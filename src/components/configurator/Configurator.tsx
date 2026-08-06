@@ -31,7 +31,7 @@ const DEFAULT_CONFIG: EnvelopeConfig = {
 };
 
 interface Problem {
-  ref: React.RefObject<HTMLDivElement>;
+  ref: React.RefObject<HTMLDivElement | null>;
   message: string;
 }
 
@@ -55,7 +55,7 @@ export function Configurator() {
     setConfig((prev) => ({ ...prev, ...changes }));
   }, []);
 
-  const scrollToRef = useCallback((ref: React.RefObject<HTMLDivElement>) => {
+  const scrollToRef = useCallback((ref: React.RefObject<HTMLDivElement | null>) => {
     setTimeout(() => {
       ref.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }, 100);
