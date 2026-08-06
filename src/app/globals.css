@@ -1,0 +1,664 @@
+/* ═══════════════════════════════════════════════════════════════
+   Envelopes — system projektowy
+   Punkt wyjścia: fizyczność korespondencji — papier, atrament, lak.
+   Sygnaturą jest pieczęć lakowa w biznesowym granacie, odciśnięta na
+   ciepłym, papierowym tle. Granat niesie powagę korespondencji firmowej,
+   a ciepła kość słoniowa nie pozwala całości zejść w chłodny korporacyjny
+   ton. Cała skala szarości jest zestrojona z granatem — atrament ma jego
+   domieszkę, więc akcent nie wygląda jak doklejony.
+   ═══════════════════════════════════════════════════════════════ */
+
+:root {
+  /* ── 4.1 Kolory ── */
+  --color-paper: #f4f2ec; /* ciepła kość słoniowa — arkusz papieru */
+  --color-surface: #ffffff;
+  --color-ink: #1f2430; /* grafit z domieszką granatu */
+  --color-ink-soft: #575e6e;
+  --color-seal: #2a4e7e; /* biznesowy granat — lak pieczętny, jedyny akcent */
+  --color-seal-deep: #1c3859; /* hover / active */
+  --color-seal-wash: #e6ebf2; /* tło zaznaczenia */
+  --color-line: #dcd8cc;
+  --color-success: #3f6b4a; /* zieleń — wyraźnie odróżnialna od granatu */
+  --color-error: #9c4221;
+
+  /* ── 4.3 Odstępy (siatka 8px) ── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+
+  /* ── 4.3 Promienie — bliżej „ciętego papieru" niż miękkiego SaaS ── */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
+
+  /* ── 4.3 Cienie — miękkie, ciepłe ── */
+  --shadow-sm: 0 1px 2px rgba(31, 36, 48, 0.08);
+  --shadow-md: 0 6px 20px rgba(31, 36, 48, 0.1);
+  --shadow-lg: 0 16px 40px rgba(31, 36, 48, 0.14);
+
+  /* ── 4.4 Ruch ── */
+  --duration-fast: 150ms;
+  --duration-base: 220ms;
+  --duration-seal: 420ms;
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ── Layout ── */
+  --container: 1200px;
+  --container-narrow: 760px;
+}
+
+/* ── Reset ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-plex-sans), system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+img,
+svg {
+  max-width: 100%;
+  display: block;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+/* ═══ 4.2 Typografia ═══ */
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-fraunces), Georgia, 'Times New Roman', serif;
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  font-size: 44px;
+  line-height: 1.1;
+}
+h2 {
+  font-size: 32px;
+  line-height: 1.15;
+}
+h3 {
+  font-size: 24px;
+  line-height: 1.25;
+}
+h4,
+h5,
+h6 {
+  font-family: var(--font-plex-sans), sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 1.4;
+  margin: 0;
+}
+
+@media (max-width: 720px) {
+  h1 {
+    font-size: 32px;
+  }
+  h2 {
+    font-size: 26px;
+  }
+  h3 {
+    font-size: 21px;
+  }
+}
+
+p {
+  margin: 0 0 var(--space-4);
+}
+p:last-child {
+  margin-bottom: 0;
+}
+
+a {
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+a:hover {
+  color: var(--color-seal);
+}
+
+.label {
+  font-size: 18px;
+  line-height: 1.4;
+  font-weight: 600;
+}
+.body {
+  font-size: 16px;
+  line-height: 1.6;
+}
+.small {
+  font-size: 14px;
+  line-height: 1.5;
+}
+.muted {
+  color: var(--color-ink-soft);
+}
+
+.eyebrow {
+  font-size: 12px;
+  line-height: 1.4;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-ink-soft);
+  margin: 0 0 var(--space-2);
+  display: block;
+}
+
+/* Rola utility — dane, w których liczy się precyzja */
+.mono,
+.mono-sm {
+  font-family: var(--font-plex-mono), ui-monospace, 'SFMono-Regular', monospace;
+}
+.mono-sm {
+  font-size: 13px;
+  line-height: 1.4;
+  font-weight: 400;
+}
+.price {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 24px;
+  line-height: 1.2;
+  font-weight: 500;
+}
+
+/* ═══ Layout ═══ */
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--space-5);
+}
+.container-narrow {
+  max-width: var(--container-narrow);
+}
+
+main {
+  flex: 1;
+}
+
+.section {
+  padding: var(--space-8) 0;
+}
+.section-tight {
+  padding: var(--space-7) 0;
+}
+
+@media (max-width: 720px) {
+  .section {
+    padding: var(--space-7) 0;
+  }
+  .container {
+    padding: 0 var(--space-4);
+  }
+}
+
+.section-head {
+  margin-bottom: var(--space-6);
+  max-width: 640px;
+}
+.section-head p {
+  color: var(--color-ink-soft);
+  margin-top: var(--space-2);
+}
+
+.grid {
+  display: grid;
+  gap: var(--space-5);
+}
+.grid-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.grid-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.grid-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+@media (max-width: 900px) {
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 620px) {
+  .grid-2,
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+.row-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+/* ═══ 4.6 Komponenty ═══ */
+
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+}
+.card-lg {
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+}
+@media (max-width: 620px) {
+  .card-lg {
+    padding: var(--space-5);
+  }
+}
+
+/* Przycisk pierwotny */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: 0 var(--space-5);
+  min-height: 44px;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  background: var(--color-seal);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-standard),
+    box-shadow var(--duration-fast) var(--ease-standard),
+    transform var(--duration-fast) var(--ease-standard);
+}
+.btn:hover:not(:disabled) {
+  background: var(--color-seal-deep);
+  box-shadow: var(--shadow-md);
+  color: #fff;
+}
+.btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+.btn:disabled,
+.btn[aria-disabled='true'] {
+  opacity: 0.4;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+.btn-block {
+  width: 100%;
+}
+.btn-lg {
+  min-height: 52px;
+  font-size: 17px;
+  padding: 0 var(--space-6);
+}
+
+/* Przycisk drugorzędny */
+.btn-secondary {
+  background: transparent;
+  border: 1px solid var(--color-line);
+  color: var(--color-ink);
+}
+.btn-secondary:hover:not(:disabled) {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  box-shadow: none;
+}
+
+.btn-ghost {
+  background: transparent;
+  border-color: transparent;
+  color: var(--color-ink);
+  padding: 0 var(--space-3);
+}
+.btn-ghost:hover:not(:disabled) {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  box-shadow: none;
+}
+
+.btn-sm {
+  min-height: 36px;
+  font-size: 14px;
+  padding: 0 var(--space-4);
+}
+
+/* 4.7 — widoczny focus na każdym interaktywnym elemencie */
+:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 2px;
+}
+
+/* Pola formularzy */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.field > label,
+.field-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+.input,
+.select,
+.textarea {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  transition: border-color var(--duration-fast) var(--ease-standard),
+    box-shadow var(--duration-fast) var(--ease-standard);
+}
+.textarea {
+  padding: var(--space-3);
+  min-height: 96px;
+  resize: vertical;
+  line-height: 1.5;
+}
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--color-ink-soft);
+  opacity: 0.75;
+}
+.input:focus,
+.select:focus,
+.textarea:focus {
+  outline: none;
+  border-color: var(--color-ink);
+  border-width: 2px;
+  padding: 0 calc(var(--space-3) - 1px);
+  box-shadow: 0 0 0 3px rgba(31, 36, 48, 0.08);
+}
+.textarea:focus {
+  padding: calc(var(--space-3) - 1px);
+}
+.input[aria-invalid='true'],
+.select[aria-invalid='true'],
+.textarea[aria-invalid='true'] {
+  border-color: var(--color-error);
+}
+.field-error {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-error);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+.field-hint {
+  font-size: 14px;
+  color: var(--color-ink-soft);
+}
+
+.checkbox-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  cursor: pointer;
+}
+.checkbox-row input[type='checkbox'],
+.checkbox-row input[type='radio'] {
+  margin-top: 3px;
+  width: 18px;
+  height: 18px;
+  accent-color: var(--color-seal);
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.checkbox-row span {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Plakietki */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 3px var(--space-2);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-line);
+  background: var(--color-surface);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-ink-soft);
+  white-space: nowrap;
+}
+.badge-success {
+  border-color: var(--color-success);
+  color: var(--color-success);
+  background: rgba(63, 107, 74, 0.08);
+}
+.badge-error {
+  border-color: var(--color-error);
+  color: var(--color-error);
+  background: rgba(156, 66, 33, 0.08);
+}
+.badge-seal {
+  border-color: var(--color-seal);
+  color: var(--color-seal);
+  background: var(--color-seal-wash);
+}
+
+/* Komunikaty */
+.notice {
+  border: 1px solid var(--color-line);
+  border-left: 3px solid var(--color-ink-soft);
+  border-radius: var(--radius-sm);
+  padding: var(--space-4);
+  background: var(--color-surface);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.notice-seal {
+  border-left-color: var(--color-seal);
+  background: var(--color-seal-wash);
+}
+.notice-success {
+  border-left-color: var(--color-success);
+  background: rgba(63, 107, 74, 0.06);
+}
+.notice-error {
+  border-left-color: var(--color-error);
+  background: rgba(156, 66, 33, 0.06);
+  color: var(--color-error);
+}
+
+hr,
+.divider {
+  border: none;
+  border-top: 1px solid var(--color-line);
+  margin: var(--space-5) 0;
+}
+
+/* Tabele (koszyk, panel Admina) */
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+table.data {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  min-width: 720px;
+}
+table.data th {
+  text-align: left;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-ink-soft);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-line);
+  white-space: nowrap;
+}
+table.data td {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-line);
+  vertical-align: top;
+}
+table.data tr:last-child td {
+  border-bottom: none;
+}
+table.data tbody tr:hover {
+  background: var(--color-paper);
+}
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 200;
+  background: var(--color-ink);
+  color: #fff;
+  padding: var(--space-3) var(--space-4);
+  border-radius: 0 0 var(--radius-sm) 0;
+  text-decoration: none;
+}
+.skip-link:focus {
+  left: 0;
+  color: #fff;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ═══ 4.4 Ruch — jedyny zorkiestrowany moment to pieczęć ═══ */
+@keyframes seal-in {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Treść artykułów i stron prawnych */
+.prose {
+  max-width: var(--container-narrow);
+}
+.prose h2 {
+  margin-top: var(--space-7);
+  margin-bottom: var(--space-3);
+  scroll-margin-top: 100px;
+}
+.prose h3 {
+  margin-top: var(--space-5);
+  margin-bottom: var(--space-2);
+  font-size: 20px;
+}
+.prose p,
+.prose li {
+  color: var(--color-ink);
+  line-height: 1.7;
+}
+.prose ul,
+.prose ol {
+  padding-left: var(--space-5);
+  margin: 0 0 var(--space-4);
+}
+.prose li {
+  margin-bottom: var(--space-2);
+}
+.prose > *:first-child {
+  margin-top: 0;
+}
