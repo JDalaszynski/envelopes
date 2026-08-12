@@ -1,16 +1,20 @@
 import 'server-only';
 
 /**
- * Minimalny generator PDF — faktura proforma i faktura VAT do pobrania.
+ * Minimalny generator PDF — faktury oraz dokumenty prawne do pobrania.
  * Bez zależności zewnętrznych: dokument budowany jest wprost w składni PDF.
  *
  * Polskie znaki: używamy fontu bazowego Helvetica z tablicą /Differences,
  * która mapuje kody 128–159 na nazwy glifów z Latin Extended-A (aogonek,
  * lslash, zdotaccent itd.). Dzięki temu diakrytyki renderują się poprawnie
  * bez osadzania pliku fontu.
+ *
+ * Kody 128–145 zajmują diakrytyki, 146–154 — znaki typograficzne. Bez tych
+ * drugich myślniki i cudzysłowy drukarskie z regulaminu trafiałyby do PDF-a
+ * jako znaki zapytania, bo ich punkty kodowe leżą poza zakresem latin-1.
  */
 
-const POLISH_MAP: Record<string, { code: number; glyph: string }> = {
+const CHAR_MAP: Record<string, { code: number; glyph: string }> = {
   Ą: { code: 128, glyph: 'Aogonek' },
   ą: { code: 129, glyph: 'aogonek' },
   Ć: { code: 130, glyph: 'Cacute' },
@@ -29,10 +33,21 @@ const POLISH_MAP: Record<string, { code: number; glyph: string }> = {
   ź: { code: 143, glyph: 'zacute' },
   Ż: { code: 144, glyph: 'Zdotaccent' },
   ż: { code: 145, glyph: 'zdotaccent' },
+
+  // Znaki typograficzne używane w treści dokumentów
+  '—': { code: 146, glyph: 'emdash' },
+  '–': { code: 147, glyph: 'endash' },
+  '„': { code: 148, glyph: 'quotedblbase' },
+  '”': { code: 149, glyph: 'quotedblright' },
+  '“': { code: 150, glyph: 'quotedblleft' },
+  '’': { code: 151, glyph: 'quoteright' },
+  '…': { code: 152, glyph: 'ellipsis' },
+  '−': { code: 153, glyph: 'minus' },
+  '•': { code: 154, glyph: 'bullet' },
 };
 
 function differencesArray(): string {
-  const entries = Object.values(POLISH_MAP).sort((a, b) => a.code - b.code);
+  const entries = Object.values(CHAR_MAP).sort((a, b) => a.code - b.code);
   const parts: string[] = [];
   let previous = -2;
   for (const entry of entries) {
@@ -47,7 +62,7 @@ function differencesArray(): string {
 function encodeText(text: string): string {
   let out = '';
   for (const char of text) {
-    const mapped = POLISH_MAP[char];
+    const mapped = CHAR_MAP[char];
     if (mapped) {
       out += `\\${mapped.code.toString(8).padStart(3, '0')}`;
       continue;

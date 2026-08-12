@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { LegalPage } from '@/components/legal/LegalPage';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { PRIVACY } from '@/lib/legal';
+import { CONTACT_DETAILS } from '@/lib/orders';
 import { breadcrumbJsonLd } from '@/lib/seo';
 
 export const metadata: Metadata = {
@@ -27,7 +28,8 @@ export default function PrivacyPage() {
           <p className="notice" style={{ marginTop: 'var(--space-6)' }}>
             Zasady stosowania plików cookies opisuje odrębny dokument —{' '}
             <Link href="/pliki-cookies">Polityka Cookies</Link>. W sprawach ochrony danych prosimy o
-            kontakt: <a href="mailto:iod@envelopes.pl">iod@envelopes.pl</a>.
+            kontakt:{' '}
+            <a href={`mailto:${CONTACT_DETAILS.email}`}>{CONTACT_DETAILS.email}</a>.
           </p>
         }
       />

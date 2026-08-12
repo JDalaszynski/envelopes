@@ -21,6 +21,8 @@ interface Props {
   size?: 'sm' | 'md' | 'lg';
   /** Czy pokazywać zdjęcie z podglądem nadruku */
   hasPrint?: boolean;
+  /** Czy pokazywać zdjęcie z podglądem personalizacji */
+  hasPersonalization?: boolean;
 }
 
 const RATIOS = { photo: '4 / 3', wide: '16 / 9', portrait: '3 / 4', square: '1 / 1' };
@@ -32,6 +34,7 @@ export function EnvelopePlaceholder({
   hideCaption = false,
   size = 'md',
   hasPrint = false,
+  hasPersonalization = false,
 }: Props) {
   const color = COLOR_MAP[colorId];
   const hex = color?.hex ?? '#EADFC8';
@@ -41,7 +44,10 @@ export function EnvelopePlaceholder({
   const strokeColor = color?.dark ? 'rgba(255,255,255,.55)' : 'rgba(31,36,48,.45)';
   const captionSize = size === 'sm' ? 11 : size === 'lg' ? 14 : 13;
 
-  const imageUrl = (hasPrint && color?.printImages?.[format as keyof typeof color.printImages]) || color?.images?.[format as keyof typeof color.images];
+  const imageUrl =
+    (hasPersonalization && color?.personalizedImages?.[format as keyof typeof color.personalizedImages]) ||
+    (hasPrint && color?.printImages?.[format as keyof typeof color.printImages]) ||
+    color?.images?.[format as keyof typeof color.images];
 
   if (imageUrl) {
     return (
@@ -50,14 +56,14 @@ export function EnvelopePlaceholder({
         style={{
           aspectRatio: RATIOS[ratio],
           padding: 0,
-          border: 'none',
-          background: 'none',
+          background: '#fff',
+          overflow: 'hidden',
         }}
       >
         <img
           src={imageUrl}
           alt={alt}
-          style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'var(--radius-md)' }}
+          style={{ width: '100%', height: '100%', objectFit: 'contain' }}
         />
       </figure>
     );

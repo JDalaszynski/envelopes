@@ -499,7 +499,7 @@
   border-radius: var(--radius-md);
   cursor: pointer;
   text-align: center;
-  overflow: hidden;
+  overflow: visible;
   transition: border-color var(--duration-fast) var(--ease-standard),
               box-shadow var(--duration-fast) var(--ease-standard);
 }
@@ -520,6 +520,8 @@
   justify-content: center;
   overflow: hidden;
   background: var(--color-paper);
+  border-top-left-radius: calc(var(--radius-md) - 1px);
+  border-top-right-radius: calc(var(--radius-md) - 1px);
 }
 .swatch-shape img {
   width: 100%;
@@ -543,6 +545,87 @@
 .swatch:hover .swatch-shape svg {
   transform: scale(1.05) translateZ(0);
 }
+
+.tooltip-wrap {
+  position: absolute;
+  bottom: 35px;
+  left: 4px;
+  z-index: 10;
+}
+
+.info-icon {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  color: var(--color-ink-soft);
+  font-family: var(--font-plex-mono), monospace;
+  font-size: 11px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-sm);
+  transition: color var(--duration-fast), border-color var(--duration-fast);
+}
+
+/* Kiedy to .tooltip-wrap zawiera tooltip-content */
+.tooltip-wrap .tooltip-content {
+  position: absolute;
+  bottom: 100%;
+  left: -2px;
+  margin-bottom: 6px;
+  background: var(--color-ink);
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-family: var(--font-plex-sans), sans-serif;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(4px);
+  transition: opacity 0.15s, transform 0.15s, visibility 0.15s;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  box-shadow: var(--shadow-md);
+}
+
+.tooltip-wrap .tooltip-content::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 7px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: var(--color-ink) transparent transparent transparent;
+}
+
+.tooltip-wrap .tooltip-content strong {
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.tooltip-wrap .tooltip-content span {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.tooltip-wrap:hover .info-icon {
+  color: var(--color-ink);
+  border-color: var(--color-ink-soft);
+}
+
+.tooltip-wrap:hover .tooltip-content {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
 .swatch-name {
   flex-shrink: 0;
   width: 100%;
@@ -555,6 +638,8 @@
   overflow: hidden;
   text-overflow: ellipsis;
   color: var(--color-ink);
+  border-bottom-left-radius: calc(var(--radius-md) - 1px);
+  border-bottom-right-radius: calc(var(--radius-md) - 1px);
 }
 .swatch-check {
   position: absolute;
@@ -1075,13 +1160,18 @@
   transition: border-color var(--duration-fast) var(--ease-standard),
     box-shadow var(--duration-fast) var(--ease-standard);
 }
-.format-card:hover {
+.format-card:hover:not(:disabled) {
   border-color: var(--color-ink-soft);
   box-shadow: var(--shadow-sm);
 }
-.format-card:hover .format-select-btn.btn-secondary {
+.format-card:hover:not(:disabled) .format-select-btn.btn-secondary {
   background: var(--color-paper);
   color: var(--color-ink);
+}
+.format-card:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: var(--color-paper);
 }
 .format-card[aria-pressed='true'] {
   border: 2px solid var(--color-seal);
@@ -1499,6 +1589,38 @@
   margin: 0;
   padding-left: var(--space-5);
   font-size: 14px;
+}
+
+/* Numerowane ustępy dokumentów prawnych — „§7 ust. 3 lit. b” */
+.prose ol.legal-clauses {
+  list-style: decimal;
+  counter-reset: none;
+}
+.prose ol.legal-clauses > li {
+  margin-bottom: var(--space-3);
+  padding-left: var(--space-1);
+}
+.prose ol.legal-points {
+  list-style: lower-alpha;
+  margin: var(--space-2) 0 0;
+}
+.prose ol.legal-points > li {
+  margin-bottom: var(--space-1);
+}
+.prose .legal-note {
+  margin-top: var(--space-3);
+  padding-left: var(--space-3);
+  border-left: 2px solid var(--color-line);
+}
+.prose .legal-annex-rule {
+  margin: var(--space-7) 0 var(--space-6);
+  border: none;
+  border-top: 1px solid var(--color-line);
+}
+/* Tabele w dokumentach są węższe niż tabele danych w panelu */
+table.data.legal-table {
+  min-width: 560px;
+  font-size: 13px;
 }
 
 /* ── Statusy zamówień ── */

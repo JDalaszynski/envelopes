@@ -11,3 +11,8 @@ build
 next-env.d.ts
 tsconfig.tsbuildinfo
 .vercel
+
+# Źródła graficzne — pliki robocze Photoshopa potrafią mieć setki MB,
+# przekraczają limit 100 MB na plik w GitHubie i nie mają czego szukać
+# w `public/`, bo Vercel serwowałby je publicznie razem z aplikacją.
+*.psd

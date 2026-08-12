@@ -200,9 +200,10 @@ export function Configurator() {
             value={config.format}
             colorId={config.color}
             onChange={(format) => {
-              patch({ format });
+              patch({ format: format || undefined });
               if (!hasFormat) scrollToRef(colorRef);
             }}
+            onNextStep={() => scrollToRef(colorRef)}
           />
         </div>
       </div>
@@ -276,6 +277,8 @@ export function Configurator() {
                 onTextChange={(personalizationText) => patch({ personalizationText })}
                 onFileChange={(personalizationFile) => patch({ personalizationFile })}
                 onFixQuantity={() => patch({ quantity: minimumQuantity(true) })}
+                format={config.format}
+                colorId={config.color}
               />
 
               {(config.print || config.personalization) && <VisualizationNotice />}

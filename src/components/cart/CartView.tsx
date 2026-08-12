@@ -24,8 +24,6 @@ function CartInner() {
     count,
     removeItem,
     itemsGross,
-    discountCode,
-    discountGross,
     reorder,
     ready,
     shippingSpeed,
@@ -86,7 +84,7 @@ function CartInner() {
     );
   }
 
-  const gross = round2(itemsGross + DELIVERY_COST - discountGross);
+  const gross = round2(itemsGross + DELIVERY_COST);
   const net = round2(gross / (1 + DEFAULT_PRICING.vatRate));
   const vat = round2(gross - net);
   const leadDays = leadTimeDays({ speed: shippingSpeed, requiresProduction });
@@ -280,12 +278,6 @@ function CartInner() {
             <div className="summary-row muted">
               <span style={{ paddingLeft: 'var(--space-3)' }}>w tym dopłata ekspresowa</span>
               <span>{formatPrice(expressSurcharge)}</span>
-            </div>
-          )}
-          {discountGross > 0 && (
-            <div className="summary-row" style={{ color: 'var(--color-success)' }}>
-              <span>Rabat {discountCode}</span>
-              <span>− {formatPrice(discountGross)}</span>
             </div>
           )}
           <div className="summary-row">

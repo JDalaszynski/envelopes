@@ -1,19 +1,27 @@
 import 'server-only';
 
 import { formatPrice, formatDate } from './pricing';
-import { BANK_TRANSFER_DETAILS, PAYMENT_METHOD_LABEL, isGatewayPayment } from './orders';
+import {
+  BANK_TRANSFER_DETAILS,
+  CONTACT_DETAILS,
+  PAYMENT_METHOD_LABEL,
+  isGatewayPayment,
+} from './orders';
 import type { Order } from './types';
 
 /**
- * Brevo — e-maile transakcyjne i newsletter (pkt 8.1).
- * Wszystkie wywołania idą z serwerowych endpointów na Vercel;
- * klucz API nigdy nie trafia do bundla klienckiego.
+ * Brevo — wyłącznie e-maile transakcyjne (pkt 8.1): potwierdzenie zamówienia,
+ * wizualizacja do akceptacji, potwierdzenie wpłaty, zmiana statusu oraz
+ * wiadomość z formularza kontaktowego.
+ *
+ * Wszystkie wywołania idą z serwerowych endpointów na Vercel; klucz API
+ * nigdy nie trafia do bundla klienckiego.
  */
 
 const API_BASE = 'https://api.brevo.com/v3';
 const API_KEY = process.env.BREVO_API_KEY;
 const SENDER = {
-  email: process.env.BREVO_SENDER_EMAIL ?? 'zamowienia@envelopes.pl',
+  email: process.env.BREVO_SENDER_EMAIL ?? CONTACT_DETAILS.email,
   name: process.env.BREVO_SENDER_NAME ?? 'Envelopes',
 };
 
@@ -69,35 +77,9 @@ export async function sendEmail(payload: EmailPayload): Promise<{ sent: boolean;
   }
 }
 
-/** Zapis do listy kontaktów newslettera, ze zgodą RODO zaznaczoną przy zapisie. */
-export async function subscribeToNewsletter(
-  email: string,
-  attributes: Record<string, unknown> = {}
-): Promise<{ ok: boolean; reason?: string }> {
-  const listId = Number(process.env.BREVO_NEWSLETTER_LIST_ID ?? 2);
-
-  if (!isBrevoConfigured) {
-    console.info(`[Brevo — tryb bez klucza API] Zapis do newslettera: ${email}`);
-    return { ok: true, reason: 'Zapis odnotowany lokalnie (brak BREVO_API_KEY).' };
-  }
-
-  try {
-    const res = await brevoFetch('/contacts', {
-      email,
-      listIds: [listId],
-      updateEnabled: true,
-      attributes: { ZGODA_RODO: true, ZRODLO: 'envelopes.pl', ...attributes },
-    });
-    if (!res.ok && res.status !== 204) {
-      const text = await res.text();
-      if (text.includes('duplicate_parameter')) return { ok: true };
-      return { ok: false, reason: `Brevo zwróciło status ${res.status}` };
-    }
-    return { ok: true };
-  } catch {
-    return { ok: false, reason: 'Nie udało się połączyć z Brevo.' };
-  }
-}
+/* Sklep nie prowadzi newslettera ani wysyłki informacji handlowych —
+   Brevo obsługuje wyłącznie wiadomości transakcyjne wymienione poniżej
+   (§3 ust. 5 Regulaminu). */
 
 /* ── Szablony wiadomości ────────────────────────────────────── */
 
@@ -112,7 +94,8 @@ function shell(title: string, body: string): string {
 <h1 style="font-size:24px;line-height:1.25;margin:0 0 16px">${title}</h1>
 <div style="font-family:Arial,sans-serif;font-size:15px;line-height:1.6;color:#20242E">${body}</div>
 <p style="margin:32px 0 0;font-family:Arial,sans-serif;font-size:12px;color:#565C6E">
-Envelopes sp. z o.o. · kontakt@envelopes.pl · +48 22 000 00 00<br>
+${CONTACT_DETAILS.company}, ${CONTACT_DETAILS.address} · NIP ${CONTACT_DETAILS.nip}<br>
+${CONTACT_DETAILS.email} · ${CONTACT_DETAILS.phone}<br>
 Wiadomość dotyczy zamówienia złożonego w serwisie envelopes.pl.</p>
 </td></tr></table></td></tr></table></body></html>`;
 }

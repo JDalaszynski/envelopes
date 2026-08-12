@@ -9,10 +9,12 @@ export function StepFormat({
   value,
   colorId,
   onChange,
+  onNextStep,
 }: {
-  value: FormatId;
+  value: FormatId | '';
   colorId: string;
-  onChange: (format: FormatId) => void;
+  onChange: (format: FormatId | '') => void;
+  onNextStep?: () => void;
 }) {
   return (
     <div className="stack">
@@ -31,7 +33,14 @@ export function StepFormat({
             type="button"
             className="format-card"
             aria-pressed={value === format.id}
-            onClick={() => onChange(format.id)}
+            onClick={() => {
+              if (value === format.id) {
+                onChange('');
+              } else {
+                onChange(format.id);
+              }
+            }}
+            disabled={format.disabled}
           >
             {format.badge && <span className="card-badge">{format.badge}</span>}
             <span className="format-visual" aria-hidden="true">
@@ -44,8 +53,17 @@ export function StepFormat({
               </span>
             </span>
             <span className="mono-sm">{formatPrice(DEFAULT_PRICING.base[format.id])} / szt.</span>
-            <span className={`btn btn-sm ${value === format.id ? '' : 'btn-secondary'} format-select-btn`} style={{ marginTop: 'var(--space-3)', width: '100%' }}>
-              Dostępne kolory
+            <span
+              className={`btn btn-sm ${value === format.id ? '' : 'btn-secondary'} format-select-btn`}
+              style={{ marginTop: 'var(--space-3)', width: '100%' }}
+              onClick={(e) => {
+                if (value === format.id && onNextStep) {
+                  e.stopPropagation();
+                  onNextStep();
+                }
+              }}
+            >
+              Wybierz kolor koperty
             </span>
           </button>
         ))}
@@ -88,16 +106,6 @@ function MiniEnvelope({ format, colorId }: { format: EnvelopeFormat; colorId: st
         strokeWidth="1.5"
         strokeLinejoin="round"
       />
-      <text
-        x={w / 2}
-        y={h - 8}
-        textAnchor="middle"
-        fontSize="12"
-        fill={color?.dark ? 'rgba(255,255,255,.75)' : 'var(--color-ink-soft)'}
-        fontFamily="var(--font-plex-mono), monospace"
-      >
-        {format.id}
-      </text>
     </svg>
   );
 }

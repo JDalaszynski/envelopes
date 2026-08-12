@@ -147,16 +147,3 @@ export function formatDateTime(date: Date | string): string {
     minute: '2-digit',
   }).format(d);
 }
-
-/** Kody rabatowe — demonstracyjne, docelowo kolekcja Firestore `discounts`. */
-export const DISCOUNT_CODES: Record<string, { percent: number; label: string }> = {
-  POWITANIE10: { percent: 10, label: 'Rabat powitalny z newslettera' },
-  BIURO5: { percent: 5, label: 'Rabat dla klientów biurowych' },
-};
-
-export function applyDiscount(gross: number, code: string | null | undefined): number {
-  if (!code) return 0;
-  const found = DISCOUNT_CODES[code.trim().toUpperCase()];
-  if (!found) return 0;
-  return round2((gross * found.percent) / 100);
-}

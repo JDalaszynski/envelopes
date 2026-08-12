@@ -13,6 +13,13 @@ import { useEffect, useState } from 'react';
 const STORAGE_KEY = 'envelopes.cookieConsent';
 const EVENT = 'envelopes:cookies';
 
+/**
+ * Ważność zapisanej decyzji. Pamięć lokalna przeglądarki nie wygasa sama,
+ * więc termin egzekwujemy przy odczycie — po roku baner pojawia się ponownie,
+ * tak jak deklaruje to Polityka Cookies (pkt 5 ust. 3).
+ */
+const CONSENT_MAX_AGE_DAYS = 365;
+
 export interface CookieConsent {
   necessary: true;
   analytics: boolean;
@@ -53,7 +60,18 @@ export function readConsent(): CookieConsent | null {
   if (typeof window === 'undefined') return null;
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY);
-    return raw ? (JSON.parse(raw) as CookieConsent) : null;
+    if (!raw) return null;
+
+    const consent = JSON.parse(raw) as CookieConsent;
+    const decidedAt = new Date(consent.decidedAt).getTime();
+    const ageDays = (Date.now() - decidedAt) / 86_400_000;
+
+    // Zgoda starsza niż rok albo wpis bez czytelnej daty — pytamy ponownie.
+    if (!Number.isFinite(ageDays) || ageDays > CONSENT_MAX_AGE_DAYS) {
+      window.localStorage.removeItem(STORAGE_KEY);
+      return null;
+    }
+    return consent;
   } catch {
     return null;
   }

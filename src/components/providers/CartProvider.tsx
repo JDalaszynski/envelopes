@@ -10,12 +10,11 @@ import {
   type ReactNode,
 } from 'react';
 
-import { calculatePrice, DEFAULT_PRICING, round2, applyDiscount } from '@/lib/pricing';
+import { calculatePrice, DEFAULT_PRICING, round2 } from '@/lib/pricing';
 import { buildProductName } from '@/lib/product-name';
 import type { CartItem, EnvelopeConfig, ShippingSpeed } from '@/lib/types';
 
 const STORAGE_KEY = 'envelopes.cart';
-const DISCOUNT_KEY = 'envelopes.discount';
 const SPEED_KEY = 'envelopes.shippingSpeed';
 /** Konfiguracja przekazywana z panelu „Złożone zamówienia" do konfiguratora przy edycji */
 export const EDIT_KEY = 'envelopes.editConfig';
@@ -23,9 +22,7 @@ export const EDIT_KEY = 'envelopes.editConfig';
 interface CartContextValue {
   items: CartItem[];
   count: number;
-  discountCode: string | null;
   itemsGross: number;
-  discountGross: number;
   /**
    * Czas realizacji jest wspólny dla całego koszyka — przesyłka wychodzi
    * jedna, więc nie da się jej wysłać jednocześnie standardowo i ekspresowo.
@@ -49,7 +46,6 @@ interface CartContextValue {
   updateItem: (id: string, config: EnvelopeConfig) => void;
   removeItem: (id: string) => void;
   clear: () => void;
-  setDiscountCode: (code: string | null) => void;
   /** Ponowne zamówienie — przelicza konfigurację wg aktualnego cennika (pkt 6.11) */
   reorder: (configs: EnvelopeConfig[]) => void;
   ready: boolean;
@@ -80,7 +76,6 @@ function withSpeed(item: CartItem, shippingSpeed: ShippingSpeed): CartItem {
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
-  const [discountCode, setDiscountCodeState] = useState<string | null>(null);
   const [shippingSpeed, setShippingSpeedState] = useState<ShippingSpeed>('standard');
   const [ready, setReady] = useState(false);
 
@@ -100,8 +95,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
         // policzy serwer przy składaniu zamówienia.
         setItems(stored.map((item) => withSpeed(item, speed)));
       }
-      const code = window.localStorage.getItem(DISCOUNT_KEY);
-      if (code) setDiscountCodeState(code);
     } catch {
       /* uszkodzony wpis w localStorage — startujemy z pustym koszykiem */
     }
@@ -146,15 +139,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const clear = useCallback(() => {
     setItems([]);
-    setDiscountCodeState(null);
-    if (typeof window !== 'undefined') window.localStorage.removeItem(DISCOUNT_KEY);
-  }, []);
-
-  const setDiscountCode = useCallback((code: string | null) => {
-    setDiscountCodeState(code);
-    if (typeof window === 'undefined') return;
-    if (code) window.localStorage.setItem(DISCOUNT_KEY, code);
-    else window.localStorage.removeItem(DISCOUNT_KEY);
   }, []);
 
   const reorder = useCallback(
@@ -184,10 +168,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
     () => round2(items.reduce((sum, item) => sum + item.price.gross, 0)),
     [items]
   );
-  const discountGross = useMemo(
-    () => applyDiscount(itemsGross, discountCode),
-    [itemsGross, discountCode]
-  );
   const count = useMemo(
     () => items.reduce((sum, item) => sum + item.price.quantity, 0),
     [items]
@@ -205,9 +185,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     () => ({
       items,
       count,
-      discountCode,
       itemsGross,
-      discountGross,
       shippingSpeed,
       setShippingSpeed,
       requiresProduction,
@@ -216,16 +194,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
       updateItem,
       removeItem,
       clear,
-      setDiscountCode,
       reorder,
       ready,
     }),
     [
       items,
       count,
-      discountCode,
       itemsGross,
-      discountGross,
       shippingSpeed,
       setShippingSpeed,
       requiresProduction,
@@ -234,7 +209,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
       updateItem,
       removeItem,
       clear,
-      setDiscountCode,
       reorder,
       ready,
     ]

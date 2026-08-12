@@ -10,6 +10,7 @@ import { TrustBar } from '@/components/layout/TrustBar';
 import { CartProvider } from '@/components/providers/CartProvider';
 import { AuthProvider } from '@/components/providers/AuthProvider';
 import { organizationJsonLd } from '@/lib/seo';
+import { CONTACT_DETAILS } from '@/lib/orders';
 
 /* Typografia (pkt 4.2) — serif o charakterze tłoczonym + neutralny,
    „dokumentowy" UI sans + mono dla danych, w których liczy się precyzja. */
@@ -45,7 +46,7 @@ export const metadata: Metadata = {
   description:
     'Koperty ozdobne w formatach DL, C6 i K4, w 19 kolorach. Nadruk firmowy, adresowanie, realizacja od 2 dni roboczych, faktura VAT i odroczony termin płatności dla firm.',
   applicationName: 'Envelopes',
-  authors: [{ name: 'Envelopes sp. z o.o.' }],
+  authors: [{ name: CONTACT_DETAILS.company }],
   openGraph: {
     type: 'website',
     locale: 'pl_PL',

@@ -32,7 +32,13 @@ export function StepColor({
               type="button"
               className="swatch"
               aria-pressed={selected}
-              onClick={() => onChange(color.id)}
+              onClick={() => {
+                if (selected) {
+                  onChange('');
+                } else {
+                  onChange(color.id);
+                }
+              }}
             >
               <span className="swatch-shape">
                 {color.images?.[format as keyof typeof color.images] ? (
@@ -48,6 +54,15 @@ export function StepColor({
               {selected && (
                 <span className="swatch-check" aria-hidden="true">
                   ✓
+                </span>
+              )}
+              {color.weight && (
+                <span className="tooltip-wrap">
+                  <span className="info-icon">i</span>
+                  <span className="tooltip-content">
+                    <strong>Gramatura {color.weight}</strong>
+                    <span>Gruby, jakościowy papier</span>
+                  </span>
                 </span>
               )}
             </button>

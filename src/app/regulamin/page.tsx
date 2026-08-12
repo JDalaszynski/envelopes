@@ -20,7 +20,15 @@ export default function TermsPage() {
           { name: 'Regulamin', url: '/regulamin' },
         ])}
       />
-      <LegalPage document={TERMS} pdfHref="/api/dokumenty/regulamin" />
+      <LegalPage
+        document={TERMS}
+        pdfHref="/api/dokumenty/regulamin"
+        extraActions={
+          <a className="btn btn-secondary" href="/api/dokumenty/odstapienie">
+            Formularz odstąpienia (PDF)
+          </a>
+        }
+      />
     </>
   );
 }

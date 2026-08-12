@@ -54,8 +54,22 @@ export function SummaryBar({
       <div className="summary-bar-inner">
         <div className="summary-bar-product" style={{ display: 'flex', gap: 'var(--space-3)', alignItems: 'center' }}>
           {config.format && config.color && (
-            <div style={{ width: 72, flexShrink: 0 }}>
-              <EnvelopePlaceholder format={config.format} colorId={config.color} ratio="photo" size="md" hasPrint={config.print} />
+            <div style={{ display: 'flex', gap: 'var(--space-2)', flexShrink: 0, alignItems: 'center' }}>
+              {config.print && config.personalization ? (
+                <>
+                  <div style={{ width: 72 }}>
+                    <EnvelopePlaceholder format={config.format} colorId={config.color} ratio="photo" size="md" hasPrint={true} />
+                  </div>
+                  <span style={{ color: 'var(--color-ink-soft)', fontWeight: 600, fontSize: 16 }}>+</span>
+                  <div style={{ width: 72 }}>
+                    <EnvelopePlaceholder format={config.format} colorId={config.color} ratio="photo" size="md" hasPersonalization={true} />
+                  </div>
+                </>
+              ) : (
+                <div style={{ width: 120 }}>
+                  <EnvelopePlaceholder format={config.format} colorId={config.color} ratio="photo" size="lg" hasPrint={config.print} hasPersonalization={config.personalization} />
+                </div>
+              )}
             </div>
           )}
 

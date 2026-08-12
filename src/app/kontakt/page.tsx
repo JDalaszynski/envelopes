@@ -65,7 +65,7 @@ export default function ContactPage() {
                 <br />
                 REGON {CONTACT_DETAILS.regon}
                 <br />
-                KRS {CONTACT_DETAILS.krs}
+                Działalność wpisana do CEIDG
               </p>
             </div>
 

@@ -86,10 +86,8 @@ export function Footer() {
 
         <div className="footer-bottom">
           <span>
-            © {new Date().getFullYear()} {CONTACT_DETAILS.company}, {CONTACT_DETAILS.address} ·
-            NIP {CONTACT_DETAILS.nip} · KRS {CONTACT_DETAILS.krs}
+            © {new Date().getFullYear()} <a href="https://jdalaszynski.pl/" target="_blank" rel="noopener noreferrer">Jakub Dalaszyński</a>. Wszelkie prawa zastrzeżone.
           </span>
-          <span>Ceny podane w złotych, zawierają podatek VAT.</span>
         </div>
       </div>
     </footer>

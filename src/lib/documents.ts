@@ -56,14 +56,6 @@ export function buildInvoicePdf(order: Order, kind: 'proforma' | 'vat'): Buffer 
     spaceBefore: 6,
   });
 
-  if (order.totals.discountGross > 0) {
-    lines.push({
-      text: `Rabat ${order.discountCode ?? ''}`.trim(),
-      size: 10,
-      right: `− ${formatPrice(order.totals.discountGross)}`,
-    });
-  }
-
   lines.push(
     { text: 'Wartość netto', size: 10, right: formatPrice(order.totals.net), spaceBefore: 10 },
     { text: 'VAT 23%', size: 10, right: formatPrice(order.totals.vat) },
@@ -104,8 +96,6 @@ export function buildInvoicePdf(order: Order, kind: 'proforma' | 'vat'): Buffer 
 
 /** Sprawdza spójność sum — używane przy wystawianiu dokumentu. */
 export function verifyTotals(order: Order): boolean {
-  const expected = round2(
-    order.totals.itemsGross + order.totals.deliveryGross - order.totals.discountGross
-  );
+  const expected = round2(order.totals.itemsGross + order.totals.deliveryGross);
   return Math.abs(expected - order.totals.gross) < 0.02;
 }

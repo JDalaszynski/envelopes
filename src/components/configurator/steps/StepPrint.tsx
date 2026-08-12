@@ -51,11 +51,11 @@ export function StepPrint({
             }
           }}
         >
-          <div style={{ width: 96, flexShrink: 0 }}>
+          <div style={{ width: 144, flexShrink: 0 }}>
             {format && colorId ? (
-              <EnvelopePlaceholder format={format} colorId={colorId} ratio="square" size="md" hideCaption hasPrint />
+              <EnvelopePlaceholder format={format} colorId={colorId} ratio="square" size="lg" hideCaption hasPrint />
             ) : (
-              <svg width="96" height="96" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--color-ink-soft)', background: 'var(--color-paper)', padding: 8, borderRadius: 'var(--radius-sm)', border: '1px solid var(--color-line)', flexShrink: 0 }}>
+              <svg width="144" height="144" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--color-ink-soft)', background: 'var(--color-paper)', padding: 12, borderRadius: 'var(--radius-sm)', border: '1px solid var(--color-line)', flexShrink: 0 }}>
                 <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
                 <circle cx="8.5" cy="8.5" r="1.5"></circle>
                 <polyline points="21 15 16 10 5 21"></polyline>
@@ -63,7 +63,7 @@ export function StepPrint({
             )}
           </div>
           <div>
-            <h4>Nadruk na Kopertach</h4>
+            <h4>Logo na Kopertach (lub dowolny nadruk)</h4>
             <div style={{ margin: 'var(--space-1) 0 var(--space-2)' }}>
               <strong style={{ display: 'block', color: 'var(--color-ink)' }}>+ {formatPrice(DEFAULT_PRICING.print)} brutto / szt.</strong>
               <span className="small muted">minimalna ilość {minimum} szt.</span>

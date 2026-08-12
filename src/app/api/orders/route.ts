@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 
 import { verifyRequest } from '@/lib/firebase/admin';
 import { getPricing, listOrders, nextOrderNumber, saveOrder } from '@/lib/store';
-import { applyDiscount, calculatePrice, estimatedDeliveryDate, round2 } from '@/lib/pricing';
+import { calculatePrice, estimatedDeliveryDate, round2 } from '@/lib/pricing';
 import { buildProductName } from '@/lib/product-name';
 import {
   generateApprovalToken,
@@ -10,7 +10,7 @@ import {
   isGatewayPayment,
   requiresVisualization,
 } from '@/lib/orders';
-import { orderConfirmationEmail, sendEmail, subscribeToNewsletter } from '@/lib/brevo';
+import { orderConfirmationEmail, sendEmail } from '@/lib/brevo';
 import { isP24Configured, registerTransaction } from '@/lib/p24';
 import { SITE_URL } from '@/lib/seo';
 import type { CartItem, EnvelopeConfig, Order, PaymentMethod } from '@/lib/types';
@@ -62,9 +62,7 @@ interface CreateOrderBody {
   customer: Order['customer'];
   delivery: Order['delivery'];
   paymentMethod: PaymentMethod;
-  discountCode?: string | null;
   marketingConsent?: boolean;
-  newsletter?: boolean;
 }
 
 /** POST — złożenie zamówienia. */
@@ -119,8 +117,7 @@ export async function POST(request: Request) {
 
   const itemsGross = round2(items.reduce((sum, item) => sum + item.price.gross, 0));
   const deliveryGross = pricing.delivery[body.delivery?.method ?? 'kurier'];
-  const discountGross = applyDiscount(itemsGross, body.discountCode);
-  const gross = round2(itemsGross + deliveryGross - discountGross);
+  const gross = round2(itemsGross + deliveryGross);
   const net = round2(gross / (1 + pricing.vatRate));
 
   const now = new Date();
@@ -143,12 +140,10 @@ export async function POST(request: Request) {
     totals: {
       itemsGross,
       deliveryGross,
-      discountGross,
       gross,
       net,
       vat: round2(gross - net),
     },
-    discountCode: body.discountCode ?? null,
     paymentMethod: body.paymentMethod,
     paymentStatus: 'oczekuje',
     p24Reference: null,
@@ -204,13 +199,6 @@ export async function POST(request: Request) {
   // Przy płatności bramką wysyłamy go dopiero po potwierdzeniu transakcji.
   if (!isGatewayPayment(order.paymentMethod) || order.paymentStatus === 'oplacone') {
     await sendEmail(orderConfirmationEmail(order));
-  }
-
-  if (body.newsletter && body.customer.email) {
-    await subscribeToNewsletter(body.customer.email, {
-      ZRODLO: 'checkout',
-      FIRMA: body.customer.firma ?? '',
-    });
   }
 
   return NextResponse.json({

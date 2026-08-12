@@ -128,21 +128,42 @@ export function generateApprovalToken(): string {
 /* ── Dane do przelewu tradycyjnego (pkt 1.12 ścieżka B) ─────── */
 
 export const BANK_TRANSFER_DETAILS = {
-  odbiorca: 'Envelopes sp. z o.o.',
-  adres: 'ul. Przykładowa 12, 00-001 Warszawa',
-  konto: 'PL 00 0000 0000 0000 0000 0000 0000',
-  bank: 'Bank Przykładowy S.A.',
+  odbiorca: 'Jakub Dalaszyński',
+  adres: 'ul. Geodetów 41, 64-100 Trzebiny',
+  konto: 'PL 64 1020 3088 0000 8002 0171 3445',
+  bank: 'PKO Bank Polski',
 };
 
+/**
+ * Dane rejestrowe i kontaktowe Sprzedawcy — jedno źródło prawdy dla stopki,
+ * strony kontaktu, dokumentów prawnych, faktur PDF, e-maili i JSON-LD.
+ *
+ * Działalność jednoosobowa wpisana do CEIDG: nie ma numeru KRS, więc nigdzie
+ * go nie prezentujemy.
+ */
 export const CONTACT_DETAILS = {
-  phone: '+48 22 000 00 00',
-  phoneHref: '+48220000000',
+  phone: '+48 695 527 166',
+  phoneHref: '+48695527166',
   email: 'kontakt@envelopes.pl',
-  ordersEmail: 'zamowienia@envelopes.pl',
+  ordersEmail: 'kontakt@envelopes.pl',
   hours: 'pon.–pt. 8:00–16:00',
-  company: 'Envelopes sp. z o.o.',
-  address: 'ul. Przykładowa 12, 00-001 Warszawa',
-  nip: '000-000-00-00',
-  regon: '000000000',
-  krs: '0000000000',
+  /** Imię i nazwisko przedsiębiorcy — jak we wpisie do CEIDG */
+  company: 'Jakub Dalaszyński',
+  /** Nazwa handlowa sklepu */
+  brand: 'Envelopes',
+  street: 'ul. Geodetów 41',
+  postalCode: '64-100',
+  city: 'Trzebiny',
+  address: 'ul. Geodetów 41, 64-100 Trzebiny',
+  nip: '6972414844',
+  regon: '544772342',
+  /**
+   * Adres, pod który Klient odsyła towar przy odstąpieniu od umowy i przy
+   * reklamacji. Trafia wprost do Regulaminu (§12 i §13) oraz do formularza
+   * odstąpienia w PDF.
+   *
+   * TODO: podmienić na adres magazynu/drukarni — dziś zwroty kierujemy na
+   * adres rejestrowy, co jest poprawne, ale niekoniecznie wygodne.
+   */
+  returnAddress: 'ul. Geodetów 41, 64-100 Trzebiny',
 };

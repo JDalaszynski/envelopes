@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { DEFAULT_PRICING, formatPrice } from '@/lib/pricing';
 import { Toggle } from '@/components/ui/Toggle';
 import { formatBytes } from '@/components/ui/FileDropzone';
+import { EnvelopePlaceholder } from '@/components/ui/EnvelopePlaceholder';
 import type { PersonalizationMethod, UploadedFile } from '@/lib/types';
 
 /**
@@ -25,6 +26,8 @@ export function StepPersonalization({
   onTextChange,
   onFileChange,
   onFixQuantity,
+  format,
+  colorId,
 }: {
   enabled: boolean;
   method: PersonalizationMethod | undefined;
@@ -37,6 +40,8 @@ export function StepPersonalization({
   onTextChange: (text: string) => void;
   onFileChange: (file: UploadedFile | null) => void;
   onFixQuantity: () => void;
+  format: string;
+  colorId: string;
 }) {
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [uploadInfo, setUploadInfo] = useState<string | null>(null);
@@ -113,11 +118,17 @@ export function StepPersonalization({
             }
           }}
         >
-          <svg width="96" height="96" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--color-ink-soft)', background: 'var(--color-paper)', padding: 12, borderRadius: 'var(--radius-sm)', border: '1px solid var(--color-line)', flexShrink: 0 }}>
-            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-            <circle cx="8.5" cy="8.5" r="1.5"></circle>
-            <polyline points="21 15 16 10 5 21"></polyline>
-          </svg>
+          <div style={{ width: 144, flexShrink: 0 }}>
+            {format && colorId ? (
+              <EnvelopePlaceholder format={format} colorId={colorId} ratio="square" size="lg" hideCaption hasPersonalization />
+            ) : (
+              <svg width="144" height="144" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--color-ink-soft)', background: 'var(--color-paper)', padding: 12, borderRadius: 'var(--radius-sm)', border: '1px solid var(--color-line)', flexShrink: 0 }}>
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                <polyline points="21 15 16 10 5 21"></polyline>
+              </svg>
+            )}
+          </div>
           <div>
             <h4>Personalizacja Kopert</h4>
             <div style={{ margin: 'var(--space-1) 0 var(--space-2)' }}>

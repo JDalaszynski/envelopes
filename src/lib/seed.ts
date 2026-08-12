@@ -62,7 +62,6 @@ function totals(items: CartItem[], deliveryGross: number) {
   return {
     itemsGross,
     deliveryGross,
-    discountGross: 0,
     gross,
     net,
     vat: round2(gross - net),

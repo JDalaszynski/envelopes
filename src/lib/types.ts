@@ -149,12 +149,10 @@ export interface Order {
   totals: {
     itemsGross: number;
     deliveryGross: number;
-    discountGross: number;
     gross: number;
     net: number;
     vat: number;
   };
-  discountCode?: string | null;
   paymentMethod: PaymentMethod;
   paymentStatus: PaymentStatus;
   /** Identyfikator transakcji zwrócony przez bramkę Przelewy24 */

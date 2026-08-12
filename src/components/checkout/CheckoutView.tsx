@@ -54,7 +54,7 @@ type FieldName =
  */
 export function CheckoutView() {
   const router = useRouter();
-  const { items, itemsGross, discountCode, discountGross, clear, ready } = useCart();
+  const { items, itemsGross, clear, ready } = useCart();
   const { user, login, register, loginWithGoogle, getToken } = useAuth();
 
   const [customer, setCustomer] = useState<CustomerData>(EMPTY_CUSTOMER);
@@ -184,7 +184,7 @@ export function CheckoutView() {
 
   /* ── Podsumowanie ────────────────────────────────────────── */
 
-  const gross = round2(itemsGross + DELIVERY_COST - discountGross);
+  const gross = round2(itemsGross + DELIVERY_COST);
   const net = round2(gross / (1 + DEFAULT_PRICING.vatRate));
   const requiresApproval = items.some((i) => i.config.print || i.config.personalization);
 
@@ -246,7 +246,6 @@ export function CheckoutView() {
           customer,
           delivery: { method: 'kurier', cost: DELIVERY_COST, point: null },
           paymentMethod: payment,
-          discountCode,
         }),
       });
       const json = await res.json();
@@ -737,12 +736,6 @@ export function CheckoutView() {
             <span>Produkty</span>
             <span>{formatPrice(itemsGross)}</span>
           </div>
-          {discountGross > 0 && (
-            <div className="summary-row" style={{ color: 'var(--color-success)' }}>
-              <span>Rabat {discountCode}</span>
-              <span>− {formatPrice(discountGross)}</span>
-            </div>
-          )}
           <div className="summary-row">
             <span>Dostawa</span>
             <span>{formatPrice(DELIVERY_COST)}</span>

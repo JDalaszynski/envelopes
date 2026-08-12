@@ -186,7 +186,76 @@ export default function HomePage() {
         </div>
       </section>
 
-
+      {/* ── Realizacje (Nadruk & Personalizacja) ── */}
+      <section className="section" id="realizacje">
+        <div className="container">
+          <div className="section-head">
+            <span className="eyebrow">Realizacje</span>
+            <h2>Przykłady nadruku i personalizacji</h2>
+            <p>
+              Precyzyjny druk logo oraz profesjonalne adresowanie na naszych kopertach ozdobnych.
+            </p>
+          </div>
+          <div className="grid grid-4" style={{ gap: 'var(--space-4)' }}>
+            <div className="card" style={{ padding: 'var(--space-3)' }}>
+              <EnvelopePlaceholder format="DL" colorId="bialy" ratio="photo" hasPrint hideCaption />
+              <div style={{ marginTop: 'var(--space-3)' }}>
+                <strong style={{ display: 'block', fontSize: 15 }}>Biała DL z nadrukiem</strong>
+                <span className="small muted">Druk logo firmowego</span>
+              </div>
+            </div>
+            <div className="card" style={{ padding: 'var(--space-3)' }}>
+              <EnvelopePlaceholder format="DL" colorId="granatowy" ratio="photo" hasPrint hideCaption />
+              <div style={{ marginTop: 'var(--space-3)' }}>
+                <strong style={{ display: 'block', fontSize: 15 }}>Granatowa DL z nadrukiem</strong>
+                <span className="small muted">Eskluzywny druk na granacie</span>
+              </div>
+            </div>
+            <div className="card" style={{ padding: 'var(--space-3)' }}>
+              <EnvelopePlaceholder format="DL" colorId="ciemnozielony" ratio="photo" hasPrint hideCaption />
+              <div style={{ marginTop: 'var(--space-3)' }}>
+                <strong style={{ display: 'block', fontSize: 15 }}>Ciemnozielona z nadrukiem</strong>
+                <span className="small muted">Egancki nadruk na butelkowej zieleni</span>
+              </div>
+            </div>
+            <div className="card" style={{ padding: 'var(--space-3)' }}>
+              <EnvelopePlaceholder format="DL" colorId="blekit-lupkowy" ratio="photo" hasPrint hideCaption />
+              <div style={{ marginTop: 'var(--space-3)' }}>
+                <strong style={{ display: 'block', fontSize: 15 }}>Błękit Łupkowy z nadrukiem</strong>
+                <span className="small muted">Druk logo na stonowanym błękicie</span>
+              </div>
+            </div>
+            <div className="card" style={{ padding: 'var(--space-3)' }}>
+              <EnvelopePlaceholder format="DL" colorId="szara" ratio="photo" hasPersonalization hideCaption />
+              <div style={{ marginTop: 'var(--space-3)' }}>
+                <strong style={{ display: 'block', fontSize: 15 }}>Szara DL z personalizacją</strong>
+                <span className="small muted">Imienne adresowanie odbiorców</span>
+              </div>
+            </div>
+            <div className="card" style={{ padding: 'var(--space-3)' }}>
+              <EnvelopePlaceholder format="DL" colorId="granatowy" ratio="photo" hasPersonalization hideCaption />
+              <div style={{ marginTop: 'var(--space-3)' }}>
+                <strong style={{ display: 'block', fontSize: 15 }}>Granatowa z personalizacją</strong>
+                <span className="small muted">Personalizowane adresowanie VIP</span>
+              </div>
+            </div>
+            <div className="card" style={{ padding: 'var(--space-3)' }}>
+              <EnvelopePlaceholder format="DL" colorId="czarny" ratio="photo" hasPrint hideCaption />
+              <div style={{ marginTop: 'var(--space-3)' }}>
+                <strong style={{ display: 'block', fontSize: 15 }}>Czarna DL z nadrukiem</strong>
+                <span className="small muted">Eskluzywny druk na czarnym tle</span>
+              </div>
+            </div>
+            <div className="card" style={{ padding: 'var(--space-3)' }}>
+              <EnvelopePlaceholder format="DL" colorId="czerwony" ratio="photo" hasPersonalization hideCaption />
+              <div style={{ marginTop: 'var(--space-3)' }}>
+                <strong style={{ display: 'block', fontSize: 15 }}>Czerwona z personalizacją</strong>
+                <span className="small muted">Adresowanie na czerwonym papierze</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* ── Dla firm ── */}
       <section className="section" id="dla-firm">

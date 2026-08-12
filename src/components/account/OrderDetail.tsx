@@ -365,9 +365,6 @@ export function OrderDetail({ number }: { number: string }) {
             <dl className="stack" style={{ gap: 'var(--space-2)' }}>
               <Row label="Produkty" value={formatPrice(order.totals.itemsGross)} mono />
               <Row label="Dostawa" value={formatPrice(order.totals.deliveryGross)} mono />
-              {order.totals.discountGross > 0 && (
-                <Row label="Rabat" value={`− ${formatPrice(order.totals.discountGross)}`} mono />
-              )}
               <Row label="Netto" value={formatPrice(order.totals.net)} mono />
               <Row label="VAT 23%" value={formatPrice(order.totals.vat)} mono />
               <Row label="Razem brutto" value={formatPrice(order.totals.gross)} mono />
