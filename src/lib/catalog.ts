@@ -53,6 +53,17 @@ export const FORMATS: EnvelopeFormat[] = [
 /** Najdłuższy bok w katalogu — podstawa do rysowania formatów we wzajemnej skali. */
 export const MAX_FORMAT_SIDE = Math.max(...FORMATS.map((f) => Math.max(f.width, f.height)));
 
+/**
+ * Formaty, które faktycznie da się kupić — widoczne i bez `disabled`.
+ * Treść, cennik i dane strukturalne muszą korzystać z tej listy, a nie
+ * z `FORMATS`: pokazanie ceny formatu ze statusem „Dostępne wkrótce" jest
+ * obietnicą, której konfigurator nie zrealizuje.
+ */
+export const AVAILABLE_FORMATS = FORMATS.filter((f) => !f.hidden && !f.disabled);
+
+/** Formaty zapowiedziane — widoczne w treści wyłącznie ze statusem, bez ceny i bez CTA. */
+export const UPCOMING_FORMATS = FORMATS.filter((f) => !f.hidden && f.disabled);
+
 export const FORMAT_MAP: Record<FormatId, EnvelopeFormat> = FORMATS.reduce(
   (acc, f) => ({ ...acc, [f.id]: f }),
   {} as Record<FormatId, EnvelopeFormat>
@@ -92,20 +103,20 @@ export const COLORS: EnvelopeColor[] = [
   // Niebieskie
   { id: 'granatowy', name: 'Granatowy', hex: '#22314F', dark: true, bestseller: true, weight: '115g', images: { DL: '/images/colors/granatowa-koperta-dl.png' }, printImages: { DL: '/images/prints/granatowa-dl-koperta-z-nadrukiem.png' }, personalizedImages: { DL: '/images/personalized/granatowa-dl-koperta-z-personalizacja.png' } },
   { id: 'niebieski', name: 'Niebieski', hex: '#3A5C8C', dark: true, weight: '115g', images: { DL: '/images/colors/niebieska-koperta-dl.png' } },
-  { id: 'blekit-lupkowy', name: 'Błękit Łupkowy', hex: '#6E8395', bestseller: true, weight: '120g', images: { DL: '/images/colors/blekit-lupkowy-koperta-dl.png' }, printImages: { DL: '/images/prints/blekit-lupkowy-dl-koperta-z-nadrukiem.png' }, personalizedImages: { DL: '/images/personalized/blekit-lupkowy-dl-koperta-z-personalizacja.png' } },
-  { id: 'jasnoniebieska', name: 'Jasnoniebieska', hex: '#B9CBDD', weight: '115g', images: { DL: '/images/colors/jasnoniebieska-koperta-dl.png' }, printImages: { DL: '/images/prints/jasnoniebieski-dl-koperta-z-nadrukiem.png' }, personalizedImages: { DL: '/images/personalized/jasnoniebieski-lupkowy-dl-koperta-z-personalizacja.png' } },
+  { id: 'blekit-lupkowy', name: 'Jeansowy', hex: '#6E8395', bestseller: true, weight: '120g', images: { DL: '/images/colors/blekit-lupkowy-koperta-dl.png' }, printImages: { DL: '/images/prints/blekit-lupkowy-dl-koperta-z-nadrukiem.png' }, personalizedImages: { DL: '/images/personalized/blekit-lupkowy-dl-koperta-z-personalizacja.png' } },
+  { id: 'jasnoniebieska', name: 'Błękitna', hex: '#B9CBDD', weight: '115g', images: { DL: '/images/colors/jasnoniebieska-koperta-dl.png' }, printImages: { DL: '/images/prints/jasnoniebieski-dl-koperta-z-nadrukiem.png' }, personalizedImages: { DL: '/images/personalized/jasnoniebieski-lupkowy-dl-koperta-z-personalizacja.png' } },
 
   // Zielenie
-  { id: 'ciemnozielony', name: 'Ciemnozielony', hex: '#2F4A38', dark: true, weight: '115g', images: { DL: '/images/colors/ciemnozielona-koperta-dl.png' }, printImages: { DL: '/images/prints/ciemnozielona-dl-koperta-z-nadrukiem.png' }, personalizedImages: { DL: '/images/personalized/ciemnozielona-dl-koperta-z-personalizacja.png' } },
+  { id: 'ciemnozielony', name: 'Butelkowa Zieleń', hex: '#2F4A38', dark: true, weight: '115g', images: { DL: '/images/colors/ciemnozielona-koperta-dl.png' }, printImages: { DL: '/images/prints/ciemnozielona-dl-koperta-z-nadrukiem.png' }, personalizedImages: { DL: '/images/personalized/ciemnozielona-dl-koperta-z-personalizacja.png' } },
   { id: 'matcha', name: 'Matcha', hex: '#A8B78C', bestseller: true, weight: '120g', images: { DL: '/images/colors/matcha-koperta-dl.png' }, printImages: { DL: '/images/prints/matcha-dl-koperta-z-nadrukiem.png' }, personalizedImages: { DL: '/images/personalized/matcha-dl-koperta-z-personalizacja.png' } },
-  { id: 'jasnozielony', name: 'Jasnozielony', hex: '#BFD3A8', weight: '115g', images: { DL: '/images/colors/jasnozielona-koperta-dl.png' }, printImages: { DL: '/images/prints/jasnozielony-dl-koperta-z-nadrukiem.png' }, personalizedImages: { DL: '/images/personalized/jasnozielona-dl-koperta-z-personalizacja.png' } },
+  { id: 'jasnozielony', name: 'Zielony', hex: '#BFD3A8', weight: '115g', images: { DL: '/images/colors/jasnozielona-koperta-dl.png' }, printImages: { DL: '/images/prints/jasnozielony-dl-koperta-z-nadrukiem.png' }, personalizedImages: { DL: '/images/personalized/jasnozielona-dl-koperta-z-personalizacja.png' } },
 
   // Róże / Czerwienie
   { id: 'czerwony', name: 'Czerwony', hex: '#8E2B2B', dark: true, weight: '115g', images: { DL: '/images/colors/czerwona-koperta-dl.png' }, printImages: { DL: '/images/prints/czerwona-dl-koperta-z-nadrukiem.png' }, personalizedImages: { DL: '/images/personalized/czerwona-dl-koperta-z-personalizacja.png' } },
   { id: 'rozowa', name: 'Różowa', hex: '#E6C3C1', weight: '115g', images: { DL: '/images/colors/rozowa-koperta-dl.png' } },
 
   // Żółte / Ziemiste
-  { id: 'taupe', name: 'Taupe', hex: '#9C8C7E', weight: '140g', images: { DL: '/images/colors/taupe-koperta-dl.png' } },
+  { id: 'taupe', name: 'Szarobrązowy', hex: '#9C8C7E', weight: '140g', images: { DL: '/images/colors/taupe-koperta-dl.png' } },
   { id: 'eko', name: 'Eko', hex: '#C6AE8B', finish: 'eko', weight: '115g', images: { DL: '/images/colors/eko-koperta-dl.png' } },
   { id: 'zolta', name: 'Żółta', hex: '#E8CE7E', weight: '115g', images: { DL: '/images/colors/zolta-koperta-dl.png' }, printImages: { DL: '/images/prints/zolta-dl-koperta-z-nadrukiem.png' }, personalizedImages: { DL: '/images/personalized/zolta-dl-koperta-z-personalizacja.png' } },
   
@@ -130,6 +141,14 @@ export function getColorByName(name: string): EnvelopeColor | undefined {
 
 /** Dozwolone rozszerzenia plików nadruku (pkt 1.4) */
 export const PRINT_FILE_EXTENSIONS = ['pdf', 'ai', 'eps', 'cdr', 'png', 'jpg', 'jpeg', 'svg'];
+
+/**
+ * Lista rozszerzeń do treści na stronie — bez `jpeg`, bo dla czytelnika jest
+ * tym samym formatem co `jpg`. Walidacja uploadu korzysta z pełnej listy.
+ */
+export const PRINT_FILE_EXTENSIONS_LABEL = PRINT_FILE_EXTENSIONS.filter((ext) => ext !== 'jpeg')
+  .map((ext) => ext.toUpperCase())
+  .join(', ');
 export const PRINT_FILE_MAX_BYTES = 10 * 1024 * 1024;
 export const PRINT_FILE_MAX_COUNT = 3;
 

@@ -21,8 +21,19 @@ export function buildProductName(config: EnvelopeConfig): string {
   return parts.join(' ');
 }
 
-/** Opisowy alt placeholdera produktowego — realnie wspiera SEO obrazów (pkt 8.3). */
-export function buildImageAlt(format: string, colorId: string): string {
+/**
+ * Opisowy alt placeholdera produktowego — realnie wspiera SEO obrazów (pkt 8.3).
+ * Wariant dopisuje usługę widoczną na zdjęciu, bo zdjęcie koperty z nadrukiem
+ * i zdjęcie koperty gładkiej to dwa różne obrazy i nie mogą mieć tego samego opisu.
+ */
+export function buildImageAlt(
+  format: string,
+  colorId: string,
+  variant?: 'nadruk' | 'personalizacja'
+): string {
   const color = COLOR_MAP[colorId]?.name ?? colorId;
-  return `Koperta ozdobna, format ${format}, kolor ${color.toLowerCase()}`;
+  const base = `Koperta ozdobna, format ${format}, kolor ${color.toLowerCase()}`;
+  if (variant === 'nadruk') return `${base}, z nadrukiem logo firmowego`;
+  if (variant === 'personalizacja') return `${base}, z personalizacją — nadrukowanym adresem`;
+  return base;
 }

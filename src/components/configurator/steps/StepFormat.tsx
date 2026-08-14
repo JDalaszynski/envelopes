@@ -52,7 +52,12 @@ export function StepFormat({
                 {format.dimensions}
               </span>
             </span>
-            <span className="mono-sm">{formatPrice(DEFAULT_PRICING.base[format.id])} / szt.</span>
+            {/* Format ze statusem „Dostępne wkrótce" nie pokazuje ceny — kwota przy
+                produkcie, którego nie da się kupić, jest obietnicą bez pokrycia
+                i przeczy tabeli formatów na stronie głównej (pkt 4.5 briefu SEO). */}
+            <span className="mono-sm">
+              {format.disabled ? '—' : `${formatPrice(DEFAULT_PRICING.base[format.id])} / szt.`}
+            </span>
             <span
               className={`btn btn-sm ${value === format.id ? '' : 'btn-secondary'} format-select-btn`}
               style={{ marginTop: 'var(--space-3)', width: '100%' }}

@@ -13,6 +13,7 @@ import { StepPersonalization } from '@/components/configurator/steps/StepPersona
 import { useCart, EDIT_KEY } from '@/components/providers/CartProvider';
 
 import { calculatePrice, minimumQuantity } from '@/lib/pricing';
+import { COLOR_MAP, FORMAT_MAP } from '@/lib/catalog';
 import type { FormatId } from '@/lib/catalog';
 import type { EnvelopeConfig } from '@/lib/types';
 
@@ -33,6 +34,15 @@ const DEFAULT_CONFIG: EnvelopeConfig = {
 interface Problem {
   ref: React.RefObject<HTMLDivElement | null>;
   message: string;
+}
+
+/** Preselekcja konfiguratora — ze zdarzenia `envelopes:configure` albo z adresu. */
+interface Preselect {
+  format?: FormatId;
+  color?: string;
+  step?: number;
+  print?: boolean;
+  personalization?: boolean;
 }
 
 export function Configurator() {
@@ -61,22 +71,38 @@ export function Configurator() {
     }, 100);
   }, []);
 
-  useEffect(() => {
-    function handlePreselect(event: Event) {
-      const detail = (event as CustomEvent<{ format?: FormatId; color?: string }>)
-        .detail;
-      if (!detail) return;
+  const applyPreselect = useCallback(
+    (detail: Preselect) => {
+      const format =
+        detail.format && !FORMAT_MAP[detail.format]?.disabled ? detail.format : undefined;
+      const color = detail.color && COLOR_MAP[detail.color] ? detail.color : undefined;
+
+      if (!format && !color && !detail.print && !detail.personalization) return;
+
       setConfig((prev) => ({
         ...prev,
-        ...(detail.format ? { format: detail.format } : {}),
-        ...(detail.color ? { color: detail.color } : {}),
+        ...(format ? { format } : {}),
+        ...(color ? { color } : {}),
+        ...(detail.print ? { print: true } : {}),
+        ...(detail.personalization ? { personalization: true } : {}),
       }));
-      
-      if (detail.color) {
+
+      /* Sekcja nadruku pojawia się dopiero po wyborze koloru — bez koloru
+         przewijamy do kroku, który użytkownik ma faktycznie do wykonania. */
+      if (color) {
         scrollToRef(printRef);
-      } else if (detail.format) {
+      } else {
         scrollToRef(colorRef);
       }
+    },
+    [scrollToRef]
+  );
+
+  useEffect(() => {
+    function handlePreselect(event: Event) {
+      const detail = (event as CustomEvent<Preselect>).detail;
+      if (!detail) return;
+      applyPreselect(detail);
     }
     window.addEventListener('envelopes:configure', handlePreselect);
 
@@ -88,13 +114,25 @@ export function Configurator() {
         setEditingItemId(parsed.itemId ?? null);
         window.sessionStorage.removeItem(EDIT_KEY);
         setToast('Wczytano konfigurację do edycji.');
+        return () => window.removeEventListener('envelopes:configure', handlePreselect);
       }
     } catch {
       /* brak zapisanej konfiguracji */
     }
 
+    /* Wejście z podstrony ofertowej: `/?format=DL&kolor=czarny&nadruk=1#konfigurator`.
+       Preselekcja z adresu jest jedynym sposobem na zachowanie intencji przy
+       przejściu między trasami — zdarzenie działa tylko w obrębie jednej strony. */
+    const params = new URLSearchParams(window.location.search);
+    applyPreselect({
+      format: (params.get('format') as FormatId | null) ?? undefined,
+      color: params.get('kolor') ?? undefined,
+      print: params.get('nadruk') === '1',
+      personalization: params.get('personalizacja') === '1',
+    });
+
     return () => window.removeEventListener('envelopes:configure', handlePreselect);
-  }, [scrollToRef]);
+  }, [applyPreselect]);
 
   const price = useMemo(() => calculatePrice(config), [config]);
   const minimum = minimumQuantity(config.print || config.personalization);

@@ -10,6 +10,8 @@ import { useAuth } from '@/components/providers/AuthProvider';
 import { isCheckoutRoute } from '@/lib/chrome';
 
 const NAV = [
+  /* Filar oferty — strona z najsilniejszą intencją zakupową (keywords.md, K1) */
+  { href: '/koperty-z-nadrukiem', label: 'Koperty z nadrukiem' },
   { href: '/blog', label: 'Blog' },
   { href: '/kontakt', label: 'Kontakt' },
 ];
@@ -19,10 +21,20 @@ export function Header() {
   const { user } = useAuth();
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     setMenuOpen(false);
   }, [pathname]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   /* Checkout: samo logo — bez nawigacji, bez koszyka, bez rozpraszaczy. */
   if (isCheckoutRoute(pathname)) {
@@ -38,8 +50,10 @@ export function Header() {
     );
   }
 
+  const isTransparent = pathname === '/' && !isScrolled && !menuOpen;
+
   return (
-    <header className="site-header">
+    <header className={`site-header ${isTransparent ? 'site-header-transparent' : ''}`}>
       <div className="container header-inner">
         <Link href="/" className="brand" aria-label="Envelopes — strona główna">
           <Image src="/images/logo-icon.png" alt="" width={90} height={24} style={{ width: 'auto', height: '24px', objectFit: 'contain' }} aria-hidden="true" priority />
@@ -67,8 +81,8 @@ export function Header() {
           <Link
             href={user ? '/profil' : '/logowanie'}
             className="icon-btn"
-            aria-label={user ? 'Twoje konto' : 'Zaloguj się'}
-            title={user ? 'Twoje konto' : 'Zaloguj się'}
+            aria-label={user ? 'Państwa konto' : 'Zaloguj się'}
+            title={user ? 'Państwa konto' : 'Zaloguj się'}
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
               <circle cx="12" cy="8" r="4" />

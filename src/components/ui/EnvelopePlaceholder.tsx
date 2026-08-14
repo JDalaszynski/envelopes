@@ -39,15 +39,26 @@ export function EnvelopePlaceholder({
   const color = COLOR_MAP[colorId];
   const hex = color?.hex ?? '#EADFC8';
   const name = color?.name ?? colorId;
-  const alt = buildImageAlt(format, colorId);
   const caption = `[Koperta — ${format}, ${name}]`;
   const strokeColor = color?.dark ? 'rgba(255,255,255,.55)' : 'rgba(31,36,48,.45)';
   const captionSize = size === 'sm' ? 11 : size === 'lg' ? 14 : 13;
 
+  const personalizedUrl = hasPersonalization
+    ? color?.personalizedImages?.[format as keyof typeof color.personalizedImages]
+    : undefined;
+  const printUrl = hasPrint
+    ? color?.printImages?.[format as keyof typeof color.printImages]
+    : undefined;
   const imageUrl =
-    (hasPersonalization && color?.personalizedImages?.[format as keyof typeof color.personalizedImages]) ||
-    (hasPrint && color?.printImages?.[format as keyof typeof color.printImages]) ||
-    color?.images?.[format as keyof typeof color.images];
+    personalizedUrl || printUrl || color?.images?.[format as keyof typeof color.images];
+
+  /* Alt opisuje to, co faktycznie widać na kadrze — nadruk i personalizacja
+     mają własne zdjęcia, więc muszą mieć własny opis (pkt 8.3). */
+  const alt = buildImageAlt(
+    format,
+    colorId,
+    personalizedUrl ? 'personalizacja' : printUrl ? 'nadruk' : undefined
+  );
 
   if (imageUrl) {
     return (
@@ -60,9 +71,15 @@ export function EnvelopePlaceholder({
           overflow: 'hidden',
         }}
       >
+        {/* Zdjęcia produktowe to pliki PNG po ~0,6 MB, a na stronie głównej
+            jest ich kilkanaście. Leniwe ładowanie zdejmuje je z krytycznej
+            ścieżki renderowania — ramka ma jawny aspect-ratio, więc nie
+            powoduje to przesunięć układu (pkt 5.5). */}
         <img
           src={imageUrl}
           alt={alt}
+          loading="lazy"
+          decoding="async"
           style={{ width: '100%', height: '100%', objectFit: 'contain' }}
         />
       </figure>

@@ -12,6 +12,8 @@ import { SITE_URL } from '@/lib/seo';
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages: MetadataRoute.Sitemap = [
     { url: `${SITE_URL}/`, changeFrequency: 'weekly', priority: 1 },
+    /* Filar K1 — strona ofertowa nadruku (content-plan.md poz. 1) */
+    { url: `${SITE_URL}/koperty-z-nadrukiem`, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${SITE_URL}/blog`, changeFrequency: 'weekly', priority: 0.8 },
     { url: `${SITE_URL}/kontakt`, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${SITE_URL}/regulamin`, changeFrequency: 'yearly', priority: 0.3 },

@@ -85,6 +85,14 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             {post.intro}
           </p>
 
+          {/* Link w górę do filara klastra — przekazanie autorytetu (pkt 5.4 briefu SEO) */}
+          {post.pillar && (
+            <p className="notice notice-seal" style={{ marginBottom: 'var(--space-6)' }}>
+              Strona oferty: <Link href={post.pillar.href}>{post.pillar.anchor}</Link> — cennik,
+              specyfikacja i wejście do konfiguratora.
+            </p>
+          )}
+
           {showToc && (
             <nav className="toc" aria-label="Spis treści">
               <strong className="small">W tym artykule</strong>

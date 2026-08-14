@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 import { JsonLd } from '@/components/seo/JsonLd';
+import { QuoteForm } from '@/components/forms/QuoteForm';
+import { BULK_QUOTE_THRESHOLD } from '@/lib/catalog';
 import { CONTACT_DETAILS } from '@/lib/orders';
 import { breadcrumbJsonLd } from '@/lib/seo';
 
@@ -81,6 +83,19 @@ export default function ContactPage() {
               </Link>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Wycena hurtowa — kotwica #wycena, do której prowadzą CTA ze strony
+          głównej i z filara /koperty-z-nadrukiem (pkt 7 briefu SEO). */}
+      <section className="section" id="wycena" style={{ paddingTop: 0 }}>
+        <div className="container container-narrow">
+          <p className="small muted" style={{ marginBottom: 'var(--space-4)' }}>
+            Zamówienia do {BULK_QUOTE_THRESHOLD.toLocaleString('pl-PL')} sztuk wyceniają Państwo
+            samodzielnie w <Link href="/#konfigurator">konfiguratorze</Link>. Powyżej tego progu
+            ustalamy harmonogram dostaw i sposób rozliczenia — prosimy o wypełnienie formularza.
+          </p>
+          <QuoteForm />
         </div>
       </section>
     </>

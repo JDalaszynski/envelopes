@@ -13,11 +13,15 @@ export function TrustBar() {
     <div className="trust-bar">
       <div className="container">
         <span>
+          <Check /> Koperty Najwyższej Jakości
+        </span>
+        <span>
           <Check /> Bezpieczne płatności Przelewy24
         </span>
         <span>
           <Check /> Wysyłka od 2 dni roboczych
         </span>
+
       </div>
     </div>
   );

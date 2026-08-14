@@ -9,7 +9,7 @@ import { CookieBanner } from '@/components/layout/CookieBanner';
 import { TrustBar } from '@/components/layout/TrustBar';
 import { CartProvider } from '@/components/providers/CartProvider';
 import { AuthProvider } from '@/components/providers/AuthProvider';
-import { organizationJsonLd } from '@/lib/seo';
+import { organizationJsonLd, SITE_URL } from '@/lib/seo';
 import { CONTACT_DETAILS } from '@/lib/orders';
 
 /* Typografia (pkt 4.2) — serif o charakterze tłoczonym + neutralny,
@@ -35,10 +35,8 @@ const plexMono = IBM_Plex_Mono({
   display: 'swap',
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
-
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: 'Envelopes — koperty ozdobne z nadrukiem i adresowaniem',
     template: '%s | Envelopes',
@@ -69,7 +67,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pl" className={`${fraunces.variable} ${plexSans.variable} ${plexMono.variable}`}>
+    <html
+      lang="pl"
+      className={`${fraunces.variable} ${plexSans.variable} ${plexMono.variable}`}
+    >
       <body>
         <script
           type="application/ld+json"

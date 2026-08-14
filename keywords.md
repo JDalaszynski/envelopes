@@ -35,9 +35,10 @@ Naruszenie tej zasady = kanibalizacja.
 Najsilniejszy komercyjnie klaster. Pokrywa się 1:1 z płatną usługą (+1,99 zł/szt.) i z profilem
 klienta z bazy wiedzy (kancelarie, hotele, kliniki, agencje). Intencja niemal wyłącznie firmowa.
 
-**URL docelowy:** `/koperty-z-nadrukiem` `[PROPOZYCJA]` — dziś ta intencja rozbija się między
-stronę główną a wpis blogowy `koperty-firmowe-z-nadrukiem-co-przygotowac-przed-zamowieniem`,
-który rankuje na frazę informacyjną, a nie transakcyjną.
+**URL docelowy:** `/koperty-z-nadrukiem` `[ISTNIEJE]` — opublikowany 13 sierpnia 2026.
+Wpis blogowy `koperty-firmowe-z-nadrukiem-co-przygotowac-przed-zamowieniem` oddał frazę
+transakcyjną filarowi (przepisane `keywords`, link w górę) i obsługuje wyłącznie intencję
+procesową „jak przygotować plik do druku".
 
 | Fraza | Rola | Intencja | Lejek | Wol. | P |
 | --- | --- | --- | --- | --- | --- |
@@ -104,7 +105,7 @@ Klaster najszerszy i najbardziej ogólny. Właścicielem jest **strona główna*
 konfigurator — przeniesienie tej intencji na podstronę kategorii oddaliłoby użytkownika od
 konwersji o jedno kliknięcie.
 
-**URL docelowy:** `/` `[ISTNIEJE]`
+**URL docelowy:** `/` `[ISTNIEJE]` — przebudowana 13 sierpnia 2026 (content-plan.md poz. 6).
 
 | Fraza | Rola | Intencja | Lejek | Wol. | P |
 | --- | --- | --- | --- | --- | --- |
@@ -117,11 +118,25 @@ konwersji o jedno kliknięcie.
 | koperty na listy | peryferyjna | KOM | MOFU | — | P2 |
 
 **Notatki wdrożeniowe:**
-- Obecny H1 („Koperty, które robią wrażenie, zanim zostaną otwarte") jest dobry sprzedażowo,
-  ale nie zawiera frazy głównej. Rozwiązanie: zachować H1 i dołożyć nadrzędny, opisowy H2 nad
-  sekcją kolorów — **nie** psuć nagłówka wymianą na suchy keyword.
+- ~~Obecny H1 nie zawiera frazy głównej~~ — **wykonane.** H1 sprzedażowy został zachowany,
+  a fraza główna weszła do leadu (pierwsze dwa słowa strony), do H2 nad sekcją kolorów
+  („Koperty ozdobne w 19 kolorach — jedna cena za każdy odcień", `#kolory`), do H2 cennika
+  i do H2 zastosowań. Nagłówka nie wymieniono na suchy keyword.
 - `koperty na listy` to intencja bardziej pocztowa niż ozdobna (koperty białe, tanie, hurtowo).
-  Nisko-wartościowa dla tej oferty — obsłużyć akapitem, nie stroną.
+  Nisko-wartościowa dla tej oferty — obsłużona akapitem w sekcji zastosowań, nie stroną.
+- **Rozgraniczenie z filarem K1.** Strona główna wymienia usługę nadruku i jej dopłatę
+  (+1,99 zł/szt.), ale **nie ma nagłówka o cenie nadruku i nie rozkłada tej ceny na czynniki** —
+  ten materiał należy do `/koperty-z-nadrukiem`. Cennik na stronie głównej dotyczy kopert
+  **gładkich** (1 / 50 / 100 / 500 / 1 000 szt.), filar liczy koperty **z nadrukiem**
+  (10 / 100 / 500 / 1 000 szt.). Dwie różne tabele, dwa różne produkty, zero nakładania.
+- **Rozgraniczenie z K4.** Strona główna podaje wymiary DL i status C6/K4 w tabeli formatów,
+  bo bez tego obiecywałaby produkt niedostępny. Nie buduje jednak sekcji „co się zmieści"
+  ani nagłówka z frazą `koperty dl wymiary` — to zostaje dla `/koperty-dl`.
+- **FAQ rozdzielone.** `FAQ_ITEMS` (strona główna) obsługuje pytania o kopertę ozdobną jako
+  produkt: czym jest, ile kosztuje, jakie formaty, jaka dostawa, jakie rozliczenie.
+  `PRINT_FAQ_ITEMS` (filar K1) obsługuje pytania drukarskie. Pytanie „Jakie pliki mogę przesłać
+  do nadruku?" **usunięto ze strony głównej** — dwa adresy nie mogą konkurować o ten sam wynik
+  rozszerzony.
 
 ---
 
@@ -293,12 +308,22 @@ to zapis na powiadomienie o dostępności formatów, nie wejście do konfigurato
 
 | Klaster | URL docelowy | Status | Priorytet | Uzasadnienie kolejności |
 | --- | --- | --- | --- | --- |
-| K1 Nadruk / logo | `/koperty-z-nadrukiem` | do zbudowania | **P0** | Największa marża, produkt aktywny, intencja czysto zakupowa |
+| K1 Nadruk / logo | `/koperty-z-nadrukiem` | **istnieje** | **P0** | Największa marża, produkt aktywny, intencja czysto zakupowa |
 | K2 Personalizacja | `/koperty-personalizowane` | do zbudowania | **P0** | Najwyższa dopłata (+2,99 zł), realny wyróżnik rynkowy |
-| K3 Ozdobne / kolorowe | `/` | istnieje | **P0** | Optymalizacja istniejącego zasobu, zero kosztu wdrożenia |
+| K3 Ozdobne / kolorowe | `/` | **przebudowane** | **P0** | Optymalizacja istniejącego zasobu, zero kosztu wdrożenia |
 | K4 Format DL | `/koperty-dl` | do zbudowania | **P0** | Najwyższy potencjał cytowań w AI, jedyny dostępny format |
 | K7 Vouchery | `/koperty-na-vouchery` | do zbudowania | **P0** | 9 z 22 profili klienta, zakupy cykliczne, brak konkurencji tematycznej |
 | K5 Kolory | `/koperty/[kolor]` × 19 | do zbudowania | P1 | Skalowalny long-tail na gotowych danych z katalogu |
+
+> **Decyzja z 13 sierpnia 2026 — hub `/koperty` zdjęty z planu.** Po przebudowie strony głównej
+> cała paleta 19 kolorów stoi na `/`: tabela gramatur i wykończeń, `ItemList` w danych
+> strukturalnych, most nazewniczy dla nazw potocznych (beżowa → Ecru, butelkowa →
+> Ciemnozielony) i 19 wejść do konfiguratora z preselekcją koloru. Osobny hub `/koperty`
+> celujący w `koperty kolorowe` konkurowałby z `/` o tę samą frazę i tę samą intencję —
+> to byłaby kanibalizacja własnej strony głównej. **Frazy `koperty ozdobne` i `koperty kolorowe`
+> zostają przy `/`.** Strony `/koperty/[kolor]` z K5 powstają bez huba pośredniego: linkują
+> w górę wprost do `/` i celują w `[kolor] koperty dl`, czyli w intencję wariantową, której
+> strona główna nie obsługuje.
 | K6 Premium | `/koperty-premium` | do zbudowania | P1 | Zgodność z pozycjonowaniem, ale niski wolumen |
 | K8 Na pieniądze | `/koperty-na-pieniadze` | do zbudowania | P1 | Duży wolumen, niższa wartość klienta |
 | K9 Ślub | blog + lista powiadomień | content-first | P2 | Treść wyprzedza ofertę; **bez CTA zakupowego do czasu startu C6/K4** |

@@ -7,6 +7,7 @@ import {
   PAYMENT_METHOD_LABEL,
   isGatewayPayment,
 } from './orders';
+import { SITE_URL } from './seo';
 import type { Order } from './types';
 
 /**
@@ -83,7 +84,7 @@ export async function sendEmail(payload: EmailPayload): Promise<{ sent: boolean;
 
 /* ── Szablony wiadomości ────────────────────────────────────── */
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
+const siteUrl = SITE_URL;
 
 function shell(title: string, body: string): string {
   return `<!doctype html><html lang="pl"><body style="margin:0;background:#F5F1E6;padding:32px 16px;font-family:Georgia,serif;color:#20242E">

@@ -49,6 +49,7 @@ export function Footer() {
             <h3>Sklep</h3>
             <ul className="footer-list">
               <li><Link href="/#konfigurator">Konfigurator</Link></li>
+              <li><Link href="/koperty-z-nadrukiem">Koperty z nadrukiem</Link></li>
               <li><Link href="/#kolory">Paleta kolorów</Link></li>
               <li><Link href="/#formaty">Formaty i zastosowania</Link></li>
               <li><Link href="/#faq">Najczęstsze pytania</Link></li>

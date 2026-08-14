@@ -35,8 +35,13 @@ jest niekompletna.
 | **F2 — Personalizacja** | `/koperty-personalizowane` | K2 | „chcę koperty zaadresowane imiennie" |
 | **F3 — Format DL** | `/koperty-dl` | K4 | „jakie wymiary, co się zmieści" |
 | **F4 — Vouchery** | `/koperty-na-vouchery` | K7 | „w co zapakować bon podarunkowy" |
-| **F5 — Kolory** | `/koperty` | K3, K5 | „jaki kolor koperty wybrać" |
-| **H — Hub** | `/` | K3 | konfigurator + rozdzielnik ruchu |
+| **F5 — Kolory** | ~~`/koperty`~~ → `/` | K3, K5 | „jaki kolor koperty wybrać" — przejęte przez `/` |
+| **H — Hub** | `/` | K3, K5 | konfigurator + paleta 19 kolorów + rozdzielnik ruchu |
+
+> **Zmiana z 13 sierpnia 2026.** Filar F5 nie dostaje własnego adresu. Po przebudowie strony
+> głównej paleta 19 kolorów, tabela gramatur i wykończeń oraz `ItemList` w danych strukturalnych
+> stoją na `/`. Osobny hub `/koperty` konkurowałby z `/` o frazę `koperty kolorowe`.
+> Strony `/koperty/[kolor]` z Fazy 3 linkują w górę wprost do `/`.
 
 ---
 
@@ -49,18 +54,26 @@ linkuje donikąd i nie buduje żadnego klastra.
 
 | # | Tytuł / URL | Format | Główna fraza | Cel | Persona / Branża | Filar | Uwagi (antykanibalizacja) | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | Koperty z nadrukiem logo firmowego — `/koperty-z-nadrukiem` | Pillar (LP) | koperty z nadrukiem | KONWERSJA | Kancelarie, biura rachunkowe, agencje | — | Przejmuje intencję transakcyjną, którą dziś rozmywa wpis `koperty-firmowe-z-nadrukiem-…` (ten zostaje jako poradnik procesowy) | [ ] |
-| 2 | Personalizowane koperty i adresowanie — `/koperty-personalizowane` | Pillar (LP) | personalizowane koperty | KONWERSJA | Office manager, hotele, uczelnie | — | Obsługuje trzy nazwy jednej usługi (personalizacja / adresowanie / imiona i nazwiska) w jednym URL — nie rozbijać na osobne strony | [ ] |
+| 1 | Koperty z nadrukiem logo firmowego — `/koperty-z-nadrukiem` | Pillar (LP) | koperty z nadrukiem | KONWERSJA | **Każda firma z logo** — sekcja „Dla kogo" obejmuje 8–10 branż | — | Przejmuje intencję transakcyjną, którą dziś rozmywa wpis `koperty-firmowe-z-nadrukiem-…` (ten zostaje jako poradnik procesowy) | [x] |
+| 2 | Personalizowane koperty i adresowanie — `/koperty-personalizowane` | Pillar (LP) | personalizowane koperty | KONWERSJA | **Każdy, kto wysyła imiennie** — sekretariat, HR, hotele, uczelnie, eventy | — | Obsługuje trzy nazwy jednej usługi (personalizacja / adresowanie / imiona i nazwiska) w jednym URL — nie rozbijać na osobne strony | [ ] |
 | 3 | Koperty DL — wymiary 110 × 220 mm — `/koperty-dl` | Pillar (LP) | koperty dl wymiary | GEO | Wszystkie (wejście TOFU) | — | Jedyna strona odpowiadająca na pytania o specyfikację. Sekcja kolorów DL linkuje do F5, nie duplikuje jej | [ ] |
-| 4 | Koperty na vouchery i bony podarunkowe — `/koperty-na-vouchery` | Pillar (LP) | koperty na vouchery | KONWERSJA | SPA, fryzjer, fine dining, fitness | — | Klaster nietknięty przez istniejące treści — zero ryzyka nakładania | [ ] |
+| 4 | Koperty na vouchery i bony podarunkowe — `/koperty-na-vouchery` | Pillar (LP) | koperty na vouchery | KONWERSJA | **Każda usługa sprzedająca bon** — SPA, fryzjer, gastronomia, fitness, klinika, hotel, warsztat, szkoła | — | Klaster nietknięty przez istniejące treści — zero ryzyka nakładania | [ ] |
+
+> **Zasada zasięgu filarów (dotyczy poz. 1–5).** Filar mówi do **wszystkich** branż — zawężenie
+> jest błędem, bo nadruku logo potrzebuje praktycznie każda firma. Każdy filar ma obowiązkową
+> sekcję **„Dla kogo"** z 8–10 zastosowaniami branżowymi po jednym akapicie, z linkiem w dół do
+> LP branżowego z Fazy 2 (dopóki nie istnieje — akapit bez linku, link dokładany przy publikacji LP).
+> Kanibalizacji nie ma, bo filar celuje we frazę usługową (`koperty z nadrukiem`), a LP branżowe
+> we frazę branżową (`koperty dla kancelarii`) — inna intencja, inny słownik, inny etap decyzji.
+> Kolumna „Persona / Branża" przy filarze opisuje **akcent treści**, nie ograniczenie odbiorcy.
 
 ### Tydzień 2
 
 | # | Tytuł / URL | Format | Główna fraza | Cel | Persona / Branża | Filar | Uwagi (antykanibalizacja) | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 5 | Koperty ozdobne — 19 kolorów — `/koperty` | Pillar (LP) | koperty kolorowe | KONWERSJA | Wszystkie | — | Hub kolorów; frazę `koperty ozdobne` zostawia stronie głównej, sam celuje w `kolorowe` i wariantowe | [ ] |
-| 6 | Strona główna — przebudowa linkowania — `/` | Aktualizacja | koperty ozdobne | KONWERSJA | Wszystkie | — | Dodać H2 z frazą główną nad sekcją kolorów **bez zmiany H1** i widoczną sekcję linkującą do F1–F5 | [ ] |
-| 7 | Koperty firmowe z nadrukiem — co przygotować | Aktualizacja | pliki do druku na kopertach | AUTORYTET | Grafik, marketing | F1 | Zawęzić do procesu przygotowania plików; frazę `koperty z nadrukiem` oddać filarowi F1 i podlinkować w górę | [ ] |
+| 5 | ~~Koperty ozdobne — 19 kolorów — `/koperty`~~ | Pillar (LP) | koperty kolorowe | — | — | — | **Anulowane** przy poz. 6. Paleta, tabela gramatur i `ItemList` stoją na `/`; osobny hub konkurowałby z własną stroną główną o `koperty kolorowe` | [x] |
+| 6 | Strona główna — pełna przebudowa treści — `/` | Aktualizacja | koperty ozdobne | KONWERSJA | Wszystkie | — | Fraza główna w leadzie i w H2 nad sekcją kolorów, **H1 bez zmian**; cennik dotyczy kopert gładkich, cennik nadruku zostaje w F1 | [x] |
+| 7 | Koperty firmowe z nadrukiem — co przygotować | Aktualizacja | pliki do druku na kopertach | AUTORYTET | Grafik, marketing | F1 | Zawęzić do procesu przygotowania plików; frazę `koperty z nadrukiem` oddać filarowi F1 i podlinkować w górę. **Częściowo wykonane przy poz. 1:** `keywords` przepisane na frazy procesowe, link w górę do F1 dodany. Zostaje przepisanie tytułu i sekcji pod intencję „jak przygotować plik" | [ ] |
 | 8 | Adresowanie kopert: ręcznie czy z arkusza | Aktualizacja | adresowanie kopert z arkusza | AUTORYTET | Office manager | F2 | Zawęzić do porównania dwóch trybów; frazę `adresowanie kopert` oddać filarowi F2 | [ ] |
 
 ---
@@ -132,6 +145,12 @@ bestseller) i zdjęcia już istnieją w `src/lib/catalog.ts` i `public/images/co
 Szablon: `/koperty/[kolor]`, generowany z `COLORS`. CTA wchodzi do konfiguratora
 z **preselekcją koloru**.
 
+> **Filar F5 to `/`, nie `/koperty`** (zmiana z 13 sierpnia 2026). Strony kolorów linkują
+> w górę do strony głównej anchorem `koperty ozdobne`, a strona główna linkuje w dół z tabeli
+> gramatur — nazwa koloru w tabeli zamienia się wtedy z odnośnika do konfiguratora na odnośnik
+> do strony koloru. Każda strona koloru celuje w `[kolor] koperty dl`; frazy `koperty ozdobne`
+> i `koperty kolorowe` pozostają przy `/`.
+
 ### Tydzień 8
 
 | # | Tytuł / URL | Format | Główna fraza | Cel | Persona / Branża | Filar | Uwagi (antykanibalizacja) | Status |
@@ -190,14 +209,98 @@ z **preselekcją koloru**.
 
 ---
 
+## Dziennik wdrożeń
+
+### 13 sierpnia 2026 — poz. 6: przebudowa strony głównej `/` (klaster K3)
+
+**Opublikowane.** `src/app/page.tsx` przepisane w całości. Strona główna jest właścicielem
+frazy `koperty ozdobne` i jednocześnie rozdzielnikiem ruchu do filarów.
+
+Struktura: hero z blokiem odpowiedzi GEO → konfigurator → paleta 19 kolorów z tabelą gramatur
+→ tabela formatów ze statusem dostępności → cennik kopert gładkich → usługi (nadruk,
+personalizacja) → proces w czterech krokach → sześć zastosowań → realizacje na zdjęciach
+→ rozliczenie B2B → FAQ na 9 pytań → blog → finalne CTA. Cztery CTA kontekstowe plus
+19 wejść do konfiguratora z preselekcją koloru z tabeli i 19 z palety.
+
+Dane strukturalne: `WebSite`, `Product` + `AggregateOffer` (z `shippingDetails`), `ItemList`
+19 kolorów, `FAQPage`, `HowTo`. `Organization` renderuje się globalnie z `layout.tsx`.
+`LocalBusiness` świadomie nieobecny — sprzedaż jest wyłącznie wysyłkowa.
+
+**Naprawione błędy faktograficzne (najważniejsza część tej pozycji):**
+- `title` i `description` obiecywały „DL, C6, K4" oraz cenę „od 2,12 zł/szt.". 2,12 zł to cena
+  bazowa formatu C6, który ma `disabled: true` — strona sprzedawała w wynikach wyszukiwania
+  produkt, którego konfigurator nie przyjmuje. Teraz metadane mówią o DL i 2,58 zł.
+- `productJsonLd()` liczyło `lowPrice` ze wszystkich formatów, więc dane strukturalne
+  publikowały tę samą nieosiągalną cenę 2,12 zł. Helper korzysta teraz z `AVAILABLE_FORMATS`.
+- Sekcja „Formaty" renderowała C6 i K4 jako klikalne karty z napisem „Wybierz format C6 →",
+  mimo że konfigurator odrzuca formaty `disabled`. Zastąpiona tabelą ze statusem dostępności.
+- Blok „Dla firm" ilustrowała koperta K4 — format niedostępny i bez zdjęcia w repozytorium.
+  Podmieniona na realne zdjęcie koperty DL granatowej.
+- Literówki w kartach realizacji: „Eskluzywny" (×2), „Egancki". Karty przepisane.
+- Usunięta martwa funkcja `Seal()`.
+
+Antykanibalizacja wobec F1 `/koperty-z-nadrukiem`: strona główna podaje dopłatę za nadruk
+(+1,99 zł/szt.), ale nie ma nagłówka o cenie nadruku i nie rozkłada jej na czynniki. Tabela
+wartości zamówienia dotyczy kopert **gładkich** (1 / 50 / 100 / 500 / 1 000 szt.), filar liczy
+koperty **z nadrukiem** (10 / 100 / 500 / 1 000 szt.). Z `FAQ_ITEMS` usunięto pytanie o pliki
+do druku — należy do filara.
+
+Linkowanie wychodzące ze strony głównej: `/koperty-z-nadrukiem` (hero, cennik, usługi,
+realizacje), `/kontakt#wycena`, `/rejestracja?typ=firmowe`, `/blog` oraz **wszystkie sześć
+wpisów blogowych podlinkowanych kontekstowo** — każdy pod sekcją, której temat rozwija.
+
+Zmiany w bibliotekach: `AVAILABLE_FORMATS` i `UPCOMING_FORMATS` w `catalog.ts`;
+`webSiteJsonLd()`, `colorPaletteJsonLd()` i przepisane `productJsonLd()` w `seo.ts`;
+`FAQ_ITEMS` w `faq.ts` liczone z `pricing.ts` zamiast wpisanych ręcznie liczb;
+`loading="lazy"` i `decoding="async"` w `EnvelopePlaceholder`.
+
+Weryfikacja: `npm run typecheck` i `npm run build` bez błędów, `/` prerenderowana statycznie,
+sześć bloków JSON-LD renderuje się serwerowo, `title` 52 znaki, `description` 148 znaków.
+
+### 13 sierpnia 2026 — poz. 1: filar F1 `/koperty-z-nadrukiem`
+
+**Opublikowane.** Trasa `src/app/koperty-z-nadrukiem/page.tsx` (SSR, prerender statyczny).
+Zakres dostawy: H1 + 9 sekcji H2, blok odpowiedzi GEO w leadzie, dwie tabele cenowe
+(składniki ceny i wartość zamówienia dla 10 / 100 / 500 / 1 000 szt.), tabela specyfikacji,
+proces w czterech krokach, 12 kolorów ze zdjęciami nadruku, sekcja „Dla kogo" z 10 branżami,
+FAQ na 6 pytań, cztery CTA kontekstowe.
+
+Dane strukturalne: `Product` + `Offer`, `FAQPage`, `HowTo`, `BreadcrumbList` — wszystkie liczby
+liczone z `pricing.ts` i `catalog.ts`, więc zmiana cennika przepisuje treść, metadane i JSON-LD
+jednocześnie.
+
+Linkowanie w obie strony:
+- **do filara:** nagłówek serwisu (nawigacja), stopka (sekcja „Sklep"), strona główna
+  (sekcja „Realizacje"), wpisy `koperty-firmowe-z-nadrukiem-…` i `ekspresowa-realizacja-2-dni-robocze`
+  (nowy blok „Strona oferty" — pole `pillar` w `BlogPost`),
+- **z filara:** wpisy blogowe wspierające, paleta kolorów na stronie głównej, formularz wyceny.
+
+Zmiany techniczne wykonane przy okazji (konieczne dla ciągłości intencji, pkt 7 briefu):
+- `ConfigureLink` buduje realny adres `/?format=DL&kolor=…&nadruk=1#konfigurator`, działa
+  między trasami i bez JavaScriptu; konfigurator czyta preselekcję z adresu i włącza nadruk
+  lub personalizację. Wcześniej preselekcja działała wyłącznie w obrębie strony głównej,
+  a opcji nadruku nie dało się wskazać wcale. **Odblokowuje to poz. 29–36 (strony kolorów).**
+- `buildImageAlt` rozróżnia zdjęcie gładkie, z nadrukiem i z personalizacją — alty na stronie
+  głównej i w konfiguratorze przestały opisywać trzy różne zdjęcia tym samym zdaniem.
+- Formularz wyceny B2B (`QuoteForm`) był w repozytorium, ale nie był nigdzie renderowany —
+  kotwica `/kontakt#wycena`, do której prowadziło CTA ze strony głównej, była martwa.
+  Formularz stoi teraz na `/kontakt` pod tą kotwicą.
+
+Weryfikacja: `npm run typecheck` i `npm run build` bez błędów, trasa prerenderowana statycznie,
+obecna w `sitemap.xml`, JSON-LD renderuje się serwerowo (5 bloków), CTA wchodzi do konfiguratora
+z konfiguracją „Koperta DL Czarny z nadrukiem", 4,57 zł/szt.
+
+---
+
 ## Zależności i blokady
 
 | Blokada | Wpływ | Kto odblokowuje |
 | --- | --- | --- |
-| `NEXT_PUBLIC_SITE_URL` nieustawione | Sitemapa i **wszystkie** JSON-LD wskazują na `localhost:3000` — publikacja bez tego jest bezwartościowa | Właściciel — ustawić `https://envelopes.pl` |
-| Dane rejestrowe zastępcze w `src/lib/orders.ts` | Błędna encja `Organization` (nieistniejąca sp. z o.o., zerowy NIP, warszawski adres) | Właściciel — uzupełnić telefon, rachunek bankowy, decyzję o REGON |
+| ~~`NEXT_PUBLIC_SITE_URL` nieustawione~~ | **Odblokowane.** `SITE_URL` ma produkcyjny fallback `https://envelopes.pl` — sitemapa, robots, JSON-LD i OG wskazują na domenę | — |
+| ~~Dane rejestrowe zastępcze~~ | **Odblokowane.** `CONTACT_DETAILS` zawiera realne dane (JDG, NIP 6972414844, REGON, adres, telefon, rachunek) | — |
 | Brak analityki (GA4 / GSC) | Cel „wejścia do konfiguratora" niemierzalny; priorytety opierają się na intencji, nie na danych | Wdrożenie zapowiedziane |
 | Formaty C6 i K4 `disabled` | Klaster ślubny (K9) bez CTA zakupowego; poz. 27 ograniczona do A4 składanego | Właściciel — uruchomienie formatów |
+| Zdjęcia produktowe to PNG po 0,5–0,75 MB, serwowane przez `<img>` bez `next/image` | Strona główna pobiera ~9 MB obrazów; realne ryzyko dla LCP i pozycji. Doraźnie założono `loading="lazy"`, ale to nie zmniejsza wagi plików | Właściciel — konwersja do WebP/AVIF albo przejście na `next/image` |
 | Profile FB / Instagram / LinkedIn | `Organization.sameAs` pusty do czasu utworzenia | Właściciel — po założeniu przekazać adresy |
 
 ---

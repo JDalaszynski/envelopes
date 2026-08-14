@@ -73,19 +73,19 @@ kupuje głównie zaufanie.
   `Organization.sameAs` — dopiero po tym, jak realnie istnieją pod potwierdzonymi adresami.
 - **Marka:** „Envelopes" jako nazwa handlowa; „Jakub Dalaszyński" jako `legalName`.
 
-⚠️ **Znane rozbieżności do usunięcia (zgłoś przy pierwszej okazji, nie wdrażaj po kawałku):**
-`src/lib/orders.ts` zawiera dane zastępcze — „Envelopes sp. z o.o.", warszawski adres, zerowy
-NIP, REGON i KRS, telefon `+48 22 000 00 00` oraz fikcyjny rachunek bankowy. Te wartości zasilają
-JSON-LD `Organization`, stopkę, regulamin, faktury i tytuły przelewów. Poprawka musi objąć
-**wszystkie** pola naraz (forma prawna JDG nie ma KRS-u), więc wymaga uzupełnienia brakujących
-danych: telefonu kontaktowego, numeru rachunku i banku oraz decyzji, czy REGON ma być podawany.
+✅ **Dane rejestrowe są kompletne i prawdziwe** — `CONTACT_DETAILS` i `BANK_TRANSFER_DETAILS`
+w `src/lib/orders.ts` zawierają realne wartości (Jakub Dalaszyński, NIP 6972414844,
+REGON 544772342, ul. Geodetów 41, 64-100 Trzebiny, telefon, e-mail, rachunek w PKO BP).
+Zasilają JSON-LD `Organization`, stopkę, stronę kontaktu, dokumenty prawne, faktury i tytuły
+przelewów. **Nie wpisuj tych danych ręcznie w treściach — zawsze odwołuj się do
+`CONTACT_DETAILS`.** JDG nie ma KRS-u i nigdzie go nie prezentujemy.
 
 ### 3.2 Produkt (stan na wejściu — zawsze weryfikuj w kodzie)
 - **Aktywny jest tylko format DL (110 × 220 mm, 2,58 zł brutto/szt.).** C6 i K4 mają
   `disabled: true` — „Dostępne wkrótce". **To najważniejsze ograniczenie strategiczne w projekcie.**
 - **19 kolorów w identycznej cenie** — bez dopłat za perłę i metalik, bez rabatów ilościowych.
 - **Usługi:** nadruk +1,99 zł/szt., personalizacja/adresowanie +2,99 zł/szt., ekspres +1,50 zł/szt.
-- **MOQ:** 1 szt. dla kopert gładkich, 10 szt. przy nadruku lub personalizacji.
+- **MOQ:** 1 szt. dla kopert gładkich, 10 szt. przy nadruku lub personalizacji. **(UWAGA: Wydruk z własnym logo już od 10 szt. to gigantyczna przewaga konkurencyjna na rynku poligraficznym! Drukarnie startują zazwyczaj od 100-500 szt. Zawsze podkreślaj to w treściach jako kluczową korzyść dla małych firm i organizatorów eventów: "Koperty z własnym nadrukiem już od 10 sztuk").**
 - **Terminy:** gładkie 2 dni robocze; z nadrukiem 5 dni (standard) lub 2 dni (ekspres).
 - **Dostawa:** 19,99 zł, kurier. **Faktura z odroczonym terminem 14 dni przy każdym zamówieniu** —
   to przewaga wobec instytucji i jednostek budżetowych, wykorzystuj ją w treści.
@@ -160,6 +160,12 @@ Model treści: **filar → treści wspierające**. Każdy klaster z `keywords.md
 (LP transakcyjny) i wokół niego artykuły wspierające, które linkują **w górę** do filara.
 Nigdy odwrotnie i nigdy „każdy z każdym".
 
+**Zasięg filara jest maksymalny.** Filar pisze się do wszystkich branż — kopert z logo potrzebuje
+praktycznie każda firma, więc zawężanie filara do trzech nisz odcina ruch bez żadnego zysku.
+Każdy filar ma obowiązkową sekcję **„Dla kogo"**: 8–10 zastosowań branżowych po jednym akapicie,
+z linkiem w dół do LP branżowego, gdy taki istnieje. Zawężenie należy do stron wspierających,
+nie do filara.
+
 Nowa strona ofertowa = `src/app/<slug>/page.tsx` (SSR, `export const metadata`), wpis
 w `src/app/sitemap.ts`, JSON-LD przez komponent `JsonLd` + helper w `src/lib/seo.ts`,
 linkowanie z `/` i z powiązanych wpisów blogowych, CTA przez `ConfigureLink`.
@@ -203,11 +209,39 @@ SSR bez blokowania treści JS-em, `generateStaticParams` + ISR na blogu, prawid�
 Przy każdej większej zmianie sprawdź `npm run build` i `npm run typecheck`.
 
 **Luki do zgłoszenia właścicielowi:**
-- `NEXT_PUBLIC_SITE_URL` nie jest ustawione — bez tego `SITE_URL` pada na `localhost:3000`
-  i **cała sitemapa oraz wszystkie JSON-LD wskazują na localhost**. To blokada wdrożeniowa
-  numer jeden; docelowa wartość: `https://envelopes.pl`.
+- ~~`NEXT_PUBLIC_SITE_URL`~~ — rozwiązane. `SITE_URL` w `src/lib/seo.ts` ma produkcyjny fallback
+  `https://envelopes.pl`, więc sitemapa, `robots.txt`, JSON-LD, metadane OG i linki w e-mailach
+  wskazują na domenę produkcyjną nawet bez zmiennej na hostingu. Lokalnie nadpisuje to
+  `.env.local` (`http://localhost:3000`). Adres kanoniczny bierz **wyłącznie** z `SITE_URL`.
 - Brak warstwy analityki (GA4 / GSC / zdarzenia). Wdrożenie jest zapowiedziane — do czasu
   uruchomienia raportuj jawnie, że pomiar celu jest niedostępny, i nie zastępuj go szacunkami.
+
+### 5.6 Zdjęcia — obowiązkowa ścieżka od wrzuconego pliku do publikacji
+Gdy właściciel wrzuca plik graficzny (zwykle do `public/images/` pod nazwą roboczą typu `1.png`),
+przechodzisz **całą** poniższą ścieżkę, bez pytania o zgodę na kolejne kroki:
+
+1. **Obejrzyj plik** narzędziem `Read` i opisz, co realnie widać. Nazwa pliku i rozszerzenie
+   potrafią kłamać — sprawdź `sharp(...).metadata()` (w repozytorium jest `sharp`, bo ciągnie
+   je Next). Wrzutka `.png` bywa JPEG-iem.
+2. **Ustal kolor katalogowy pomiarem, nie na oko.** Policz średnią barwę kadru z pominięciem
+   białego tła i porównaj ją ze zdjęciami z `public/images/colors/`. Dopiero ta nazwa
+   (`catalog.ts`) wchodzi do altu, podpisu i nazwy pliku.
+3. **Nazwij plik opisowo i sfrazowanie:** `<kolor>-koperta-<format>-<co-widać>.webp`, małe
+   litery, bez polskich znaków, myślniki. Konwencja jak w `colors/`, `prints/`, `personalized/`;
+   kadry detaliczne trafiają do `details/`.
+4. **Zoptymalizuj.** WebP, jakość 78–82, dwie szerokości do `srcSet` (512 i 1024 px dla kadru
+   w gridzie). Budżet: ≤120 kB dla 1024 px, ≤30 kB dla 512 px. Master zostaje poza katalogiem
+   serwowanym — `.data/source-images/` (`.data` jest w `.gitignore`), nigdy w `public/`.
+5. **Wstaw z pełną obudową:** `<img>` z `srcSet` i `sizes` policzonym z realnej szerokości
+   kolumny, jawne `width`/`height`, `aspect-ratio` w CSS, `loading="lazy"` (wyjątek: kadr LCP)
+   i `decoding="async"`.
+6. **Alt po polsku, opisowy**, według reguły z pkt 5.2 — co widać + format + kolor. Dwa różne
+   kadry nigdy nie dostają tego samego altu.
+7. **Podpis daje kontekst produktowy** — nazwa katalogowa, gramatura i wykończenie czytane
+   z `catalog.ts`, a nie wpisane ręcznie. Każdy kadr produktowy linkuje do konfiguratora
+   przez `ConfigureLink` z preselekcją koloru.
+8. **Domknij:** `npm run typecheck`, `npm run build` i sprawdzenie w przeglądarce, który wariant
+   ze `srcSet` faktycznie pobiera przeglądarka.
 
 ---
 
@@ -224,8 +258,8 @@ Zasady, których trzymasz się w każdej treści:
    wprost i kompletnie. Rozwinięcie idzie niżej. Fragment musi mieć sens **wyrwany z kontekstu**,
    bo dokładnie tak zostanie użyty.
 2. **Fakty z jednostkami i nazwami.** Nie „atrakcyjna cena", tylko „2,58 zł brutto za sztukę".
-   Nie „szybka realizacja", tylko „2 dni robocze". Nie „duży wybór", tylko „19 kolorów".
-   Modele cytują liczby, bo liczby są weryfikowalne.
+   Nie „szybka realizacja", tylko „2 dni robocze". Nie „niskie zamówienie minimalne", tylko
+   „koperty z nadrukiem już od 10 sztuk". Modele cytują liczby, bo liczby są weryfikowalne.
 3. **Encje nazwane wprost.** W kluczowych akapitach pisz „Envelopes", „koperta DL 110 × 220 mm",
    „nadruk logo firmowego" — bez zaimków i skrótów myślowych. Model, który nie wie, o czym jest
    akapit, go nie zacytuje.
@@ -359,9 +393,64 @@ Posortowane wpływem malejąco. Bez listy „nice to have" na końcu.
 
 **Plan / roadmapa:** tabela w formacie z pkt 8.
 
-W tekstach na stronę piszesz **po polsku, formą grzecznościową „Państwo"** (spójnie z FAQ
-i komunikacją transakcyjną), rzeczowo, bez marketingowej waty. Ton: kompetentny dostawca dla
-firm, nie sklep z gadżetami.
+---
+
+## 10.1 Ton — specyfikacja obowiązkowa
+
+Ton jest optymalizowany pod jedno: **fragment Państwa tekstu ma być na tyle konkretny, żeby model
+językowy mógł go zacytować bez kontekstu, a użytkownik uwierzył w niego bez dopytywania.**
+Marketingowa wata nie jest tylko brzydka — jest niecytowalna, bo nie zawiera nic weryfikowalnego.
+
+### Zasady twarde
+
+1. **Rejestr: „Państwo", konsekwentnie.** Druga osoba liczby mnogiej, forma grzecznościowa —
+   spójnie z FAQ, checkoutem i e-mailami transakcyjnymi. Nigdy „Ty" i nigdy mieszanie form
+   w obrębie serwisu. O sobie: pierwsza osoba liczby mnogiej („przygotowujemy", „wysyłamy",
+   „termin liczymy od…"), nigdy bezosobowo („zostanie przygotowane") — sprzedawca ma być
+   widocznym podmiotem, bo to sygnał E-E-A-T dla algorytmu i dla modelu.
+2. **Pierwsze zdanie sekcji odpowiada na pytanie z nagłówka.** Bez rozbiegu, bez „warto wiedzieć,
+   że". Rozwinięcie idzie niżej. To najważniejsza zasada GEO w całym briefie.
+3. **Liczba zamiast przymiotnika.** Każdy przymiotnik wartościujący zamień na parametr:
+   nie „szeroki wybór" → „19 kolorów"; nie „szybko" → „2 dni robocze"; nie „korzystna cena" →
+   „2,58 zł brutto za sztukę"; nie „gruby papier" → „140 g/m²". Przymiotnik bez liczby to zdanie
+   do wykreślenia.
+4. **Jedno zdanie = jeden fakt.** 15–25 słów. Akapit 2–4 zdania. Zdania złożone z trzema
+   wtrąceniami są nieekstrahowalne — model urwie je w połowie i zacytuje bez sensu.
+5. **Strona czynna, czasownik konkretny.** „Grafik przygotowuje wizualizację" zamiast
+   „wizualizacja jest przygotowywana". „Wysyłamy kurierem" zamiast „realizujemy dostawę".
+6. **Encja nazwana wprost co kilka zdań.** „Koperta DL", „nadruk logo", „Envelopes" — zamiast
+   „ona", „to", „nasz produkt". Akapit, w którym nie wiadomo o czym mowa, nie zostanie zacytowany.
+7. **Fraza w naturalnej odmianie.** Polska fleksja jest w pełni rozumiana przez wyszukiwarkę —
+   „kopert z nadrukiem", „kopertach DL" liczą się tak samo jak mianownik. Nigdy nie wciskaj
+   frazy w formie podstawowej kosztem gramatyki.
+8. **Ryzyko nazywasz wprost, zanim klient zapyta.** „Termin liczymy od akceptacji wizualizacji",
+   „przy przelewie tradycyjnym doliczcie Państwo czas księgowania". To jest przewaga, nie słabość:
+   klient B2B kupuje przewidywalność, a model cytuje zdania, które zawierają warunek.
+9. **Zero przechwałek bez dowodu.** Bez „lider", „najlepsi", „lata doświadczenia", „tysiące
+   klientów". Wiarygodność budujesz parametrem, procesem i zdjęciem realizacji.
+
+### Czarna lista — nigdy w tekście na stronę
+
+„szeroka gama" · „bogata oferta" · „najwyższa jakość" · „kompleksowe rozwiązania" ·
+„indywidualne podejście" · „zapraszamy do współpracy" · „nie pozostawia obojętnym" ·
+„idealne rozwiązanie dla każdego" · wykrzykniki · CAPS · emoji · „kliknij tutaj" jako anchor.
+
+### Kalibracja
+
+| ✗ Nie tak | ✓ Tak |
+| --- | --- |
+| „Oferujemy szeroką gamę eleganckich kopert w atrakcyjnych cenach." | „Koperty DL 110 × 220 mm dostępne są w 19 kolorach, każdy w tej samej cenie 2,58 zł brutto za sztukę." |
+| „Przyjmujemy zamówienia detaliczne." | „Realizujemy koperty z własnym nadrukiem firmowym w nakładach już od 10 sztuk." |
+| „Zadbamy o szybką realizację Twojego zamówienia!" | „Koperty z nadrukiem wysyłamy w 5 dni roboczych, a w trybie ekspresowym — w 2 dni za dopłatą 1,50 zł brutto od sztuki." |
+| „Nasze koperty świetnie sprawdzą się w wielu zastosowaniach." | „Format DL mieści kartkę A4 złożoną na trzy, voucher 99 × 210 mm i standardowy bilet." |
+| „Współpracujemy z wieloma zadowolonymi klientami z różnych branż." | „Kancelaria z Poznania zamawia kwartalnie 3 000 kopert granatowych z nadrukiem logo — konfiguracja zapisana jako szablon." |
+
+### Test przed oddaniem tekstu
+
+Weź dowolny akapit, wyrwij go z kontekstu i zadaj pytanie: **czy sam w sobie odpowiada na
+pytanie użytkownika, i czy da się go zweryfikować?** Jeśli nie — przepisz ten akapit, nie dopisuj
+kolejnego. Drugi test: usuń z tekstu wszystkie przymiotniki. Jeśli treść nic nie traci, wróć
+i wstaw w ich miejsce liczby.
 
 ---
 

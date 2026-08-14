@@ -34,6 +34,12 @@ export interface BlogPost {
   sections: BlogSection[];
   /** Kontekstowe CTA do konfiguratora */
   cta: string;
+  /**
+   * Strona ofertowa (filar klastra), do której wpis linkuje **w górę**.
+   * Anchor jest frazą docelową filara — treść wspierająca przekazuje mu
+   * autorytet, nigdy odwrotnie (pkt 5.4 briefu SEO).
+   */
+  pillar?: { href: string; anchor: string };
 }
 
 const POSTS: BlogPost[] = [
@@ -52,7 +58,7 @@ const POSTS: BlogPost[] = [
     sections: [
       {
         id: 'format',
-        heading: 'Zacznij od formatu wkładki, nie od koperty',
+        heading: 'Punktem wyjścia jest format wkładki, nie koperta',
         paragraphs: [
           'Kolejność jest istotna: najpierw ustalamy wymiar zaproszenia, dopiero potem dobieramy kopertę. Koperta powinna być o 4–6 mm większa od wkładki w każdym wymiarze — zbyt ciasna utrudni wkładanie i zagnie rogi, zbyt luźna pozwoli zaproszeniu przemieszczać się w transporcie.',
           'Dla klasycznego zaproszenia w formacie A6 (105 × 148 mm) właściwym wyborem jest C6 (114 × 162 mm). Zaproszenia kwadratowe — coraz częstsze przy galach i wydarzeniach ślubnych — wymagają koperty K4 o wymiarach 155 × 155 mm.',
@@ -67,13 +73,13 @@ const POSTS: BlogPost[] = [
         id: 'kolor',
         heading: 'Kolor: kontrast z nadrukiem ważniejszy niż moda',
         paragraphs: [
-          'Kolor koperty najczęściej wybiera się pod identyfikację wizualną firmy, ale decydującym kryterium powinna być czytelność nadruku i adresu. Ciemne koperty (granatowy, czarny, ciemnozielony) wyglądają wyjątkowo dobrze ze złotym lub srebrnym nadrukiem, ale wymagają jasnego tuszu przy adresowaniu.',
-          'Jasne odcienie — ecru, biały perłowy, jasnoniebieski — są bezpieczniejsze przy adresowaniu drukiem cyfrowym i lepiej znoszą sortowanie maszynowe w placówkach pocztowych.',
+          'Kolor koperty najczęściej wybiera się pod identyfikację wizualną firmy, ale decydującym kryterium powinna być czytelność nadruku i adresu. Ciemne koperty (granatowy, czarny, butelkowa zieleń) wyglądają wyjątkowo dobrze ze złotym lub srebrnym nadrukiem, ale wymagają jasnego tuszu przy adresowaniu.',
+          'Jasne odcienie — ecru, biały perłowy, błękitny — są bezpieczniejsze przy adresowaniu drukiem cyfrowym i lepiej znoszą sortowanie maszynowe w placówkach pocztowych.',
         ],
       },
       {
         id: 'nadruk',
-        heading: 'Nadruk i adresowanie planuj razem',
+        heading: 'Nadruk i adresowanie warto planować razem',
         paragraphs: [
           'Jeżeli zaproszenia mają być adresowane imiennie, warto zlecić nadruk i adresowanie w jednym zamówieniu. Pozwala to zachować spójność krojów pisma i uniknąć sytuacji, w której logotyp jest drukowany offsetowo, a adres dopisywany innym urządzeniem o odmiennym odcieniu czerni.',
           'Przy zamówieniach z nadrukiem obowiązuje minimalna ilość 10 sztuk. Adresowanie można zlecić na dwa sposoby: wpisując dane bezpośrednio w konfiguratorze albo pobierając szablon arkusza i wgrywając go z powrotem po uzupełnieniu.',
@@ -81,13 +87,13 @@ const POSTS: BlogPost[] = [
       },
       {
         id: 'terminy',
-        heading: 'Terminy — policz wstecz od daty wydarzenia',
+        heading: 'Terminy — liczone wstecz od daty wydarzenia',
         paragraphs: [
           'Przyjmuje się, że zaproszenia na wydarzenia firmowe wysyła się 4–6 tygodni przed terminem. Do tego doliczamy czas produkcji: realizacja standardowa zajmuje 5 dni roboczych, ekspresowa 2 dni robocze. W przypadku zamówień z nadrukiem należy dodatkowo uwzględnić czas na akceptację wizualizacji projektu.',
         ],
       },
     ],
-    cta: 'Sprawdź, jak wyglądają koperty C6 w poszczególnych kolorach — konfigurator pokazuje cenę od razu.',
+    cta: 'Koperty DL 110 × 220 mm w 19 kolorach obejrzą Państwo w konfiguratorze, z ceną widoczną od razu.',
   },
   {
     slug: 'koperty-firmowe-z-nadrukiem-co-przygotowac-przed-zamowieniem',
@@ -98,7 +104,9 @@ const POSTS: BlogPost[] = [
     readingMinutes: 5,
     colorId: 'bialy',
     format: 'DL',
-    keywords: ['koperty z nadrukiem', 'nadruk na kopertach', 'pliki do druku'],
+    /* Fraza `koperty z nadrukiem` należy do filara /koperty-z-nadrukiem —
+       ten wpis obsługuje intencję procesową (przygotowanie plików). */
+    keywords: ['pliki do druku na kopertach', 'nadruk na kopertach', 'przygotowanie logo do druku'],
     intro:
       'Najczęstszą przyczyną opóźnień w zamówieniach z nadrukiem nie jest produkcja, lecz wymiana korespondencji na temat plików. Ta lista skraca ten etap do minimum.',
     sections: [
@@ -133,7 +141,8 @@ const POSTS: BlogPost[] = [
         ],
       },
     ],
-    cta: 'Masz gotowy plik? Skonfiguruj koperty z nadrukiem i sprawdź cenę.',
+    cta: 'Gotowy plik wgrywają Państwo w konfiguratorze i widzą cenę jeszcze przed złożeniem zamówienia.',
+    pillar: { href: '/koperty-z-nadrukiem', anchor: 'koperty z nadrukiem' },
   },
   {
     slug: 'adresowanie-kopert-recznie-czy-z-arkusza',
@@ -176,7 +185,7 @@ const POSTS: BlogPost[] = [
         ],
       },
     ],
-    cta: 'Zobacz, jak działa adresowanie — wybierz metodę w piątym kroku konfiguratora.',
+    cta: 'Metodę adresowania — wpisywanie ręczne albo arkusz — wybiorą Państwo w piątym kroku konfiguratora.',
   },
   {
     slug: 'paleta-19-kolorow-jak-wybrac-odcien-do-identyfikacji-firmy',
@@ -195,14 +204,14 @@ const POSTS: BlogPost[] = [
         id: 'stonowane',
         heading: 'Odcienie stonowane — kancelarie, finanse, doradztwo',
         paragraphs: [
-          'Granatowy, czarny, taupe i błękit łupkowy budują wrażenie powagi i stabilności. Sprawdzają się w korespondencji formalnej, gdzie koperta ma sygnalizować wagę dokumentu, a nie przyciągać uwagę.',
+          'Granatowy, czarny, szarobrązowy i jeansowy budują wrażenie powagi i stabilności. Sprawdzają się w korespondencji formalnej, gdzie koperta ma sygnalizować wagę dokumentu, a nie przyciągać uwagę.',
         ],
       },
       {
         id: 'naturalne',
         heading: 'Odcienie naturalne — marki z profilem ekologicznym',
         paragraphs: [
-          'Eko, ecru, matcha i jasnozielony komunikują odpowiedzialność środowiskową bez deklaracji wprost. Koperta Eko wykonana jest z papieru z certyfikatem pochodzenia z recyklingu.',
+          'Eko, ecru, matcha i zielony komunikują odpowiedzialność środowiskową bez deklaracji wprost. Koperta Eko wykonana jest z papieru z certyfikatem pochodzenia z recyklingu.',
         ],
       },
       {
@@ -213,7 +222,7 @@ const POSTS: BlogPost[] = [
         ],
       },
     ],
-    cta: 'Przejrzyj pełną paletę i zobacz podgląd wybranego koloru w konfiguratorze.',
+    cta: 'Pełną paletę 19 kolorów obejrzą Państwo w konfiguratorze, z podglądem wybranego odcienia na kopercie.',
   },
   {
     slug: 'realizacja-3000-kopert-dl-dla-kancelarii',
@@ -251,7 +260,7 @@ const POSTS: BlogPost[] = [
         ],
       },
     ],
-    cta: 'Zamawiasz cyklicznie? Załóż konto i zapisz swoją konfigurację jako szablon.',
+    cta: 'Konto pozwala zapisać konfigurację jako szablon i powtórzyć zamówienie jednym kliknięciem.',
   },
   {
     slug: 'ekspresowa-realizacja-2-dni-robocze',
@@ -282,7 +291,8 @@ const POSTS: BlogPost[] = [
         ],
       },
     ],
-    cta: 'Wybierz czas realizacji w szóstym kroku konfiguratora i zobacz orientacyjną datę dostawy.',
+    cta: 'Czas realizacji — 5 dni roboczych albo 2 dni w ekspresie — wybiorą Państwo w szóstym kroku konfiguratora.',
+    pillar: { href: '/koperty-z-nadrukiem', anchor: 'koperty z nadrukiem' },
   },
 ];
 
