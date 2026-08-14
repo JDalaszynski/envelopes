@@ -336,6 +336,15 @@ export default function PrintedEnvelopesPage() {
             </table>
           </div>
 
+          {/* Link do filara sąsiedniego klastra K2 — cennik personalizacji
+              rozkładamy wyłącznie tam (pkt 5.4 briefu SEO). */}
+          <p className="small muted" style={{ marginTop: 'var(--space-4)', maxWidth: '68ch' }}>
+            Nadruk powtarza ten sam projekt na całym nakładzie. Jeśli każda koperta ma nosić inne
+            dane — imię, nazwisko albo adres odbiorcy — to usługa personalizacji: cennik, wymagania
+            dla listy adresów i proces opisaliśmy na stronie{' '}
+            <Link href="/koperty-personalizowane">personalizowane koperty</Link>.
+          </p>
+
           <h3 style={{ marginTop: 'var(--space-7)' }}>
             Przykładowe wartości zamówienia kopert z nadrukiem
           </h3>
@@ -398,7 +407,9 @@ export default function PrintedEnvelopesPage() {
             dziś w sprzedaży — koperty C6 {FORMAT_MAP.C6.dimensions} i K4{' '}
             {FORMAT_MAP.K4.dimensions} mają w katalogu status „Dostępne wkrótce". Wszystkie koperty
             Envelopes są bez okienka adresowego, więc nadruk może objąć całą przednią ściankę
-            z zachowaniem 5 mm marginesu od krawędzi.
+            z zachowaniem 5 mm marginesu od krawędzi. Co zmieści się w środku i jak format wypada
+            na tle C6 i K4 — opisaliśmy na stronie{' '}
+            <Link href="/koperty-dl">wymiary kopert DL</Link>.
           </p>
 
           <div className="table-wrap" style={{ marginTop: 'var(--space-5)' }}>

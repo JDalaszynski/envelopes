@@ -1,6 +1,10 @@
 import { NextResponse } from 'next/server';
 import * as XLSX from 'xlsx';
 
+import {
+  PERSONALIZATION_SHEET_EXTENSIONS,
+  PERSONALIZATION_SHEET_EXTENSIONS_LABEL,
+} from '@/lib/catalog';
 import { storeFile } from '@/lib/storage';
 
 export const runtime = 'nodejs';
@@ -20,9 +24,9 @@ export async function POST(request: Request) {
   }
 
   const ext = file.name.split('.').pop()?.toLowerCase() ?? '';
-  if (!['xlsx', 'xls', 'csv'].includes(ext)) {
+  if (!PERSONALIZATION_SHEET_EXTENSIONS.includes(ext)) {
     return NextResponse.json(
-      { ok: false, error: 'Obsługujemy pliki XLSX, XLS i CSV.' },
+      { ok: false, error: `Obsługujemy pliki ${PERSONALIZATION_SHEET_EXTENSIONS_LABEL}.` },
       { status: 415 }
     );
   }

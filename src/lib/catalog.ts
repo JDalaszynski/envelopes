@@ -69,6 +69,156 @@ export const FORMAT_MAP: Record<FormatId, EnvelopeFormat> = FORMATS.reduce(
   {} as Record<FormatId, EnvelopeFormat>
 );
 
+/* ── Dopasowanie wkładek do formatu — klaster K4 (`/koperty-dl`) ───────── */
+
+/**
+ * Zalecany zapas między wkładką a kopertą, w każdym wymiarze.
+ *
+ * Wartość 5 mm jest środkiem przedziału 4–6 mm, który podajemy we wpisie
+ * o doborze koperty do zaproszeń. Trzymamy ją w jednym miejscu, bo z niej
+ * liczy się zarówno tabela dopasowań na `/koperty-dl`, jak i deklarowana
+ * największa wkładka — dwie liczby, które nie mogą się rozjechać.
+ */
+export const INSERT_CLEARANCE_MM = 5;
+
+export interface StandardInsert {
+  label: string;
+  /**
+   * Wymiary w mm zapisane w konwencji, w jakiej dana wkładka jest zwyczajowo
+   * opisywana: formaty papieru krótszym bokiem do przodu (A4 = 210 × 297),
+   * banknoty i karty dłuższym. Kolejność nie wpływa na wynik dopasowania —
+   * `fitsInFormat()` porównuje krótszy bok z krótszym.
+   */
+  width: number;
+  height: number;
+  /** Do czego wkładka służy — kontekst zakupowy, nie opis geometrii */
+  note: string;
+}
+
+/**
+ * Standardowe wkładki, o które pytają klienci przy formacie DL.
+ * Wymiary są wartościami normatywnymi (seria A, karta ID-1, banknoty NBP),
+ * a nie deklaracją oferty — nie sprzedajemy żadnej z tych rzeczy.
+ * Dopasowanie liczy `fitsInFormat()` z wymiarów katalogowych koperty,
+ * więc zmiana formatu w `FORMATS` przepisuje całą tabelę na stronie.
+ */
+export const STANDARD_INSERTS: StandardInsert[] = [
+  {
+    label: 'Kartka A4 złożona na trzy',
+    width: 99,
+    height: 210,
+    note: 'Pismo, umowa, faktura i certyfikat — podstawa korespondencji firmowej.',
+  },
+  {
+    label: 'Voucher lub bon w formacie DL',
+    width: 99,
+    height: 210,
+    note: 'Bon podarunkowy drukowany na jednej trzeciej arkusza A4.',
+  },
+  {
+    label: 'Kartka A5 złożona na pół (A6)',
+    width: 105,
+    height: 148,
+    note: 'Kartka okolicznościowa i zaproszenie w klasycznym formacie A6.',
+  },
+  {
+    label: 'Zdjęcie 10 × 15 cm',
+    width: 100,
+    height: 150,
+    note: 'Odbitka fotograficzna dołączana do korespondencji.',
+  },
+  {
+    label: 'Banknot 500 zł',
+    width: 150,
+    height: 75,
+    note: 'Największy banknot w obiegu — mieści się płasko, bez składania.',
+  },
+  {
+    label: 'Karta podarunkowa (standard ID-1)',
+    width: 85.6,
+    height: 54,
+    note: 'Karta plastikowa w wymiarze karty płatniczej.',
+  },
+  {
+    label: 'Wizytówka',
+    width: 90,
+    height: 50,
+    note: 'Dołączana do przesyłki firmowej razem z listem.',
+  },
+  {
+    label: 'Kartka A4 złożona na pół (A5)',
+    width: 148,
+    height: 210,
+    note: 'Program wydarzenia i broszura składana raz — za szeroka na format DL.',
+  },
+  {
+    label: 'Zaproszenie kwadratowe',
+    width: 150,
+    height: 150,
+    note: 'Wkładka kwadratowa wymaga koperty K4 155 × 155 mm.',
+  },
+  {
+    label: 'Dyplom A4 bez składania',
+    width: 210,
+    height: 297,
+    note: 'Arkusz A4 płasko — nie mieści się w żadnej kopercie z naszego katalogu.',
+  },
+];
+
+export interface InsertFit {
+  /** Czy wkładka mieści się z zachowaniem zalecanego zapasu */
+  fits: boolean;
+  /** Zapas na krótszym boku w mm — ujemny, gdy wkładka jest za duża */
+  clearanceShort: number;
+  /** Zapas na dłuższym boku w mm */
+  clearanceLong: number;
+}
+
+/** Zaokrąglenie do jednego miejsca — wymiary w mm bywają ułamkowe (karta ID-1). */
+function round1(value: number): number {
+  return Math.round(value * 10) / 10;
+}
+
+/**
+ * Sprawdza, czy wkładka mieści się w kopercie. Porównujemy krótszy bok
+ * z krótszym i dłuższy z dłuższym, bo wkładkę wsuwa się w tej orientacji,
+ * w której jest to możliwe — a nie w tej, w jakiej zapisano ją w tabeli.
+ */
+export function fitsInFormat(
+  insert: { width: number; height: number },
+  format: EnvelopeFormat,
+  clearance: number = INSERT_CLEARANCE_MM
+): InsertFit {
+  const insertShort = Math.min(insert.width, insert.height);
+  const insertLong = Math.max(insert.width, insert.height);
+  const formatShort = Math.min(format.width, format.height);
+  const formatLong = Math.max(format.width, format.height);
+  const clearanceShort = round1(formatShort - insertShort);
+  const clearanceLong = round1(formatLong - insertLong);
+
+  return {
+    fits: clearanceShort >= clearance && clearanceLong >= clearance,
+    clearanceShort,
+    clearanceLong,
+  };
+}
+
+/** Największa wkładka mieszcząca się w formacie przy zalecanym zapasie. */
+export function maxInsertSize(
+  format: EnvelopeFormat,
+  clearance: number = INSERT_CLEARANCE_MM
+): { short: number; long: number } {
+  return {
+    short: round1(Math.min(format.width, format.height) - clearance),
+    long: round1(Math.max(format.width, format.height) - clearance),
+  };
+}
+
+/** Wymiar w milimetrach zapisany po polsku — przecinek dziesiętny. */
+export function formatMm(value: number): string {
+  return Number.isInteger(value) ? String(value) : value.toFixed(1).replace('.', ',');
+}
+
 export interface EnvelopeColor {
   id: string;
   /** Nazwa użyta w ustandaryzowanej nazwie produktu (pkt 1.9) */
@@ -154,3 +304,58 @@ export const PRINT_FILE_MAX_COUNT = 3;
 
 /** Próg, powyżej którego proponujemy wycenę indywidualną (lead-gen B2B) */
 export const BULK_QUOTE_THRESHOLD = 2000;
+
+/* ── Personalizacja / adresowanie (pkt 1.3) ───────────────────────────── */
+
+export interface AddressSheetColumn {
+  label: string;
+  /** Pole, bez którego walidacja arkusza odrzuca wiersz */
+  required: boolean;
+  note: string;
+}
+
+/**
+ * Kolumny szablonu adresowego XLSX — jedno źródło prawdy dla generatora
+ * szablonu (`/api/personalizacja/szablon`), walidacji wgranego pliku
+ * i treści strony `/koperty-personalizowane`.
+ *
+ * Wcześniej nagłówki arkusza istniały wyłącznie w kodzie API. Opisanie ich
+ * na stronie ofertowej wymagałoby przepisania listy ręcznie, a wtedy zmiana
+ * szablonu rozjechałaby się z obietnicą na stronie.
+ */
+export const PERSONALIZATION_SHEET_COLUMNS: AddressSheetColumn[] = [
+  {
+    label: 'Lp.',
+    required: false,
+    note: 'Numer wiersza — w pobranym szablonie jest już uzupełniony.',
+  },
+  {
+    label: 'Imię i nazwisko',
+    required: false,
+    note: 'Wiersz musi mieć wypełnione imię i nazwisko albo nazwę firmy — inaczej traktujemy go jako pusty.',
+  },
+  {
+    label: 'Firma (opcjonalnie)',
+    required: false,
+    note: 'Nazwa firmy odbiorcy. Drukujemy ją nad wierszem z ulicą.',
+  },
+  { label: 'Ulica i numer', required: true, note: 'Numer lokalu podajemy po ukośniku, np. 41/2.' },
+  { label: 'Kod pocztowy', required: true, note: 'Zapis w formacie 00-000, spójny w całym arkuszu.' },
+  { label: 'Miejscowość', required: true, note: 'Bez skrótów i bez nazwy województwa.' },
+  { label: 'Kraj', required: false, note: 'W szablonie wpisana z góry wartość „Polska".' },
+];
+
+/** Pola, których brak zatrzymuje walidację arkusza adresowego. */
+export const PERSONALIZATION_REQUIRED_COLUMNS = PERSONALIZATION_SHEET_COLUMNS.filter(
+  (column) => column.required
+);
+
+/** Rozszerzenia arkusza z danymi do personalizacji. */
+export const PERSONALIZATION_SHEET_EXTENSIONS = ['xlsx', 'xls', 'csv'];
+
+export const PERSONALIZATION_SHEET_EXTENSIONS_LABEL = PERSONALIZATION_SHEET_EXTENSIONS.map((ext) =>
+  ext.toUpperCase()
+).join(', ');
+
+/** Górna granica wierszy generowanego szablonu adresowego. */
+export const PERSONALIZATION_SHEET_MAX_ROWS = 20000;

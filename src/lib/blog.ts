@@ -94,6 +94,9 @@ const POSTS: BlogPost[] = [
       },
     ],
     cta: 'Koperty DL 110 × 220 mm w 19 kolorach obejrzą Państwo w konfiguratorze, z ceną widoczną od razu.',
+    /* Filar klastra K4 — wpis dobiera kopertę do wkładki, filar podaje
+       wymiary i tabelę dopasowań (content-plan.md poz. 3 i 41). */
+    pillar: { href: '/koperty-dl', anchor: 'wymiary kopert DL' },
   },
   {
     slug: 'koperty-firmowe-z-nadrukiem-co-przygotowac-przed-zamowieniem',
@@ -153,7 +156,14 @@ const POSTS: BlogPost[] = [
     readingMinutes: 4,
     colorId: 'ecru',
     format: 'DL',
-    keywords: ['adresowanie kopert', 'personalizacja kopert', 'wysyłka korespondencji firmowej'],
+    /* Frazy `adresowanie kopert` i `personalizowane koperty` należą do filara
+       /koperty-personalizowane — ten wpis obsługuje intencję procesową
+       (wybór trybu przekazania danych). */
+    keywords: [
+      'adresowanie kopert z arkusza',
+      'szablon adresowy do kopert',
+      'wysyłka korespondencji firmowej',
+    ],
     intro:
       'Personalizacja kopert to usługa, w której nadrukowujemy dane adresowe bezpośrednio na kopercie. Dostępne są dwie metody przekazania danych i wybór między nimi zależy głównie od skali wysyłki.',
     sections: [
@@ -186,6 +196,7 @@ const POSTS: BlogPost[] = [
       },
     ],
     cta: 'Metodę adresowania — wpisywanie ręczne albo arkusz — wybiorą Państwo w piątym kroku konfiguratora.',
+    pillar: { href: '/koperty-personalizowane', anchor: 'personalizowane koperty' },
   },
   {
     slug: 'paleta-19-kolorow-jak-wybrac-odcien-do-identyfikacji-firmy',

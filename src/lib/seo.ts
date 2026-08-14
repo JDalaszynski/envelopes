@@ -1,6 +1,6 @@
 import { CONTACT_DETAILS } from './orders';
 import { DEFAULT_PRICING, DELIVERY_COST, round2 } from './pricing';
-import { AVAILABLE_FORMATS, COLORS, FORMAT_MAP } from './catalog';
+import { AVAILABLE_FORMATS, COLORS, FORMATS, FORMAT_MAP, maxInsertSize } from './catalog';
 import type { BlogPost } from './blog';
 
 /** Dane strukturalne JSON-LD (pkt 8.3). */
@@ -197,6 +197,172 @@ export function printedEnvelopeProductJsonLd() {
         '@type': 'QuantitativeValue',
         minValue: DEFAULT_PRICING.moqWithPrint,
         unitCode: 'C62',
+      },
+      seller: { '@type': 'Organization', name: 'Envelopes' },
+    },
+  };
+}
+
+/**
+ * Product + Offer dla filara „Koperty DL" (/koperty-dl) — klaster K4.
+ *
+ * Świadomie **nie duplikuje** `productJsonLd()` ze strony głównej, mimo że
+ * chodzi o ten sam papier. Strona główna opisuje całą paletę jako jedną
+ * ofertę zbiorczą (`AggregateOffer`, 19 wariantów, widełki cenowe od koperty
+ * gładkiej po komplet z nadrukiem, personalizacją i ekspresem). Ta strona
+ * opisuje **jeden konkretny wariant** — kopertę DL gładką — i dokłada to,
+ * czego strona główna nie niesie: `width`, `depth` i `additionalProperty`
+ * z pełną geometrią formatu. To jest ładunek, po który model przychodzi na
+ * zapytanie „jakie wymiary ma koperta DL", więc musi być w danych, a nie
+ * tylko w treści.
+ *
+ * `width` i `height` w schema.org opisują wymiary produktu, więc dla koperty
+ * podajemy krótszy i dłuższy bok wprost w milimetrach.
+ */
+export function dlEnvelopeProductJsonLd() {
+  const dl = FORMAT_MAP.DL;
+  const maxInsert = maxInsertSize(dl);
+  const url = `${SITE_URL}/koperty-dl`;
+  const images = COLORS.filter((color) => color.images?.DL)
+    .slice(0, 6)
+    .map((color) => `${SITE_URL}${color.images?.DL}`);
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: `Koperta DL ${dl.dimensions}`,
+    description: `Koperta ozdobna w formacie DL o wymiarach ${dl.dimensions}. Papier barwiony w masie 115–140 g/m², bez okienka adresowego. Mieści kartkę A4 złożoną na trzy (99 × 210 mm) oraz voucher w tym samym wymiarze. Największa wkładka: ${maxInsert.short} × ${maxInsert.long} mm. Dostępna w ${COLORS.length} kolorach w jednej cenie.`,
+    brand: { '@type': 'Brand', name: 'Envelopes' },
+    category: 'Koperty DL',
+    material: 'Papier ozdobny 115–140 g/m²',
+    size: dl.dimensions,
+    width: { '@type': 'QuantitativeValue', value: dl.width, unitCode: 'MMT' },
+    height: { '@type': 'QuantitativeValue', value: dl.height, unitCode: 'MMT' },
+    image: images,
+    url,
+    additionalProperty: [
+      { '@type': 'PropertyValue', name: 'Format', value: `DL ${dl.dimensions}` },
+      { '@type': 'PropertyValue', name: 'Kształt', value: 'Prostokątna, podłużna' },
+      {
+        '@type': 'PropertyValue',
+        name: 'Największa wkładka',
+        value: `${maxInsert.short} × ${maxInsert.long} mm`,
+      },
+      { '@type': 'PropertyValue', name: 'Okienko adresowe', value: 'Brak' },
+      { '@type': 'PropertyValue', name: 'Gramatura papieru', value: '115–140 g/m²' },
+      { '@type': 'PropertyValue', name: 'Liczba kolorów', value: String(COLORS.length) },
+    ],
+    offers: {
+      '@type': 'Offer',
+      priceCurrency: 'PLN',
+      price: DEFAULT_PRICING.base.DL.toFixed(2),
+      availability: 'https://schema.org/InStock',
+      itemCondition: 'https://schema.org/NewCondition',
+      url,
+      areaServed: 'PL',
+      eligibleQuantity: {
+        '@type': 'QuantitativeValue',
+        minValue: DEFAULT_PRICING.moqWithoutPrint,
+        unitCode: 'C62',
+      },
+      shippingDetails: {
+        '@type': 'OfferShippingDetails',
+        shippingRate: {
+          '@type': 'MonetaryAmount',
+          value: DELIVERY_COST.toFixed(2),
+          currency: 'PLN',
+        },
+        shippingDestination: {
+          '@type': 'DefinedRegion',
+          addressCountry: 'PL',
+        },
+      },
+      seller: { '@type': 'Organization', name: 'Envelopes' },
+    },
+  };
+}
+
+/**
+ * ItemList formatów kopert — DL, C6 i K4 z wymiarami i statusem dostępności.
+ *
+ * Celowo **bez** zagnieżdżonych typów `Product` i bez `Offer` dla C6 i K4.
+ * Format ze statusem „Dostępne wkrótce" opisany jako produkt z ofertą byłby
+ * deklaracją sprzedaży czegoś, czego konfigurator nie przyjmuje — to wprost
+ * ostrzeżenie w Search Console i rozjazd z katalogiem (pkt 4.10 briefu).
+ * Lista niesie sam komplet faktów: nazwę, wymiary i status.
+ */
+export function envelopeFormatsJsonLd() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Formaty kopert w Envelopes — wymiary i dostępność',
+    description: `Porównanie formatów kopert oferowanych przez Envelopes. W sprzedaży jest format DL ${FORMAT_MAP.DL.dimensions}. Pozostałe formaty mają status „Dostępne wkrótce".`,
+    numberOfItems: FORMATS.length,
+    itemListOrder: 'https://schema.org/ItemListUnordered',
+    itemListElement: FORMATS.map((format, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: `Koperta ${format.id} ${format.dimensions}`,
+      description: `Wymiary ${format.dimensions}. ${format.audience} Status w katalogu Envelopes: ${format.disabled ? 'Dostępne wkrótce' : 'dostępna w sprzedaży'}.`,
+    })),
+  };
+}
+
+/**
+ * Product + Offer dla filara „Personalizowane koperty" (/koperty-personalizowane).
+ *
+ * Świadomie `Product`, a nie `Service`. Klient nie kupuje usługi
+ * adresowania w oderwaniu od towaru — kupuje kopertę DL z nadrukowanymi
+ * danymi odbiorcy, którą wysyłamy kurierem. Cena, MOQ i dostawa dotyczą
+ * sztuki produktu, więc `Service` bez `price` za sztukę byłby sygnałem
+ * niezgodnym z tym, co widzi użytkownik w konfiguratorze i na fakturze.
+ *
+ * Cena to koperta + personalizacja, liczone z `DEFAULT_PRICING`.
+ * `image` wskazuje wyłącznie na realne zdjęcia kopert z personalizacją
+ * z `public/images/personalized/`.
+ */
+export function personalizedEnvelopeProductJsonLd() {
+  const unitPrice = round2(DEFAULT_PRICING.base.DL + DEFAULT_PRICING.personalization);
+  const url = `${SITE_URL}/koperty-personalizowane`;
+  const images = COLORS.filter((color) => color.personalizedImages?.DL)
+    .slice(0, 6)
+    .map((color) => `${SITE_URL}${color.personalizedImages?.DL}`);
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: 'Personalizowane koperty DL z adresowaniem',
+    description: `Koperta DL ${FORMAT_MAP.DL.dimensions} z personalizacją, czyli nadrukiem indywidualnych danych odbiorcy: imienia i nazwiska, pełnego adresu albo dedykacji. Dostępna w ${COLORS.length} kolorach papieru ozdobnego. Minimalna ilość ${DEFAULT_PRICING.moqWithPrint} sztuk, realizacja ${DEFAULT_PRICING.leadDaysStandard} dni roboczych lub ${DEFAULT_PRICING.leadDaysExpress} dni w trybie ekspresowym.`,
+    brand: { '@type': 'Brand', name: 'Envelopes' },
+    category: 'Koperty personalizowane z adresowaniem',
+    material: 'Papier ozdobny 115–140 g/m²',
+    size: FORMAT_MAP.DL.dimensions,
+    image: images,
+    url,
+    offers: {
+      '@type': 'Offer',
+      priceCurrency: 'PLN',
+      price: unitPrice.toFixed(2),
+      availability: 'https://schema.org/InStock',
+      itemCondition: 'https://schema.org/NewCondition',
+      url,
+      areaServed: 'PL',
+      eligibleQuantity: {
+        '@type': 'QuantitativeValue',
+        minValue: DEFAULT_PRICING.moqWithPrint,
+        unitCode: 'C62',
+      },
+      shippingDetails: {
+        '@type': 'OfferShippingDetails',
+        shippingRate: {
+          '@type': 'MonetaryAmount',
+          value: DELIVERY_COST.toFixed(2),
+          currency: 'PLN',
+        },
+        shippingDestination: {
+          '@type': 'DefinedRegion',
+          addressCountry: 'PL',
+        },
       },
       seller: { '@type': 'Organization', name: 'Envelopes' },
     },

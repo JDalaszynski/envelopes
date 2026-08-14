@@ -2,6 +2,10 @@
 
 import { useState } from 'react';
 
+import {
+  PERSONALIZATION_SHEET_EXTENSIONS,
+  PERSONALIZATION_SHEET_EXTENSIONS_LABEL,
+} from '@/lib/catalog';
 import { DEFAULT_PRICING, formatPrice } from '@/lib/pricing';
 import { Toggle } from '@/components/ui/Toggle';
 import { formatBytes } from '@/components/ui/FileDropzone';
@@ -55,8 +59,10 @@ export function StepPersonalization({
     setUploadInfo(null);
 
     const ext = selected.name.split('.').pop()?.toLowerCase() ?? '';
-    if (!['xlsx', 'xls', 'csv'].includes(ext)) {
-      setUploadError('Obsługujemy pliki XLSX, XLS i CSV — prosimy wgrać uzupełniony szablon.');
+    if (!PERSONALIZATION_SHEET_EXTENSIONS.includes(ext)) {
+      setUploadError(
+        `Obsługujemy pliki ${PERSONALIZATION_SHEET_EXTENSIONS_LABEL} — prosimy wgrać uzupełniony szablon.`
+      );
       return;
     }
 
@@ -256,7 +262,7 @@ export function StepPersonalization({
                   id="szablon-input"
                   type="file"
                   className="sr-only"
-                  accept=".xlsx,.xls,.csv"
+                  accept={PERSONALIZATION_SHEET_EXTENSIONS.map((ext) => `.${ext}`).join(',')}
                   onChange={(e) => void handleTemplateFile(e.target.files)}
                 />
               </div>

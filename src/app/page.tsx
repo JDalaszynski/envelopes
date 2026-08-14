@@ -536,11 +536,52 @@ export default function HomePage() {
             adresowego, więc nadruk i adres mogą objąć całą przednią ściankę.
           </p>
 
+          {/* Tabela statusu — trzy kolumny i nic więcej (keywords.md, rozgraniczenie
+              K3 ↔ K4). Kolumna „co się zmieści" i porównanie wkładek należą do
+              `/koperty-dl`; strona główna podaje wyłącznie wymiar i dostępność,
+              bo bez tego obiecywałaby produkt, którego konfigurator nie przyjmie.
+              Cena stoi tylko przy formacie dostępnym — cennik zapowiedzianego
+              formatu byłby obietnicą nie do zrealizowania. */}
+          <div className="table-wrap" style={{ marginTop: 'var(--space-5)' }}>
+            <table className="data">
+              <caption className="sr-only">
+                Formaty kopert Envelopes — wymiary, cena i status dostępności
+              </caption>
+              <thead>
+                <tr>
+                  <th scope="col">Format</th>
+                  <th scope="col">Wymiary</th>
+                  <th scope="col">Cena od</th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {AVAILABLE_FORMATS.map((format) => (
+                  <tr key={format.id}>
+                    <th scope="row">{format.id}</th>
+                    <td>{format.dimensions}</td>
+                    <td>{formatPrice(DEFAULT_PRICING.base[format.id])} brutto/szt.</td>
+                    <td>W sprzedaży</td>
+                  </tr>
+                ))}
+                {UPCOMING_FORMATS.map((format) => (
+                  <tr key={format.id}>
+                    <th scope="row">{format.id}</th>
+                    <td>{format.dimensions}</td>
+                    <td className="muted">—</td>
+                    <td className="muted">Dostępne wkrótce</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
           <p style={{ maxWidth: '68ch', marginTop: 'var(--space-5)' }}>
             Format DL mieści kartkę A4 złożoną na trzy, czyli 99 × 210 mm, voucher w tym samym
             wymiarze oraz złożony program wydarzenia. To wymiar, który obsługuje zdecydowaną
-            większość korespondencji firmowej — pisma, umowy, faktury i bony podarunkowe.
+            większość korespondencji firmowej — pisma, umowy, faktury i bony podarunkowe. Pełną
+            tabelę dopasowań i porównanie z formatami C6 i K4 znajdą Państwo na stronie{' '}
+            <Link href="/koperty-dl">wymiary kopert DL</Link>.
             {invitationsPost && (
               <>
                 {' '}
@@ -652,7 +693,9 @@ export default function HomePage() {
                 Personalizacja to nadruk danych odbiorcy wprost na kopercie: imienia i nazwiska albo
                 pełnego adresu. Dane przekazują Państwo na dwa sposoby — wpisując je w
                 konfiguratorze lub wgrywając uzupełniony arkusz. Dzięki temu każda koperta w partii
-                wychodzi z innym adresem, a krój pisma pozostaje ten sam.
+                wychodzi z innym adresem, a krój pisma pozostaje ten sam. Cennik, wymagania dla
+                listy adresów i proces krok po kroku opisaliśmy na stronie{' '}
+                <Link href="/koperty-personalizowane">koperty personalizowane</Link>.
                 {addressingPost && (
                   <>
                     {' '}
@@ -747,8 +790,9 @@ export default function HomePage() {
             <h2>Przykłady nadruku i personalizacji na kopertach DL</h2>
             <p>
               Zdjęcia poniżej pokazują koperty DL wykonane w naszej produkcji — z nadrukiem logo
-              i z adresowaniem. Cennik, specyfikację i proces akceptacji opisaliśmy na stronie{' '}
-              <Link href="/koperty-z-nadrukiem">koperty z nadrukiem</Link>.
+              i z adresowaniem. Cennik, specyfikację i proces akceptacji opisaliśmy na stronach{' '}
+              <Link href="/koperty-z-nadrukiem">koperty z nadrukiem</Link> oraz{' '}
+              <Link href="/koperty-personalizowane">personalizowane koperty</Link>.
             </p>
           </div>
           <div className="grid grid-4" style={{ gap: 'var(--space-4)' }}>
@@ -915,7 +959,9 @@ export default function HomePage() {
                 {formatPrice(plain.unitTotal)} brutto za sztukę ({formatPrice(plain.net)} netto) i jest
                 dostępna w {COLORS.length} kolorach w tej samej cenie. Koperty gładkie zamawiają Państwo
                 od {DEFAULT_PRICING.moqWithoutPrint} sztuki i wysyłamy je w{' '}
-                {DEFAULT_PRICING.leadDaysPlain} dni robocze.
+                {DEFAULT_PRICING.leadDaysPlain} dni robocze. Specyfikację formatu — wymiary,
+                największą wkładkę i brak okienka adresowego — zebraliśmy na stronie{' '}
+                <Link href="/koperty-dl">koperty DL {DL.dimensions}</Link>.
               </p>
             </div>
             <div>

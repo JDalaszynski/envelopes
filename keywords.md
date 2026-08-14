@@ -73,9 +73,10 @@ Drugi filar usługowy (+2,99 zł/szt.) i jedyny realny wyróżnik wobec hurtowni
 Klaster jest rozdrobniony leksykalnie — jedna strona musi obsłużyć trzy nazwy tej samej usługi:
 *personalizacja*, *adresowanie*, *imiona i nazwiska na kopertach*.
 
-**URL docelowy:** `/koperty-personalizowane` `[PROPOZYCJA]`
-**Wsparcie:** wpis `adresowanie-kopert-recznie-czy-z-arkusza` `[ISTNIEJE]` — zostaje jako TOFU,
-z linkiem do nowej strony usługowej.
+**URL docelowy:** `/koperty-personalizowane` `[ISTNIEJE]` — opublikowany 14 sierpnia 2026.
+**Wsparcie:** wpis `adresowanie-kopert-recznie-czy-z-arkusza` `[ISTNIEJE]` — oddał frazę
+`adresowanie kopert` filarowi (przepisane `keywords`, link w górę przez pole `pillar`)
+i obsługuje wyłącznie intencję procesową „który tryb przekazania danych wybrać".
 
 | Fraza | Rola | Intencja | Lejek | Wol. | P |
 | --- | --- | --- | --- | --- | --- |
@@ -92,10 +93,15 @@ z linkiem do nowej strony usługowej.
 
 **Notatki wdrożeniowe:**
 - `adresowanie koperty od firmy` ma intencję instruktażową („jak zaadresować kopertę wysyłaną
-  przez firmę") — to nie jest fraza zakupowa. Obsłużyć blokiem H2 z wzorem adresu + zdjęciem,
-  a dopiero pod nim CTA. Wepchnięcie tu oferty zabije trafność.
-- Dwa tryby zamawiania (wpisanie danych w konfiguratorze / arkusz XLSX) opisać jako tabelę
-  porównawczą — to gotowy fragment pod odpowiedzi generatywne.
+  przez firmę") — to nie jest fraza zakupowa. **Decyzja z 14 sierpnia 2026:** obsługuje ją osobny
+  wpis (content-plan.md poz. 14), a nie sekcja filara. Filar opisuje zakres usługi („co drukujemy
+  na kopercie"), nie zasady adresowania korespondencji — dwie różne intencje, dwa różne adresy.
+- ~~Dwa tryby zamawiania opisać jako tabelę porównawczą~~ — **wykonane.** Tabela porównuje
+  wpisanie danych w konfiguratorze i arkusz XLSX według sześciu kryteriów (skala, sposób
+  przekazania, źródło formularza, kontrola poprawności, praca zespołowa, limit wierszy).
+- Specyfikacja arkusza na filarze (kolumny, pola wymagane, walidacja) jest generowana
+  z `PERSONALIZATION_SHEET_COLUMNS` w `src/lib/catalog.ts` — tej samej listy, z której powstaje
+  szablon XLSX. Treść nie może rozjechać się z plikiem, który klient faktycznie pobiera.
 
 ---
 
@@ -129,9 +135,13 @@ konwersji o jedno kliknięcie.
   ten materiał należy do `/koperty-z-nadrukiem`. Cennik na stronie głównej dotyczy kopert
   **gładkich** (1 / 50 / 100 / 500 / 1 000 szt.), filar liczy koperty **z nadrukiem**
   (10 / 100 / 500 / 1 000 szt.). Dwie różne tabele, dwa różne produkty, zero nakładania.
-- **Rozgraniczenie z K4.** Strona główna podaje wymiary DL i status C6/K4 w tabeli formatów,
-  bo bez tego obiecywałaby produkt niedostępny. Nie buduje jednak sekcji „co się zmieści"
-  ani nagłówka z frazą `koperty dl wymiary` — to zostaje dla `/koperty-dl`.
+- **Rozgraniczenie z K4** (stan na 14 sierpnia 2026). Strona główna podaje wymiary DL i status
+  C6/K4, bo bez tego obiecywałaby produkt niedostępny, oraz **jedno zdanie** o tym, co format
+  mieści. Nie buduje jednak sekcji „co się zmieści", tabeli dopasowań wkładek ani nagłówka
+  z frazą `koperty dl wymiary` — te należą do `/koperty-dl`, a sekcja „Formaty" na `/` linkuje
+  do filara anchorem `wymiary kopert DL`. **Do obserwacji przy przeglądzie kwartalnym:** jeśli
+  GSC pokaże obie strony na tej samej frazie o wymiarach, zdanie ze strony głównej skracamy do
+  samego odesłania.
 - **FAQ rozdzielone.** `FAQ_ITEMS` (strona główna) obsługuje pytania o kopertę ozdobną jako
   produkt: czym jest, ile kosztuje, jakie formaty, jaka dostawa, jakie rozliczenie.
   `PRINT_FAQ_ITEMS` (filar K1) obsługuje pytania drukarskie. Pytanie „Jakie pliki mogę przesłać
@@ -148,7 +158,10 @@ AI Overviews, ChatGPT i Perplexity. Odpowiedź jest jednoznaczna i weryfikowalna
 zostać cytowanym źródłem. Ruch jest TOFU, ale to jedyny format faktycznie dostępny w sprzedaży,
 więc ścieżka do konwersji jest krótka.
 
-**URL docelowy:** `/koperty-dl` `[PROPOZYCJA]` — strona hybrydowa: specyfikacja + oferta.
+**URL docelowy:** `/koperty-dl` `[ISTNIEJE]` — opublikowany 14 sierpnia 2026.
+Strona jest **specyfikacyjna, nie usługowa**: nie ma nagłówka cenowego, nie powtarza palety
+19 kolorów i nie rozkłada na czynniki cen nadruku ani personalizacji. Wpis blogowy
+`jak-dobrac-koperte-do-zaproszen-firmowych` linkuje w górę do filara (pole `pillar`).
 
 | Fraza | Rola | Intencja | Lejek | Wol. | P |
 | --- | --- | --- | --- | --- | --- |
@@ -162,11 +175,25 @@ więc ścieżka do konwersji jest krótka.
 **Notatki wdrożeniowe:**
 - Wymiar w katalogu to **110 × 220 mm** (`src/lib/catalog.ts`). Każda treść musi używać tej
   wartości — rozbieżność z kartą produktu jest natychmiast wykrywalna i kosztuje wiarygodność.
-- `kartka do koperty dl` i `format do koperty dl` wymagają tabeli dopasowań (co się zmieści:
-  A4 składane na trzy = 99 × 210 mm, DL wkładka, złożony program). To najczęściej cytowalny
-  fragment tego typu strony.
-- `koperty bez okienka` — cała oferta jest bez okienka. To gotowy, darmowy wyróżnik: jedno
-  zdanie potwierdzające wprost („wszystkie koperty Envelopes są bez okienka adresowego").
+- ~~`kartka do koperty dl` i `format do koperty dl` wymagają tabeli dopasowań~~ — **wykonane
+  na filarze.** Tabela obejmuje 10 standardowych wkładek (A4 na trzy, voucher DL, A6, zdjęcie
+  10 × 15 cm, banknot 500 zł, karta ID-1, wizytówka oraz trzy wkładki, które **się nie
+  mieszczą**) i jest w całości liczona przez `fitsInFormat()` z wymiarów katalogowych.
+- **Rozgraniczenie wewnątrz klastra.** Filar rozstrzyga wymiary w dwóch płaszczyznach:
+  tabela formatów (DL / C6 / K4 — wymiary, największa wkładka, status) i tabela dopasowań
+  wkładek. Frazy wspierające dostają osobne intencje: `format do koperty dl` (poz. 10 planu) —
+  odwrotne mapowanie wkładka → format jako przewodnik decyzyjny; `kartka do koperty dl`
+  (poz. 11) — grubość wkładu, czyli ile arkuszy i jakiej gramatury; `koperty bez okienka`
+  (poz. 13) — kiedy brak okienka pomaga, a kiedy wymusza adresowanie. Pytanie „Czym różni się
+  koperta DL od C6" należy do FAQ filara i **nie może** wrócić w FAQ pozycji 10.
+- `koperta prostokątna` / `koperty prostokątne` — obsłużone akapitem „Kształt prostokątny,
+  klapka na dłuższym boku" i wierszem „Kształt" w tabeli specyfikacji. Osobnej strony te frazy
+  nie dostają: to opis tego samego produktu innym słowem.
+- `koperty bez okienka` — cała oferta jest bez okienka. Filar podaje fakt (wiersz specyfikacji
+  + akapit „Brak okienka na całej ofercie"), intencja decyzyjna zostaje dla poz. 13.
+- **Rozgraniczenie z K3.** Filar nie ma nagłówka cenowego — cena 2,58 zł stoi w jednym wierszu
+  tabeli specyfikacji i w `Offer`, a cennik i tabela wartości zamówienia zostają na `/`.
+  Sekcja kolorów pokazuje 6 bestsellerów i odsyła do palety na `/#kolory`.
 
 ---
 
@@ -309,9 +336,9 @@ to zapis na powiadomienie o dostępności formatów, nie wejście do konfigurato
 | Klaster | URL docelowy | Status | Priorytet | Uzasadnienie kolejności |
 | --- | --- | --- | --- | --- |
 | K1 Nadruk / logo | `/koperty-z-nadrukiem` | **istnieje** | **P0** | Największa marża, produkt aktywny, intencja czysto zakupowa |
-| K2 Personalizacja | `/koperty-personalizowane` | do zbudowania | **P0** | Najwyższa dopłata (+2,99 zł), realny wyróżnik rynkowy |
+| K2 Personalizacja | `/koperty-personalizowane` | **istnieje** | **P0** | Najwyższa dopłata (+2,99 zł), realny wyróżnik rynkowy |
 | K3 Ozdobne / kolorowe | `/` | **przebudowane** | **P0** | Optymalizacja istniejącego zasobu, zero kosztu wdrożenia |
-| K4 Format DL | `/koperty-dl` | do zbudowania | **P0** | Najwyższy potencjał cytowań w AI, jedyny dostępny format |
+| K4 Format DL | `/koperty-dl` | **istnieje** | **P0** | Najwyższy potencjał cytowań w AI, jedyny dostępny format |
 | K7 Vouchery | `/koperty-na-vouchery` | do zbudowania | **P0** | 9 z 22 profili klienta, zakupy cykliczne, brak konkurencji tematycznej |
 | K5 Kolory | `/koperty/[kolor]` × 19 | do zbudowania | P1 | Skalowalny long-tail na gotowych danych z katalogu |
 

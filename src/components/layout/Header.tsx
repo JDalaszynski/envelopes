@@ -9,9 +9,13 @@ import { useCart } from '@/components/providers/CartProvider';
 import { useAuth } from '@/components/providers/AuthProvider';
 import { isCheckoutRoute } from '@/lib/chrome';
 
+/* Pasek celowo nie zawiera stron ofertowych (filarów K1, K2 i K4). Trzy pozycje
+   zaczynające się od słowa „Koperty" konkurowały z przyciskiem „Zamów Koperty"
+   i odciągały od konfiguratora, a linkowanie serwisowe do filarów zapewnia
+   stopka (sekcja „Sklep") oraz treść strony głównej — sekcje „Formaty",
+   „Usługi", „Realizacje" i „Więcej o kopertach". Nawigacja obsługuje tylko
+   zadania użytkownika: zakup, wiedzę i kontakt. */
 const NAV = [
-  /* Filar oferty — strona z najsilniejszą intencją zakupową (keywords.md, K1) */
-  { href: '/koperty-z-nadrukiem', label: 'Koperty z nadrukiem' },
   { href: '/blog', label: 'Blog' },
   { href: '/kontakt', label: 'Kontakt' },
 ];
