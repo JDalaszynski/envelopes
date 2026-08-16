@@ -612,18 +612,7 @@ export default function VoucherEnvelopesPage() {
                 <Link href="/koperty-personalizowane">koperty personalizowane</Link>.
               </p>
               <div className="row" style={{ marginTop: 'var(--space-4)' }}>
-                {/* Zakres imienny, nie domyślny adresowy: akapit wyżej mówi, że
-                    przy bonie wręczanym do ręki wystarcza samo imię, więc
-                    konfigurator ma otworzyć się w tym trybie. Inaczej klient
-                    cofa się poprawiać ustawienie, które przed chwilą przeczytał
-                    jako właściwe (ciągłość intencji, pkt 7 briefu). */}
-                <ConfigureLink
-                  format="DL"
-                  print
-                  personalization
-                  personalizationScope="imiona"
-                  className="btn btn-sm"
-                >
+                <ConfigureLink format="DL" print personalization className="btn btn-sm">
                   Wyceń koperty z logo i imieniem
                 </ConfigureLink>
               </div>
