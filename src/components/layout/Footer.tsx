@@ -49,9 +49,6 @@ export function Footer() {
             <h3>Sklep</h3>
             <ul className="footer-list">
               <li><Link href="/#konfigurator">Konfigurator</Link></li>
-              <li><Link href="/koperty-dl">Koperty DL 110 × 220 mm</Link></li>
-              <li><Link href="/koperty-z-nadrukiem">Koperty z nadrukiem</Link></li>
-              <li><Link href="/koperty-personalizowane">Koperty personalizowane</Link></li>
               <li><Link href="/#kolory">Paleta kolorów</Link></li>
               <li><Link href="/#formaty">Formaty i zastosowania</Link></li>
               <li><Link href="/#faq">Najczęstsze pytania</Link></li>
@@ -84,6 +81,16 @@ export function Footer() {
               <span className="pay-badge">Instagram</span>
               <span className="pay-badge">Facebook</span>
             </div>
+          </div>
+          
+          <div>
+            <h3>Oferta</h3>
+            <ul className="footer-list">
+              <li><Link href="/koperty-dl">Koperty DL 110 × 220 mm</Link></li>
+              <li><Link href="/koperty-z-nadrukiem">Koperty z nadrukiem</Link></li>
+              <li><Link href="/koperty-personalizowane">Koperty personalizowane</Link></li>
+              <li><Link href="/koperty-na-vouchery">Koperty na vouchery</Link></li>
+            </ul>
           </div>
         </div>
 

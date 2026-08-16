@@ -1,5 +1,6 @@
 import 'server-only';
 
+import { personalizationScope } from './catalog';
 import { formatPrice, formatDate } from './pricing';
 import {
   BANK_TRANSFER_DETAILS,
@@ -8,6 +9,7 @@ import {
   isGatewayPayment,
 } from './orders';
 import { SITE_URL } from './seo';
+import { readLocalFile } from './storage';
 import type { Order } from './types';
 
 /**
@@ -32,6 +34,7 @@ interface EmailPayload {
   to: string;
   subject: string;
   html: string;
+  attachment?: { url?: string; content?: string; name: string }[];
 }
 
 async function brevoFetch(endpoint: string, body: unknown): Promise<Response> {
@@ -55,18 +58,23 @@ export async function sendEmail(payload: EmailPayload): Promise<{ sent: boolean;
         .replace(/<[^>]+>/g, ' ')
         .replace(/\s+/g, ' ')
         .trim()
-        .slice(0, 600)}\n`
+        .slice(0, 600)}\n  Załączniki: ${payload.attachment?.length ?? 0}\n`
     );
     return { sent: false, reason: 'BREVO_API_KEY nie jest ustawiony — e-mail zapisany w logu serwera.' };
   }
 
   try {
-    const res = await brevoFetch('/smtp/email', {
+    const body: Record<string, unknown> = {
       sender: SENDER,
       to: [{ email: payload.to }],
       subject: payload.subject,
       htmlContent: payload.html,
-    });
+    };
+    if (payload.attachment && payload.attachment.length > 0) {
+      body.attachment = payload.attachment;
+    }
+
+    const res = await brevoFetch('/smtp/email', body);
     if (!res.ok) {
       console.error('[Brevo] Błąd wysyłki:', res.status, await res.text());
       return { sent: false, reason: `Brevo zwróciło status ${res.status}` };
@@ -87,14 +95,14 @@ export async function sendEmail(payload: EmailPayload): Promise<{ sent: boolean;
 const siteUrl = SITE_URL;
 
 function shell(title: string, body: string): string {
-  return `<!doctype html><html lang="pl"><body style="margin:0;background:#F5F1E6;padding:32px 16px;font-family:Georgia,serif;color:#20242E">
+  return `<!doctype html><html lang="pl"><body style="margin:0;background:#f4f2ec;padding:32px 16px;font-family:Georgia,serif;color:#1f2430">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center">
-<table role="presentation" width="560" cellpadding="0" cellspacing="0" style="background:#FFFFFF;border:1px solid #E3D9C4;border-radius:14px;padding:32px">
+<table role="presentation" width="560" cellpadding="0" cellspacing="0" style="background:#FFFFFF;border:1px solid #dcd8cc;border-radius:14px;padding:32px">
 <tr><td>
-<p style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#565C6E;margin:0 0 8px;font-family:Arial,sans-serif">Envelopes</p>
+<p style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#575e6e;margin:0 0 8px;font-family:Arial,sans-serif">Envelopes</p>
 <h1 style="font-size:24px;line-height:1.25;margin:0 0 16px">${title}</h1>
-<div style="font-family:Arial,sans-serif;font-size:15px;line-height:1.6;color:#20242E">${body}</div>
-<p style="margin:32px 0 0;font-family:Arial,sans-serif;font-size:12px;color:#565C6E">
+<div style="font-family:Arial,sans-serif;font-size:15px;line-height:1.6;color:#1f2430">${body}</div>
+<p style="margin:32px 0 0;font-family:Arial,sans-serif;font-size:12px;color:#575e6e">
 ${CONTACT_DETAILS.company}, ${CONTACT_DETAILS.address} · NIP ${CONTACT_DETAILS.nip}<br>
 ${CONTACT_DETAILS.email} · ${CONTACT_DETAILS.phone}<br>
 Wiadomość dotyczy zamówienia złożonego w serwisie envelopes.pl.</p>
@@ -103,16 +111,17 @@ Wiadomość dotyczy zamówienia złożonego w serwisie envelopes.pl.</p>
 
 function itemsTable(order: Order): string {
   const rows = order.items
-    .map(
-      (item) => `<tr>
-<td style="padding:8px 0;border-bottom:1px solid #E3D9C4">${item.name}<br>
-<span style="font-family:monospace;font-size:13px;color:#565C6E">${item.price.quantity} szt. × ${formatPrice(
+    .map((item) => {
+      const speed = item.config.shippingSpeed === 'ekspres' ? 'Tryb ekspresowy' : 'Tryb standardowy';
+      return `<tr>
+<td style="padding:8px 0;border-bottom:1px solid #dcd8cc">${item.name}<br>
+<span style="font-family:monospace;font-size:13px;color:#575e6e">${item.price.quantity} szt. × ${formatPrice(
         item.price.unitTotal
-      )}</span></td>
-<td align="right" style="padding:8px 0;border-bottom:1px solid #E3D9C4;font-family:monospace">${formatPrice(
+      )} | Czas realizacji: ${speed}</span></td>
+<td align="right" style="padding:8px 0;border-bottom:1px solid #dcd8cc;font-family:monospace">${formatPrice(
         item.price.gross
-      )}</td></tr>`
-    )
+      )}</td></tr>`;
+    })
     .join('');
   return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:16px 0;font-size:14px">
 ${rows}
@@ -126,10 +135,6 @@ ${rows}
 
 /** Potwierdzenie zamówienia — dwa warianty wg pkt 1.12. */
 export function orderConfirmationEmail(order: Order): EmailPayload {
-  const visualizationNote = order.requiresVisualization
-    ? `<p style="background:#F3E1DE;border-left:3px solid #7A2A2E;padding:12px 16px;margin:16px 0">
-Zamówienie obejmuje nadruk lub personalizację. Wkrótce otrzymają Państwo e-mail z wizualizacją projektu do akceptacji — produkcja ruszy po jej zatwierdzeniu.</p>`
-    : '';
 
   if (isGatewayPayment(order.paymentMethod)) {
     return {
@@ -141,8 +146,7 @@ Zamówienie obejmuje nadruk lub personalizację. Wkrótce otrzymają Państwo e-
 <strong style="font-family:monospace">${order.number}</strong>.</p>
 ${itemsTable(order)}
 <p>Przewidywana data dostawy: <strong>${formatDate(order.estimatedDelivery)}</strong>.</p>
-${visualizationNote}
-<p><a href="${siteUrl}/zamowienia" style="color:#7A2A2E">Podgląd zamówienia w panelu klienta</a></p>`
+<p><a href="${siteUrl}/zamowienia" style="color:#2a4e7e">Podgląd zamówienia w panelu klienta</a></p>`
       ),
     };
   }
@@ -156,8 +160,7 @@ ${visualizationNote}
         `<p>Zamówienie <strong style="font-family:monospace">${order.number}</strong> zostało przyjęte do realizacji.
 Rozliczenie następuje na podstawie faktury z odroczonym terminem płatności.</p>
 ${itemsTable(order)}
-<p>Termin płatności faktury: <strong>${formatDate(order.paymentDueDate ?? order.estimatedDelivery)}</strong>.</p>
-${visualizationNote}`
+<p>Termin płatności faktury: <strong>${formatDate(order.paymentDueDate ?? order.estimatedDelivery)}</strong>.</p>`
       ),
     };
   }
@@ -170,16 +173,15 @@ ${visualizationNote}`
       'Zamówienie przyjęte — czekamy na wpłatę',
       `<p>Zamówienie <strong style="font-family:monospace">${order.number}</strong> zostało zarejestrowane.
 Poniżej dane do przelewu.</p>
-<table role="presentation" width="100%" style="background:#F5F1E6;border-radius:8px;padding:16px;font-size:14px;margin:16px 0">
+<table role="presentation" width="100%" style="background:#f4f2ec;border-radius:8px;padding:16px;font-size:14px;margin:16px 0">
 <tr><td style="padding:4px 0">Odbiorca</td><td align="right">${BANK_TRANSFER_DETAILS.odbiorca}</td></tr>
 <tr><td style="padding:4px 0">Numer konta</td><td align="right" style="font-family:monospace">${BANK_TRANSFER_DETAILS.konto}</td></tr>
 <tr><td style="padding:4px 0">Kwota</td><td align="right" style="font-family:monospace">${formatPrice(order.totals.gross)}</td></tr>
 <tr><td style="padding:4px 0">Tytuł przelewu</td><td align="right" style="font-family:monospace">${order.number}</td></tr>
 </table>
 ${itemsTable(order)}
-<p><a href="${siteUrl}/api/dokumenty/proforma/${order.number}" style="color:#7A2A2E">Pobierz fakturę proforma (PDF)</a></p>
-<p>Czekamy na zaksięgowanie wpłaty — druk ruszy dopiero po jej otrzymaniu.</p>
-${visualizationNote}`
+<p><a href="${siteUrl}/api/dokumenty/proforma/${order.number}" style="color:#2a4e7e">Pobierz fakturę proforma (PDF)</a></p>
+<p>Czekamy na zaksięgowanie wpłaty — druk ruszy dopiero po jej otrzymaniu.</p>`
     ),
   };
 }
@@ -195,15 +197,15 @@ export function visualizationEmail(order: Order): EmailPayload {
       `<p>Nasz grafik przygotował wizualizację do zamówienia
 <strong style="font-family:monospace">${order.number}</strong>. Prosimy o jej sprawdzenie i zatwierdzenie —
 produkcja ruszy po Państwa akceptacji.</p>
-<table role="presentation" width="100%" style="background:#F5F1E6;border:1px dashed #E3D9C4;border-radius:8px;padding:32px;text-align:center;margin:16px 0">
-<tr><td style="color:#565C6E;font-size:13px;font-family:monospace">[Podgląd wizualizacji — ${order.items[0]?.name ?? 'projekt'}]</td></tr>
+<table role="presentation" width="100%" style="background:#f4f2ec;border:1px dashed #dcd8cc;border-radius:8px;padding:32px;text-align:center;margin:16px 0">
+<tr><td style="color:#575e6e;font-size:13px;font-family:monospace">[Podgląd wizualizacji — ${order.items[0]?.name ?? 'projekt'}]</td></tr>
 </table>
 <p style="text-align:center;margin:24px 0">
-<a href="${url}?akcja=akceptuj" style="display:inline-block;background:#7A2A2E;color:#fff;text-decoration:none;padding:12px 24px;border-radius:8px;font-family:Arial,sans-serif;font-weight:bold">Akceptuję projekt</a>
+<a href="${url}?akcja=akceptuj" style="display:inline-block;background:#2a4e7e;color:#fff;text-decoration:none;padding:12px 24px;border-radius:8px;font-family:Arial,sans-serif;font-weight:bold">Akceptuję projekt</a>
 &nbsp;&nbsp;
-<a href="${url}?akcja=uwagi" style="display:inline-block;border:1px solid #E3D9C4;color:#20242E;text-decoration:none;padding:12px 24px;border-radius:8px;font-family:Arial,sans-serif">Zgłoś uwagi</a>
+<a href="${url}?akcja=uwagi" style="display:inline-block;border:1px solid #dcd8cc;color:#1f2430;text-decoration:none;padding:12px 24px;border-radius:8px;font-family:Arial,sans-serif">Zgłoś uwagi</a>
 </p>
-<p style="font-size:13px;color:#565C6E">Link prowadzi do widoku akceptacji i nie wymaga logowania.</p>`
+<p style="font-size:13px;color:#575e6e">Link prowadzi do widoku akceptacji i nie wymaga logowania.</p>`
     ),
   };
 }
@@ -228,8 +230,22 @@ export function paymentConfirmedEmail(order: Order): EmailPayload {
   };
 }
 
-/** Powiadomienie o zmianie statusu zamówienia. */
 export function statusChangeEmail(order: Order, statusLabel: string): EmailPayload {
+  let customMessage = '';
+
+  if (order.status === 'czeka_na_akceptacje') {
+    customMessage = `
+<div style="background:#f4f2ec;border-left:3px solid #2a4e7e;padding:16px 20px;margin:24px 0;border-radius:0 8px 8px 0;">
+  <p style="margin:0 0 8px;font-weight:600;color:#2a4e7e;">Projekt graficzny jest już gotowy!</p>
+  <p style="margin:0;font-size:14px;line-height:1.5;color:#575e6e;">Nasz grafik przygotował wizualizację i wysłał ją do Państwa w osobnej wiadomości. Bardzo prosimy o rzut okiem i odpowiedź bezpośrednio na tamtego e-maila (z akceptacją lub uwagami), abyśmy mogli bezzwłocznie ruszyć z drukiem.</p>
+</div>`;
+  } else if (order.status === 'gotowe_do_wysylki') {
+    customMessage = `
+<div style="margin:24px 0;">
+  <p style="margin:0;font-size:15px;line-height:1.5;">Paczka została starannie spakowana i obecnie oczekuje na odbiór przez kuriera. Już niebawem wyruszy w drogę!</p>
+</div>`;
+  }
+
   return {
     to: order.customer.email,
     subject: `Zamówienie ${order.number} — status: ${statusLabel}`,
@@ -237,7 +253,8 @@ export function statusChangeEmail(order: Order, statusLabel: string): EmailPaylo
       `Status zamówienia: ${statusLabel}`,
       `<p>Status zamówienia <strong style="font-family:monospace">${order.number}</strong>
 został zmieniony na <strong>${statusLabel}</strong>.</p>
-<p><a href="${siteUrl}/zamowienia/${order.number}" style="color:#7A2A2E">Szczegóły zamówienia</a></p>`
+${customMessage}
+<p><a href="${siteUrl}/zamowienia/${order.number}" style="color:#2a4e7e;font-weight:bold;">Szczegóły zamówienia</a></p>`
     ),
   };
 }
@@ -263,6 +280,138 @@ ${data.phone ? `<strong>Telefon:</strong> ${data.phone}<br>` : ''}
 ${data.quantity ? `<strong>Szacowana ilość:</strong> ${data.quantity} szt.<br>` : ''}
 <strong>Temat:</strong> ${data.topic}</p>
 <p>${data.message.replace(/\n/g, '<br>')}</p>`
+    ),
+  };
+}
+
+/** Powiadomienie do obsługi sklepu o nowym zamówieniu. */
+export async function adminNewOrderEmail(order: Order): Promise<EmailPayload> {
+  const isPaid = order.paymentStatus === 'oplacone';
+  const paymentStatusText = isPaid
+    ? '<strong style="color: green;">Opłacone</strong>'
+    : '<strong style="color: #d9534f;">Nieopłacone (oczekuje)</strong>';
+
+  const attachment: { url?: string; content?: string; name: string }[] = [];
+  let filesHtml = '';
+
+  for (const [index, item] of order.items.entries()) {
+    const posNum = index + 1;
+    const safeName = item.name.replace(/[^a-zA-Z0-9_]/g, '_');
+    let hasFiles = false;
+    let itemHtml = `<h4 style="margin: 16px 0 8px;">Pozycja ${posNum}: ${item.name}</h4><ul style="margin:0 0 16px;padding-left:20px;">`;
+
+    for (const [fIdx, file] of item.config.printFiles.entries()) {
+      if (file.url) {
+        const name = `Pozycja_${posNum}_Nadruk_${fIdx + 1}_${safeName}${file.ext}`;
+        const absoluteUrl = file.url.startsWith('/') ? `${siteUrl}${file.url}` : file.url;
+        if (absoluteUrl.startsWith('https://')) {
+          attachment.push({ url: absoluteUrl, name });
+        } else if (file.path) {
+          const buffer = await readLocalFile(file.path);
+          if (buffer) {
+            attachment.push({ content: buffer.toString('base64'), name });
+          }
+        }
+        itemHtml += `<li><a href="${absoluteUrl}">Nadruk ${fIdx + 1} (${name})</a></li>`;
+        hasFiles = true;
+      }
+    }
+
+    const pFile = item.config.personalizationFile;
+    if (pFile && pFile.url) {
+      const name = `Pozycja_${posNum}_Personalizacja_${safeName}${pFile.ext}`;
+      const absoluteUrl = pFile.url.startsWith('/') ? `${siteUrl}${pFile.url}` : pFile.url;
+      if (absoluteUrl.startsWith('https://')) {
+        attachment.push({ url: absoluteUrl, name });
+      } else if (pFile.path) {
+        const buffer = await readLocalFile(pFile.path);
+        if (buffer) {
+          attachment.push({ content: buffer.toString('base64'), name });
+        }
+      }
+      itemHtml += `<li><a href="${absoluteUrl}">Plik personalizacji (${name})</a></li>`;
+      hasFiles = true;
+    }
+
+    if (item.config.personalization) {
+      itemHtml += `<li><strong>Zakres personalizacji:</strong> ${personalizationScope(
+        item.config.personalizationScope
+      ).label.toLowerCase()}</li>`;
+      hasFiles = true;
+    }
+
+    if (item.config.personalizationText) {
+      itemHtml += `<li><strong>Tekst personalizacji:</strong> ${item.config.personalizationText}</li>`;
+      hasFiles = true;
+    }
+
+    if (item.config.printNotes) {
+      itemHtml += `<li><strong>Uwagi do druku:</strong> ${item.config.printNotes}</li>`;
+      hasFiles = true;
+    }
+
+    itemHtml += `</ul>`;
+    if (hasFiles) {
+      filesHtml += itemHtml;
+    }
+  }
+
+  const filesSection = filesHtml
+    ? `<div style="margin-top:32px;border-top:1px solid #dcd8cc;padding-top:16px;">
+         <h3 style="margin:0 0 8px;">Pliki do zamówienia (nadruki / personalizacja)</h3>
+         <p style="font-size:13px;color:#575e6e;margin-bottom:16px;">Pliki zostały dołączone jako załączniki do tego e-maila. W przypadku bardzo dużych plików lub problemów z załącznikami, użyj poniższych bezpiecznych linków do bezpośredniego pobrania z serwera.</p>
+         ${filesHtml}
+       </div>`
+    : '';
+
+  const customer = order.customer;
+  const address = customer.isCompany
+    ? `${customer.firma}<br>NIP: ${customer.nip}<br>${customer.ulica}, ${customer.kodPocztowy} ${customer.miasto}`
+    : `${customer.imie} ${customer.nazwisko}<br>${customer.ulica}, ${customer.kodPocztowy} ${customer.miasto}`;
+    
+  const deliveryAddress = customer.deliveryDifferent
+    ? `${customer.deliveryUlica}, ${customer.deliveryKodPocztowy} ${customer.deliveryMiasto}`
+    : `${customer.ulica}, ${customer.kodPocztowy} ${customer.miasto}`;
+    
+  const delivery = order.delivery.method === 'kurier'
+    ? `Kurier (dostawa pod adres: ${deliveryAddress})`
+    : `Paczkomat (kod: ${order.delivery.point?.name || 'Brak kodu'})`;
+
+  return {
+    to: process.env.BREVO_SENDER_EMAIL ?? 'kontakt@envelopes.pl',
+    subject: `Nowe zamówienie ${order.number} w systemie`,
+    attachment,
+    html: shell(
+      `Nowe zamówienie: ${order.number}`,
+      `<p>W sklepie złożono nowe zamówienie.</p>
+
+<table role="presentation" width="100%" style="background:#f4f2ec;border-radius:8px;padding:16px;font-size:14px;margin:16px 0">
+<tr><td style="padding:4px 0">Status płatności</td><td align="right">${paymentStatusText}</td></tr>
+<tr><td style="padding:4px 0">Metoda płatności</td><td align="right">${PAYMENT_METHOD_LABEL[order.paymentMethod]}</td></tr>
+</table>
+
+${itemsTable(order)}
+
+<h3 style="margin: 24px 0 8px;">Dane zamawiającego</h3>
+<p style="margin:0;font-size:14px;line-height:1.5;">
+  <strong>Imię i nazwisko:</strong> ${customer.imie} ${customer.nazwisko}<br>
+  <strong>Email:</strong> <a href="mailto:${customer.email}">${customer.email}</a><br>
+  <strong>Telefon:</strong> ${customer.telefon}
+</p>
+
+<h3 style="margin: 24px 0 8px;">Dane do faktury / rachunku</h3>
+<p style="margin:0;font-size:14px;line-height:1.5;">
+  ${address}
+</p>
+
+<h3 style="margin: 24px 0 8px;">Dostawa</h3>
+<p style="margin:0;font-size:14px;line-height:1.5;">
+  ${delivery}
+</p>
+
+${filesSection}
+
+<p style="margin-top:32px;"><a href="${siteUrl}/admin/zamowienia/${order.number}" style="display:inline-block;padding:12px 24px;background:#2a4e7e;color:#fff;text-decoration:none;border-radius:4px;font-weight:bold;">Przejdź do panelu administracyjnego</a></p>`
     ),
   };
 }

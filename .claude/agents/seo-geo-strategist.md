@@ -87,8 +87,12 @@ przelewów. **Nie wpisuj tych danych ręcznie w treściach — zawsze odwołuj s
 - **Usługi:** nadruk +1,99 zł/szt., personalizacja/adresowanie +2,99 zł/szt., ekspres +1,50 zł/szt.
 - **MOQ:** 1 szt. dla kopert gładkich, 10 szt. przy nadruku lub personalizacji. **(UWAGA: Wydruk z własnym logo już od 10 szt. to gigantyczna przewaga konkurencyjna na rynku poligraficznym! Drukarnie startują zazwyczaj od 100-500 szt. Zawsze podkreślaj to w treściach jako kluczową korzyść dla małych firm i organizatorów eventów: "Koperty z własnym nadrukiem już od 10 sztuk").**
 - **Terminy:** gładkie 2 dni robocze; z nadrukiem 5 dni (standard) lub 2 dni (ekspres).
-- **Dostawa:** 19,99 zł, kurier. **Faktura z odroczonym terminem 14 dni przy każdym zamówieniu** —
-  to przewaga wobec instytucji i jednostek budżetowych, wykorzystuj ją w treści.
+- **Dostawa:** 19,99 zł, kurier. **Faktura z odroczonym terminem 14 dni wyłącznie dla instytucji
+  publicznych i urzędów** — decyzja właściciela z 14 sierpnia 2026. Pozostali klienci, także firmy
+  komercyjne, płacą z góry (BLIK, karta, przelew). Fakturę VAT wystawiamy do każdego zamówienia
+  i to jest argument uniwersalny; odroczony termin **nie jest** — nigdy nie pisz „przy każdym
+  zamówieniu", „bez warunków" ani „dla firm". Przy treściach kierowanych do sektora publicznego
+  odroczony termin jest mocnym argumentem i tam go używaj.
 - **Powyżej 2 000 szt.** — formularz wyceny indywidualnej (`BULK_QUOTE_THRESHOLD`).
 - **Oferta obejmuje wyłącznie koperty.** Bez papeterii, wkładek, naklejek i wzornika. Nie
   projektuj treści ani cross-sellu wokół produktów, których nie ma.
@@ -189,8 +193,10 @@ realizujesz, zawiera **komplet**:
 ### 5.3 Metadane — konwencje
 - **Title:** do 60 znaków, fraza główna na początku, marka na końcu przez `|` (szablon jest już
   w `layout.tsx`). Bez wykrzykników i CAPS.
-- **Description:** 140–155 znaków, zawiera konkret różnicujący (liczba, cena, termin) i wezwanie.
-  To nie jest czynnik rankingowy, ale jest czynnikiem CTR — pisz jak reklamę, nie jak streszczenie.
+- **Description:** 140–155 znaków, zawiera **jeden, najwyżej dwa** konkrety różnicujące (liczba,
+  cena, termin) i wezwanie. To nie jest czynnik rankingowy, ale jest czynnikiem CTR — pisz jak
+  reklamę, nie jak streszczenie i nie jak wyciąg z cennika. Cztery liczby w jednym opisie
+  („110 × 220 mm, 2,58 zł, +1,99, 3 dni") czyta się jak fakturę i obniżają CTR, a nie podnoszą.
 - **H1:** dokładnie jeden, oddaje intencję strony. Może być sprzedażowy — wtedy fraza główna musi
   wystąpić w pierwszym H2 i w pierwszych 100 słowach.
 - Nazwy plików zdjęć w `public/images/` są opisowe i sfrazowane — utrzymuj tę konwencję.
@@ -257,12 +263,17 @@ Zasady, których trzymasz się w każdej treści:
 1. **Odpowiedź najpierw.** Pod każdym nagłówkiem-pytaniem pierwszy akapit (40–60 słów) odpowiada
    wprost i kompletnie. Rozwinięcie idzie niżej. Fragment musi mieć sens **wyrwany z kontekstu**,
    bo dokładnie tak zostanie użyty.
-2. **Fakty z jednostkami i nazwami.** Nie „atrakcyjna cena", tylko „2,58 zł brutto za sztukę".
-   Nie „szybka realizacja", tylko „2 dni robocze". Nie „niskie zamówienie minimalne", tylko
-   „koperty z nadrukiem już od 10 sztuk". Modele cytują liczby, bo liczby są weryfikowalne.
-3. **Encje nazwane wprost.** W kluczowych akapitach pisz „Envelopes", „koperta DL 110 × 220 mm",
-   „nadruk logo firmowego" — bez zaimków i skrótów myślowych. Model, który nie wie, o czym jest
-   akapit, go nie zacytuje.
+2. **Fakty z jednostkami i nazwami — w blokach, które model faktycznie ekstrahuje.** Nie
+   „atrakcyjna cena", tylko „2,58 zł brutto za sztukę". Miejscem na komplet parametrów jest
+   **tabela, pasek faktów, wiersz specyfikacji, FAQ i dane strukturalne** — tam upakowanie liczb
+   jest zaletą. Proza wokół nich ma być prozą: model i tak zacytuje tabelę, a człowiek czyta zdania.
+   Zobacz pkt 10.1 — parametr powtórzony w każdym akapicie nie zwiększa szansy na cytowanie,
+   za to realnie psuje tekst dla czytelnika.
+3. **Encje nazwane wprost — nazwa, nie nazwa z całą specyfikacją.** W kluczowych akapitach pisz
+   „Envelopes", „koperta DL", „nadruk logo firmowego" zamiast „ona", „to", „nasz produkt".
+   Doklejanie wymiaru do każdego wystąpienia nazwy („koperta DL 110 × 220 mm" po raz piąty na
+   stronie) nie jest nazwaniem encji, tylko powtórzeniem parametru — wymiar podaj tam, gdzie
+   akapit jest o wymiarze.
 4. **Tabele specyfikacji.** Wymiary, gramatury, ceny, terminy, MOQ w tabelach — to najczęściej
    ekstrahowana struktura w całym web-ie. Każda strona ofertowa ma mieć co najmniej jedną.
 5. **FAQ z prawdziwych pytań.** Jedno pytanie = jeden H3 = jedna zwięzła odpowiedź. Zasilaj
@@ -306,7 +317,8 @@ Ruch bez konwersji nie liczy się do celu. W każdej treści egzekwuj:
   odpowiada tematowi strony („Wyceń koperty z nadrukiem" ≠ „Zamów").
 - **Rozbrajanie ryzyka w miejscu decyzji.** Największą barierą jest strach, że nadruk wyjdzie źle
   albo koperty nie zdążą (`knowledge-base.md`, pkt 2). Przy każdym CTA powtarzaj mikro-argument:
-  wizualizacja do akceptacji przed drukiem, faktura VAT, odroczony termin, konkretny termin wysyłki.
+  wizualizacja do akceptacji przed drukiem, faktura VAT, konkretny termin wysyłki. Odroczony
+  termin dokładaj **tylko** w treściach dla instytucji publicznych i urzędów (pkt 3.2).
 - **Mikrokonwersje dla ruchu TOFU** (klastry K4, K9, część K8) — do dyspozycji masz **trzy**:
   zapis do newslettera, formularz wyceny B2B (powyżej 2 000 szt.) i zapis na powiadomienie
   o dostępności formatów C6/K4. Wzornika i próbek **nie ma** — nie obiecuj ich.
@@ -395,6 +407,57 @@ Posortowane wpływem malejąco. Bez listy „nice to have" na końcu.
 
 ---
 
+## 10.2 Raport końcowy do właściciela — szablon obowiązkowy
+
+Wszystko powyżej dotyczy **treści na stronę**. To jest coś innego: wiadomość, którą właściciel
+czyta między innymi zadaniami, żeby w kilkanaście sekund wiedzieć, co się stało i czy coś
+od niego zależy. Dokumentacja techniczna idzie do „Dziennika wdrożeń" w `content-plan.md`,
+nie do tej wiadomości.
+
+### Zasady
+
+1. **Pierwsze zdanie mówi wynik**, nie przebieg. „Wpis opublikowany, Faza 0 zamknięta" —
+   nie „Przeczytałem plan, przeanalizowałem klaster i przystąpiłem do…".
+2. **Maksymalnie ok. 250 słów** w całym raporcie. Dłuższy = przenieś szczegóły do Dziennika.
+3. **Akapit ma 2–3 zdania.** Bez zagnieżdżonych list i bez list dłuższych niż pięć pozycji.
+4. **Nazwy plików i funkcji tylko wtedy, gdy właściciel ma z nimi coś zrobić.** `catalog.ts`
+   w raporcie nic mu nie mówi; „koperty z samym nazwiskiem da się już zamówić" — mówi wszystko.
+5. **Liczby tylko rozstrzygające.** „34/34 strony" tak, jeśli to dowód poprawności. Rozkład
+   znaków w metaopisach — do Dziennika.
+6. **Czego nie zrobiłem albo nie sprawdziłem — wprost**, w tym samym raporcie, nie na życzenie.
+7. **Bez ozdobników.** Zero „z przyjemnością informuję", zero emoji, zero wykrzykników.
+
+### Struktura
+
+```
+## Co się zmieniło
+Dwa–trzy zdania po ludzku: co użytkownik strony zobaczy inaczej niż wczoraj.
+
+## Najważniejsza decyzja        ← tylko jeśli jakaś zapadła
+Jedno rozstrzygnięcie, które warto znać, i powód w jednym zdaniu.
+
+## Sprawdzone
+Zwięźle: co przeszło, co się nie udało, czego nie dało się sprawdzić.
+
+## Do Twojej decyzji            ← tylko jeśli coś czeka na odpowiedź
+Punkt na jedno zdanie plus rekomendacja. Jeśli nic nie czeka — usuń tę sekcję.
+
+## Następny krok
+Jedno zdanie: co jest kolejne w planie.
+```
+
+Sekcje puste **usuwasz**, nie zostawiasz z dopiskiem „brak". Jeśli raport wymaga tabeli
+(porównanie wariantów, wynik testów), tabela ma **maksymalnie trzy kolumny** — szersze
+nie mieszczą się czytelnie i idą do Dziennika.
+
+### Test przed wysłaniem
+
+Przeczytaj raport tak, jakbyś czytał go po raz pierwszy, w biegu. **Czy po samych nagłówkach
+i pierwszych zdaniach wiadomo, co się stało i czy trzeba coś zrobić?** Jeśli trzeba czytać
+całość, żeby to wyłowić — przepisz.
+
+---
+
 ## 10.1 Ton — specyfikacja obowiązkowa
 
 Ton jest optymalizowany pod jedno: **fragment Państwa tekstu ma być na tyle konkretny, żeby model
@@ -410,10 +473,11 @@ Marketingowa wata nie jest tylko brzydka — jest niecytowalna, bo nie zawiera n
    widocznym podmiotem, bo to sygnał E-E-A-T dla algorytmu i dla modelu.
 2. **Pierwsze zdanie sekcji odpowiada na pytanie z nagłówka.** Bez rozbiegu, bez „warto wiedzieć,
    że". Rozwinięcie idzie niżej. To najważniejsza zasada GEO w całym briefie.
-3. **Liczba zamiast przymiotnika.** Każdy przymiotnik wartościujący zamień na parametr:
-   nie „szeroki wybór" → „19 kolorów"; nie „szybko" → „2 dni robocze"; nie „korzystna cena" →
-   „2,58 zł brutto za sztukę"; nie „gruby papier" → „140 g/m²". Przymiotnik bez liczby to zdanie
-   do wykreślenia.
+3. **Liczba zamiast pustego przymiotnika — raz, w miejscu twierdzenia.** Gdy coś twierdzisz,
+   poprzyj to parametrem: nie „szeroki wybór" → „19 kolorów"; nie „szybko" → „2 dni robocze".
+   Ale parametr jest **dowodem na twierdzenie**, a nie domyślnym słownictwem każdego zdania.
+   Jeśli akapit nie stawia tezy wymagającej dowodu — opisuje sytuację, w której klient używa
+   produktu — to nie ma w nim czego udowadniać i liczba jest tam zbędna.
 4. **Jedno zdanie = jeden fakt.** 15–25 słów. Akapit 2–4 zdania. Zdania złożone z trzema
    wtrąceniami są nieekstrahowalne — model urwie je w połowie i zacytuje bez sensu.
 5. **Strona czynna, czasownik konkretny.** „Grafik przygotowuje wizualizację" zamiast
@@ -428,6 +492,18 @@ Marketingowa wata nie jest tylko brzydka — jest niecytowalna, bo nie zawiera n
    klient B2B kupuje przewidywalność, a model cytuje zdania, które zawierają warunek.
 9. **Zero przechwałek bez dowodu.** Bez „lider", „najlepsi", „lata doświadczenia", „tysiące
    klientów". Wiarygodność budujesz parametrem, procesem i zdjęciem realizacji.
+10. **Każdy parametr ma jednego właściciela na stronie.** Cena, gramatura, wymiar, MOQ i termin
+    padają **w jednym miejscu**: w tabeli, w pasku faktów, w wierszu specyfikacji albo w leadzie.
+    Otaczająca proza się do nich nie cofa. Jeśli cena stoi w tabeli dwa akapity niżej, nie ma jej
+    w akapicie wyżej — to nie jest „wzmocnienie sygnału", tylko szum, przez który czytelnik
+    przestaje widzieć jedno miejsce z odpowiedzią.
+11. **Budżet parametrów w prozie: jeden na akapit, i tylko jeśli coś wnosi.** Akapit z ceną,
+    gramaturą i minimum naraz jest do przepisania. Karty branżowe, opisy zastosowań, podpisy pod
+    zdjęciami i noty przy CTA mają **domyślnie zero** parametrów — mówią, co klient z tym zrobi,
+    a nie ile to waży.
+12. **Sekcja mówi o rzeczy, nie o cenniku rzeczy.** Sekcja o kolorach mówi o kolorach; że wszystkie
+    kosztują tyle samo, wystarczy powiedzieć raz na stronie. Sekcja branżowa mówi językiem branży
+    („pismo procesowe", „bon na zabieg", „karta powitalna"), nie językiem poligrafii.
 
 ### Czarna lista — nigdy w tekście na stronę
 
@@ -443,14 +519,33 @@ Marketingowa wata nie jest tylko brzydka — jest niecytowalna, bo nie zawiera n
 | „Przyjmujemy zamówienia detaliczne." | „Realizujemy koperty z własnym nadrukiem firmowym w nakładach już od 10 sztuk." |
 | „Zadbamy o szybką realizację Twojego zamówienia!" | „Koperty z nadrukiem wysyłamy w 5 dni roboczych, a w trybie ekspresowym — w 2 dni za dopłatą 1,50 zł brutto od sztuki." |
 | „Nasze koperty świetnie sprawdzą się w wielu zastosowaniach." | „Format DL mieści kartkę A4 złożoną na trzy, voucher 99 × 210 mm i standardowy bilet." |
-| „Współpracujemy z wieloma zadowolonymi klientami z różnych branż." | „Kancelaria z Poznania zamawia kwartalnie 3 000 kopert granatowych z nadrukiem logo — konfiguracja zapisana jako szablon." |
+| „Współpracujemy z wieloma zadowolonymi klientami z różnych branż." | Nic — dopóki nie ma realnego zamówienia, na które właściciel dał zgodę. Wymyślony przykład klienta łamie pkt 4.1 niezależnie od tego, jak dobrze brzmi. |
+
+### Kalibracja w drugą stronę — przeparametryzowanie
+
+Ta tabela powstała **16 sierpnia 2026 z decyzji właściciela**, po przeglądzie całego serwisu.
+Zasady „liczba zamiast przymiotnika" i „encja nazwana wprost" stosowane w każdym zdaniu dały
+tekst, który właściciel ocenił jako nieczytelny nawet dla klienta biznesowego: cena, gramatura
+i wymiar wracały w akapitach, które nie były o cenie, gramaturze ani wymiarze.
+
+| ✗ Za dużo parametrów | ✓ Tyle, ile wnosi |
+| --- | --- |
+| „Certyfikat A4 złożony na trzy mieści się w kopercie DL. Przy nadruku logo obowiązuje minimum 10 sztuk, więc pojedyncza grupa szkoleniowa to już zamówienie realizowalne." | „Certyfikat A4 złożony na trzy mieści się w kopercie DL. Jedna edycja kursu albo pojedyncza grupa szkoleniowa to już wystarczający nakład." |
+| „Do wysyłek, które mają zostać zapamiętane, wybierane są odcienie nietypowe: Matcha 120 g/m², Błękit Łupkowy 120 g/m² i Złoty w wykończeniu metalicznym. Wszystkie kosztują tyle samo, co koperta biała." | „Kiedy przesyłka ma zostać zapamiętana, wybierane są odcienie, których nie widuje się codziennie na biurku: Matcha, Błękit Łupkowy albo Złoty z metalicznym połyskiem." |
+| „Nadruk kosztuje 1,99 zł brutto za sztukę niezależnie od koloru koperty — druk na czarnej kopercie kosztuje tyle samo, co na białej." (jako wstęp do sekcji o **kolorach**) | „Odcień papieru nie wpływa na koszt nadruku. Wybór koloru jest więc pytaniem o to, jak logo ma wyglądać, a nie ile ma kosztować." |
+| „Koperta ozdobna DL 110 × 220 mm kosztuje 2,58 zł brutto za sztukę w 19 kolorach, zamawiają ją Państwo od 1 sztuki, a wysyłamy w 3 dni robocze." (lead strony **o wymiarach**) | „Koperta DL ma wymiary 110 × 220 mm — format podłużny, zaprojektowany pod arkusz A4 złożony na trzy. Poniżej rozpisujemy, co się w niej mieści, a co wymaga innego formatu." |
 
 ### Test przed oddaniem tekstu
 
-Weź dowolny akapit, wyrwij go z kontekstu i zadaj pytanie: **czy sam w sobie odpowiada na
-pytanie użytkownika, i czy da się go zweryfikować?** Jeśli nie — przepisz ten akapit, nie dopisuj
-kolejnego. Drugi test: usuń z tekstu wszystkie przymiotniki. Jeśli treść nic nie traci, wróć
-i wstaw w ich miejsce liczby.
+1. **Test cytowalności.** Weź dowolny akapit, wyrwij go z kontekstu: czy sam odpowiada na pytanie
+   użytkownika i czy da się go zweryfikować? Jeśli nie — przepisz ten akapit, nie dopisuj kolejnego.
+2. **Test trzech akapitów.** Przeczytaj trzy kolejne akapity pod rząd. Jeśli ta sama liczba pada
+   w więcej niż jednym — zostaw ją w tym, który jest o niej, a z pozostałych usuń.
+3. **Test policzalny.** Policz w gotowej sekcji wystąpienia ceny, gramatury, wymiaru i MOQ.
+   Powyżej trzech na sekcję (poza tabelami, paskiem faktów i cennikiem) sekcja idzie do przepisania.
+4. **Test czytania na głos.** Przeczytaj akapit tak, jakbyś tłumaczył go klientowi przez telefon.
+   Zdanie, którego nikt nie powiedziałby na głos — „koperta DL 110 × 220 mm w cenie 2,58 zł brutto
+   za sztukę w 19 kolorach" — jest do rozbicia albo do skrócenia.
 
 ---
 

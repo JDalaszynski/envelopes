@@ -55,7 +55,7 @@ type FieldName =
 export function CheckoutView() {
   const router = useRouter();
   const { items, itemsGross, clear, ready } = useCart();
-  const { user, login, register, loginWithGoogle, getToken } = useAuth();
+  const { user, loading, login, register, loginWithGoogle, getToken } = useAuth();
 
   const [customer, setCustomer] = useState<CustomerData>(EMPTY_CUSTOMER);
   const [payment, setPayment] = useState<PaymentMethod>('p24');
@@ -278,6 +278,7 @@ export function CheckoutView() {
 
   return (
     <>
+      {submitting && <ProcessingOverlay />}
       <div className="checkout-head">
         <h1>Zamówienie</h1>
       </div>
@@ -306,7 +307,9 @@ export function CheckoutView() {
               </div>
             </header>
 
-            {user ? (
+            {loading ? (
+              <p className="small muted">Sprawdzanie sesji...</p>
+            ) : user ? (
               <p className="notice notice-success">
                 Zalogowano jako <strong>{user.email}</strong> — dane uzupełniliśmy z profilu.
               </p>
@@ -320,7 +323,7 @@ export function CheckoutView() {
               </p>
             )}
 
-            {!user && showLogin && (
+            {!loading && !user && showLogin && (
               <div className="login-inline">
                 <div className="field">
                   <label htmlFor="login-haslo">Hasło do konta {customer.email || ''}</label>
@@ -394,7 +397,7 @@ export function CheckoutView() {
               />
             </div>
 
-            {!user && (
+            {!loading && !user && (
               <>
                 <label className="checkbox-row">
                   <input
@@ -622,10 +625,29 @@ export function CheckoutView() {
             </div>
 
             {payment === 'przelew' && (
-              <p className="notice">
+              <p className="notice" style={{ marginTop: 'var(--space-3)' }}>
                 Po złożeniu zamówienia otrzymają Państwo fakturę proforma z danymi do przelewu. Druk
                 rusza po zaksięgowaniu wpłaty.
               </p>
+            )}
+
+            {payment === 'faktura_odroczona' && (
+              <div
+                className="notice notice-seal"
+                role="region"
+                aria-live="polite"
+                style={{ marginTop: 'var(--space-3)' }}
+              >
+                <strong style={{ display: 'block', color: 'var(--color-ink)', marginBottom: 'var(--space-1)' }}>
+                  Uwaga: opcja przeznaczona dla instytucji i jednostek budżetowych
+                </strong>
+                <p style={{ margin: 0, color: 'var(--color-ink-soft)' }}>
+                  Płatność z 14-dniowym terminem (na podstawie faktury VAT) udostępniamy placówkom
+                  oświatowym, urzędom, przedszkolom, uczelniom oraz pozostałym jednostkom sektora
+                  finansów publicznych. Realizacja zamówienia rusza natychmiast po weryfikacji danych —
+                  bez konieczności przedpłaty.
+                </p>
+              </div>
             )}
           </section>
 
@@ -740,6 +762,9 @@ export function CheckoutView() {
             <span>Dostawa</span>
             <span>{formatPrice(DELIVERY_COST)}</span>
           </div>
+
+          <div className="summary-divider" />
+
           <div className="summary-row muted">
             <span>Netto</span>
             <span>{formatPrice(net)}</span>
@@ -857,3 +882,90 @@ function TruckIcon() {
   );
 }
 
+function ProcessingOverlay() {
+  const [step, setStep] = useState(0);
+
+  useEffect(() => {
+    // Blokada przewijania pod spodem
+    document.body.style.overflow = 'hidden';
+    
+    // Progresywne komunikaty dające poczucie zaawansowanego procesu
+    const t1 = setTimeout(() => setStep(1), 1800);
+    const t2 = setTimeout(() => setStep(2), 3500);
+    
+    return () => {
+      document.body.style.overflow = '';
+      clearTimeout(t1);
+      clearTimeout(t2);
+    };
+  }, []);
+
+  const messages = [
+    'Zabezpieczanie danych zamówienia...',
+    'Weryfikacja opcji płatności...',
+    'Nawiązywanie bezpiecznego połączenia...',
+  ];
+
+  return (
+    <div
+      style={{
+        position: 'fixed',
+        inset: 0,
+        zIndex: 9999,
+        backgroundColor: 'rgba(244, 242, 236, 0.85)', // var(--color-paper) z alfą
+        backdropFilter: 'blur(8px)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 'var(--space-4)',
+        animation: 'fadeIn 0.3s ease-out forwards',
+      }}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="processing-title"
+    >
+      <div className="card card-lg" style={{ textAlign: 'center', maxWidth: 440, width: '100%' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 'var(--space-4)' }}>
+          <div className="processing-spinner">
+            <LockIcon />
+          </div>
+        </div>
+        <h2 id="processing-title" style={{ fontSize: 20, marginBottom: 'var(--space-2)' }}>
+          {messages[step]}
+        </h2>
+        <p className="muted small" style={{ margin: 0 }}>
+          Prosimy nie odświeżać i nie zamykać okna przeglądarki. Za chwilę nastąpi przekierowanie.
+        </p>
+      </div>
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        @keyframes pulseLock {
+          0% { transform: scale(0.95); opacity: 0.7; }
+          50% { transform: scale(1.05); opacity: 1; }
+          100% { transform: scale(0.95); opacity: 0.7; }
+        }
+        .processing-spinner {
+          color: var(--color-seal);
+          animation: pulseLock 1.5s infinite ease-in-out;
+          display: flex;
+        }
+        .processing-spinner svg {
+          width: 48px;
+          height: 48px;
+        }
+      `}} />
+    </div>
+  );
+}
+
+function LockIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+    </svg>
+  );
+}

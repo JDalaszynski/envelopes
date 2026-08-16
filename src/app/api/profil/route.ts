@@ -36,9 +36,12 @@ export async function GET(request: Request) {
   const orders = [...unique.values()];
   const completed = orders.filter((o) => o.status === 'zrealizowane').length;
 
-  // Faktura z odroczonym terminem jest dostępna dla wszystkich — to opcja
-  // dla instytucji i jednostek budżetowych, których obieg zakupowy nie
-  // przewiduje przedpłaty.
+  // Faktura z odroczonym terminem 14 dni jest ofertą dla instytucji
+  // publicznych i urzędów — tak opisują ją treści serwisu i checkout.
+  // Flaga celowo zwraca `true` dla każdego zalogowanego użytkownika:
+  // wyboru metody nie bramkujemy po typie klienta. To decyzja właściciela
+  // z 14 sierpnia 2026, nie przeoczenie — nie dodawać tu walidacji
+  // ani warunku na podstawie NIP-u czy pola w profilu.
   return NextResponse.json({
     profile: { ...profile, role: user.role, deferredPaymentEligible: true },
     stats: { ordersTotal: orders.length, ordersCompleted: completed },

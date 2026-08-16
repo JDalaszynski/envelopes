@@ -4,9 +4,18 @@ import Link from 'next/link';
 import { ConfigureLink } from '@/components/home/ConfigureLink';
 import { EnvelopePlaceholder } from '@/components/ui/EnvelopePlaceholder';
 import { ParallaxBackground } from '@/components/ui/ParallaxBackground';
+import { ShowcaseGrid } from '@/components/ui/ShowcaseGrid';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { getPost } from '@/lib/blog';
 import type { BlogPost } from '@/lib/blog';
+import {
+  INDUSTRY_SHOTS,
+  PRINT_AREA_SHOT,
+  showcaseCaption,
+  showcaseLinkTitle,
+  showcaseSrc,
+  showcaseSrcSet,
+} from '@/lib/showcase';
 import {
   BULK_QUOTE_THRESHOLD,
   COLORS,
@@ -14,6 +23,7 @@ import {
   PRINT_FILE_EXTENSIONS_LABEL,
   PRINT_FILE_MAX_BYTES,
   PRINT_FILE_MAX_COUNT,
+  PRINT_SAFE_MARGIN_MM,
 } from '@/lib/catalog';
 import { PRINT_FAQ_ITEMS } from '@/lib/faq';
 import { DEFAULT_PRICING, DELIVERY_COST, calculatePrice, formatPrice, round2 } from '@/lib/pricing';
@@ -21,6 +31,7 @@ import {
   breadcrumbJsonLd,
   faqJsonLd,
   howToJsonLd,
+  ogImage,
   printedEnvelopeProductJsonLd,
 } from '@/lib/seo';
 import type { EnvelopeConfig } from '@/lib/types';
@@ -84,7 +95,7 @@ const HOW_TO_STEPS = [
   },
   {
     name: 'Płatność',
-    text: 'Do wyboru są BLIK, karta, szybki przelew, przelew tradycyjny oraz faktura z odroczonym terminem płatności. Faktura odroczona nie wstrzymuje produkcji.',
+    text: 'Do wyboru są BLIK, karta, szybki przelew i przelew tradycyjny. Instytucje publiczne i urzędy mogą zapłacić fakturą z odroczonym terminem płatności 14 dni — taka faktura nie wstrzymuje produkcji.',
   },
   {
     name: 'Akceptacja wizualizacji',
@@ -96,52 +107,61 @@ const HOW_TO_STEPS = [
   },
 ];
 
+/**
+ * Sekcja „Dla kogo" mówi językiem branży, nie językiem cennika. Każdy akapit
+ * opisuje sytuację, w której koperta z logo coś załatwia — cena, gramatura
+ * i progi ilościowe mają swoje miejsce w tabelach niżej i nie muszą wracać
+ * w każdym z dziesięciu akapitów.
+ */
 const INDUSTRIES: { heading: string; text: string }[] = [
   {
     heading: 'Kancelarie prawne i notarialne',
-    text: 'Pismo procesowe A4 złożone na trzy mieści się w kopercie DL 110 × 220 mm bez dodatkowego zagięcia. Do korespondencji formalnej wybierane są kolory stonowane — Czarny, Granatowy i Szarobrązowy (140 g/m², najgrubszy papier w ofercie).',
+    text: 'Pismo procesowe złożone na trzy wchodzi do koperty DL bez dodatkowego zagięcia. Do korespondencji formalnej wybierane są kolory stonowane — czerń, granat i szarobrązowy — bo koperta ma wyglądać poważnie, zanim ktokolwiek ją otworzy.',
   },
   {
     heading: 'Biura rachunkowe i doradztwo finansowe',
-    text: 'Sprawozdania roczne i raporty z audytu wychodzą do klientów w powtarzalnych partiach. Nadruk logo na kopercie DL kosztuje ' + formatPrice(printed.unitTotal) + ' brutto za sztukę niezależnie od wielkości zamówienia, więc koszt kwartalnej wysyłki jest przewidywalny co do złotówki.',
+    text: 'Sprawozdania roczne i raporty z audytu wychodzą do klientów w powtarzalnych partiach, zwykle w tym samym tygodniu każdego kwartału. Ten sam projekt nadruku zamawia się wtedy raz i wraca do niego przy kolejnej wysyłce.',
   },
   {
     heading: 'Hotele, resorty i pensjonaty',
-    text: 'Karty powitalne w pokojach i vouchery pobytowe wręcza się gościowi do ręki, więc koperta jest częścią doświadczenia pobytu. Format DL mieści voucher 99 × 210 mm oraz kartę A4 złożoną na trzy.',
+    text: 'Kartę powitalną i voucher pobytowy wręcza się gościowi do ręki, więc koperta jest częścią pobytu, a nie opakowaniem transportowym. Zmieści się w niej zarówno bon, jak i list na papierze firmowym złożony na trzy.',
   },
   {
     heading: 'Kliniki medycyny estetycznej i salony SPA',
-    text: 'Bon podarunkowy na zabieg wręczany jest jako prezent, dlatego wybierane są jasne odcienie — Biała Perłowa, Ecru, Biały. Nadruk logo kliniki na kopercie odróżnia bon od wydruku z drukarki biurowej.',
+    text: 'Bon na zabieg jest prezentem, więc wybierane są jasne odcienie — Biała Perłowa, Ecru, Biały. Logo kliniki na kopercie robi różnicę między prezentem a wydrukiem z drukarki biurowej.',
   },
   {
     heading: 'Agencje eventowe, PR i kreatywne',
-    text: 'Wysyłki VIP i zaproszenia na premiery wymagają koloru, którego nie ma konkurencja — Matcha (120 g/m²), Jeansowy (120 g/m²) i Złoty w wykończeniu metalicznym kosztują tyle samo, co biel. Przy dacie wydarzenia wpisanej w kalendarz dostępny jest tryb ekspresowy: ' + DEFAULT_PRICING.leadDaysExpress + ' dni robocze za dopłatą ' + formatPrice(DEFAULT_PRICING.express) + ' brutto od sztuki.',
+    text: 'Wysyłki VIP i zaproszenia na premiery potrzebują koloru, którego nie ma konkurencja: Matcha, Jeansowy albo Złoty z metalicznym połyskiem. Kiedy data wydarzenia jest bliżej, niż byśmy chcieli, zamówienie da się puścić trybem ekspresowym.',
   },
   {
     heading: 'Biura nieruchomości i deweloperzy',
-    text: 'Umowa deweloperska i akt notarialny to dokumenty A4 — złożone na trzy wchodzą do koperty DL. Nadruk logo biura na kopercie z aktem jest ostatnim elementem transakcji, który klient zabiera ze sobą.',
+    text: 'Umowa deweloperska i akt notarialny to ostatnia rzecz, jaką klient zabiera ze sobą po transakcji. Koperta z logo biura sprawia, że komplet dokumentów wygląda jak domknięcie sprawy, a nie jak plik kartek.',
   },
   {
     heading: 'Salony samochodowe',
-    text: 'Dokumenty pojazdu i umowy leasingowe przekazywane są przy odbiorze auta. Koperta DL z nadrukiem logo dilera w kolorze Czarnym lub Granatowym porządkuje ten moment i chroni komplet dokumentów przed zagięciem.',
+    text: 'Dokumenty pojazdu i umowy leasingowe przekazywane są przy odbiorze auta — momencie, który klient zapamiętuje. Koperta z logo dilera porządkuje ten komplet i chroni go przed zagięciem w drodze do domu.',
   },
   {
     heading: 'Uczelnie, szkoły i firmy szkoleniowe',
-    text: 'Certyfikaty i podziękowania dla sponsorów wysyłane są w seriach kilkuset sztuk. Minimalna ilość przy nadruku to ' + DEFAULT_PRICING.moqWithPrint + ' sztuk, więc mniejsze serie — na przykład dyplomy dla jednej grupy — również da się zamówić z logo uczelni.',
+    text: 'Certyfikaty i podziękowania dla sponsorów idą w seriach — czasem kilkuset, czasem kilkunastu. Dyplomy dla jednej grupy szkoleniowej też da się zamówić z logo uczelni, bez czekania, aż uzbiera się cały rocznik.',
   },
   {
     heading: 'Restauracje fine dining i winiarnie',
-    text: 'Vouchery na kolację degustacyjną sprzedają się w cyklu sezonowym, ze szczytem w grudniu. Koperta DL z nadrukiem logo restauracji zamienia wydrukowany bon w prezent gotowy do wręczenia.',
+    text: 'Vouchery na kolację degustacyjną sprzedają się sezonowo, ze szczytem w grudniu. Koperta z logo restauracji zamienia wydrukowany bon w prezent, który da się komuś wręczyć bez tłumaczenia się z opakowania.',
   },
   {
     heading: 'Galerie sztuki i domy aukcyjne',
-    text: 'Certyfikaty autentyczności i zaproszenia na wernisaże trafiają do wąskiej, stałej listy odbiorców. Nadruk logo galerii można połączyć z personalizacją, czyli nadrukiem adresu odbiorcy, za dopłatą ' + formatPrice(DEFAULT_PRICING.personalization) + ' brutto od sztuki.',
+    text: 'Certyfikaty autentyczności i zaproszenia na wernisaże trafiają do wąskiej, stałej listy odbiorców. Logo galerii można połączyć z nadrukiem nazwiska adresata — przy takiej liście imienna koperta jest normą, nie fanaberią.',
   },
 ];
 
 export const metadata: Metadata = {
-  title: `Koperty z nadrukiem logo — ${formatPrice(printed.unitTotal)} brutto/szt.`,
-  description: `Koperty DL ${DL.dimensions} z nadrukiem logo, 19 kolorów: ${formatPrice(printed.unitTotal)} brutto za sztukę, od ${DEFAULT_PRICING.moqWithPrint} sztuk, wysyłka w ${DEFAULT_PRICING.leadDaysStandard} dni roboczych lub ${DEFAULT_PRICING.leadDaysExpress} dni ekspresem. Faktura VAT.`,
+  /* „brutto" schodzi z tytułu do description — razem z szablonem `| Envelopes`
+     tytuł przekraczał 60 znaków. Liczba kolorów czytana z katalogu, nie
+     wpisana z pamięci: `19` w tekście rozjechałoby się przy zmianie palety. */
+  title: `Koperty z nadrukiem logo — ${formatPrice(printed.unitTotal)}/szt.`,
+  description: `Nadruk logo na kopertach ozdobnych DL w ${COLORS.length} kolorach — ${formatPrice(printed.unitTotal)} brutto/szt. od ${DEFAULT_PRICING.moqWithPrint} sztuk. Wizualizacja do akceptacji przed drukiem, faktura VAT.`,
   keywords: [
     'koperty z nadrukiem',
     'koperty firmowe z nadrukiem',
@@ -155,16 +175,18 @@ export const metadata: Metadata = {
     title: 'Koperty z nadrukiem logo firmowego — Envelopes',
     description: `Koperta DL ${DL.dimensions} z nadrukiem logo: ${formatPrice(printed.unitTotal)} brutto za sztukę, 19 kolorów, minimum ${DEFAULT_PRICING.moqWithPrint} sztuk.`,
     url: '/koperty-z-nadrukiem',
+    images: [
+      ogImage(
+        'koperty-z-nadrukiem',
+        'Granatowa koperta DL z jasnym nadrukiem logo kancelarii prawnej na ciemnym drewnie'
+      ),
+    ],
   },
 };
 
 export default function PrintedEnvelopesPage() {
-  const filesPost = getPost('koperty-firmowe-z-nadrukiem-co-przygotowac-przed-zamowieniem');
-  const expressPost = getPost('ekspresowa-realizacja-2-dni-robocze');
-  const casePost = getPost('realizacja-3000-kopert-dl-dla-kancelarii');
-  const relatedPosts = [filesPost, expressPost, casePost].filter(
-    (post): post is BlogPost => post !== undefined
-  );
+  const filesPost = getPost('jak-przygotowac-pliki-do-druku-na-kopertach');
+  const relatedPosts = [filesPost].filter((post): post is BlogPost => post !== undefined);
 
   return (
     <>
@@ -196,12 +218,10 @@ export default function PrintedEnvelopesPage() {
             <span className="eyebrow">Koperty firmowe</span>
             <h1>Koperty z nadrukiem logo firmowego</h1>
             <p className="hero-lead">
-              Koperty z nadrukiem to koperty ozdobne z wydrukowanym logo firmowym, zamawiane od{' '}
-              {DEFAULT_PRICING.moqWithPrint} sztuk. W Envelopes drukujemy na kopercie DL{' '}
-              {DL.dimensions} w 19 kolorach. Koperta DL z nadrukiem kosztuje{' '}
-              {formatPrice(printed.unitTotal)} brutto za sztukę ({formatPrice(printed.net)} netto):{' '}
-              {formatPrice(plain.unitTotal)} za kopertę i {formatPrice(DEFAULT_PRICING.print)} za
-              nadruk. Wysyłamy w {DEFAULT_PRICING.leadDaysStandard} dni roboczych.
+              Drukujemy logo firmowe na kopertach ozdobnych w {COLORS.length} kolorach, od{' '}
+              {DEFAULT_PRICING.moqWithPrint} sztuk. Koperta z nadrukiem kosztuje{' '}
+              {formatPrice(printed.unitTotal)} brutto za sztukę — na każdym odcieniu tyle samo.
+              Zanim cokolwiek pójdzie do druku, dostają Państwo wizualizację do akceptacji.
             </p>
 
             <div className="row">
@@ -214,7 +234,8 @@ export default function PrintedEnvelopesPage() {
             </div>
             <p className="small muted" style={{ marginTop: 'var(--space-3)' }}>
               Wizualizację koperty akceptują Państwo przed drukiem. Do każdego zamówienia wystawiamy
-              fakturę VAT, także z odroczonym terminem płatności 14 dni.
+              fakturę VAT, a instytucjom publicznym i urzędom — z odroczonym terminem płatności
+              14 dni.
             </p>
           </div>
         </div>
@@ -261,12 +282,12 @@ export default function PrintedEnvelopesPage() {
           </div>
 
           <p style={{ maxWidth: '68ch' }}>
-            Koperta DL {DL.dimensions} z nadrukiem logo kosztuje{' '}
+            Koperta z nadrukiem logo kosztuje{' '}
             <strong>{formatPrice(printed.unitTotal)} brutto</strong> ({formatPrice(printed.net)}{' '}
-            netto) za sztukę. Na cenę składa się koperta — {formatPrice(plain.unitTotal)} brutto —
-            oraz nadruk logo — {formatPrice(DEFAULT_PRICING.print)} brutto. Cena jest identyczna we
-            wszystkich 19 kolorach i nie zmienia się wraz z ilością; rabatów ilościowych nie
-            stosujemy.
+            netto) za sztukę. Składają się na to dwie pozycje — sama koperta i nadruk — rozpisane
+            w tabeli niżej. Cena jest ta sama we wszystkich {COLORS.length} kolorach i nie zmienia
+            się wraz z ilością; rabatów ilościowych nie stosujemy, więc nie ma progu, od którego
+            nagle opłaca się zamówić więcej.
           </p>
 
           <div className="table-wrap" style={{ marginTop: 'var(--space-5)' }}>
@@ -402,15 +423,45 @@ export default function PrintedEnvelopesPage() {
             <h2>Koperta DL z nadrukiem — parametry</h2>
           </div>
 
-          <p style={{ maxWidth: '68ch' }}>
-            Nadruk wykonujemy na kopercie DL o wymiarach {DL.dimensions}. To jedyny format dostępny
-            dziś w sprzedaży — koperty C6 {FORMAT_MAP.C6.dimensions} i K4{' '}
-            {FORMAT_MAP.K4.dimensions} mają w katalogu status „Dostępne wkrótce". Wszystkie koperty
-            Envelopes są bez okienka adresowego, więc nadruk może objąć całą przednią ściankę
-            z zachowaniem 5 mm marginesu od krawędzi. Co zmieści się w środku i jak format wypada
-            na tle C6 i K4 — opisaliśmy na stronie{' '}
-            <Link href="/koperty-dl">wymiary kopert DL</Link>.
-          </p>
+          {/* Kadr z zaznaczonym polem nadruku stoi przy akapicie o marginesie
+              — to jedyne miejsce na stronie, w którym tekst opisuje geometrię
+              nadruku, więc zdjęcie ma tu wartość wyjaśniającą, a nie ozdobną. */}
+          <div className="grid grid-2" style={{ alignItems: 'center' }}>
+            <p style={{ maxWidth: '68ch', marginBottom: 0 }}>
+              Nadruk wykonujemy na kopercie DL o wymiarach {DL.dimensions}. To jedyny format dostępny
+              dziś w sprzedaży — koperty C6 {FORMAT_MAP.C6.dimensions} i K4{' '}
+              {FORMAT_MAP.K4.dimensions} mają w katalogu status „Dostępne wkrótce". Wszystkie koperty
+              Envelopes są bez okienka adresowego, więc nadruk może objąć całą przednią ściankę
+              z zachowaniem {PRINT_SAFE_MARGIN_MM} mm marginesu od krawędzi. Co zmieści się w środku i jak format wypada
+              na tle C6 i K4 — opisaliśmy na stronie{' '}
+              <Link href="/koperty-dl">wymiary kopert DL</Link>.
+            </p>
+
+            <ConfigureLink
+              format="DL"
+              color={PRINT_AREA_SHOT.colorId}
+              print
+              className="paper-shot"
+              title={showcaseLinkTitle(PRINT_AREA_SHOT)}
+            >
+              <figure>
+                <img
+                  src={showcaseSrc(PRINT_AREA_SHOT)}
+                  srcSet={showcaseSrcSet(PRINT_AREA_SHOT)}
+                  sizes="(max-width: 620px) calc(100vw - 32px), (max-width: 1248px) calc(50vw - 36px), 564px"
+                  width={1024}
+                  height={1024}
+                  alt={PRINT_AREA_SHOT.alt}
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption>
+                  <strong>{showcaseCaption(PRINT_AREA_SHOT)}</strong>
+                  <span className="small muted">{PRINT_AREA_SHOT.note}</span>
+                </figcaption>
+              </figure>
+            </ConfigureLink>
+          </div>
 
           <div className="table-wrap" style={{ marginTop: 'var(--space-5)' }}>
             <table className="data">
@@ -450,7 +501,10 @@ export default function PrintedEnvelopesPage() {
                 </tr>
                 <tr>
                   <th scope="row">Margines nadruku</th>
-                  <td>Minimum 5 mm od krawędzi, poza linią klejenia i zagięciem klapki</td>
+                  <td>
+                    Minimum {PRINT_SAFE_MARGIN_MM} mm od krawędzi, poza linią klejenia i zagięciem
+                    klapki
+                  </td>
                 </tr>
                 <tr>
                   <th scope="row">Czas realizacji</th>
@@ -466,8 +520,8 @@ export default function PrintedEnvelopesPage() {
                 <tr>
                   <th scope="row">Rozliczenie</th>
                   <td>
-                    Faktura VAT do każdego zamówienia, z odroczonym terminem płatności 14 dni na
-                    życzenie
+                    Faktura VAT do każdego zamówienia; odroczony termin płatności 14 dni dla
+                    instytucji publicznych i urzędów
                   </td>
                 </tr>
                 <tr>
@@ -503,11 +557,15 @@ export default function PrintedEnvelopesPage() {
             ))}
           </div>
 
+          {/* Anchor = fraza docelowa wpisu, nie fraza tej strony. Wpis obsługuje
+              intencję procesową („jak przygotować plik"), filar zostaje przy
+              frazie transakcyjnej (content-plan.md poz. 7). */}
           {filesPost && (
             <p className="small" style={{ marginTop: 'var(--space-5)' }}>
-              Listę kontrolną plików, marginesów i danych zebraliśmy we wpisie{' '}
+              Wymagania dla pliku — rozdzielczość, krzywe, przestrzeń barw i margines{' '}
+              {PRINT_SAFE_MARGIN_MM} mm — rozpisaliśmy w poradniku{' '}
               <Link href={`/blog/${filesPost.slug}`}>
-                koperty firmowe z nadrukiem — co przygotować przed zamówieniem
+                jak przygotować pliki do druku na kopertach
               </Link>
               .
             </p>
@@ -522,8 +580,9 @@ export default function PrintedEnvelopesPage() {
             <span className="eyebrow">Kolory</span>
             <h2>Kolory kopert pod nadruk logo</h2>
             <p>
-              Nadruk kosztuje {formatPrice(DEFAULT_PRICING.print)} brutto za sztukę niezależnie od
-              koloru koperty — druk na czarnej kopercie kosztuje tyle samo, co na białej.            </p>
+              Odcień papieru nie wpływa na koszt nadruku — czerń kosztuje tyle samo, co biel. Wybór
+              koloru jest więc pytaniem o to, jak logo ma wyglądać, a nie ile ma kosztować.
+            </p>
           </div>
 
           <div className="grid grid-4" style={{ gap: 'var(--space-4)' }}>
@@ -558,13 +617,53 @@ export default function PrintedEnvelopesPage() {
           </div>
 
           <p className="small muted" style={{ marginTop: 'var(--space-5)', maxWidth: '68ch' }}>
-            Na zdjęciach pokazujemy {PRINT_COLORS.length} odcieni, w których wykonaliśmy nadruk.
-            Pozostałe kolory z palety 19 odcieni — między innymi Złoty, Srebrna Perłowa i Szarobrązowy —
-            również przyjmują nadruk; wybiorą je Państwo{' '}
-            <Link href="/#kolory">w pełnej palecie kolorów</Link>. Przy ciemnych kopertach
-            rekomendujemy jasny kolor nadruku, przy jasnych — ciemny; kontrast decyduje
-            o czytelności logo bardziej niż sam odcień papieru.
+            {/* Wcześniej: „…odcieni, w których wykonaliśmy nadruk" plus zdanie
+                o pozostałych kolorach wymieniające Złoty, Srebrną Perłową
+                i Szarobrązowy. Oba zdania przestały być prawdziwe: kadr
+                pokazuje zaznaczone pole nadruku, a nie wykonaną realizację,
+                a paleta ze zdjęciami obejmuje dziś wszystkie odcienie, więc
+                „pozostałe kolory" był zbiorem pustym. */}
+            Nadruk przyjmuje wszystkie {PRINT_COLORS.length} odcieni z palety, w tej samej cenie.
+            Pole nadruku zaznaczyliśmy na zdjęciach symbolem — Państwa logo trafia dokładnie
+            w to miejsce, a jego wygląd zatwierdzają Państwo na wizualizacji przed drukiem.
+            Przy ciemnych kopertach rekomendujemy jasny kolor nadruku, przy jasnych — ciemny;
+            kontrast decyduje o czytelności logo bardziej niż sam odcień papieru.
           </p>
+        </div>
+      </section>
+
+      {/* ── Nadruk w kontekście — kadry z public/images/zastosowania/ ── */}
+      <section className="section" id="przyklady">
+        <div className="container">
+          <div className="section-head">
+            <span className="eyebrow">Przykłady</span>
+            <h2>Jak wygląda nadruk logo na kopercie DL</h2>
+            <p>
+              Ten sam nadruk jednokolorowy na ośmiu odcieniach papieru — najlepszy sposób, żeby
+              zobaczyć, jak logo zachowa się na ciemnym i na jasnym tle. Każde zdjęcie otwiera
+              konfigurator z tym kolorem.
+            </p>
+          </div>
+
+          <ShowcaseGrid shots={INDUSTRY_SHOTS} columns={4} />
+
+          {/* Nazwy na kopertach są przykładowe. Podpisanie tych kadrów jako
+              realizacji konkretnych klientów byłoby wymyślonym portfolio —
+              rzecz, której brief zabrania wprost (pkt 4.1). */}
+          <p className="small muted" style={{ marginTop: 'var(--space-5)', maxWidth: '68ch' }}>
+            Nazwy firm widoczne na zdjęciach są przykładowe i służą wyłącznie pokazaniu, jak
+            nadruk układa się na kopercie w danym kolorze. Na kopertę trafia Państwa logo —
+            w kształcie zatwierdzonym na wizualizacji przed drukiem.
+          </p>
+
+          <div className="row" style={{ marginTop: 'var(--space-6)' }}>
+            <ConfigureLink format="DL" print className="btn">
+              Wyceń koperty z logo
+            </ConfigureLink>
+            <span className="small muted">
+              Wizualizację zobaczą Państwo przed drukiem — dopiero po akceptacji ruszamy z maszyną.
+            </span>
+          </div>
         </div>
       </section>
 
@@ -575,9 +674,8 @@ export default function PrintedEnvelopesPage() {
             <span className="eyebrow">Zastosowania</span>
             <h2>Dla kogo są koperty z nadrukiem</h2>
             <p>
-              Kopert z nadrukiem logo używa każda firma, która wysyła dokumenty, vouchery albo
-              zaproszenia we własnym imieniu. Poniżej dziesięć zastosowań, w których format DL{' '}
-              {DL.dimensions} jest wyborem naturalnym.
+              Kopert z nadrukiem używa właściwie każda firma, która wysyła dokumenty, vouchery albo
+              zaproszenia we własnym imieniu. Dziesięć sytuacji, w których widzimy je najczęściej.
             </p>
           </div>
 
@@ -592,12 +690,22 @@ export default function PrintedEnvelopesPage() {
             ))}
           </div>
 
+          {/* Link w bok do filara K7 — cztery z powyższych branż kupują nadruk
+              pod bon podarunkowy, a to inny cykl zakupowy niż korespondencja. */}
+          <p className="small muted" style={{ marginTop: 'var(--space-5)', maxWidth: '68ch' }}>
+            Cztery z powyższych zastosowań — kliniki i SPA, hotele, restauracje oraz galerie —
+            łączy jedno: nadruk trafia na kopertę, w którą pakowany jest bon podarunkowy. Ten
+            zakup ma własny kalendarz i własny nakład, więc opisaliśmy go osobno na stronie{' '}
+            <Link href="/koperty-na-vouchery">koperty na vouchery</Link>.
+          </p>
+
           <div className="row" style={{ marginTop: 'var(--space-6)' }}>
             <ConfigureLink format="DL" print className="btn">
               Zamów koperty z logo firmy
             </ConfigureLink>
             <span className="small muted">
-              Minimum {DEFAULT_PRICING.moqWithPrint} sztuk. Wizualizacja do akceptacji przed drukiem.
+              Nie znaleźli Państwo swojej branży? Nadruk wygląda tak samo niezależnie od tego, co
+              trafia do środka.
             </span>
           </div>
         </div>
@@ -658,8 +766,8 @@ export default function PrintedEnvelopesPage() {
               <ul className="small" style={{ paddingLeft: 'var(--space-5)', lineHeight: 1.8 }}>
                 <li>Fakturę VAT wystawiamy do każdego zamówienia, także bez numeru NIP.</li>
                 <li>
-                  Faktura z odroczonym terminem płatności 14 dni jest dostępna przy każdym
-                  zamówieniu — z myślą o instytucjach i jednostkach budżetowych.
+                  Faktura z odroczonym terminem płatności 14 dni jest dostępna dla instytucji
+                  publicznych i urzędów, których obieg zakupowy nie przewiduje przedpłaty.
                 </li>
                 <li>
                   Powyżej {BULK_QUOTE_THRESHOLD.toLocaleString('pl-PL')} sztuk ustalamy harmonogram
@@ -673,14 +781,6 @@ export default function PrintedEnvelopesPage() {
               </div>
             </div>
           </div>
-
-          {expressPost && (
-            <p className="small" style={{ marginTop: 'var(--space-5)' }}>
-              Kiedy dopłata za ekspres ma sens, a kiedy wystarczy termin standardowy — opisaliśmy to
-              we wpisie{' '}
-              <Link href={`/blog/${expressPost.slug}`}>realizacja ekspresowa w 2 dni robocze</Link>.
-            </p>
-          )}
         </div>
       </section>
 

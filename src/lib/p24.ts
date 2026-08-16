@@ -10,7 +10,7 @@ import type { Order } from './types';
  * w obie strony.
  */
 
-const SANDBOX = process.env.P24_SANDBOX !== 'false';
+const SANDBOX = process.env.P24_ENV === 'production' ? false : process.env.P24_SANDBOX !== 'false';
 const API_BASE = SANDBOX
   ? 'https://sandbox.przelewy24.pl/api/v1'
   : 'https://secure.przelewy24.pl/api/v1';

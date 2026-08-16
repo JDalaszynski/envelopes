@@ -3,11 +3,15 @@ import { Great_Vibes } from 'next/font/google';
 import Link from 'next/link';
 
 import { Configurator } from '@/components/configurator/Configurator';
+import { ConfiguratorAmbience } from '@/components/configurator/ConfiguratorAmbience';
 import { ConfigureLink } from '@/components/home/ConfigureLink';
 import { HeroEnvelopes } from '@/components/home/HeroEnvelopes';
+import { MobileCta } from '@/components/home/MobileCta';
 import { EnvelopePlaceholder } from '@/components/ui/EnvelopePlaceholder';
 import { EnvelopeShape } from '@/components/ui/EnvelopeShape';
+import { ShowcaseGrid } from '@/components/ui/ShowcaseGrid';
 import { JsonLd } from '@/components/seo/JsonLd';
+import { OCCASION_SHOTS } from '@/lib/showcase';
 import {
   AVAILABLE_FORMATS,
   BULK_QUOTE_THRESHOLD,
@@ -30,6 +34,7 @@ import {
   colorPaletteJsonLd,
   faqJsonLd,
   howToJsonLd,
+  ogImage,
   productJsonLd,
   webSiteJsonLd,
 } from '@/lib/seo';
@@ -104,13 +109,6 @@ const WEIGHT_SUMMARY = WEIGHT_GROUPS.map(([weight, names]) => {
 
 const BESTSELLERS = COLORS.filter((color) => color.bestseller);
 
-/** Etykieta wykończenia — `finish` jest opcjonalne w katalogu. */
-const FINISH_LABEL: Record<string, string> = {
-  perłowe: 'Perłowe',
-  metaliczne: 'Metaliczne',
-  eko: 'Eko',
-};
-
 function weightLabel(colorId: string): string {
   return COLOR_MAP[colorId]?.weight?.replace('g', ' g/m²') ?? '';
 }
@@ -119,14 +117,21 @@ function weightLabel(colorId: string): string {
 /** Formaty zapowiedziane, wypisane zdaniem: „C6 114 × 162 mm i K4 155 × 155 mm". */
 const UPCOMING_LABEL = UPCOMING_FORMATS.map((f) => `${f.id} ${f.dimensions}`).join(' i ');
 
+/**
+ * Te same formaty bez wymiarów. W tabeli formatów milimetry są treścią
+ * kolumny, ale w akapicie o zaproszeniach niosą tylko szum — czytelnik na
+ * tym etapie pyta, czy może zamówić, a nie ile to ma milimetrów.
+ */
+const UPCOMING_LABEL_SHORT = UPCOMING_FORMATS.map((f) => f.id).join(' i ');
+
 const HOW_TO_STEPS = [
   {
     name: 'Wybór koperty w konfiguratorze',
-    text: `Wybierają Państwo format DL ${DL.dimensions}, jeden z ${COLORS.length} kolorów i ilość od ${DEFAULT_PRICING.moqWithoutPrint} sztuki. Opcjonalnie włączają nadruk logo lub personalizację — wtedy minimum rośnie do ${DEFAULT_PRICING.moqWithPrint} sztuk. Cena przelicza się przy każdej zmianie.`,
+    text: `Wybierają Państwo kolor i ilość, a jeśli koperta ma nieść logo albo dane odbiorcy — także jedną z dwóch usług. Przy nadruku i personalizacji zamówienie zaczyna się od ${DEFAULT_PRICING.moqWithPrint} sztuk. Cena przelicza się przy każdej zmianie, więc nic nie wyjaśnia się dopiero w koszyku.`,
   },
   {
     name: 'Płatność',
-    text: 'Do wyboru są BLIK, karta, szybki przelew, przelew tradycyjny oraz faktura z odroczonym terminem płatności 14 dni. Faktura odroczona nie wstrzymuje realizacji zamówienia.',
+    text: 'Do wyboru są BLIK, karta, szybki przelew i przelew tradycyjny. Instytucje publiczne i urzędy mogą zapłacić fakturą z odroczonym terminem płatności 14 dni — taka faktura nie wstrzymuje realizacji zamówienia.',
   },
   {
     name: 'Akceptacja wizualizacji',
@@ -142,27 +147,27 @@ const HOW_TO_STEPS = [
 const USE_CASES: { heading: string; text: string }[] = [
   {
     heading: 'Korespondencja firmowa i dokumenty',
-    text: `Pismo, umowa i faktura w formacie A4 złożone na trzy mieszczą się w kopercie DL ${DL.dimensions} bez dodatkowego zagięcia. Koperta ozdobna zamiast białej pocztowej odróżnia przesyłkę od reklamy już na biurku odbiorcy.`,
+    text: 'Pismo, umowa i faktura złożone na trzy wchodzą do koperty DL bez dodatkowego zagięcia. Koperta ozdobna zamiast białej pocztowej sprawia, że przesyłka nie ląduje na stosie z reklamami.',
   },
   {
     heading: 'Vouchery i bony podarunkowe',
-    text: 'Voucher drukowany na kartce 99 × 210 mm wchodzi do koperty DL bez zaginania. Bon w kopercie ozdobnej z logo wygląda jak prezent, a nie jak wydruk z drukarki biurowej — to najczęstszy powód, dla którego salony, kliniki i restauracje zamawiają koperty kolorowe.',
+    text: 'Bon w kopercie ozdobnej z logo wygląda jak prezent, a nie jak wydruk z drukarki biurowej. To najczęstszy powód, dla którego salony, kliniki i restauracje sięgają po koperty kolorowe — obdarowany dostaje coś, co chce się otworzyć.',
   },
   {
     heading: 'Zaproszenia i programy wydarzeń',
-    text: `Zaproszenie składane do formatu DL oraz program wydarzenia wysyłamy dziś w kopercie DL. Zaproszenia w formacie A6 i kwadratowe wymagają kopert ${UPCOMING_LABEL}, które mają w katalogu status „Dostępne wkrótce".`,
+    text: `Zaproszenie składane i program wydarzenia wysyłamy dziś w kopercie DL. Na zaproszenia kwadratowe i w formacie A6 potrzebne są koperty ${UPCOMING_LABEL_SHORT}, które mają w katalogu status „Dostępne wkrótce".`,
   },
   {
     heading: 'Wysyłki VIP i prezentowe',
-    text: `Do wysyłek, które mają zostać zapamiętane, wybierane są odcienie nietypowe: Matcha ${weightLabel('matcha')}, Błękit Łupkowy ${weightLabel('blekit-lupkowy')} i Złoty w wykończeniu metalicznym. Wszystkie kosztują tyle samo, co koperta biała.`,
+    text: 'Kiedy przesyłka ma zostać zapamiętana, wybierane są odcienie, których nie widuje się codziennie na biurku: Matcha, Błękit Łupkowy albo Złoty z metalicznym połyskiem.',
   },
   {
     heading: 'Certyfikaty, dyplomy i podziękowania',
-    text: `Certyfikat A4 złożony na trzy mieści się w kopercie DL. Przy nadruku logo obowiązuje minimum ${DEFAULT_PRICING.moqWithPrint} sztuk, więc pojedyncza grupa szkoleniowa lub jedna edycja kursu to już zamówienie realizowalne.`,
+    text: 'Certyfikat A4 złożony na trzy mieści się w kopercie DL. Jedna edycja kursu albo pojedyncza grupa szkoleniowa to już wystarczający nakład — nie trzeba czekać, aż uzbiera się większe zamówienie.',
   },
   {
     heading: 'Koperty na pieniądze i nagrody',
-    text: `Premia, nagroda w konkursie pracowniczym i prezent okolicznościowy trafiają do koperty DL, bo banknot mieści się w niej płasko, bez składania. Koperty gładkie zamawiają Państwo od ${DEFAULT_PRICING.moqWithoutPrint} sztuki, więc nie trzeba kupować opakowania zbiorczego.`,
+    text: 'Premia, nagroda w konkursie pracowniczym i prezent okolicznościowy trafiają do koperty DL, bo banknot mieści się w niej płasko, bez składania. Nie trzeba przy tym kupować opakowania zbiorczego.',
   },
 ];
 
@@ -191,7 +196,7 @@ const PAPER_SHOTS: { colorId: string; file: string; alt: string; note: string }[
     colorId: 'zloty',
     file: 'zlota-koperta-dl-papier-metaliczny-zblizenie',
     alt: 'Koperta ozdobna DL złota — zbliżenie na metaliczne wykończenie papieru',
-    note: 'Wykończenie metaliczne odbija światło pod kątem — i nie kosztuje ani grosza więcej.',
+    note: 'Metaliczne wykończenie odbija światło pod kątem — koperta wygląda inaczej z każdej strony.',
   },
   {
     colorId: 'matcha',
@@ -242,7 +247,7 @@ export const metadata: Metadata = {
      podrzędne — strona główna jest tym samym segmentem co layout, więc marka
      musi znaleźć się w tytule wprost. */
   title: `Koperty ozdobne i kolorowe DL od ${formatPrice(plain.unitTotal)} | Envelopes`,
-  description: `Koperty ozdobne DL ${DL.dimensions} w ${COLORS.length} kolorach po ${formatPrice(plain.unitTotal)} brutto za sztukę. Nadruk logo +${formatPrice(DEFAULT_PRICING.print)}, adresowanie +${formatPrice(DEFAULT_PRICING.personalization)}. Wysyłka w ${DEFAULT_PRICING.leadDaysPlain} dni, faktura VAT.`,
+  description: `Koperty ozdobne DL w ${COLORS.length} kolorach po ${formatPrice(plain.unitTotal)} brutto za sztukę — każdy odcień w tej samej cenie. Nadruk logo i adresowanie odbiorców, wysyłka w ${DEFAULT_PRICING.leadDaysPlain} dni robocze.`,
   keywords: [
     'koperty ozdobne',
     'koperta ozdobna',
@@ -256,6 +261,12 @@ export const metadata: Metadata = {
     title: 'Koperty ozdobne DL w 19 kolorach — Envelopes',
     description: `Koperta ozdobna DL ${DL.dimensions} za ${formatPrice(plain.unitTotal)} brutto, ${COLORS.length} kolorów w jednej cenie, od ${DEFAULT_PRICING.moqWithoutPrint} sztuki. Nadruk logo i adresowanie na życzenie.`,
     url: '/',
+    images: [
+      ogImage(
+        'home',
+        'Koperty ozdobne DL w sześciu kolorach — czarna, granatowa, czerwona, Matcha, złota i ecru'
+      ),
+    ],
   },
 };
 
@@ -264,12 +275,8 @@ export default function HomePage() {
 
   /* Wpisy blogowe podlinkowane kontekstowo w treści — każdy pod tą sekcją,
      której temat rozwija (pkt 5.4: strona główna rozdziela ruch). */
-  const colorsPost = getPost('paleta-19-kolorow-jak-wybrac-odcien-do-identyfikacji-firmy');
-  const invitationsPost = getPost('jak-dobrac-koperte-do-zaproszen-firmowych');
-  const addressingPost = getPost('adresowanie-kopert-recznie-czy-z-arkusza');
-  const filesPost = getPost('koperty-firmowe-z-nadrukiem-co-przygotowac-przed-zamowieniem');
-  const expressPost = getPost('ekspresowa-realizacja-2-dni-robocze');
-  const casePost = getPost('realizacja-3000-kopert-dl-dla-kancelarii');
+  const filesPost = getPost('jak-przygotowac-pliki-do-druku-na-kopertach');
+  const sheetGuidePost = getPost('adresowanie-kopert-z-arkusza-czy-recznie');
 
   return (
     <>
@@ -292,28 +299,37 @@ export default function HomePage() {
         <span className="home-hero-grain" aria-hidden="true" />
 
         <div className="container home-hero-inner">
+          {/* Kolumna tekstu jest rozbita na dwa bloki — nagłówek i obietnicę
+              z CTA — żeby na mobile kompozycja produktowa mogła wejść między
+              nie (`order` w `mobile.css`). DOM zostaje w kolejności czytania:
+              h1 → lead → CTA. */}
           <div className="home-hero-copy">
-            <span className="eyebrow home-hero-eyebrow">Koperty ozdobne dla firm</span>
-            {/* Akcent na „wrażenie" — sam krój pisma zamiast koloru, więc
-                wyróżnienie działa też przy monochromatycznym wydruku i nie
-                niesie znaczenia wyłącznie barwą. Przecinek zostaje poza
-                kaligrafią: pochylona interpunkcja rozjeżdża światło w wierszu. */}
-            <h1 className="home-hero-title">
-              Koperty ozdobne robiące <em className="hero-accent">wrażenie</em>, zanim zostaną
-              otwarte.
-            </h1>
-            <p className="hero-lead">
-              Wybierz spośród {COLORS.length} odcieni prestiżowych kopert DL.
-              Szybka realizacja i pełna transparentność kosztów od pierwszej sztuki.
-            </p>
-
-            <div className="home-hero-cta">
-              <Link href="#konfigurator" className="btn btn-lg">
-                Zamów Koperty Ozdobne
-              </Link>
+            <div className="home-hero-head">
+              <span className="eyebrow home-hero-eyebrow">Koperty ozdobne dla firm</span>
+              {/* Akcent na „wrażenie" — sam krój pisma zamiast koloru, więc
+                  wyróżnienie działa też przy monochromatycznym wydruku i nie
+                  niesie znaczenia wyłącznie barwą. Przecinek zostaje poza
+                  kaligrafią: pochylona interpunkcja rozjeżdża światło w wierszu. */}
+              <h1 className="home-hero-title">
+                Koperty ozdobne robiące <em className="hero-accent">wrażenie</em>, zanim zostaną
+                otwarte.
+              </h1>
             </div>
-            <p className="small muted home-hero-note">
-            </p>
+
+            <div className="home-hero-tail">
+              <p className="hero-lead">
+                {COLORS.length} odcieni papieru barwionego w masie, z logo albo z nazwiskiem
+                odbiorcy. Cenę widzisz od razu, zamówienie składasz w kilka minut.
+              </p>
+
+              <div className="home-hero-cta">
+                <Link href="#konfigurator" className="btn btn-lg">
+                  Zamów Koperty Ozdobne
+                </Link>
+              </div>
+              <p className="small muted home-hero-note">
+              </p>
+            </div>
           </div>
 
           <HeroEnvelopes />
@@ -322,7 +338,9 @@ export default function HomePage() {
 
       <section className="home-hero-facts-section">
         <div className="container">
-          <div className="home-hero-facts">
+          {/* `m-snap`: na mobile cztery kafle jadą poziomo z zatrzaskiem
+              zamiast zajmować cztery ekrany pionu. */}
+          <div className="home-hero-facts m-snap m-snap-sm">
             {([
               {
                 icon: 'kolory.svg',
@@ -369,10 +387,17 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── Konfigurator — na białym tle, wizualnie wydzielony z reszty strony ── */}
-      <section className="section section-surface" id="konfigurator">
+      {/* ── Konfigurator — jedyny ciemny pas na całej stronie ──
+          Biel przestała być wyróżnikiem: `section-surface` mają tu cztery
+          sekcje, więc konfigurator wyglądał jak kolejny akapit i był mijany
+          przewijaniem. Odwrócony kontrast — granat pod papierowymi kartami —
+          daje jedno miejsce, które nie wygląda jak treść, tylko jak narzędzie.
+          Obie krawędzie pasa są widoczne w trakcie przewijania, więc widać nie
+          tylko, gdzie konfigurator się zaczyna, ale też gdzie się kończy. */}
+      <section className="section configurator-zone" id="konfigurator">
+        <ConfiguratorAmbience />
         <div className="container">
-          <div className="section-head">
+          <div className="section-head configurator-zone-head">
             <span className="eyebrow">Konfigurator kopert</span>
             <h2>Trzy kroki do gotowego zamówienia</h2>
             <p>
@@ -381,82 +406,6 @@ export default function HomePage() {
             </p>
           </div>
           <Configurator />
-        </div>
-      </section>
-
-      {/* ── Koperty ozdobne / paleta — właściciel frazy głównej K3 ── */}
-      <section className="section" id="kolory">
-        <div className="container">
-          <div className="section-head">
-            <span className="eyebrow">Paleta</span>
-            <h2>Koperty ozdobne w {COLORS.length} kolorach — jedna cena za każdy odcień</h2>
-          </div>
-
-          <p style={{ maxWidth: '68ch' }}>
-            Koperty ozdobne różnią się od kopert pocztowych papierem: zamiast białego offsetu
-            używamy papieru barwionego w masie o gramaturze 115, 120 lub 140 g/m². W ofercie
-            Envelopes jest {COLORS.length} kolorów kopert DL {DL.dimensions} i każdy kosztuje tyle
-            samo — {formatPrice(plain.unitTotal)} brutto za sztukę. Za wykończenie perłowe,
-            metaliczne i papier eko nie ma dopłaty, więc wybór koloru jest decyzją wyłącznie
-            wizerunkową, nie budżetową.
-          </p>
-          <p style={{ maxWidth: '68ch' }}>
-            Kolorowe koperty DL zamawiają Państwo od {DEFAULT_PRICING.moqWithoutPrint} sztuki, bez
-            opakowań zbiorczych i bez progów ilościowych. Kliknięcie w kolor otwiera konfigurator
-            z zaznaczonym odcieniem.
-          </p>
-
-          <div className="palette-scroller">
-            {COLORS.map((color) => (
-              <ConfigureLink
-                key={color.id}
-                format="DL"
-                color={color.id}
-                className="palette-chip"
-                title={`Koperta DL ${color.name.toLowerCase()} — otwórz konfigurator z tym kolorem`}
-              >
-                <span className="swatch-shape">
-                  <EnvelopeShape colorId={color.id} />
-                </span>
-                <span>{color.name}</span>
-              </ConfigureLink>
-            ))}
-          </div>
-
-          <h3 style={{ marginTop: 'var(--space-7)' }}>
-            Gramatura i wykończenie {COLORS.length} kolorów kopert DL
-          </h3>
-          <p style={{ maxWidth: '68ch' }}>
-            Gramatura papieru rozkłada się następująco: {WEIGHT_SUMMARY}. Najgrubszy papier w
-            ofercie to Taupe {weightLabel('taupe')} — mimo to kosztuje tyle samo, co pozostałe
-            odcienie. Plakietką „Bestseller" oznaczyliśmy {BESTSELLERS.length} kolorów zamawianych
-            najczęściej.
-          </p>
-
-
-
-          <p className="small muted" style={{ marginTop: 'var(--space-5)', maxWidth: '68ch' }}>
-            Część odcieni funkcjonuje w rozmowie pod nazwami potocznymi. Koperta beżowa to w naszym
-            katalogu Ecru albo Taupe, kremowa — Ecru, grafitowa — Czarny, butelkowa —
-            Ciemnozielony, a pudrowa — Różowa. W konfiguratorze, na fakturze i w potwierdzeniu
-            zamówienia obowiązuje wyłącznie nazwa katalogowa, żeby wszystkie dokumenty opisywały ten
-            sam produkt.
-          </p>
-
-          <div className="row" style={{ marginTop: 'var(--space-6)' }}>
-            <ConfigureLink format="DL" className="btn">
-              Wybierz kolor koperty
-            </ConfigureLink>
-            {colorsPost && (
-              <span className="small muted">
-                Nie wiedzą Państwo, który odcień wybrać? Podpowiadamy we wpisie{' '}
-                <Link href={`/blog/${colorsPost.slug}`}>
-                  jak wybrać odcień do identyfikacji firmy
-                </Link>
-                .
-              </span>
-            )}
-          </div>
         </div>
       </section>
 
@@ -473,10 +422,9 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid grid-4 paper-shots">
+          <div className="grid grid-4 paper-shots m-snap">
             {PAPER_SHOTS.map((shot) => {
               const color = COLOR_MAP[shot.colorId];
-              const finish = color?.finish ? FINISH_LABEL[color.finish] : null;
               return (
                 <ConfigureLink
                   key={shot.colorId}
@@ -500,10 +448,8 @@ export default function HomePage() {
                       decoding="async"
                     />
                     <figcaption>
-                      <strong>
-                        {color?.name ?? shot.colorId} · {weightLabel(shot.colorId)}
-                        {finish ? ` · ${finish}` : ''}
-                      </strong>
+                      {/* Kolor i gramaturę podaje konfigurator — na stronie
+                          głównej podpis zostaje przy samym kontekście użycia. */}
                       <span className="small muted">{shot.note}</span>
                     </figcaption>
                   </figure>
@@ -513,10 +459,8 @@ export default function HomePage() {
           </div>
 
           <p className="small muted" style={{ marginTop: 'var(--space-5)', maxWidth: '68ch' }}>
-            Wszystkie cztery odcienie to ta sama koperta DL {DL.dimensions} w cenie{' '}
-            {formatPrice(plain.unitTotal)} brutto za sztukę. Za wykończenie metaliczne i za
-            grubszy papier nie ma dopłaty, więc różnica między tymi zdjęciami jest wyłącznie
-            wizerunkowa.
+            Cztery różne papiery, jedna i ta sama koperta. Wykończenie nie wpływa na cenę, więc
+            wybór między nimi jest decyzją wizerunkową, a nie budżetową.
           </p>
         </div>
       </section>
@@ -542,7 +486,11 @@ export default function HomePage() {
               bo bez tego obiecywałaby produkt, którego konfigurator nie przyjmie.
               Cena stoi tylko przy formacie dostępnym — cennik zapowiedzianego
               formatu byłby obietnicą nie do zrealizowania. */}
-          <div className="table-wrap" style={{ marginTop: 'var(--space-5)' }}>
+          {/* `m-cards`: tabela ma `min-width: 720px`, więc na telefonie czytało
+              się ją bokiem. Na mobile każdy wiersz staje się kartą, a `data-label`
+              zastępuje ukryty nagłówek kolumny. Znaczniki zostają tabelaryczne,
+              więc czytnik ekranu nadal dostaje pełne powiązanie danych. */}
+          <div className="table-wrap m-cards" style={{ marginTop: 'var(--space-5)' }}>
             <table className="data">
               <caption className="sr-only">
                 Formaty kopert Envelopes — wymiary, cena i status dostępności
@@ -559,17 +507,23 @@ export default function HomePage() {
                 {AVAILABLE_FORMATS.map((format) => (
                   <tr key={format.id}>
                     <th scope="row">{format.id}</th>
-                    <td>{format.dimensions}</td>
-                    <td>{formatPrice(DEFAULT_PRICING.base[format.id])} brutto/szt.</td>
-                    <td>W sprzedaży</td>
+                    <td data-label="Wymiary">{format.dimensions}</td>
+                    <td data-label="Cena od">
+                      {formatPrice(DEFAULT_PRICING.base[format.id])} brutto/szt.
+                    </td>
+                    <td data-label="Status">W sprzedaży</td>
                   </tr>
                 ))}
                 {UPCOMING_FORMATS.map((format) => (
                   <tr key={format.id}>
                     <th scope="row">{format.id}</th>
-                    <td>{format.dimensions}</td>
-                    <td className="muted">—</td>
-                    <td className="muted">Dostępne wkrótce</td>
+                    <td data-label="Wymiary">{format.dimensions}</td>
+                    <td className="muted" data-label="Cena od">
+                      —
+                    </td>
+                    <td className="muted" data-label="Status">
+                      Dostępne wkrótce
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -582,17 +536,6 @@ export default function HomePage() {
             większość korespondencji firmowej — pisma, umowy, faktury i bony podarunkowe. Pełną
             tabelę dopasowań i porównanie z formatami C6 i K4 znajdą Państwo na stronie{' '}
             <Link href="/koperty-dl">wymiary kopert DL</Link>.
-            {invitationsPost && (
-              <>
-                {' '}
-                Zaproszenia rządzą się własnymi zasadami: dobór koperty do wkładki opisaliśmy we
-                wpisie{' '}
-                <Link href={`/blog/${invitationsPost.slug}`}>
-                  jak dobrać kopertę do zaproszeń firmowych
-                </Link>
-                .
-              </>
-            )}
           </p>
         </div>
       </section>
@@ -606,25 +549,17 @@ export default function HomePage() {
           </div>
 
           <p style={{ maxWidth: '68ch' }}>
-            Koperta ozdobna DL {DL.dimensions} kosztuje{' '}
+            Gładka koperta ozdobna kosztuje{' '}
             <strong>{formatPrice(plain.unitTotal)} brutto</strong> ({formatPrice(plain.net)} netto)
-            za sztukę w każdym z {COLORS.length} kolorów. Cena jednostkowa nie zmienia się wraz
-            z ilością — rabatów ilościowych nie stosujemy, więc {DEFAULT_PRICING.moqWithPrint} i
-            1000 kopert kosztuje tyle samo za sztukę. Do zamówienia doliczamy jednorazowo{' '}
-            {formatPrice(DELIVERY_COST)} brutto za dostawę kurierem.
+            za sztukę — tyle samo w każdym z {COLORS.length} kolorów. Rabatów ilościowych nie
+            stosujemy, więc cena za sztukę przy dziesięciu kopertach i przy tysiącu jest ta sama;
+            do zamówienia dochodzi jednorazowo {formatPrice(DELIVERY_COST)} brutto za kuriera.
           </p>
-
-
-
-          <h3 style={{ marginTop: 'var(--space-7)' }}>
-            Wartość zamówienia kopert gładkich — przykłady
-          </h3>
           <p style={{ maxWidth: '68ch' }}>
-            Poniższe kwoty dotyczą kopert ozdobnych DL bez nadruku i bez personalizacji, wysyłanych
-            w {DEFAULT_PRICING.leadDaysPlain} dni robocze. Koperty gładkie nie przechodzą przez
-            produkcję, więc dopłata za ekspres ich nie dotyczy — jadą w tym samym terminie zawsze.
+            Koperty bez nadruku nie przechodzą przez produkcję, więc dopłata za ekspres ich nie
+            dotyczy — jadą w tym samym terminie zawsze. Dokładną kwotę dla swojej ilości zobaczą
+            Państwo w konfiguratorze, zanim cokolwiek zamówią.
           </p>
-
 
           <div className="row" style={{ marginTop: 'var(--space-6)' }}>
             <ConfigureLink format="DL" className="btn">
@@ -634,13 +569,6 @@ export default function HomePage() {
               Wycena powyżej {BULK_QUOTE_THRESHOLD.toLocaleString('pl-PL')} szt.
             </Link>
           </div>
-          {expressPost && (
-            <p className="small muted" style={{ marginTop: 'var(--space-4)', maxWidth: '68ch' }}>
-              Kiedy dopłata za ekspres ma sens, a kiedy wystarczy termin standardowy — opisaliśmy to
-              we wpisie{' '}
-              <Link href={`/blog/${expressPost.slug}`}>realizacja ekspresowa w 2 dni robocze</Link>.
-            </p>
-          )}
         </div>
       </section>
 
@@ -653,11 +581,9 @@ export default function HomePage() {
           </div>
 
           <p style={{ maxWidth: '68ch' }}>
-            Do koperty ozdobnej dokładają Państwo dwie usługi. Nadruk logo firmowego kosztuje{' '}
-            {formatPrice(DEFAULT_PRICING.print)} brutto od sztuki, a personalizacja, czyli nadruk
-            danych odbiorcy, {formatPrice(DEFAULT_PRICING.personalization)} brutto od sztuki. Obie
-            wymagają zamówienia minimum {DEFAULT_PRICING.moqWithPrint} sztuk i obie kończą się
-            wizualizacją, którą akceptują Państwo przed skierowaniem zamówienia do druku.
+            Do gładkiej koperty można dołożyć dwie rzeczy: logo firmy albo dane odbiorcy drukowane
+            wprost na kopercie. Obie usługi kończą się wizualizacją — do druku idzie wyłącznie to,
+            co Państwo zaakceptują, więc niespodzianek po otwarciu paczki nie ma.
           </p>
 
           <div className="grid grid-2" style={{ gap: 'var(--space-5)' }}>
@@ -669,11 +595,10 @@ export default function HomePage() {
                 roboczych
               </p>
               <p className="small">
-                Drukujemy logo, dane kontaktowe albo pełną grafikę na przedniej ściance koperty DL.
-                Cena nadruku jest identyczna na każdym z {COLORS.length} kolorów — druk na czarnej
-                kopercie kosztuje tyle samo, co na białej. Cennik, listę przyjmowanych plików
-                i proces krok po kroku opisaliśmy na stronie{' '}
-                <Link href="/koperty-z-nadrukiem">koperty z nadrukiem</Link>.
+                Drukujemy logo, dane kontaktowe albo całą grafikę na przedniej ściance koperty.
+                Odcień papieru nie zmienia ceny nadruku — na czarnej kopercie kosztuje tyle samo,
+                co na białej. Cennik, listę przyjmowanych plików i proces krok po kroku opisaliśmy
+                na stronie <Link href="/koperty-z-nadrukiem">koperty z nadrukiem</Link>.
               </p>
               <div className="row" style={{ marginTop: 'var(--space-4)' }}>
                 <ConfigureLink format="DL" print className="btn btn-sm">
@@ -690,18 +615,21 @@ export default function HomePage() {
                 roboczych
               </p>
               <p className="small">
-                Personalizacja to nadruk danych odbiorcy wprost na kopercie: imienia i nazwiska albo
-                pełnego adresu. Dane przekazują Państwo na dwa sposoby — wpisując je w
-                konfiguratorze lub wgrywając uzupełniony arkusz. Dzięki temu każda koperta w partii
-                wychodzi z innym adresem, a krój pisma pozostaje ten sam. Cennik, wymagania dla
-                listy adresów i proces krok po kroku opisaliśmy na stronie{' '}
+                Każda koperta w partii wychodzi z innymi danymi, a pismo na wszystkich jest to samo
+                — równe tak, jak nie wyjdzie żadną ręką. Drukujemy pełny adres, kiedy przesyłka
+                idzie pocztą, albo samo imię i nazwisko, kiedy koperty wręczają Państwo osobiście.
+                Dane przekazują Państwo wpisując je w konfiguratorze albo wgrywając arkusz. Cennik,
+                wymagania dla listy i proces krok po kroku opisaliśmy na stronie{' '}
                 <Link href="/koperty-personalizowane">koperty personalizowane</Link>.
-                {addressingPost && (
+                {/* Anchor = tytuł wpisu, czyli jego fraza długiego ogona
+                    (content-plan.md poz. 8). Fraza `adresowanie kopert`
+                    zostaje przy filarze. */}
+                {sheetGuidePost && (
                   <>
                     {' '}
-                    Który tryb wybrać, porównaliśmy we wpisie{' '}
-                    <Link href={`/blog/${addressingPost.slug}`}>
-                      adresowanie kopert ręcznie czy z arkusza
+                    Który z dwóch trybów wybrać przy własnej liście, rozstrzygamy w poradniku{' '}
+                    <Link href={`/blog/${sheetGuidePost.slug}`}>
+                      {sheetGuidePost.title.toLowerCase()}
                     </Link>
                     .
                   </>
@@ -742,13 +670,15 @@ export default function HomePage() {
             dodatkowo od akceptacji wizualizacji. Przy przelewie tradycyjnym prosimy doliczyć czas
             księgowania; przy fakturze z odroczonym terminem realizacja rusza bez oczekiwania na
             wpłatę.
+            {/* Anchor = fraza wpisu (`pliki do druku na kopertach`), a nie fraza
+                filara K1 — inaczej strona główna wzmacniałaby wpis na frazie,
+                którą oddał filarowi (content-plan.md poz. 7). */}
             {filesPost && (
               <>
                 {' '}
-                Listę plików i danych, które warto przygotować przed zamówieniem z nadrukiem,
-                zebraliśmy we wpisie{' '}
+                Wymagania dla pliku z logo zebraliśmy w poradniku{' '}
                 <Link href={`/blog/${filesPost.slug}`}>
-                  co przygotować przed zamówieniem kopert z nadrukiem
+                  jak przygotować pliki do druku na kopertach
                 </Link>
                 .
               </>
@@ -765,11 +695,10 @@ export default function HomePage() {
             <h2>Do czego używa się kopert ozdobnych</h2>
             <p>
               Koperta ozdobna zastępuje białą kopertę pocztową wszędzie tam, gdzie odbiorca ma
-              zapamiętać nadawcę. Poniżej sześć sytuacji, w których format DL {DL.dimensions} jest
-              wyborem naturalnym.
+              zapamiętać nadawcę. Sześć sytuacji, w których sięga się po nią najczęściej.
             </p>
           </div>
-          <div className="grid grid-3" style={{ gap: 'var(--space-5)' }}>
+          <div className="grid grid-3 m-snap" style={{ gap: 'var(--space-5)' }}>
             {USE_CASES.map((useCase) => (
               <div className="card" key={useCase.heading}>
                 <h3 style={{ fontSize: 19 }}>{useCase.heading}</h3>
@@ -779,6 +708,27 @@ export default function HomePage() {
               </div>
             ))}
           </div>
+          {/* Trzy kadry okolicznościowe — jedyne miejsce w serwisie, gdzie
+              nadruk pokazany jest w roli innej niż firmowa. Wszystkie trzy to
+              format DL, czyli ten, który da się dziś kupić; koperty C6 i K4 ze
+              statusem „Dostępne wkrótce" nie występują na żadnym z nich. */}
+          <h3 style={{ marginTop: 'var(--space-7)' }}>Nadruk okolicznościowy na kopercie DL</h3>
+          <p style={{ maxWidth: '68ch' }}>
+            Nadruk nie musi być logo firmy. Równie dobrze drukujemy jedno słowo — nazwę
+            uroczystości albo imię — na tych samych zasadach co znak firmowy.
+          </p>
+
+          <div style={{ marginTop: 'var(--space-5)' }}>
+            <ShowcaseGrid shots={OCCASION_SHOTS} columns={3} showSpec={false} />
+          </div>
+
+          {/* Odesłanie do filara K7 wewnątrz sekcji tematycznej — bez tworzenia
+              osobnego rozdzielnika, który odsunąłby paletę kolorów w dół. */}
+          <p className="small muted" style={{ marginTop: 'var(--space-5)', maxWidth: '68ch' }}>
+            Bony sprzedają się sezonowo i zamawia się je całymi seriami pod jedną akcję. Kiedy
+            złożyć zamówienie, żeby zdążyć przed szczytem, i ile kosztuje gotowa seria — opisaliśmy
+            na stronie <Link href="/koperty-na-vouchery">koperty na vouchery</Link>.
+          </p>
         </div>
       </section>
 
@@ -795,7 +745,7 @@ export default function HomePage() {
               <Link href="/koperty-personalizowane">personalizowane koperty</Link>.
             </p>
           </div>
-          <div className="grid grid-4" style={{ gap: 'var(--space-4)' }}>
+          <div className="grid grid-4 m-snap m-snap-sm" style={{ gap: 'var(--space-4)' }}>
             {SHOWCASE.map((item) => {
               const color = COLOR_MAP[item.colorId];
               const label = `Koperta DL ${color?.name ?? item.colorId} ${item.variant === 'nadruk' ? 'z nadrukiem' : 'z personalizacją'
@@ -820,27 +770,82 @@ export default function HomePage() {
                       hideCaption
                       size="sm"
                     />
+                    {/* Podpis mówi o usłudze, nie o wariancie papieru — kolor
+                        i gramaturę wybiera się w konfiguratorze. */}
                     <strong style={{ display: 'block', fontSize: 15, marginTop: 'var(--space-3)' }}>
-                      {label}
+                      Koperta DL {item.variant === 'nadruk' ? 'z nadrukiem' : 'z personalizacją'}
                     </strong>
                     <span className="small muted">{item.note}</span>
-                    <span className="mono-sm muted" style={{ display: 'block', marginTop: 2 }}>
-                      Papier {weightLabel(item.colorId)}
-                    </span>
                   </div>
                 </ConfigureLink>
               );
             })}
           </div>
-          {casePost && (
-            <p className="small" style={{ marginTop: 'var(--space-5)', maxWidth: '68ch' }}>
-              Jak wygląda zamówienie cykliczne w większej skali, opisaliśmy we wpisie{' '}
-              <Link href={`/blog/${casePost.slug}`}>
-                realizacja 3 000 kopert DL dla kancelarii prawnej
-              </Link>
-              .
-            </p>
-          )}
+        </div>
+      </section>
+
+      {/* ── Koperty ozdobne / paleta — właściciel frazy głównej K3.
+             Sekcja stoi poniżej zdjęć: najpierw produkt na zdjęciu i cena,
+             dopiero potem pełna specyfikacja palety. Kotwica `#kolory`
+             jest linkowana ze stopki i ze stron filarowych. ── */}
+      <section className="section" id="kolory">
+        <div className="container">
+          <div className="section-head">
+            <span className="eyebrow">Paleta Kolorów</span>
+            <h2>Koperty ozdobne w {COLORS.length} kolorach — jedna cena za każdy odcień</h2>
+          </div>
+
+          <p style={{ maxWidth: '68ch' }}>
+            Koperty ozdobne różnią się od pocztowych papierem: zamiast białego offsetu jest papier
+            barwiony w masie, więc kolor sięga w głąb arkusza i nie znika na zagięciu klapki.
+            Wszystkie {COLORS.length} odcieni kosztuje tyle samo — również te perłowe, metaliczne
+            i eko. Kolor wybierają Państwo pod markę albo pod okazję, nie pod budżet.
+          </p>
+          <p style={{ maxWidth: '68ch' }}>
+            Zamawiać można bez opakowań zbiorczych i bez progów ilościowych. Kliknięcie w kolor
+            otwiera konfigurator z zaznaczonym odcieniem.
+          </p>
+
+          <div className="palette-scroller">
+            {COLORS.map((color) => (
+              <ConfigureLink
+                key={color.id}
+                format="DL"
+                color={color.id}
+                className="palette-chip"
+                title={`Koperta DL ${color.name.toLowerCase()} — otwórz konfigurator z tym kolorem`}
+              >
+                <span className="swatch-shape">
+                  <EnvelopeShape colorId={color.id} />
+                </span>
+                <span>{color.name}</span>
+              </ConfigureLink>
+            ))}
+          </div>
+
+          <h3 style={{ marginTop: 'var(--space-7)' }}>
+            Gramatura i wykończenie {COLORS.length} kolorów kopert DL
+          </h3>
+          <p style={{ maxWidth: '68ch' }}>
+            Im grubszy papier, tym lepiej koperta znosi drogę w przesyłce zbiorczej. Najgrubszy
+            w ofercie jest Taupe ({weightLabel('taupe')}), a cała paleta rozkłada się tak:{' '}
+            {WEIGHT_SUMMARY}. Plakietkę „Bestseller" ma {BESTSELLERS.length} odcieni zamawianych
+            najczęściej.
+          </p>
+
+          <p className="small muted" style={{ marginTop: 'var(--space-5)', maxWidth: '68ch' }}>
+            Część odcieni funkcjonuje w rozmowie pod nazwami potocznymi. Koperta beżowa to w naszym
+            katalogu Ecru albo Taupe, kremowa — Ecru, grafitowa — Czarny, butelkowa —
+            Ciemnozielony, a pudrowa — Różowa. W konfiguratorze, na fakturze i w potwierdzeniu
+            zamówienia obowiązuje wyłącznie nazwa katalogowa, żeby wszystkie dokumenty opisywały ten
+            sam produkt.
+          </p>
+
+          <div className="row" style={{ marginTop: 'var(--space-6)' }}>
+            <ConfigureLink format="DL" className="btn">
+              Wybierz kolor koperty
+            </ConfigureLink>
+          </div>
         </div>
       </section>
 
@@ -853,10 +858,10 @@ export default function HomePage() {
               <h2>Rozliczenie dopasowane do obiegu dokumentów</h2>
               <p className="small">
                 Fakturę VAT wystawiamy do każdego zamówienia, także przy zakupie bez numeru NIP.
-                Faktura z odroczonym terminem płatności 14 dni jest dostępna przy każdym zamówieniu
-                i nie wstrzymuje realizacji — zamówienie rusza bez oczekiwania na wpłatę. To
-                rozwiązanie dla instytucji i jednostek budżetowych, których obieg zakupowy nie
-                przewiduje przedpłaty.
+                Faktura z odroczonym terminem płatności 14 dni jest dostępna dla instytucji
+                publicznych i urzędów, których obieg zakupowy nie przewiduje przedpłaty. Taka
+                faktura nie wstrzymuje realizacji — zamówienie rusza bez oczekiwania na wpłatę.
+                Pozostali klienci płacą z góry: BLIK-iem, kartą lub przelewem.
               </p>
               <ul className="small" style={{ paddingLeft: 'var(--space-5)', lineHeight: 1.8 }}>
                 <li>Faktura VAT do każdego zamówienia, także przy zakupie bez NIP.</li>
@@ -917,7 +922,7 @@ export default function HomePage() {
               Wszystkie wpisy
             </Link>
           </div>
-          <div className="grid grid-3">
+          <div className="grid grid-3 m-snap">
             {posts.map((post) => (
               <article className="post-card" key={post.slug}>
                 <EnvelopePlaceholder
@@ -954,22 +959,20 @@ export default function HomePage() {
           <div className="grid grid-2" style={{ gap: 'var(--space-6)' }}>
             <div>
               <p className="small muted">
-                Koperty ozdobne to koperty z papieru barwionego w masie, zamawiane wtedy, gdy przesyłka
-                ma budować wizerunek nadawcy. Koperta ozdobna DL {DL.dimensions} kosztuje{' '}
-                {formatPrice(plain.unitTotal)} brutto za sztukę ({formatPrice(plain.net)} netto) i jest
-                dostępna w {COLORS.length} kolorach w tej samej cenie. Koperty gładkie zamawiają Państwo
-                od {DEFAULT_PRICING.moqWithoutPrint} sztuki i wysyłamy je w{' '}
-                {DEFAULT_PRICING.leadDaysPlain} dni robocze. Specyfikację formatu — wymiary,
-                największą wkładkę i brak okienka adresowego — zebraliśmy na stronie{' '}
+                Po koperty ozdobne sięga się wtedy, gdy sama przesyłka ma coś powiedzieć o nadawcy:
+                przy zaproszeniu, bonie podarunkowym, piśmie do klienta, którego nie chce się
+                zgubić w stosie poczty. Papier barwiony w masie robi tu całą robotę — biała
+                koperta z okienkiem tego nie udźwignie. Co się w kopercie zmieści i czym różni się
+                od pozostałych formatów, opisaliśmy na stronie{' '}
                 <Link href="/koperty-dl">koperty DL {DL.dimensions}</Link>.
               </p>
             </div>
             <div>
               <p className="small muted">
-                Cenę widzą Państwo od razu, bez zapytania ofertowego. Do każdego zamówienia wystawiamy
-                fakturę VAT, także z odroczonym terminem płatności 14 dni. Przejrzysty proces pozwala
-                zamawiać koperty kolorowe szybko i bez zbędnych formalności, z myślą o firmach i instytucjach
-                wymagających stałych dostaw na czas.
+                Zamawianie ma być krótsze niż wybieranie koloru. Cenę widzą Państwo od razu, bez
+                zapytania ofertowego i bez czekania na odpowiedź handlowca. Fakturę VAT wystawiamy
+                do każdego zamówienia, a instytucje publiczne i urzędy mogą zapłacić po terminie —
+                zamówienie rusza wtedy od razu, nie po zaksięgowaniu przelewu.
               </p>
             </div>
           </div>
@@ -983,9 +986,8 @@ export default function HomePage() {
             <div>
               <h2>Gotowi, by zamówić koperty ozdobne?</h2>
               <p>
-                Konfigurator otwiera się z formatem DL. Wybór koloru zajmuje minutę, a cenę widzą
-                Państwo od razu — bez zapytania ofertowego. Koperty gładkie wysyłamy w{' '}
-                {DEFAULT_PRICING.leadDaysPlain} dni robocze, z fakturą VAT.
+                Wybór koloru zajmuje minutę, a cenę widzą Państwo od razu — bez zapytania
+                ofertowego i bez zakładania konta.
               </p>
             </div>
             <ConfigureLink format="DL" className="btn btn-lg">
@@ -994,6 +996,10 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Dolny pasek akcji — tylko mobile. Trzyma cenę wyjściową i wejście do
+          konfiguratora w zasięgu kciuka przez całą długość strony. */}
+      <MobileCta price={formatPrice(plain.unitTotal)} />
     </>
   );
 }

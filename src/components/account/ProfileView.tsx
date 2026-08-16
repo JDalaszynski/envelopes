@@ -113,8 +113,8 @@ export function ProfileView() {
             </strong>
             <p className="small muted" style={{ margin: '2px 0 0' }}>
               Złożone zamówienia: {stats?.ordersTotal ?? 0}, w tym zrealizowanych:{' '}
-              {stats?.ordersCompleted ?? 0}. Płatność fakturą z odroczonym terminem jest dostępna
-              przy każdym zamówieniu.
+              {stats?.ordersCompleted ?? 0}. Płatność fakturą z odroczonym terminem 14 dni jest
+              dostępna dla instytucji publicznych i urzędów.
             </p>
           </div>
           {profile?.deferredPaymentEligible && <span className="badge badge-success">Odroczony termin</span>}

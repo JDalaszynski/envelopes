@@ -173,8 +173,11 @@ Tło placeholdera przyjmuje odcień wybranego koloru, więc konfigurator daje na
    bez odbioru osobistego i bez Paczkomatów. Integracja z InPost Geowidget została w kodzie
    (`src/components/checkout/InpostGeowidget.tsx`), ale nie jest nigdzie renderowana; wystarczy
    przywrócić wybór metody w sekcji „Dostawa”, jeśli Paczkomaty wrócą do oferty.
-3. **Faktura z odroczonym terminem** — dostępna przy każdym zamówieniu, bez warunków (opcja dla
-   instytucji i jednostek budżetowych). Nie wstrzymuje produkcji; termin płatności 14 dni.
+3. **Faktura z odroczonym terminem** — oferta dla **instytucji publicznych i urzędów**
+   (reguła z 14 sierpnia 2026), tak opisana we wszystkich treściach serwisu. Nie wstrzymuje
+   produkcji; termin płatności 14 dni. Wyboru metody **nie bramkujemy w systemie** —
+   `/api/profil` zwraca `deferredPaymentEligible: true` dla każdego zalogowanego użytkownika
+   i tak ma zostać. Nie dodawać walidacji po NIP-ie ani po polu w profilu.
 4. **Status „Anulowane”** — dodany zgodnie z rekomendacją z briefu.
 5. **Dokumenty prawne** — regulamin, polityka prywatności i polityka cookies mają charakter wzorcowy
    i wymagają weryfikacji prawnej przed uruchomieniem sprzedaży.

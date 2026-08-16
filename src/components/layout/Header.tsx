@@ -31,6 +31,17 @@ export function Header() {
     setMenuOpen(false);
   }, [pathname]);
 
+  /* Menu mobilne jest pełnoekranowym arkuszem, więc treść pod nim nie może
+     się przewijać — bez blokady kciuk przesuwa stronę zamiast listy. */
+  useEffect(() => {
+    if (!menuOpen) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, [menuOpen]);
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);

@@ -1,6 +1,6 @@
 'use client';
 
-import { COLORS } from '@/lib/catalog';
+import { COLORS, colorImageSrcSet } from '@/lib/catalog';
 import { EnvelopeShape } from '@/components/ui/EnvelopeShape';
 
 /** Krok 2 — Kolor. Siatka 19 swatchy w kształcie koperty. */
@@ -42,9 +42,23 @@ export function StepColor({
             >
               <span className="swatch-shape">
                 {color.images?.[format as keyof typeof color.images] ? (
+                  /* Swatch ma 104–170 px, a plik źródłowy 1200 px — bez
+                     `srcSet` konfigurator pobierał 19 obrazów w rozdzielczości
+                     dwudziestokrotnie większej niż potrzebna. `sizes` opisuje
+                     siatkę `minmax(104px, 1fr)`, na desktopie sztywne 5 kolumn.
+
+                     Alt zostaje krótki i jest to celowe: swatch stoi w grupie
+                     opisanej `aria-label="Kolor koperty"`, a nazwa koloru
+                     powtarza się obok w `.swatch-name`. Pełne zdanie
+                     w dziewiętnastu sąsiadujących kadrach czytnik ekranu
+                     odczytywałby jako ścianę tekstu. */
                   <img
                     src={color.images[format as keyof typeof color.images]}
+                    srcSet={colorImageSrcSet(color.images[format as keyof typeof color.images])}
+                    sizes="(min-width: 820px) 210px, 104px"
                     alt={color.name}
+                    loading="lazy"
+                    decoding="async"
                   />
                 ) : (
                   <EnvelopeShape colorId={color.id} />
@@ -61,7 +75,7 @@ export function StepColor({
                   <span className="info-icon">i</span>
                   <span className="tooltip-content">
                     <strong>Gramatura {color.weight}</strong>
-                    <span>Gruby, jakościowy papier</span>
+                    <span>Gruby, Wysokiej jakości papier barwiony w masie</span>
                   </span>
                 </span>
               )}

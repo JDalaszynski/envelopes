@@ -5,14 +5,25 @@ import { JsonLd } from '@/components/seo/JsonLd';
 import { QuoteForm } from '@/components/forms/QuoteForm';
 import { BULK_QUOTE_THRESHOLD } from '@/lib/catalog';
 import { CONTACT_DETAILS } from '@/lib/orders';
-import { breadcrumbJsonLd } from '@/lib/seo';
+import { breadcrumbJsonLd, ogImage } from '@/lib/seo';
 
 export const metadata: Metadata = {
   title: 'Kontakt — Biuro Obsługi Klienta',
-  description:
-    'Kontakt do Envelopes: telefon, e-mail, godziny pracy Biura Obsługi Klienta oraz dane rejestrowe.',
+  /* 97 znaków zostawiało w wyniku wyszukiwania pół wiersza pustki. Dopisany
+     próg wyceny indywidualnej niesie konkret, po który klient B2B tu wchodzi. */
+  description: `Kontakt do Envelopes: telefon, e-mail i godziny pracy Biura Obsługi Klienta. Wycena indywidualna powyżej ${BULK_QUOTE_THRESHOLD.toLocaleString('pl-PL')} sztuk, faktura VAT do każdego zamówienia.`,
   alternates: { canonical: '/kontakt' },
-  openGraph: { title: 'Kontakt — Envelopes', url: '/kontakt' },
+  openGraph: {
+    type: 'website',
+    title: 'Kontakt i wycena indywidualna — Envelopes',
+    /* Bez `description` karta w podglądzie odnośnika dziedziczyła opis
+       z layoutu, czyli ofertę zamiast informacji kontaktowej. */
+    description: `Telefon, e-mail i godziny pracy Biura Obsługi Klienta. Wycena indywidualna zamówień powyżej ${BULK_QUOTE_THRESHOLD.toLocaleString('pl-PL')} sztuk.`,
+    url: '/kontakt',
+    images: [
+      ogImage('kontakt', 'Koperta DL Biała Perłowa z nadrukiem logo firmowego na szczotkowanym metalu'),
+    ],
+  },
 };
 
 export default function ContactPage() {

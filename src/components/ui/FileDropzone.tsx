@@ -23,7 +23,7 @@ interface Props {
   purpose: 'nadruk' | 'personalizacja' | 'wizualizacja';
 }
 
-const PREVIEWABLE = ['png', 'jpg', 'jpeg', 'svg'];
+const PREVIEWABLE = ['png', 'jpg', 'jpeg', 'webp', 'svg'];
 
 export function formatBytes(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`;
@@ -210,7 +210,7 @@ export function FileDropzone({
                   {file.status === 'przeslano'
                     ? 'Przesłano'
                     : file.status === 'blad'
-                      ? 'Błąd formatu'
+                      ? 'Błąd'
                       : 'Weryfikacja'}
                 </span>
                 <button

@@ -3,19 +3,26 @@ import type { Metadata } from 'next';
 import { BlogList } from '@/components/blog/BlogList';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { getAllPosts } from '@/lib/blog';
-import { breadcrumbJsonLd } from '@/lib/seo';
+import { breadcrumbJsonLd, ogImage } from '@/lib/seo';
 
 export const metadata: Metadata = {
-  title: 'Blog — poradniki o kopertach i korespondencji firmowej',
+  /* Pełne „…i korespondencji firmowej" dawało 68 znaków razem z szablonem
+     `| Envelopes` — poza próg wyświetlania w wyniku wyszukiwania. */
+  title: 'Blog — poradniki o kopertach firmowych',
+  /* Opis obiecywał „realizacje klientów", a wpisy tego typu zostały z bloga
+     usunięte (content-plan.md, 15 sierpnia 2026). Zapowiadanie w wyniku
+     wyszukiwania treści, której na stronie nie ma, to najkrótsza droga
+     do powrotu do wyników — i obietnica bez pokrycia. */
   description:
-    'Praktyczne poradniki o doborze kopert, przygotowaniu plików do nadruku i adresowaniu korespondencji firmowej. Inspiracje kolorystyczne i realizacje klientów.',
+    'Praktyczne poradniki o doborze kopert, przygotowaniu plików do nadruku i adresowaniu korespondencji firmowej. Konkrety z cennika, bez ogólników.',
   // Kanoniczny adres listy — filtry i sortowanie nie tworzą osobnych URL-i (pkt 8.3)
   alternates: { canonical: '/blog' },
   openGraph: {
     title: 'Blog Envelopes — koperty i korespondencja firmowa',
-    description: 'Poradniki, inspiracje i realizacje dotyczące kopert ozdobnych.',
+    description: 'Poradniki o doborze kopert, plikach do nadruku i adresowaniu korespondencji firmowej.',
     url: '/blog',
     type: 'website',
+    images: [ogImage('blog', 'Koperta DL z papieru Eko z brązowym nadrukiem logo palarni kawy')],
   },
 };
 

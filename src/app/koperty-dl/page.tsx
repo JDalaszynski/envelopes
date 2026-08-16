@@ -5,8 +5,6 @@ import { ConfigureLink } from '@/components/home/ConfigureLink';
 import { EnvelopePlaceholder } from '@/components/ui/EnvelopePlaceholder';
 import { ParallaxBackground } from '@/components/ui/ParallaxBackground';
 import { JsonLd } from '@/components/seo/JsonLd';
-import { getPost } from '@/lib/blog';
-import type { BlogPost } from '@/lib/blog';
 import {
   BULK_QUOTE_THRESHOLD,
   COLORS,
@@ -14,6 +12,7 @@ import {
   FORMAT_MAP,
   INSERT_CLEARANCE_MM,
   MAX_FORMAT_SIDE,
+  PRINT_SAFE_MARGIN_MM,
   STANDARD_INSERTS,
   UPCOMING_FORMATS,
   fitsInFormat,
@@ -29,6 +28,7 @@ import {
   envelopeFormatsJsonLd,
   faqJsonLd,
   howToJsonLd,
+  ogImage,
 } from '@/lib/seo';
 import type { EnvelopeConfig } from '@/lib/types';
 
@@ -118,7 +118,7 @@ const HOW_TO_STEPS = [
   },
   {
     name: 'Płatność',
-    text: 'Do wyboru są BLIK, karta, szybki przelew, przelew tradycyjny oraz faktura z odroczonym terminem płatności 14 dni. Faktura odroczona nie wstrzymuje wysyłki.',
+    text: 'Do wyboru są BLIK, karta, szybki przelew i przelew tradycyjny. Instytucje publiczne i urzędy mogą zapłacić fakturą z odroczonym terminem płatności 14 dni — taka faktura nie wstrzymuje wysyłki.',
   },
   {
     name: 'Wysyłka kurierem',
@@ -134,7 +134,7 @@ const HOW_TO_STEPS = [
 const INDUSTRIES: { heading: string; text: string }[] = [
   {
     heading: 'Kancelarie prawne i notarialne',
-    text: `Pismo procesowe, opinia i akt notarialny to arkusze A4. Złożone na trzy mierzą ${A4_IN_THREE.width} × ${A4_IN_THREE.height} mm i wchodzą do koperty DL ${DL.dimensions} z zapasem ${A4_FIT.clearanceShort} mm na szerokości. Dokument nie wymaga drugiego zagięcia, więc po otwarciu leży płasko.`,
+    text: `Pismo procesowe, opinia i akt notarialny to arkusze A4. Złożone na trzy wchodzą do koperty DL z zapasem ${A4_FIT.clearanceShort} mm na szerokości — dokument nie wymaga drugiego zagięcia, więc po otwarciu leży płasko na biurku.`,
   },
   {
     heading: 'Biura rachunkowe i doradztwo podatkowe',
@@ -142,15 +142,15 @@ const INDUSTRIES: { heading: string; text: string }[] = [
   },
   {
     heading: 'Hotele, resorty i pensjonaty',
-    text: `Karta powitalna i voucher pobytowy drukowane są zwykle na jednej trzeciej arkusza A4, czyli ${A4_IN_THREE.width} × ${A4_IN_THREE.height} mm. To wymiar, pod który format DL został zaprojektowany, więc karta wypełnia kopertę bez luzu i nie przesuwa się w środku.`,
+    text: 'Karta powitalna i voucher pobytowy drukowane są zwykle na jednej trzeciej arkusza A4. To wymiar, pod który format DL został zaprojektowany, więc karta wypełnia kopertę bez luzu i nie przesuwa się w środku.',
   },
   {
     heading: 'Salony SPA, kosmetyczne i kliniki',
-    text: `Bon na zabieg mieści się w kopercie DL w dwóch wariantach: jako wydruk ${A4_IN_THREE.width} × ${A4_IN_THREE.height} mm albo jako karta plastikowa w standardzie ID-1, czyli ${formatMm(85.6)} × 54 mm. Oba wchodzą płasko, bez zaginania.`,
+    text: `Bon na zabieg wchodzi w dwóch postaciach: jako wydruk w wymiarze DL albo jako karta plastikowa w standardzie ID-1 (${formatMm(85.6)} × 54 mm). Oba warianty leżą płasko, bez zaginania.`,
   },
   {
     heading: 'Restauracje, winiarnie i kawiarnie',
-    text: `Voucher na kolację degustacyjną drukowany w wymiarze DL wchodzi do koperty bez składania. Koperty DL zamawiają Państwo od ${DEFAULT_PRICING.moqWithoutPrint} sztuki, więc zapas na sezon świąteczny można uzupełniać partiami, a nie kartonem.`,
+    text: 'Voucher na kolację degustacyjną drukowany w wymiarze DL wchodzi do koperty bez składania. Zapas na sezon świąteczny można uzupełniać partiami, w miarę jak bony się sprzedają, zamiast zamawiać karton z góry.',
   },
   {
     heading: 'Działy HR, kadr i płac',
@@ -170,13 +170,16 @@ const INDUSTRIES: { heading: string; text: string }[] = [
   },
   {
     heading: 'Butiki, jubilerzy i marki premium',
-    text: `Karta podarunkowa ID-1 (${formatMm(85.6)} × 54 mm) i wizytówka 90 × 50 mm giną w większej kopercie, a w DL leżą stabilnie. Do tej samej przesyłki wchodzi list na jednej trzeciej arkusza A4 — karta i list w jednej kopercie, bez dwóch opakowań.`,
+    text: 'Karta podarunkowa i wizytówka giną w większej kopercie, a w DL leżą stabilnie. Do tej samej przesyłki wchodzi jeszcze list — karta i list w jednym opakowaniu zamiast w dwóch.',
   },
 ];
 
 export const metadata: Metadata = {
-  title: `Koperty DL — wymiary ${DL.dimensions}, co się mieści`,
-  description: `Koperta DL ma wymiary ${DL.dimensions}. Mieści kartkę A4 złożoną na trzy i voucher ${A4_IN_THREE.width} × ${A4_IN_THREE.height} mm, największa wkładka to ${MAX_INSERT.short} × ${MAX_INSERT.long} mm. ${COLORS.length} kolorów, od ${DEFAULT_PRICING.moqWithoutPrint} sztuki.`,
+  /* Tytuł z dopiskiem „co się mieści" wychodził na 65 znaków razem z szablonem
+     `| Envelopes` z layoutu — Google ucinał go w wyniku. Intencję „co się
+     mieści" niesie description i pierwszy nagłówek H2. */
+  title: `Koperty DL — wymiary ${DL.dimensions}`,
+  description: `Koperta DL ma wymiary ${DL.dimensions}. Mieści A4 złożone na trzy i voucher ${A4_IN_THREE.width} × ${A4_IN_THREE.height} mm; największa wkładka to ${MAX_INSERT.short} × ${MAX_INSERT.long} mm. ${COLORS.length} kolorów, od ${DEFAULT_PRICING.moqWithoutPrint} sztuki.`,
   keywords: [
     'koperty dl wymiary',
     'koperta dl wymiary',
@@ -191,6 +194,9 @@ export const metadata: Metadata = {
     title: `Wymiary koperty DL — ${DL.dimensions} | Envelopes`,
     description: `Wymiary koperty DL to ${DL.dimensions}. Największa wkładka: ${MAX_INSERT.short} × ${MAX_INSERT.long} mm. Tabela dopasowań, porównanie z formatami C6 i K4, ${COLORS.length} kolorów.`,
     url: '/koperty-dl',
+    images: [
+      ogImage('koperty-dl', 'Koperta DL 110 × 220 mm w kolorze Biała Perłowa z nadrukowanym adresem'),
+    ],
   },
 };
 
@@ -253,13 +259,6 @@ function FormatDiagram({ format, showInsert = false }: { format: EnvelopeFormat;
 }
 
 export default function DlEnvelopesPage() {
-  const invitationsPost = getPost('jak-dobrac-koperte-do-zaproszen-firmowych');
-  const colorsPost = getPost('paleta-19-kolorow-jak-wybrac-odcien-do-identyfikacji-firmy');
-  const casePost = getPost('realizacja-3000-kopert-dl-dla-kancelarii');
-  const relatedPosts = [invitationsPost, colorsPost, casePost].filter(
-    (post): post is BlogPost => post !== undefined
-  );
-
   return (
     <>
       <JsonLd data={dlEnvelopeProductJsonLd()} />
@@ -295,13 +294,10 @@ export default function DlEnvelopesPage() {
             <span className="eyebrow">Format DL</span>
             <h1>Koperty DL — wymiary {DL.dimensions}</h1>
             <p className="hero-lead">
-              Koperta DL ma wymiary {DL.dimensions}, czyli {dimensionsInCm(DL)}. To format
-              prostokątny i podłużny, dopasowany do arkusza A4 złożonego na trzy —{' '}
-              {A4_IN_THREE.width} × {A4_IN_THREE.height} mm. Największa wkładka, jaka wchodzi do
-              koperty DL, mierzy {MAX_INSERT.short} × {MAX_INSERT.long} mm. W Envelopes koperta DL
-              kosztuje {formatPrice(plain.unitTotal)} brutto za sztukę w {COLORS.length} kolorach,
-              zamawiają ją Państwo od {DEFAULT_PRICING.moqWithoutPrint} sztuki, a wysyłamy w{' '}
-              {DEFAULT_PRICING.leadDaysPlain} dni robocze.
+              Koperta DL ma wymiary {DL.dimensions}, czyli {dimensionsInCm(DL)} — format podłużny,
+              zaprojektowany pod arkusz A4 złożony na trzy. Największa wkładka, jaka do niej
+              wejdzie, mierzy {MAX_INSERT.short} × {MAX_INSERT.long} mm. Poniżej rozpisujemy, co
+              się w niej mieści, a co wymaga innego formatu.
             </p>
 
             <div className="row">
@@ -314,8 +310,8 @@ export default function DlEnvelopesPage() {
             </div>
             <p className="small muted" style={{ marginTop: 'var(--space-3)' }}>
               Koperty gładkie zamawiają Państwo od {DEFAULT_PRICING.moqWithoutPrint} sztuki, bez
-              opakowań zbiorczych. Do każdego zamówienia wystawiamy fakturę VAT, także
-              z odroczonym terminem płatności 14 dni.
+              opakowań zbiorczych. Do każdego zamówienia wystawiamy fakturę VAT, a instytucjom
+              publicznym i urzędom — z odroczonym terminem płatności 14 dni.
             </p>
           </div>
         </div>
@@ -523,6 +519,14 @@ export default function DlEnvelopesPage() {
             a 500 zł — 150 × 75 mm.
           </p>
 
+          {/* Link w bok do filara K7 — wiersz „Voucher lub bon" jest w tej tabeli,
+              ale cała ścieżka zakupowa firmy sprzedającej bon należy do F4. */}
+          <p className="small muted" style={{ marginTop: 'var(--space-4)', maxWidth: '68ch' }}>
+            Wiersz z voucherem dotyczy najczęstszego zastosowania formatu DL poza korespondencją.
+            Cennik serii bonów, wybór kolorów pod nadruk logo i dziesięć branż sprzedających bon
+            opisaliśmy na stronie <Link href="/koperty-na-vouchery">koperty na vouchery</Link>.
+          </p>
+
           <div className="row" style={{ marginTop: 'var(--space-6)' }}>
             <ConfigureLink format="DL" className="btn">
               Zamów koperty DL {DL.dimensions}
@@ -601,17 +605,6 @@ export default function DlEnvelopesPage() {
             Envelopes status „Dostępne wkrótce" — nie da się ich kupić ani gładkich, ani
             z nadrukiem. Podajemy ich wymiary, bo bez nich porównanie formatów byłoby niepełne,
             ale żaden przycisk na tej stronie nie prowadzi do zamówienia koperty C6 ani K4.
-            {invitationsPost && (
-              <>
-                {' '}
-                Dobór formatu do konkretnej wkładki — zaproszenia, programu, kartki
-                okolicznościowej — opisaliśmy we wpisie{' '}
-                <Link href={`/blog/${invitationsPost.slug}`}>
-                  jak dobrać kopertę do zaproszeń firmowych
-                </Link>
-                .
-              </>
-            )}
           </p>
         </div>
       </section>
@@ -642,7 +635,7 @@ export default function DlEnvelopesPage() {
                 Wszystkie koperty Envelopes są bez okienka adresowego. Przednia ścianka jest
                 jednolitą płaszczyzną papieru barwionego w masie, bez folii i bez wycięcia. Ma to
                 dwie konsekwencje praktyczne: adres odbiorcy trzeba nadrukować lub napisać na
-                kopercie, a w zamian cała ścianka jest dostępna pod nadruk — z zachowaniem 5 mm
+                kopercie, a w zamian cała ścianka jest dostępna pod nadruk — z zachowaniem {PRINT_SAFE_MARGIN_MM} mm
                 marginesu od krawędzi, poza linią klejenia i zagięciem klapki.
               </p>
             </div>
@@ -699,14 +692,6 @@ export default function DlEnvelopesPage() {
             sam we wszystkich odcieniach — grubszy papier nie zmienia formatu, zmienia sztywność.
             Wszystkie {COLORS.length} odcieni obejrzą Państwo w{' '}
             <Link href="/#kolory">palecie kolorów kopert ozdobnych</Link>.
-            {colorsPost && (
-              <>
-                {' '}
-                Który odcień pasuje do identyfikacji firmy, podpowiadamy we wpisie{' '}
-                <Link href={`/blog/${colorsPost.slug}`}>paleta 19 kolorów — jak wybrać odcień</Link>
-                .
-              </>
-            )}
           </p>
         </div>
       </section>
@@ -829,16 +814,6 @@ export default function DlEnvelopesPage() {
             {DEFAULT_PRICING.leadDaysStandard} dni roboczych — albo{' '}
             {DEFAULT_PRICING.leadDaysExpress} dni roboczych za dopłatą{' '}
             {formatPrice(DEFAULT_PRICING.express)} brutto od sztuki.
-            {casePost && (
-              <>
-                {' '}
-                Jak wygląda cykliczne zamówienie kopert DL w większej skali, opisaliśmy we wpisie{' '}
-                <Link href={`/blog/${casePost.slug}`}>
-                  realizacja 3 000 kopert DL dla kancelarii prawnej
-                </Link>
-                .
-              </>
-            )}
           </p>
         </div>
       </section>
@@ -863,37 +838,7 @@ export default function DlEnvelopesPage() {
         </div>
       </section>
 
-      {/* ── Treści wspierające filar ── */}
-      {relatedPosts.length > 0 && (
-        <section className="section" id="poradniki">
-          <div className="container">
-            <div className="section-head">
-              <span className="eyebrow">Poradniki</span>
-              <h2>Więcej o doborze koperty</h2>
-            </div>
-            <div className="grid grid-3">
-              {relatedPosts.map((post) => (
-                <article className="post-card" key={post.slug}>
-                  <EnvelopePlaceholder
-                    format={post.format}
-                    colorId={post.colorId}
-                    ratio="wide"
-                    hideCaption
-                    size="sm"
-                  />
-                  <div className="post-card-body">
-                    <span className="badge">{post.category}</span>
-                    <h3 style={{ fontSize: 18 }}>
-                      <Link href={`/blog/${post.slug}`}>{post.title}</Link>
-                    </h3>
-                    <p className="small muted">{post.lead}</p>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
+      {/* ── Treści wspierające filar wrócą wraz z poz. 10, 11 i 13 planu ── */}
 
       {/* ── Finalne CTA ── */}
       <section className="section-tight">

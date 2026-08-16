@@ -1252,52 +1252,274 @@
   margin-top: 2px;
 }
 
-/* Sekcja na białym tle — wydziela konfigurator z papierowego tła strony */
+/* Sekcja na białym tle — rytm strony, przekładka między pasami treści */
 .section-surface {
   background: var(--color-surface);
   border-top: 1px solid var(--color-line);
   border-bottom: 1px solid var(--color-line);
 }
 
-/* Karta kroku na białej sekcji dostaje papierowe tło, żeby zachować kontrast */
-.section-surface .config-card,
-.section-surface .summary-panel,
-.section-surface .summary-bar {
+/* Karta kroku na sekcji o innym tle dostaje papier, żeby zachować kontrast.
+   Ten sam komplet reguł obsługuje białą sekcję i granatową strefę
+   konfiguratora — obie odsuwają kartę od swojego tła o jeden stopień. */
+:is(.section-surface, .configurator-zone) .config-card,
+:is(.section-surface, .configurator-zone) .summary-panel,
+:is(.section-surface, .configurator-zone) .summary-bar {
   background: var(--color-paper);
 }
 
-.section-surface .summary-bar::before {
+:is(.section-surface, .configurator-zone) .summary-bar::before {
   background-image: radial-gradient(circle at 5px 0, transparent 5px, var(--color-paper) 5px);
 }
 
-.section-surface .summary-chip {
+:is(.section-surface, .configurator-zone) .summary-chip {
   background: var(--color-surface);
 }
 
-.section-surface .summary-bar .qty-block-control,
-.section-surface .config-card .input,
-.section-surface .config-card .textarea,
-.section-surface .config-card .select,
-.section-surface .config-card .format-card,
-.section-surface .config-card .option-card,
-.section-surface .config-card .swatch,
-.section-surface .config-card .file-card,
-.section-surface .config-card .thumb,
-.section-surface .config-card .card {
+:is(.section-surface, .configurator-zone) .summary-bar .qty-block-control,
+:is(.section-surface, .configurator-zone) .config-card .input,
+:is(.section-surface, .configurator-zone) .config-card .textarea,
+:is(.section-surface, .configurator-zone) .config-card .select,
+:is(.section-surface, .configurator-zone) .config-card .format-card,
+:is(.section-surface, .configurator-zone) .config-card .option-card,
+:is(.section-surface, .configurator-zone) .config-card .swatch,
+:is(.section-surface, .configurator-zone) .config-card .file-card,
+:is(.section-surface, .configurator-zone) .config-card .thumb,
+:is(.section-surface, .configurator-zone) .config-card .card {
   background: var(--color-surface);
 }
 
-.section-surface .summary-panel::before {
+:is(.section-surface, .configurator-zone) .summary-panel::before {
   background-image: radial-gradient(circle at 5px 0, transparent 5px, var(--color-paper) 5px);
 }
 
-.section-surface .dropzone {
+:is(.section-surface, .configurator-zone) .dropzone {
   background: var(--color-surface);
 }
 
-.section-surface .dropzone:hover,
-.section-surface .dropzone[data-drag='true'] {
+:is(.section-surface, .configurator-zone) .dropzone:hover,
+:is(.section-surface, .configurator-zone) .dropzone[data-drag='true'] {
   background: var(--color-seal-wash);
+}
+
+/* ── Strefa konfiguratora — jedyny ciemny pas na stronie ──
+   Wyróżnikiem nie może być kolejny odcień bieli, bo biel na tej stronie
+   oznacza „następna sekcja treści". Odwrócenie kontrastu daje landmark,
+   którego nie da się pomylić z akapitem, a papierowe karty w środku zyskują
+   na nim maksymalną czytelność (10,6:1 dla tekstu na granacie).
+
+   Pas celowo NIE ustawia `color`. Jasny kolor tekstu dziedziczyłyby też karty
+   i pasek podsumowania, które stoją na papierze — papier na papierze znika.
+   Kolor dostają wyłącznie elementy stojące wprost na granacie (poniżej).
+
+   Bez `isolation` — pływające elementy konfiguratora (toast, „Powrót do
+   konfiguratora") są jego potomkami i muszą nadal warstwować się względem
+   nagłówka i baneru zgód, a nie wewnątrz pasa. */
+.configurator-zone {
+  position: relative;
+  /* Pozycja kursora (`--cx`/`--cy`) i przesunięty za nim środek winiety
+     (`--vx`/`--vy`) — wszystkie ustawia `ConfiguratorAmbience`, gotowe
+     w procentach. Wartości muszą być gotowe do podstawienia, bo `calc()`
+     z `var()` w pozycji gradientu nie przechodzi przez transformację CSS
+     w buildzie. Środek to stan spoczynku: bez wskaźnika i przy ograniczonym
+     ruchu nic ich nie zmienia, więc dekoracja zostaje statyczna. */
+  --cx: 50%;
+  --cy: 50%;
+  --vx: 50%;
+  --vy: 50%;
+  background-color: #274F7F;
+}
+
+/* Treść nad warstwami dekoracyjnymi. Świadomie bez `z-index` — elementy
+   pozycjonowane z `z-index: auto` malują się w kolejności drzewa, a każdy
+   `z-index` tutaj utworzyłby kontekst nakładania i uwięził w nim toast
+   oraz przycisk powrotu (oba `fixed`, oba muszą stać nad banerem zgód). */
+.configurator-zone > .container {
+  position: relative;
+}
+
+/* ── Dekoracja pasa: ziarno, winieta, światło kursora ──
+   Winieta siedzi na kontenerze warstw: papier z krawędzi strony wchodzi na
+   granat i zmiękcza jego granicę. Środek elipsy przesuwa się za kursorem
+   o ±6% szerokości pasa — ruch na tyle mały, że czyta się jak reakcja
+   materiału na światło, a nie jak animacja. */
+.config-ambience {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(75% 65% at var(--vx) var(--vy),
+      rgba(244, 242, 236, 0) 38%,
+      rgba(244, 242, 236, 0.12) 72%,
+      rgba(244, 242, 236, 0.35) 100%);
+}
+
+/* Ziarno — ten sam arkusz szumu, co w hero, tylko bez `mix-blend-mode`:
+   tryb mieszania utworzyłby kontekst nakładania, a na granacie zwykła
+   przezroczystość daje ten sam efekt drobnej faktury. */
+.config-ambience-grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23g)'/%3E%3C/svg%3E");
+}
+
+/* Światło pod kursorem zostało wyłączone na życzenie */
+.config-ambience-glow {
+  display: none;
+}
+
+.configurator-zone-head h2 {
+  color: var(--color-paper);
+}
+
+.configurator-zone-head .eyebrow {
+  color: rgba(244, 242, 236, 0.62);
+}
+
+.configurator-zone-head p {
+  color: rgba(244, 242, 236, 0.76);
+}
+
+/* Domyślny focus (grafit) znika na granacie — elementy stojące wprost na
+   pasie dostają obwódkę w kolorze papieru. Wnętrza kart zostają bez zmian. */
+.config-progress :focus-visible,
+.configurator-zone-head :focus-visible {
+  outline-color: var(--color-paper);
+}
+
+/* ── Pasek kroków — nagłówek narzędzia nad pierwszą kartą ──
+   Mówi, ile decyzji zostało, i pozwala wrócić do wcześniejszej bez szukania
+   karty wzrokiem. Stoi w potoku strony, nie przykleja się do jej krawędzi. */
+.config-progress {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid rgba(244, 242, 236, 0.18);
+  border-radius: var(--radius-md);
+  background: rgba(244, 242, 236, 0.05);
+}
+
+.config-progress-rail {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.config-progress-step {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+/* Kreska między krokami — kierunek czytania, nie ozdoba */
+.config-progress-step + .config-progress-step::before {
+  content: '';
+  flex: none;
+  width: 20px;
+  height: 1px;
+  background: rgba(244, 242, 236, 0.3);
+}
+
+.config-progress-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: 0 var(--space-2);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: none;
+  font: inherit;
+  font-size: 14px;
+  /* 0,68 zamiast 0,6 — pasek ma teraz własne, jaśniejsze tło, więc słabszy
+     odcień zszedłby dokładnie do granicy 4,5:1. */
+  color: rgba(244, 242, 236, 0.68);
+  cursor: pointer;
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.config-progress-btn:disabled {
+  cursor: default;
+}
+
+.config-progress-btn:not(:disabled):hover {
+  color: var(--color-paper);
+}
+
+.config-progress-step[data-state='done'] .config-progress-btn {
+  color: rgba(244, 242, 236, 0.75);
+}
+
+.config-progress-step[data-state='current'] .config-progress-btn {
+  color: var(--color-paper);
+  font-weight: 600;
+}
+
+.config-progress-dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border: 1px solid rgba(244, 242, 236, 0.35);
+  border-radius: 50%;
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 12px;
+  font-weight: 400;
+  transition: background var(--duration-fast) var(--ease-standard),
+    border-color var(--duration-fast) var(--ease-standard);
+}
+
+.config-progress-step[data-state='done'] .config-progress-dot {
+  background: rgba(244, 242, 236, 0.16);
+  border-color: rgba(244, 242, 236, 0.45);
+}
+
+.config-progress-step[data-state='current'] .config-progress-dot {
+  background: var(--color-paper);
+  border-color: var(--color-paper);
+  color: var(--color-seal-deep);
+}
+
+.config-progress-meta {
+  flex: none;
+  margin: 0;
+  color: rgba(244, 242, 236, 0.66);
+  white-space: nowrap;
+}
+
+@media (max-width: 720px) {
+  .config-progress {
+    padding: 0 var(--space-2);
+  }
+
+  /* Nazwy kroków ustępują miejsca — zostaje numer i nazwa kroku bieżącego */
+  .config-progress-step:not([data-state='current']) .config-progress-label {
+    display: none;
+  }
+
+  /* Krok bez podpisu to sam numer — pole dotyku musi urosnąć do 44 × 44 */
+  .config-progress-btn {
+    min-width: 44px;
+    justify-content: center;
+  }
+
+  .config-progress-step + .config-progress-step::before {
+    width: 12px;
+  }
+
+  .config-progress-meta {
+    display: none;
+  }
 }
 
 /* ── 4.5 Layout konfiguratora ── */
@@ -2179,6 +2401,14 @@
   border-radius: var(--radius-md);
   overflow: hidden;
   height: 100%;
+  position: relative;
+  transition: border-color var(--duration-fast) var(--ease-standard), box-shadow var(--duration-fast) var(--ease-standard), transform var(--duration-fast) var(--ease-standard);
+}
+
+.post-card:hover {
+  border-color: var(--color-ink-soft);
+  box-shadow: 0 4px 12px rgba(31, 36, 48, 0.05);
+  transform: translateY(-2px);
 }
 
 .post-card-body {
@@ -2195,6 +2425,13 @@
 
 .post-card a {
   text-decoration: none;
+}
+
+.post-card a::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
 }
 
 .post-meta {
@@ -2311,6 +2548,12 @@ table.data.legal-table {
   color: #1f4b73;
   border-color: #1f4b73;
   background: rgba(31, 75, 115, 0.08);
+}
+
+.status-gotowe_do_wysylki {
+  color: #5b3d75;
+  border-color: #5b3d75;
+  background: rgba(91, 61, 117, 0.08);
 }
 
 .status-zrealizowane {

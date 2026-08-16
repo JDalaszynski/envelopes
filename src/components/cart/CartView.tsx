@@ -6,7 +6,7 @@ import { Suspense, useEffect, useState } from 'react';
 
 import { EnvelopePlaceholder } from '@/components/ui/EnvelopePlaceholder';
 import { useCart, EDIT_KEY } from '@/components/providers/CartProvider';
-import { COLOR_MAP, FORMAT_MAP } from '@/lib/catalog';
+import { COLOR_MAP, FORMAT_MAP, personalizationScope } from '@/lib/catalog';
 import { DEFAULT_PRICING, DELIVERY_COST, formatPrice, leadTimeDays, round2 } from '@/lib/pricing';
 import type { EnvelopeConfig, ShippingSpeed } from '@/lib/types';
 
@@ -159,7 +159,9 @@ function CartInner() {
                       )}
                       {item.config.personalization && (
                         <li>
-                          Personalizacja:{' '}
+                          Personalizacja —{' '}
+                          {personalizationScope(item.config.personalizationScope).label.toLowerCase()}
+                          :{' '}
                           {item.config.personalizationMethod === 'szablon'
                             ? `arkusz ${item.config.personalizationFile?.name ?? 'do uzupełnienia'}`
                             : 'treść wpisana ręcznie'}

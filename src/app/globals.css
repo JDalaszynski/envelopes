@@ -51,6 +51,7 @@
   /* ── Layout ── */
   --container: 1200px;
   --container-narrow: 760px;
+  --container-article: 1024px;
 }
 
 /* ── Reset ── */
@@ -217,6 +218,9 @@ a:hover {
 }
 .container-narrow {
   max-width: var(--container-narrow);
+}
+.container-article {
+  max-width: var(--container-article);
 }
 
 main {
@@ -634,7 +638,7 @@ table.data tbody tr:hover {
 
 /* Treść artykułów i stron prawnych */
 .prose {
-  max-width: var(--container-narrow);
+  max-width: 100%;
 }
 .prose h2 {
   margin-top: var(--space-7);

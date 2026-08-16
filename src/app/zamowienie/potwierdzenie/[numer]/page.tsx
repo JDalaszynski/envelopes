@@ -45,10 +45,10 @@ export default async function ConfirmationPage({
           <h1>Płatność przyjęta — przystępujemy do realizacji zamówienia.</h1>
         )}
         {gateway && order.paymentStatus !== 'oplacone' && (
-          <h1>Zamówienie zarejestrowane — czekamy na potwierdzenie płatności z bramki.</h1>
+          <h1>Zamówienie zarejestrowane - czekamy na potwierdzenie płatności z bramki.</h1>
         )}
         {deferred && <h1>Zamówienie przyjęte do realizacji.</h1>}
-        {order.paymentMethod === 'przelew' && <h1>Zamówienie zarejestrowane — czekamy na wpłatę.</h1>}
+        {order.paymentMethod === 'przelew' && <h1>Zamówienie zarejestrowane - czekamy na wpłatę.</h1>}
 
         <p className="price" style={{ marginTop: 'var(--space-4)' }}>
           {order.number}
@@ -75,7 +75,7 @@ export default async function ConfirmationPage({
               </a>
             </div>
             <p className="notice" style={{ marginTop: 'var(--space-5)' }}>
-              Czekamy na zaksięgowanie wpłaty — druk ruszy dopiero po jej otrzymaniu.
+              Czekamy na zaksięgowanie wpłaty — druk ruszy dopiero po jej otrzymaniu (lub po ewentualnym zaakceptowaniu projektów przed drukiem).
             </p>
           </div>
         )}

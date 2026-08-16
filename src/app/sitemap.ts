@@ -18,6 +18,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE_URL}/koperty-personalizowane`, changeFrequency: 'monthly', priority: 0.9 },
     /* Filar K4 — wymiary i specyfikacja formatu DL (content-plan.md poz. 3) */
     { url: `${SITE_URL}/koperty-dl`, changeFrequency: 'monthly', priority: 0.9 },
+    /* Filar K7 — koperty na vouchery i bony podarunkowe (content-plan.md poz. 4) */
+    { url: `${SITE_URL}/koperty-na-vouchery`, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${SITE_URL}/blog`, changeFrequency: 'weekly', priority: 0.8 },
     { url: `${SITE_URL}/kontakt`, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${SITE_URL}/regulamin`, changeFrequency: 'yearly', priority: 0.3 },

@@ -10,7 +10,7 @@ import {
   isGatewayPayment,
   requiresVisualization,
 } from '@/lib/orders';
-import { orderConfirmationEmail, sendEmail } from '@/lib/brevo';
+import { adminNewOrderEmail, orderConfirmationEmail, sendEmail } from '@/lib/brevo';
 import { isP24Configured, registerTransaction } from '@/lib/p24';
 import { SITE_URL } from '@/lib/seo';
 import type { CartItem, EnvelopeConfig, Order, PaymentMethod } from '@/lib/types';
@@ -194,6 +194,10 @@ export async function POST(request: Request) {
   }
 
   await saveOrder(order);
+
+  // Zawsze wysyłamy powiadomienie do obsługi sklepu o nowym zamówieniu.
+  // Nie czekamy na webhook, aby sklep wiedział o każdym rozpoczętym zamówieniu.
+  await sendEmail(await adminNewOrderEmail(order));
 
   // E-mail potwierdzający — treść zależna od metody płatności (pkt 1.12).
   // Przy płatności bramką wysyłamy go dopiero po potwierdzeniu transakcji.

@@ -71,7 +71,7 @@ export function buildInvoicePdf(order: Order, kind: 'proforma' | 'vat'): Buffer 
       { text: `Kwota: ${formatPrice(order.totals.gross)}`, size: 10 },
       { text: `Tytuł przelewu: ${order.number}`, size: 10, bold: true },
       {
-        text: 'Druk rusza po zaksięgowaniu wpłaty.',
+        text: 'Druk rusza po zaksięgowaniu wpłaty (lub po ewentualnym zaakceptowaniu projektów przed drukiem). ',
         size: 9,
         spaceBefore: 10,
       }

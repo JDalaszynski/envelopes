@@ -99,14 +99,15 @@ export function StepPrint({
             maxFiles={PRINT_FILE_MAX_COUNT}
             maxBytes={PRINT_FILE_MAX_BYTES}
             purpose="nadruk"
-            label="Prześlij pliki do nadruku"
+            label="Załącz grafikę do nadruku"
           />
 
-          <div className="field">
+          <div className="field" style={{ width: '33.333%' }}>
             <label htmlFor="print-notes">Uwagi dla grafika</label>
-            <textarea
+            <input
+              type="text"
               id="print-notes"
-              className="textarea"
+              className="input"
               value={notes}
               placeholder="Np. logo koloru białego na środku"
               onChange={(e) => onNotesChange(e.target.value)}

@@ -3,10 +3,13 @@
 import { useState } from 'react';
 
 import {
+  PERSONALIZATION_SCOPES,
   PERSONALIZATION_SHEET_EXTENSIONS,
   PERSONALIZATION_SHEET_EXTENSIONS_LABEL,
+  personalizationScope,
 } from '@/lib/catalog';
-import { DEFAULT_PRICING, formatPrice } from '@/lib/pricing';
+import type { PersonalizationScope } from '@/lib/catalog';
+import { DEFAULT_PRICING, formatPrice, plural } from '@/lib/pricing';
 import { Toggle } from '@/components/ui/Toggle';
 import { formatBytes } from '@/components/ui/FileDropzone';
 import { EnvelopePlaceholder } from '@/components/ui/EnvelopePlaceholder';
@@ -14,18 +17,22 @@ import type { PersonalizationMethod, UploadedFile } from '@/lib/types';
 
 /**
  * Personalizacja / adresowanie (pkt 1.3) — część wspólnego kroku z nadrukiem.
- * Dwie metody dostępne równolegle: wpisanie treści ręcznie (dowolny tekst —
- * imię i nazwisko, dedykacja, pełny adres) albo pobranie szablonu Excel
- * z liczbą wierszy odpowiadającą zamówieniu i wgranie go z powrotem.
+ *
+ * Dwa pytania w tej kolejności: **co** ma stanąć na kopercie (pełny adres
+ * czy samo nazwisko) i **jak** dane do nas trafią (wpisane ręcznie czy
+ * arkuszem). Zakres wybieramy pierwszy, bo to on decyduje o kolumnach
+ * szablonu i o tym, czego wymaga walidacja.
  */
 export function StepPersonalization({
   enabled,
+  scope,
   method,
   text,
   file,
   quantity,
   minimum,
   onToggle,
+  onScopeChange,
   onMethodChange,
   onTextChange,
   onFileChange,
@@ -34,12 +41,14 @@ export function StepPersonalization({
   colorId,
 }: {
   enabled: boolean;
+  scope: PersonalizationScope | undefined;
   method: PersonalizationMethod | undefined;
   text: string;
   file: UploadedFile | null;
   quantity: number;
   minimum: number;
   onToggle: (value: boolean) => void;
+  onScopeChange: (scope: PersonalizationScope) => void;
   onMethodChange: (method: PersonalizationMethod) => void;
   onTextChange: (text: string) => void;
   onFileChange: (file: UploadedFile | null) => void;
@@ -51,6 +60,11 @@ export function StepPersonalization({
   const [uploadInfo, setUploadInfo] = useState<string | null>(null);
   const [dragging, setDragging] = useState(false);
   const belowMinimum = enabled && quantity < minimum;
+  const activeScope = personalizationScope(scope);
+  const namesOnly = activeScope.id === 'imiona';
+
+  /** Ile wierszy klient wpisał ręcznie — porównanie z nakładem, bez blokowania. */
+  const typedRows = text.split('\n').filter((line) => line.trim() !== '').length;
 
   async function handleTemplateFile(fileList: FileList | null) {
     const selected = fileList?.[0];
@@ -69,6 +83,7 @@ export function StepPersonalization({
     const body = new FormData();
     body.append('file', selected);
     body.append('quantity', String(quantity));
+    body.append('zakres', activeScope.id);
 
     try {
       const res = await fetch('/api/personalizacja/walidacja', { method: 'POST', body });
@@ -165,6 +180,42 @@ export function StepPersonalization({
             </p>
           )}
 
+          <div className="stack" style={{ gap: 'var(--space-3)' }}>
+            <p className="small muted" style={{ margin: 0 }}>
+              Co ma stanąć na kopercie?
+            </p>
+            <div className="grid grid-2" role="group" aria-label="Zakres personalizacji">
+              {PERSONALIZATION_SCOPES.map((option) => (
+                <button
+                  key={option.id}
+                  type="button"
+                  className="option-card"
+                  aria-pressed={activeScope.id === option.id}
+                  onClick={() => onScopeChange(option.id)}
+                  style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}
+                >
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--color-seal)' }} aria-hidden="true">
+                    {option.id === 'adres' ? (
+                      <>
+                        <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                        <path d="M2 7l10 6 10-6"></path>
+                      </>
+                    ) : (
+                      <>
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                      </>
+                    )}
+                  </svg>
+                  <span>
+                    <strong>{option.label}</strong>
+                    <small>{option.hint}</small>
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+
           <div className="grid grid-2" role="group" aria-label="Metoda przekazania danych">
             <button
               type="button"
@@ -177,8 +228,7 @@ export function StepPersonalization({
               <span>
                 <strong>Wpisz ręcznie</strong>
                 <small>
-                  Treść wpisują Państwo wprost w konfiguratorze. Wygodne przy krótkim tekście
-                  i mniejszych wysyłkach.
+                  Treść wpisują Państwo wprost w konfiguratorze. Wygodne przy krótkiej liście.
                 </small>
               </span>
             </button>
@@ -193,8 +243,8 @@ export function StepPersonalization({
               <span>
                 <strong>Pobierz i uzupełnij szablon</strong>
                 <small>
-                  Arkusz Excel z {quantity} wierszami. Uzupełniony plik wgrywają Państwo z powrotem
-                  — sprawdzimy zgodność z zamówioną ilością.
+                  Arkusz z {quantity} wierszami i gotowymi nagłówkami. Uzupełniony plik wgrywają
+                  Państwo z powrotem — sprawdzimy go od razu.
                 </small>
               </span>
             </button>
@@ -208,13 +258,23 @@ export function StepPersonalization({
                 className="textarea"
                 style={{ minHeight: 160 }}
                 value={text}
-                placeholder="Np. Jan Kowalski, Anna Nowak..."
+                placeholder={
+                  namesOnly
+                    ? 'Jedna osoba w wierszu:\nAnna Nowak\nJan Kowalski'
+                    : 'Jeden odbiorca w wierszu:\nAnna Nowak, ul. Kwiatowa 4, 00-001 Warszawa'
+                }
                 onChange={(e) => onTextChange(e.target.value)}
               />
               <span className="field-hint">
-                Odtworzymy tekst dokładnie w podanej postaci. Przy wielu różnych odbiorcach
-                wygodniejszy będzie szablon Excel.
+                Odtworzymy tekst dokładnie w podanej postaci.
               </span>
+              {typedRows > 0 && typedRows !== quantity && (
+                <p className="notice" role="status" style={{ marginTop: 'var(--space-2)' }}>
+                  Wpisali Państwo {typedRows} {plural(typedRows, 'wiersz', 'wiersze', 'wierszy')}{' '}
+                  przy {quantity} kopertach. Jeśli każda koperta ma mieć inne dane, prosimy
+                  uzupełnić listę — przy dłuższych wykazach wygodniejszy będzie szablon.
+                </p>
+              )}
             </div>
           )}
 
@@ -222,11 +282,19 @@ export function StepPersonalization({
             <div className="stack">
               <a
                 className="btn btn-secondary"
-                href={`/api/personalizacja/szablon?ilosc=${quantity}`}
+                href={`/api/personalizacja/szablon?ilosc=${quantity}&zakres=${activeScope.id}`}
                 style={{ alignSelf: 'flex-start' }}
               >
                 Pobierz szablon dla {quantity} kopert (XLSX)
               </a>
+              <p className="small muted" style={{ margin: 0 }}>
+                Kolumny w szablonie:{' '}
+                {activeScope.columns
+                  .filter((column) => !column.ordinal)
+                  .map((column) => column.label.replace(' (opcjonalnie)', ''))
+                  .join(', ')}
+                .
+              </p>
 
               <div
                 className="dropzone"
@@ -290,7 +358,7 @@ export function StepPersonalization({
                       file.status === 'przeslano' ? 'badge badge-success' : 'badge badge-error'
                     }
                   >
-                    {file.status === 'przeslano' ? 'Przesłano' : 'Błąd formatu'}
+                    {file.status === 'przeslano' ? 'Przesłano' : 'Błąd'}
                   </span>
                   <button
                     type="button"

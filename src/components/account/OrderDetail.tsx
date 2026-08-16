@@ -9,6 +9,7 @@ import { StatusPill, PaymentPill } from '@/components/ui/StatusPill';
 import { useAuth } from '@/components/providers/AuthProvider';
 import { useCart } from '@/components/providers/CartProvider';
 import { formatBytes } from '@/components/ui/FileDropzone';
+import { personalizationScope } from '@/lib/catalog';
 import {
   BANK_TRANSFER_DETAILS,
   PAYMENT_METHOD_LABEL,
@@ -119,122 +120,6 @@ export function OrderDetail({ number }: { number: string }) {
 
       {note && <p className="notice notice-success">{note}</p>}
 
-      {/* ── Wizualizacja do akceptacji (pkt 6.11) ── */}
-      {awaitingApproval && latest && (
-        <div className="card card-lg" id="wizualizacja" style={{ marginBottom: 'var(--space-5)' }}>
-          <span className="eyebrow">Wizualizacja do akceptacji</span>
-          <h2 style={{ fontSize: 22 }}>Projekt czeka na Państwa decyzję</h2>
-          <p className="small muted">
-            Przesłano {formatDateTime(latest.sentAt)} · wersja {latest.version}
-          </p>
-
-          <div style={{ maxWidth: 420, margin: 'var(--space-4) 0' }}>
-            <EnvelopePlaceholder
-              format={order.items[0]?.config.format ?? 'DL'}
-              colorId={order.items[0]?.config.color ?? 'ecru'}
-              ratio="photo"
-              hasPrint={order.items[0]?.config.print}
-            />
-            <p className="mono-sm muted" style={{ marginTop: 'var(--space-2)' }}>
-              {latest.file.name} · {formatBytes(latest.file.size)}
-              {latest.file.url && (
-                <>
-                  {' · '}
-                  <a href={latest.file.url} target="_blank" rel="noreferrer">
-                    otwórz plik
-                  </a>
-                </>
-              )}
-            </p>
-          </div>
-
-          {order.paymentStatus === 'oczekuje' && !isDeferredInvoice(order.paymentMethod) && (
-            <p className="notice">
-              Po akceptacji zamówienie pozostanie w statusie „Czeka na akceptację" z adnotacją
-              „Czekamy jeszcze na wpłatę" — druk ruszy po zaksięgowaniu płatności.
-            </p>
-          )}
-
-          <div className="row" style={{ marginTop: 'var(--space-4)' }}>
-            <button type="button" className="btn" disabled={busy} onClick={() => void respond('akceptuj')}>
-              Akceptuję projekt
-            </button>
-            <button
-              type="button"
-              className="btn btn-secondary"
-              onClick={() => setShowComment((v) => !v)}
-            >
-              Zgłoś uwagi
-            </button>
-          </div>
-
-          {showComment && (
-            <div className="field" style={{ marginTop: 'var(--space-4)' }}>
-              <label htmlFor="uwagi">Uwagi do projektu</label>
-              <textarea
-                id="uwagi"
-                className="textarea"
-                value={comment}
-                placeholder="Np. logo o 3 mm wyżej, kolor tekstu ciemniejszy."
-                onChange={(e) => setComment(e.target.value)}
-              />
-              <button
-                type="button"
-                className="btn"
-                style={{ marginTop: 'var(--space-3)', alignSelf: 'flex-start' }}
-                disabled={busy || !comment.trim()}
-                onClick={() => void respond('uwagi')}
-              >
-                Wyślij uwagi
-              </button>
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* Historia wizualizacji */}
-      {order.visualizations.length > 0 && (
-        <div className="card" style={{ marginBottom: 'var(--space-5)' }}>
-          <h2 style={{ fontSize: 20, marginBottom: 'var(--space-3)' }}>Historia wizualizacji</h2>
-          <div className="stack" style={{ gap: 'var(--space-3)' }}>
-            {order.visualizations.map((version) => (
-              <div className="file-card" key={version.id}>
-                <span className="file-icon" aria-hidden="true">
-                  {version.file.ext}
-                </span>
-                <span className="file-meta">
-                  <span className="file-name">
-                    Wersja {version.version} — {version.file.name}
-                  </span>
-                  <span className="mono-sm muted" style={{ display: 'block' }}>
-                    przesłano {formatDateTime(version.sentAt)}
-                  </span>
-                  {version.customerComment && (
-                    <span className="small" style={{ display: 'block', marginTop: 4 }}>
-                      Uwagi: {version.customerComment}
-                    </span>
-                  )}
-                </span>
-                <span
-                  className={
-                    version.status === 'zaakceptowano'
-                      ? 'badge badge-success'
-                      : version.status === 'uwagi'
-                        ? 'badge badge-error'
-                        : 'badge badge-seal'
-                  }
-                >
-                  {version.status === 'zaakceptowano'
-                    ? 'Zaakceptowano'
-                    : version.status === 'uwagi'
-                      ? 'Zgłoszono uwagi'
-                      : 'Oczekuje'}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
 
       {/* ── Dane do przelewu, dopóki płatność nie jest potwierdzona ── */}
       {showPaymentDetails && (
@@ -278,6 +163,9 @@ export function OrderDetail({ number }: { number: string }) {
                     {item.price.quantity} szt. × {formatPrice(item.price.unitTotal)} ={' '}
                     {formatPrice(item.price.gross)}
                   </p>
+                  <p className="small muted" style={{ margin: '0 0 var(--space-2) 0' }}>
+                    <strong>Czas realizacji:</strong> {item.config.shippingSpeed === 'ekspres' ? 'Tryb ekspresowy' : 'Tryb standardowy'}
+                  </p>
                   {item.config.printNotes && (
                     <p className="small muted" style={{ margin: 0 }}>
                       Uwagi dla grafika: {item.config.printNotes}
@@ -309,7 +197,8 @@ export function OrderDetail({ number }: { number: string }) {
 
               {item.config.personalization && (
                 <p className="small muted" style={{ marginTop: 'var(--space-3)' }}>
-                  Adresowanie:{' '}
+                  Personalizacja —{' '}
+                  {personalizationScope(item.config.personalizationScope).label.toLowerCase()}:{' '}
                   {item.config.personalizationMethod === 'szablon'
                     ? `arkusz ${item.config.personalizationFile?.name ?? '—'}`
                     : 'treść wpisana ręcznie'}

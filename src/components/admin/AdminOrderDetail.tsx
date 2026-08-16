@@ -8,6 +8,7 @@ import { EnvelopePlaceholder } from '@/components/ui/EnvelopePlaceholder';
 import { StatusPill, PaymentPill } from '@/components/ui/StatusPill';
 import { formatBytes } from '@/components/ui/FileDropzone';
 import { useAuth } from '@/components/providers/AuthProvider';
+import { personalizationScope } from '@/lib/catalog';
 import {
   ORDER_STATUSES,
   PAYMENT_METHOD_LABEL,
@@ -213,91 +214,7 @@ export function AdminOrderDetail({ number }: { number: string }) {
             )}
           </div>
 
-          {/* Wizualizacja */}
-          {order.requiresVisualization && (
-            <div className="card">
-              <h2 style={{ fontSize: 20, marginBottom: 'var(--space-2)' }}>Wizualizacja</h2>
-              <p className="small muted">
-                Wizualizację dołączamy niezależnie od statusu płatności. Wysłanie pliku automatycznie
-                powiadamia klienta i ustawia status „Czeka na akceptację".
-              </p>
 
-              <div className="row" style={{ margin: 'var(--space-3) 0' }}>
-                <span className="small">Status akceptacji:</span>
-                <span
-                  className={
-                    order.visualizationStatus === 'zaakceptowano'
-                      ? 'badge badge-success'
-                      : order.visualizationStatus === 'uwagi'
-                        ? 'badge badge-error'
-                        : order.visualizationStatus === 'oczekuje'
-                          ? 'badge badge-seal'
-                          : 'badge'
-                  }
-                >
-                  {order.visualizationStatus === 'zaakceptowano'
-                    ? 'Zaakceptowano'
-                    : order.visualizationStatus === 'uwagi'
-                      ? 'Zgłoszono uwagi'
-                      : order.visualizationStatus === 'oczekuje'
-                        ? 'Oczekuje'
-                        : 'Nie wysłano'}
-                </span>
-              </div>
-
-              {latest?.customerComment && (
-                <p className="notice notice-error">
-                  Uwagi klienta: {latest.customerComment}
-                </p>
-              )}
-
-              <input
-                ref={fileRef}
-                type="file"
-                className="sr-only"
-                accept=".pdf,.png,.jpg,.jpeg,.svg"
-                onChange={(e) => {
-                  const file = e.target.files?.[0];
-                  if (file) void uploadVisualization(file);
-                }}
-              />
-              <button
-                type="button"
-                className="btn"
-                disabled={busy}
-                onClick={() => fileRef.current?.click()}
-              >
-                {order.visualizations.length === 0
-                  ? 'Dołącz wizualizację'
-                  : `Dołącz kolejną wersję (${order.visualizations.length + 1})`}
-              </button>
-
-              {order.visualizations.length > 0 && (
-                <div className="stack" style={{ gap: 'var(--space-2)', marginTop: 'var(--space-4)' }}>
-                  {order.visualizations.map((version) => (
-                    <div className="file-card" key={version.id}>
-                      <span className="file-icon" aria-hidden="true">
-                        {version.file.ext}
-                      </span>
-                      <span className="file-meta">
-                        <span className="file-name">
-                          v{version.version} — {version.file.name}
-                        </span>
-                        <span className="mono-sm muted" style={{ display: 'block' }}>
-                          {formatDateTime(version.sentAt)}
-                        </span>
-                      </span>
-                      {version.file.url && (
-                        <a className="btn btn-secondary btn-sm" href={version.file.url} target="_blank" rel="noreferrer">
-                          Podgląd
-                        </a>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
 
           {/* Przesyłka */}
           <div className="card">
@@ -448,6 +365,9 @@ export function AdminOrderDetail({ number }: { number: string }) {
                     <p className="mono-sm muted" style={{ margin: 0 }}>
                       {item.price.quantity} szt. × {formatPrice(item.price.unitTotal)}
                     </p>
+                    <p className="small muted" style={{ margin: 'var(--space-1) 0 0' }}>
+                      Czas realizacji: {item.config.shippingSpeed === 'ekspres' ? 'Tryb ekspresowy' : 'Tryb standardowy'}
+                    </p>
                     {item.config.printNotes && (
                       <p className="small" style={{ margin: 'var(--space-2) 0 0' }}>
                         Uwagi: {item.config.printNotes}
@@ -473,6 +393,15 @@ export function AdminOrderDetail({ number }: { number: string }) {
                       )}
                     </div>
                   )
+                )}
+
+                {item.config.personalization && (
+                  <p className="small muted" style={{ marginTop: 'var(--space-2)', marginBottom: 0 }}>
+                    Zakres personalizacji:{' '}
+                    <strong>
+                      {personalizationScope(item.config.personalizationScope).label.toLowerCase()}
+                    </strong>
+                  </p>
                 )}
 
                 {item.config.personalization && item.config.personalizationMethod === 'reczna' && (

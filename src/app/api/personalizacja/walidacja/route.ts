@@ -4,20 +4,27 @@ import * as XLSX from 'xlsx';
 import {
   PERSONALIZATION_SHEET_EXTENSIONS,
   PERSONALIZATION_SHEET_EXTENSIONS_LABEL,
+  personalizationScope,
 } from '@/lib/catalog';
+import { plural } from '@/lib/pricing';
 import { storeFile } from '@/lib/storage';
 
 export const runtime = 'nodejs';
 
 /**
- * Walidacja uzupełnionego szablonu adresowego (pkt 1.3):
- * sprawdza format pliku, liczbę wypełnionych wierszy względem zamówionej
- * ilości kopert oraz kompletność pól wymaganych.
+ * Walidacja uzupełnionego szablonu (pkt 1.3): sprawdza format pliku,
+ * liczbę wypełnionych wierszy względem zamówionej ilości kopert
+ * oraz kompletność pól wymaganych w wybranym wariancie.
+ *
+ * Wymagane pola czytamy z `PERSONALIZATION_SCOPES`, a nie z listy wpisanej
+ * tutaj. Wariant `imiona` nie ma pól adresowych, więc lista samych nazwisk
+ * przechodzi walidację — wcześniej odrzucał ją brak ulicy.
  */
 export async function POST(request: Request) {
   const form = await request.formData();
   const file = form.get('file');
   const quantity = Number.parseInt((form.get('quantity') as string) ?? '0', 10) || 0;
+  const scope = personalizationScope(form.get('zakres') as string | null);
 
   if (!(file instanceof File)) {
     return NextResponse.json({ ok: false, error: 'Brak pliku w żądaniu.' }, { status: 400 });
@@ -53,34 +60,33 @@ export async function POST(request: Request) {
     return '';
   };
 
-  const filled = rows.filter(
-    (row) =>
-      value(row, ['imię', 'imie', 'nazwisko', 'firma']) !== '' ||
-      value(row, ['ulica']) !== ''
-  );
+  const filled = rows.filter((row) => value(row, scope.identityMatch) !== '');
 
   if (filled.length === 0) {
     return NextResponse.json(
-      { ok: false, error: 'Arkusz nie zawiera wypełnionych wierszy adresowych.' },
+      { ok: false, error: 'Arkusz nie zawiera wypełnionych wierszy.' },
       { status: 422 }
     );
   }
 
-  const incomplete = filled.filter(
-    (row) =>
-      value(row, ['ulica']) === '' ||
-      value(row, ['kod']) === '' ||
-      value(row, ['miejscow', 'miasto']) === ''
+  const requiredColumns = scope.columns.filter((column) => column.required);
+  const incomplete = filled.filter((row) =>
+    requiredColumns.some((column) => value(row, column.match) === '')
   );
 
   if (incomplete.length > 0) {
+    const missingLabel = requiredColumns
+      .map((column) => column.label.toLowerCase())
+      .join(', ')
+      .replace(/, ([^,]*)$/, ' lub $1');
+
     return NextResponse.json(
       {
         ok: false,
         rows: filled.length,
         error: `W ${incomplete.length} ${
           incomplete.length === 1 ? 'wierszu brakuje' : 'wierszach brakuje'
-        } ulicy, kodu pocztowego lub miejscowości. Prosimy uzupełnić arkusz i wgrać go ponownie.`,
+        } pola: ${missingLabel}. Prosimy uzupełnić arkusz i wgrać go ponownie.`,
       },
       { status: 422 }
     );
@@ -91,9 +97,17 @@ export async function POST(request: Request) {
       {
         ok: false,
         rows: filled.length,
-        error: `Arkusz zawiera ${filled.length} ${
-          filled.length === 1 ? 'adres' : 'adresów'
-        }, a zamówienie obejmuje ${quantity} kopert. Prosimy wyrównać liczbę wierszy albo skorygować ilość w kroku 3.`,
+        error: `Arkusz zawiera ${filled.length} ${plural(
+          filled.length,
+          'wiersz',
+          'wiersze',
+          'wierszy'
+        )}, a zamówienie obejmuje ${quantity} ${plural(
+          quantity,
+          'kopertę',
+          'koperty',
+          'kopert'
+        )}. Prosimy wyrównać liczbę wierszy albo skorygować ilość w kroku 3.`,
       },
       { status: 422 }
     );

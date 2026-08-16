@@ -36,7 +36,8 @@ export const ORDER_STATUSES: { id: OrderStatus; label: string; description: stri
     description: 'Wizualizacja przesłana do klienta — czekamy na zatwierdzenie projektu.',
   },
   { id: 'do_druku', label: 'Do druku', description: 'Wszystkie warunki spełnione — zamówienie skierowane do produkcji.' },
-  { id: 'zrealizowane', label: 'Zrealizowane', description: 'Zamówienie wyprodukowane i wysłane.' },
+  { id: 'gotowe_do_wysylki', label: 'Gotowe do wysyłki', description: 'Zamówienie zostało spakowane i oczekuje na odbiór przez kuriera.' },
+  { id: 'zrealizowane', label: 'Zrealizowane', description: 'Zamówienie wysłane do klienta.' },
   { id: 'anulowane', label: 'Anulowane', description: 'Zamówienie anulowane lub zwrócone.' },
 ];
 

@@ -36,9 +36,12 @@ Najsilniejszy komercyjnie klaster. Pokrywa się 1:1 z płatną usługą (+1,99 z
 klienta z bazy wiedzy (kancelarie, hotele, kliniki, agencje). Intencja niemal wyłącznie firmowa.
 
 **URL docelowy:** `/koperty-z-nadrukiem` `[ISTNIEJE]` — opublikowany 13 sierpnia 2026.
-Wpis blogowy `koperty-firmowe-z-nadrukiem-co-przygotowac-przed-zamowieniem` oddał frazę
-transakcyjną filarowi (przepisane `keywords`, link w górę) i obsługuje wyłącznie intencję
-procesową „jak przygotować plik do druku".
+**Wsparcie:** wpis `jak-przygotowac-pliki-do-druku-na-kopertach` `[ISTNIEJE]` — przepisany
+15 sierpnia 2026 (content-plan.md poz. 7). Oddał filarowi całą warstwę transakcyjną i obsługuje
+wyłącznie intencję procesową „jak przygotować plik do druku": jest właścicielem frazy
+`pliki do druku na kopertach`. Poprzedni slug
+(`koperty-firmowe-z-nadrukiem-co-przygotowac-przed-zamowieniem`) niósł w adresie frazę
+wspierającą tego klastra — przekierowanie 308 stoi w `next.config.mjs`.
 
 | Fraza | Rola | Intencja | Lejek | Wol. | P |
 | --- | --- | --- | --- | --- | --- |
@@ -64,6 +67,17 @@ procesową „jak przygotować plik do druku".
   tabeli cenowej (2,58 zł DL + 1,99 zł nadruk = 4,57 zł brutto/szt., MOQ 10 szt.). Modele językowe
   cytują konkretne liczby z jednostką i statusem VAT, nie „ceny od".
 - Wejście do konfiguratora z tej strony musi ustawiać krok nadruku (`step`), nie krok 1.
+- **Rozgraniczenie filar ↔ poradnik plikowy** (15 sierpnia 2026). Filar odpowiada na pytanie
+  **„jakie pliki przyjmujemy"** — jednym wierszem tabeli specyfikacji i jednym pytaniem
+  w `PRINT_FAQ_ITEMS`. Wpis odpowiada na pytanie **„jak ten plik przygotować"**: rozdzielczość
+  w dpi, przelicznik milimetry → piksele, przestrzeń barw, krzywe, przezroczyste tło, margines
+  i treść uwag dla grafika. Wpis nie podaje ceny nadruku ani MOQ — należą do filara oraz do
+  pozycji 9 i 46 planu. `FAQPage` ma wyłącznie filar; wpis nie dostaje własnego, żeby dwa adresy
+  nie konkurowały o ten sam wynik rozszerzony.
+- **Anchor prowadzący do wpisu to jego własna fraza** (`jak przygotować pliki do druku na
+  kopertach`), a nie fraza filara. Odnośniki na `/`, `/koperty-z-nadrukiem`
+  i `/koperty-na-vouchery` używały wcześniej anchora „koperty firmowe z nadrukiem…" — trzy
+  strony wzmacniały wpis na frazie, którą miał oddać.
 
 ---
 
@@ -74,9 +88,10 @@ Klaster jest rozdrobniony leksykalnie — jedna strona musi obsłużyć trzy naz
 *personalizacja*, *adresowanie*, *imiona i nazwiska na kopertach*.
 
 **URL docelowy:** `/koperty-personalizowane` `[ISTNIEJE]` — opublikowany 14 sierpnia 2026.
-**Wsparcie:** wpis `adresowanie-kopert-recznie-czy-z-arkusza` `[ISTNIEJE]` — oddał frazę
-`adresowanie kopert` filarowi (przepisane `keywords`, link w górę przez pole `pillar`)
-i obsługuje wyłącznie intencję procesową „który tryb przekazania danych wybrać".
+**Wsparcie:** `/blog/adresowanie-kopert-z-arkusza-czy-recznie` `[ISTNIEJE]` — opublikowany
+16 sierpnia 2026 (poz. 8 planu), właściciel frazy `adresowanie kopert z arkusza`. Wpis startowy
+`adresowanie-kopert-recznie-czy-z-arkusza` usunięto 15 sierpnia; nowy powstał od zera i stoi pod
+innym adresem, bo docelowa fraza wchodzi teraz w slug w całości. Stary adres zwraca 404.
 
 | Fraza | Rola | Intencja | Lejek | Wol. | P |
 | --- | --- | --- | --- | --- | --- |
@@ -99,6 +114,12 @@ i obsługuje wyłącznie intencję procesową „który tryb przekazania danych 
 - ~~Dwa tryby zamawiania opisać jako tabelę porównawczą~~ — **wykonane.** Tabela porównuje
   wpisanie danych w konfiguratorze i arkusz XLSX według sześciu kryteriów (skala, sposób
   przekazania, źródło formularza, kontrola poprawności, praca zespołowa, limit wierszy).
+- **Podział pracy z wpisem wspierającym (16 sierpnia 2026).** Filar rozstrzyga wybór trybu
+  **według skali wysyłki**; wpis `adresowanie-kopert-z-arkusza-czy-recznie` — według **treści
+  nadruku i źródła danych**, czyli tam, gdzie sama liczba adresów nie wystarcza. Kluczowy fakt
+  wpisu (arkusz odrzuca wiersz bez pełnego adresu, więc listy samych imion idą trybem ręcznym)
+  **nie może** trafić na filar jako osobna sekcja — filar podaje wyłącznie pola wymagane
+  w tabeli specyfikacji.
 - Specyfikacja arkusza na filarze (kolumny, pola wymagane, walidacja) jest generowana
   z `PERSONALIZATION_SHEET_COLUMNS` w `src/lib/catalog.ts` — tej samej listy, z której powstaje
   szablon XLSX. Treść nie może rozjechać się z plikiem, który klient faktycznie pobiera.
@@ -160,8 +181,9 @@ więc ścieżka do konwersji jest krótka.
 
 **URL docelowy:** `/koperty-dl` `[ISTNIEJE]` — opublikowany 14 sierpnia 2026.
 Strona jest **specyfikacyjna, nie usługowa**: nie ma nagłówka cenowego, nie powtarza palety
-19 kolorów i nie rozkłada na czynniki cen nadruku ani personalizacji. Wpis blogowy
-`jak-dobrac-koperte-do-zaproszen-firmowych` linkuje w górę do filara (pole `pillar`).
+19 kolorów i nie rozkłada na czynniki cen nadruku ani personalizacji. Filar nie ma dziś
+**żadnej treści wspierającej** — wpis `jak-dobrac-koperte-do-zaproszen-firmowych` został
+usunięty 15 sierpnia 2026. Klaster odbudowują poz. 10, 11, 13 i 41 planu.
 
 | Fraza | Rola | Intencja | Lejek | Wol. | P |
 | --- | --- | --- | --- | --- | --- |
@@ -254,7 +276,7 @@ tatuaż, biura podróży, teatry, szkoły gotowania. Format DL jest dla vouchera
 a zamówienia są **cykliczne i sezonowe** (Dzień Matki, Walentynki, Boże Narodzenie) — czyli
 wprost pod cel LTV z bazy wiedzy.
 
-**URL docelowy:** `/koperty-na-vouchery` `[PROPOZYCJA]`
+**URL docelowy:** `/koperty-na-vouchery` `[ISTNIEJE]` — opublikowany 14 sierpnia 2026.
 
 | Fraza | Rola | Intencja | Lejek | Wol. | P |
 | --- | --- | --- | --- | --- | --- |
@@ -263,11 +285,32 @@ wprost pod cel LTV z bazy wiedzy.
 | koperty do voucherow | wariant bez PL znaków | TRANS | BOFU | — | P0 |
 | koperta do vouchera | wariant lp. | TRANS | BOFU | — | P0 |
 | koperta ozdobna na voucher | wspierająca | TRANS | BOFU | — | P1 |
+| koperty na bony podarunkowe | wariant nazewniczy | TRANS | BOFU | — | P1 |
 
-**Notatki wdrożeniowe:** strona musi mówić językiem branży usługowej („bon podarunkowy",
-„karta podarunkowa", „voucher na zabieg"), nie językiem poligrafii. Sekcje pod branże
-(SPA / fryzjer / restauracja / klinika) dają naturalne pokrycie long-tail bez tworzenia
-osobnych URL-i. Kalendarz publikacji: **wrzesień–październik**, żeby złapać sezon świąteczny.
+**Notatki wdrożeniowe:**
+- ~~Strona musi mówić językiem branży usługowej~~ — **wykonane.** Filar operuje słownikiem
+  usługi („bon", „zabieg", „obdarowany", „seria bonów"), nie poligrafii. Sekcja „Dla kogo"
+  obejmuje 10 branż po akapicie i pokrywa long-tail bez tworzenia osobnych URL-i.
+- **Właścicielem fraz `koperty na vouchery`, `koperty do voucherów`, `koperty do voucherow`
+  i `koperta do vouchera` jest filar.** `koperta do vouchera` to liczba pojedyncza frazy
+  filara — nie może trafić do wpisu blogowego (content-plan.md, korekta poz. 24).
+- `koperty na bony podarunkowe` siedzi dziś w `keywords` filara. **Przy publikacji
+  `/koperty-dla-salonow-spa` (poz. 19 planu) przenieść ją tam** i zostawić filarowi wyłącznie
+  warianty voucherowe — inaczej dwa adresy będą celować w tę samą frazę.
+- `koperta ozdobna na voucher` należy do poz. 20 (wpis doradczy). Filar podaje **fakt**
+  o kolorze — nadruk kosztuje tyle samo na każdym z 19 odcieni, a o czytelności logo decyduje
+  kontrast — i pokazuje 6 kolorów ze zdjęciami nadruku. Dobór odcienia do branży i okazji
+  oraz kiedy sięgnąć po metalik i perłę zostają dla wpisu.
+- **Rozgraniczenie z K1.** Filar podaje cenę koperty z nadrukiem (4,57 zł brutto/szt.)
+  i tabelę kosztu **gotowej serii bonów** (10 / 25 / 50 / 100 szt. w trzech konfiguracjach),
+  ale **nie rozkłada ceny nadruku na składniki** — to materiał `/koperty-z-nadrukiem`,
+  który liczy nakłady 10 / 100 / 500 / 1 000.
+- **Rozgraniczenie z K4.** Filar podaje wymiary trzech postaci bonu (DL 99 × 210 mm,
+  A6 105 × 148 mm, karta ID-1 85,6 × 54 mm) i odsyła do `/koperty-dl` po pełną tabelę
+  dopasowań wkładek i porównanie formatów.
+- Kalendarz publikacji zakładał wrzesień–październik pod sezon świąteczny. Strona powstała
+  wcześniej **świadomie**: domena startuje od zera, a strona potrzebuje 3–6 miesięcy
+  dojrzewania w indeksie — publikacja we wrześniu oznaczałaby stratę pierwszego sezonu.
 
 ---
 
@@ -321,9 +364,10 @@ to zapis na powiadomienie o dostępności formatów, nie wejście do konfigurato
 | personalizowana koperta na slub | wariant szyku | C6 / K4 | TRANS | — | P2 |
 
 **Notatki wdrożeniowe:**
-- Istniejący wpis `jak-dobrac-koperte-do-zaproszen-firmowych` `[ISTNIEJE]` już opisuje C6 i K4 —
-  utrzymać, bo buduje pozycję **zanim** produkt ruszy. To właściwa kolejność: treść wyprzedza
-  ofertę o 3–6 miesięcy, bo tyle trwa dojrzewanie strony w indeksie.
+- Frazę `koperty na zaproszenia` obsługuje poz. 41 planu `[DO NAPISANIA]`. Wpis
+  `jak-dobrac-koperte-do-zaproszen-firmowych` opisywał C6 i K4, ale został usunięty
+  15 sierpnia 2026 razem z treściami startowymi. Kolejność zostaje bez zmian: treść
+  wyprzedza ofertę o 3–6 miesięcy, bo tyle trwa dojrzewanie strony w indeksie.
 - **B2B w tym klastrze jest dostępne już dziś:** wedding plannerzy i agencje eventowe kupują
   koperty DL na vouchery prezentowe i korespondencję z parami. To pomost K9 → K7.
 - Nie dodawać fraz ślubnych do `keywords` istniejących wpisów blogowych „na zapas" — to sygnał
@@ -339,7 +383,7 @@ to zapis na powiadomienie o dostępności formatów, nie wejście do konfigurato
 | K2 Personalizacja | `/koperty-personalizowane` | **istnieje** | **P0** | Najwyższa dopłata (+2,99 zł), realny wyróżnik rynkowy |
 | K3 Ozdobne / kolorowe | `/` | **przebudowane** | **P0** | Optymalizacja istniejącego zasobu, zero kosztu wdrożenia |
 | K4 Format DL | `/koperty-dl` | **istnieje** | **P0** | Najwyższy potencjał cytowań w AI, jedyny dostępny format |
-| K7 Vouchery | `/koperty-na-vouchery` | do zbudowania | **P0** | 9 z 22 profili klienta, zakupy cykliczne, brak konkurencji tematycznej |
+| K7 Vouchery | `/koperty-na-vouchery` | **istnieje** | **P0** | 9 z 22 profili klienta, zakupy cykliczne, brak konkurencji tematycznej |
 | K5 Kolory | `/koperty/[kolor]` × 19 | do zbudowania | P1 | Skalowalny long-tail na gotowych danych z katalogu |
 
 > **Decyzja z 13 sierpnia 2026 — hub `/koperty` zdjęty z planu.** Po przebudowie strony głównej

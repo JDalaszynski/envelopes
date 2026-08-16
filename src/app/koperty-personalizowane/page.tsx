@@ -4,24 +4,26 @@ import Link from 'next/link';
 import { ConfigureLink } from '@/components/home/ConfigureLink';
 import { EnvelopePlaceholder } from '@/components/ui/EnvelopePlaceholder';
 import { ParallaxBackground } from '@/components/ui/ParallaxBackground';
+import { ShowcaseGrid } from '@/components/ui/ShowcaseGrid';
 import { JsonLd } from '@/components/seo/JsonLd';
-import { getPost } from '@/lib/blog';
-import type { BlogPost } from '@/lib/blog';
+import { PERSONALIZATION_SHOTS } from '@/lib/showcase';
 import {
   BULK_QUOTE_THRESHOLD,
   COLORS,
   FORMAT_MAP,
-  PERSONALIZATION_REQUIRED_COLUMNS,
-  PERSONALIZATION_SHEET_COLUMNS,
+  PERSONALIZATION_SCOPES,
   PERSONALIZATION_SHEET_EXTENSIONS_LABEL,
   PERSONALIZATION_SHEET_MAX_ROWS,
+  PRINT_SAFE_MARGIN_MM,
 } from '@/lib/catalog';
+import { getPost } from '@/lib/blog';
 import { PERSONALIZATION_FAQ_ITEMS } from '@/lib/faq';
 import { DEFAULT_PRICING, DELIVERY_COST, calculatePrice, formatPrice, round2 } from '@/lib/pricing';
 import {
   breadcrumbJsonLd,
   faqJsonLd,
   howToJsonLd,
+  ogImage,
   personalizedEnvelopeProductJsonLd,
 } from '@/lib/seo';
 import type { EnvelopeConfig } from '@/lib/types';
@@ -40,8 +42,8 @@ import type { EnvelopeConfig } from '@/lib/types';
  * w tabeli i z linkiem do filara K1.
  *
  * Wszystkie liczby pochodzą z `pricing.ts` i `catalog.ts`, a specyfikacja
- * arkusza adresowego z `PERSONALIZATION_SHEET_COLUMNS` — tej samej listy,
- * z której generujemy szablon XLSX.
+ * szablonów z `PERSONALIZATION_SCOPES` — tej samej definicji, z której
+ * generujemy pliki XLSX i którą czyta walidacja wgranego arkusza.
  */
 
 const DL = FORMAT_MAP.DL;
@@ -81,6 +83,14 @@ const EXAMPLE_QUANTITIES = [DEFAULT_PRICING.moqWithPrint, 100, 300, 1000];
 /** Kolory, dla których mamy realne zdjęcie koperty z personalizacją (pkt 3.3). */
 const PERSONALIZED_COLORS = COLORS.filter((color) => color.personalizedImages?.DL);
 
+/**
+ * Treści wspierające filar K2. Lista rośnie razem z planem (poz. 8, 14, 15) —
+ * `getPost` zwraca `undefined` dla wpisu, który jeszcze nie powstał, więc
+ * dopisanie slugu z wyprzedzeniem niczego nie psuje.
+ */
+const sheetGuide = getPost('adresowanie-kopert-z-arkusza-czy-recznie');
+const GUIDES = [sheetGuide].filter((post) => post !== undefined);
+
 /** Gramatury papieru w podziale na kolory — dane wprost z katalogu. */
 const WEIGHT_GROUPS = Object.entries(
   COLORS.reduce<Record<string, string[]>>((acc, color) => {
@@ -95,23 +105,30 @@ const WEIGHT_SUMMARY = WEIGHT_GROUPS.map(([weight, names]) => {
   return names.length > 3 ? `${label} — ${names.length} kolorów` : `${label} — ${names.join(', ')}`;
 }).join(' · ');
 
-/** Wymagane kolumny arkusza wypisane zdaniem: „ulica i numer, kod pocztowy…". */
-const REQUIRED_COLUMNS_LABEL = PERSONALIZATION_REQUIRED_COLUMNS.map((column) =>
-  column.label.toLowerCase()
-).join(', ');
+/**
+ * Pola wymagane w obu wariantach szablonu. Od czasu, gdy lista samych nazwisk
+ * ma własny zestaw kolumn, jedna lista pól opisywałaby tylko połowę prawdy.
+ */
+const REQUIRED_COLUMNS_LABEL = PERSONALIZATION_SCOPES.map((scope) => {
+  const required = scope.columns
+    .filter((column) => column.required)
+    .map((column) => column.label.toLowerCase())
+    .join(', ');
+  return `${scope.label.toLowerCase()} — ${required}`;
+}).join('; ');
 
 const HOW_TO_STEPS = [
   {
     name: 'Konfiguracja zamówienia',
-    text: `W konfiguratorze wybierają Państwo format DL ${DL.dimensions}, kolor koperty i ilość od ${DEFAULT_PRICING.moqWithPrint} sztuk, po czym włączają opcję personalizacji. Cena rośnie o ${formatPrice(DEFAULT_PRICING.personalization)} brutto od sztuki i przelicza się od razu.`,
+    text: `W konfiguratorze wybierają Państwo kolor koperty i ilość od ${DEFAULT_PRICING.moqWithPrint} sztuk, po czym włączają personalizację i wskazują, czy na kopercie ma stanąć pełny adres, czy samo imię i nazwisko. Cena przelicza się od razu.`,
   },
   {
     name: 'Przekazanie danych odbiorców',
-    text: `Do wyboru są dwa tryby: wpisanie treści wprost w konfiguratorze albo pobranie szablonu Excel z liczbą wierszy równą zamówionej ilości kopert. Uzupełniony arkusz wgrywają Państwo z powrotem — sprawdzamy kompletność adresów i zgodność liczby wierszy z ilością kopert.`,
+    text: 'Do wyboru są dwa tryby: wpisanie treści wprost w konfiguratorze albo pobranie szablonu z liczbą wierszy równą zamówionej ilości kopert. Uzupełniony arkusz wgrywają Państwo z powrotem — sprawdzamy komplet pól wymaganych w wybranym wariancie i zgodność liczby wierszy z ilością kopert.',
   },
   {
     name: 'Płatność',
-    text: 'Do wyboru są BLIK, karta, szybki przelew, przelew tradycyjny oraz faktura z odroczonym terminem płatności 14 dni. Faktura odroczona nie wstrzymuje produkcji.',
+    text: 'Do wyboru są BLIK, karta, szybki przelew i przelew tradycyjny. Instytucje publiczne i urzędy mogą zapłacić fakturą z odroczonym terminem płatności 14 dni — taka faktura nie wstrzymuje produkcji.',
   },
   {
     name: 'Akceptacja wizualizacji i wysyłka',
@@ -127,49 +144,49 @@ const HOW_TO_STEPS = [
 const INDUSTRIES: { heading: string; text: string }[] = [
   {
     heading: 'Sekretariaty i biura zarządu',
-    text: `Pismo zaadresowane imiennie do członka zarządu nie trafia na stos korespondencji masowej. Adres drukujemy wprost na kopercie DL ${DL.dimensions}, więc nie ma naklejki, która się odkleja, ani odręcznego pisma o różnej czytelności. Przy liście do 30 osób dane wpisują Państwo w konfiguratorze, bez otwierania arkusza.`,
+    text: 'Pismo zaadresowane imiennie do członka zarządu nie ląduje na stosie korespondencji masowej. Adres drukujemy wprost na kopercie, więc nie ma naklejki, która się odkleja, ani odręcznego pisma, którego czytelność zależy od tego, kto akurat wypisywał.',
   },
   {
     heading: 'Działy HR i employer branding',
-    text: `Oferta pracy, gratulacje po awansie i decyzja o premii wręczane są jednej osobie, a nie działowi. Minimalna ilość ${DEFAULT_PRICING.moqWithPrint} sztuk pozwala zamówić koperty imienne pod jedną rekrutację albo jedną turę podwyżek, bez kupowania zapasu na rok.`,
+    text: 'Oferta pracy, gratulacje po awansie i decyzja o premii trafiają do jednej osoby, nie do działu. Koperty imienne da się zamówić pod jedną rekrutację albo jedną turę podwyżek — bez kupowania zapasu na cały rok.',
   },
   {
     heading: 'Hotele, resorty i pensjonaty',
-    text: 'Karta powitalna z nazwiskiem gościa leży w pokoju przed jego przyjazdem — to pierwszy przedmiot, który gość bierze do ręki. Listę nazwisk z systemu rezerwacji wgrywają Państwo jako arkusz. Do kart powitalnych wybierane są jasne odcienie: Ecru, Biała Perłowa i Biały.',
+    text: 'Karta powitalna z nazwiskiem gościa leży w pokoju, zanim gość przyjedzie — to pierwszy przedmiot, który bierze do ręki. Tu wystarczy samo nazwisko, bez adresu; listę z systemu rezerwacji wgrywają Państwo arkuszem. Sprawdzają się jasne odcienie: Ecru, Biała Perłowa i Biały.',
   },
   {
     heading: 'Uczelnie, szkoły i firmy szkoleniowe',
-    text: `Dyplom i certyfikat imienny wręcza się konkretnemu absolwentowi, więc koperta powinna nosić jego nazwisko. Jedna grupa szkoleniowa to zwykle 10–30 osób — mieści się w minimum ${DEFAULT_PRICING.moqWithPrint} sztuk. Certyfikat A4 złożony na trzy wchodzi do koperty DL bez dodatkowego zagięcia.`,
+    text: 'Dyplom wręcza się konkretnemu absolwentowi, więc koperta powinna nosić jego nazwisko. Jedna grupa szkoleniowa to zwykle kilkanaście osób i tyle w zupełności wystarczy, żeby złożyć zamówienie. Certyfikat A4 złożony na trzy wchodzi do koperty bez dodatkowego zagięcia.',
   },
   {
     heading: 'Agencje eventowe, PR i kreatywne',
-    text: `Zaproszenie na galę adresowane imiennie działa inaczej niż zaproszenie „do firmy" — zobowiązuje konkretną osobę. Przy dacie wydarzenia wpisanej w kalendarz dostępny jest tryb ekspresowy: ${DEFAULT_PRICING.leadDaysExpress} dni robocze za dopłatą ${formatPrice(DEFAULT_PRICING.express)} brutto od sztuki. Kolory nietypowe — Matcha i Jeansowy, oba 120 g/m² — kosztują tyle samo, co biel.`,
+    text: 'Zaproszenie na galę adresowane imiennie działa inaczej niż zaproszenie „do firmy" — zobowiązuje konkretną osobę. Kiedy data wydarzenia goni, zamówienie da się puścić trybem ekspresowym, a kolory spoza standardu, jak Matcha czy Jeansowy, nie kosztują więcej niż biel.',
   },
   {
     heading: 'Kancelarie prawne i notarialne',
-    text: 'Pismo procesowe adresowane jest do strony postępowania, nie do instytucji. Nadrukowany adres eliminuje ryzyko pomyłki przy ręcznym przepisywaniu z akt. Do korespondencji formalnej wybierane są kolory stonowane: Czarny i Granatowy (115 g/m²) oraz Szarobrązowy (140 g/m², najgrubszy papier w ofercie).',
+    text: 'Pismo procesowe adresowane jest do strony postępowania, nie do instytucji. Nadrukowany adres zdejmuje ryzyko pomyłki przy przepisywaniu z akt ręką. Do korespondencji formalnej wybierane są kolory stonowane: czerń, granat i szarobrązowy.',
   },
   {
     heading: 'Kliniki, gabinety i salony SPA',
-    text: `Bon podarunkowy z imieniem obdarowanego przestaje być kuponem, a staje się prezentem. Personalizacja przyjmuje dowolny tekst, więc na kopercie może stanąć samo imię albo dedykacja, bez adresu pocztowego. Koszt to ${formatPrice(DEFAULT_PRICING.personalization)} brutto od sztuki niezależnie od długości tekstu.`,
+    text: 'Bon z imieniem obdarowanego przestaje być kuponem, a staje się prezentem. Taka koperta nigdzie nie jedzie — wręcza się ją przy ladzie — więc drukujemy na niej samo imię albo dedykację, bez adresu pocztowego. Długość tekstu nie zmienia ceny.',
   },
   {
     heading: 'Biura nieruchomości i deweloperzy',
-    text: 'Akt notarialny i umowa deweloperska trafiają do nabywcy z imienia i nazwiska — to dokument, który zostaje w domu na lata. Koperta DL mieści komplet A4 złożony na trzy, a nadrukowany adres nabywcy porządkuje przekazanie dokumentów po odbiorze lokalu.',
+    text: 'Akt notarialny i umowa deweloperska trafiają do nabywcy z imienia i nazwiska — to dokument, który zostaje w domu na lata. Nadrukowany adres porządkuje przekazanie kompletu po odbiorze lokalu.',
   },
   {
     heading: 'Butiki, jubilerzy i marki premium',
-    text: `List do klienta programu lojalnościowego wymaga dwóch rzeczy naraz: logo marki i nazwiska odbiorcy. Obie usługi realizujemy w jednym przebiegu — koperta DL z nadrukiem logo i personalizacją kosztuje ${formatPrice(printedPersonalized.unitTotal)} brutto za sztukę.`,
+    text: 'List do klienta programu lojalnościowego potrzebuje dwóch rzeczy naraz: logo marki i nazwiska odbiorcy. Obie drukujemy w jednym przebiegu, więc koperta nie wraca do maszyny po raz drugi.',
   },
   {
     heading: 'Wedding plannerzy i pary młode',
-    text: `Zaproszenia adresowane drukiem wychodzą jednolicie, niezależnie od tego, ile osób wypisywało listę gości. Personalizację wykonujemy dziś na kopertach DL ${DL.dimensions} — formaty C6 ${FORMAT_MAP.C6.dimensions} i K4 ${FORMAT_MAP.K4.dimensions} mają w katalogu status „Dostępne wkrótce" i nie można ich zamówić.`,
+    text: 'Zaproszenia adresowane drukiem wychodzą jednolicie, niezależnie od tego, ile osób wypisywało listę gości. Personalizację wykonujemy dziś na kopertach DL — formaty C6 i K4 mają status „Dostępne wkrótce" i nie można ich jeszcze zamówić.',
   },
 ];
 
 export const metadata: Metadata = {
   title: `Personalizowane koperty — adresowanie ${formatPrice(personalized.unitTotal)}`,
-  description: `Personalizowane koperty DL ${DL.dimensions}: adresowanie drukiem za ${formatPrice(personalized.unitTotal)} brutto/szt., od ${DEFAULT_PRICING.moqWithPrint} sztuk, w ${COLORS.length} kolorach. Dane z arkusza XLSX, wysyłka w ${DEFAULT_PRICING.leadDaysStandard} dni.`,
+  description: `Drukujemy dane odbiorcy wprost na kopercie — pełny adres albo samo nazwisko. ${formatPrice(personalized.unitTotal)} brutto/szt. od ${DEFAULT_PRICING.moqWithPrint} sztuk, listę przekazują Państwo arkuszem.`,
   keywords: [
     'personalizowane koperty',
     'koperta personalizowana',
@@ -184,17 +201,16 @@ export const metadata: Metadata = {
     title: 'Personalizowane koperty i adresowanie kopert — Envelopes',
     description: `Koperta DL ${DL.dimensions} z nadrukiem danych odbiorcy: ${formatPrice(personalized.unitTotal)} brutto za sztukę, ${COLORS.length} kolorów, minimum ${DEFAULT_PRICING.moqWithPrint} sztuk.`,
     url: '/koperty-personalizowane',
+    images: [
+      ogImage(
+        'koperty-personalizowane',
+        'Trzy czarne koperty DL z nadrukowanymi imionami i nazwiskami odbiorców'
+      ),
+    ],
   },
 };
 
 export default function PersonalizedEnvelopesPage() {
-  const addressingPost = getPost('adresowanie-kopert-recznie-czy-z-arkusza');
-  const colorsPost = getPost('paleta-19-kolorow-jak-wybrac-odcien-do-identyfikacji-firmy');
-  const expressPost = getPost('ekspresowa-realizacja-2-dni-robocze');
-  const relatedPosts = [addressingPost, colorsPost, expressPost].filter(
-    (post): post is BlogPost => post !== undefined
-  );
-
   return (
     <>
       <JsonLd data={personalizedEnvelopeProductJsonLd()} />
@@ -230,14 +246,11 @@ export default function PersonalizedEnvelopesPage() {
             <span className="eyebrow">Adresowanie drukiem</span>
             <h1>Personalizowane koperty — adresowanie drukiem</h1>
             <p className="hero-lead">
-              Personalizowane koperty to koperty z nadrukowanymi indywidualnymi danymi odbiorcy:
-              imieniem i nazwiskiem, pełnym adresem albo dedykacją. W Envelopes personalizację
-              wykonujemy na kopercie DL {DL.dimensions} w {COLORS.length} kolorach. Koszt to{' '}
-              {formatPrice(personalized.unitTotal)} brutto za sztukę ({formatPrice(personalized.net)}{' '}
-              netto): {formatPrice(plain.unitTotal)} za kopertę i{' '}
-              {formatPrice(DEFAULT_PRICING.personalization)} za adresowanie. Minimalna ilość to{' '}
-              {DEFAULT_PRICING.moqWithPrint} sztuk, wysyłka w {DEFAULT_PRICING.leadDaysStandard} dni
-              roboczych.
+              Drukujemy na kopercie dane odbiorcy — pełny adres, kiedy przesyłka idzie pocztą, albo
+              samo imię i nazwisko, kiedy koperty wręczają Państwo do ręki. Każda wychodzi z innymi
+              danymi, wszystkie tym samym pismem. Personalizowana koperta kosztuje{' '}
+              {formatPrice(personalized.unitTotal)} brutto za sztukę, od{' '}
+              {DEFAULT_PRICING.moqWithPrint} sztuk.
             </p>
 
             <div className="row">
@@ -250,7 +263,8 @@ export default function PersonalizedEnvelopesPage() {
             </div>
             <p className="small muted" style={{ marginTop: 'var(--space-3)' }}>
               Wizualizację koperty z danymi odbiorcy akceptują Państwo przed drukiem. Do każdego
-              zamówienia wystawiamy fakturę VAT, także z odroczonym terminem płatności 14 dni.
+              zamówienia wystawiamy fakturę VAT, a instytucjom publicznym i urzędom —
+              z odroczonym terminem płatności 14 dni.
             </p>
           </div>
         </div>
@@ -297,15 +311,13 @@ export default function PersonalizedEnvelopesPage() {
           </div>
 
           <p style={{ maxWidth: '68ch' }}>
-            Personalizowana koperta DL {DL.dimensions} kosztuje{' '}
+            Personalizowana koperta kosztuje{' '}
             <strong>{formatPrice(personalized.unitTotal)} brutto</strong> (
-            {formatPrice(personalized.net)} netto) za sztukę. Na cenę składa się koperta —{' '}
-            {formatPrice(plain.unitTotal)} brutto — oraz adresowanie —{' '}
-            {formatPrice(DEFAULT_PRICING.personalization)} brutto. Stawka nie zależy od długości
-            tekstu ani od liczby różnych adresów: koperta z samym imieniem kosztuje tyle samo, co
-            koperta z pełnym adresem pocztowym. Cena jest identyczna we wszystkich{' '}
-            {COLORS.length} kolorach i nie zmienia się wraz z ilością — rabatów ilościowych nie
-            stosujemy.
+            {formatPrice(personalized.net)} netto) za sztukę — koperta plus adresowanie, rozpisane
+            w tabeli niżej. Stawka nie zależy od długości tekstu ani od tego, ile różnych danych
+            jest na liście: koperta z samym imieniem kosztuje tyle samo, co z pełnym adresem.
+            Rabatów ilościowych nie stosujemy, więc cena za sztukę jest ta sama przy każdym
+            nakładzie.
           </p>
 
           <div className="table-wrap" style={{ marginTop: 'var(--space-5)' }}>
@@ -437,11 +449,17 @@ export default function PersonalizedEnvelopesPage() {
           </div>
 
           <p style={{ maxWidth: '68ch' }}>
-            Dane do adresowania kopert przekazują Państwo na dwa sposoby: wpisując treść wprost
-            w konfiguratorze albo wgrywając arkusz z listą odbiorców. Wybór zależy od skali wysyłki.
-            Przy kilkunastu kopertach wpisanie danych ręcznie jest szybsze niż otwieranie Excela.
-            Przy stu adresach arkusz nie ma alternatywy — i dodatkowo pozwala przekazać listę do
-            sprawdzenia innej osobie w firmie, zanim zamówienie ruszy.
+            W konfiguratorze odpowiadają Państwo na dwa pytania. Pierwsze: co ma stanąć na kopercie
+            — pełny adres, jeśli przesyłka idzie pocztą, albo samo imię i nazwisko, jeśli koperty
+            wręczają Państwo do ręki. Drugie: jak przekazać dane — wpisać je wprost w
+            konfiguratorze czy wgrać arkusz z listą. Odpowiedź na pierwsze pytanie ustawia kolumny
+            szablonu, więc lista samych nazwisk nie musi udawać listy wysyłkowej.
+          </p>
+          <p style={{ maxWidth: '68ch' }}>
+            Sposób przekazania danych zależy głównie od skali. Przy kilkunastu kopertach wpisanie
+            danych ręcznie jest szybsze niż otwieranie Excela. Przy stu pozycjach arkusz nie ma
+            alternatywy — i dodatkowo pozwala przekazać listę do sprawdzenia komuś innemu w firmie,
+            zanim zamówienie ruszy.
           </p>
 
           <div className="table-wrap" style={{ marginTop: 'var(--space-5)' }}>
@@ -479,10 +497,13 @@ export default function PersonalizedEnvelopesPage() {
                 </tr>
                 <tr>
                   <th scope="row">Kontrola poprawności</th>
-                  <td>Tekst odtwarzamy dokładnie w podanej postaci; sprawdzenie następuje na wizualizacji</td>
                   <td>
-                    Przy wgraniu sprawdzamy kompletność adresów i zgodność liczby wierszy z ilością
-                    kopert
+                    Tekst odtwarzamy dokładnie w podanej postaci; sprawdzenie następuje na
+                    wizualizacji. Konfigurator pokazuje, ile wierszy Państwo wpisali
+                  </td>
+                  <td>
+                    Przy wgraniu sprawdzamy komplet pól wymaganych w wybranym wariancie i zgodność
+                    liczby wierszy z ilością kopert
                   </td>
                 </tr>
                 <tr>
@@ -502,19 +523,23 @@ export default function PersonalizedEnvelopesPage() {
             </table>
           </div>
 
+          {/* Link w dół do treści wspierającej (content-plan.md poz. 8).
+              Anchor = tytuł wpisu, czyli jego fraza długiego ogona
+              `adresowanie kopert z arkusza`; fraza `adresowanie kopert`
+              zostaje przy tej stronie. */}
+          {sheetGuide && (
+            <p className="small muted" style={{ marginTop: 'var(--space-5)', maxWidth: '68ch' }}>
+              Powyższa tabela zestawia oba tryby według skali wysyłki. Gdy sama liczba adresów
+              niczego nie przesądza, decydują dwie inne rzeczy — treść nadruku i miejsce, w którym
+              dane już są. Rozstrzygamy je w poradniku{' '}
+              <Link href={`/blog/${sheetGuide.slug}`}>{sheetGuide.title.toLowerCase()}</Link>.
+            </p>
+          )}
+
           <div className="row" style={{ marginTop: 'var(--space-6)' }}>
             <ConfigureLink format="DL" personalization className="btn">
               Zamów koperty adresowane
             </ConfigureLink>
-            {addressingPost && (
-              <span className="small muted">
-                Porównanie obu trybów na przykładach opisaliśmy we wpisie{' '}
-                <Link href={`/blog/${addressingPost.slug}`}>
-                  adresowanie kopert ręcznie czy z arkusza
-                </Link>
-                .
-              </span>
-            )}
           </div>
         </div>
       </section>
@@ -524,48 +549,60 @@ export default function PersonalizedEnvelopesPage() {
         <div className="container">
           <div className="section-head">
             <span className="eyebrow">Dane odbiorców</span>
-            <h2>Jak przygotować listę adresów do nadruku</h2>
+            <h2>Jak przygotować listę do nadruku</h2>
           </div>
 
           <p style={{ maxWidth: '68ch' }}>
-            Arkusz adresowy ma {PERSONALIZATION_SHEET_COLUMNS.length} kolumn, z czego{' '}
-            {PERSONALIZATION_REQUIRED_COLUMNS.length} są wymagane w każdym wierszu:{' '}
-            {REQUIRED_COLUMNS_LABEL}. Odbiorcę identyfikuje imię i nazwisko albo nazwa firmy —
-            wystarczy jedno z tych pól, ale wiersz bez obu uznajemy za pusty. Liczba wypełnionych
-            wierszy musi być równa liczbie zamówionych kopert; różnicę zgłaszamy przy wgrywaniu
-            pliku, zanim zamówienie trafi do produkcji.
+            Szablon pobierany z konfiguratora ma tyle wierszy, ile kopert Państwo zamawiają, i tyle
+            kolumn, ile wymaga wybrany zakres. Przy przesyłce pocztowej trzeba podać komplet pól
+            adresowych; przy kopertach wręczanych do ręki wystarczy nazwisko. Liczba wypełnionych
+            wierszy musi zgadzać się z liczbą kopert — różnicę zgłaszamy przy wgrywaniu pliku,
+            zanim zamówienie trafi do produkcji.
           </p>
 
-          <div className="table-wrap" style={{ marginTop: 'var(--space-5)' }}>
-            <table className="data">
-              <caption className="sr-only">
-                Kolumny arkusza adresowego wraz z oznaczeniem pól wymaganych
-              </caption>
-              <thead>
-                <tr>
-                  <th scope="col">Kolumna</th>
-                  <th scope="col">Wymagana</th>
-                  <th scope="col">Jak wypełnić</th>
-                </tr>
-              </thead>
-              <tbody>
-                {PERSONALIZATION_SHEET_COLUMNS.map((column) => (
-                  <tr key={column.label}>
-                    <th scope="row">{column.label}</th>
-                    <td>{column.required ? 'Tak' : 'Nie'}</td>
-                    <td>{column.note}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          {/* Obie tabele powstają z `PERSONALIZATION_SCOPES` — z tej samej
+              definicji, z której generator buduje szablon XLSX, a walidacja
+              czyta pola wymagane. Dopisanie kolumny przepisuje szablon,
+              walidację i tę stronę jednocześnie. */}
+          {PERSONALIZATION_SCOPES.map((scope) => (
+            <div key={scope.id}>
+              <h3 style={{ marginTop: 'var(--space-7)' }}>{scope.label}</h3>
+              <p className="small muted" style={{ maxWidth: '68ch' }}>
+                {scope.hint}
+              </p>
+              <div className="table-wrap m-cards" style={{ marginTop: 'var(--space-4)' }}>
+                <table className="data">
+                  <caption className="sr-only">
+                    Kolumny szablonu „{scope.label}" wraz z oznaczeniem pól wymaganych
+                  </caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Kolumna</th>
+                      <th scope="col">Wymagana</th>
+                      <th scope="col">Jak wypełnić</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {scope.columns.map((column) => (
+                      <tr key={column.label}>
+                        <th scope="row">{column.label}</th>
+                        <td data-label="Wymagana">{column.required ? 'Tak' : 'Nie'}</td>
+                        <td data-label="Jak wypełnić">{column.note}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          ))}
 
           <p className="small muted" style={{ marginTop: 'var(--space-5)', maxWidth: '68ch' }}>
-            Przyjmujemy pliki {PERSONALIZATION_SHEET_EXTENSIONS_LABEL}. Tekst odtwarzamy dokładnie
-            w postaci, w jakiej został przekazany — nie poprawiamy odmiany nazwisk, wielkich liter
-            ani skrótów. Jeśli w arkuszu jest „ul." przed nazwą ulicy, taki zapis znajdzie się na
-            kopercie. To celowe: dane adresowe bywają pobierane z systemów księgowych, w których
-            zapis jest już ustandaryzowany.
+            Przyjmujemy pliki {PERSONALIZATION_SHEET_EXTENSIONS_LABEL}, do{' '}
+            {PERSONALIZATION_SHEET_MAX_ROWS.toLocaleString('pl-PL')} wierszy. Tekst odtwarzamy
+            dokładnie w postaci, w jakiej został przekazany — nie poprawiamy odmiany nazwisk,
+            wielkich liter ani skrótów. Jeśli w arkuszu stoi „ul." przed nazwą ulicy, taki zapis
+            znajdzie się na kopercie. To celowe: dane bywają pobierane z systemów, w których zapis
+            jest już ustandaryzowany, i nie chcemy go po cichu zmieniać.
           </p>
         </div>
       </section>
@@ -579,11 +616,9 @@ export default function PersonalizedEnvelopesPage() {
           </div>
 
           <p style={{ maxWidth: '68ch' }}>
-            Personalizacja przyjmuje dowolny tekst, nie tylko adres pocztowy. Na kopercie DL{' '}
-            {DL.dimensions} drukujemy imię i nazwisko odbiorcy, nazwę firmy, pełny adres wysyłkowy
-            albo dedykację — w zależności od tego, do czego koperta ma posłużyć. Cena jest ta sama
-            w każdym z tych przypadków: {formatPrice(DEFAULT_PRICING.personalization)} brutto od
-            sztuki.
+            Personalizacja przyjmuje dowolny tekst, nie tylko adres pocztowy. Na kopercie może
+            stanąć imię i nazwisko, nazwa firmy, pełny adres albo dedykacja — zależnie od tego, do
+            czego koperta ma posłużyć. Cena jest w każdym z tych przypadków ta sama.
           </p>
 
           <div className="grid grid-3" style={{ gap: 'var(--space-5)' }}>
@@ -598,10 +633,21 @@ export default function PersonalizedEnvelopesPage() {
             <div className="card">
               <h3 style={{ fontSize: 19 }}>Samo imię i nazwisko</h3>
               <p className="small" style={{ marginTop: 'var(--space-2)', marginBottom: 0 }}>
-                Koperty imienne wręczane do ręki: karty powitalne w hotelu, dyplomy dla grupy
-                szkoleniowej, decyzje o premii, bony podarunkowe. Przesyłka nie idzie pocztą, więc
-                adres jest zbędny.
+                Koperty wręczane do ręki: karty powitalne w hotelu, dyplomy dla grupy szkoleniowej,
+                decyzje o premii, bony podarunkowe. Nic nie jedzie pocztą, więc adresu nie ma po co
+                podawać — szablon dla takiej listy ma same nazwiska. Wariant voucherowy opisaliśmy
+                osobno na stronie <Link href="/koperty-na-vouchery">koperty na vouchery</Link>.
               </p>
+              <div className="row" style={{ marginTop: 'var(--space-4)' }}>
+                <ConfigureLink
+                  format="DL"
+                  personalization
+                  personalizationScope="imiona"
+                  className="btn btn-secondary btn-sm"
+                >
+                  Zamów koperty z samym nazwiskiem
+                </ConfigureLink>
+              </div>
             </div>
             <div className="card">
               <h3 style={{ fontSize: 19 }}>Dedykacja lub krótki tekst</h3>
@@ -612,13 +658,22 @@ export default function PersonalizedEnvelopesPage() {
             </div>
           </div>
 
+          {/* Trzy kadry pokrywają się jeden do jednego z trzema kartami wyżej:
+              pełny adres, samo imię i nazwisko, zapis odręczny. Kolejność jest
+              ta sama, żeby czytelnik zobaczył wariant, o którym właśnie czytał. */}
+          <ShowcaseGrid shots={PERSONALIZATION_SHOTS} columns={3} />
+
+          <p className="small muted" style={{ marginTop: 'var(--space-5)', maxWidth: '68ch' }}>
+            Imiona i adresy na zdjęciach są przykładowe — pokazują układ nadruku, nie dane
+            realnych odbiorców. Na Państwa kopertach drukujemy dane z przesłanego arkusza,
+            w takiej postaci, w jakiej zostały w nim zapisane.
+          </p>
+
           <p style={{ maxWidth: '68ch', marginTop: 'var(--space-6)' }}>
-            Wszystkie koperty Envelopes są bez okienka adresowego, więc nadruk danych obejmuje
-            wolną przednią ściankę z zachowaniem 5 mm marginesu od krawędzi. Personalizację można
-            połączyć z nadrukiem logo w jednym zamówieniu — wtedy logo nadawcy i dane odbiorcy
-            powstają w tym samym przebiegu produkcyjnym, a nie na dwóch urządzeniach o różnym
-            odcieniu czerni. Koperta DL z logo i adresem kosztuje{' '}
-            {formatPrice(printedPersonalized.unitTotal)} brutto za sztukę.
+            Nasze koperty nie mają okienka adresowego, więc dane drukujemy na wolnej przedniej
+            ściance. Personalizację da się połączyć z nadrukiem logo w jednym zamówieniu — logo
+            nadawcy i dane odbiorcy powstają wtedy w tym samym przebiegu produkcyjnym, a nie na
+            dwóch urządzeniach o różnym odcieniu czerni.
           </p>
 
           <div className="row" style={{ marginTop: 'var(--space-5)' }}>
@@ -626,7 +681,7 @@ export default function PersonalizedEnvelopesPage() {
               Wyceń koperty z logo i adresem
             </ConfigureLink>
             <span className="small muted">
-              Minimum {DEFAULT_PRICING.moqWithPrint} sztuk. Wizualizacja do akceptacji przed drukiem.
+              Wizualizację zobaczą Państwo przed drukiem — obie usługi na jednym podglądzie.
             </span>
           </div>
         </div>
@@ -700,7 +755,10 @@ export default function PersonalizedEnvelopesPage() {
                 </tr>
                 <tr>
                   <th scope="row">Margines nadruku</th>
-                  <td>Minimum 5 mm od krawędzi, poza linią klejenia i zagięciem klapki</td>
+                  <td>
+                    Minimum {PRINT_SAFE_MARGIN_MM} mm od krawędzi, poza linią klejenia i zagięciem
+                    klapki
+                  </td>
                 </tr>
                 <tr>
                   <th scope="row">Czas realizacji</th>
@@ -716,8 +774,8 @@ export default function PersonalizedEnvelopesPage() {
                 <tr>
                   <th scope="row">Rozliczenie</th>
                   <td>
-                    Faktura VAT do każdego zamówienia, z odroczonym terminem płatności 14 dni na
-                    życzenie
+                    Faktura VAT do każdego zamówienia; odroczony termin płatności 14 dni dla
+                    instytucji publicznych i urzędów
                   </td>
                 </tr>
                 <tr>
@@ -762,9 +820,9 @@ export default function PersonalizedEnvelopesPage() {
             <span className="eyebrow">Kolory</span>
             <h2>Kolory kopert pod adresowanie</h2>
             <p>
-              Adresowanie kosztuje {formatPrice(DEFAULT_PRICING.personalization)} brutto za sztukę
-              niezależnie od koloru koperty. O czytelności danych decyduje kontrast: na ciemnych
-              kopertach drukujemy jasnym kolorem, na jasnych — ciemnym.
+              Odcień papieru nie zmienia kosztu adresowania — o czytelności danych decyduje
+              kontrast, nie kolor. Na ciemnych kopertach drukujemy jasnym kolorem, na jasnych —
+              ciemnym.
             </p>
           </div>
 
@@ -800,20 +858,12 @@ export default function PersonalizedEnvelopesPage() {
           </div>
 
           <p className="small muted" style={{ marginTop: 'var(--space-5)', maxWidth: '68ch' }}>
-            Na zdjęciach pokazujemy {PERSONALIZED_COLORS.length} odcieni, w których wykonaliśmy
-            adresowanie. Pozostałe kolory z palety {COLORS.length} odcieni — między innymi Złoty,
-            Srebrna Perłowa i Szarobrązowy — również przyjmują nadruk danych; wybiorą je Państwo{' '}
-            <Link href="/#kolory">w pełnej palecie kolorów</Link>.
-            {colorsPost && (
-              <>
-                {' '}
-                Który odcień pasuje do identyfikacji firmy, podpowiadamy we wpisie{' '}
-                <Link href={`/blog/${colorsPost.slug}`}>
-                  paleta 19 kolorów — jak wybrać odcień
-                </Link>
-                .
-              </>
-            )}
+            {/* Zdanie o „pozostałych kolorach" wskazywało na Złoty, Srebrną
+                Perłową i Szarobrązowy — wszystkie trzy mają dziś własny kadr
+                i stoją w siatce wyżej, więc odsyłacz kierował donikąd. */}
+            Nadruk danych przyjmuje wszystkie {PERSONALIZED_COLORS.length} odcieni z palety,
+            w tej samej cenie. Adres widoczny na zdjęciach jest przykładowy — drukujemy dane
+            z Państwa arkusza, w postaci, w jakiej zostały w nim zapisane.
           </p>
         </div>
       </section>
@@ -907,8 +957,8 @@ export default function PersonalizedEnvelopesPage() {
               <ul className="small" style={{ paddingLeft: 'var(--space-5)', lineHeight: 1.8 }}>
                 <li>Fakturę VAT wystawiamy do każdego zamówienia, także bez numeru NIP.</li>
                 <li>
-                  Faktura z odroczonym terminem płatności 14 dni jest dostępna przy każdym
-                  zamówieniu — z myślą o instytucjach i jednostkach budżetowych.
+                  Faktura z odroczonym terminem płatności 14 dni jest dostępna dla instytucji
+                  publicznych i urzędów, których obieg zakupowy nie przewiduje przedpłaty.
                 </li>
                 <li>
                   Powyżej {BULK_QUOTE_THRESHOLD.toLocaleString('pl-PL')} sztuk ustalamy harmonogram
@@ -922,14 +972,6 @@ export default function PersonalizedEnvelopesPage() {
               </div>
             </div>
           </div>
-
-          {expressPost && (
-            <p className="small" style={{ marginTop: 'var(--space-5)' }}>
-              Kiedy dopłata za ekspres ma sens, a kiedy wystarczy termin standardowy — opisaliśmy to
-              we wpisie{' '}
-              <Link href={`/blog/${expressPost.slug}`}>realizacja ekspresowa w 2 dni robocze</Link>.
-            </p>
-          )}
         </div>
       </section>
 
@@ -953,31 +995,39 @@ export default function PersonalizedEnvelopesPage() {
         </div>
       </section>
 
-      {/* ── Treści wspierające filar ── */}
-      {relatedPosts.length > 0 && (
-        <section className="section" id="poradniki">
+      {/* ── Poradniki — treści wspierające filar (poz. 8, 14 i 15 planu) ──
+          Sekcja wróciła po czystce wpisów startowych z 15 sierpnia 2026.
+          Przy jednym wpisie renderujemy pojedynczą kartę zamiast siatki,
+          żeby nie zostawiać pustych kolumn; siatka włącza się od drugiego. */}
+      {GUIDES.length > 0 && (
+        <section className="section section-surface" id="poradniki">
           <div className="container">
             <div className="section-head">
               <span className="eyebrow">Poradniki</span>
-              <h2>Zanim zamówią Państwo adresowanie</h2>
+              <h2>Jak przygotować dane do adresowania kopert</h2>
+              <p>
+                Personalizacja zaczyna się po Państwa stronie — od listy odbiorców. Poniższe
+                poradniki prowadzą przez decyzje, które podejmują Państwo, zanim otworzą
+                konfigurator.
+              </p>
             </div>
-            <div className="grid grid-3">
-              {relatedPosts.map((post) => (
-                <article className="post-card" key={post.slug}>
-                  <EnvelopePlaceholder
-                    format={post.format}
-                    colorId={post.colorId}
-                    ratio="wide"
-                    hideCaption
-                    size="sm"
-                  />
-                  <div className="post-card-body">
-                    <span className="badge">{post.category}</span>
-                    <h3 style={{ fontSize: 18 }}>
-                      <Link href={`/blog/${post.slug}`}>{post.title}</Link>
-                    </h3>
-                    <p className="small muted">{post.lead}</p>
-                  </div>
+
+            <div
+              className={GUIDES.length > 1 ? 'grid grid-2' : undefined}
+              style={{ gap: 'var(--space-5)' }}
+            >
+              {GUIDES.map((post) => (
+                <article className="card card-lg" key={post.slug}>
+                  <span className="badge">{post.category}</span>
+                  <h3 style={{ fontSize: 21, marginTop: 'var(--space-3)' }}>
+                    <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+                  </h3>
+                  <p className="small" style={{ marginTop: 'var(--space-2)' }}>
+                    {post.lead}
+                  </p>
+                  <p className="small muted" style={{ marginBottom: 0 }}>
+                    {post.readingMinutes} min czytania
+                  </p>
                 </article>
               ))}
             </div>
@@ -992,9 +1042,8 @@ export default function PersonalizedEnvelopesPage() {
             <div>
               <h2>Gotowi na koperty z danymi odbiorców?</h2>
               <p>
-                Konfigurator otworzy się z formatem DL i włączoną personalizacją. Cenę widzą Państwo
-                od razu, bez zapytania ofertowego — {formatPrice(personalized.unitTotal)} brutto za
-                sztukę.
+                Konfigurator otworzy się z włączoną personalizacją. Wystarczy wybrać kolor i wskazać,
+                co ma stanąć na kopercie — cenę widzą Państwo od razu.
               </p>
             </div>
             <ConfigureLink format="DL" personalization className="btn btn-lg">

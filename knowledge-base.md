@@ -70,7 +70,7 @@ Architektura obecnego systemu została świetnie zaplanowana pod wysoki współc
 *   **Kompaktowy Konfigurator:** Brak rozpraszaczy. Cały proces (od wyboru formatu, przez kolor, pliki do nadruku, po czas realizacji) dzieje się wizualnie "na jednym ekranie".
 *   **Natychmiastowa Kalkulacja:** Sticky panel podsumowujący daje pełną przejrzystość ceny na każdym etapie.
 *   **Rozbicie Bariery Ryzyka:** System wysyła wizualizację *po złożeniu zamówienia*, przed ostatecznym skierowaniem do druku. To uspokaja klienta, że nie kupuje w ciemno, a grafik dba o plik.
-*   **Funkcje B2B:** Faktury z odroczonym terminem płatności to "Game Changer" dla instytucji, korporacji i stałych partnerów.
+*   **Funkcje B2B:** Faktura VAT do każdego zamówienia. Faktura z **odroczonym terminem płatności 14 dni jest zarezerwowana dla instytucji publicznych i urzędów** (decyzja właściciela z 14 sierpnia 2026) — dla nich to "Game Changer", bo ich obieg zakupowy nie przewiduje przedpłaty. Firmy komercyjne i klienci detaliczni płacą z góry.
 
 ---
 

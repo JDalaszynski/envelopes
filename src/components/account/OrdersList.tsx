@@ -153,12 +153,6 @@ export function OrdersList() {
                 </div>
               </div>
 
-              {order.status === 'czeka_na_akceptacje' && order.visualizationStatus === 'oczekuje' && (
-                <p className="notice notice-seal" style={{ marginTop: 'var(--space-4)' }}>
-                  Wizualizacja czeka na Państwa akceptację.{' '}
-                  <Link href={`/zamowienia/${order.number}#wizualizacja`}>Przejdź do akceptacji</Link>
-                </p>
-              )}
 
               <div className="row" style={{ marginTop: 'var(--space-4)' }}>
                 <Link href={`/zamowienia/${order.number}`} className="btn btn-secondary btn-sm">

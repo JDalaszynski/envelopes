@@ -90,6 +90,17 @@ export function formatPrice(value: number): string {
   return `${value.toFixed(2).replace('.', ',')} zł`;
 }
 
+/**
+ * Polska liczba mnoga: 1 wiersz · 2–4 wiersze · 5+ wierszy, z wyjątkiem
+ * nastek (12, 13, 14 → wierszy). Bez tego interfejs pisze „3 wierszy”.
+ */
+export function plural(count: number, one: string, few: string, many: string): string {
+  const abs = Math.abs(count) % 100;
+  if (abs === 1) return one;
+  if (abs >= 12 && abs <= 14) return many;
+  return abs % 10 >= 2 && abs % 10 <= 4 ? few : many;
+}
+
 /** Dodaje dni robocze do daty (pomija sobotę i niedzielę). */
 export function addWorkingDays(from: Date, days: number): Date {
   const date = new Date(from.getTime());

@@ -36,6 +36,15 @@ export function BlogList({ posts }: { posts: BlogPost[] }) {
     return result;
   }, [posts, category, query, sort]);
 
+  /* Filtr pokazuje tylko kategorie, w których faktycznie coś jest. Po czystce
+     wpisów startowych (content-plan.md, 15 sierpnia 2026) trzy z czterech
+     kategorii są puste, a przycisk prowadzący zawsze do „Brak wpisów"
+     kosztuje zaufanie i nic nie wnosi. */
+  const usedCategories = useMemo(
+    () => BLOG_CATEGORIES.filter((cat) => posts.some((post) => post.category === cat)),
+    [posts]
+  );
+
   return (
     <>
       <div className="card" style={{ marginBottom: 'var(--space-6)' }}>
@@ -47,7 +56,7 @@ export function BlogList({ posts }: { posts: BlogPost[] }) {
           >
             Wszystkie
           </button>
-          {BLOG_CATEGORIES.map((cat) => (
+          {usedCategories.map((cat) => (
             <button
               key={cat}
               type="button"

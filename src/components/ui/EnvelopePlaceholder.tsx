@@ -1,4 +1,4 @@
-import { COLOR_MAP } from '@/lib/catalog';
+import { COLOR_MAP, colorImageSrcSet } from '@/lib/catalog';
 import { buildImageAlt } from '@/lib/product-name';
 
 /**
@@ -23,9 +23,19 @@ interface Props {
   hasPrint?: boolean;
   /** Czy pokazywać zdjęcie z podglądem personalizacji */
   hasPersonalization?: boolean;
+  /**
+   * Realna szerokość kadru w układzie. Domyślna wartość opisuje kartę
+   * w siatce czterokolumnowej — najczęstsze użycie komponentu. Podgląd
+   * w konfiguratorze jest szerszy i podaje własną wartość.
+   */
+  sizes?: string;
 }
 
 const RATIOS = { photo: '4 / 3', wide: '16 / 9', portrait: '3 / 4', square: '1 / 1' };
+
+/** Karta w siatce `grid-4`: kontener 1200 px, padding 24 px, gap 24 px. */
+const DEFAULT_SIZES =
+  '(max-width: 620px) calc(100vw - 48px), (max-width: 900px) calc(50vw - 36px), (max-width: 1248px) calc(25vw - 30px), 270px';
 
 export function EnvelopePlaceholder({
   format,
@@ -35,6 +45,7 @@ export function EnvelopePlaceholder({
   size = 'md',
   hasPrint = false,
   hasPersonalization = false,
+  sizes = DEFAULT_SIZES,
 }: Props) {
   const color = COLOR_MAP[colorId];
   const hex = color?.hex ?? '#EADFC8';
@@ -71,12 +82,18 @@ export function EnvelopePlaceholder({
           overflow: 'hidden',
         }}
       >
-        {/* Zdjęcia produktowe to pliki PNG po ~0,6 MB, a na stronie głównej
-            jest ich kilkanaście. Leniwe ładowanie zdejmuje je z krytycznej
-            ścieżki renderowania — ramka ma jawny aspect-ratio, więc nie
-            powoduje to przesunięć układu (pkt 5.5). */}
+        {/* Zdjęcia gładkich kopert leżą w trzech szerokościach, więc karta
+            o szerokości ~270 px pobiera wariant 320 lub 640 px zamiast 1200.
+            `colorImageSrcSet` zwraca `undefined` dla zdjęć nadruku
+            i personalizacji, które są jeszcze pojedynczymi plikami PNG —
+            wtedy `<img>` zostaje przy samym `src`.
+
+            Leniwe ładowanie zdejmuje kadry z krytycznej ścieżki renderowania;
+            ramka ma jawny `aspect-ratio`, więc nie powoduje to CLS (pkt 5.5). */}
         <img
           src={imageUrl}
+          srcSet={colorImageSrcSet(imageUrl)}
+          sizes={sizes}
           alt={alt}
           loading="lazy"
           decoding="async"

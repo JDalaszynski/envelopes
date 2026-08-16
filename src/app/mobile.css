@@ -1,0 +1,714 @@
+/* ═══════════════════════════════════════════════════════════════
+   Envelopes — warstwa mobilna (≤ 720 px)
+
+   Ten plik nie jest zbiorem poprawek do układu desktopowego. To osobna
+   warstwa prezentacji, która na wąskim ekranie zmienia sposób czytania
+   strony: pionowe stosy kart zamienia na poziome karuzele z zatrzaskiem,
+   szeroką tabelę na listę kart, długie akapity SEO na bloki rozwijane,
+   a nawigację i główne CTA przenosi tam, gdzie sięga kciuk.
+
+   Powód jest mierzalny: przed tą warstwą strona główna miała na ekranie
+   390 × 844 px około 24 000 px wysokości, czyli 28 pełnych ekranów
+   przewijania. Ta sama treść, ułożona po mobilnemu, mieści się w mniej
+   więcej połowie tego dystansu — nic nie znika z DOM, więc indeksacja
+   i czytniki ekranu widzą dokładnie tyle samo, co wcześniej.
+
+   Zasady:
+   1. Wyłącznie tokeny z `globals.css`. Żadnych nowych kolorów, promieni
+      ani cieni — warstwa mobilna ma być tym samym systemem, nie drugim.
+   2. Jeden breakpoint: 720 px. Projekt używa go jako granicy „mobile"
+      w typografii i odstępach, więc warstwa aplikacyjna siada dokładnie
+      na tej samej krawędzi.
+   3. Klasy `m-*` są opt-in i powyżej 720 px nie robią nic. Dzięki temu
+      dodanie ich w JSX nie może zepsuć widoku desktopowego.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Wyłącznik dla desktopu ──
+   Pasek akcji jest w DOM zawsze, więc bez tej deklaracji pokazałby się
+   na szerokim ekranie jako blok doklejony pod treścią. */
+
+.m-cta-bar {
+  display: none;
+}
+
+/* ═══ Urządzenia dotykowe — niezależnie od szerokości ═══
+   Kryterium jest tu rodzaj wskaźnika, nie rozmiar okna: tablet w poziomie
+   ma 1024 px i palec, a okno przeglądarki zwężone do 400 px ma myszkę.
+
+   Na dotyku stan `:hover` nie istnieje jako podgląd — przeglądarki mobilne
+   symulują go dopiero przy dotknięciu i zostawiają na elemencie aż do
+   dotknięcia czegoś innego. Efekt jest taki, że kafelek koloru zostaje
+   „podświetlony" po odejściu palca, a na iOS pierwsze dotknięcie elementu
+   z regułą `:hover` bywa zjadane na samo pokazanie tego stanu — dopiero
+   drugie uruchamia `click`. Stąd reguła: na dotyku żadnych efektów hover,
+   a informację zwrotną niesie `:active`, czyli stan trwający dokładnie
+   tyle, ile trwa dotknięcie. */
+@media (hover: none) {
+  .swatch:hover .swatch-shape img,
+  .swatch:hover .swatch-shape svg {
+    transform: none;
+  }
+
+  .swatch:hover {
+    border-color: var(--color-line);
+  }
+
+  .swatch[aria-pressed='true']:hover {
+    border-color: var(--color-seal);
+  }
+
+  .format-card:hover:not(:disabled),
+  .option-card:hover {
+    border-color: var(--color-line);
+    box-shadow: none;
+  }
+
+  .format-card[aria-pressed='true']:hover:not(:disabled),
+  .option-card[aria-pressed='true']:hover,
+  .option-card[aria-checked='true']:hover,
+  .option-card[data-selected='true']:hover {
+    border-color: var(--color-seal);
+  }
+
+  .btn:hover:not(:disabled) {
+    box-shadow: none;
+  }
+
+  .btn-secondary:hover:not(:disabled),
+  .btn-ghost:hover:not(:disabled) {
+    background: transparent;
+  }
+
+  .qty-btn:hover:not(:disabled),
+  .qty-block-btn:hover:not(:disabled) {
+    background: transparent;
+  }
+
+  .icon-btn:hover {
+    background: transparent;
+  }
+
+  .paper-shot:hover img {
+    border-color: var(--color-line);
+    box-shadow: none;
+  }
+
+  .summary-chip:hover {
+    border-color: var(--color-line);
+    color: var(--color-ink-soft);
+  }
+
+  table.data tbody tr:hover {
+    background: transparent;
+  }
+
+  .dropzone:hover {
+    border-color: var(--color-line);
+    background: var(--color-paper);
+  }
+
+  /* Parallaksa 3D reaguje na pozycję kursora, którego na dotyku nie ma. */
+  .hero-envelope-3d:hover {
+    transform: none;
+  }
+
+  /* Odpowiedź na dotknięcie — jedyny stan, który na dotyku niesie sens. */
+  .swatch:active,
+  .format-card:not(:disabled):active,
+  .option-card:active {
+    transform: scale(0.97);
+  }
+
+  .swatch,
+  .format-card,
+  .option-card {
+    transition: border-color var(--duration-fast) var(--ease-standard),
+      box-shadow var(--duration-fast) var(--ease-standard),
+      transform var(--duration-fast) var(--ease-standard);
+  }
+}
+
+@media (max-width: 720px) {
+  :root {
+    /* Margines boczny ekranu — ten sam, którego używa `.container`.
+       Trzymany w zmiennej, bo karuzele muszą go odwracać co do piksela. */
+    --m-gutter: var(--space-4);
+    /* Wysokość paska akcji u dołu — o tyle podnosimy stopkę. */
+    --m-bar-h: calc(72px + env(safe-area-inset-bottom, 0px));
+    /* Wysokość nagłówka na mobile (56 px + kreska). Hero podkłada się pod
+       niego o dokładnie tę wartość. */
+    --m-header-h: 57px;
+    /* Szerokość karty w karuzeli. Reszta ekranu to podgląd następnej karty
+       — jedyna afordancja, jakiej potrzebuje przewijanie w poziomie. */
+    --m-card: 78vw;
+  }
+
+  /* Kotwice mają lądować pod nagłówkiem, nie za nim. */
+  html {
+    scroll-padding-top: calc(var(--m-header-h) + var(--space-3));
+  }
+
+  /* ═══ Karuzela z zatrzaskiem ═══
+     Zamienia dowolną siatkę `.grid` w poziomy tor przewijania wykrwawiony
+     do krawędzi ekranu. Karty zachowują swój wygląd — zmienia się wyłącznie
+     kierunek czytania. */
+  .m-snap {
+    display: flex;
+    gap: var(--space-3);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    /* Wykrwawienie: karuzela wychodzi poza `.container`, ale pierwsza karta
+       zostaje wyrównana do jego marginesu. */
+    margin-inline: calc(-1 * var(--m-gutter));
+    padding-inline: var(--m-gutter);
+    scroll-padding-inline: var(--m-gutter);
+    padding-block-end: var(--space-2);
+  }
+
+  .m-snap::-webkit-scrollbar {
+    display: none;
+  }
+
+  .m-snap > * {
+    flex: 0 0 var(--m-card);
+    min-width: 0;
+    scroll-snap-align: start;
+  }
+
+  /* Karty krótsze niż akapit — mieszczą się po dwie na ekran. */
+  .m-snap-sm {
+    --m-card: 62vw;
+  }
+
+  /* ═══ Chrome: pasek zaufania ═══
+     Trzy hasła w jednym wierszu zamiast trzech wierszy pod sobą — 106 px
+     chrome'u nad nagłówkiem schodzi do ~30 px. */
+  .trust-bar .container {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    scroll-snap-type: x proximity;
+    gap: var(--space-4);
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+
+  .trust-bar .container::-webkit-scrollbar {
+    display: none;
+  }
+
+  .trust-bar span {
+    scroll-snap-align: start;
+  }
+
+  /* ═══ Chrome: nagłówek ═══ */
+  .header-inner {
+    min-height: calc(var(--m-header-h) - 1px);
+    gap: var(--space-3);
+  }
+
+  .brand {
+    font-size: 20px;
+  }
+
+  /* Cel dotykowy 44 × 44 px — minimum, poniżej którego kciuk trafia w sąsiada. */
+  .icon-btn {
+    width: 44px;
+    height: 44px;
+  }
+
+  /* ═══ Chrome: menu jako pełnoekranowy arkusz ═══
+     Rozwijana lista pod nagłówkiem to wzorzec strony. Arkusz zajmujący
+     resztę ekranu to wzorzec aplikacji — i przy okazji daje pozycjom menu
+     wysokość, w którą da się trafić. */
+  .mobile-nav {
+    position: fixed;
+    inset: var(--m-header-h) 0 0;
+    z-index: 55;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background: var(--color-paper);
+    padding: var(--space-4) 0 calc(var(--space-6) + env(safe-area-inset-bottom, 0px));
+    animation: m-sheet-in var(--duration-base) var(--ease-standard);
+  }
+
+  .mobile-nav a:not(.btn) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 56px;
+    padding: var(--space-3) 0;
+    font-size: 17px;
+  }
+
+  /* Szewron mówi „to prowadzi dalej" — na dotyku nie ma hoveru, który
+     mógłby to powiedzieć za niego. */
+  .mobile-nav a:not(.btn)::after {
+    content: '›';
+    font-size: 22px;
+    line-height: 1;
+    color: var(--color-ink-soft);
+  }
+
+  .mobile-nav .btn {
+    min-height: 52px;
+  }
+
+  @keyframes m-sheet-in {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* ═══ Cele dotykowe ═══ */
+  .btn {
+    min-height: 48px;
+  }
+
+  .btn-sm {
+    min-height: 44px;
+  }
+
+  .btn-lg {
+    min-height: 54px;
+  }
+
+  /* ═══ Hero ═══
+     Na desktopie tekst stoi obok kompozycji produktowej. Na mobile kolumny
+     nie ma, więc kolejność ustala CSS: nagłówek → koperty → obietnica i CTA.
+     Dzięki temu na pierwszym ekranie widać jednocześnie co sprzedajemy,
+     jak to wygląda i gdzie kliknąć — bez przewijania.
+
+     `display: contents` na kolumnie tekstu wypuszcza jej dzieci wprost do
+     flexboksa hero, więc `order` może je przełożyć bez ruszania DOM (a więc
+     bez zmiany kolejności czytania dla robota i czytnika ekranu). */
+  .home-hero {
+    margin-top: calc(-1 * var(--m-header-h));
+    background-position: 58% top;
+  }
+
+  .home-hero-inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding-top: calc(var(--m-header-h) + var(--space-4));
+    padding-bottom: var(--space-6);
+  }
+
+  .home-hero-copy {
+    display: contents;
+  }
+
+  .home-hero-head {
+    order: 1;
+  }
+
+  .home-hero .hero-stage {
+    order: 2;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  .home-hero-tail {
+    order: 3;
+  }
+
+  .home-hero-title {
+    font-size: clamp(32px, 8.6vw, 38px);
+    max-width: none;
+    letter-spacing: -0.025em;
+  }
+
+  .home-hero .hero-lead {
+    font-size: 16px;
+    max-width: none;
+    margin: var(--space-3) 0 var(--space-4);
+  }
+
+  /* Główne CTA na całą szerokość — na dotyku przycisk ma być celem, nie
+     linkiem, w który trzeba wymierzyć. */
+  .home-hero-cta {
+    display: block;
+  }
+
+  .home-hero-cta .btn {
+    width: 100%;
+  }
+
+  /* Pusty akapit rezerwowy z desktopu zabierał 16 px światła. */
+  .home-hero-note:empty {
+    display: none;
+  }
+
+  /* ═══ Pasek faktów handlowych ═══
+     Cztery kafle jeden pod drugim to 543 px — pełny ekran na cztery zdania.
+     W karuzeli to 190 px, a każdy kafel dostaje ramkę karty, więc widać,
+     gdzie kończy się jeden argument, a zaczyna następny. */
+  .home-hero-facts {
+    border-top: none;
+    padding-top: 0;
+    padding-block-end: var(--space-6);
+  }
+
+  .home-fact {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-4);
+    border-left: none;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+  }
+
+  .home-fact:first-child {
+    padding-left: var(--space-4);
+  }
+
+  .home-fact strong {
+    font-size: 16px;
+  }
+
+  .home-fact-icon {
+    margin-bottom: var(--space-2);
+  }
+
+  /* ═══ Rytm sekcji ═══ */
+  .section-head {
+    margin-bottom: var(--space-5);
+  }
+
+  .section-head h2 {
+    text-wrap: balance;
+  }
+
+  .section-head .eyebrow {
+    color: var(--color-seal);
+  }
+
+  .card {
+    padding: var(--space-4);
+  }
+
+  /* Nagłówek sekcji z przyciskiem po prawej (np. „Blog / Wszystkie wpisy")
+     nie mieści się w jednym wierszu — bez zawijania przycisk zostaje
+     ściśnięty do dwóch znaków na wiersz. */
+  .row-between {
+    flex-wrap: wrap;
+  }
+
+  /* ═══ Konfigurator ═══ */
+
+  /* 19 kolorów w dwóch kolumnach to 1684 px. W trzech — 700 px, przy
+     kafelku 96 px, czyli wciąż powyżej progu dotyku. */
+  .swatch-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+
+  .swatch-name {
+    padding: 6px 4px;
+    font-size: 11px;
+  }
+
+  /* Dymek gramatury otwiera się na `:hover`, którego na dotyku nie ma —
+     na mobile był martwym elementem, a przy okazji rozpychał dokument
+     o 81 px w poziomie. Gramatury opisuje sekcja „Paleta". */
+  .tooltip-wrap {
+    display: none;
+  }
+
+  /* Powrót do konfiguratora obsługuje dolny pasek akcji — dwa pływające
+     przyciski o tej samej roli to o jeden za dużo. */
+  .scroll-back-btn {
+    display: none;
+  }
+
+  /* ═══ Paleta kolorów ═══ */
+  .palette-scroller {
+    gap: var(--space-2);
+    margin-inline: calc(-1 * var(--m-gutter));
+    padding-inline: var(--m-gutter);
+    scroll-padding-inline: var(--m-gutter);
+    scroll-snap-type: x proximity;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+
+  .palette-scroller::-webkit-scrollbar {
+    display: none;
+  }
+
+  .palette-chip {
+    width: 88px;
+    scroll-snap-align: start;
+  }
+
+  .palette-chip .swatch-shape {
+    width: 88px;
+    height: 66px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-line);
+  }
+
+  /* ═══ Tabela formatów jako lista kart ═══
+     Tabela ma `min-width: 720px`, więc na 390 px czytało się ją bokiem.
+     Znaczniki zostają tabelaryczne (nagłówki kolumn nadal opisują dane
+     dla czytnika ekranu), zmienia się wyłącznie prezentacja. */
+  .m-cards {
+    border: none;
+    background: transparent;
+    overflow: visible;
+  }
+
+  .m-cards table.data {
+    display: block;
+    min-width: 0;
+  }
+
+  .m-cards thead {
+    display: none;
+  }
+
+  .m-cards tbody,
+  .m-cards tr,
+  .m-cards th,
+  .m-cards td {
+    display: block;
+    width: 100%;
+  }
+
+  .m-cards tr {
+    margin-bottom: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+  }
+
+  .m-cards tr:last-child {
+    margin-bottom: 0;
+  }
+
+  .m-cards tbody tr:hover {
+    background: var(--color-surface);
+  }
+
+  /* Selektory schodzą po `table.data` — inaczej przegrywają specyficznością
+     z regułami tabeli danych z `globals.css` i komórki zachowują padding
+     policzony dla wiersza, a nie dla karty. */
+  .m-cards table.data tbody th[scope='row'] {
+    padding: 0 0 var(--space-2);
+    margin-bottom: var(--space-2);
+    border-bottom: 1px solid var(--color-line);
+    font-family: var(--font-fraunces), Georgia, serif;
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    text-transform: none;
+    white-space: normal;
+    color: var(--color-ink);
+  }
+
+  .m-cards table.data td {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: 3px 0;
+    border: none;
+  }
+
+  .m-cards table.data td::before {
+    content: attr(data-label);
+    flex-shrink: 0;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-ink-soft);
+  }
+
+  /* ═══ „Jak to działa" jako oś czasu ═══
+     Cztery karty z kreską u góry zamieniają się w jedną kolumnę połączoną
+     linią, z numerem kroku w pieczęci. Ten sam element, którym konfigurator
+     oznacza krok wykonany. */
+  .how-steps {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .how-step {
+    position: relative;
+    padding: 0 0 var(--space-5) var(--space-7);
+    border-top: none;
+  }
+
+  .how-step:last-child {
+    padding-bottom: 0;
+  }
+
+  .how-step::before {
+    position: absolute;
+    left: 0;
+    top: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    margin: 0;
+    border-radius: 50%;
+    background: var(--color-seal);
+    color: #fff;
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.28),
+      inset 0 -1px 3px rgba(0, 0, 0, 0.32);
+  }
+
+  .how-step::after {
+    content: '';
+    position: absolute;
+    left: 13px;
+    top: 36px;
+    bottom: 2px;
+    width: 2px;
+    background: var(--color-line);
+  }
+
+  .how-step:last-child::after {
+    display: none;
+  }
+
+  /* Numer kroku niesie już pieczęć na osi — nadtytuł „Krok 1" powtarzałby
+     go w tym samym wierszu. Na desktopie osi nie ma, więc nadtytuł zostaje. */
+  .how-step .eyebrow {
+    display: none;
+  }
+
+  /* ═══ FAQ ═══ */
+  .faq-item summary {
+    min-height: 56px;
+    padding: var(--space-4) 0;
+    font-size: 16px;
+  }
+
+  .faq-item summary h3 {
+    font-size: 16px;
+  }
+
+  /* ═══ Sekcja „Dla firm" ═══ */
+  #dla-firm .placeholder {
+    max-width: 260px;
+    margin-inline: auto;
+  }
+
+  /* ═══ Finalne CTA ═══ */
+  .final-cta {
+    padding: var(--space-5);
+  }
+
+  .final-cta .btn {
+    width: 100%;
+  }
+
+  /* ═══ Stopka ═══
+     Pięć kolumn pod sobą to 1206 px stopki. Dwie kolumny z blokiem marki
+     na całą szerokość mieszczą to samo w mniej więcej połowie. */
+  .site-footer {
+    margin-top: var(--space-7);
+    padding-top: var(--space-7);
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-5) var(--space-4);
+  }
+
+  .footer-grid > div:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .site-footer h3 {
+    margin-bottom: var(--space-2);
+    font-size: 13px;
+  }
+
+  .footer-list a,
+  .footer-list button {
+    display: block;
+    padding: var(--space-2) 0;
+  }
+
+  .footer-bottom {
+    margin-top: var(--space-5);
+  }
+
+  /* Stopka musi skończyć się nad paskiem akcji, nie pod nim. */
+  body[data-m-cta] .site-footer {
+    padding-bottom: calc(var(--space-5) + var(--m-bar-h));
+  }
+
+  /* ═══ Dolny pasek akcji ═══
+     Wchodzi dopiero, gdy hero wyjedzie z ekranu, i chowa się na czas
+     konfiguratora — konfigurator ma własny przyklejony pasek z ceną
+     i przyciskiem, a dwa paski jednocześnie zjadłyby jedną trzecią ekranu. */
+  .m-cta-bar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-3) var(--m-gutter)
+      calc(var(--space-3) + env(safe-area-inset-bottom, 0px));
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-top: 1px solid var(--color-line);
+    box-shadow: 0 -8px 28px rgba(31, 36, 48, 0.1);
+    /* Ukryty pasek jest też niedostępny z klawiatury — `visibility` wypina
+       go z kolejności tabulacji, samo przesunięcie by tego nie zrobiło. */
+    visibility: hidden;
+    transform: translateY(110%);
+    transition: transform var(--duration-base) var(--ease-standard),
+      visibility var(--duration-base) var(--ease-standard);
+  }
+
+  .m-cta-bar[data-visible='true'] {
+    visibility: visible;
+    transform: none;
+  }
+
+  .m-cta-bar .btn {
+    flex: 1;
+  }
+
+  .m-cta-price {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+  }
+
+  .m-cta-price .price {
+    font-size: 19px;
+  }
+
+  /* Baner cookies stoi w tym samym rogu ekranu i ma pierwszeństwo —
+     zgoda przed sprzedażą. */
+  body:has(.cookie-banner) .m-cta-bar {
+    visibility: hidden;
+    transform: translateY(110%);
+  }
+}

@@ -19,7 +19,7 @@ filarów, bo to on dojrzewa najdłużej.
 | **Format** | `Pillar (LP)` filar klastra · `Supporting LP` strona branżowa/wariantowa · `Supporting article` wpis blogowy · `Aktualizacja` przebudowa istniejącej treści |
 | **Cel** | `KONWERSJA` wejście do konfiguratora · `RUCH` pozyskanie sesji · `AUTORYTET` wiarygodność tematyczna · `GEO` cytowalność w modelach |
 | **Filar** | URL, do którego treść linkuje **w górę** |
-| **Status** | `[ ]` do zrobienia · `[~]` w toku · `[x]` opublikowane |
+| **Status** | `[ ]` do zrobienia · `[~]` w toku · `[x]` opublikowane · `[—]` wstrzymane do odblokowania |
 
 **Zasada:** każda pozycja linkuje w górę do dokładnie jednego filara. Filar linkuje w dół do
 3–6 treści wspierających. Publikacja bez dołożenia linków zwrotnych na stronach istniejących
@@ -34,7 +34,7 @@ jest niekompletna.
 | **F1 — Nadruk** | `/koperty-z-nadrukiem` | K1 | „chcę koperty z moim logo" |
 | **F2 — Personalizacja** | `/koperty-personalizowane` | K2 | „chcę koperty zaadresowane imiennie" |
 | **F3 — Format DL** | `/koperty-dl` | K4 | „jakie wymiary, co się zmieści" — opublikowany 14 sierpnia 2026 |
-| **F4 — Vouchery** | `/koperty-na-vouchery` | K7 | „w co zapakować bon podarunkowy" |
+| **F4 — Vouchery** | `/koperty-na-vouchery` | K7 | „w co zapakować bon podarunkowy" — opublikowany 14 sierpnia 2026 |
 | **F5 — Kolory** | ~~`/koperty`~~ → `/` | K3, K5 | „jaki kolor koperty wybrać" — przejęte przez `/` |
 | **H — Hub** | `/` | K3, K5 | konfigurator + paleta 19 kolorów + rozdzielnik ruchu |
 
@@ -57,7 +57,7 @@ linkuje donikąd i nie buduje żadnego klastra.
 | 1 | Koperty z nadrukiem logo firmowego — `/koperty-z-nadrukiem` | Pillar (LP) | koperty z nadrukiem | KONWERSJA | **Każda firma z logo** — sekcja „Dla kogo" obejmuje 8–10 branż | — | Przejmuje intencję transakcyjną, którą dziś rozmywa wpis `koperty-firmowe-z-nadrukiem-…` (ten zostaje jako poradnik procesowy) | [x] |
 | 2 | Personalizowane koperty i adresowanie — `/koperty-personalizowane` | Pillar (LP) | personalizowane koperty | KONWERSJA | **Każdy, kto wysyła imiennie** — sekretariat, HR, hotele, uczelnie, eventy | — | Obsługuje trzy nazwy jednej usługi (personalizacja / adresowanie / imiona i nazwiska) w jednym URL — nie rozbijać na osobne strony | [x] |
 | 3 | Koperty DL — wymiary 110 × 220 mm — `/koperty-dl` | Pillar (LP) | koperty dl wymiary | GEO | Wszystkie (wejście TOFU) | — | Jedyna strona odpowiadająca na pytania o specyfikację. Sekcja kolorów linkuje do `/`, nie duplikuje palety; **brak nagłówka cenowego** — cena jest jednym wierszem tabeli specyfikacji, bo cennik należy do `/` | [x] |
-| 4 | Koperty na vouchery i bony podarunkowe — `/koperty-na-vouchery` | Pillar (LP) | koperty na vouchery | KONWERSJA | **Każda usługa sprzedająca bon** — SPA, fryzjer, gastronomia, fitness, klinika, hotel, warsztat, szkoła | — | Klaster nietknięty przez istniejące treści — zero ryzyka nakładania | [ ] |
+| 4 | Koperty na vouchery i bony podarunkowe — `/koperty-na-vouchery` | Pillar (LP) | koperty na vouchery | KONWERSJA | **Każda usługa sprzedająca bon** — SPA, fryzjer, gastronomia, fitness, klinika, hotel, warsztat, szkoła | — | Klaster nietknięty przez istniejące treści — zero ryzyka nakładania. **Tabela liczy koszt gotowej serii bonów w trzech konfiguracjach** (gładka / z logo / z logo i imieniem), nie składniki ceny jednostkowej — te zostają na F1 | [x] |
 
 > **Zasada zasięgu filarów (dotyczy poz. 1–5).** Filar mówi do **wszystkich** branż — zawężenie
 > jest błędem, bo nadruku logo potrzebuje praktycznie każda firma. Każdy filar ma obowiązkową
@@ -73,8 +73,8 @@ linkuje donikąd i nie buduje żadnego klastra.
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 5 | ~~Koperty ozdobne — 19 kolorów — `/koperty`~~ | Pillar (LP) | koperty kolorowe | — | — | — | **Anulowane** przy poz. 6. Paleta, tabela gramatur i `ItemList` stoją na `/`; osobny hub konkurowałby z własną stroną główną o `koperty kolorowe` | [x] |
 | 6 | Strona główna — pełna przebudowa treści — `/` | Aktualizacja | koperty ozdobne | KONWERSJA | Wszystkie | — | Fraza główna w leadzie i w H2 nad sekcją kolorów, **H1 bez zmian**; cennik dotyczy kopert gładkich, cennik nadruku zostaje w F1 | [x] |
-| 7 | Koperty firmowe z nadrukiem — co przygotować | Aktualizacja | pliki do druku na kopertach | AUTORYTET | Grafik, marketing | F1 | Zawęzić do procesu przygotowania plików; frazę `koperty z nadrukiem` oddać filarowi F1 i podlinkować w górę. **Częściowo wykonane przy poz. 1:** `keywords` przepisane na frazy procesowe, link w górę do F1 dodany. Zostaje przepisanie tytułu i sekcji pod intencję „jak przygotować plik" | [ ] |
-| 8 | Adresowanie kopert: ręcznie czy z arkusza | Aktualizacja | adresowanie kopert z arkusza | AUTORYTET | Office manager | F2 | Zawęzić do porównania dwóch trybów; frazę `adresowanie kopert` oddać filarowi F2. **Częściowo wykonane przy poz. 2:** `keywords` przepisane na frazy procesowe, link w górę do F2 dodany. Zostaje przepisanie sekcji pod intencję „który tryb wybrać przy mojej skali" — dziś wpis powtarza progi 30/100 adresów, które filar podaje w tabeli porównawczej | [ ] |
+| 7 | Jak przygotować pliki do druku na kopertach — `/blog/jak-przygotowac-pliki-do-druku-na-kopertach` | Aktualizacja | pliki do druku na kopertach | AUTORYTET | Grafik, marketing | F1 | **Wykonane 15 sierpnia 2026.** Tytuł, slug i wszystkie 8 sekcji przepisane pod intencję „jak przygotować plik"; wpis nie zawiera ceny ani MOQ (należą do F1, poz. 9 i 46). Filar odpowiada „jakie pliki przyjmujemy", wpis — „jak ten plik przygotować" | [x] |
+| 8 | Adresowanie kopert z arkusza czy ręcznie — `/blog/adresowanie-kopert-z-arkusza-czy-recznie` | Supporting article | adresowanie kopert z arkusza | AUTORYTET | Office manager | F2 | **Wykonane 16 sierpnia 2026.** Treść napisana od zera; oś decyzji przesunięta ze skali na **treść nadruku i źródło danych**, bo skalę rozstrzyga tabela na filarze. Zero cen, zero MOQ, zero progów ilościowych. Tytuł doprecyzowany — slug niesie pełną frazę długiego ogona | [x] |
 
 ---
 
@@ -90,7 +90,7 @@ liczbowymi i porównaniami. Najtańszy dostępny kanał widoczności dla domeny 
 | 9 | Ile kosztuje nadruk logo na kopertach — pełny cennik | Supporting article | koperty z nadrukiem cena | GEO | Decydent budżetowy | F1 | Jedyne miejsce z rozpisanym działaniem 2,58 + 1,99 zł; filar F1 pokazuje cenę, ale nie rozkłada jej na czynniki | [ ] |
 | 10 | Który format koperty wybrać do mojej wkładki | Supporting article | format do koperty dl | GEO | Wszystkie | F3 | **Odwrotne mapowanie: wkładka → format.** F3 podaje wymiary trzech formatów i status dostępności w tabeli; ten wpis prowadzi przez decyzję („mam zaproszenie A6 / program / dyplom — co wybrać") i uzasadnia różnice konstrukcyjne. **Zakaz powtórzenia pytania „Czym różni się koperta DL od C6" w FAQ** — należy do F3. Bez CTA zakupowego na C6/K4 | [ ] |
 | 11 | Ile kartek mieści koperta DL i jak je złożyć | Supporting article | kartka do koperty dl | GEO | Wszystkie | F3 | **Trzeci wymiar, którego F3 nie dotyka: grubość wkładu.** F3 rozstrzyga dopasowanie w dwóch wymiarach (tabela wkładek w mm), ten wpis odpowiada, ile arkuszy i jakiej gramatury wchodzi, jak złożyć A4 na trzy równo i kiedy plik przestaje się mieścić mimo poprawnych wymiarów | [ ] |
-| 12 | Paleta 19 kolorów — jak wybrać odcień | Aktualizacja | kolory kopert | RUCH | Marketing, brand manager | F5 | Podlinkować w górę do nowego huba `/koperty` i w dół do stron kolorów z Fazy 3 | [ ] |
+| 12 | Paleta 19 kolorów — jak wybrać odcień | Supporting article | kolory kopert | RUCH | Marketing, brand manager | F5 = `/` | **Format zmieniony z `Aktualizacja` na `Supporting article` 15 sierpnia 2026** — wpis startowy usunięty, treść powstaje od zera. Link w górę wprost do `/` anchorem `koperty ozdobne` (huba `/koperty` nie ma — poz. 5 anulowana), w dół do stron kolorów z Fazy 3. Frazy `koperty ozdobne` i `koperty kolorowe` zostają przy `/`; wpis obsługuje dobór odcienia do identyfikacji wizualnej | [ ] |
 
 ### Tydzień 4
 
@@ -98,8 +98,8 @@ liczbowymi i porównaniami. Najtańszy dostępny kanał widoczności dla domeny 
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 13 | Koperty bez okienka — kiedy je wybrać | Supporting article | koperty bez okienka | GEO | Kancelarie, biura rachunkowe | F3 | Cała oferta jest bez okienka — treść wykorzystuje to jako wyróżnik, nie jako filtr produktowy. **F3 podaje sam fakt** (wiersz specyfikacji + akapit „Brak okienka na całej ofercie"); ten wpis obsługuje intencję decyzyjną: kiedy okienko przeszkadza, a kiedy jego brak wymusza adresowanie | [ ] |
 | 14 | Jak zaadresować kopertę wysyłaną przez firmę — wzór | Supporting article | adresowanie koperty od firmy | GEO | Sekretariat, office manager | F2 | Intencja **instruktażowa**, nie zakupowa: wzór adresu i układ, CTA dopiero pod treścią merytoryczną. Filar F2 świadomie **nie ma** sekcji ze wzorem adresu — opisuje wyłącznie zakres usługi („co drukujemy"), więc ta pozycja nie koliduje | [ ] |
-| 15 | Koperty z imieniem i nazwiskiem — jak przygotować listę | Supporting article | koperty z imieniem i nazwiskiem | RUCH | Office manager, HR | F2 | Dotyczy **przygotowania danych po stronie klienta** (eksport z CRM, odmiana nazwisk, ujednolicenie zapisu); filar F2 podaje wyłącznie specyfikację arkusza (kolumny, pola wymagane, walidacja), poz. 8 — wybór trybu. Trzy różne pytania użytkownika | [ ] |
-| 16 | Realizacja ekspresowa w 2 dni robocze | Aktualizacja | szybka realizacja kopert | KONWERSJA | Agencje eventowe, „na już" | F1 | Dodać tabelę terminów i linki w górę do F1 i F3 | [ ] |
+| 15 | Koperty z imieniem i nazwiskiem — jak przygotować listę | Supporting article | koperty z imieniem i nazwiskiem | RUCH | Office manager, HR | F2 | Dotyczy **przygotowania danych po stronie klienta** (eksport z CRM, odmiana nazwisk, ujednolicenie zapisu); filar F2 podaje wyłącznie specyfikację arkusza (kolumny, pola wymagane, walidacja), poz. 8 — wybór trybu. Trzy różne pytania użytkownika. **Granica dopisana 16 sierpnia 2026:** poz. 8 zajęła już tabelę „skąd pochodzi lista → tryb" oraz przyczyny odrzucenia arkusza (druga zakładka, przemianowany nagłówek, wiersze ukryte filtrem). Ta pozycja zaczyna się **po** wyborze trybu: co zrobić z danymi między eksportem a wgraniem pliku | [ ] |
+| 16 | Realizacja ekspresowa w 2 dni robocze | Supporting article | szybka realizacja kopert | KONWERSJA | Agencje eventowe, „na już" | F1 | **Format zmieniony z `Aktualizacja` na `Supporting article` 15 sierpnia 2026** — wpis startowy usunięty, treść powstaje od zera. Oś wpisu: od kiedy liczymy termin (zaksięgowanie wpłaty + akceptacja wizualizacji) i kiedy dopłata za ekspres się zwraca. Tabela terminów, link w górę do F1. **Cennika nadruku nie dublować** — należy do F1 i poz. 9 | [ ] |
 
 ---
 
@@ -114,9 +114,9 @@ lub `personalized/` — buduj treść wokół zdjęcia, które faktycznie masz.
 | # | Tytuł / URL | Format | Główna fraza | Cel | Persona / Branża | Filar | Uwagi (antykanibalizacja) | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 17 | Koperty dla kancelarii prawnych — `/koperty-dla-kancelarii` | Supporting LP | koperty dla kancelarii | KONWERSJA | Kancelarie, notariusze | F1 | Kolory stonowane (czarny, granat, taupe), pisma i akty. Nie powtarza cennika z poz. 9 — linkuje | [ ] |
-| 18 | Koperty dla hoteli — `/koperty-dla-hoteli` | Supporting LP | koperty firmowe dla hotelu | KONWERSJA | Hotele 4–5*, resorty | F4 | Welcome letters i vouchery pobytowe; filar F4, bo dominuje zastosowanie voucherowe | [ ] |
-| 19 | Koperty na bony do salonu SPA — `/koperty-dla-salonow-spa` | Supporting LP | koperty na bony podarunkowe | KONWERSJA | SPA, kosmetyka, masaż | F4 | Język branży usługowej („bon", „zabieg"), nie poligrafii. Sezon: publikować przed IV kw. | [ ] |
-| 20 | Koperta na voucher — jaki format i kolor wybrać | Supporting article | koperta ozdobna na voucher | GEO | Właściciel salonu | F4 | Doradcza; filar F4 sprzedaje, ten wpis odpowiada na pytanie „jaka" | [ ] |
+| 18 | Koperty dla hoteli — `/koperty-dla-hoteli` | Supporting LP | koperty firmowe dla hotelu | KONWERSJA | Hotele 4–5*, resorty | F4 | Welcome letters i vouchery pobytowe; filar F4, bo dominuje zastosowanie voucherowe. **Rozgraniczenie:** F4 poświęca hotelom jeden akapit w sekcji „Dla kogo", ten LP celuje we frazę branżową i dokłada scenariusz welcome letter, którego filar nie ma | [ ] |
+| 19 | Koperty na bony do salonu SPA — `/koperty-dla-salonow-spa` | Supporting LP | koperty na bony podarunkowe | KONWERSJA | SPA, kosmetyka, masaż | F4 | Język branży usługowej („bon", „zabieg"), nie poligrafii. Sezon: publikować przed IV kw. **Uwaga:** fraza `koperty na bony podarunkowe` jest w `keywords` filara F4 jako wariant nazewniczy — przy publikacji tego LP przenieść ją tutaj i zostawić filarowi wyłącznie `koperty na vouchery` i `koperty do voucherów` | [ ] |
+| 20 | Koperta na voucher — jaki format i kolor wybrać | Supporting article | koperta ozdobna na voucher | GEO | Właściciel salonu | F4 | Doradcza; filar F4 sprzedaje, ten wpis odpowiada na pytanie „jaka". **Granica po publikacji F4:** filar podaje wymiary trzech postaci bonu (DL / A6 / karta ID-1) i jeden fakt o kolorze — nadruk kosztuje tyle samo na każdym odcieniu, a o czytelności decyduje kontrast. Ten wpis dostaje dobór odcienia do branży i okazji oraz kiedy sięgnąć po metalik i perłę | [ ] |
 
 ### Tydzień 6
 
@@ -125,7 +125,7 @@ lub `personalized/` — buduj treść wokół zdjęcia, które faktycznie masz.
 | 21 | Koperty dla biur rachunkowych — `/koperty-dla-biur-rachunkowych` | Supporting LP | koperty firmowe z logo | KONWERSJA | Biura rachunkowe, audyt | F1 | Sprawozdania i korespondencja cykliczna; odróżnia się od poz. 17 sezonowością (zamknięcie roku) | [ ] |
 | 22 | Koperty dla klinik i gabinetów — `/koperty-dla-klinik` | Supporting LP | koperty na vouchery dla kliniki | KONWERSJA | Med. estetyczna, stomatologia | F4 | Jasne, „czyste" barwy; osobno od poz. 19 — inny cykl zakupowy i inny język | [ ] |
 | 23 | Koperty dla restauracji — `/koperty-dla-restauracji` | Supporting LP | koperty na vouchery do restauracji | KONWERSJA | Fine dining, winiarnie | F4 | Vouchery na kolacje; publikacja przed sezonem świątecznym | [ ] |
-| 24 | Bon podarunkowy — jak go wręczyć, żeby wyglądał jak prezent | Supporting article | koperta do vouchera | RUCH | Właściciel usługi | F4 | Poradnik prezentacyjny; poz. 20 dotyczy doboru koperty, ten — sposobu wręczenia | [ ] |
+| 24 | Bon podarunkowy — jak go wręczyć, żeby wyglądał jak prezent | Supporting article | ~~koperta do vouchera~~ → `jak wręczyć bon podarunkowy` | RUCH | Właściciel usługi | F4 | Poradnik prezentacyjny; poz. 20 dotyczy doboru koperty, ten — sposobu wręczenia. **Fraza główna przepisana 14 sierpnia 2026:** `koperta do vouchera` to liczba pojedyncza frazy filara `koperty do voucherów` — dwa adresy na tę samą intencję to kanibalizacja z definicji. Fraza zostaje przy F4 (jest w jego `keywords`), wpis celuje w intencję czynnościową | [ ] |
 
 ### Tydzień 7
 
@@ -134,7 +134,7 @@ lub `personalized/` — buduj treść wokół zdjęcia, które faktycznie masz.
 | 25 | Koperty dla agencji eventowych — `/koperty-dla-agencji-eventowych` | Supporting LP | koperty na zaproszenia firmowe | KONWERSJA | Agencje eventowe, PR | F1 | **Uwaga:** zaproszenia sugerują C6/K4 — treść prowadzi do DL (zaproszenia składane, programy), reszta jako „wkrótce" | [ ] |
 | 26 | Koperty dla biur nieruchomości — `/koperty-dla-nieruchomosci` | Supporting LP | koperty na dokumenty firmowe | KONWERSJA | Nieruchomości premium, deweloperzy | F1 | Akty i umowy; format DL naturalnie pasuje do dokumentów składanych | [ ] |
 | 27 | Koperty na certyfikaty i dyplomy — `/koperty-na-certyfikaty` | Supporting LP | koperty na certyfikaty | RUCH | Uczelnie, firmy szkoleniowe | F1 | **Ostrożnie:** dyplom A4 płaski wymaga K4 (niedostępny). Treść mówi wprost o A4 składanym na trzy i kieruje resztę na listę powiadomień | [ ] |
-| 28 | Realizacja: koperty z nadrukiem dla hotelu | Supporting article | koperty z nadrukiem firmowym | AUTORYTET | Hotele | F4 | Dowód wykonania na realnym zdjęciu; uzupełnia poz. 18 o warstwę E-E-A-T | [ ] |
+| 28 | Realizacja: koperty z nadrukiem dla hotelu | Supporting article | koperty z nadrukiem firmowym | AUTORYTET | Hotele | F4 | Dowód wykonania na realnym zdjęciu; uzupełnia poz. 18 o warstwę E-E-A-T. **Warunek wejścia dopisany 15 sierpnia 2026:** wpis powstaje wyłącznie na realnym zamówieniu, potwierdzonym przez właściciela — samo zdjęcie nadruku z `public/images/prints/` nie wystarczy, bo studium przypadku niesie też klienta, skalę i efekt. Bez tego pozycja idzie na `[—]`, jak poz. 47 | [ ] |
 
 ---
 
@@ -193,7 +193,7 @@ z **preselekcją koloru**.
 
 | # | Tytuł / URL | Format | Główna fraza | Cel | Persona / Branża | Filar | Uwagi (antykanibalizacja) | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 41 | Jak dobrać kopertę do zaproszeń | Aktualizacja | koperty na zaproszenia | RUCH | Eventy, ślub | F3 | Rozbudowa istniejącego wpisu o zapis na powiadomienie. **Nowej strony nie tworzymy — właściciel frazy już istnieje.** Link w górę do F3 (pole `pillar`) dodany przy poz. 3. **Tabeli dopasowań nie dublować** — stoi na F3; wpis zostaje przy doborze koperty do zaproszenia | [ ] |
+| 41 | Jak dobrać kopertę do zaproszeń | Supporting article | koperty na zaproszenia | RUCH | Eventy, ślub | F3 | **Format zmieniony z `Aktualizacja` na `Supporting article` 15 sierpnia 2026** — wpis startowy usunięty, fraza `koperty na zaproszenia` jest dziś **bez właściciela**, więc treść powstaje od zera z linkiem w górę do F3. Bez CTA zakupowego na C6/K4, konwersją jest zapis na powiadomienie. **Tabeli dopasowań nie dublować** — stoi na F3; wpis zostaje przy doborze koperty do zaproszenia | [ ] |
 | 42 | Koperty na zaproszenia ślubne — poradnik doboru | Supporting article | koperty na zaproszenia ślubne | RUCH | Para młoda, wedding planner | poz. 41 | Inna persona i inny słownik niż poz. 41 (firmowe/eventowe) — to jedyne, co uzasadnia osobny URL | [ ] |
 | 43 | Personalizowane koperty ślubne — adresowanie drukiem | Supporting article | personalizowane koperty slubne | KONWERSJA | Para młoda, wedding planner | F2 | **Jedyna pozycja ślubna z realnym CTA** — personalizacja działa dziś na DL | [ ] |
 | 44 | Koperty na pieniądze na ślub — format i kolor | Supporting article | koperty na pieniadze na slub | RUCH | Gość weselny, detal | `/koperty-na-pieniadze` | Wąska intencja okazjonalna; poz. 39 obsługuje ogólną | [ ] |
@@ -204,12 +204,568 @@ z **preselekcją koloru**.
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 45 | Faktura VAT i odroczony termin przy zamówieniu kopert | Supporting article | koperty firmowe faktura vat | KONWERSJA | Instytucje, jednostki budżetowe | F1 | Rozbraja barierę rozliczeniową — realna przewaga oferty, nieopisana nigdzie indziej | [ ] |
 | 46 | Koperty z nadrukiem od 10 sztuk — dlaczego jest minimum | Supporting article | koperty z nadrukiem od 10 sztuk | GEO | Małe firmy, pierwszy zakup | F1 | Odpowiedź na realną obiekcję; F1 podaje MOQ, ta pozycja je uzasadnia | [ ] |
-| 47 | Realizacja: 3 000 kopert DL dla kancelarii | Aktualizacja | koperty dla kancelarii | AUTORYTET | Kancelarie | `/koperty-dla-kancelarii` | Podlinkować w górę do LP z poz. 17 i uzupełnić o zdjęcia realizacji | [ ] |
+| 47 | ~~Realizacja: 3 000 kopert DL dla kancelarii~~ | Supporting article | koperty dla kancelarii | AUTORYTET | Kancelarie | `/koperty-dla-kancelarii` | **Wstrzymane 15 sierpnia 2026 — brak realizacji do opisania.** Wpis startowy opisywał klienta, jego problem z poprzednim dostawcą i efekt wdrożenia; właściciel potwierdził, że przykład był wymyślony, więc został usunięty. Pozycja wraca do planu **dopiero wtedy, gdy powstanie realne zamówienie**, na które właściciel da zgodę i zdjęcia. Do tego czasu autorytet w klastrze kancelaryjnym buduje wyłącznie LP z poz. 17 | [—] |
 | 48 | Przegląd kwartalny: audyt kanibalizacji i aktualizacja map | Aktualizacja | — | — | — | — | Przegląd `keywords.md` i `content-plan.md`, weryfikacja pozycji, kwalifikacja treści do przepisania lub scalenia | [ ] |
 
 ---
 
 ## Dziennik wdrożeń
+
+### 16 sierpnia 2026 — decyzja właściciela: ton treści i zamknięcie luki produktowej
+
+**Dwie rzeczy naraz, bo jedna wynikała z drugiej.**
+
+**1. Luka produktowa zamknięta — personalizacja ma teraz zakres.** Walidacja arkusza wymagała
+pełnego adresu w każdym wierszu, więc lista samych nazwisk nie przechodziła plikiem. Przy
+kilkuset imionach zostawało wklejanie do pola tekstowego, bez sprawdzenia liczby wpisów.
+
+Konfigurator zadaje teraz dwa pytania zamiast jednego: **co** ma stanąć na kopercie (pełny adres
+albo samo imię i nazwisko) i dopiero potem **jak** dane trafią do nas (ręcznie albo arkuszem).
+Zakres ustawia kolumny szablonu i pola wymagane w walidacji — jedno źródło prawdy
+`PERSONALIZATION_SCOPES` w `catalog.ts`, z którego korzystają generator XLSX, walidacja, obie
+tabele na F2 i wiersz specyfikacji. Wariant imienny nie ma pól adresowych, więc lista nazwisk
+przechodzi tą samą drogą co lista wysyłkowa.
+
+Dołożone przy okazji: licznik wierszy w trybie ręcznym (sygnalizuje różnicę wobec nakładu, nie
+blokuje — czasem ta sama treść ma iść na wszystkie koperty), `zakres` w `ConfigureLink`
+i w preselekcji z adresu, zakres widoczny w koszyku, panelu klienta, panelu admina i w mailu do
+produkcji. Helper `plural()` w `pricing.ts` — komunikaty pisały „3 wierszy" i „2 kopert".
+
+**2. Ton treści — przegląd całego serwisu.** Właściciel: treści brzmiały jak „rocket science
+wycenowo gramaturowo paletowo barwny". Diagnoza potwierdziła zarzut — cena występowała
+41 razy na F1 i 44 razy na F2, a parametry wracały w akapitach, które nie były o parametrach.
+
+Źródłem był brief, nie przypadek. Pkt 10.1.3 kazał zamieniać **każdy** przymiotnik na parametr
+(„przymiotnik bez liczby to zdanie do wykreślenia"), pkt 6.3 kazał nazywać encję jako
+„koperta DL 110 × 220 mm", a test końcowy kazał wstawiać liczby w miejsce usuniętych
+przymiotników. Zastosowane literalnie w każdym zdaniu dały dokładnie to, co właściciel odrzucił.
+
+Przepisane: karty branżowe na F1 (10), F2 (10) i F4 (10), karty zastosowań na `/` (6), leady
+wszystkich czterech filarów, wstępy sekcji kolorów na F1, F2 i F4, sekcja „Więcej o kopertach"
+na `/`, pięć metaopisów oraz cztery odpowiedzi FAQ. Zasada: **parametr ma jednego właściciela
+na stronie** — stoi w tabeli, pasku faktów, wierszu specyfikacji albo w leadzie, a proza wokół
+się do niego nie cofa. Tabele, cenniki i paski faktów zostały nietknięte; to tam liczby mają być.
+
+**Naprawione przy okazji.** Sekcja „Cennik" na `/` miała nagłówek „Wartość zamówienia kopert
+gładkich — przykłady" i zdanie „Poniższe kwoty dotyczą…", a pod nimi nie było żadnej tabeli —
+ten sam typ usterki co pusta luka po tabeli formatów opisana 14 sierpnia. Nagłówek i zapowiedź
+usunięte, treść scalona w dwa akapity.
+
+**Zmiany w briefie agenta** (`.claude/agents/seo-geo-strategist.md`), żeby błąd nie wrócił:
+przepisany pkt 10.1.3, trzy nowe zasady twarde (10–12: właściciel parametru, budżet jeden na
+akapit, sekcja mówi o rzeczy, a nie o cenniku rzeczy), przeredagowane pkt 6.2 i 6.3, nowa tabela
+„Kalibracja w drugą stronę — przeparametryzowanie" z czterema realnymi przykładami z tego
+przeglądu, cztery testy końcowe zamiast jednego (w tym test czytania na głos i test policzalny),
+limit konkretów w `description`. Usunięty też przykład w tabeli kalibracji, który pokazywał
+**wymyśloną realizację** („Kancelaria z Poznania zamawia kwartalnie 3 000 kopert") jako wzór do
+naśladowania — sprzeczny z pkt 4.1 i z decyzją przy poz. 47.
+
+**Treść, która przestała być prawdziwa.** Wpis z poz. 8 był zbudowany wokół zniesionego
+ograniczenia — jego oś brzmiała „arkusz nie przyjmie listy samych imion, więc idzie trybem
+ręcznym". Przepisane: lead, intro, sekcja „Pierwsze pytanie", obie tabele w tej sekcji, akapit
+o kontroli liczby wpisów i lista kontrolna. Nowa oś: zakres to pytanie osobne od trybu, a o trybie
+decyduje źródło danych. Podobnie dwie odpowiedzi w `PERSONALIZATION_FAQ_ITEMS` i jedna
+w `VOUCHER_FAQ_ITEMS`; doszło pytanie „Czy mogę zamówić koperty z samym imieniem, bez adresu?".
+
+Weryfikacja: `typecheck` i `build` bez błędów, 34/34 strony statycznie. Sześć przypadków
+walidacji sprawdzonych na działającym serwerze — lista nazwisk w wariancie imiennym przechodzi
+(200), ta sama lista w wariancie adresowym odrzucona (422), pełne adresy bez regresji, żądanie
+bez parametru `zakres` zachowuje się jak dotąd, kontrola liczby wierszy działa w obu wariantach,
+generator zwraca arkusz „Odbiorcy" z czterema kolumnami. W przeglądarce: preselekcja
+`?zakres=imiona` zaznacza właściwą kartę, link do szablonu niesie zakres, licznik wierszy
+odmienia się poprawnie (1 wiersz / 3 wiersze / 12 wierszy), konsola czysta. Metadane pięciu
+przepisanych tras w normie: title ≤ 57 znaków, description 141–156.
+
+### 16 sierpnia 2026 — poz. 8: `/blog/adresowanie-kopert-z-arkusza-czy-recznie` · **Faza 0 zamknięta**
+
+**Opublikowane.** Nowy wpis w `POSTS` (`src/lib/blog.ts`), prerenderowany pod
+`/blog/adresowanie-kopert-z-arkusza-czy-recznie`. Zakres dostawy: H1 + 8 sekcji H2, blok
+odpowiedzi GEO w leadzie, **trzy tabele faktów**, lista kontrolna na sześć pytań, kontekstowe CTA
+wchodzące do konfiguratora z `format=DL&personalizacja=1`, link w górę do filara F2 przez pole
+`pillar` (anchor `adresowanie kopert`). Tekst 1 407 słów, czas czytania 6 minut.
+
+**Oś wpisu to przesunięcie kryterium decyzji.** Filar F2 zestawia oba tryby **według skali**
+(„do 30 adresów" kontra „od 100 adresów"). Ten wpis odpowiada na pytanie, co zrobić, gdy sama
+liczba kopert niczego nie przesądza — i wskazuje dwa kryteria, których filar nie ma: **co ma
+stanąć na kopercie** oraz **gdzie te dane już są**. Zdanie otwierające sekcję pierwszą odsyła do
+filara wprost („zestawienie obu trybów według liczby adresów stoi na stronie oferty"), więc treść
+nie konkuruje z tabelą filara, tylko ją domyka.
+
+**Najmocniejszy fakt wpisu wyszedł z kodu walidacji, nie z copy.** `POST /api/personalizacja/
+walidacja` uznaje wiersz za wypełniony, gdy ma nazwisko **albo** ulicę, a następnie odrzuca cały
+plik, jeśli w którymkolwiek takim wierszu brakuje ulicy, kodu pocztowego lub miejscowości.
+Konsekwencja, której nie było napisanej nigdzie w serwisie: **arkusz nie przyjmie listy samych
+imion**, więc koperty wręczane do ręki (karty powitalne, dyplomy, bony) muszą iść trybem ręcznym.
+To jest jednocześnie oś sekcji „Pierwsze pytanie" i pierwszy, wiążący punkt listy kontrolnej.
+
+Z tego samego kodu wyszły trzy dalsze fakty do tabeli „Co zatrzymuje wgranie arkusza": czytamy
+**pierwszy arkusz w skoroszycie** (dane z drugiej zakładki są niewidoczne), nagłówki rozpoznajemy
+po słowach kluczowych (przemianowana kolumna przestaje być rozpoznawana), a wiersze ukryte
+filtrem liczą się razem z widocznymi.
+
+Antykanibalizacja:
+- **wobec F2 `/koperty-personalizowane`:** zero cen (2,58 / 2,99 / 5,57 zł), zero MOQ, zero progów
+  ilościowych 10 / 100 / 300 / 1 000 i zero tabeli kolumn arkusza. Wymagane pola adresowe padają
+  **raz, w jednym zdaniu i w roli skutku** („arkusz nie przyjmie wiersza bez adresu"), a nie jako
+  specyfikacja szablonu. Żaden H2 nie powtarza nagłówka z filara.
+- **wobec poz. 14 (wzór adresu od firmy):** wpis nie pokazuje układu adresu na kopercie ani
+  kolejności wierszy — mówi wyłącznie o tym, którą drogą dane do nas trafiają.
+- **wobec poz. 15 (jak przygotować listę):** zero instrukcji przygotowania eksportu, odmiany
+  nazwisk i ujednolicania zapisu. Zdanie „eksport wystarczy przenieść do szablonu" jest granicą,
+  za którą zaczyna się poz. 15.
+- **wobec poz. 16 (ekspres):** termin pojawia się w jednym zdaniu i w roli konsekwencji poprawek
+  („każda kolejna wersja przesuwa datę wysyłki"), bez liczby dni i bez dopłaty.
+- **`FAQPage` zostaje wyłącznie na filarze.** Wpis nie ma własnych danych `FAQPage`, mimo że dwie
+  sekcje mają formę pytań — zasada z poz. 7. Pytanie „W jaki sposób przekazać listę adresów do
+  zadrukowania?" w `PERSONALIZATION_FAQ_ITEMS` zostaje nietknięte.
+
+**Slug inny niż tytuł z planu — świadomie.** Plan zapowiadał
+`adresowanie-kopert-recznie-czy-z-arkusza` (tak nazywał się usunięty wpis startowy). Fraza
+docelowa brzmi jednak `adresowanie kopert z arkusza` i adres niesie ją teraz w całości.
+Stary adres zwraca **404** i tak zostaje: to treść usunięta 15 sierpnia bez odpowiednika
+w indeksie, więc nie ma czego przekierowywać (ta sama decyzja co przy pozostałych czterech
+wpisach startowych).
+
+Linkowanie w obie strony:
+- **do wpisu:** `/koperty-personalizowane` ×2 — akapit pod tabelą porównawczą dwóch trybów oraz
+  **przywrócona sekcja „Poradniki"**; `/` ×2 — karta usługi „Personalizacja i adresowanie"
+  i siatka blogowa; `/blog` — listing. Anchory kontekstowe brzmią `adresowanie kopert z arkusza
+  czy ręcznie`, czyli frazą wpisu, a nie frazą filara.
+- **z wpisu:** blok „Strona oferty" (pole `pillar`, anchor `adresowanie kopert`) oraz stopka.
+- Siatka blogowa na `/` ma teraz **dwie karty z trzech** — obserwacja z 15 sierpnia domknie się
+  przy poz. 9.
+
+**Sekcja „Poradniki" wróciła na F2** — była usunięta 15 sierpnia, bo wszystkie jej wpisy przepadły.
+Przy jednej pozycji renderuje **pojedynczą kartę `card card-lg`**, a nie siatkę: `grid grid-2`
+włącza się dopiero od drugiego wpisu, więc dziś nie ma pustych kolumn. Lista wypełni się przy
+poz. 14 i 15. Sekcja na `/koperty-dl` pozostaje usunięta — jej wpisy to poz. 10, 11 i 13.
+
+Zmiany w bibliotekach:
+- **`BlogTable` i pole `table` w `BlogSection`** (`blog.ts`) plus renderer w
+  `src/app/blog/[slug]/page.tsx`. Wpisy blogowe nie miały dotąd tabel, a tabela specyfikacji jest
+  najczęściej ekstrahowaną strukturą przez modele generatywne (brief pkt 6.4). Pierwsza kolumna
+  renderuje się jako `th[scope=row]`, komórki dostają `data-label`, więc na telefonie tabela
+  przechodzi w karty przez istniejącą klasę `m-cards` — bez nowego CSS-u.
+- **`image` w `articleJsonLd()`** (`seo.ts`). `Article` nie miał obrazu, choć obraz wyróżniający
+  jest w wytycznych Google warunkiem wyniku rozszerzonego. Wskazuje ten sam kadr co `og:image`,
+  z fallbackiem na zbiorczy obraz bloga — poprawka działa wstecz również dla poz. 7.
+- Wymagane pola adresowe i lista rozszerzeń arkusza czytane w treści wpisu
+  z `PERSONALIZATION_REQUIRED_COLUMNS` i `PERSONALIZATION_SHEET_EXTENSIONS_LABEL`, a nie wpisane
+  ręcznie: zmiana szablonu XLSX przepisuje akapit, tabelę i listę kontrolną razem z walidacją.
+
+**Nowy obraz wyróżniający** `public/images/og/blog-adresowanie-z-arkusza.jpg` (1200 × 630, 84 kB)
+w układzie pozostałych ośmiu kart OG — kadr `zastosowania/biala-perlowa-koperta-dl-adresowanie-
+odbiorcy` z realnym blokiem adresowym, ciemna płachta, nagłówek i dwa wiersze faktów.
+
+**Zdanie usunięte na etapie pisania:** pierwsza wersja mówiła, że plik jest odrzucany „w trzech
+sytuacjach". Walidacja zna ich więcej (pusty arkusz, plik nieczytelny), więc zamknięta lista
+byłaby nieprawdziwa — akapit wymienia teraz przypadki bez deklarowania ich liczby.
+
+Weryfikacja: `npm run typecheck` i `npm run build` bez błędów, **34/34 strony statycznie** (o jedną
+więcej niż przed publikacją), wpis prerenderowany (`● /blog/adresowanie-kopert-z-arkusza-czy-
+recznie`), obecny w `sitemap.xml` z `lastModified` 2026-08-16. `title` 52 znaki, `description`
+148 znaków, jeden `<h1>`, 8 `<h2>` treściowych, 3 tabele z 34 komórkami opisanymi `data-label`,
+JSON-LD `Article` + `BreadcrumbList` (**bez `FAQPage`**), `Article.image` wskazuje na nowy kadr OG.
+CTA prowadzi do `/?format=DL&personalizacja=1#konfigurator`. Serwer produkcyjny zwraca 200 dla
+wpisu i dla wszystkich stron, na których dołożono linki; stary slug zwraca 404.
+**Podglądu w przeglądarce nie było** — w tej sesji nie było dostępnego narzędzia podglądu, więc
+render sprawdzony na HTML-u z serwera produkcyjnego (treść i tabele obecne bez JS).
+
+### 15 sierpnia 2026 — `prints/` i `personalized/`: domknięcie blokady wagi zdjęć
+
+**Wykonane.** 38 plików PNG (**20,21 MB**) → **1,21 MB** w 114 plikach WebP w trzech
+szerokościach, **94 % mniej**. Mastery w `.data/source-images/prints/`
+i `.data/source-images/personalized/`.
+
+**Nazwy w liczbie mnogiej, spójne z `colors/`,** wyprowadzone z `COLORS[].name`:
+`czarne-koperty-z-nadrukiem-dl-320.webp`, `czarne-koperty-personalizowane-dl-320.webp`.
+Fraza produktowa w nazwie odpowiada frazie głównej filara — K1 „koperty z nadrukiem",
+K2 „koperty personalizowane". Stare nazwy były niespójne nawet między sobą:
+`jasnoniebieski-dl-koperta-z-nadrukiem` kontra
+`jasnoniebieski-lupkowy-dl-koperta-z-personalizacja`, `jasnozielony-` kontra `jasnozielona-`.
+
+**Znalezione przy okazji — alt opisywał coś, czego na zdjęciu nie ma.** Kadry z `prints/`
+**nie pokazują logo**: na przedniej ściance stoi symbol grafiki oznaczający pole nadruku.
+`buildImageAlt` mówił „z nadrukiem logo firmowego", a dwie strony pisały o „odcieniach,
+w których wykonaliśmy nadruk". Użytkownik Grafiki Google zobaczyłby po kliknięciu co innego
+niż w opisie. Alt opisuje teraz zaznaczone pole nadruku, a treść mówi wprost, że logo klienta
+trafia w to miejsce po akceptacji wizualizacji.
+
+**Druga nieaktualna obietnica.** Oba filary miały zdanie „Pozostałe kolory — między innymi
+Złoty, Srebrna Perłowa i Szarobrązowy — również przyjmują nadruk", odsyłające do palety.
+Wszystkie 19 odcieni ma dziś własny kadr w obu katalogach, więc „pozostałe kolory" był zbiorem
+pustym, a odsyłacz kierował donikąd. Zastąpione zdaniem o tym, że nadruk przyjmuje cała paleta
+w tej samej cenie. Na `/koperty-na-vouchery` zdanie zostaje — tam siatka jest celowo węższa
+(6 wybranych odcieni z `VOUCHER_COLOR_IDS`), więc „pozostałe kolory" nadal ma desygnat.
+
+Weryfikacja: `typecheck` i `build` bez błędów (33/33 statycznie), zero martwych referencji
+do starych nazw, zero PNG-ów w obu katalogach. W przeglądarce `/koperty-z-nadrukiem` i
+`/koperty-personalizowane` renderują po 19 kadrów, każdy pobiera wariant **320 px**, zero
+nieudanych żądań, konsola czysta.
+
+**Wynik łączny trzech katalogów: 30,8 MB → 2,1 MB.** Strona główna pobiera dziś
+**197 kB obrazów** (41 zasobów, wszystkie załadowane) zamiast ~9 MB odnotowanych w blokadzie.
+
+### 15 sierpnia 2026 — katalog kolorów, alty i obrazy wyróżniające dla wyszukiwarek
+
+**Wykonane, część 1 — `public/images/colors/`.** 19 plików PNG po 400–740 kB
+(**10,55 MB**) zamienione na WebP w trzech szerokościach 320 / 640 / 1200 px: **660 kB
+w 57 plikach**, czyli **95 % mniej mimo trzech wariantów zamiast jednego**. Wszystko przy
+jakości 84, żaden kadr nie musiał zejść niżej. Mastery w `.data/source-images/colors/`,
+razem z `Envelopes.psd`, który leżał w katalogu serwowanym.
+
+**Nazwy wzięte z `COLORS[].name`, nie z `id`.** To była realna luka: plik nazywał się
+`blekit-lupkowy-koperta-dl.png`, a kolor jest sprzedawany jako **Jeansowy**; `taupe-…`
+to **Szarobrązowy**. Nazwa pliku opisywała wewnętrzny identyfikator, a nie frazę, której
+klient szuka. Nowa konwencja: **`<kolor>-koperty-ozdobne-dl-<szerokość>.webp`** — kolor w formie
+zgodnej z nazwą katalogową, fraza główna klastra K3 w nazwie pliku.
+
+**Liczba mnoga, nie pojedyncza** (decyzja właściciela). Plan celuje we frazy w liczbie mnogiej —
+„czarne koperty z logo", „granatowe koperty dl" (poz. 29–36) — a kadr katalogowy pokazuje
+**dwie** koperty, więc `koperty` opisuje go dokładniej niż `koperta` i zgadza się z altem
+(„Dwie koperty ozdobne DL…"). Formy uzgodnione z rzeczownikiem `koperty`; nazwy nieodmienne
+(Matcha, Ecru, Eko) zostają bez zmian.
+
+**Jeden wyjątek: `ciemnozielony`.** Nazwa katalogowa „Butelkowa Zieleń" jest frazą
+rzeczownikową i nie ma formy uzgadniającej się z `koperty` — `butelkowa-zielen-koperty-…`
+czytałoby się jak sklejka dwóch mianowników. Plik nazywa się `ciemnozielone-koperty-ozdobne-dl`:
+przymiotnik z `id` jest tu zarazem poprawny gramatycznie i bliższy temu, jak ten kolor jest
+wyszukiwany. To jedyne miejsce, w którym nazwa pliku odchodzi od nazwy katalogowej, i jedyne,
+w którym odejście jest uzasadnione.
+
+**Odrzucone przy okazji: dosypanie przymiotników do nazw plików**
+(`…-premium-prostokatna-elegancka`). „Premium" i „eleganckie koperty premium" to klaster **K6**
+z docelowym URL-em `/koperty-premium`, a „koperta prostokątna" należy do K4 i jest już obsłużona
+akapitem na `/koperty-dl` (`keywords.md`). Wstawienie ich do 19 nazw plików na stronie głównej
+byłoby kanibalizacją dwóch klastrów naraz i keyword stuffingiem (brief pkt 4.3), a identyczny
+ogon w każdej nazwie odbierałby plikom to, do czego nazwa faktycznie służy — rozróżnialność.
+
+**`srcSet` wpięty w komponenty, bo bez tego oszczędność byłaby pozorna.** Swatch
+w konfiguratorze ma **202 px** i pobierał plik **1200 px** — dziewiętnaście razy na jednym
+ekranie. Teraz pobiera wariant 320 px (2 kB). `EnvelopePlaceholder` dostał `sizes` policzone
+z siatki czterokolumnowej. `colorImageSrcSet()` zwraca `undefined` dla adresów spoza
+konwencji, więc zdjęcia z `prints/` i `personalized/` przechodzą przez ten sam komponent
+bez wyjątków w kodzie wywołującym.
+
+**`buildImageAlt` przepisany.** Poprzedni alt („Koperta ozdobna, format DL, kolor czarny")
+był poprawny, ale nie odróżniał tego zdjęcia od żadnego innego zdjęcia koperty w tym kolorze.
+Nowy opisuje kadr — dwie koperty na białym tle, widok klapki i tylnej ścianki — i dokłada
+gramaturę oraz wykończenie z katalogu. Nazwa koloru stoi **po dwukropku, w mianowniku**:
+odmiana wymagałaby mapy przypadków, bo `COLORS[].name` miesza rodzaje (Czarny, Szara, Matcha,
+Butelkowa Zieleń, Ecru) i żadna pojedyncza końcówka nie jest poprawna dla wszystkich.
+
+**Wykonane, część 2 — obrazy wyróżniające.** Audyt wykazał, że **żadna trasa w serwisie nie
+miała `og:image`**, mimo zadeklarowanej karty `summary_large_image`. Podgląd odnośnika
+w wyszukiwarce, na Facebooku, LinkedInie i w komunikatorach renderował się jako goły tekst.
+
+Osiem kadrów **1200 × 630** (proporcja 1,91:1 wymagana przez dużą kartę) w `public/images/og/`,
+łącznie 904 kB. Każdy to zdjęcie produktowe z gradientem, nazwą sekcji, nagłówkiem i dwoma
+wierszami faktów. **Liczby na obrazach czytane są z `pricing.ts` i `catalog.ts`** przez skrypt
+generujący — obraz OG siedzi w cache'u Facebooka długo po zmianie cennika, więc wpisana ręcznie
+cena rozjechałaby się trwale i niewidocznie. Strona główna dostała siatkę sześciu kolorów
+zamiast jednego zdjęcia, bo „19 kolorów w jednej cenie" to jedyny komunikat, który odróżnia
+ją od filarów, a pojedynczy kadr tego nie powie.
+
+Domyślny obraz stoi w `layout.tsx`, więc trasa bez własnej deklaracji nie wychodzi z pustą kartą.
+Wpisy blogowe dostały pola `ogImageSlug` i `ogImageAlt` z fallbackiem na kadr listy blogowej.
+
+**Metadane doprowadzone do normy na wszystkich ośmiu trasach publicznych** — wcześniej cztery
+były poza progami wyświetlania:
+
+| Trasa | Było | Jest |
+| --- | --- | --- |
+| `/koperty-dl` | title 65 zn., desc 163 zn. | 48 / 154 |
+| `/blog` | title 68 zn. | 52 |
+| `/koperty-z-nadrukiem` | title 61 zn., desc 157 zn. | 54 / 151 |
+| `/kontakt` | desc 97 zn., OG bez opisu | 155, OG z opisem i progiem wyceny |
+
+**Poprawione przy okazji.** Opis `/blog` obiecywał „realizacje klientów" — wpisy tego typu
+zostały z bloga usunięte 15 sierpnia. Zapowiadanie w wyniku wyszukiwania treści, której na
+stronie nie ma, to obietnica bez pokrycia i najkrótsza droga do powrotu do wyników.
+
+Weryfikacja: `typecheck` i `build` bez błędów (33/33 statycznie). W przeglądarce wszystkie
+19 swatchy pobiera wariant **320 px** zamiast 1200 px, zero nieudanych żądań, stare nazwy
+zwracają 404 i nie ma do nich referencji w kodzie. Wszystkie 8 tras ma `og:image`
+i `twitter:image`, title ≤ 60 znaków i description w przedziale 140–156.
+
+**Blokada „zdjęcia produktowe to PNG po 0,5–0,75 MB" — częściowo zamknięta.** `colors/`
+zeszło z 10,55 MB do 660 kB. **Otwarte zostają `prints/` (5,9 MB) i `personalized/` (6,0 MB)** —
+dwanaście megabajtów w PNG, ładowane na stronie głównej i na dwóch filarach. Ta sama ścieżka
+co przy `colors/` załatwi je bez zmian w komponentach, bo `colorImageSrcSet()` jest już wpięty
+i zacznie zwracać `srcSet`, gdy tylko pliki wejdą w konwencję.
+
+### 15 sierpnia 2026 — 15 zdjęć aranżacyjnych: `public/images/zastosowania/`
+
+**Wykonane.** Właściciel wrzucił 15 plików roboczych (`1.jpg`…`15.png`, 44 MB) do
+`public/images/new-images/`. Przeprowadzone przez pełną ścieżkę z pkt 5.6 briefu.
+
+**Kolor katalogowy ustalony pomiarem, nie na oko.** Dla każdego kadru policzona mediana barwy
+centralnego wycinka w przestrzeni Lab i porównana z tak samo zmierzonymi zdjęciami
+z `public/images/colors/`. Pomiar rozstrzygnął dwa przypadki, w których oko myli się
+systematycznie: `11.png` to **Niebieski**, nie Granatowy (ΔE 6,5 vs 21,2), a `15.png` odwrotnie —
+**Granatowy** (ΔE 4,4). Trzy biele (`2`, `8`, `12`) pomiar wskazał jako Biały, ale zbliżenie
+pokazało wyraźne ziarno perłowe, więc weszły jako **Biała Perłowa** — pomiar rozstrzyga odcień,
+nie wykończenie.
+
+**Optymalizacja.** 44 MB → **1,72 MB** w 30 plikach WebP (dwie szerokości do `srcSet`).
+Jakość dobierana adaptacyjnie pod budżet z briefu: wszystkie warianty 1024 px ≤ 120 kB
+(najcięższy 117 kB), wszystkie 512 px ≤ 30 kB. Mastery przeniesione do
+`.data/source-images/zastosowania/` (`.data` jest w `.gitignore`) — `public/images/new-images/`
+nie istnieje.
+
+**Dlaczego osobny katalog, a nie `catalog.ts`.** Cztery odcienie z tych kadrów nie mają dziś
+zdjęcia z nadrukiem w katalogu (Biała Perłowa, Złoty, Szarobrązowy, Eko), więc kusiło, żeby
+dopisać je do `printImages`. Świadomie nie: te pliki mają tło z drewna, marmuru i trawy, a
+`printImages` zasila podgląd w konfiguratorze i swatch koloru, gdzie tło zaburzyłoby ocenę
+papieru. Kadry aranżacyjne żyją w `src/lib/showcase.ts` i służą wyłącznie treści.
+
+**Rozmieszczenie** — 19 miejsc, 15 unikalnych plików (4 współdzielone przez F1 i F4):
+
+| Strona | Kadry | Miejsce |
+| --- | --- | --- |
+| `/koperty-z-nadrukiem` | 8 branżowych + 1 pole nadruku | nowa sekcja `#przyklady`; kadr z polem nadruku przy akapicie o marginesie bezpiecznym |
+| `/koperty-personalizowane` | 3 | pod kartami „Co drukujemy", w tej samej kolejności co karty |
+| `/koperty-na-vouchery` | 4 (współdzielone z F1) | H3 w sekcji `#kolory` |
+| `/` | 3 okolicznościowe | H3 w sekcji `#zastosowania` |
+
+**Każdy kadr jest odnośnikiem do konfiguratora** przez `ConfigureLink` z preselekcją koloru
+i usługi — ciągłość intencji z pkt 7, a nie dekoracja.
+
+**Nazwy firm na nadrukach są przykładowe** (Kancelaria Prawna Tomasz Wiśniewski, LUNA SPA,
+ROGI Steakhouse, ZIARNO i inne). Wszystkie trzy galerie mają pod spodem zdanie mówiące to
+wprost, a treść nigdzie nie nazywa ich realizacjami. Podpisanie ich jako zrealizowanych
+zamówień powtórzyłoby błąd z `realizacja-3000-kopert-dl-dla-kancelarii` (pkt 4.1).
+**Poz. 28 i 47 planu nadal wymagają realnego zamówienia** — te zdjęcia ich nie odblokowują.
+
+**Naprawione przy okazji — podwójny ukośnik we wszystkich adresach kanonicznych.**
+`.env.local` ma `NEXT_PUBLIC_SITE_URL=https://envelopes.pl/` z ukośnikiem na końcu, a każde
+użycie stałej ma postać `${SITE_URL}/ścieżka`. Efekt: `https://envelopes.pl//koperty-dl`
+w sitemapie, w `robots.host`, w `image` danych strukturalnych, w linkach e-mail i w adresach
+powrotnych Przelewy24 — dla wyszukiwarki inny adres niż kanoniczny. `SITE_URL` ucina teraz
+końcowe ukośniki, więc poprawność nie zależy od zapisu zmiennej na środowisku.
+
+Weryfikacja: `typecheck` i `build` bez błędów (33/33 stron statycznie), 15/15 kadrów ma oba
+warianty na dysku i zero plików bez wpisu w kodzie, wszystkie 4 strony renderują zdjęcia
+serwerowo (alty obecne w HTML bez JS). W przeglądarce kolumna gridu ma 268 px i pobiera
+wariant **512w** (24 kB), kadr 562 px pobiera **1024w** — `sizes` policzone poprawnie.
+Boksy rezerwują miejsce przed pobraniem (jawne `width`/`height` + `aspect-ratio`), zero CLS,
+konsola bez błędów.
+
+**Blokada „zdjęcia produktowe to PNG po 0,5–0,75 MB" pozostaje otwarta** — dotyczy starych
+plików w `colors/`, `prints/` i `personalized/`, których ta zmiana nie ruszała.
+
+### 15 sierpnia 2026 — decyzja właściciela: czystka treści startowych na blogu
+
+**Wykonane.** Z `POSTS` w `src/lib/blog.ts` usunięto **pięć wpisów z pierwszego commita**
+(`27fe674`), postawionych po to, żeby blog nie był pusty. Na blogu zostaje jeden wpis —
+`jak-przygotowac-pliki-do-druku-na-kopertach` z poz. 7, przepisany dzień wcześniej.
+
+Usunięte: `jak-dobrac-koperte-do-zaproszen-firmowych`, `adresowanie-kopert-recznie-czy-z-arkusza`,
+`paleta-19-kolorow-jak-wybrac-odcien-do-identyfikacji-firmy`,
+`realizacja-3000-kopert-dl-dla-kancelarii`, `ekspresowa-realizacja-2-dni-robocze`.
+
+**Powód (decyzja właściciela).** Treści powstały przed strategią i nie realizują żadnej z jej
+zasad: brak bloku odpowiedzi GEO, brak tabel faktów, brak FAQ, liczby wpisane ręcznie zamiast
+czytanych z `pricing.ts`, przymiotniki zamiast parametrów. Plan traktował je jako pozycje
+`Aktualizacja`, ale przepisanie ich od zera kosztuje tyle samo co napisanie nowych, a niesie
+dodatkowy koszt: trzymanie się cudzej struktury.
+
+**Osobny powód przy jednej pozycji.** `realizacja-3000-kopert-dl-dla-kancelarii` opisywała
+klienta, jego problem z poprzednim dostawcą i efekt wdrożenia. Właściciel potwierdził, że
+przykład był **wymyślony**. To narusza pkt 4.1 briefu wprost i wypadłoby niezależnie od
+jakości tekstu. Poz. 47 idzie na status `[—]` do czasu realnego zamówienia; poz. 28 (realizacja
+dla hotelu) dostała ten sam warunek wejścia, zanim ktokolwiek zacznie ją pisać.
+
+**Pięć pozycji planu zmieniło format z `Aktualizacja` na `Supporting article`** — 8, 12, 16, 41
+oraz 47 (ta ostatnia dodatkowo wstrzymana). Nie ma już czego aktualizować; każda z nich powstaje
+od zera pod intencję opisaną w kolumnie „Uwagi". **Kadencja i horyzont planu bez zmian** — liczba
+pozycji się nie zmieniła, zmienił się nakład na pięciu z nich.
+
+**Fraza bez właściciela.** `koperty na zaproszenia` (K9) straciła jedyną stronę, która na nią
+celowała. Do czasu poz. 41 klaster zaproszeniowy nie ma w serwisie żadnej treści. Zapisane
+w `keywords.md` przy K4 i K9, żeby nie wypłynęło jako „luka" przy najbliższym audycie.
+
+Sprzątanie po stronie kodu — **17 martwych referencji na 5 stronach ofertowych**. Każde wywołanie
+`getPost()` było osłonięte `{post && …}`, więc build nie protestował, ale strony po cichu
+gubiłyby całe akapity:
+- `/` — 5 akapitów kontekstowych i 5 deklaracji `getPost` (zostaje `filesPost`),
+- `/koperty-z-nadrukiem` — akapit o ekspresie, `relatedPosts` skrócone do jednego wpisu,
+- `/koperty-na-vouchery` — akapit o kolorach i o ekspresie, `relatedPosts` do jednego wpisu,
+- `/koperty-personalizowane` i `/koperty-dl` — **cała sekcja „Poradniki" usunięta**, bo wszystkie
+  jej wpisy przepadły. Wraca z poz. 8, 14, 15 (F2) oraz 10, 11, 13 (F3). Osierocone importy
+  `getPost` i `BlogPost` skasowane.
+
+**Naprawione przy okazji.** Sekcja „Powiązane wpisy" w `src/app/blog/[slug]/page.tsx` nie miała
+osłony na pustą listę — przy jednym wpisie na blogu `getRelatedPosts()` zwraca `[]`, więc strona
+renderowałaby nagłówek nad pustą siatką. Nagłówek stoi teraz pod warunkiem `related.length > 0`.
+
+**Przekierowań nie zakładaliśmy.** Pięć adresów zwraca 404 i tak ma zostać: to treść usunięta
+bez odpowiednika, a domena nie ma historii w indeksie, więc nie ma czego przenosić. 308 na
+stronę zastępczą byłby przekierowaniem na treść o innej intencji — sygnał gorszy niż 404.
+Przekierowanie z poz. 7 (stary slug wpisu o plikach) zostaje, bo tam odpowiednik istnieje.
+
+Weryfikacja: `npm run typecheck` i `npm run build` bez błędów. Prerender zawiera **zero**
+odwołań do pięciu usuniętych slugów, `sitemap.xml` wymienia jeden wpis blogowy
+(`/blog/jak-przygotowac-pliki-do-druku-na-kopertach`), wszystkie cztery filary i `/` budują się
+statycznie. **Do obserwacji:** sekcja „Blog" na `/` renderuje dziś jedną kartę w siatce
+trzykolumnowej — wypełni się przy poz. 9 i 10.
+
+### 15 sierpnia 2026 — poz. 7: poradnik plikowy `/blog/jak-przygotowac-pliki-do-druku-na-kopertach`
+
+**Przepisane w całości.** Wpis `koperty-firmowe-z-nadrukiem-co-przygotowac-przed-zamowieniem`
+zmienił tytuł, adres i wszystkie sekcje. Był poradnikiem o zamawianiu kopert z nadrukiem —
+czyli treścią konkurującą z filarem F1 o intencję transakcyjną. Jest poradnikiem o jednej
+czynności: przygotowaniu pliku, który przejdzie akceptację wizualizacji za pierwszym razem.
+
+Zakres dostawy: H1 + 8 sekcji H2, blok odpowiedzi GEO w leadzie (rozstrzyga cztery warunki
+w pierwszych dwóch zdaniach), przelicznik milimetry → piksele z trzema przykładami, dwie listy
+wypunktowane w treści i lista kontrolna na osiem punktów, kontekstowe CTA wchodzące do
+konfiguratora z `format=DL&nadruk=1`. Tekst 1 151 słów, czas czytania 6 minut.
+
+**Oś wpisu to jedno rozróżnienie:** filar odpowiada na pytanie „jakie pliki przyjmujemy",
+ten wpis na pytanie „jak ten plik przygotować". Wszystko, co jest ceną, terminem albo progiem
+ilościowym, zostało z niego usunięte.
+
+Antykanibalizacja:
+- **wobec F1 `/koperty-z-nadrukiem`:** zero cen (2,58 / 1,99 / 4,57 zł), zero MOQ, zero tabeli
+  terminów. Fakt o terminie pojawia się w jednym zdaniu i w innej roli niż na filarze — jako
+  konsekwencja jakości pliku („termin zaczyna biec od akceptacji wizualizacji"), a nie jako
+  parametr oferty. Nagłówki nie powtarzają żadnego H2 filara.
+- **wobec poz. 9 (cennik nadruku):** wpis nie podaje ani jednej kwoty, więc pozycja 9 wchodzi
+  na czyste pole.
+- **wobec poz. 46 (MOQ od 10 sztuk):** próg ilościowy nie pada we wpisie ani razu.
+- **wobec F3 `/koperty-dl`:** jedyne odwołanie do geometrii to nazwa formatu z wymiarem
+  (`koperta DL 110 × 220 mm`) w jednym zdaniu, bez tabeli dopasowań i bez opisu wkładek.
+- **`FAQPage` zostaje wyłącznie na filarze.** Wpis nie dostaje własnych danych `FAQPage`, mimo
+  że sekcje mają formę pytań — dwa adresy nie mogą konkurować o ten sam wynik rozszerzony.
+  Pytanie „Jakie pliki przyjmujemy do nadruku na kopertach?" w `PRINT_FAQ_ITEMS` zostaje
+  nietknięte.
+
+**Zmiana adresu (decyzja podjęta przy tej pozycji).** Stary slug niósł frazę
+`koperty firmowe z nadrukiem` — wspierającą klastra K1, której właścicielem jest filar. Adres
+to sygnał, którego nie da się zneutralizować treścią, więc slug zmieniliśmy na
+`jak-przygotowac-pliki-do-druku-na-kopertach`. Przekierowanie 308 stoi w `next.config.mjs`
+(pierwsze `redirects()` w projekcie). Domena nie ma historii, więc koszt zmiany jest dziś
+zerowy — za trzy miesiące nie byłby.
+
+**Naprawione trzy anchory prowadzące do wpisu.** `/`, `/koperty-z-nadrukiem`
+i `/koperty-na-vouchery` linkowały do niego anchorami „co przygotować przed zamówieniem kopert
+z nadrukiem" i „koperty firmowe z nadrukiem — co przygotować przed zamówieniem". Trzy strony
+wzmacniały wpis dokładnie na tej frazie, którą miał oddać filarowi. Anchor brzmi teraz
+`jak przygotować pliki do druku na kopertach` na wszystkich trzech.
+
+Zmiany w bibliotekach:
+- `PRINT_SAFE_MARGIN_MM` i `PRINT_MIN_DPI` w `catalog.ts` — margines nadruku i minimalna
+  rozdzielczość były wpisane liczbą w siedmiu miejscach (`faq.ts` ×2, F1 ×2, F2 ×2, F3 ×1).
+  Poradnik opisuje te wartości najdokładniej w całym serwisie, więc rozjazd byłby najbardziej
+  widoczny właśnie z niego. Komentarz przy stałej ostrzega, że `PRINT_SAFE_MARGIN_MM` (margines
+  nadruku) i `INSERT_CLEARANCE_MM` (zapas dla wkładki) to dwie różne wielkości, dziś przypadkiem
+  równe 5 mm.
+- `BlogCta` i pola `ctaConfigure` oraz `imageVariant` w `BlogPost`. CTA wpisu prowadziło do
+  `/#konfigurator` z etykietą „Zamów koperty" — konfigurator otwierał się pusty, mimo że
+  czytelnik przyszedł z gotowym plikiem logo. Teraz wchodzi z `format=DL&nadruk=1` i etykietą
+  „Wgraj plik i wyceń nadruk”. `imageVariant` podmienia kadr nagłówkowy na realne zdjęcie
+  koperty z nadrukiem (`/images/prints/biala-dl-koperta-z-nadrukiem.png`) z własnym tekstem
+  alternatywnym z `buildImageAlt`. Oba pola są opcjonalne — pozostałe wpisy działają bez zmian.
+- Podział przyjmowanych rozszerzeń na wektorowe i rastrowe liczony w `blog.ts`
+  z `PRINT_FILE_EXTENSIONS`, a nie wypisany ręcznie: dopisanie formatu do uploadu przepisuje
+  treść poradnika razem z walidacją.
+
+**Liczby w treści są liczone, nie wpisane.** Przelicznik rozdzielczości (60 mm → 709 px,
+1 200 px → 102 mm, logo ze strony 200–400 px → 17–34 mm) powstaje z `PRINT_MIN_DPI` i stałej
+25,4 mm/cal. Zmiana wymaganej rozdzielczości przepisuje trzy akapity, listę kontrolną, lead
+i `description` jednocześnie.
+
+**Zdanie usunięte na etapie pisania:** pierwsza wersja twierdziła, że brak krzywych jest
+„najczęstszą przyczyną poprawek". Nie mamy danych, które by to potwierdzały — akapit opisuje
+teraz mechanizm (podmiana kroju tam, gdzie czcionki nie ma w systemie), a nie częstotliwość.
+
+Weryfikacja: `npm run typecheck` i `npm run build` bez błędów, wpis prerenderowany
+(`● /blog/jak-przygotowac-pliki-do-druku-na-kopertach`), obecny w `sitemap.xml`
+z `lastModified` z pola `updated`, stary slug zniknął z sitemapy i z HTML wszystkich stron.
+`title` 55 znaków, `description` 147 znaków, jeden `<h1>`, 8 `<h2>` treściowych,
+`Article` z `dateModified` 2026-08-15, zdjęcie nagłówkowe z nadrukiem i altem „Koperta ozdobna,
+format DL, kolor biały, z nadrukiem logo firmowego", CTA prowadzi do
+`/?format=DL&nadruk=1#konfigurator`.
+
+### 14 sierpnia 2026 — poz. 4: filar F4 `/koperty-na-vouchery` (klaster K7) · **Faza 0 zamknięta**
+
+**Opublikowane.** Trasa `src/app/koperty-na-vouchery/page.tsx` (SSR, prerender statyczny).
+Zakres dostawy: H1 + 11 sekcji H2, blok odpowiedzi GEO w leadzie, trzy karty argumentacyjne
+„po co koperta", **tabela kosztu gotowej serii bonów** (3 konfiguracje × 4 nakłady + wiersz
+ceny jednostkowej), trzy karty postaci bonu z wymiarami, sześć kolorów ze zdjęciami nadruku,
+dwie karty usług, sekcja „Dla kogo" z 10 branżami, tabela terminów, blok rozliczenia B2B,
+proces w czterech krokach, FAQ na 6 pytań, osiem CTA kontekstowych. Wszystkie 15 wejść do
+konfiguratora ustawia `format=DL`, trzynaście z nich dodatkowo `nadruk=1`.
+
+**Oś strony to jedno zdanie:** bon drukowany na jednej trzeciej arkusza A4 — 99 × 210 mm —
+wchodzi do koperty DL płasko, bez zaginania. Wszystko inne jest jego rozwinięciem.
+
+Dane strukturalne: `Product` + `AggregateOffer`, `FAQPage`, `HowTo`, `BreadcrumbList`;
+`Organization` dochodzi globalnie z `layout.tsx` — pięć bloków w HTML.
+**Dlaczego `AggregateOffer`, a nie pojedynczy `Offer` jak na F1:** bon pakuje się w trzech
+realnych konfiguracjach — koperta gładka (2,58 zł), z nadrukiem logo (4,57 zł) oraz z logo
+i imieniem obdarowanego (7,56 zł). Podanie jednej ceny wymagałoby przemilczenia dwóch
+pozostałych. Widełki 2,58–7,56 zł są jednocześnie węższe niż na `/` (tam górna granica 9,06 zł
+obejmuje dopłatę ekspresową) i szersze niż na F1 (tam jedna konfiguracja). Ekspres do widełek
+nie wchodzi, bo jest opcją terminu, a nie wariantem produktu. **`HowTo` zaczyna się przed
+zamówieniem** — krok 1 to ustalenie wymiaru bonu, nie konfiguracja koperty; to odróżnia go od
+trzech pozostałych procesów w serwisie.
+
+Antykanibalizacja:
+- **wobec F1 `/koperty-z-nadrukiem`:** zero rozbicia ceny nadruku na czynniki. Tabela liczy
+  **gotowe konfiguracje razy nakład** (10 / 25 / 50 / 100 bonów), F1 liczy składniki ceny
+  jednostkowej i nakłady 10 / 100 / 500 / 1 000. Inna oś, inne progi, inne pytanie
+  użytkownika: „ile mnie wyjdzie seria bonów" kontra „z czego składa się cena nadruku".
+  Odesłanie do F1 stoi wprost pod tabelą.
+- **wobec F3 `/koperty-dl`:** zero tabeli dopasowań wkładek i zero sekcji o wymiarach formatu.
+  F4 podaje wymiary **trzech postaci bonu** (DL 99 × 210, A6 105 × 148, karta ID-1 85,6 × 54)
+  i odsyła po pełną tabelę dziesięciu wkładek do F3.
+- **wobec F2 `/koperty-personalizowane`:** personalizacja to jedna karta z ceną jednostkową
+  i linkiem; specyfikacja arkusza adresowego zostaje na F2.
+- **wobec `/`:** F4 nie ma palety kolorów ani cennika kopert gładkich. Sześć kolorów pokazujemy
+  ze zdjęciami nadruku i z podpisem **cenowym** (`4,57 zł brutto/szt.`), a nie gramaturowym
+  jak F1 — inny podpis, węższy wybór, inne pytanie.
+- **wobec poz. 18, 19, 22, 23 (LP branżowe) oraz 20 i 24 (wpisy doradcze):** filar mówi do
+  wszystkich dziesięciu branż po jednym akapicie i celuje we frazę usługową. Zawężenie do
+  branży i doradztwo „jaki kolor wybrać" należą do stron wspierających — granice dopisane
+  w kolumnie „Uwagi" przy każdej z tych pozycji.
+- `VOUCHER_FAQ_ITEMS` **nie zawiera pytania cenowego ani pytania o MOQ** — oba mają odpowiedź
+  na F1. Cena jest na stronie w leadzie, pasku faktów i tabeli, ale nie w `FAQPage`.
+
+**Dwie korekty planu wykonane przy tej pozycji:**
+1. Poz. 24 miała frazę główną `koperta do vouchera`, czyli liczbę pojedynczą frazy filara
+   `koperty do voucherów`. Dwa adresy na tę samą intencję to kanibalizacja z definicji —
+   fraza zostaje przy F4 (jest w jego `keywords`), a wpis dostaje intencję czynnościową
+   „jak wręczyć bon podarunkowy".
+2. Fraza `koperty na bony podarunkowe` siedzi dziś w `keywords` filara jako wariant
+   nazewniczy. Przy publikacji poz. 19 (`/koperty-dla-salonow-spa`) trzeba ją stamtąd zabrać —
+   zapisane w uwagach do tej pozycji, żeby nie wypłynęło to dopiero w Search Console.
+
+Linkowanie w obie strony:
+- **do filara:** stopka (sekcja „Sklep"), strona główna (akapit pod siatką zastosowań —
+  anchor `koperty na vouchery`), filar F1 (akapit pod sekcją „Dla kogo"), filar F2 (karta
+  „Samo imię i nazwisko"), filar F3 (akapit pod tabelą dopasowań, przy wierszu z voucherem).
+  **Nawigacji nie ruszaliśmy** — pasek celowo nie zawiera stron ofertowych.
+- **z filara:** `/koperty-dl`, `/koperty-z-nadrukiem`, `/koperty-personalizowane`, `/#kolory`,
+  `/kontakt#wycena` oraz wpisy `paleta-19-kolorow-…`,
+  `koperty-firmowe-z-nadrukiem-co-przygotowac-…` i `ekspresowa-realizacja-2-dni-robocze`.
+
+Zmiany w bibliotekach: `VOUCHER_FAQ_ITEMS` w `faq.ts`; `voucherEnvelopeProductJsonLd()`
+w `seo.ts`. **Żadnego nowego pola w katalogu** — wymiary bonu, kartki A6 i karty ID-1 to
+wartości normatywne opisane w treści, a nie parametry naszej oferty.
+
+**Tytuł skrócony na etapie weryfikacji:** wersja „Koperty na vouchery i bony podarunkowe od
+10 szt." miała z sufiksem marki 61 znaków. Wybraliśmy pełne dopasowanie frazy zamiast MOQ —
+liczby niesie `description`.
+
+Weryfikacja: `npm run typecheck` i `npm run build` bez błędów, trasa prerenderowana statycznie
+(`○ /koperty-na-vouchery`), obecna w `sitemap.xml`, pięć bloków JSON-LD renderuje się
+serwerowo (`AggregateOffer` 2.58–7.56 PLN, `offerCount` 19, `minValue` 1, `FAQPage` 6 pytań,
+`HowTo` 4 kroki), `title` 50 znaków, `description` 142 znaki, jeden `<h1>`, 11 `<h2>`,
+7 unikalnych tekstów alternatywnych, 15 wejść do konfiguratora — **żadne nie ustawia formatu
+C6 ani K4**. Serwer produkcyjny zwraca 200 dla `/koperty-na-vouchery` i dla wszystkich stron,
+na których dołożono linki przychodzące.
 
 ### 14 sierpnia 2026 — decyzja właściciela: filary znikają z paska nawigacji
 
@@ -463,7 +1019,8 @@ z konfiguracją „Koperta DL Czarny z nadrukiem", 4,57 zł/szt.
 | ~~Dane rejestrowe zastępcze~~ | **Odblokowane.** `CONTACT_DETAILS` zawiera realne dane (JDG, NIP 6972414844, REGON, adres, telefon, rachunek) | — |
 | Brak analityki (GA4 / GSC) | Cel „wejścia do konfiguratora" niemierzalny; priorytety opierają się na intencji, nie na danych | Wdrożenie zapowiedziane |
 | Formaty C6 i K4 `disabled` | Klaster ślubny (K9) bez CTA zakupowego; poz. 27 ograniczona do A4 składanego | Właściciel — uruchomienie formatów |
-| Zdjęcia produktowe to PNG po 0,5–0,75 MB, serwowane przez `<img>` bez `next/image` | Strona główna pobiera ~9 MB obrazów; realne ryzyko dla LCP i pozycji. Doraźnie założono `loading="lazy"`, ale to nie zmniejsza wagi plików | Właściciel — konwersja do WebP/AVIF albo przejście na `next/image` |
+| ~~Zdjęcia produktowe to PNG po 0,5–0,75 MB~~ | **Odblokowane 15 sierpnia 2026.** `colors/`, `prints/` i `personalized/` przeszły na WebP w trzech szerokościach: **30,8 MB → 2,1 MB**. Strona główna pobiera dziś **197 kB** obrazów zamiast ~9 MB | — |
+| Kadry hero w `public/images/` nadal w PNG | `Hero Envelopes Robocze.png` 2,99 MB, `koperta-gorna/dolna.png` 0,7 MB. Hero ma już warianty WebP w `srcSet`, więc PNG-i są najprawdopodobniej nieużywanymi źródłami — do weryfikacji przed usunięciem | Właściciel — potwierdzenie, czy pliki są jeszcze potrzebne |
 | Profile FB / Instagram / LinkedIn | `Organization.sameAs` pusty do czasu utworzenia | Właściciel — po założeniu przekazać adresy |
 
 ---

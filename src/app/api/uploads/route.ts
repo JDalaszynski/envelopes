@@ -8,7 +8,7 @@ export const runtime = 'nodejs';
 const ALLOWED: Record<FilePurpose, string[]> = {
   nadruk: PRINT_FILE_EXTENSIONS,
   personalizacja: ['xlsx', 'xls', 'csv'],
-  wizualizacja: ['pdf', 'png', 'jpg', 'jpeg', 'svg'],
+  wizualizacja: ['pdf', 'png', 'jpg', 'jpeg', 'webp', 'svg'],
 };
 
 /** POST — przyjmuje plik i zapisuje go w Firebase Storage. */

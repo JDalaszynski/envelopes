@@ -29,14 +29,18 @@ export async function storeFile(
 
   const bucket = getBucket();
   if (bucket) {
-    const blob = bucket.file(objectPath);
-    await blob.save(buffer, { contentType: file.type || 'application/octet-stream' });
-    // Podpisany URL ważny 7 dni — pliki nie są publiczne
-    const [url] = await blob.getSignedUrl({
-      action: 'read',
-      expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
-    });
-    return { id, name: file.name, size: file.size, ext, path: objectPath, url, status: 'przeslano' };
+    try {
+      const blob = bucket.file(objectPath);
+      await blob.save(buffer, { contentType: file.type || 'application/octet-stream' });
+      // Podpisany URL ważny 7 dni — pliki nie są publiczne
+      const [url] = await blob.getSignedUrl({
+        action: 'read',
+        expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+      });
+      return { id, name: file.name, size: file.size, ext, path: objectPath, url, status: 'przeslano' };
+    } catch (err) {
+      console.warn('[storage] Błąd zapisu w Firebase Storage, próbuję zapisu lokalnego:', err);
+    }
   }
 
   const target = path.join(UPLOAD_DIR, objectPath);

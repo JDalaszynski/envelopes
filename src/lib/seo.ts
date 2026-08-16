@@ -1,6 +1,7 @@
 import { CONTACT_DETAILS } from './orders';
 import { DEFAULT_PRICING, DELIVERY_COST, round2 } from './pricing';
 import { AVAILABLE_FORMATS, COLORS, FORMATS, FORMAT_MAP, maxInsertSize } from './catalog';
+import { INDUSTRY_SHOTS, PERSONALIZATION_SHOTS, showcaseSrc } from './showcase';
 import type { BlogPost } from './blog';
 
 /** Dane strukturalne JSON-LD (pkt 8.3). */
@@ -14,7 +15,34 @@ import type { BlogPost } from './blog';
  * Do pracy lokalnej ustaw `NEXT_PUBLIC_SITE_URL=http://localhost:3000`
  * w `.env.local` — inaczej webhook P24 pojedzie na produkcję.
  */
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://envelopes.pl';
+/*
+ * Końcowy ukośnik jest ucinany, bo **każde** użycie tej stałej ma postać
+ * `${SITE_URL}/ścieżka`. Wartość `https://envelopes.pl/` dawała adresy
+ * z podwójnym ukośnikiem (`https://envelopes.pl//koperty-dl`) w sitemapie,
+ * w `robots.host`, w `image` danych strukturalnych, w linkach e-mail
+ * i w adresach powrotnych Przelewy24. Dla wyszukiwarki to inny adres niż
+ * kanoniczny, więc normalizujemy w jednym miejscu zamiast pilnować zapisu
+ * zmiennej na każdym środowisku osobno.
+ */
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://envelopes.pl').replace(
+  /\/+$/,
+  ''
+);
+
+/**
+ * Obraz wyróżniający dla karty w wynikach wyszukiwania i w podglądzie
+ * odnośnika (`summary_large_image`, Facebook, LinkedIn, komunikatory).
+ *
+ * Pliki leżą w `public/images/og/` w proporcji 1,91:1 — wymaganej przez duży
+ * podgląd. Kwadratowe zdjęcia produktowe są w tej karcie przycinane w pionie,
+ * więc kadr OG komponujemy osobno, zamiast wskazywać zdjęcie z katalogu.
+ *
+ * Adres podajemy względny: `metadataBase` w `layout.tsx` rozwija go do adresu
+ * bezwzględnego, którego wymagają crawlery społecznościowe.
+ */
+export function ogImage(slug: string, alt: string) {
+  return { url: `/images/og/${slug}.jpg`, width: 1200, height: 630, alt };
+}
 
 export function organizationJsonLd() {
   return {
@@ -164,15 +192,21 @@ export function colorPaletteJsonLd() {
  *
  * Cena jest liczona z `DEFAULT_PRICING`, czyli z tego samego źródła, z którego
  * strona renderuje cennik — dane strukturalne nie mogą rozjechać się z treścią
- * widoczną dla użytkownika. `image` wskazuje wyłącznie na realne zdjęcia
- * kopert z nadrukiem z `public/images/prints/`.
+ * widoczną dla użytkownika. `image` łączy dwa zestawy: zdjęcia produktowe
+ * na białym tle z `public/images/prints/` i kadry aranżacyjne
+ * z `public/images/zastosowania/`. Oba pokazują ten sam produkt w dwóch
+ * ujęciach, a nie dwa różne produkty — Google honoruje wiele obrazów
+ * przy jednym `Product` i wybiera kadr sam.
  */
 export function printedEnvelopeProductJsonLd() {
   const unitPrice = round2(DEFAULT_PRICING.base.DL + DEFAULT_PRICING.print);
   const url = `${SITE_URL}/koperty-z-nadrukiem`;
-  const images = COLORS.filter((color) => color.printImages?.DL)
-    .slice(0, 6)
-    .map((color) => `${SITE_URL}${color.printImages?.DL}`);
+  const images = [
+    ...COLORS.filter((color) => color.printImages?.DL)
+      .slice(0, 6)
+      .map((color) => `${SITE_URL}${color.printImages?.DL}`),
+    ...INDUSTRY_SHOTS.map((shot) => `${SITE_URL}${showcaseSrc(shot)}`),
+  ];
 
   return {
     '@context': 'https://schema.org',
@@ -318,15 +352,19 @@ export function envelopeFormatsJsonLd() {
  * niezgodnym z tym, co widzi użytkownik w konfiguratorze i na fakturze.
  *
  * Cena to koperta + personalizacja, liczone z `DEFAULT_PRICING`.
- * `image` wskazuje wyłącznie na realne zdjęcia kopert z personalizacją
- * z `public/images/personalized/`.
+ * `image` łączy zdjęcia produktowe z `public/images/personalized/` z kadrami
+ * aranżacyjnymi z `public/images/zastosowania/` — te drugie pokazują realny
+ * układ nadrukowanych danych na kopercie, czego kadr na białym tle nie niesie.
  */
 export function personalizedEnvelopeProductJsonLd() {
   const unitPrice = round2(DEFAULT_PRICING.base.DL + DEFAULT_PRICING.personalization);
   const url = `${SITE_URL}/koperty-personalizowane`;
-  const images = COLORS.filter((color) => color.personalizedImages?.DL)
-    .slice(0, 6)
-    .map((color) => `${SITE_URL}${color.personalizedImages?.DL}`);
+  const images = [
+    ...COLORS.filter((color) => color.personalizedImages?.DL)
+      .slice(0, 6)
+      .map((color) => `${SITE_URL}${color.personalizedImages?.DL}`),
+    ...PERSONALIZATION_SHOTS.map((shot) => `${SITE_URL}${showcaseSrc(shot)}`),
+  ];
 
   return {
     '@context': 'https://schema.org',
@@ -350,6 +388,75 @@ export function personalizedEnvelopeProductJsonLd() {
       eligibleQuantity: {
         '@type': 'QuantitativeValue',
         minValue: DEFAULT_PRICING.moqWithPrint,
+        unitCode: 'C62',
+      },
+      shippingDetails: {
+        '@type': 'OfferShippingDetails',
+        shippingRate: {
+          '@type': 'MonetaryAmount',
+          value: DELIVERY_COST.toFixed(2),
+          currency: 'PLN',
+        },
+        shippingDestination: {
+          '@type': 'DefinedRegion',
+          addressCountry: 'PL',
+        },
+      },
+      seller: { '@type': 'Organization', name: 'Envelopes' },
+    },
+  };
+}
+
+/**
+ * Product + AggregateOffer dla filara „Koperty na vouchery" (/koperty-na-vouchery).
+ *
+ * Widełki zamiast pojedynczej ceny są tu decyzją merytoryczną, nie stylistyczną.
+ * Bon pakuje się w trzech konfiguracjach i wszystkie trzy są realne: koperta
+ * gładka w kolorze marki, koperta z nadrukiem logo oraz koperta z logo
+ * i imieniem obdarowanego. Podanie jednej ceny wymagałoby wybrania jednej
+ * z nich i przemilczenia dwóch pozostałych.
+ *
+ * Rozgraniczenie z sąsiadami: `productJsonLd()` na `/` opisuje cały katalog
+ * (widełki do 9,06 zł, bo obejmują dopłatę ekspresową), a
+ * `printedEnvelopeProductJsonLd()` na F1 — jedną konfigurację z nadrukiem
+ * (4,57 zł). Tutaj zakres jest węższy niż na `/` i szerszy niż na F1, bo
+ * odpowiada zestawowi konfiguracji sensownych pod voucher. Ekspres do widełek
+ * nie wchodzi: to opcja terminu, a nie wariant produktu.
+ */
+export function voucherEnvelopeProductJsonLd() {
+  const lowPrice = DEFAULT_PRICING.base.DL;
+  const highPrice = round2(
+    DEFAULT_PRICING.base.DL + DEFAULT_PRICING.print + DEFAULT_PRICING.personalization
+  );
+  const url = `${SITE_URL}/koperty-na-vouchery`;
+  const images = COLORS.filter((color) => color.printImages?.DL)
+    .slice(0, 6)
+    .map((color) => `${SITE_URL}${color.printImages?.DL}`);
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: 'Koperty DL na vouchery i bony podarunkowe',
+    description: `Koperty ozdobne DL ${FORMAT_MAP.DL.dimensions} do pakowania bonów podarunkowych i voucherów na usługi. Voucher drukowany na jednej trzeciej arkusza A4, czyli 99 × 210 mm, wchodzi płasko, bez zaginania. Dostępne w ${COLORS.length} kolorach, opcjonalnie z nadrukiem logo firmy i z imieniem obdarowanego. Minimalna ilość ${DEFAULT_PRICING.moqWithPrint} sztuk przy nadruku, ${DEFAULT_PRICING.moqWithoutPrint} sztuka bez nadruku.`,
+    brand: { '@type': 'Brand', name: 'Envelopes' },
+    category: 'Koperty na vouchery i bony podarunkowe',
+    material: 'Papier ozdobny 115–140 g/m²',
+    size: FORMAT_MAP.DL.dimensions,
+    image: images,
+    url,
+    offers: {
+      '@type': 'AggregateOffer',
+      priceCurrency: 'PLN',
+      lowPrice: lowPrice.toFixed(2),
+      highPrice: highPrice.toFixed(2),
+      offerCount: COLORS.length,
+      availability: 'https://schema.org/InStock',
+      itemCondition: 'https://schema.org/NewCondition',
+      url,
+      areaServed: 'PL',
+      eligibleQuantity: {
+        '@type': 'QuantitativeValue',
+        minValue: DEFAULT_PRICING.moqWithoutPrint,
         unitCode: 'C62',
       },
       shippingDetails: {
@@ -408,6 +515,12 @@ export function articleJsonLd(post: BlogPost) {
     '@type': 'Article',
     headline: post.title,
     description: post.lead,
+    /* Obraz wyróżniający jest w wytycznych Google warunkiem wyniku
+       rozszerzonego dla `Article`. Wskazujemy ten sam kadr, który idzie
+       w `og:image`, żeby wynik wyszukiwania i podgląd odnośnika pokazywały
+       jedno zdjęcie; wpis bez własnego kadru dziedziczy zbiorczy obraz bloga.
+       Adres bezwzględny, bo dane strukturalne nie mają `metadataBase`. */
+    image: [`${SITE_URL}${ogImage(post.ogImageSlug ?? 'blog', post.title).url}`],
     datePublished: post.date,
     dateModified: post.updated ?? post.date,
     author: { '@type': 'Organization', name: 'Envelopes' },

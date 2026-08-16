@@ -8,6 +8,8 @@ import {
   PRINT_FILE_EXTENSIONS_LABEL,
   PRINT_FILE_MAX_BYTES,
   PRINT_FILE_MAX_COUNT,
+  PRINT_MIN_DPI,
+  PRINT_SAFE_MARGIN_MM,
   UPCOMING_FORMATS,
   fitsInFormat,
   maxInsertSize,
@@ -76,7 +78,7 @@ export const FAQ_ITEMS: FaqItem[] = [
   {
     question: 'Czy wystawiacie faktury VAT i fakturę z odroczonym terminem?',
     answer:
-      'Do każdego zamówienia wystawiamy fakturę VAT, także przy zakupie bez numeru NIP. Płatność fakturą z odroczonym terminem 14 dni jest dostępna przy każdym zamówieniu — z myślą o instytucjach i jednostkach budżetowych, których obieg zakupowy nie przewiduje przedpłaty. Produkcja rusza wtedy bez oczekiwania na wpłatę.',
+      'Do każdego zamówienia wystawiamy fakturę VAT, także przy zakupie bez numeru NIP. Płatność fakturą z odroczonym terminem 14 dni jest dostępna dla instytucji publicznych i urzędów, których obieg zakupowy nie przewiduje przedpłaty — produkcja rusza wtedy bez oczekiwania na wpłatę. Pozostali klienci płacą z góry: BLIK-iem, kartą lub przelewem.',
   },
   {
     question: 'Mam zamówienie na dużą ilość — jak je wycenić?',
@@ -123,7 +125,7 @@ export const PRINT_FAQ_ITEMS: FaqItem[] = [
   },
   {
     question: 'Jakie pliki przyjmujemy do nadruku na kopertach?',
-    answer: `Przyjmujemy pliki ${PRINT_FILE_EXTENSIONS_LABEL} — do ${PRINT_FILE_MAX_MB} MB każdy, maksymalnie ${PRINT_FILE_MAX_COUNT} załączniki na zamówienie. Rekomendujemy plik wektorowy z czcionkami zamienionymi na krzywe. Plik rastrowy powinien mieć co najmniej 300 dpi w docelowym rozmiarze nadruku, a grafika — 5 mm marginesu od krawędzi koperty.`,
+    answer: `Przyjmujemy pliki ${PRINT_FILE_EXTENSIONS_LABEL} — do ${PRINT_FILE_MAX_MB} MB każdy, maksymalnie ${PRINT_FILE_MAX_COUNT} załączniki na zamówienie. Rekomendujemy plik wektorowy z czcionkami zamienionymi na krzywe. Plik rastrowy powinien mieć co najmniej ${PRINT_MIN_DPI} dpi w docelowym rozmiarze nadruku, a grafika — ${PRINT_SAFE_MARGIN_MM} mm marginesu od krawędzi koperty.`,
   },
   {
     question: 'Czy zobaczę projekt przed drukiem kopert?',
@@ -192,7 +194,7 @@ export const DL_FAQ_ITEMS: FaqItem[] = [
   },
   {
     question: 'Czy koperty DL mają okienko adresowe?',
-    answer: 'Nie. Wszystkie koperty DL w Envelopes są bez okienka adresowego — przednia ścianka jest jednolitą płaszczyzną papieru barwionego w masie. Dane odbiorcy drukujemy wprost na papierze albo pozostawiamy kopertę gładką. Brak okienka oznacza też, że nadruk logo może objąć całą przednią ściankę z zachowaniem 5 mm marginesu od krawędzi.',
+    answer: `Nie. Wszystkie koperty DL w Envelopes są bez okienka adresowego — przednia ścianka jest jednolitą płaszczyzną papieru barwionego w masie. Dane odbiorcy drukujemy wprost na papierze albo pozostawiamy kopertę gładką. Brak okienka oznacza też, że nadruk logo może objąć całą przednią ściankę z zachowaniem ${PRINT_SAFE_MARGIN_MM} mm marginesu od krawędzi.`,
   },
   {
     question: 'Czy w kopercie DL zmieści się banknot?',
@@ -228,7 +230,7 @@ const PRINTED_PERSONALIZED_DL = calculatePrice({
   shippingSpeed: 'standard',
 });
 
-/** Wymagane kolumny arkusza wypisane zdaniem: „ulica i numer, kod pocztowy…". */
+/** Pola wymagane w szablonie wysyłkowym: „ulica i numer, kod pocztowy…". */
 const REQUIRED_COLUMNS_LABEL = PERSONALIZATION_REQUIRED_COLUMNS.map((column) =>
   column.label.toLowerCase()
 ).join(', ');
@@ -255,11 +257,16 @@ export const PERSONALIZATION_FAQ_ITEMS: FaqItem[] = [
   },
   {
     question: 'W jaki sposób przekazać listę adresów do zadrukowania?',
-    answer: `Dane przekazują Państwo na dwa sposoby. Pierwszy: wpisanie treści wprost w konfiguratorze — wygodne przy krótkim tekście i kilkudziesięciu kopertach. Drugi: pobranie szablonu Excel, który konfigurator generuje z liczbą wierszy równą zamówionej ilości kopert, i wgranie uzupełnionego pliku z powrotem. Przyjmujemy pliki ${PERSONALIZATION_SHEET_EXTENSIONS_LABEL}, a liczba wypełnionych wierszy musi zgadzać się z liczbą zamówionych kopert.`,
+    answer: `Dane przekazują Państwo na dwa sposoby. Pierwszy: wpisanie treści wprost w konfiguratorze — wygodne przy krótkiej liście, która nigdzie jeszcze nie istnieje. Drugi: pobranie szablonu, który konfigurator generuje z liczbą wierszy równą zamówionej ilości kopert, i wgranie uzupełnionego pliku z powrotem. Przyjmujemy pliki ${PERSONALIZATION_SHEET_EXTENSIONS_LABEL}, a liczba wypełnionych wierszy musi zgadzać się z liczbą zamówionych kopert.`,
   },
   {
-    question: 'Jakie dane są wymagane w arkuszu adresowym?',
-    answer: `W każdym wierszu wymagamy trzech pól: ${REQUIRED_COLUMNS_LABEL}. Odbiorcę identyfikuje imię i nazwisko albo nazwa firmy — wystarczy jedno z nich, ale wiersz bez obu traktujemy jako pusty. Kolumny „Firma (opcjonalnie)" i „Kraj" można zostawić bez zmian. Braki wychwytujemy przy wgrywaniu pliku i wskazujemy liczbę niekompletnych wierszy, zanim zamówienie trafi do produkcji.`,
+    question: 'Czy mogę zamówić koperty z samym imieniem, bez adresu?',
+    answer:
+      'Tak. Przy włączaniu personalizacji wskazują Państwo, co ma stanąć na kopercie: pełny adres pocztowy albo samo imię i nazwisko. Wybór ustawia kolumny szablonu, więc lista bez adresów przechodzi tą samą drogą co lista wysyłkowa — nie trzeba przepisywać jej do pola tekstowego ani dopisywać adresów, których nikt nie użyje. Wariant imienny wybierają najczęściej hotele, szkoły i salony wręczające bony do ręki.',
+  },
+  {
+    question: 'Jakie dane są wymagane w arkuszu?',
+    answer: `To zależy od tego, co ma stanąć na kopercie. W szablonie wysyłkowym każdy wypełniony wiersz musi mieć komplet pól adresowych: ${REQUIRED_COLUMNS_LABEL}. W szablonie imiennym pól adresowych po prostu nie ma — wymagane jest wyłącznie imię i nazwisko, a firma, stanowisko i dodatkowa linia są opcjonalne. Braki wychwytujemy przy wgrywaniu pliku i podajemy liczbę niekompletnych wierszy, zanim zamówienie trafi do produkcji.`,
   },
   {
     question: 'Ile trwa realizacja kopert z personalizacją?',
@@ -269,5 +276,65 @@ export const PERSONALIZATION_FAQ_ITEMS: FaqItem[] = [
     question: 'Czy zobaczę projekt personalizowanej koperty przed drukiem?',
     answer:
       'Tak. Po złożeniu zamówienia z personalizacją nasz grafik przygotowuje wizualizację koperty z danymi odbiorcy i przesyła ją e-mailem. Zamówienie czeka w statusie „Czeka na akceptację" do momentu, aż zatwierdzą Państwo projekt. Tekst odtwarzamy dokładnie w postaci, w jakiej został przekazany — literówka w arkuszu zostanie wydrukowana, dlatego akceptacja wizualizacji jest ostatnim momentem na korektę.',
+  },
+];
+
+/* ── FAQ filara „Koperty na vouchery" (/koperty-na-vouchery) ──────────── */
+
+/** Koperta DL z nadrukiem logo i z personalizacją imieniem obdarowanego. */
+const VOUCHER_PRINTED = calculatePrice({
+  format: 'DL',
+  color: '',
+  quantity: 1,
+  print: true,
+  printFiles: [],
+  personalization: false,
+  shippingSpeed: 'standard',
+});
+
+/** Wymiar bonu drukowanego na jednej trzeciej arkusza A4. */
+const VOUCHER_INSERT = { width: 99, height: 210 };
+
+/**
+ * Pytania o pakowanie bonów podarunkowych — klaster K7 (keywords.md).
+ *
+ * Zakres jest rozdzielony z trzema pozostałymi zestawami:
+ * `FAQ_ITEMS` (`/`) odpowiada na pytania o produkt i zakup, `PRINT_FAQ_ITEMS`
+ * (F1) na pytania drukarskie i o MOQ, `DL_FAQ_ITEMS` (F3) na pytania
+ * o geometrię formatu. Tutaj wyłącznie pytania, które zadaje właściciel
+ * usługi sprzedającej bon: w co go zapakować, czy logo jest konieczne, czy
+ * da się dopisać imię obdarowanego i kiedy zamówić przed sezonem.
+ *
+ * Świadomie **nie ma tu pytania „ile kosztuje koperta z nadrukiem"** — to
+ * odpowiedź filara K1 i dwa adresy nie mogą konkurować o ten sam wynik
+ * rozszerzony. Cena jest na stronie w leadzie, pasku faktów i tabeli
+ * scenariuszy, ale nie w danych `FAQPage`.
+ */
+export const VOUCHER_FAQ_ITEMS: FaqItem[] = [
+  {
+    question: 'W jakiej kopercie wręczyć voucher?',
+    answer: `Najwygodniej w kopercie dopasowanej do wymiaru wydruku. Bon drukowany na jednej trzeciej arkusza A4, czyli ${VOUCHER_INSERT.width} × ${VOUCHER_INSERT.height} mm, wchodzi do koperty DL płasko, bez zaginania — a zgięty bon wygląda jak wydruk, nie jak prezent. Kolor koperty warto dobrać do identyfikacji salonu; wszystkie odcienie kosztują tyle samo, więc nie ma tu kompromisu między marką a budżetem.`,
+  },
+  {
+    question: 'Czym różni się bon podarunkowy od vouchera?',
+    answer:
+      'W praktyce handlowej obie nazwy używane są zamiennie i oznaczają dokument uprawniający okaziciela do odbioru towaru lub usługi. Rozróżnienie bywa umowne: „voucher" częściej opisuje prawo do konkretnej usługi — zabiegu, kolacji, sesji zdjęciowej — a „bon podarunkowy" kwotę do wykorzystania na dowolną usługę w cenniku. Z punktu widzenia pakowania nie ma między nimi różnicy: oba są wydrukiem na papierze i oba wręcza się w kopercie.',
+  },
+  {
+    question: 'Czy koperta na voucher musi mieć nadruk logo?',
+    answer: `Nie musi — sama koperta w kolorze marki robi już większość roboty, a gładkie zamawiają Państwo od ${DEFAULT_PRICING.moqWithoutPrint} sztuki i bez czekania na produkcję. Nadruk dokłada jedno: nazwa salonu jest widoczna, zanim koperta zostanie otwarta, i zostaje w domu obdarowanego razem z bonem. Przy bonach kupowanych na prezent to często jedyny ślad marki, który tam dociera.`,
+  },
+  {
+    question: 'Czy na kopercie z bonem można nadrukować imię obdarowanego?',
+    answer:
+      'Tak, i przy bonach jest to najczęstszy wybór — koperta idzie do ręki, więc adres byłby zbędny. Przy włączaniu personalizacji wskazują Państwo wariant „samo imię i nazwisko", a listę obdarowanych przekazują arkuszem albo wpisują wprost w konfiguratorze. Imię można połączyć z logo salonu; obie rzeczy drukujemy w jednym przebiegu.',
+  },
+  {
+    question: 'Kiedy zamówić koperty na bony przed sezonem świątecznym?',
+    answer: `Termin liczymy wstecz od dnia, w którym bony mają trafić do sprzedaży. Koperty z nadrukiem wysyłamy w ${DEFAULT_PRICING.leadDaysStandard} dni roboczych, a w trybie ekspresowym w ${DEFAULT_PRICING.leadDaysExpress} dni robocze za dopłatą ${formatPrice(DEFAULT_PRICING.express)} brutto od sztuki. Do tego dochodzą dwa warunki, od których w ogóle zaczynamy liczyć: zaksięgowana wpłata i zaakceptowana wizualizacja. Koperty gładkie idą w ${DEFAULT_PRICING.leadDaysPlain} dni robocze, bo nie przechodzą przez produkcję.`,
+  },
+  {
+    question: 'Czy koperty na vouchery można zamówić w kilku kolorach naraz?',
+    answer: `Tak. Każdy kolor konfigurują Państwo osobno i dodają do koszyka jako oddzielną pozycję — jedno zamówienie może obejmować dowolnie wiele kolorów. Minimalna ilość ${DEFAULT_PRICING.moqWithPrint} sztuk dotyczy pojedynczej pozycji z nadrukiem, więc trzy kolory z logo to minimum ${3 * DEFAULT_PRICING.moqWithPrint} kopert. Dostawę ${formatPrice(DELIVERY_COST)} brutto naliczamy raz na całe zamówienie, niezależnie od liczby pozycji.`,
   },
 ];

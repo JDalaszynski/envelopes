@@ -1,4 +1,4 @@
-import type { FormatId } from './catalog';
+import type { FormatId, PersonalizationScope } from './catalog';
 
 /** Czas realizacji (Krok 6 konfiguratora) */
 export type ShippingSpeed = 'standard' | 'ekspres';
@@ -37,6 +37,8 @@ export interface EnvelopeConfig {
   printFiles: UploadedFile[];
   printNotes?: string;
   personalization: boolean;
+  /** Co drukujemy — pełny adres pocztowy czy samo imię i nazwisko */
+  personalizationScope?: PersonalizationScope;
   personalizationMethod?: PersonalizationMethod;
   /**
    * Treść personalizacji wpisana ręcznie — dowolny tekst, nie sztywny
@@ -76,6 +78,7 @@ export type OrderStatus =
   | 'w_trakcie'
   | 'czeka_na_akceptacje'
   | 'do_druku'
+  | 'gotowe_do_wysylki'
   | 'zrealizowane'
   | 'anulowane';
 

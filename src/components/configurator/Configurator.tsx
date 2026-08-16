@@ -4,8 +4,10 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
+import { ConfigProgress } from '@/components/configurator/ConfigProgress';
+import type { StepNumber } from '@/components/configurator/ConfigProgress';
 import { SummaryBar } from '@/components/configurator/SummaryBar';
-import { VisualizationNotice } from '@/components/configurator/VisualizationNotice';
+
 import { StepFormat } from '@/components/configurator/steps/StepFormat';
 import { StepColor } from '@/components/configurator/steps/StepColor';
 import { StepPrint } from '@/components/configurator/steps/StepPrint';
@@ -13,8 +15,13 @@ import { StepPersonalization } from '@/components/configurator/steps/StepPersona
 import { useCart, EDIT_KEY } from '@/components/providers/CartProvider';
 
 import { calculatePrice, minimumQuantity } from '@/lib/pricing';
-import { COLOR_MAP, FORMAT_MAP } from '@/lib/catalog';
-import type { FormatId } from '@/lib/catalog';
+import {
+  COLOR_MAP,
+  DEFAULT_PERSONALIZATION_SCOPE,
+  FORMAT_MAP,
+  PERSONALIZATION_SCOPES,
+} from '@/lib/catalog';
+import type { FormatId, PersonalizationScope } from '@/lib/catalog';
 import type { EnvelopeConfig } from '@/lib/types';
 
 const DEFAULT_CONFIG: EnvelopeConfig = {
@@ -25,6 +32,7 @@ const DEFAULT_CONFIG: EnvelopeConfig = {
   printFiles: [],
   printNotes: '',
   personalization: false,
+  personalizationScope: DEFAULT_PERSONALIZATION_SCOPE,
   personalizationMethod: undefined,
   personalizationText: '',
   personalizationFile: null,
@@ -43,6 +51,7 @@ interface Preselect {
   step?: number;
   print?: boolean;
   personalization?: boolean;
+  personalizationScope?: PersonalizationScope;
 }
 
 export function Configurator() {
@@ -76,6 +85,9 @@ export function Configurator() {
       const format =
         detail.format && !FORMAT_MAP[detail.format]?.disabled ? detail.format : undefined;
       const color = detail.color && COLOR_MAP[detail.color] ? detail.color : undefined;
+      const scope = PERSONALIZATION_SCOPES.some((option) => option.id === detail.personalizationScope)
+        ? detail.personalizationScope
+        : undefined;
 
       if (!format && !color && !detail.print && !detail.personalization) return;
 
@@ -85,6 +97,7 @@ export function Configurator() {
         ...(color ? { color } : {}),
         ...(detail.print ? { print: true } : {}),
         ...(detail.personalization ? { personalization: true } : {}),
+        ...(detail.personalization && scope ? { personalizationScope: scope } : {}),
       }));
 
       /* Sekcja nadruku pojawia się dopiero po wyborze koloru — bez koloru
@@ -129,6 +142,7 @@ export function Configurator() {
       color: params.get('kolor') ?? undefined,
       print: params.get('nadruk') === '1',
       personalization: params.get('personalizacja') === '1',
+      personalizationScope: (params.get('zakres') as PersonalizationScope | null) ?? undefined,
     });
 
     return () => window.removeEventListener('envelopes:configure', handlePreselect);
@@ -230,8 +244,23 @@ export function Configurator() {
   const hasFormat = Boolean(config.format);
   const hasColor = Boolean(config.color);
 
+  /* Krok bieżący = pierwszy niewykonany. Format jest wstępnie wybrany (DL),
+     więc konfigurator otwiera się na kroku 2 — pasek mówi to wprost, zamiast
+     udawać, że użytkownik ma przed sobą trzy decyzje. */
+  const currentStep: StepNumber = !hasFormat ? 1 : !hasColor ? 2 : 3;
+
+  const goToStep = useCallback(
+    (step: StepNumber) => {
+      const target = step === 1 ? formatRef : step === 2 ? colorRef : printRef;
+      target.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    },
+    []
+  );
+
   return (
     <div ref={containerRef}>
+      <ConfigProgress current={currentStep} onGoToStep={goToStep} />
+
       <div className="config-card" ref={formatRef}>
         <div className="config-body">
           <StepFormat
@@ -294,6 +323,7 @@ export function Configurator() {
 
               <StepPersonalization
                 enabled={config.personalization}
+                scope={config.personalizationScope}
                 method={config.personalizationMethod}
                 text={config.personalizationText ?? ''}
                 file={config.personalizationFile ?? null}
@@ -305,11 +335,17 @@ export function Configurator() {
                     ...(personalization
                       ? {}
                       : {
+                          personalizationScope: DEFAULT_PERSONALIZATION_SCOPE,
                           personalizationMethod: undefined,
                           personalizationText: '',
                           personalizationFile: null,
                         }),
                   })
+                }
+                /* Zmiana zakresu zmienia kolumny szablonu, więc wgrany wcześniej
+                   arkusz przestaje pasować — usuwamy go razem z wyborem. */
+                onScopeChange={(personalizationScope) =>
+                  patch({ personalizationScope, personalizationFile: null })
                 }
                 onMethodChange={(personalizationMethod) => patch({ personalizationMethod })}
                 onTextChange={(personalizationText) => patch({ personalizationText })}
@@ -319,7 +355,6 @@ export function Configurator() {
                 colorId={config.color}
               />
 
-              {(config.print || config.personalization) && <VisualizationNotice />}
             </div>
           </div>
         </div>
