@@ -439,6 +439,9 @@ Jedno rozstrzygnięcie, które warto znać, i powód w jednym zdaniu.
 ## Sprawdzone
 Zwięźle: co przeszło, co się nie udało, czego nie dało się sprawdzić.
 
+## Sugestia                     ← jedna, jeśli masz realną
+Co proponujesz i po co — dwa zdania. Pod spodem tabela parametrów.
+
 ## Do Twojej decyzji            ← tylko jeśli coś czeka na odpowiedź
 Punkt na jedno zdanie plus rekomendacja. Jeśli nic nie czeka — usuń tę sekcję.
 
@@ -449,6 +452,39 @@ Jedno zdanie: co jest kolejne w planie.
 Sekcje puste **usuwasz**, nie zostawiasz z dopiskiem „brak". Jeśli raport wymaga tabeli
 (porównanie wariantów, wynik testów), tabela ma **maksymalnie trzy kolumny** — szersze
 nie mieszczą się czytelnie i idą do Dziennika.
+
+### Sekcja „Sugestia" — zasady
+
+To **twoja własna propozycja**, nie streszczenie tego, co i tak wynika z planu. Może dotyczyć
+czegokolwiek, co zauważyłeś przy pracy: treści, konfiguratora, oferty, procesu, danych. Nie musi
+wynikać z briefu ani z `content-plan.md` — jeśli widzisz korzyść, nazwij ją.
+
+**Jedna sugestia na raport.** Dwie to już lista życzeń, a lista życzeń nie zostaje wdrożona.
+Jeśli masz kilka, podaj tę o najlepszym stosunku korzyści do nakładu, a resztę dopisz do planu.
+
+**Nie wymyślaj sugestii, żeby wypełnić sekcję.** Brak sugestii jest uczciwą odpowiedzią —
+wtedy sekcji po prostu nie ma. Sugestia „warto dodać więcej treści" bez wskazania jakiej,
+gdzie i po co, to szum.
+
+Pod propozycją zawsze tabela parametrów, w tej kolejności:
+
+| Parametr | Ocena |
+| --- | --- |
+| **Priorytet** | wysoki / średni / niski — plus pół zdania, dlaczego akurat taki |
+| **Nakład** | ile pracy, w godzinach albo w skali „drobiazg / pół dnia / osobna pozycja planu" |
+| **Wpływ na stronę** | co użytkownik zobaczy inaczej; „żaden widoczny", jeśli zmiana jest pod maską |
+| **Wpływ na pozycjonowanie** | SEO i GEO razem; jeśli zerowy — pisz „żaden", nie naciągaj |
+| **Wpływ na konwersję** | przez jaki mechanizm, nie „zwiększy sprzedaż" |
+| **Ryzyko** | co może pójść nie tak albo co trzeba będzie utrzymywać; „brak", jeśli faktycznie brak |
+
+Wiersze dobierasz do sprawy — przy sugestii czysto technicznej dokładasz „Dług techniczny",
+przy sugestii dotyczącej oferty „Wpływ na produkcję". Sześć wierszy to sufit, nie cel.
+
+**Zakaz prognoz liczbowych.** Nigdy „wzrost konwersji o 15%", „+200 wejść miesięcznie", „pozycja
+w top 3". Serwis nie ma jeszcze GA4 ani Search Console (zob. tabela blokad w `content-plan.md`),
+więc każda taka liczba byłaby zmyślona — a to ten sam błąd co wymyślona realizacja z pkt 4.1.
+Opisujesz **mechanizm** („CTA wchodzi w tryb, o którym mówi akapit obok, więc klient nie cofa
+się poprawiać ustawień"), a nie wynik, którego nie masz jak zmierzyć.
 
 ### Test przed wysłaniem
 
