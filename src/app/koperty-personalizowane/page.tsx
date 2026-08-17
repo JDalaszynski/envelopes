@@ -5,6 +5,7 @@ import { ConfigureLink } from '@/components/home/ConfigureLink';
 import { EnvelopePlaceholder } from '@/components/ui/EnvelopePlaceholder';
 import { ParallaxBackground } from '@/components/ui/ParallaxBackground';
 import { ShowcaseGrid } from '@/components/ui/ShowcaseGrid';
+import { StickyCta } from '@/components/ui/StickyCta';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { PERSONALIZATION_SHOTS } from '@/lib/showcase';
 import {
@@ -1053,6 +1054,7 @@ export default function PersonalizedEnvelopesPage() {
           </div>
         </div>
       </section>
+      <StickyCta format="DL" personalization />
     </>
   );
 }

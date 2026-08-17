@@ -5,6 +5,7 @@ import { ConfigureLink } from '@/components/home/ConfigureLink';
 import { EnvelopePlaceholder } from '@/components/ui/EnvelopePlaceholder';
 import { ParallaxBackground } from '@/components/ui/ParallaxBackground';
 import { ShowcaseGrid } from '@/components/ui/ShowcaseGrid';
+import { StickyCta } from '@/components/ui/StickyCta';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { getPost } from '@/lib/blog';
 import type { BlogPost } from '@/lib/blog';
@@ -25,6 +26,7 @@ import {
   PRINT_FILE_MAX_COUNT,
   PRINT_SAFE_MARGIN_MM,
 } from '@/lib/catalog';
+import { colorPagePath, colorPages } from '@/lib/color-pages';
 import { PRINT_FAQ_ITEMS } from '@/lib/faq';
 import { DEFAULT_PRICING, DELIVERY_COST, calculatePrice, formatPrice, round2 } from '@/lib/pricing';
 import {
@@ -604,6 +606,19 @@ export default function PrintedEnvelopesPage() {
             <p>
               Odcień papieru nie wpływa na koszt nadruku — czerń kosztuje tyle samo, co biel. Wybór
               koloru jest więc pytaniem o to, jak logo ma wyglądać, a nie ile ma kosztować.
+              {colorPages().length > 0 && (
+                <>
+                  {' '}
+                  Charakterystykę papieru odcień po odcieniu opisujemy osobno —{' '}
+                  {colorPages().map(({ color, content }, index) => (
+                    <span key={color.id}>
+                      {index > 0 ? ', ' : ''}
+                      <Link href={colorPagePath(color.id)}>{content.phraseShort} z logo</Link>
+                    </span>
+                  ))}
+                  .
+                </>
+              )}
             </p>
           </div>
 
@@ -877,6 +892,7 @@ export default function PrintedEnvelopesPage() {
           </div>
         </div>
       </section>
+      <StickyCta format="DL" print />
     </>
   );
 }

@@ -161,7 +161,7 @@ export function organizationJsonLd() {
  * Widełki na `/` i `/koperty-na-vouchery` symbolu nie dostają — obejmują
  * kilka konfiguracji naraz, więc jeden identyfikator byłby nieprawdziwy.
  */
-const SKU = {
+export const SKU = {
   plain: 'ENV-DL',
   print: 'ENV-DL-NADRUK',
   personalization: 'ENV-DL-PERS',
@@ -524,6 +524,98 @@ export function dlEnvelopeProductJsonLd() {
       }),
       /* Jedyna oferta w serwisie objęta prawem odstąpienia — koperta bez
          nadruku i bez personalizacji nie jest rzeczą wykonaną na zamówienie. */
+      hasMerchantReturnPolicy: plainReturnPolicy(),
+      seller: organizationRef,
+    },
+  };
+}
+
+/**
+ * Symbol handlowy wariantu kolorystycznego — `ENV-DL-CZARNY`.
+ *
+ * Zbudowany z symbolu koperty gładkiej, bo wariant różni się od niej wyłącznie
+ * odcieniem: ten sam format, ten sam papier, ta sama cena. Wspólny przedrostek
+ * jest jednocześnie identyfikatorem grupy wariantów (`inProductGroupWithID`),
+ * po którym Google skleja odcienie w jedną rodzinę produktową zamiast
+ * traktować je jako konkurujące oferty.
+ */
+export function colorSku(colorId: string): string {
+  return `${SKU.plain}-${colorId.toUpperCase()}`;
+}
+
+/**
+ * Product + Offer dla strony koloru `/koperty/[kolor]` (content-plan.md, Faza 3).
+ *
+ * Rozgraniczenie wobec `dlEnvelopeProductJsonLd()`: tamten blok opisuje format
+ * — wymiary, geometrię, największą wkładkę — i jest właścicielem tych pól.
+ * Ten opisuje **wariant kolorystyczny** i dokłada `color`, wykończenie oraz
+ * gramaturę tego konkretnego odcienia. Oba wskazują tę samą cenę, bo cena
+ * zależy wyłącznie od formatu; oba biorą ją z `DEFAULT_PRICING`, więc rozjazd
+ * między nimi jest niemożliwy.
+ *
+ * `inProductGroupWithID` zamiast `isVariantOf`: to pole rozumie zarówno
+ * schema.org, jak i Merchant Center, i nie wymaga istnienia osobnego węzła
+ * `ProductGroup`, którego w serwisie nie ma — grupą jest zbiór stron kolorów.
+ */
+export function colorEnvelopeProductJsonLd(input: {
+  colorId: string;
+  colorName: string;
+  weight?: string;
+  finish?: string;
+  images: string[];
+}) {
+  const dl = FORMAT_MAP.DL;
+  const url = `${SITE_URL}/koperty/${input.colorId}`;
+  const weight = input.weight?.replace('g', ' g/m²');
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    '@id': `${url}#product`,
+    name: `Koperta DL ${dl.dimensions} — kolor ${input.colorName}`,
+    description: `Koperta ozdobna DL ${dl.dimensions} w kolorze ${input.colorName}. Papier barwiony w masie${weight ? ` o gramaturze ${weight}` : ''}${input.finish ? `, wykończenie ${input.finish}` : ''}, bez okienka adresowego. Cena identyczna jak w pozostałych ${COLORS.length} odcieniach — zależy wyłącznie od formatu. Opcjonalny nadruk logo i personalizacja, czyli nadruk danych odbiorcy.`,
+    brand: brandRef,
+    sku: colorSku(input.colorId),
+    inProductGroupWithID: SKU.plain,
+    color: input.colorName,
+    category: 'Koperty ozdobne',
+    material: `Papier ozdobny${weight ? ` ${weight}` : ''}, barwiony w masie`,
+    size: dl.dimensions,
+    width: { '@type': 'QuantitativeValue', value: dl.width, unitCode: 'MMT' },
+    height: { '@type': 'QuantitativeValue', value: dl.height, unitCode: 'MMT' },
+    image: input.images,
+    url,
+    additionalProperty: [
+      { '@type': 'PropertyValue', name: 'Kolor', value: input.colorName },
+      { '@type': 'PropertyValue', name: 'Barwienie papieru', value: 'W masie, na wylot' },
+      ...(weight
+        ? [{ '@type': 'PropertyValue', name: 'Gramatura papieru', value: weight }]
+        : []),
+      ...(input.finish
+        ? [{ '@type': 'PropertyValue', name: 'Wykończenie', value: input.finish }]
+        : []),
+      { '@type': 'PropertyValue', name: 'Okienko adresowe', value: 'Brak' },
+    ],
+    offers: {
+      '@type': 'Offer',
+      priceCurrency: 'PLN',
+      price: DEFAULT_PRICING.base.DL.toFixed(2),
+      priceValidUntil: PRICE_VALID_UNTIL,
+      availability: 'https://schema.org/InStock',
+      itemCondition: 'https://schema.org/NewCondition',
+      url,
+      areaServed: 'PL',
+      eligibleQuantity: {
+        '@type': 'QuantitativeValue',
+        minValue: DEFAULT_PRICING.moqWithoutPrint,
+        unitCode: 'C62',
+      },
+      shippingDetails: shippingDetails({
+        min: DEFAULT_PRICING.leadDaysPlain,
+        max: DEFAULT_PRICING.leadDaysPlain,
+      }),
+      /* Koperta gładka w dowolnym kolorze podlega odstąpieniu na zasadach
+         ogólnych — dopiero nadruk czyni z niej rzecz wykonaną na zamówienie. */
       hasMerchantReturnPolicy: plainReturnPolicy(),
       seller: organizationRef,
     },

@@ -34,8 +34,7 @@ export function Footer() {
           <div>
             <h3>Envelopes</h3>
             <p style={{ color: 'rgba(255,255,255,.72)', maxWidth: '34ch' }}>
-              Koperty ozdobne w 19 kolorach, z nadrukiem i adresowaniem. Realizacja od 2 dni
-              roboczych, faktura VAT do każdego zamówienia.
+              Dostarczamy estetyczne, gotowe koperty premium, które pomagają budować w pełni profesjonalny wizerunek Twojej marki.
             </p>
             <div className="pay-badges" style={{ marginTop: 'var(--space-4)' }}>
               <span className="pay-badge">Przelewy24</span>
@@ -86,7 +85,7 @@ export function Footer() {
               <span className="pay-badge">Facebook</span>
             </div>
           </div>
-          
+
           <div>
             <h3>Oferta</h3>
             <ul className="footer-list">

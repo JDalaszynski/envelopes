@@ -75,8 +75,26 @@ export const metadata: Metadata = {
     description: 'Koperty firmowe z nadrukiem i adresowaniem. Cena widoczna od razu.',
     images: ['/images/og/home.jpg'],
   },
+  /*
+   * Weryfikacja własności domeny w narzędziach dla webmasterów.
+   *
+   * Bing Webmaster Tools ma dwie drogi: import serwisu z Search Console
+   * (przenosi też zgłoszoną sitemapę i nie wymaga żadnego kodu) albo znacznik
+   * `msvalidate.01`. Druga droga jest tu obsłużona, bo import bywa zablokowany,
+   * gdy konto Google i konto Microsoft należą do różnych osób.
+   *
+   * Znacznik pojawia się w HTML **wyłącznie**, gdy zmienna jest ustawiona —
+   * `<meta content="undefined">` byłby dla weryfikatora sygnałem gorszym niż
+   * brak znacznika, bo wygląda na próbę weryfikacji, która się nie powiodła.
+   *
+   * Bing to jednocześnie źródło wyników dla ChatGPT Search i Copilota, więc
+   * to konto obsługuje warstwę GEO, nie tylko ruch z samej wyszukiwarki.
+   */
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+    ...(process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION
+      ? { other: { 'msvalidate.01': process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION } }
+      : {}),
   },
   robots: { index: true, follow: true },
   icons: {

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { ConfigureLink } from '@/components/home/ConfigureLink';
 import { EnvelopePlaceholder } from '@/components/ui/EnvelopePlaceholder';
 import { ParallaxBackground } from '@/components/ui/ParallaxBackground';
+import { StickyCta } from '@/components/ui/StickyCta';
 import { JsonLd } from '@/components/seo/JsonLd';
 import {
   BULK_QUOTE_THRESHOLD,
@@ -20,6 +21,7 @@ import {
   maxInsertSize,
 } from '@/lib/catalog';
 import type { EnvelopeFormat } from '@/lib/catalog';
+import { colorPagePath, colorPages } from '@/lib/color-pages';
 import { DL_FAQ_ITEMS } from '@/lib/faq';
 import { DEFAULT_PRICING, DELIVERY_COST, calculatePrice, formatPrice } from '@/lib/pricing';
 import {
@@ -693,6 +695,21 @@ export default function DlEnvelopesPage() {
             Wszystkie {COLORS.length} odcieni obejrzą Państwo w{' '}
             <Link href="/#kolory">palecie kolorów kopert ozdobnych</Link>.
           </p>
+
+          {/* Odcienie z własną kartą — lista rośnie razem z `color-pages.ts`,
+              więc link dokłada się sam przy publikacji kolejnego koloru. */}
+          {colorPages().length > 0 && (
+            <p className="small muted" style={{ marginTop: 'var(--space-3)', maxWidth: '68ch' }}>
+              Osobną kartę z charakterystyką papieru, zastosowaniami i zamówieniem mają:{' '}
+              {colorPages().map(({ color, content }, index) => (
+                <span key={color.id}>
+                  {index > 0 ? ', ' : ''}
+                  <Link href={colorPagePath(color.id)}>{content.phrase}</Link>
+                </span>
+              ))}
+              .
+            </p>
+          )}
         </div>
       </section>
 
@@ -859,6 +876,7 @@ export default function DlEnvelopesPage() {
           </div>
         </div>
       </section>
+      <StickyCta format="DL" />
     </>
   );
 }

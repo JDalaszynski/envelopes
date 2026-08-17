@@ -175,9 +175,6 @@
   padding: var(--space-6);
 }
 
-.home-doc .section-surface .plate {
-  background: var(--color-paper);
-}
 
 /* Perforacja u górnej krawędzi — ten sam papierowy detal, którym pasek
    podsumowania w konfiguratorze odrywa się od karty. Tu oznacza wklejkę
@@ -200,9 +197,6 @@
   border-top: 1px dashed var(--color-line);
 }
 
-.home-doc .section-surface .plate-tearoff::before {
-  background-image: radial-gradient(circle at 5px 0, transparent 5px, var(--color-paper) 5px);
-}
 
 /* ═══ 3. Galeria kadrów (01 Papier, 06 Zastosowania) ═══════════
    Kadr i podpis stają się jednym przedmiotem: ramka trzyma zdjęcie
@@ -219,9 +213,6 @@
     border-color var(--duration-fast) var(--ease-standard);
 }
 
-.home-doc .section-surface .tile-gallery .paper-shot {
-  background: var(--color-paper);
-}
 
 .home-doc .tile-gallery .paper-shot img {
   border: none;
@@ -755,9 +746,6 @@
     border-color var(--duration-fast) var(--ease-standard);
 }
 
-.home-doc .section-surface .usecase-card {
-  background: var(--color-paper);
-}
 
 /* Ramka kadru trzyma proporcje 4:3 niezależnie od tego, czy w środku
    stoi kadr aranżacyjny (kwadrat, kadrowany) czy zdjęcie produktowe
@@ -868,9 +856,6 @@
     border-color var(--duration-fast) var(--ease-standard);
 }
 
-.home-doc .section-surface .sample {
-  background: var(--color-paper);
-}
 
 /* Kadr wypełnia górę kafla — ramka kafla przejmuje rolę ramki zdjęcia. */
 .home-doc .sample .placeholder {
@@ -945,9 +930,6 @@
   transform: translateY(-2px);
 }
 
-.home-doc .section-surface .palette-board .palette-chip:hover {
-  background: var(--color-paper);
-}
 
 /* ═══ 11. Panel dla firm (09 Dla firm) ═════════════════════════ */
 
@@ -1012,9 +994,6 @@
   background: var(--color-surface);
 }
 
-.home-doc .section-surface .faq-list .faq-item summary:hover {
-  background: var(--color-paper);
-}
 
 .home-doc .faq-list .faq-item summary h3 {
   font-family: var(--font-plex-sans), sans-serif;

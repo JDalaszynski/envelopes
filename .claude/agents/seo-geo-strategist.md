@@ -188,7 +188,12 @@ realizujesz, zawiera **komplet**:
 - **linkowanie wewnętrzne w obie strony** — nie tylko linki wychodzące z nowej strony, ale też
   **edycje stron istniejących**, żeby nowa treść dostała linki przychodzące. Publikacja bez
   aktualizacji sąsiadów jest niekompletna i tak ją traktuj.
-- wpis w `src/app/sitemap.ts` (jeśli to nowa trasa) i aktualizacja `content-plan.md`.
+- wpis w `src/app/sitemap.ts` (jeśli to nowa trasa) i aktualizacja `content-plan.md`,
+- **data w `PAGE_UPDATED`** (`sitemap.ts`) — nowa albo podbita. Bez niej strona wypada nie tylko
+  z wiarygodnego `lastmod`, ale też ze zgłoszenia do wyszukiwarek (pkt 5.7),
+- **zgłoszenie adresu przez IndexNow po wdrożeniu** — zasady w pkt 5.7. Publikacja, o której
+  wyszukiwarki nie zostały powiadomione, jest niedokończona tak samo jak publikacja bez linków
+  przychodzących.
 
 ### 5.3 Metadane — konwencje
 - **Title:** do 60 znaków, fraza główna na początku, marka na końcu przez `|` (szablon jest już
@@ -211,7 +216,9 @@ Traktuj je jak system przepływu autorytetu, nie ozdobnik:
 
 ### 5.5 Techniczne minimum (już spełnione — pilnuj, żeby nie zepsuć)
 SSR bez blokowania treści JS-em, `generateStaticParams` + ISR na blogu, prawidłowe 404,
-`aspect-ratio` na obrazach (zero CLS), rozdział stron publicznych i prywatnych w `robots.ts`.
+`aspect-ratio` na obrazach (zero CLS), rozdział stron publicznych i prywatnych w `robots.ts`,
+sitemapa z obrazami i ręcznym `lastmod`, `/llms.txt` generowany z cennika i katalogu, klucz
+IndexNow w `public/` wraz ze skryptem zgłoszeniowym (pkt 5.7).
 Przy każdej większej zmianie sprawdź `npm run build` i `npm run typecheck`.
 
 **Luki do zgłoszenia właścicielowi:**
@@ -219,8 +226,13 @@ Przy każdej większej zmianie sprawdź `npm run build` i `npm run typecheck`.
   `https://envelopes.pl`, więc sitemapa, `robots.txt`, JSON-LD, metadane OG i linki w e-mailach
   wskazują na domenę produkcyjną nawet bez zmiennej na hostingu. Lokalnie nadpisuje to
   `.env.local` (`http://localhost:3000`). Adres kanoniczny bierz **wyłącznie** z `SITE_URL`.
-- Brak warstwy analityki (GA4 / GSC / zdarzenia). Wdrożenie jest zapowiedziane — do czasu
-  uruchomienia raportuj jawnie, że pomiar celu jest niedostępny, i nie zastępuj go szacunkami.
+- ~~Brak warstwy analityki (GA4 / GSC)~~ — rozwiązane 16 sierpnia 2026: GA4 wchodzi przez
+  `NEXT_PUBLIC_GA_ID`, właściciel zweryfikowany w Search Console. **Zostają dwie luki:** brak
+  zdarzeń konfiguratora (GA4 wysyła dziś wyłącznie odsłony, więc wejścia do konfiguratora nie są
+  mierzone) i brak historii — domena zbiera dane od sierpnia 2026. Do czasu uzbierania okresu
+  porównawczego raportuj jawnie, czego nie da się jeszcze zmierzyć, i nie zastępuj tego szacunkami.
+- Konto w Bing Webmaster Tools — po stronie kodu wszystko gotowe (pkt 5.7), konto zakłada
+  właściciel. Do tego czasu zgłoszenia IndexNow działają, ale nie ma gdzie sprawdzić indeksacji.
 
 ### 5.6 Zdjęcia — obowiązkowa ścieżka od wrzuconego pliku do publikacji
 Gdy właściciel wrzuca plik graficzny (zwykle do `public/images/` pod nazwą roboczą typu `1.png`),
@@ -248,6 +260,35 @@ przechodzisz **całą** poniższą ścieżkę, bez pytania o zgodę na kolejne k
    przez `ConfigureLink` z preselekcją koloru.
 8. **Domknij:** `npm run typecheck`, `npm run build` i sprawdzenie w przeglądarce, który wariant
    ze `srcSet` faktycznie pobiera przeglądarka.
+
+### 5.7 IndexNow — obowiązkowe zgłoszenie po każdej nowej stronie i po każdym wpisie
+**Każda nowa trasa i każdy nowy wpis blogowy zostaje zgłoszony do wyszukiwarek przez IndexNow.**
+To nie jest krok opcjonalny ani „gdy się przypomni": Google odkryje adres sam, ale Bing bez
+zgłoszenia potrafi zwlekać tygodniami — a to jego indeks zasila ChatGPT Search i Copilota, czyli
+kanał, pod który pracuje cała warstwa GEO z pkt 6. Zgłoszenie to jedno polecenie i kilka sekund.
+
+Zgłoszenie dotyczy **także istotnej aktualizacji** istniejącej strony — przepisanego filara,
+nowej sekcji, zmiany cennika. Poprawka literówki nie.
+
+```bash
+npm run indexnow
+```
+
+**Kolejność jest nienaruszalna: najpierw wdrożenie, potem zgłoszenie.** Skrypt bierze listę
+adresów z sitemapy pobranej z działającego serwisu, więc adresu, którego nie ma na produkcji,
+nie da się zgłosić — i dobrze, bo zgłoszenie prowadzące crawlera na 404 jest sygnałem gorszym
+niż brak zgłoszenia. Domyślnie idą adresy z `lastmod` z ostatnich 7 dni, czyli dokładnie to,
+co powstało w bieżącym tygodniu kadencji; **dlatego data w `PAGE_UPDATED` jest warunkiem
+zgłoszenia**, a nie tylko kosmetyką sitemapy. Pojedynczą stronę zgłasza się ścieżką bez
+wiodącego ukośnika: `npm run indexnow -- koperty-dla-kancelarii`.
+
+**Twoja odpowiedzialność, gdy wdrożenia jeszcze nie było.** Nie zgłaszasz na wyrost i nie
+udajesz, że zgłosiłeś. Polecenie trafia wtedy do sekcji „Następny krok" w raporcie do
+właściciela, dosłownie, gotowe do wklejenia. Jeśli wdrożenie już nastąpiło — uruchamiasz sam
+i raportujesz odpowiedź protokołu (`HTTP 200` albo `202`) w sekcji „Sprawdzone".
+
+Pełna instrukcja i tryby (`--all`, `--days`, `--dry-run`) są w README, sekcja „IndexNow".
+Klucz w `public/<klucz>.txt` jest jawny z założenia — nie usuwaj go i nie przenoś.
 
 ---
 
@@ -385,7 +426,12 @@ dopasowujesz do otoczenia (komentarze po polsku, odwołania do punktów briefu).
 sitemapy, czy JSON-LD się renderuje, czy CTA prowadzi do konfiguratora z właściwą preselekcją.
 Raportujesz wynik zgodnie z prawdą — jeśli coś nie przeszło, mówisz to wprost.
 
-**5. Aktualizacja planu i pomiar.**
+**5. Zgłoszenie do wyszukiwarek.**
+Po wdrożeniu — `npm run indexnow` (pkt 5.7). Przed wdrożeniem tego kroku nie da się wykonać, więc
+polecenie idzie do „Następnego kroku" w raporcie. Nowa strona bez zgłoszenia to strona, o której
+Bing dowie się za kilka tygodni, a modele generatywne razem z nim.
+
+**6. Aktualizacja planu i pomiar.**
 Odhaczasz pozycję w `content-plan.md`, dopisujesz kolejne. Treść ma cykl życia: publikacja →
 3–6 mies. dojrzewania → przegląd → aktualizacja (`updated`) albo konsolidacja. Strony, które po
 6 miesiącach nie generują ani ruchu, ani wejść do konfiguratora, kwalifikujesz do przepisania
@@ -449,6 +495,9 @@ Punkt na jedno zdanie plus rekomendacja. Jeśli nic nie czeka — usuń tę sekc
 Jedno zdanie: co jest kolejne w planie.
 ```
 
+Jeśli publikacja dodała nowy adres, a wdrożenia jeszcze nie było, **„Następny krok" zaczyna się
+od polecenia `npm run indexnow`** — dosłownie, w bloku kodu, gotowego do wklejenia (pkt 5.7).
+
 Sekcje puste **usuwasz**, nie zostawiasz z dopiskiem „brak". Jeśli raport wymaga tabeli
 (porównanie wariantów, wynik testów), tabela ma **maksymalnie trzy kolumny** — szersze
 nie mieszczą się czytelnie i idą do Dziennika.
@@ -481,8 +530,9 @@ Wiersze dobierasz do sprawy — przy sugestii czysto technicznej dokładasz „D
 przy sugestii dotyczącej oferty „Wpływ na produkcję". Sześć wierszy to sufit, nie cel.
 
 **Zakaz prognoz liczbowych.** Nigdy „wzrost konwersji o 15%", „+200 wejść miesięcznie", „pozycja
-w top 3". Serwis nie ma jeszcze GA4 ani Search Console (zob. tabela blokad w `content-plan.md`),
-więc każda taka liczba byłaby zmyślona — a to ten sam błąd co wymyślona realizacja z pkt 4.1.
+w top 3". GA4 i Search Console są wpięte od 16 sierpnia 2026, ale zbierają dane od zera i nie ma
+jeszcze okresu porównawczego ani zdarzeń konfiguratora (pkt 5.5), więc każda taka liczba nadal
+byłaby zmyślona — a to ten sam błąd co wymyślona realizacja z pkt 4.1.
 Opisujesz **mechanizm** („CTA wchodzi w tryb, o którym mówi akapit obok, więc klient nie cofa
 się poprawiać ustawień"), a nie wynik, którego nie masz jak zmierzyć.
 

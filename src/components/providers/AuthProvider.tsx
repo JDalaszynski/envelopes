@@ -17,6 +17,7 @@ import {
   signInWithPopup,
   signOut,
   updateProfile,
+  getAdditionalUserInfo,
   type User,
 } from 'firebase/auth';
 
@@ -36,7 +37,7 @@ interface AuthContextValue {
   live: boolean;
   login: (email: string, password: string) => Promise<void>;
   register: (email: string, password: string, displayName?: string) => Promise<void>;
-  loginWithGoogle: () => Promise<void>;
+  loginWithGoogle: () => Promise<{ isNewUser: boolean } | void>;
   logout: () => Promise<void>;
   resetPassword: (email: string) => Promise<void>;
   /** Token do autoryzacji wywołań API Routes */
@@ -150,9 +151,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const auth = getFirebaseAuth();
     if (!auth) {
       persistDev(makeDevUser('konto.google@przyklad.pl', 'Konto Google'));
-      return;
+      return { isNewUser: true };
     }
-    await signInWithPopup(auth, googleProvider);
+    const credential = await signInWithPopup(auth, googleProvider);
+    const info = getAdditionalUserInfo(credential);
+    return { isNewUser: info?.isNewUser ?? false };
   }, [persistDev]);
 
   const logout = useCallback(async () => {

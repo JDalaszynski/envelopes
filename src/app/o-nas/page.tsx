@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 import { ConfigureLink } from '@/components/home/ConfigureLink';
+import { StickyCta } from '@/components/ui/StickyCta';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { ParallaxBackground } from '@/components/ui/ParallaxBackground';
 import { ShowcaseGrid } from '@/components/ui/ShowcaseGrid';
@@ -368,6 +369,7 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+      <StickyCta format="DL" />
     </>
   );
 }

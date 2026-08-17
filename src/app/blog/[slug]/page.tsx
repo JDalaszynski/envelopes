@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import { ConfigureLink } from '@/components/home/ConfigureLink';
 import { EnvelopePlaceholder } from '@/components/ui/EnvelopePlaceholder';
 import { ShareButtons } from '@/components/blog/ShareButtons';
+import { StickyCta } from '@/components/ui/StickyCta';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { getAllPosts, getPost, getRelatedPosts } from '@/lib/blog';
 import { formatDate } from '@/lib/pricing';
@@ -237,6 +238,12 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           )}
         </div>
       </article>
+      <StickyCta
+        format={post.ctaConfigure?.format}
+        color={post.ctaConfigure?.color}
+        print={post.ctaConfigure?.print}
+        personalization={post.ctaConfigure?.personalization}
+      />
     </>
   );
 }

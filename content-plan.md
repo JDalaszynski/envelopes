@@ -25,6 +25,11 @@ filarów, bo to on dojrzewa najdłużej.
 3–6 treści wspierających. Publikacja bez dołożenia linków zwrotnych na stronach istniejących
 jest niekompletna.
 
+**Zamknięcie pozycji:** data w `PAGE_UPDATED` (`src/app/sitemap.ts`) i — po wdrożeniu —
+zgłoszenie adresu przez `npm run indexnow`. Dotyczy każdej nowej trasy, każdego nowego wpisu
+i każdej istotnej aktualizacji istniejącej strony. Bez tego Bing dowie się o publikacji za
+kilka tygodni, a razem z nim ChatGPT Search i Copilot (brief agenta, pkt 5.7).
+
 ---
 
 ## Mapa filarów
@@ -155,7 +160,7 @@ z **preselekcją koloru**.
 
 | # | Tytuł / URL | Format | Główna fraza | Cel | Persona / Branża | Filar | Uwagi (antykanibalizacja) | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 29 | Czarne koperty DL — `/koperty/czarny` | Supporting LP | czarne koperty z logo | KONWERSJA | Kancelarie, tatuaż, premium | F5 | Fraza należy jednocześnie do K1 — właścicielem jest strona koloru, F1 tylko linkuje | [ ] |
+| 29 | Czarne koperty DL — `/koperty/czarny` | Supporting LP | czarne koperty z logo | KONWERSJA | Kancelarie, tatuaż, premium | F5 | **Wykonane 17 sierpnia 2026.** Fraza należy jednocześnie do K1 — właścicielem jest strona koloru, F1 tylko linkuje. Szablon `/koperty/[kolor]` i przycisk „dodaj do koszyka" powstały przy tej pozycji; treść mieszka w `src/lib/color-pages.ts`, który jest jednocześnie listą opublikowanych kolorów | [x] |
 | 30 | Granatowe koperty DL — `/koperty/granatowy` | Supporting LP | granatowe koperty dl | KONWERSJA | Kancelarie, korporacje | F5 | Wariant kolorystyczny, bez powielania treści usługowej z F1/F2 | [ ] |
 | 31 | Złote koperty DL — `/koperty/zloty` | Supporting LP | złote koperty dl | KONWERSJA | Eventy, wesela, gale | F5 | Wykończenie metaliczne bez dopłaty — to główny argument strony | [ ] |
 | 32 | Koperty ecru DL — `/koperty/ecru` | Supporting LP | koperta dl beżowa | KONWERSJA | Ślub, kliniki, hotele | F5 | **Most nazewniczy:** „beżowa" → Ecru. Zdanie mostkujące w treści, bez tworzenia koloru w katalogu | [ ] |
@@ -222,6 +227,196 @@ nie liczą się do kadencji czterech pozycji tygodniowo i nie mają filara.
 ---
 
 ## Dziennik wdrożeń
+
+### 17 sierpnia 2026 — poz. 29: `/koperty/czarny` i szablon stron kolorów
+
+**Faza 3 otwarta pierwszym kolorem.** Powstał szablon `/koperty/[kolor]`, a razem z nim
+rozstrzygnięcia, które obowiązują wszystkie kolejne odcienie.
+
+**1. Lista opublikowanych kolorów to plik z treścią.** `src/lib/color-pages.ts` trzyma teksty
+i jednocześnie **jest rejestrem stron**: kolor ma adres wtedy i tylko wtedy, gdy ma tam wpis.
+Ta sama lista zasila `generateStaticParams`, sitemapę, linkowanie z palety na `/` i docelowo
+warianty w feedzie. Nie da się więc wygenerować strony bez tekstu, zgłosić do wyszukiwarek
+adresu, którego nie ma, ani wystawić oferty bez strony docelowej. `dynamicParams = false`
+domyka to od strony routingu — kolor spoza listy dostaje 404, nie pusty szablon.
+
+**2. Treść nie jest generowana z szablonu.** Dziewiętnaście stron z jednym zdaniem i podmienioną
+nazwą koloru to dziewiętnaście stron cienkich. Każdy odcień dostaje własny opis charakteru,
+własną sekcję o nadruku, własne „dla kogo", własną sekcję o granicach zastosowania i własne FAQ.
+Parametry — wymiary, gramatura, cena, terminy — są czytane z katalogu i cennika, więc do treści
+wchodzi wyłącznie to, co dla tego odcienia jest naprawdę inne.
+
+**2a. Nazwa koloru nie wchodzi do zdania.** Katalog trzyma przymiotnik w mianowniku liczby
+pojedynczej („Czarny", „Szara", „Ecru"), a szablon potrzebuje formy mnogiej — „koperty czarny"
+to błąd, a rodzaj gramatyczny bywa różny w obrębie palety. Każdy kolor podaje więc dwie odmienione
+frazy (`phrase`, `phraseShort`), z których szablon buduje nagłówki, przycisk koszyka, okruszki
+i anchory linków przychodzących. **Przy dodawaniu kolejnego koloru to pole jest obowiązkowe.**
+
+**3. Czerń ma jeden argument, którego nie ma żaden inny kolor:** papier barwiony w masie zostaje
+czarny na zgięciu i na krawędzi, podczas gdy arkusz barwiony powierzchniowo pokazuje jasny rdzeń.
+Wokół tego zbudowana jest sekcja „Papier". Do tego sekcja **„Kiedy czarna koperta nie jest
+najlepszym wyborem"** — ręczne adresowanie długopisem i widoczność otarć — bo granica zastosowania
+jest materiałem cytowalnym i uczciwym wobec klienta, a nie ubytkiem sprzedażowym.
+
+**4. Cena wchodzi na stronę koloru — świadomy wyjątek od zasady „cennik należy do `/`".**
+Strona koloru jest stroną docelową oferty produktowej: bez widocznej kwoty Merchant Center
+odrzuca ofertę. Cena stoi więc w wierszu specyfikacji i w bloku zamówienia, ale strona nie
+dostaje nagłówka cenowego ani rozbicia dopłat — te zostają na `/`, F1 i F2.
+
+**5. „Dodaj do koszyka" tylko tutaj.** Na `/koperty-dl` kolor nie jest wybrany, więc przycisk
+musiałby o niego zapytać, czyli powtórzyć konfigurator. Na stronie koloru decyzja jest podjęta
+adresem URL: zostaje ilość. Nadruk i personalizacja przycisku nie dostają — wymagają pliku albo
+listy adresów i akceptacji wizualizacji, więc prowadzą do konfiguratora z zaznaczonym kolorem.
+
+**6. Linki przychodzące.** Paleta na `/` oddaje klik stronie koloru zamiast konfiguratorowi
+(zapowiedziane przy zmianie z 13 sierpnia), a sekcja kolorów na `/koperty-dl` wymienia odcienie
+z własną kartą. Oba miejsca renderują listę z `color-pages.ts`, więc kolejny kolor dokłada sobie
+linki sam.
+
+**7. Karta OG z generatora.** `scripts/og-card.mjs` odtwarza układ rodziny obrazów wyróżniających
+(przyciemnienie od lewej, nadtytuł, tytuł szeryfowy, kreska w kolorze pieczęci, dwie linijki
+parametrów, domena). **Bez kwot na karcie** — obraz OG bywa buforowany przez komunikatory
+miesiącami i przeżyłby zmianę cennika.
+
+**Feed produktowy zostaje przy jednej pozycji.** Wariant `ENV-DL-CZARNY` obok zbiorczego `ENV-DL`
+to dwie oferty na ten sam produkt. Warianty zastąpią pozycję zbiorczą naraz, gdy strony pokryją
+paletę — inaczej Shopping pokazywałby jeden odcień zamiast dziewiętnastu.
+
+Weryfikacja: `typecheck` i `build` bez błędów, `/koperty/czarny` prerenderowany statycznie.
+`title` 46 znaków, `description` 147, kanoniczny adres i własna karta OG. JSON-LD: `Product`
+z `sku ENV-DL-CZARNY`, `color Czarny`, `inProductGroupWithID ENV-DL`, ceną 2.58 i pięcioma
+zdjęciami, do tego `FAQPage` i `BreadcrumbList`. Cena widoczna w treści pięć razy — warunek
+strony docelowej oferty. Sitemapa urosła z 14 do 15 adresów, wpis koloru niesie datę i pięć
+obrazów. Linki przychodzące renderują się na `/` i na `/koperty-dl`.
+
+### 17 sierpnia 2026 — `/feed.xml`: jedna pozycja produktowa na próbę
+
+**Feed dla Merchant Center jako trasa, nie jako plik.** Powód ten sam co przy `/llms.txt`:
+wszystkie liczby pochodzą z `pricing.ts` i `catalog.ts`. Pozycja jest **budowana
+z `dlEnvelopeProductJsonLd()`**, czyli z tego samego bloku, który opisuje produkt na stronie
+docelowej — tytuł, opis, cena, zdjęcia i identyfikator nie są przepisane, tylko wzięte z jedynego
+miejsca, które je definiuje. Feed, `Offer` na stronie, cennik w treści i faktura mają jedno
+źródło; wgrany raz plik rozjechałby się przy pierwszej zmianie ceny.
+
+**Jedna pozycja, i to nie z ostrożności.** Koperta DL gładka (`ENV-DL`, 2,58 zł brutto) jest
+jedyną konfiguracją, którą kupujący może zamówić **od 1 sztuki** — cena jednostkowa w feedzie
+jest więc ceną realnie dostępną. Nadruk i personalizacja mają MOQ 10, więc pozycja z ceną
+4,57 zł byłaby ofertą, której nie da się kupić: wejdą jako komplet z `unit_pricing_measure`,
+razem ze stronami kolorów, które dadzą im własne adresy docelowe.
+
+**Dwie decyzje w szczegółach.** Kadrem wiodącym jest koperta **biała**, nie czarna — czarna
+wypada pierwsza w kolejności katalogowej, ale zdjęcie główne nie może obiecywać jednego odcienia
+mocniej niż tytuł, skoro oferta obejmuje wszystkie w jednej cenie; pozostałe kadry idą jako
+`additional_image_link`, a tytuł niesie liczbę kolorów, więc zestaw zdjęć jest spójny z opisem.
+Identyfikacja to `brand` + `mpn` z symbolem katalogowym (koperty nie mają GTIN, a Envelopes jest
+producentem); gdyby Merchant Center zakwestionował MPN, alternatywą jest `identifier_exists: no`.
+`transit_time` pominięty tak samo jak w danych strukturalnych — czasu przewozu nie ma w żadnym
+źródle w projekcie (zob. tabela blokad).
+
+Weryfikacja: `typecheck` i `build` bez błędów, `/feed.xml` prerenderowany jako statyczny.
+Dokument sprawdzony parserem XML — poprawny składniowo, jedna pozycja. Pola: `id ENV-DL`,
+tytuł 68 znaków (limit 150), opis 272 znaki, `price 2.58 PLN` zgodne z kwotą widoczną
+na `/koperty-dl`, `availability in_stock`, `condition new`, czas obsługi 2–2 dni roboczych
+(`leadDaysPlain`), wysyłka `PL / Kurier / 19.99 PLN`, siedem zdjęć z kadrem białym na czele.
+Plik w UTF-8 bez BOM.
+
+**Co zostaje po stronie właściciela:** konto Merchant Center, dane firmy, stawka wysyłki
+i polityka zwrotów w ustawieniach konta, a następnie zaplanowane pobieranie
+`https://envelopes.pl/feed.xml`. Własność witryny jest już potwierdzona przez Search Console.
+
+### 17 sierpnia 2026 — jedno źródło ceny (warunek wejścia do Merchant Center)
+
+**Zero zmian widocznych dla klienta.** Ceny na stronach, w konfiguratorze, w koszyku, w `Offer`
+i w `/llms.txt` są dokładnie te same co wczoraj — zmienia się to, czego nie było widać.
+
+**Rozjazd, który był możliwy.** Wszystko, co widzi klient, czyta `DEFAULT_PRICING` wkompilowane
+w statyczny HTML. Serwer wyliczający wartość zamówienia (`/api/orders`) czytał natomiast
+`getPricing()`, czyli cennik nadpisywalny dokumentem `pricing/current` w Firestore. Dokument nie
+zmieniał żadnej liczby na stronie — zmieniłby wyłącznie kwotę naliczoną w koszyku. Klient
+widziałby 2,58 zł na każdej stronie serwisu i zapłaciłby inną stawkę, nie mając jak tego
+zauważyć. Nadpisanie było puste, więc do niczego takiego nie doszło; niezmiennik nie był jednak
+niczym chroniony poza tym, że nikt nie dotknął bazy.
+
+**Rozstrzygnięcie: cenę wolno zmienić tylko przez wdrożenie.** `resolvePricing()` w `pricing.ts`
+czyta nadpisanie, porównuje je ze stawkami wkompilowanymi i **odrzuca rozjazd**, zwracając zawsze
+`DEFAULT_PRICING`. Odczyt zostaje, bo to on wykrywa problem: rozjeżdżające się pola trafiają
+do logu serwera jako błąd, z nazwami (`base.DL`, `print`) i ze wskazaniem właściwej drogi.
+Odrzucone alternatywy: **zastosować nadpisanie i tylko ostrzec** — ostrzeżenie w logu nie cofa
+obciążenia klienta ceną, której nie widział; **usunąć mechanizm** — wróci, gdy cenę będzie czytać
+z jednego źródła także warstwa prezentacji (render dynamiczny albo rewalidacja wyzwalana zmianą
+cennika), a do tego czasu jego odczyt pełni rolę czujnika.
+
+**Dlaczego to sprawa SEO, a nie tylko porządek w kodzie.** Merchant Center odrzuca ofertę, gdy
+cena w feedzie nie zgadza się z ceną na stronie docelowej, a przy powtarzalnym rozjeździe zawiesza
+konto. Dopóki kwota naliczana mogła się różnić od pokazanej, feed produktowy (poz. „Feed + Merchant
+Center" z listy priorytetów) był zbudowany na źródle, które wolno było rozjechać jednym wpisem
+w bazie. Teraz feed, `Offer`, cennik na stronie i faktura mają jedno źródło.
+
+Weryfikacja: `typecheck` i `build` bez błędów. Test jednostkowy na wyodrębnionym module —
+brak nadpisania i brak dokumentu dają wynik **identyczny** z `DEFAULT_PRICING` (co do bajtu,
+więc klient nie zobaczy różnicy), nadpisanie o tych samych wartościach nie generuje fałszywego
+alarmu, nadpisanie `base.DL = 9,99` zostaje odrzucone (cena pozostaje 2,58) i wypisuje błąd
+z listą pól, a koszyk 100 kopert z nadrukiem nadal liczy 4,57 zł/szt. i 457,00 zł brutto.
+
+### 17 sierpnia 2026 — IndexNow i konto w Bing Webmaster Tools
+
+**Zmiana infrastrukturalna, zero zmian w treści.** Google odkrywa nowe adresy sam i szybko.
+Bing bez zgłoszenia potrafi zwlekać tygodniami — a jego indeks jest źródłem wyników dla
+ChatGPT Search i Copilota, więc opóźnienie w Bing to opóźnienie w tym samym kanale, pod który
+przygotowany jest `/llms.txt` i cała warstwa danych strukturalnych. Protokół IndexNow zamyka tę
+lukę: jedno zgłoszenie idzie do punktu zbiorczego i trafia do Bing, Yandeksa, Seznamu i Navera.
+
+**1. Klucz jako jedyny plik, nie jako stała w kodzie.** `public/ec2f0cba…d19813a6d.txt` — nazwa
+pliku równa jego zawartości, tak wymaga protokół. Klucz **nie jest sekretem**: cała weryfikacja
+polega na tym, że plik jest publicznie dostępny pod adresem domeny, więc leży w repozytorium,
+a nie w zmiennych środowiskowych. Odrzucone: stała w kodzie obok pliku — dwie kopie tej samej
+wartości rozjechałyby się przy pierwszej podmianie klucza, a jedynym objawem byłby HTTP 403
+bez wskazania przyczyny. Skrypt czyta klucz z nazwy pliku i sprawdza zgodność z zawartością.
+
+**2. Lista adresów pochodzi z sitemapy pobranej z serwera, nie z kodu.** Zgłoszenie adresu,
+który nie jest jeszcze wdrożony, kończy się wizytą crawlera na 404 — sygnał gorszy niż brak
+zgłoszenia. Sitemapa produkcyjna z definicji zawiera wyłącznie to, co faktycznie stoi, i niesie
+`lastmod` z `PAGE_UPDATED`, czyli z dat wpisywanych w tym dzienniku. **Konsekwencja dla
+kadencji:** publikacja bez podbicia daty w `sitemap.ts` nie tylko psuje sitemapę, ale też wypada
+ze zgłoszenia do wyszukiwarek. Domyślne okno to 7 dni — tydzień odpowiada kadencji czterech
+pozycji tygodniowo, więc `npm run indexnow` po deployu zgłasza dokładnie to, co w tym tygodniu
+powstało. `--all` obsługuje zgłoszenie startowe, argumenty pozycyjne — pojedynczą stronę.
+
+**3. Trzy blokady przed wysłaniem czegoś nieprawdziwego.** Skrypt pobiera plik klucza z serwera
+i porównuje treść, zanim cokolwiek wyśle (odpowiedź 403 nie mówi, czego brakuje). Odmawia
+zgłoszenia hosta lokalnego. Odrzuca argument, który powłoka Git Bash rozwinęła z `/koperty-dl`
+do ścieżki systemowej — bez tej kontroli do wyszukiwarek poszedłby adres nieistniejący, czyli
+dokładnie to, przed czym reszta skryptu chroni.
+
+**4. Weryfikacja własności w Bing Webmaster Tools.** Znacznik `msvalidate.01` wchodzi do HTML
+**wyłącznie**, gdy `NEXT_PUBLIC_BING_SITE_VERIFICATION` jest ustawione; `<meta content="undefined">`
+byłby sygnałem gorszym niż brak znacznika. Prostsza droga to import serwisu z Search Console —
+przenosi też zgłoszoną sitemapę i nie wymaga żadnej zmiennej. Przy okazji `.env.example` dostał
+sekcję z `NEXT_PUBLIC_GA_ID` i `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION`, których nigdy nie
+dokumentował, mimo że kod czyta obie od 16 sierpnia.
+
+**5. Zgłoszenie weszło do definicji ukończonej publikacji**, a nie do listy dobrych praktyk.
+Brief agenta dostał pkt 5.7 („IndexNow — obowiązkowe zgłoszenie po każdej nowej stronie i po
+każdym wpisie") oraz osobny krok w pętli operacyjnej; kompletność dostawy z pkt 5.2 obejmuje
+teraz datę w `PAGE_UPDATED` i zgłoszenie po wdrożeniu. Gdy wdrożenia jeszcze nie było, polecenie
+trafia dosłownie do sekcji „Następny krok" w raporcie — agent nie zgłasza na wyrost i nie udaje,
+że zgłosił. Zasada zamknięcia pozycji stoi też w legendzie tego planu, obok reguły o linkach
+zwrotnych, bo to ten sam rodzaj długu: publikacja, o której nikt się nie dowiedział.
+
+Przy okazji poprawione dwa nieaktualne miejsca w briefie: GA4 i Search Console figurowały jako
+niewdrożone, mimo że działają od 16 sierpnia. Zakaz prognoz liczbowych zostaje — uzasadnia go
+teraz brak okresu porównawczego i brak zdarzeń konfiguratora, a nie brak samych narzędzi.
+
+**Co zostaje po stronie właściciela:** założenie konta w Bing Webmaster Tools (import z Search
+Console), a po najbliższym wdrożeniu jednorazowe `npm run indexnow -- --all`. Do tego czasu
+**nic nie zostało zgłoszone** — klucz nie jest jeszcze wdrożony na produkcji, więc każda wysyłka
+i tak wróciłaby z 403.
+
+Weryfikacja: `typecheck` i `build` bez błędów. Dry-run na lokalnym serwerze — 14 adresów stron
+z sitemapy, bez adresów obrazów (`<image:loc>` nie wchodzi do listy), plik klucza zwraca 200
+i zgadza się co do znaku, okno `--days 1` zawęża listę do 5 adresów zmienionych 17 sierpnia.
+Ścieżki błędne kończą się kodem wyjścia 1, przebieg poprawny — 0, więc skrypt nadaje się do
+wpięcia w hook wdrożeniowy.
 
 ### 17 sierpnia 2026 — poz. S1: `/o-nas`, przepisanie na polecenie właściciela
 
@@ -1332,6 +1527,7 @@ z konfiguracją „Koperta DL Czarny z nadrukiem", 4,57 zł/szt.
 | ~~Zdjęcia produktowe to PNG po 0,5–0,75 MB~~ | **Odblokowane 15 sierpnia 2026.** `colors/`, `prints/` i `personalized/` przeszły na WebP w trzech szerokościach: **30,8 MB → 2,1 MB**. Strona główna pobiera dziś **197 kB** obrazów zamiast ~9 MB | — |
 | Kadry hero w `public/images/` nadal w PNG | `Hero Envelopes Robocze.png` 2,99 MB, `koperta-gorna/dolna.png` 0,7 MB. Hero ma już warianty WebP w `srcSet`, więc PNG-i są najprawdopodobniej nieużywanymi źródłami — do weryfikacji przed usunięciem | Właściciel — potwierdzenie, czy pliki są jeszcze potrzebne |
 | Profile FB / Instagram / LinkedIn | `Organization.sameAs` pusty do czasu utworzenia | Właściciel — po założeniu przekazać adresy |
+| Konto w Bing Webmaster Tools | Kod po stronie serwisu gotowy (klucz IndexNow, `npm run indexnow`, znacznik `msvalidate.01`). Bez konta nie ma danych o indeksacji w Bing — a to indeks, z którego korzystają ChatGPT Search i Copilot | Właściciel — założenie konta, najprościej importem z Search Console |
 
 ---
 

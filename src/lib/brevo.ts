@@ -415,3 +415,55 @@ ${filesSection}
     ),
   };
 }
+
+/** E-mail weryfikacyjny (przy standardowej rejestracji konta). */
+export function verificationEmail(email: string, link: string): EmailPayload {
+  return {
+    to: email,
+    subject: 'Potwierdź swój adres e-mail — Envelopes',
+    html: shell(
+      'Weryfikacja adresu e-mail',
+      `<p>Dziękujemy za założenie konta w naszym sklepie. Aby upewnić się, że adres e-mail jest poprawny, prosimy o jego weryfikację klikając w poniższy link:</p>
+<p style="text-align:center;margin:32px 0;">
+  <a href="${link}" style="display:inline-block;background:#2a4e7e;color:#fff;text-decoration:none;padding:14px 28px;border-radius:8px;font-family:Arial,sans-serif;font-weight:bold;font-size:16px;">Potwierdź adres e-mail</a>
+</p>
+<p style="font-size:13px;color:#575e6e;word-break:break-all;">
+  Jeśli przycisk nie działa, skopiuj ten link do przeglądarki:<br>
+  <a href="${link}" style="color:#2a4e7e;">${link}</a>
+</p>
+<p>Jeśli to nie Ty zakładałeś konto, po prostu zignoruj tę wiadomość.</p>`
+    ),
+  };
+}
+
+/** Powitanie nowo zarejestrowanego użytkownika. */
+export function welcomeEmail(email: string, displayName: string | null): EmailPayload {
+  const nameGreeting = displayName ? `Cześć ${displayName}` : 'Cześć';
+  
+  return {
+    to: email,
+    subject: 'Witamy w Envelopes!',
+    html: shell(
+      'Witamy w świecie pięknych kopert',
+      `<p><strong>${nameGreeting},</strong></p>
+<p>Bardzo się cieszymy, że dołączyłeś do grona klientów <strong>Envelopes</strong>. Z Twoim nowym kontem zakupy będą jeszcze szybsze i przyjemniejsze!</p>
+
+<div style="background:#f4f2ec;border-left:3px solid #2a4e7e;padding:16px 20px;margin:24px 0;border-radius:0 8px 8px 0;">
+  <p style="margin:0 0 8px;font-weight:600;color:#2a4e7e;">Korzyści z Twojego konta:</p>
+  <ul style="margin:0;padding-left:20px;font-size:14px;line-height:1.6;color:#575e6e;">
+    <li>Szybsze zamawianie — Twoje dane do wysyłki i faktury są już zapisane.</li>
+    <li>Dostęp do historii zamówień i projektów do akceptacji.</li>
+    <li>Wygodne ponawianie zamówień za pomocą jednego kliknięcia.</li>
+  </ul>
+</div>
+
+<p>Zachęcamy do uzupełnienia swoich danych profilowych, co przyspieszy proces przyszłych zakupów.</p>
+
+<p style="text-align:center;margin:32px 0;">
+  <a href="${siteUrl}/profil" style="display:inline-block;background:#2a4e7e;color:#fff;text-decoration:none;padding:14px 28px;border-radius:8px;font-family:Arial,sans-serif;font-weight:bold;font-size:16px;">Przejdź do profilu</a>
+</p>
+
+<p>W razie pytań, po prostu odpisz na tego e-maila — chętnie pomożemy!</p>`
+    ),
+  };
+}

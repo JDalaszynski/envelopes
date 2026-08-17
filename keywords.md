@@ -397,7 +397,7 @@ to zapis na powiadomienie o dostępności formatów, nie wejście do konfigurato
 | K3 Ozdobne / kolorowe | `/` | **przebudowane** | **P0** | Optymalizacja istniejącego zasobu, zero kosztu wdrożenia |
 | K4 Format DL | `/koperty-dl` | **istnieje** | **P0** | Najwyższy potencjał cytowań w AI, jedyny dostępny format |
 | K7 Vouchery | `/koperty-na-vouchery` | **istnieje** | **P0** | 9 z 22 profili klienta, zakupy cykliczne, brak konkurencji tematycznej |
-| K5 Kolory | `/koperty/[kolor]` × 19 | do zbudowania | P1 | Skalowalny long-tail na gotowych danych z katalogu |
+| K5 Kolory | `/koperty/[kolor]` × 19 | **1 z 19 opublikowana** (`/koperty/czarny`, 17 sierpnia 2026) | P1 | Skalowalny long-tail na gotowych danych z katalogu |
 
 > **Decyzja z 13 sierpnia 2026 — hub `/koperty` zdjęty z planu.** Po przebudowie strony głównej
 > cała paleta 19 kolorów stoi na `/`: tabela gramatur i wykończeń, `ItemList` w danych

@@ -20,6 +20,7 @@ import {
   FORMAT_MAP,
   UPCOMING_FORMATS,
 } from '@/lib/catalog';
+import { colorPagePath, hasColorPage } from '@/lib/color-pages';
 import { FAQ_ITEMS } from '@/lib/faq';
 import { getAllPosts, getPost } from '@/lib/blog';
 import {
@@ -1104,24 +1105,42 @@ export default function HomePage() {
 
               <p>
                 Zamawiać można bez opakowań zbiorczych i bez progów ilościowych. Kliknięcie w kolor
-                otwiera konfigurator z zaznaczonym odcieniem.
+                otwiera konfigurator z zaznaczonym odcieniem — a odcienie z własną kartą prowadzą
+                na stronę, która opisuje ich papier i zastosowania.
               </p>
 
               <div className="palette-board" style={{ marginTop: 'var(--space-5)' }}>
-                {COLORS.map((color) => (
-                  <ConfigureLink
-                    key={color.id}
-                    format="DL"
-                    color={color.id}
-                    className="palette-chip"
-                    title={`Koperta DL ${color.name.toLowerCase()} — otwórz konfigurator z tym kolorem`}
-                  >
-                    <span className="swatch-shape">
-                      <EnvelopeShape colorId={color.id} />
-                    </span>
-                    <span>{color.name}</span>
-                  </ConfigureLink>
-                ))}
+                {COLORS.map((color) =>
+                  /* Kolor z opublikowaną stroną przejmuje klik od konfiguratora
+                     (content-plan.md, Faza 3): strona koloru niesie ten sam
+                     wybór, a przy okazji treść, dane strukturalne i koszyk. */
+                  hasColorPage(color.id) ? (
+                    <Link
+                      key={color.id}
+                      href={colorPagePath(color.id)}
+                      className="palette-chip"
+                      title={`Koperty DL ${color.name.toLowerCase()} — papier, zastosowania i zamówienie`}
+                    >
+                      <span className="swatch-shape">
+                        <EnvelopeShape colorId={color.id} />
+                      </span>
+                      <span>{color.name}</span>
+                    </Link>
+                  ) : (
+                    <ConfigureLink
+                      key={color.id}
+                      format="DL"
+                      color={color.id}
+                      className="palette-chip"
+                      title={`Koperta DL ${color.name.toLowerCase()} — otwórz konfigurator z tym kolorem`}
+                    >
+                      <span className="swatch-shape">
+                        <EnvelopeShape colorId={color.id} />
+                      </span>
+                      <span>{color.name}</span>
+                    </ConfigureLink>
+                  )
+                )}
               </div>
 
               <div className="subhead">

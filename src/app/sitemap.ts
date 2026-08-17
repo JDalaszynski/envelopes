@@ -3,6 +3,7 @@ import type { MetadataRoute } from 'next';
 import { getAllPosts, type BlogPost } from '@/lib/blog';
 import { COLORS, COLOR_MAP } from '@/lib/catalog';
 import { TERMS, PRIVACY, COOKIES } from '@/lib/legal';
+import { colorPagePath, colorPages } from '@/lib/color-pages';
 import {
   ABOUT_SHOTS,
   INDUSTRY_SHOTS,
@@ -11,6 +12,7 @@ import {
   PRINT_AREA_SHOT,
   VOUCHER_COLOR_IDS,
   VOUCHER_SHOTS,
+  shotByFile,
   showcaseSrc,
   type ShowcaseShot,
 } from '@/lib/showcase';
@@ -52,6 +54,8 @@ const PAGE_UPDATED: Record<string, string> = {
   '/kontakt': '2026-08-17',
   /* Publikacja strony „O nas" */
   '/o-nas': '2026-08-17',
+  /* Pierwsza strona koloru — poz. 29 planu */
+  '/koperty/czarny': '2026-08-17',
 };
 
 /** Adres bezwzględny — sitemapa obrazów nie przyjmuje ścieżek względnych. */
@@ -168,6 +172,30 @@ export default function sitemap(): MetadataRoute.Sitemap {
     page('/pliki-cookies', 'yearly', 0.3, COOKIES.updated),
   ];
 
+  /*
+   * Strony kolorów (Faza 3). Lista pochodzi z `color-pages.ts`, czyli
+   * z jedynego rejestru opublikowanych odcieni — sitemapa nie może wyprzedzić
+   * treści. Zdjęcia to trzy kadry katalogowe tego koloru (gładki, z nadrukiem,
+   * z personalizacją) i kadry aranżacyjne, które strona faktycznie renderuje.
+   */
+  const colorPageEntries: MetadataRoute.Sitemap = colorPages().map(({ color, content }) => {
+    const path = colorPagePath(color.id);
+    return {
+      url: `${SITE_URL}${path}`,
+      lastModified: PAGE_UPDATED[path],
+      changeFrequency: 'monthly',
+      priority: 0.7,
+      images: [
+        color.images?.DL,
+        color.printImages?.DL,
+        color.personalizedImages?.DL,
+        ...content.shotFiles.map((file) => showcaseSrc(shotByFile(file))),
+      ]
+        .filter((image): image is string => Boolean(image))
+        .map(abs),
+    };
+  });
+
   const posts: MetadataRoute.Sitemap = getAllPosts().map((post) => ({
     url: `${SITE_URL}/blog/${post.slug}`,
     lastModified: new Date(post.updated ?? post.date),
@@ -176,5 +204,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     images: postImages(post),
   }));
 
-  return [...staticPages, ...posts];
+  return [...staticPages, ...colorPageEntries, ...posts];
 }

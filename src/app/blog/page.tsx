@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 
 import { BlogList } from '@/components/blog/BlogList';
+import { StickyCta } from '@/components/ui/StickyCta';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { getAllPosts } from '@/lib/blog';
 import { breadcrumbJsonLd, ogImage } from '@/lib/seo';
@@ -52,6 +53,7 @@ export default function BlogPage() {
           <BlogList posts={posts} />
         </div>
       </section>
+      <StickyCta />
     </>
   );
 }

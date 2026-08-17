@@ -4,7 +4,7 @@ import { promises as fs } from 'node:fs';
 import path from 'node:path';
 
 import { getDb, isAdminConfigured } from './firebase/admin';
-import { DEFAULT_PRICING, type PricingConfig } from './pricing';
+import { resolvePricing, type PricingConfig } from './pricing';
 import { buildOrderNumber } from './orders';
 import type { Order, UserProfile } from './types';
 import { seedOrders } from './seed';
@@ -29,10 +29,10 @@ interface LocalDb {
   users: Record<string, UserProfile>;
   counters: Record<string, number>;
   /**
-   * Wyłącznie nadpisania cennika — nigdy pełna kopia DEFAULT_PRICING.
-   * Zapisanie kompletu stawek zamroziłoby cennik w pliku i przesłoniło
-   * późniejsze zmiany w kodzie, przez co serwer naliczałby inne kwoty
-   * niż te pokazane klientowi w koszyku.
+   * Nadpisania cennika. Pole zostaje w kształcie danych, ale **żadna wartość
+   * nie jest dziś stosowana** — `resolvePricing()` odrzuca rozjazd, bo ceny
+   * pokazywane klientowi pochodzą z `DEFAULT_PRICING` wkompilowanego w strony.
+   * Rozjeżdżające się pole trafia do logu serwera jako błąd.
    */
   pricing: Partial<PricingConfig>;
 }
@@ -77,14 +77,19 @@ export const usingFirestore = (): boolean => isAdminConfigured && Boolean(getDb(
 
 /* ── Cennik ─────────────────────────────────────────────────── */
 
+/**
+ * Cennik dla serwera. Nadpisanie z bazy jest **czytane i sprawdzane, ale nie
+ * stosowane** — decyzję i jej powód opisuje `resolvePricing()` w `pricing.ts`.
+ * Odczyt zostaje, bo to on wykrywa rozjazd i wpisuje go do logu; bez niego
+ * dokument w bazie leżałby niezauważony.
+ */
 export async function getPricing(): Promise<PricingConfig> {
   if (usingFirestore()) {
     const snap = await getDb()!.collection('pricing').doc('current').get();
-    if (snap.exists) return { ...DEFAULT_PRICING, ...(snap.data() as Partial<PricingConfig>) };
-    return DEFAULT_PRICING;
+    return resolvePricing(snap.exists ? (snap.data() as Partial<PricingConfig>) : null);
   }
   const db = await readLocal();
-  return { ...DEFAULT_PRICING, ...db.pricing };
+  return resolvePricing(db.pricing);
 }
 
 /* ── Numeracja zamówień (pkt 1.8) ───────────────────────────── */
