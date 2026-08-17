@@ -21,6 +21,7 @@ import {
   maxInsertSize,
 } from '@/lib/catalog';
 import type { EnvelopeFormat } from '@/lib/catalog';
+import { getPost } from '@/lib/blog';
 import { colorPagePath, colorPages } from '@/lib/color-pages';
 import { DL_FAQ_ITEMS } from '@/lib/faq';
 import { DEFAULT_PRICING, DELIVERY_COST, calculatePrice, formatPrice } from '@/lib/pricing';
@@ -32,6 +33,12 @@ import {
   howToJsonLd,
   ogImage,
 } from '@/lib/seo';
+import {
+  PLAIN_ENVELOPE_SHOT,
+  showcaseCaption,
+  showcaseSrc,
+  showcaseSrcSet,
+} from '@/lib/showcase';
 import type { EnvelopeConfig } from '@/lib/types';
 
 /**
@@ -48,10 +55,11 @@ import type { EnvelopeConfig } from '@/lib/types';
  *    a kolory jako sześć bestsellerów z odesłaniem do pełnej palety na `/`.
  * 2. Wobec F1 i F2: cennik nadruku i personalizacji rozłożony na czynniki
  *    zostaje tam. Tutaj obie usługi to po jednym akapicie z linkiem.
- * 3. Wobec przyszłych pozycji 10 i 11 planu: ta strona podaje **wymiary** —
- *    tabelę formatów i tabelę dopasowań wkładek w milimetrach. Wybór formatu
- *    pod konkretną wkładkę (poz. 10) i grubość wkładu, czyli ile kartek
- *    i jakiej gramatury (poz. 11), są osobnymi intencjami i osobnymi URL-ami.
+ * 3. Wobec treści wspierających: ta strona podaje **wymiary** — tabelę
+ *    formatów i tabelę dopasowań wkładek w milimetrach. Wybór formatu pod
+ *    konkretną wkładkę obsługuje wpis `jaki-format-koperty-wybrac-do-wkladki`
+ *    (poz. 10, opublikowany 17 sierpnia 2026), a grubość wkładu — czyli ile
+ *    kartek i jakiej gramatury — poz. 11. Osobne intencje, osobne URL-e.
  *
  * Wszystkie wymiary pochodzą z `catalog.ts`, a dopasowania liczy
  * `fitsInFormat()` — zmiana formatu w katalogu przepisuje treść, tabele
@@ -103,6 +111,16 @@ const WEIGHT_SUMMARY = WEIGHT_GROUPS.map(([weight, names]) => {
 
 /** Kolory oznaczone plakietką „Bestseller" — sześć kadrów zamiast całej palety. */
 const BESTSELLERS = COLORS.filter((color) => color.bestseller);
+
+/**
+ * Treści wspierające filar (content-plan.md poz. 10, 11 i 13). Sekcja została
+ * usunięta 16 sierpnia razem z wpisami startowymi i wraca wraz z pierwszym
+ * wpisem klastra. `filter` zostawia listę pustą, dopóki wpisu nie ma —
+ * nagłówek nie renderuje się nad pustą siatką.
+ */
+const GUIDES = [getPost('jaki-format-koperty-wybrac-do-wkladki')].filter(
+  (post) => post !== undefined
+);
 
 /** Formaty zapowiedziane, wypisane zdaniem: „C6 114 × 162 mm i K4 155 × 155 mm". */
 const UPCOMING_LABEL = UPCOMING_FORMATS.map((f) => `${f.id} ${f.dimensions}`).join(' i ');
@@ -529,6 +547,20 @@ export default function DlEnvelopesPage() {
             opisaliśmy na stronie <Link href="/koperty-na-vouchery">koperty na vouchery</Link>.
           </p>
 
+          {/* Link w dół do treści wspierającej (poz. 10) — tabela odpowiada
+              „czy się mieści", wpis prowadzi przez wybór formatu od wkładki. */}
+          {GUIDES.length > 0 && (
+            <p className="small muted" style={{ marginTop: 'var(--space-3)', maxWidth: '68ch' }}>
+              Jeżeli Państwa wkładki nie ma w tabeli, wymiar trzeba zmierzyć samodzielnie. Metodę
+              pomiaru, wielkość zapasu i to, co zrobić z wkładką, która się nie mieści, opisaliśmy
+              w poradniku{' '}
+              <Link href="/blog/jaki-format-koperty-wybrac-do-wkladki">
+                jaki format koperty wybrać do wkładki
+              </Link>
+              .
+            </p>
+          )}
+
           <div className="row" style={{ marginTop: 'var(--space-6)' }}>
             <ConfigureLink format="DL" className="btn">
               Zamów koperty DL {DL.dimensions}
@@ -619,9 +651,39 @@ export default function DlEnvelopesPage() {
             <h2>Koperta prostokątna bez okienka adresowego</h2>
           </div>
 
-          <div className="grid grid-2" style={{ gap: 'var(--space-6)', alignItems: 'start' }}>
+          {/* Kadr koperty gładkiej — jedyne zdjęcie aranżacyjne na tym filarze
+              i jedyne w bibliotece bez nadruku. Sekcja mówi o budowie koperty,
+              więc zdjęcie z cudzym logiem odciągałoby uwagę od tego, co ma
+              pokazać: jednolitej ścianki i klapki wzdłuż dłuższego boku. */}
+          <div
+            className="grid grid-2"
+            style={{ gap: 'var(--space-6)', alignItems: 'start', marginBottom: 'var(--space-6)' }}
+          >
+            <div className="paper-shots">
+              <figure className="paper-shot" style={{ margin: 0 }}>
+                <img
+                  src={showcaseSrc(PLAIN_ENVELOPE_SHOT)}
+                  srcSet={showcaseSrcSet(PLAIN_ENVELOPE_SHOT)}
+                  sizes="(max-width: 900px) calc(100vw - 48px), 588px"
+                  width={1024}
+                  height={1024}
+                  alt={PLAIN_ENVELOPE_SHOT.alt}
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption>
+                  <strong>{showcaseCaption(PLAIN_ENVELOPE_SHOT)}</strong>
+                  <span className="small muted">{PLAIN_ENVELOPE_SHOT.note}</span>
+                </figcaption>
+              </figure>
+            </div>
+            {/* Oba akapity w jednej kolumnie obok kadru — sekcja opisuje dwie
+                cechy tej samej ścianki, więc czyta się je jedna pod drugą,
+                patrząc na to samo zdjęcie. */}
             <div>
-              <h3 style={{ fontSize: 19 }}>Kształt prostokątny, klapka na dłuższym boku</h3>
+              <h3 style={{ fontSize: 19, marginTop: 0 }}>
+                Kształt prostokątny, klapka na dłuższym boku
+              </h3>
               <p className="small">
                 Koperta DL jest prostokątna i podłużna — stosunek jej boków wynosi 1 do{' '}
                 {SIDE_RATIO}. Klapka biegnie wzdłuż dłuższego boku {DL.height} mm, więc dokument
@@ -630,8 +692,7 @@ export default function DlEnvelopesPage() {
                 × {A4_IN_THREE.height} mm wchodzi w jednym ruchu, bez obracania i bez dodatkowego
                 zagięcia.
               </p>
-            </div>
-            <div>
+
               <h3 style={{ fontSize: 19 }}>Brak okienka na całej ofercie</h3>
               <p className="small">
                 Wszystkie koperty Envelopes są bez okienka adresowego. Przednia ścianka jest
@@ -855,7 +916,44 @@ export default function DlEnvelopesPage() {
         </div>
       </section>
 
-      {/* ── Treści wspierające filar wrócą wraz z poz. 10, 11 i 13 planu ── */}
+      {/* ── Poradniki — treści wspierające filar (poz. 10, 11 i 13 planu) ──
+          Przy jednym wpisie renderujemy pojedynczą kartę zamiast siatki,
+          żeby nie zostawiać pustych kolumn; siatka włącza się od drugiego. */}
+      {GUIDES.length > 0 && (
+        <section className="section section-surface" id="poradniki">
+          <div className="container">
+            <div className="section-head">
+              <span className="eyebrow">Poradniki</span>
+              <h2>Zanim wybiorą Państwo format</h2>
+              <p>
+                Tabele powyżej odpowiadają na pytanie, czy dana wkładka mieści się w kopercie DL.
+                Poniższy poradnik odwraca kierunek: prowadzi od tego, co mają Państwo w ręku, do
+                formatu, który to przyjmie.
+              </p>
+            </div>
+
+            <div
+              className={GUIDES.length > 1 ? 'grid grid-2' : undefined}
+              style={{ gap: 'var(--space-5)' }}
+            >
+              {GUIDES.map((post) => (
+                <article className="card card-lg" key={post.slug}>
+                  <span className="badge">{post.category}</span>
+                  <h3 style={{ fontSize: 21, marginTop: 'var(--space-3)' }}>
+                    <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+                  </h3>
+                  <p className="small" style={{ marginTop: 'var(--space-2)' }}>
+                    {post.lead}
+                  </p>
+                  <p className="small muted" style={{ marginBottom: 0 }}>
+                    {post.readingMinutes} min czytania
+                  </p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ── Finalne CTA ── */}
       <section className="section-tight">

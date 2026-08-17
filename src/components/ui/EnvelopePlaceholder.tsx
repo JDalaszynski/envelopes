@@ -29,6 +29,15 @@ interface Props {
    * w konfiguratorze jest szerszy i podaje własną wartość.
    */
   sizes?: string;
+  /**
+   * Kadr w pierwszym ekranie — ładuje się od razu i dostaje `fetchPriority`.
+   *
+   * Domyślnie każdy kadr jest leniwy, bo komponent stoi głównie w siatkach
+   * poniżej zgięcia. Zdjęcie w hero strony koloru jest jednak kandydatem na
+   * LCP: leniwe ładowanie opóźniałoby wtedy największy element widoku, czyli
+   * dokładnie to, co mierzy Core Web Vitals (pkt 5.6.5 briefu).
+   */
+  eager?: boolean;
 }
 
 const RATIOS = { photo: '4 / 3', wide: '16 / 9', portrait: '3 / 4', square: '1 / 1' };
@@ -46,6 +55,7 @@ export function EnvelopePlaceholder({
   hasPrint = false,
   hasPersonalization = false,
   sizes = DEFAULT_SIZES,
+  eager = false,
 }: Props) {
   const color = COLOR_MAP[colorId];
   const hex = color?.hex ?? '#EADFC8';
@@ -95,7 +105,8 @@ export function EnvelopePlaceholder({
           srcSet={colorImageSrcSet(imageUrl)}
           sizes={sizes}
           alt={alt}
-          loading="lazy"
+          loading={eager ? 'eager' : 'lazy'}
+          fetchPriority={eager ? 'high' : undefined}
           decoding="async"
           style={{ width: '100%', height: '100%', objectFit: 'contain' }}
         />

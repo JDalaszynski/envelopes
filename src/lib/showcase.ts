@@ -20,7 +20,16 @@ import { COLOR_MAP } from './catalog';
  * a nie na oko — pkt 5.6.2 briefu.
  */
 
-export type ShowcaseVariant = 'nadruk' | 'personalizacja' | 'makieta';
+/**
+ * Co kadr pokazuje — a nie: gdzie kadr stoi.
+ *
+ * Wariant steruje preselekcją usługi w `ConfigureLink`, więc musi opisywać
+ * stan koperty na zdjęciu. `gladka` doszła razem z kadrem koperty bez
+ * nadruku: `makieta` znaczy „koperta z zaznaczonym polem nadruku" i włącza
+ * krok nadruku w konfiguratorze, co dla koperty czystej byłoby obietnicą
+ * niezgodną z tym, co widać.
+ */
+export type ShowcaseVariant = 'nadruk' | 'personalizacja' | 'makieta' | 'gladka';
 
 export interface ShowcaseShot {
   /** Nazwa pliku bez sufiksu szerokości i rozszerzenia */
@@ -73,8 +82,16 @@ export function showcaseColorName(shot: ShowcaseShot): string {
 /** Tytuł odnośnika do konfiguratora — ten sam wzorzec na każdej stronie. */
 export function showcaseLinkTitle(shot: ShowcaseShot): string {
   const color = COLOR_MAP[shot.colorId];
+  const name = color?.name ?? shot.colorId;
+
+  /* Kadr koperty gładkiej nie zapowiada żadnej usługi, więc i tytuł
+     odnośnika o niej nie mówi — konfigurator otwiera się na samym odcieniu. */
+  if (shot.variant === 'gladka') {
+    return `Koperta DL ${name} bez nadruku — otwórz konfigurator z tym odcieniem`;
+  }
+
   const usluga = shot.variant === 'personalizacja' ? 'z personalizacją' : 'z nadrukiem';
-  return `Koperta DL ${color?.name ?? shot.colorId} ${usluga} — otwórz konfigurator z tą konfiguracją`;
+  return `Koperta DL ${name} ${usluga} — otwórz konfigurator z tą konfiguracją`;
 }
 
 /* ── Nadruk logo w kontekście branżowym — filar K1 ─────────────────────── */
@@ -202,6 +219,62 @@ export const OCCASION_SHOTS: ShowcaseShot[] = [
   },
 ];
 
+/* ── Spis zastosowań na stronie głównej ────────────────────────────────── */
+
+/**
+ * Kadry, które powstały pod dwie pozycje spisu zastosowań na `/`:
+ * „Certyfikaty, dyplomy i podziękowania" oraz „Koperty na pieniądze
+ * i nagrody". Do 17 sierpnia 2026 obie pozycje nie miały zdjęcia
+ * aranżacyjnego i pokazywały zamiast niego kadr katalogowy gładkiej koperty.
+ *
+ * Trzymamy je osobno od `OCCASION_SHOTS`, mimo że tematycznie są pokrewne:
+ * galeria „Nadruk okolicznościowy" niżej na tej samej stronie renderuje
+ * `OCCASION_SHOTS` w całości, więc dopisanie tych dwóch kadrów tam pokazałoby
+ * te same zdjęcia dwa razy na jednym ekranie. Osobna lista trafia natomiast
+ * do sitemapy obrazów dla `/`, bo strona faktycznie je renderuje.
+ *
+ * ⚠ Kadr „W dniu Ślubu" pokazuje kopertę **na pieniądze**, którą wręcza się
+ * na weselu — nie kopertę na zaproszenie ślubne. Banknot mieści się w DL
+ * płasko, więc to zastosowanie jest realizowalne dziś; zaproszenie kwadratowe
+ * wymagałoby formatu K4 ze statusem „Dostępne wkrótce". Treść wokół tego
+ * kadru musi trzymać się pieniędzy, inaczej obiecuje format spoza oferty.
+ */
+export const USE_CASE_SHOTS: ShowcaseShot[] = [
+  {
+    file: 'matcha-koperta-dl-nadruk-wyrazy-uznania',
+    colorId: 'matcha',
+    variant: 'nadruk',
+    alt: 'Dwie koperty DL w kolorze Matcha na jasnym drewnie, na leżącej z tyłu biały nadruk „Z wyrazami uznania"',
+    note: 'Dyplomy, certyfikaty i listy gratulacyjne — nadruk krótkiej formuły zamiast logo.',
+  },
+  {
+    file: 'biala-perlowa-koperta-dl-nadruk-w-dniu-slubu',
+    colorId: 'biala-perlowa',
+    variant: 'nadruk',
+    alt: 'Koperta DL Biała Perłowa z czarnym nadrukiem „W dniu Ślubu" pismem odręcznym, na białych deskach',
+    note: 'Koperty na pieniądze — banknot wchodzi płasko, bez składania.',
+  },
+];
+
+/* ── Koperta gładka — kadr pod budowę formatu (filar K4) ───────────────── */
+
+/**
+ * Koperta bez nadruku, przód i klapka w jednym kadrze.
+ *
+ * Kadr istnieje po to, żeby pokazać **budowę koperty DL**: jednolitą przednią
+ * ściankę bez okienka adresowego i klapkę biegnącą wzdłuż dłuższego boku.
+ * Wszystkie pozostałe kadry aranżacyjne mają nadruk albo personalizację, więc
+ * żaden z nich nie pokazuje samego produktu — a filar formatu opisuje właśnie
+ * jego, nie usługę.
+ */
+export const PLAIN_ENVELOPE_SHOT: ShowcaseShot = {
+  file: 'biala-perlowa-koperta-dl-gladka-przod-i-tyl',
+  colorId: 'biala-perlowa',
+  variant: 'gladka',
+  alt: 'Dwie koperty DL Biała Perłowa bez nadruku na białych deskach — jedna klapką do góry, druga jednolitą przednią ścianką bez okienka adresowego',
+  note: 'Przednia ścianka bez okienka i klapka wzdłuż dłuższego boku.',
+};
+
 /* ── Kadr pomocniczy do sekcji o procesie nadruku ──────────────────────── */
 
 /**
@@ -259,7 +332,9 @@ export const ALL_SHOWCASE_SHOTS: ShowcaseShot[] = [
   ...INDUSTRY_SHOTS,
   ...PERSONALIZATION_SHOTS,
   ...OCCASION_SHOTS,
+  ...USE_CASE_SHOTS,
   PRINT_AREA_SHOT,
+  PLAIN_ENVELOPE_SHOT,
 ];
 
 /**

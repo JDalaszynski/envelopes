@@ -155,20 +155,20 @@ const HOW_TO_STEPS = [
  * i podpis biorę wprost z `showcase.ts`, więc opis kadru nie może się rozjechać
  * ze stroną filarową, na której ten sam plik też stoi.
  *
- * Dwie ostatnie pozycje — certyfikaty i koperty na pieniądze — nie mają kadru
- * aranżacyjnego w bibliotece. Zamiast podstawiać pod nie zdjęcie z cudzym
- * logiem (co byłoby nieprawdą w treści alternatywnej i w warstwie handlowej),
- * dostają zdjęcie produktowe gładkiej koperty w odcieniu pasującym do sytuacji.
- * Kadr wymyślony pod nagłówek byłby portfolio, którego nie mamy (pkt 4.1
- * briefu SEO/GEO).
+ * Dwie ostatnie pozycje — certyfikaty i koperty na pieniądze — do 17 sierpnia
+ * 2026 nie miały własnego kadru i pokazywały zamiast niego zdjęcie katalogowe
+ * gładkiej koperty w odcieniu pasującym do sytuacji. Doszły zdjęcia
+ * „Z wyrazami uznania" na papierze Matcha i „W dniu Ślubu" na Białej Perłowej
+ * (`USE_CASE_SHOTS` w `showcase.ts`), więc każda z sześciu pozycji ma dziś
+ * kadr pokazujący dokładnie to, co mówi jej nagłówek. Dlatego `shot` jest
+ * polem **wymaganym**: podstawienie pod nagłówek kadru, który przedstawia coś
+ * innego, byłoby portfolio, którego nie mamy (pkt 4.1 briefu SEO/GEO).
  */
 const USE_CASES: {
   heading: string;
   text: string;
-  /** Kadr aranżacyjny z biblioteki — jeśli istnieje dla tej sytuacji */
-  shot?: ShowcaseShot;
-  /** Kolor zdjęcia produktowego — używany, gdy kadru aranżacyjnego nie ma */
-  colorId?: string;
+  /** Kadr aranżacyjny z biblioteki — obowiązkowy, patrz komentarz wyżej */
+  shot: ShowcaseShot;
 }[] = [
   {
     heading: 'Korespondencja firmowa i dokumenty',
@@ -193,12 +193,12 @@ const USE_CASES: {
   {
     heading: 'Certyfikaty, dyplomy i podziękowania',
     text: 'Certyfikat A4 złożony na trzy mieści się w kopercie DL. Jedna edycja kursu albo pojedyncza grupa szkoleniowa to już wystarczający nakład — nie trzeba czekać, aż uzbiera się większe zamówienie.',
-    colorId: 'ecru',
+    shot: shotByFile('matcha-koperta-dl-nadruk-wyrazy-uznania'),
   },
   {
     heading: 'Koperty na pieniądze i nagrody',
-    text: 'Premia, nagroda w konkursie pracowniczym i prezent okolicznościowy trafiają do koperty DL, bo banknot mieści się w niej płasko, bez składania. Nie trzeba przy tym kupować opakowania zbiorczego.',
-    colorId: 'srebrna-perlowa',
+    text: 'Banknot mieści się w kopercie DL płasko, bez składania — dlatego trafia do niej prezent na ślub i chrzciny tak samo jak premia czy nagroda w konkursie pracowniczym. Nadruk okolicznościowy zastępuje wtedy bilecik.',
+    shot: shotByFile('biala-perlowa-koperta-dl-nadruk-w-dniu-slubu'),
   },
 ];
 
@@ -938,46 +938,33 @@ export default function HomePage() {
                   na każdej stronie, na której ten plik stoi. Zdjęcia ładują
                   się leniwie i mają jawne wymiary — sekcja nie generuje CLS. */}
               <div className="usecase-grid m-snap">
-                {USE_CASES.map((useCase) => {
-                  const shot = useCase.shot;
-                  const colorId = shot?.colorId ?? useCase.colorId ?? 'ecru';
+                {USE_CASES.map(({ heading, text, shot }) => {
                   return (
                     <ConfigureLink
-                      key={useCase.heading}
+                      key={heading}
                       format="DL"
-                      color={colorId}
-                      print={shot?.variant === 'nadruk'}
-                      personalization={shot?.variant === 'personalizacja'}
+                      color={shot.colorId}
+                      print={shot.variant === 'nadruk'}
+                      personalization={shot.variant === 'personalizacja'}
                       className="usecase-card"
-                      title={`${useCase.heading} — otwórz konfigurator z tą konfiguracją`}
+                      title={`${heading} — otwórz konfigurator z tą konfiguracją`}
                     >
                       <div className="usecase-frame">
-                        {shot ? (
-                          <img
-                            src={`/images/zastosowania/${shot.file}-1024.webp`}
-                            srcSet={`/images/zastosowania/${shot.file}-512.webp 512w, /images/zastosowania/${shot.file}-1024.webp 1024w`}
-                            sizes="(max-width: 720px) 78vw, (max-width: 900px) calc(50vw - 36px), (max-width: 1080px) calc(33.3vw - 32px), 306px"
-                            width={1024}
-                            height={1024}
-                            alt={shot.alt}
-                            loading="lazy"
-                            decoding="async"
-                          />
-                        ) : (
-                          <EnvelopePlaceholder
-                            format="DL"
-                            colorId={colorId}
-                            ratio="photo"
-                            hideCaption
-                            size="sm"
-                            sizes="(max-width: 720px) 78vw, (max-width: 900px) calc(50vw - 36px), (max-width: 1080px) calc(33.3vw - 32px), 306px"
-                          />
-                        )}
+                        <img
+                          src={`/images/zastosowania/${shot.file}-1024.webp`}
+                          srcSet={`/images/zastosowania/${shot.file}-512.webp 512w, /images/zastosowania/${shot.file}-1024.webp 1024w`}
+                          sizes="(max-width: 720px) 78vw, (max-width: 900px) calc(50vw - 36px), (max-width: 1080px) calc(33.3vw - 32px), 306px"
+                          width={1024}
+                          height={1024}
+                          alt={shot.alt}
+                          loading="lazy"
+                          decoding="async"
+                        />
                       </div>
 
                       <div className="usecase-body">
-                        <h3>{useCase.heading}</h3>
-                        <p>{useCase.text}</p>
+                        <h3>{heading}</h3>
+                        <p>{text}</p>
                       </div>
                     </ConfigureLink>
                   );

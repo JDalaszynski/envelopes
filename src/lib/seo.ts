@@ -1,6 +1,13 @@
 import { CONTACT_DETAILS } from './orders';
 import { DEFAULT_PRICING, DELIVERY_COST, round2 } from './pricing';
-import { AVAILABLE_FORMATS, COLORS, FORMATS, FORMAT_MAP, maxInsertSize } from './catalog';
+import {
+  AVAILABLE_FORMATS,
+  COLORS,
+  FORMATS,
+  FORMAT_MAP,
+  maxInsertSize,
+  type FormatId,
+} from './catalog';
 import { INDUSTRY_SHOTS, PERSONALIZATION_SHOTS, showcaseSrc } from './showcase';
 import type { BlogPost } from './blog';
 
@@ -531,16 +538,34 @@ export function dlEnvelopeProductJsonLd() {
 }
 
 /**
+ * Identyfikator grupy wariantów — **jeden na format**: `ENV-DL`, `ENV-C6`,
+ * `ENV-K4`. Po tym polu Google skleja odcienie w jedną rodzinę produktową
+ * zamiast traktować je jako konkurujące oferty.
+ *
+ * Grupa nie obejmuje formatów, choć technicznie mogłaby: format zmienia cenę
+ * jednostkową i zastosowanie, więc koperta C6 jest innym produktem, a nie
+ * innym rozmiarem tej samej koperty. Kolor jest wariantem, format — nie.
+ *
+ * Dla DL wartość jest równa `SKU.plain`, czyli symbolowi pozycji zbiorczej
+ * w feedzie. To zbieżność zamierzona: gdy warianty kolorystyczne zastąpią
+ * pozycję zbiorczą, wejdą pod identyfikatorem grupy, który Merchant Center
+ * już zna.
+ */
+export function colorGroupId(format: FormatId): string {
+  return `ENV-${format}`;
+}
+
+/**
  * Symbol handlowy wariantu kolorystycznego — `ENV-DL-CZARNY`.
  *
- * Zbudowany z symbolu koperty gładkiej, bo wariant różni się od niej wyłącznie
- * odcieniem: ten sam format, ten sam papier, ta sama cena. Wspólny przedrostek
- * jest jednocześnie identyfikatorem grupy wariantów (`inProductGroupWithID`),
- * po którym Google skleja odcienie w jedną rodzinę produktową zamiast
- * traktować je jako konkurujące oferty.
+ * Format jest częścią symbolu, a nie domyślną wartością pominiętą w zapisie:
+ * ta sama czerń w formacie C6 będzie osobną ofertą, z osobną ceną i osobnym
+ * zdjęciem, więc `ENV-C6-CZARNY` musi dać się od niej odróżnić bez migracji
+ * identyfikatorów. Symbol raz zgłoszony do Merchant Center powinien zostać
+ * stały — po nim sklejana jest historia oferty.
  */
-export function colorSku(colorId: string): string {
-  return `${SKU.plain}-${colorId.toUpperCase()}`;
+export function colorSku(colorId: string, format: FormatId): string {
+  return `${colorGroupId(format)}-${colorId.toUpperCase()}`;
 }
 
 /**
@@ -549,45 +574,82 @@ export function colorSku(colorId: string): string {
  * Rozgraniczenie wobec `dlEnvelopeProductJsonLd()`: tamten blok opisuje format
  * — wymiary, geometrię, największą wkładkę — i jest właścicielem tych pól.
  * Ten opisuje **wariant kolorystyczny** i dokłada `color`, wykończenie oraz
- * gramaturę tego konkretnego odcienia. Oba wskazują tę samą cenę, bo cena
- * zależy wyłącznie od formatu; oba biorą ją z `DEFAULT_PRICING`, więc rozjazd
- * między nimi jest niemożliwy.
+ * gramaturę tego konkretnego odcienia. Oba biorą cenę z `DEFAULT_PRICING`,
+ * więc rozjazd między nimi jest niemożliwy.
  *
  * `inProductGroupWithID` zamiast `isVariantOf`: to pole rozumie zarówno
  * schema.org, jak i Merchant Center, i nie wymaga istnienia osobnego węzła
  * `ProductGroup`, którego w serwisie nie ma — grupą jest zbiór stron kolorów.
+ *
+ * **Format jest parametrem, nie założeniem.** Dziś wchodzi tu wyłącznie `DL`,
+ * bo tylko ten format da się kupić. Gdy ruszą C6 i K4, ta sama strona koloru
+ * wystawi po jednym bloku na format — adres pozostaje kolorowy, bo wariantem
+ * jest format, a nie odcień (reguła w `src/lib/color-pages.ts`). Cena, wymiary
+ * i symbol handlowy schodzą wtedy z parametru, więc nie ma tu czego przepisywać.
  */
 export function colorEnvelopeProductJsonLd(input: {
   colorId: string;
   colorName: string;
+  format: FormatId;
   weight?: string;
   finish?: string;
   images: string[];
 }) {
-  const dl = FORMAT_MAP.DL;
+  const spec = FORMAT_MAP[input.format];
   const url = `${SITE_URL}/koperty/${input.colorId}`;
   const weight = input.weight?.replace('g', ' g/m²');
+
+  /*
+   * Opis papieru schodzi z `finish`, a nie jest wpisany na sztywno.
+   *
+   * Wcześniej każdy odcień dostawał w `material` i w opisie zdanie „barwiony
+   * w masie". Dla odcieni matowych to prawda i jednocześnie ich najmocniejszy
+   * argument, ale dla Złotego i dla papierów perłowych składało się w opis
+   * wewnętrznie sprzeczny — „barwiony w masie, wykończenie metaliczne" —
+   * a połysk jest z definicji cechą powierzchni. Merchant Center czyta
+   * `material` wprost i pokazuje go przy ofercie, więc odcień z wykończeniem
+   * powierzchniowym opisujemy wykończeniem, a resztę palety barwieniem.
+   *
+   * Wyjątek świadomy: `eko` też siedzi w polu `finish`, ale opisuje rodzaj
+   * papieru, a nie jego powierzchnię — barwienie w masie zostaje przy nim
+   * prawdziwe i nie ma powodu go z opisu zdejmować.
+   */
+  const hasSurfaceFinish = input.finish === 'perłowe' || input.finish === 'metaliczne';
+  /* Nazwa wykończenia zostaje w mianowniku („wykończenie metaliczne"),
+     bo katalog trzyma ją w tej formie. Zdanie budujemy tak, żeby nie
+     wymagało jej odmiany — inaczej wyszłoby „z wykończeniem metaliczne". */
+  const paperBase = hasSurfaceFinish ? 'Papier ozdobny' : 'Papier barwiony w masie';
+  const finishClause = input.finish ? `, wykończenie ${input.finish}` : '';
 
   return {
     '@context': 'https://schema.org',
     '@type': 'Product',
     '@id': `${url}#product`,
-    name: `Koperta DL ${dl.dimensions} — kolor ${input.colorName}`,
-    description: `Koperta ozdobna DL ${dl.dimensions} w kolorze ${input.colorName}. Papier barwiony w masie${weight ? ` o gramaturze ${weight}` : ''}${input.finish ? `, wykończenie ${input.finish}` : ''}, bez okienka adresowego. Cena identyczna jak w pozostałych ${COLORS.length} odcieniach — zależy wyłącznie od formatu. Opcjonalny nadruk logo i personalizacja, czyli nadruk danych odbiorcy.`,
+    name: `Koperta ${input.format} ${spec.dimensions} — kolor ${input.colorName}`,
+    description: `Koperta ozdobna ${input.format} ${spec.dimensions} w kolorze ${input.colorName}. ${paperBase}${weight ? ` o gramaturze ${weight}` : ''}${finishClause}, bez okienka adresowego. Cena identyczna jak w pozostałych ${COLORS.length} odcieniach — zależy wyłącznie od formatu. Opcjonalny nadruk logo i personalizacja, czyli nadruk danych odbiorcy.`,
     brand: brandRef,
-    sku: colorSku(input.colorId),
-    inProductGroupWithID: SKU.plain,
+    sku: colorSku(input.colorId, input.format),
+    inProductGroupWithID: colorGroupId(input.format),
     color: input.colorName,
     category: 'Koperty ozdobne',
-    material: `Papier ozdobny${weight ? ` ${weight}` : ''}, barwiony w masie`,
-    size: dl.dimensions,
-    width: { '@type': 'QuantitativeValue', value: dl.width, unitCode: 'MMT' },
-    height: { '@type': 'QuantitativeValue', value: dl.height, unitCode: 'MMT' },
+    material: `Papier ozdobny${weight ? ` ${weight}` : ''}${
+      hasSurfaceFinish ? `, wykończenie ${input.finish}` : ', barwiony w masie'
+    }`,
+    size: spec.dimensions,
+    width: { '@type': 'QuantitativeValue', value: spec.width, unitCode: 'MMT' },
+    height: { '@type': 'QuantitativeValue', value: spec.height, unitCode: 'MMT' },
     image: input.images,
     url,
     additionalProperty: [
+      { '@type': 'PropertyValue', name: 'Format', value: `${input.format} ${spec.dimensions}` },
       { '@type': 'PropertyValue', name: 'Kolor', value: input.colorName },
-      { '@type': 'PropertyValue', name: 'Barwienie papieru', value: 'W masie, na wylot' },
+      /* Papier metaliczny i perłowy ma niżej własny wiersz „Wykończenie" —
+         nie deklarujemy przy nim barwienia na wylot, bo tej cechy nie da się
+         dla nich potwierdzić. Reszta palety, z papierem eko włącznie, dostaje
+         ten wiersz jak dotąd. */
+      ...(hasSurfaceFinish
+        ? []
+        : [{ '@type': 'PropertyValue', name: 'Barwienie papieru', value: 'W masie, na wylot' }]),
       ...(weight
         ? [{ '@type': 'PropertyValue', name: 'Gramatura papieru', value: weight }]
         : []),
@@ -599,7 +661,7 @@ export function colorEnvelopeProductJsonLd(input: {
     offers: {
       '@type': 'Offer',
       priceCurrency: 'PLN',
-      price: DEFAULT_PRICING.base.DL.toFixed(2),
+      price: DEFAULT_PRICING.base[input.format].toFixed(2),
       priceValidUntil: PRICE_VALID_UNTIL,
       availability: 'https://schema.org/InStock',
       itemCondition: 'https://schema.org/NewCondition',

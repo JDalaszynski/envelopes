@@ -394,6 +394,51 @@
   max-width: 16ch;
 }
 
+/* ── Hero strony koloru (`/koperty/[kolor]`) ──
+   Tekst i zdjęcie odcienia obok siebie. Strona koloru sprzedaje wygląd
+   papieru, więc pierwszy ekran musi go pokazać — nazwa odcienia w nagłówku
+   nie zastąpi kadru.
+
+   Kolumny są nierówne (1,15 : 1), bo lead ma 56ch i przy podziale po połowie
+   łamał się na sześć wierszy, a kadr 4:3 nie potrzebuje połowy kontenera. */
+.color-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: var(--space-7);
+  align-items: center;
+}
+
+/* Nagłówek w kolumnie węższej niż kontener — 16ch łamałoby go zbyt wcześnie. */
+.color-hero h1 {
+  max-width: 20ch;
+}
+
+.color-hero .hero-lead {
+  max-width: none;
+}
+
+/* Kadr leży wprost na papierze strony: ramka placeholdera rysowałaby wokół
+   zdjęcia produktowego drugą krawędź, której nie ma nigdzie indziej w hero. */
+.color-hero .placeholder {
+  border: none;
+  padding: 0;
+  background: transparent;
+}
+
+@media (max-width: 900px) {
+  .color-hero {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
+
+  /* Kadr pod treścią i zwężony — na wąskim ekranie zdjęcie na pełną
+     szerokość spychałoby CTA poniżej pierwszego ekranu. */
+  .color-hero .placeholder {
+    max-width: 320px;
+    margin: 0 auto;
+  }
+}
+
 .hero-lead {
   font-size: 18px;
   color: var(--color-ink-soft);

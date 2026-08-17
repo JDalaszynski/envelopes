@@ -9,9 +9,11 @@
  */
 
 import {
+  AVAILABLE_FORMATS,
   BULK_QUOTE_THRESHOLD,
   COLORS,
   FORMAT_MAP,
+  INSERT_CLEARANCE_MM,
   PERSONALIZATION_REQUIRED_COLUMNS,
   PERSONALIZATION_SHEET_EXTENSIONS_LABEL,
   PRINT_FILE_EXTENSIONS,
@@ -19,8 +21,13 @@ import {
   PRINT_FILE_MAX_COUNT,
   PRINT_MIN_DPI,
   PRINT_SAFE_MARGIN_MM,
+  STANDARD_INSERTS,
+  UPCOMING_FORMATS,
+  fitsInFormat,
+  formatMm,
+  maxInsertSize,
 } from './catalog';
-import type { FormatId } from './catalog';
+import type { EnvelopeFormat, FormatId, StandardInsert } from './catalog';
 import {
   DEFAULT_PRICING,
   DELIVERY_COST,
@@ -233,7 +240,248 @@ const VAT_PERCENT = Math.round(DEFAULT_PRICING.vatRate * 100);
 const DELIVERY_NET = round2(DELIVERY_COST / (1 + DEFAULT_PRICING.vatRate));
 const BULK_QUOTE_LABEL = BULK_QUOTE_THRESHOLD.toLocaleString('pl-PL');
 
+/* ── Wartości wyliczane dla wpisu o doborze formatu do wkładki ─────────── */
+
+/**
+ * Wpis z content-plan.md poz. 10 robi **odwrotne mapowanie**: filar
+ * `/koperty-dl` odpowiada „czy ta wkładka mieści się w kopercie DL", ten wpis —
+ * „który format przyjmie moją wkładkę". Wszystkie werdykty liczy
+ * `fitsInFormat()` z wymiarów katalogowych, więc uruchomienie formatów C6 i K4
+ * przepisze tabelę razem z konfiguratorem, bez dotykania treści.
+ */
+const DL_FORMAT = FORMAT_MAP.DL;
+const DL_MAX_INSERT = maxInsertSize(DL_FORMAT);
+
+/**
+ * Wkładka z `STANDARD_INSERTS` po fragmencie etykiety. Rzucamy wyjątkiem
+ * zamiast cichego `undefined`: wpis opiera na tych pozycjach całe akapity,
+ * więc usunięcie wkładki z katalogu ma zatrzymać budowanie, a nie wypuścić
+ * na stronę zdanie z „undefined mm".
+ */
+function insertByLabel(fragment: string): StandardInsert {
+  const found = STANDARD_INSERTS.find((insert) =>
+    insert.label.toLowerCase().includes(fragment.toLowerCase())
+  );
+  if (!found) {
+    throw new Error(
+      `STANDARD_INSERTS nie zawiera wkładki „${fragment}" — wpis o doborze formatu opiera na niej treść`
+    );
+  }
+  return found;
+}
+
+const A4_THIRDS = insertByLabel('A4 złożona na trzy');
+const A4_HALF = insertByLabel('A4 złożona na pół');
+const A4_FLAT = insertByLabel('Dyplom A4');
+const A6_SHEET = insertByLabel('A5 złożona na pół');
+const SQUARE_INVITE = insertByLabel('Zaproszenie kwadratowe');
+const BANKNOTE = insertByLabel('Banknot');
+const BUSINESS_CARD = insertByLabel('Wizytówka');
+
+/** Wymiary wkładki zapisane po polsku — jedna funkcja dla tabeli i dla prozy. */
+function insertMm(insert: { width: number; height: number }): string {
+  return `${formatMm(insert.width)} × ${formatMm(insert.height)} mm`;
+}
+
+/** O ile krótszy bok wkładki przekracza wnętrze koperty DL. */
+const A4_HALF_OVERHANG = Math.round(Math.min(A4_HALF.width, A4_HALF.height) - DL_MAX_INSERT.short);
+
+/** Zapas, jaki zostawia kartka A6 — dolna granica dopasowania w tabelach. */
+const A6_CLEARANCE = fitsInFormat(A6_SHEET, DL_FORMAT).clearanceShort;
+
+interface InsertVerdict {
+  insert: StandardInsert;
+  /** Najmniejszy format, który wkładkę przyjmie — najpierw sprzedawany */
+  format?: EnvelopeFormat;
+  available: boolean;
+}
+
+/**
+ * Format dla wkładki. Kolejność szukania jest sprzedażowa, nie geometryczna:
+ * najpierw formaty, które da się dziś kupić, dopiero potem zapowiedziane.
+ * Odwrotna kolejność podpowiadałaby kopertę C6 do wizytówki — mniejszą, ale
+ * ze statusem „Dostępne wkrótce", czyli obietnicę bez pokrycia (brief pkt 4.2).
+ */
+function verdictForInsert(insert: StandardInsert): InsertVerdict {
+  const sellable = AVAILABLE_FORMATS.find((format) => fitsInFormat(insert, format).fits);
+  if (sellable) return { insert, format: sellable, available: true };
+  const upcoming = UPCOMING_FORMATS.find((format) => fitsInFormat(insert, format).fits);
+  return { insert, format: upcoming, available: false };
+}
+
+const INSERT_VERDICTS = STANDARD_INSERTS.map(verdictForInsert);
+const SELLABLE_INSERT_COUNT = INSERT_VERDICTS.filter((verdict) => verdict.available).length;
+
+/** Stosunek dłuższego boku do krótszego — „2" dla DL, „1" dla K4. */
+function sideRatio(format: EnvelopeFormat): string {
+  const ratio = Math.max(format.width, format.height) / Math.min(format.width, format.height);
+  return ratio
+    .toFixed(2)
+    .replace(/[.,]?0+$/, '')
+    .replace('.', ',');
+}
+
+/**
+ * Kształt wkładki, pod który zrobiony jest każdy format. To jedyna kolumna
+ * tabeli, której nie da się policzyć z katalogu — wymiary, status i proporcje
+ * pochodzą z `FORMATS`.
+ */
+const FORMAT_SHAPES: Record<FormatId, string> = {
+  DL: 'Podłużna — arkusz złożony na trzy, voucher, bilet, banknot',
+  C6: `Kompaktowa — kartka A6 ${insertMm(A6_SHEET)}, zdjęcie, klasyczne zaproszenie`,
+  K4: `Kwadratowa i szeroka — zaproszenie ${insertMm(SQUARE_INVITE)}`,
+};
+
+/** Formaty zapowiedziane wypisane zdaniem: „C6 114 × 162 mm i K4 155 × 155 mm". */
+const UPCOMING_FORMATS_LABEL = UPCOMING_FORMATS.map(
+  (format) => `${format.id} ${format.dimensions}`
+).join(' i ');
+
 const POSTS: BlogPost[] = [
+  {
+    /* content-plan.md poz. 10 — treść wspierająca filar K4 (`/koperty-dl`),
+       cel GEO. Fraza główna: `format do koperty dl`.
+
+       Rozgraniczenie z filarem. `/koperty-dl` odpowiada na pytanie o **wymiary
+       koperty**: podaje tabelę formatów i tabelę dopasowań dziesięciu wkładek
+       w milimetrach. Ten wpis odwraca kierunek pytania — wychodzi od tego, co
+       klient trzyma w ręku, i prowadzi do formatu. Stąd inna oś tabeli
+       (wkładka → format, nie wkładka → mieści się w DL) i cała metoda doboru,
+       której filar nie opisuje: pomiar po złożeniu, zapas, kształt, granica.
+
+       Świadomie nieobecne: pytanie „Czym różni się koperta DL od C6" (należy
+       do `DL_FAQ_ITEMS` na filarze i **nie może** tu wrócić), grubość wkładu
+       i sposób równego składania A4 (poz. 11), decyzja o braku okienka
+       (poz. 13), dobór koperty do zaproszeń (poz. 41). Zero kwot, zero MOQ,
+       zero terminów — należą do `/`, F1 i poz. 9. Wpis nie ma własnego
+       `FAQPage`: dane strukturalne pytań zostają na filarze (zasada z poz. 7).
+
+       Żaden odnośnik i żadne CTA nie prowadzi do formatów C6 i K4 — mają
+       w katalogu `disabled: true` (brief pkt 4.2). */
+    slug: 'jaki-format-koperty-wybrac-do-wkladki',
+    title: 'Jaki format koperty wybrać do wkładki',
+    /* Lead zasila `description`. Metoda, nie parametr — parametry stoją
+       w tabeli niżej i w specyfikacji na filarze. */
+    lead: `Format koperty wybiera się od wkładki: mierzą ją Państwo po złożeniu i dokładają ${INSERT_CLEARANCE_MM} mm zapasu. Tabela ${STANDARD_INSERTS.length} wkładek i formatów, które je przyjmą.`,
+    category: 'Poradniki',
+    date: '2026-08-17',
+    readingMinutes: 6,
+    colorId: 'taupe',
+    format: 'DL',
+    ogImageSlug: 'blog-format-do-wkladki',
+    ogImageAlt:
+      'Koperta ozdobna DL w kolorze Szarobrązowy od strony klapki, za nią druga koperta tego samego formatu',
+    keywords: [
+      'format do koperty dl',
+      'jaki format koperty',
+      'jaka koperta do wkładki',
+      'dobór formatu koperty',
+    ],
+    intro: `Format koperty dobiera się od wkładki, a nie odwrotnie. Mierzą Państwo wkład w tej postaci, w jakiej trafi do środka — już złożony — dokładają ${INSERT_CLEARANCE_MM} mm zapasu do każdego z dwóch wymiarów i wybierają najmniejszą kopertę, która obu tym wymiarom sprosta. Koperta DL ${DL_FORMAT.dimensions} przyjmuje wkładki do ${DL_MAX_INSERT.short} × ${DL_MAX_INSERT.long} mm, czyli ${SELLABLE_INSERT_COUNT} z ${STANDARD_INSERTS.length} wkładek, o które pytają Państwo najczęściej. Poniżej rozpisujemy tę metodę i mówimy, co zrobić z wkładką, która się w tym formacie nie mieści.`,
+    sections: [
+      {
+        id: 'od-wkladki-do-formatu',
+        heading: 'Jak dobrać format koperty do wkładki',
+        paragraphs: [
+          `Wybór zaczyna się od zmierzenia wkładki, nie od przejrzenia katalogu kopert. Do zmierzonych wymiarów dokładają Państwo ${INSERT_CLEARANCE_MM} mm zapasu w każdym kierunku i szukają koperty, która ten powiększony prostokąt przyjmie. Jeśli pasuje więcej niż jedna, wygrywa mniejsza — w niej wkładka mniej się przesuwa.`,
+          `Wymiary porównuje się bok w bok: krótszy bok wkładki z krótszym bokiem koperty, dłuższy z dłuższym. Kolejność zapisu nie ma znaczenia, bo wkładkę wsuwa się w tę stronę, w którą wchodzi. Banknot opisywany jako ${insertMm(BANKNOTE)} leży w kopercie DL płasko, bez składania, mimo że jego „szerokość" jest większa od szerokości koperty.`,
+          `Tabela poniżej przechodzi przez ${STANDARD_INSERTS.length} wkładek, o które pytają Państwo najczęściej, i przy każdej podaje format, który ją przyjmie. Trzecia kolumna odpowiada na pytanie o geometrię, czwarta — na pytanie, co z tego wynika dla zamówienia składanego dzisiaj.`,
+        ],
+        table: {
+          caption:
+            'Standardowe wkładki i format koperty, który je przyjmuje przy zachowanym zapasie',
+          head: ['Wkładka', 'Wymiary', 'Format, który ją przyjmie', 'Co to znaczy dziś'],
+          rows: INSERT_VERDICTS.map(({ insert, format, available }) => [
+            insert.label,
+            insertMm(insert),
+            format ? `Koperta ${format.id} ${format.dimensions}` : 'Żaden format z katalogu',
+            available
+              ? 'Do zamówienia od ręki'
+              : format
+                ? 'Format ma status „Dostępne wkrótce"'
+                : 'Trzeba złożyć wkładkę inaczej albo sięgnąć po kopertę spoza tej oferty',
+          ]),
+        },
+      },
+      {
+        id: 'zapas',
+        heading: 'Skąd bierze się zapas między wkładką a kopertą',
+        paragraphs: [
+          `Zapas ${INSERT_CLEARANCE_MM} mm w każdym wymiarze jest po to, żeby wkładkę dało się wsunąć jednym ruchem i wyjąć bez szarpania. Wkładka dopasowana co do milimetra teoretycznie wchodzi, w praktyce zahacza rogiem o brzeg i zagina się przy wkładaniu.`,
+          'Przy jednej kopercie to drobiazg. Przy serii kilkuset ten sam luz decyduje o tym, ile trwa pakowanie i ile sztuk trzeba odłożyć, bo wkładka poszła krzywo albo róg się załamał.',
+          `Granicę traktujemy dosłownie. Kartka A6 ${insertMm(A6_SHEET)} zostawia w kopercie DL dokładnie ${formatMm(A6_CLEARANCE)} mm na krótszym boku i to jest dolna granica, przy której uznajemy wkładkę za dopasowaną. Wszystko poniżej opisujemy jako niemieszczące się, nawet jeśli fizycznie da się to wcisnąć.`,
+          `Zbyt duży luz też ma swoją cenę, choć mniejszą. Wizytówka ${insertMm(BUSINESS_CARD)} przesuwa się w kopercie DL swobodnie i po otwarciu bywa nie tam, gdzie ją włożono — dlatego drobne wkładki wysyła się zwykle razem z listem, który wypełnia kopertę.`,
+        ],
+      },
+      {
+        id: 'jak-zmierzyc',
+        heading: 'Jak zmierzyć wkładkę, zanim wybiorą Państwo format',
+        paragraphs: [
+          'Mierzą Państwo wkładkę w postaci gotowej do włożenia: złożoną, spiętą, razem z tym, co ma pojechać obok. Arkusz przed złożeniem ma inny wymiar niż ten sam arkusz po złożeniu, a o formacie decyduje wymiar drugi.',
+          'W komplecie mierzy się element największy. Jeżeli do pisma dołączają Państwo kartę podarunkową i wizytówkę, format wybiera arkusz — reszta wchodzi razem z nim i nie zmienia obrysu przesyłki.',
+          'Wymiar z pliku graficznego warto sprawdzić po przycięciu. Projekt przygotowany ze spadem jest w programie większy niż gotowy wydruk, więc do doboru koperty bierze się wymiar netto, ten po cięciu.',
+        ],
+      },
+      {
+        id: 'skladanie',
+        heading: 'Złożenie zmienia wymiar wkładki, więc zmienia też format',
+        paragraphs: [
+          `Ten sam arkusz A4 wymaga dwóch różnych kopert, zależnie od tego, jak go Państwo złożą. Złożony na trzy ma ${insertMm(A4_THIRDS)} i wchodzi do koperty DL. Złożony na pół ma ${insertMm(A4_HALF)} — jego krótszy bok przekracza wtedy dopuszczalną szerokość wkładki dla koperty DL o ${A4_HALF_OVERHANG} mm i żadne dosuwanie tego nie zmieni.`,
+          'Stąd pierwsze pytanie przy wkładce, która się nie mieści: czy wolno ją złożyć inaczej. Pismo, umowa, faktura, zaświadczenie i większość certyfikatów znoszą złożenie na trzy bez straty dla dokumentu. To jest złożenie, pod które format DL został zaprojektowany.',
+          'Są wkładki, których nie składa się wcale. Dyplom wręczany na uroczystości, odbitka fotograficzna i karta plastikowa mają zostać płaskie — przy nich sposób złożenia nie jest zmienną i format musi wynikać wprost z wymiaru.',
+          'Liczba kartek nie zmienia wymiaru wkładki. Trzy arkusze złożone razem na trzy mają ten sam obrys co jeden: rośnie grubość pliku, a nie jego szerokość ani wysokość.',
+        ],
+      },
+      {
+        id: 'ksztalt',
+        heading: 'Kształt wkładki decyduje tak samo jak jej wymiar',
+        paragraphs: [
+          `Dwie wkładki o zbliżonej powierzchni potrafią wymagać dwóch różnych kopert. Zaproszenie kwadratowe ${insertMm(SQUARE_INVITE)} i arkusz A4 złożony na trzy zajmują niemal tyle samo papieru, a mieszczą się w innych formatach — różni je proporcja boków, nie powierzchnia.`,
+          `Koperta DL jest formatem podłużnym: jej dłuższy bok jest ${sideRatio(DL_FORMAT)} razy dłuższy od krótszego. Wkładka o zbliżonych proporcjach wypełnia ją równo. Wkładka zbliżona do kwadratu zostawia w niej puste pole na jednym końcu, a częściej po prostu nie mieści się na szerokości.`,
+          'Zestawienie poniżej pokazuje, pod jaki kształt wkładki zrobiony jest każdy z trzech formatów w katalogu Envelopes. Ostatnia kolumna mówi, który z nich da się dziś zamówić.',
+        ],
+        table: {
+          caption: 'Kształt wkładki, pod który zaprojektowany jest każdy format koperty',
+          head: ['Format', 'Wymiary', 'Kształt wkładki', 'Status w Envelopes'],
+          rows: [...AVAILABLE_FORMATS, ...UPCOMING_FORMATS].map((format) => [
+            `Koperta ${format.id}`,
+            format.dimensions,
+            FORMAT_SHAPES[format.id],
+            format.disabled ? 'Dostępne wkrótce' : 'W sprzedaży',
+          ]),
+        },
+      },
+      {
+        id: 'poza-formatem',
+        heading: 'Co zrobić, gdy wkładka nie mieści się w kopercie DL',
+        paragraphs: [
+          `Dwie wkładki z tabeli nie wchodzą dziś do żadnej koperty, którą da się u nas zamówić: arkusz A4 złożony na pół ${insertMm(A4_HALF)} i arkusz A4 bez składania ${insertMm(A4_FLAT)}. Drogi wyjścia są trzy i warto je rozważyć w tej kolejności.`,
+          'Pierwsza to inne złożenie. Arkusz złożony na trzy zamiast na pół rozwiązuje sprawę w większości korespondencji firmowej, nie wymaga zmiany po naszej stronie i nie przesuwa terminu wysyłki.',
+          `Druga to poczekanie na format. Koperty ${UPCOMING_FORMATS_LABEL} mają w katalogu status „Dostępne wkrótce" — nie da się ich zamówić ani gładkich, ani z nadrukiem, i żaden odnośnik w tym wpisie do nich nie prowadzi. Zaproszenie kwadratowe jest właśnie tym przypadkiem: przyjmie je format K4, którego dziś nie sprzedajemy.`,
+          'Trzecia to koperta spoza naszej oferty. Dyplomu A4, który nie może być zginany, nie zmieści żaden format z tego katalogu i mówimy to wprost, zamiast proponować złożenie, które zniszczy dokument.',
+        ],
+      },
+      {
+        id: 'lista-kontrolna',
+        heading: 'Lista kontrolna przed wyborem formatu',
+        paragraphs: [
+          'Siedem punktów wystarczy, żeby wybrany format zgadzał się z tym, co faktycznie trafi do środka.',
+        ],
+        list: [
+          'Wymiar wkładki mierzony po złożeniu, nie przed',
+          'Największy element kompletu — to on wybiera format, reszta wchodzi razem z nim',
+          `Zapas ${INSERT_CLEARANCE_MM} mm w obu wymiarach; poniżej tej granicy wkładka zagina się przy wsuwaniu`,
+          'Wymiar netto z pliku graficznego, po przycięciu, bez spadów',
+          'Sprawdzone, czy wkładkę wolno złożyć inaczej, jeśli nie mieści się na szerokości',
+          'Kształt wkładki, a nie sama jej powierzchnia — kwadrat wymaga innej koperty niż prostokąt',
+          `Format DL ${DL_FORMAT.dimensions} jako punkt wyjścia: to jedyny format, który zamówią Państwo dziś`,
+        ],
+      },
+    ],
+    cta: `Wkładkę do ${DL_MAX_INSERT.short} × ${DL_MAX_INSERT.long} mm przyjmie koperta DL — konfigurator otworzy się z tym formatem.`,
+    ctaConfigure: { label: 'Wybierz kolor koperty DL', format: 'DL' },
+    pillar: { href: '/koperty-dl', anchor: 'wymiary koperty DL' },
+  },
   {
     /* content-plan.md poz. 9 — treść wspierająca filar K1, cel GEO.
 

@@ -8,7 +8,7 @@ import { StickyCta } from '@/components/ui/StickyCta';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { EnvelopePlaceholder } from '@/components/ui/EnvelopePlaceholder';
 import { ShowcaseGrid } from '@/components/ui/ShowcaseGrid';
-import { COLORS, COLOR_MAP, FORMAT_MAP } from '@/lib/catalog';
+import { COLORS, COLOR_MAP, FORMAT_MAP, type FormatId } from '@/lib/catalog';
 import { COLOR_PAGES, COLOR_PAGE_IDS, capitalize, colorPagePath } from '@/lib/color-pages';
 import { DEFAULT_PRICING, DELIVERY_COST, calculatePrice, formatPrice } from '@/lib/pricing';
 import {
@@ -47,7 +47,16 @@ import type { EnvelopeConfig } from '@/lib/types';
  * bez tekstu ani zgłosić jej do wyszukiwarek.
  */
 
-const DL = FORMAT_MAP.DL;
+/**
+ * Format wiodący strony koloru. Dziś `DL` jest jedynym, który da się kupić,
+ * więc strona opisuje wariant kolorystyczny w tym formacie.
+ *
+ * **Adres jest kolorowy, nie formatowy** — gdy ruszą C6 i K4, ta sama strona
+ * pokaże po jednym wariancie na format zamiast rozmnażać się na `czarny-c6`
+ * i `czarny-k4`. Reguła i lista rzeczy do zmiany: `src/lib/color-pages.ts`.
+ */
+const FORMAT: FormatId = 'DL';
+const SPEC = FORMAT_MAP[FORMAT];
 
 export function generateStaticParams() {
   return COLOR_PAGE_IDS.map((kolor) => ({ kolor }));
@@ -107,7 +116,7 @@ export default async function ColorPage({ params }: { params: Promise<{ kolor: s
      źródła co konfigurator, koszyk, dane strukturalne i feed produktowy —
      kwota widoczna w tabeli nie może różnić się od naliczanej. */
   const baseConfig: EnvelopeConfig = {
-    format: 'DL',
+    format: FORMAT,
     color: color.id,
     quantity: 1,
     print: false,
@@ -121,9 +130,9 @@ export default async function ColorPage({ params }: { params: Promise<{ kolor: s
      (gładki, z nadrukiem, z personalizacją) i kadry aranżacyjne, które strona
      faktycznie renderuje. Adresy bezwzględne — JSON-LD nie ma `metadataBase`. */
   const productImages = [
-    color.images?.DL,
-    color.printImages?.DL,
-    color.personalizedImages?.DL,
+    color.images?.[FORMAT],
+    color.printImages?.[FORMAT],
+    color.personalizedImages?.[FORMAT],
     ...shots.map(showcaseSrc),
   ]
     .filter((path): path is string => Boolean(path))
@@ -135,6 +144,7 @@ export default async function ColorPage({ params }: { params: Promise<{ kolor: s
         data={colorEnvelopeProductJsonLd({
           colorId: color.id,
           colorName: color.name,
+          format: FORMAT,
           weight: color.weight,
           finish: color.finish,
           images: productImages,
@@ -144,7 +154,7 @@ export default async function ColorPage({ params }: { params: Promise<{ kolor: s
       <JsonLd
         data={breadcrumbJsonLd([
           { name: 'Strona główna', url: '/' },
-          { name: `Koperty DL ${DL.dimensions}`, url: '/koperty-dl' },
+          { name: `Koperty ${FORMAT} ${SPEC.dimensions}`, url: '/koperty-dl' },
           { name: capitalize(content.phrase), url: colorPagePath(color.id) },
         ])}
       />
@@ -162,17 +172,37 @@ export default async function ColorPage({ params }: { params: Promise<{ kolor: s
             {color.name}
           </nav>
 
-          <span className="eyebrow">{content.eyebrow}</span>
-          <h1>{content.h1}</h1>
-          <p className="hero-lead">{content.lead}</p>
+          {/* Kolumna tekstowa i zdjęcie odcienia obok siebie. Strona koloru
+              sprzedaje **wygląd papieru**, więc pierwszy ekran musi go pokazać
+              — sam nagłówek z nazwą odcienia zostawiał decyzję zakupową bez
+              tego jednego argumentu, po który klient tu wchodzi.
 
-          <div className="row">
-            <Link href="#zamow" className="btn btn-lg">
-              Zamów {content.phrase}
-            </Link>
-            <ConfigureLink format="DL" color={color.id} print className="btn btn-secondary">
-              Dodaj nadruk logo
-            </ConfigureLink>
+              Kadr jest oznaczony jako `eager`: to kandydat na LCP tej strony,
+              a `aspect-ratio` w `.placeholder` rezerwuje mu miejsce, więc
+              wejście zdjęcia nie przesuwa nagłówka (pkt 5.5 briefu). */}
+          <div className="color-hero">
+            <div className="color-hero-copy">
+              <span className="eyebrow">{content.eyebrow}</span>
+              <h1>{content.h1}</h1>
+              <p className="hero-lead">{content.lead}</p>
+
+              <div className="row">
+                <Link href="#zamow" className="btn btn-lg">
+                  Zamów {content.phrase}
+                </Link>
+                <ConfigureLink format={FORMAT} color={color.id} print className="btn btn-secondary">
+                  Dodaj nadruk logo
+                </ConfigureLink>
+              </div>
+            </div>
+
+            <EnvelopePlaceholder
+              format={FORMAT}
+              colorId={color.id}
+              ratio="photo"
+              eager
+              sizes="(max-width: 900px) calc(100vw - 48px), 516px"
+            />
           </div>
         </div>
 
@@ -180,7 +210,12 @@ export default async function ColorPage({ params }: { params: Promise<{ kolor: s
           <div className="container">
             <div className="usp-bar" style={{ flexWrap: 'wrap' }}>
               {[
-                {
+                /* Pierwsza pozycja paska należy do koloru, nie do szablonu:
+                   dla odcieni matowych barwienie w masie jest najmocniejszym
+                   argumentem, ale dla Złotego (`finish: 'metaliczne'`) mówi
+                   o papierze najmniej istotną rzecz. Kolor bez własnej
+                   wartości zostaje przy domyślnej — `color-pages.ts`. */
+                content.paperUsp ?? {
                   title: 'Barwiony w masie',
                   note: 'Kolor sięga w głąb arkusza — zgięcie i krawędź zostają w odcieniu papieru',
                 },
@@ -222,19 +257,13 @@ export default async function ColorPage({ params }: { params: Promise<{ kolor: s
             <h2>{content.character.heading}</h2>
           </div>
 
-          <div className="grid grid-2" style={{ gap: 'var(--space-6)', alignItems: 'start' }}>
-            <div>
-              {content.character.paragraphs.map((paragraph) => (
-                <p key={paragraph.slice(0, 32)}>{paragraph}</p>
-              ))}
-            </div>
-            <EnvelopePlaceholder
-              format="DL"
-              colorId={color.id}
-              ratio="photo"
-              sizes="(max-width: 900px) calc(100vw - 48px), 588px"
-            />
-          </div>
+          {/* Bez zdjęcia: ten sam kadr stoi w hero, dwa ekrany wyżej. Sekcja
+              opisuje cechy papieru, których zdjęcie produktowe i tak nie
+              pokazuje — kolor na zgięciu, zachowanie w świetle — więc jego
+              powtórzenie niczego by nie dowiodło. */}
+          {content.character.paragraphs.map((paragraph) => (
+            <p key={paragraph.slice(0, 32)}>{paragraph}</p>
+          ))}
         </div>
       </section>
 
@@ -253,7 +282,7 @@ export default async function ColorPage({ params }: { params: Promise<{ kolor: s
               <tr>
                 <th scope="row">Format i wymiary</th>
                 <td>
-                  DL {DL.dimensions} —{' '}
+                  {FORMAT} {SPEC.dimensions} —{' '}
                   <Link href="/koperty-dl">co się mieści w kopercie DL</Link>
                 </td>
               </tr>
@@ -317,9 +346,14 @@ export default async function ColorPage({ params }: { params: Promise<{ kolor: s
             <p key={paragraph.slice(0, 32)}>{paragraph}</p>
           ))}
 
-          <div style={{ margin: 'var(--space-6) 0' }}>
-            <ShowcaseGrid shots={shots} columns={3} spec="color" />
-          </div>
+          {/* Odcień bez kadru aranżacyjnego pomija siatkę. Podmiana kadru
+              w innym kolorze byłaby wprowadzaniem w błąd co do wyglądu
+              papieru, a pusta siatka zostawiłaby dziurę w układzie. */}
+          {shots.length > 0 && (
+            <div style={{ margin: 'var(--space-6) 0' }}>
+              <ShowcaseGrid shots={shots} columns={3} spec="color" />
+            </div>
+          )}
 
           <div className="grid grid-2" style={{ gap: 'var(--space-5)' }}>
             <div className="card">
@@ -334,7 +368,7 @@ export default async function ColorPage({ params }: { params: Promise<{ kolor: s
                 <Link href="/koperty-z-nadrukiem">koperty z nadrukiem</Link>.
               </p>
               <div className="row" style={{ marginTop: 'var(--space-4)' }}>
-                <ConfigureLink format="DL" color={color.id} print className="btn btn-sm">
+                <ConfigureLink format={FORMAT} color={color.id} print className="btn btn-sm">
                   Wyceń z nadrukiem
                 </ConfigureLink>
               </div>
@@ -352,7 +386,7 @@ export default async function ColorPage({ params }: { params: Promise<{ kolor: s
                 <Link href="/koperty-personalizowane">koperty personalizowane</Link>.
               </p>
               <div className="row" style={{ marginTop: 'var(--space-4)' }}>
-                <ConfigureLink format="DL" color={color.id} personalization className="btn btn-sm">
+                <ConfigureLink format={FORMAT} color={color.id} personalization className="btn btn-sm">
                   Wyceń z adresowaniem
                 </ConfigureLink>
               </div>
@@ -414,9 +448,9 @@ export default async function ColorPage({ params }: { params: Promise<{ kolor: s
           </div>
 
           <div className="grid grid-2" style={{ gap: 'var(--space-6)', alignItems: 'start' }}>
-            <AddColorToCart colorId={color.id} phraseShort={content.phraseShort} />
+            <AddColorToCart colorId={color.id} format={FORMAT} phraseShort={content.phraseShort} />
             <EnvelopePlaceholder
-              format="DL"
+              format={FORMAT}
               colorId={color.id}
               ratio="wide"
               sizes="(max-width: 900px) calc(100vw - 48px), 588px"
@@ -445,7 +479,7 @@ export default async function ColorPage({ params }: { params: Promise<{ kolor: s
           ))}
         </div>
       </section>
-      <StickyCta format="DL" color={kolor} />
+      <StickyCta format={FORMAT} color={kolor} />
     </>
   );
 }

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 
 import { useCart } from '@/components/providers/CartProvider';
+import type { FormatId } from '@/lib/catalog';
 import { DEFAULT_PRICING, calculatePrice, formatPrice } from '@/lib/pricing';
 import type { EnvelopeConfig } from '@/lib/types';
 
@@ -21,9 +22,16 @@ import type { EnvelopeConfig } from '@/lib/types';
  */
 export function AddColorToCart({
   colorId,
+  format,
   phraseShort,
 }: {
   colorId: string;
+  /**
+   * Format wchodzi parametrem, choć dziś zawsze jest to `DL`. Gdy ruszą C6
+   * i K4, ta sama strona koloru wystawi wybór formatu przed ilością — cena
+   * schodzi wtedy z `calculatePrice()` sama, bo zależy wyłącznie od formatu.
+   */
+  format: FormatId;
   /** Odmieniona nazwa w liczbie mnogiej („czarne koperty") — z `color-pages.ts`. */
   phraseShort: string;
 }) {
@@ -36,7 +44,7 @@ export function AddColorToCart({
   const [added, setAdded] = useState(0);
 
   const config: EnvelopeConfig = {
-    format: 'DL',
+    format,
     color: colorId,
     quantity: Math.max(minimum, quantity),
     print: false,

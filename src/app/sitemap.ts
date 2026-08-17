@@ -9,7 +9,9 @@ import {
   INDUSTRY_SHOTS,
   OCCASION_SHOTS,
   PERSONALIZATION_SHOTS,
+  PLAIN_ENVELOPE_SHOT,
   PRINT_AREA_SHOT,
+  USE_CASE_SHOTS,
   VOUCHER_COLOR_IDS,
   VOUCHER_SHOTS,
   shotByFile,
@@ -41,14 +43,17 @@ import { SITE_URL, ogImage } from '@/lib/seo';
  * dla całej domeny, więc lepszy jest wpis ręczny niż automat, który kłamie.
  */
 const PAGE_UPDATED: Record<string, string> = {
-  /* Przegląd tonu treści — leady czterech filarów, karty branżowe, sekcje na `/` */
-  '/': '2026-08-16',
+  /* Siatka blogowa pokazuje trzy najnowsze wpisy — doszedł poradnik o doborze
+     formatu do wkładki (poz. 10) */
+  '/': '2026-08-17',
   /* Odnośnik do poradnika o koszcie zamówienia w sekcji cenowej (poz. 9) */
   '/koperty-z-nadrukiem': '2026-08-17',
   '/koperty-personalizowane': '2026-08-16',
-  '/koperty-dl': '2026-08-16',
+  /* Sekcja „Poradniki" i odnośnik pod tabelą dopasowań — treść wspierająca
+     z poz. 10 planu */
+  '/koperty-dl': '2026-08-17',
   '/koperty-na-vouchery': '2026-08-16',
-  /* Doszedł wpis o koszcie zamówienia kopert z nadrukiem */
+  /* Doszedł wpis o doborze formatu koperty do wkładki (poz. 10) */
   '/blog': '2026-08-17',
   /* Odnośnik do strony „O nas" w karcie danych rejestrowych */
   '/kontakt': '2026-08-17',
@@ -56,6 +61,10 @@ const PAGE_UPDATED: Record<string, string> = {
   '/o-nas': '2026-08-17',
   /* Pierwsza strona koloru — poz. 29 planu */
   '/koperty/czarny': '2026-08-17',
+  /* Poz. 30–32 planu — druga partia stron kolorów */
+  '/koperty/granatowy': '2026-08-17',
+  '/koperty/zloty': '2026-08-17',
+  '/koperty/ecru': '2026-08-17',
 };
 
 /** Adres bezwzględny — sitemapa obrazów nie przyjmuje ścieżek względnych. */
@@ -91,6 +100,9 @@ const PAGE_IMAGES: Record<string, string[]> = {
   '/': [
     ...COLORS.filter((color) => color.images?.DL).map((color) => abs(color.images!.DL!)),
     ...shotUrls(OCCASION_SHOTS),
+    /* Dwa kadry ze spisu zastosowań — powstały pod tę stronę i nie wiszą
+       nigdzie indziej, więc bez nich nie trafiłyby do Grafiki Google wcale. */
+    ...shotUrls(USE_CASE_SHOTS),
   ],
   '/koperty-z-nadrukiem': [
     ...COLORS.filter((color) => color.printImages?.DL).map((color) => abs(color.printImages!.DL!)),
@@ -102,9 +114,12 @@ const PAGE_IMAGES: Record<string, string[]> = {
     ),
     ...shotUrls(PERSONALIZATION_SHOTS),
   ],
-  '/koperty-dl': BESTSELLERS.filter((color) => color.images?.DL).map((color) =>
-    abs(color.images!.DL!)
-  ),
+  '/koperty-dl': [
+    ...BESTSELLERS.filter((color) => color.images?.DL).map((color) => abs(color.images!.DL!)),
+    /* Kadr koperty gładkiej w sekcji o budowie formatu — jedyne zdjęcie
+       aranżacyjne, jakie ten filar renderuje. */
+    ...shotUrls([PLAIN_ENVELOPE_SHOT]),
+  ],
   '/koperty-na-vouchery': [
     ...VOUCHER_COLOR_IDS.map((id) => COLOR_MAP[id])
       .filter((color) => color?.printImages?.DL)

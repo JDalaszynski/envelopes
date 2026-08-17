@@ -93,7 +93,7 @@ liczbowymi i porównaniami. Najtańszy dostępny kanał widoczności dla domeny 
 | # | Tytuł / URL | Format | Główna fraza | Cel | Persona / Branża | Filar | Uwagi (antykanibalizacja) | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 9 | Cena kopert z nadrukiem i koszt zamówienia — `/blog/cena-kopert-z-nadrukiem-i-koszt-zamowienia` | Supporting article | koperty z nadrukiem cena | GEO | Decydent budżetowy | F1 | **Wykonane 17 sierpnia 2026.** Fraza cenowa przeszła z `keywords` filara do wpisu — jeden właściciel na serwis. Filar zostaje przy frazie usługowej `koperty z nadrukiem` i całej warstwie transakcyjnej, a wpis przesuwa jednostkę rozliczenia ze **sztuki** na **całe zamówienie**: dostawa rozłożona na sztuki oraz tabela pozycji, których nie doliczamy. Sekcja `#cena` i pytanie cenowe w `PRINT_FAQ_ITEMS` zostają na filarze | [x] |
-| 10 | Który format koperty wybrać do mojej wkładki | Supporting article | format do koperty dl | GEO | Wszystkie | F3 | **Odwrotne mapowanie: wkładka → format.** F3 podaje wymiary trzech formatów i status dostępności w tabeli; ten wpis prowadzi przez decyzję („mam zaproszenie A6 / program / dyplom — co wybrać") i uzasadnia różnice konstrukcyjne. **Zakaz powtórzenia pytania „Czym różni się koperta DL od C6" w FAQ** — należy do F3. Bez CTA zakupowego na C6/K4 | [ ] |
+| 10 | Jaki format koperty wybrać do wkładki — `/blog/jaki-format-koperty-wybrac-do-wkladki` | Supporting article | format do koperty dl | GEO | Wszystkie | F3 | **Wykonane 17 sierpnia 2026.** Odwrotne mapowanie: wkładka → format. F3 podaje wymiary trzech formatów i status dostępności w tabeli; ten wpis prowadzi przez decyzję i uzasadnia różnice konstrukcyjne. Tytuł doprecyzowany — slug niesie pełną frazę długiego ogona. Pytanie „Czym różni się koperta DL od C6" nie wróciło (należy do `DL_FAQ_ITEMS`); zero CTA na C6/K4, zero kwot, zero MOQ | [x] |
 | 11 | Ile kartek mieści koperta DL i jak je złożyć | Supporting article | kartka do koperty dl | GEO | Wszystkie | F3 | **Trzeci wymiar, którego F3 nie dotyka: grubość wkładu.** F3 rozstrzyga dopasowanie w dwóch wymiarach (tabela wkładek w mm), ten wpis odpowiada, ile arkuszy i jakiej gramatury wchodzi, jak złożyć A4 na trzy równo i kiedy plik przestaje się mieścić mimo poprawnych wymiarów | [ ] |
 | 12 | Paleta 19 kolorów — jak wybrać odcień | Supporting article | kolory kopert | RUCH | Marketing, brand manager | F5 = `/` | **Format zmieniony z `Aktualizacja` na `Supporting article` 15 sierpnia 2026** — wpis startowy usunięty, treść powstaje od zera. Link w górę wprost do `/` anchorem `koperty ozdobne` (huba `/koperty` nie ma — poz. 5 anulowana), w dół do stron kolorów z Fazy 3. Frazy `koperty ozdobne` i `koperty kolorowe` zostają przy `/`; wpis obsługuje dobór odcienia do identyfikacji wizualnej | [ ] |
 
@@ -150,6 +150,16 @@ bestseller) i zdjęcia już istnieją w `src/lib/catalog.ts` i `public/images/co
 Szablon: `/koperty/[kolor]`, generowany z `COLORS`. CTA wchodzi do konfiguratora
 z **preselekcją koloru**.
 
+> **Reguła adresowania (17 sierpnia 2026): kolor ma adres, format jest wariantem na stronie.**
+> `/koperty/czarny` nie niesie formatu w adresie świadomie. Gdy ruszą C6 i K4, ta sama strona
+> pokaże trzy warianty zamiast rozmnażać się na `czarny-dl`, `czarny-c6` i `czarny-k4` —
+> 19 kolorów × 3 formaty to 57 stron różniących się jednym wierszem tabeli i konkurujących
+> o tę samą frazę kolorystyczną. Zapytania idą po kolorze **albo** po formacie, rzadko po obu.
+> Lista rzeczy do zmiany w dniu uruchomienia formatów stoi w nagłówku `src/lib/color-pages.ts`;
+> symbole handlowe (`colorSku`, `colorGroupId`) i komponent koszyka są już sparametryzowane
+> formatem. Furtka na wypadek realnego wolumenu na „kolor + format": podstrona
+> `/koperty/czarny/c6`, bez przekierowania istniejącego adresu.
+
 > **Filar F5 to `/`, nie `/koperty`** (zmiana z 13 sierpnia 2026). Strony kolorów linkują
 > w górę do strony głównej anchorem `koperty ozdobne`, a strona główna linkuje w dół z tabeli
 > gramatur — nazwa koloru w tabeli zamienia się wtedy z odnośnika do konfiguratora na odnośnik
@@ -161,9 +171,9 @@ z **preselekcją koloru**.
 | # | Tytuł / URL | Format | Główna fraza | Cel | Persona / Branża | Filar | Uwagi (antykanibalizacja) | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 29 | Czarne koperty DL — `/koperty/czarny` | Supporting LP | czarne koperty z logo | KONWERSJA | Kancelarie, tatuaż, premium | F5 | **Wykonane 17 sierpnia 2026.** Fraza należy jednocześnie do K1 — właścicielem jest strona koloru, F1 tylko linkuje. Szablon `/koperty/[kolor]` i przycisk „dodaj do koszyka" powstały przy tej pozycji; treść mieszka w `src/lib/color-pages.ts`, który jest jednocześnie listą opublikowanych kolorów | [x] |
-| 30 | Granatowe koperty DL — `/koperty/granatowy` | Supporting LP | granatowe koperty dl | KONWERSJA | Kancelarie, korporacje | F5 | Wariant kolorystyczny, bez powielania treści usługowej z F1/F2 | [ ] |
-| 31 | Złote koperty DL — `/koperty/zloty` | Supporting LP | złote koperty dl | KONWERSJA | Eventy, wesela, gale | F5 | Wykończenie metaliczne bez dopłaty — to główny argument strony | [ ] |
-| 32 | Koperty ecru DL — `/koperty/ecru` | Supporting LP | koperta dl beżowa | KONWERSJA | Ślub, kliniki, hotele | F5 | **Most nazewniczy:** „beżowa" → Ecru. Zdanie mostkujące w treści, bez tworzenia koloru w katalogu | [ ] |
+| 30 | Granatowe koperty DL — `/koperty/granatowy` | Supporting LP | granatowe koperty dl | KONWERSJA | Kancelarie, korporacje | F5 | **Wykonane 17 sierpnia 2026.** Wariant kolorystyczny, bez powielania treści usługowej z F1/F2. Sekcja „charakter" porównuje granat z czernią i z jaśniejszymi błękitami — to jedyna treść, której nie da się odtworzyć z parametrów katalogu | [x] |
+| 31 | Złote koperty DL — `/koperty/zloty` | Supporting LP | złote koperty dl | KONWERSJA | Eventy, wesela, gale | F5 | **Wykonane 17 sierpnia 2026.** Wykończenie metaliczne bez dopłaty jest głównym argumentem strony — dostało pierwszą pozycję paska faktów i pytanie cenowe w FAQ. Sekcja „charakter" rozgranicza papier metaliczny od złocenia, którego nie wykonujemy | [x] |
+| 32 | Koperty ecru DL — `/koperty/ecru` | Supporting LP | koperta dl beżowa | KONWERSJA | Ślub, kliniki, hotele | F5 | **Wykonane 17 sierpnia 2026.** Most nazewniczy „beżowa/kremowa/kość słoniowa" → Ecru stoi w treści i w FAQ, bez tworzenia koloru w katalogu. Jedyna z czterech stron bez kadru aranżacyjnego — siatka kadrów się nie renderuje | [x] |
 
 ### Tydzień 9
 
@@ -228,6 +238,180 @@ nie liczą się do kadencji czterech pozycji tygodniowo i nie mają filara.
 
 ## Dziennik wdrożeń
 
+### 18 sierpnia 2026 — zdjęcie odcienia w hero stron kolorów i trzy nowe kadry
+
+**Polecenie właściciela: w hero podstrony koloru ma stać zdjęcie koperty w tym
+odcieniu.** Do tego trzy zdjęcia wrzucone do `public/images/new-images/`, do rozdysponowania.
+
+**1. Hero strony koloru jest dwukolumnowy.** Tekst po lewej, zdjęcie katalogowe odcienia po
+prawej (`.color-hero` w `components.css`, kolumny 1,15 : 1 — lead ma 56ch i przy podziale po
+połowie łamał się na sześć wierszy). Poniżej 900 px kadr schodzi pod treść i zwęża się do
+320 px, żeby CTA nie wypadło poniżej pierwszego ekranu. Kadr dostał `loading="eager"`
+i `fetchPriority="high"` przez nowe pole `eager` w `EnvelopePlaceholder`: to kandydat na LCP
+tej strony, a leniwe ładowanie opóźniałoby dokładnie ten element, który mierzy Core Web Vitals.
+
+**2. Sekcja „Papier" straciła zdjęcie i to jest celowe.** Stał tam ten sam kadr katalogowy, co
+teraz w hero — dwa ekrany niżej, w sekcji, która opisuje cechy niewidoczne na zdjęciu
+produktowym (kolor na zgięciu, zachowanie w świetle). Proza idzie tam dziś na pełną szerokość.
+**Do rozważenia przy kolejnych kolorach:** zbliżenia z `public/images/details/` pasowałyby do
+tej sekcji idealnie (klapka dla czerni, papier metaliczny dla złota), ale ich opisy mieszkają
+dziś w tablicy lokalnej w `page.tsx`, więc wymagałoby to przeniesienia ich do `showcase.ts`.
+
+**3. Nazwy wrzuconych plików opisywały miejsce docelowe, nie zawartość.** Kolor ustalony
+pomiarem mediany kadru centralnego i porównaniem ze zdjęciami z `colors/` — nie z nazwy pliku:
+„Certyfikaty, dyplomy i podziękowania" to **Matcha** (odległość 36 do matchy, 62 do następnego
+kandydata), a „Koperty na pieniądze i nagrody" to **Biała Perłowa** (10 do bieli perłowej, 18
+do ecru), nie Srebrna Perłowa, którą podstawiał dotychczasowy kadr zastępczy.
+
+**4. Kadr „na pieniądze" wymusił poprawkę treści, a nie odwrotnie.** Na zdjęciu jest nadruk
+„W dniu Ślubu", a akapit mówił wyłącznie o premiach i nagrodach w konkursach pracowniczych.
+Zasada z tej sekcji jest twarda — kadr musi pokazywać to, co mówi nagłówek — więc akapit
+prowadzi teraz banknotem mieszczącym się płasko i obejmuje oba konteksty: prezent na ślub
+i premię. **To nadal koperta na pieniądze, nie na zaproszenie ślubne**; zaproszenie kwadratowe
+wymagałoby K4 ze statusem „Dostępne wkrótce", więc treść wokół tego kadru nie może zejść
+z pieniędzy. Ostrzeżenie zapisane przy `USE_CASE_SHOTS`.
+
+**5. Pole `shot` w spisie zastosowań jest od dziś wymagane.** Wszystkie sześć pozycji ma kadr
+aranżacyjny, więc gałąź zastępcza z kadrem katalogowym była martwa — razem z nią zniknęło pole
+`colorId`. Typ wymusza teraz regułę, którą komentarz sekcji i tak deklarował.
+
+**6. Trzecie zdjęcie — gładka Biała Perłowa — poszło na filar formatu.** `/koperty-dl` nie miał
+ani jednego kadru aranżacyjnego, a wszystkie kadry w bibliotece miały nadruk albo
+personalizację, więc żaden nie pokazywał samego produktu. Kadr stanął w sekcji „Budowa": widać
+na nim jednolitą przednią ściankę bez okienka i klapkę wzdłuż dłuższego boku, czyli dokładnie
+to, o czym mówią oba akapity tej sekcji (zeszły do jednej kolumny obok zdjęcia). Doszedł wariant
+kadru `gladka` — `makieta` włącza w konfiguratorze krok nadruku, co dla koperty czystej byłoby
+obietnicą niezgodną z tym, co widać.
+
+**7. Mastery poza katalogiem serwowanym.** Trzy pliki po ~2,5 MB leżały w `public/images/`,
+czyli pod adresem publicznym. Po konwersji do WebP w dwóch szerokościach (75–99 kB dla 1024 px,
+20–24 kB dla 512 px, budżet 120/30 kB) oryginały przeniesione do `.data/source-images/`,
+a katalog `public/images/new-images/` usunięty.
+
+Weryfikacja: `typecheck` i `build` bez błędów. Hero dwukolumnowy na wszystkich czterech
+kolorach, zdjęcie `eager` z `fetchPriority=high`, bez poziomego przewijania w 1280 px i po
+zwężeniu poniżej progu 900 px. Sześć kart zastosowań ma kadr aranżacyjny i wchodzi do
+konfiguratora z właściwym odcieniem (m.in. `kolor=matcha` i `kolor=biala-perlowa`). Galeria
+„Nadruk okolicznościowy" nadal pokazuje trzy kadry, więc nowe zdjęcia nie dublują się na
+stronie głównej. Sitemapa obrazów: `/` 24 obrazy, `/koperty-dl` 7, każdy nowy plik zgłoszony
+dokładnie raz. **Niesprawdzone:** wygląd na realnym telefonie — pomiar szerokości robiłem
+w oknie przeglądarki, zrzuty ekranu w tym środowisku nie działają.
+
+### 17 sierpnia 2026 — poz. 30–32: `/koperty/granatowy`, `/koperty/zloty`, `/koperty/ecru`
+
+**Tydzień 8 Fazy 3 zamknięty.** Cztery kolory mają własne strony. Szablon z poz. 29 przyjął trzy
+kolejne odcienie bez przepisywania — zmiany poniżej wynikły z treści, a nie z architektury.
+
+**1. Każdy kolor ma inny argument główny, bo inaczej cztery strony byłyby jedną.** Granat:
+porównanie z czernią i z jaśniejszymi błękitami plus trzy kolory nadruku, które się na nim
+bronią. Złoty: rozgraniczenie papieru metalicznego od złocenia, którego **nie wykonujemy**.
+Ecru: most nazewniczy i jedyny odcień z tej czwórki, na którym adres da się wypisać ręcznie.
+Sekcja „nadruk" nie powtarza się między stronami — czerń mówi o gubieniu detali, granat
+o sprowadzaniu logo do jednej barwy, złoty o zanikaniu jasnego znaku, ecru o pełnej palecie.
+
+**2. Pytanie cenowe dostało jednego właściciela: `zloty`.** „Czy ten kolor kosztuje więcej"
+jest realne przy każdym odcieniu, ale powtórzone na dziewiętnastu stronach daje dziewiętnaście
+prawie identycznych bloków `FAQPage`. Parytet ceny jest tematem strony złotej (wykończenie
+metaliczne bez dopłaty), więc pytanie stoi tam, a pozostałe kolory pytają o swoje różnice.
+Reguła zapisana w nagłówku `ColorPageFaqItem`.
+
+**3. Pasek faktów zszedł z szablonu na kolor — z powodu Złotego.** Pierwsza pozycja mówiła
+„Barwiony w masie" na każdej stronie, a dla papieru z `finish: 'metaliczne'` to najmniej
+istotna jego cecha i w dodatku przykrywa sedno oferty. Nowe pole `paperUsp` jest opcjonalne:
+kolor bez własnej wartości zostaje przy domyślnej, `zloty` mówi o połysku.
+
+**4. Dane strukturalne przestały twierdzić „barwiony w masie" o papierach z wykończeniem.**
+`colorEnvelopeProductJsonLd()` składał wcześniej opis wewnętrznie sprzeczny — „barwiony w masie,
+wykończenie metaliczne" — a wykończenie jest z definicji cechą powierzchni. Teraz `material`,
+opis i właściwość „Barwienie papieru" schodzą z `finish`: odcienie matowe dostają barwienie,
+odcienie z wykończeniem dostają wykończenie. Merchant Center czyta `material` wprost, więc
+sprzeczność byłaby widoczna przy ofercie. **Otwarte:** czy papiery metaliczne i perłowe są
+barwione w masie, wie wyłącznie właściciel — do potwierdzenia, bo `src/lib/blog.ts` twierdzi
+o całej ofercie „barwione w masie, a nie powlekane".
+
+**5. Ecru nie ma kadru aranżacyjnego i strona to pokazuje, zamiast udawać.** W
+`public/images/zastosowania/` nie ma zdjęcia tego odcienia. `shotFiles` przyjmuje pustą tablicę,
+a szablon pomija wtedy siatkę kadrów — podmiana kadru w innym kolorze byłaby wprowadzaniem
+w błąd co do wyglądu papieru. Karta OG powstała z kadru zdjęcia katalogowego, bo przyciemnienie
+rozciągnięte na pełny kwadrat na białym tle gasiło ciepło odcienia; kadr master leży w `.data/`.
+
+**6. Linki przychodzące dołożyły się same.** Paleta na `/`, sekcja kolorów na `/koperty-dl`
+i akapit o odcieniach na `/koperty-z-nadrukiem` renderują listę z `color-pages.ts`, więc trzy
+nowe adresy weszły w linkowanie bez edycji tych stron. To była cała stawka rozwiązania z poz. 29.
+
+Weryfikacja: `typecheck` i `build` bez błędów, trzy adresy prerenderowane statycznie. Metadane
+w normie na wszystkich czterech kolorach — `title` z marką 45–51 znaków, `description` 147–150,
+lead 47–52 słowa, po cztery pytania FAQ. Sitemapa urosła z 16 do 19 adresów. JSON-LD: `ENV-DL-GRANATOWY`,
+`ENV-DL-ZLOTY` i `ENV-DL-ECRU` w grupie `ENV-DL`, ceną 2.58 i kompletem zdjęć, do tego `FAQPage`
+i `BreadcrumbList` na każdej. **Niesprawdzone:** wygląd stron w przeglądarce — weryfikacja
+wizualna nie była uruchamiana, kontrola objęła typy, build i wygenerowane metadane.
+
+### 17 sierpnia 2026 — poz. 10: `/blog/jaki-format-koperty-wybrac-do-wkladki`
+
+**Opublikowane.** Wpis w `POSTS` (`src/lib/blog.ts`), prerenderowany statycznie. Zakres dostawy:
+H1 + 7 sekcji H2, blok odpowiedzi GEO w intro, **dwie tabele** (dziesięć wkładek z formatem, który
+je przyjmie, oraz trzy formaty z kształtem wkładki i statusem), lista kontrolna na siedem punktów,
+kadr nagłówkowy, własna karta OG i kontekstowe CTA z preselekcją formatu DL.
+
+**Oś wpisu: kierunek pytania, nie temat.** Filar `/koperty-dl` odpowiada „czy ta wkładka mieści
+się w kopercie DL" — ma tabelę dopasowań z werdyktem i zapasem w milimetrach. Ten wpis odwraca
+kierunek: wychodzi od tego, co klient trzyma w ręku, i prowadzi do formatu. Stąd inna oś tabeli
+(wkładka → format, nie wkładka → mieści się) i cała metoda doboru, której filar nie opisuje:
+pomiar po złożeniu, wielkość zapasu, kształt wkładki i granica, za którą trzeba szukać koperty
+spoza oferty. Ta różnica jest jedynym powodem istnienia osobnego adresu i tak też jest zapisana
+w komentarzu przy wpisie.
+
+**Kolejność szukania formatu jest sprzedażowa, nie geometryczna.** `verdictForInsert()` sprawdza
+najpierw `AVAILABLE_FORMATS`, dopiero potem `UPCOMING_FORMATS`. Kolejność odwrotna — od
+najmniejszego formatu — podpowiadałaby do wizytówki kopertę C6, czyli mniejszą, ale ze statusem
+„Dostępne wkrótce": obietnicę bez pokrycia (brief pkt 4.2). Przy dzisiejszym katalogu tabela daje
+siedem wierszy „do zamówienia od ręki", jeden wiersz z formatem K4 opisanym jako niedostępny
+i dwa wiersze bez formatu w ogóle.
+
+**Dwie wkładki bez formatu to fakt geometryczny, nie brak w ofercie.** Arkusz A4 złożony na pół
+(148 × 210 mm) i arkusz A4 płasko (210 × 297 mm) nie zmieszczą się także po uruchomieniu C6
+i K4 — sprawdzone `fitsInFormat()` na wszystkich trzech formatach. Sekcja „Co zrobić, gdy wkładka
+nie mieści się" mówi to wprost i podaje trzy drogi w kolejności: inne złożenie, poczekanie na
+format, koperta spoza tej oferty. Trzecia droga jest wpisana świadomie: dyplomu, którego nie wolno
+zginać, nie obsłużymy i lepiej to powiedzieć niż zaproponować złożenie niszczące dokument.
+
+**Wszystkie liczby liczone, żadna wpisana.** Wymiary wkładek pochodzą z `STANDARD_INSERTS`,
+werdykty z `fitsInFormat()`, największa wkładka z `maxInsertSize()`, proporcja boków i statusy
+z `FORMATS`. Wkładki przywoływane w prozie wyszukuje `insertByLabel()`, która **rzuca wyjątkiem**
+zamiast zwrócić `undefined` — usunięcie pozycji z katalogu zatrzyma budowanie zamiast wypuścić
+na stronę zdanie z „undefined mm". Uruchomienie formatów C6 i K4 przepisze obie tabele bez
+dotykania treści.
+
+Świadomie nieobecne: pytanie „Czym różni się koperta DL od C6" (`DL_FAQ_ITEMS` na filarze),
+grubość wkładu i równe składanie A4 (poz. 11), decyzja o braku okienka (poz. 13), dobór koperty
+do zaproszeń (poz. 41). Zero kwot, zero MOQ, zero terminów — kontrola na wyrenderowanym HTML-u
+wykazała **0 wystąpień kwot**. Wpis nie ma własnego `FAQPage`: dane strukturalne pytań zostają
+na filarze (zasada z poz. 7).
+
+Linkowanie w obie strony:
+- **do wpisu:** `/koperty-dl` ×2 — akapit pod tabelą dopasowań („jeżeli Państwa wkładki nie ma
+  w tabeli") oraz **przywrócona sekcja „Poradniki"** z nagłówkiem „Zanim wybiorą Państwo format";
+  `/` — siatka blogowa; `/blog` — listing.
+- **z wpisu:** blok „Strona oferty" (pole `pillar`, anchor `wymiary koperty DL`) oraz sekcja
+  „Powiązane wpisy".
+- Sekcja „Poradniki" na F3 była usunięta 16 sierpnia, bo wszystkie jej wpisy przepadły. Wraca
+  z **pojedynczą kartą `card card-lg`** — siatka włącza się od drugiego wpisu, więc nie ma pustych
+  kolumn. Wypełnią ją poz. 11 i 13.
+
+**Karta OG** `public/images/og/blog-format-do-wkladki.jpg` (1200 × 630, 36 kB) z generatora
+`scripts/og-card.mjs`, na kadrze kopert Szarobrązowych — jedyna karta w rodzinie używająca tego
+zdjęcia. Bez kwot, zgodnie z regułą z 17 sierpnia.
+
+Weryfikacja: `npm run typecheck` i `npm run build` bez błędów, wpis prerenderowany jako SSG,
+`title` 37 znaków (49 z marką), `lead` 141 znaków, kanoniczny adres i własny obraz OG. Dane
+strukturalne: `Article` z obrazem, `BreadcrumbList`, `Organization` z layoutu. Obie tabele
+sprawdzone w wyrenderowanym HTML-u wiersz po wierszu. Cztery wejścia do konfiguratora, wszystkie
+z `format=DL`; **żaden odnośnik nie prowadzi do C6 ani K4**. Sitemapa urosła do 16 adresów, daty
+podbite dla `/`, `/koperty-dl` i `/blog`.
+
+**Zgłoszenie do wyszukiwarek:** `npm run indexnow` po wdrożeniu na produkcję. Do tego czasu adres
+nie istnieje publicznie i zgłoszenie wróciłoby z 404.
+
 ### 17 sierpnia 2026 — poz. 29: `/koperty/czarny` i szablon stron kolorów
 
 **Faza 3 otwarta pierwszym kolorem.** Powstał szablon `/koperty/[kolor]`, a razem z nim
@@ -277,6 +461,14 @@ linki sam.
 (przyciemnienie od lewej, nadtytuł, tytuł szeryfowy, kreska w kolorze pieczęci, dwie linijki
 parametrów, domena). **Bez kwot na karcie** — obraz OG bywa buforowany przez komunikatory
 miesiącami i przeżyłby zmianę cennika.
+
+**8. Adres jest kolorowy, nie formatowy — i tak zostanie.** Pytanie właściciela o przyszłe C6
+i K4 w czerni rozstrzygnięte regułą wpisaną wyżej w tej fazie i w nagłówku `color-pages.ts`.
+Żeby przyszła zmiana była mechaniczna, format przeszedł z wartości wpisanej na sztywno na
+parametr: `colorSku()` niesie go w symbolu (`ENV-DL-CZARNY` → obok stanie `ENV-C6-CZARNY`),
+`colorGroupId()` daje grupę wariantów per format, a `AddColorToCart` i blok danych
+strukturalnych przyjmują go z góry. Dziś wszystkie dostają `DL`, więc wynik jest identyczny
+co do znaku — sprawdzone porównaniem JSON-LD przed zmianą i po niej.
 
 **Feed produktowy zostaje przy jednej pozycji.** Wariant `ENV-DL-CZARNY` obok zbiorczego `ENV-DL`
 to dwie oferty na ten sam produkt. Warianty zastąpią pozycję zbiorczą naraz, gdy strony pokryją

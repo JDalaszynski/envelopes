@@ -194,14 +194,14 @@ więc ścieżka do konwersji jest krótka.
 
 **URL docelowy:** `/koperty-dl` `[ISTNIEJE]` — opublikowany 14 sierpnia 2026.
 Strona jest **specyfikacyjna, nie usługowa**: nie ma nagłówka cenowego, nie powtarza palety
-19 kolorów i nie rozkłada na czynniki cen nadruku ani personalizacji. Filar nie ma dziś
-**żadnej treści wspierającej** — wpis `jak-dobrac-koperte-do-zaproszen-firmowych` został
-usunięty 15 sierpnia 2026. Klaster odbudowują poz. 10, 11, 13 i 41 planu.
+19 kolorów i nie rozkłada na czynniki cen nadruku ani personalizacji. Pierwszą treścią
+wspierającą jest wpis `jaki-format-koperty-wybrac-do-wkladki` (poz. 10, 17 sierpnia 2026) —
+odwrotne mapowanie wkładka → format. Klaster domykają poz. 11, 13 i 41 planu.
 
 | Fraza | Rola | Intencja | Lejek | Wol. | P |
 | --- | --- | --- | --- | --- | --- |
 | koperty dl wymiary | **główna** | INFO | TOFU | — | P0 |
-| format do koperty dl | wspierająca | INFO | TOFU | — | P0 |
+| format do koperty dl | wspierająca `[WPIS]` | INFO | TOFU | — | P0 |
 | kartka do koperty dl | wspierająca | INFO | TOFU | — | P1 |
 | koperta prostokątna | wspierająca | KOM | MOFU | — | P2 |
 | koperty prostokątne | wariant lm. | KOM | MOFU | — | P2 |
@@ -216,8 +216,9 @@ usunięty 15 sierpnia 2026. Klaster odbudowują poz. 10, 11, 13 i 41 planu.
   mieszczą**) i jest w całości liczona przez `fitsInFormat()` z wymiarów katalogowych.
 - **Rozgraniczenie wewnątrz klastra.** Filar rozstrzyga wymiary w dwóch płaszczyznach:
   tabela formatów (DL / C6 / K4 — wymiary, największa wkładka, status) i tabela dopasowań
-  wkładek. Frazy wspierające dostają osobne intencje: `format do koperty dl` (poz. 10 planu) —
-  odwrotne mapowanie wkładka → format jako przewodnik decyzyjny; `kartka do koperty dl`
+  wkładek. Frazy wspierające dostają osobne intencje: `format do koperty dl` (poz. 10 —
+  **wykonane**, wpis `jaki-format-koperty-wybrac-do-wkladki`) — odwrotne mapowanie wkładka →
+  format jako przewodnik decyzyjny, z metodą pomiaru i zapasem; `kartka do koperty dl`
   (poz. 11) — grubość wkładu, czyli ile arkuszy i jakiej gramatury; `koperty bez okienka`
   (poz. 13) — kiedy brak okienka pomaga, a kiedy wymusza adresowanie. Pytanie „Czym różni się
   koperta DL od C6" należy do FAQ filara i **nie może** wrócić w FAQ pozycji 10.
@@ -247,12 +248,27 @@ wchodzącym do konfiguratora z **preselekcją koloru**).
 | koperta dl beżowa | główna wariantu | `ecru` / `taupe` — patrz notatka | TRANS | — | P1 |
 | czarne koperty z logo | główna wariantu | `czarny` (115g) + nadruk | TRANS | — | P1 |
 
+**Stan wdrożenia (17 sierpnia 2026).** Cztery adresy opublikowane, wszystkie trzy frazy z tabeli
+mają właściciela:
+
+| Fraza | Właściciel |
+| --- | --- |
+| czarne koperty z logo | `/koperty/czarny` |
+| złote koperty dl | `/koperty/zloty` |
+| koperta dl beżowa | `/koperty/ecru` |
+| granatowe koperty dl | `/koperty/granatowy` |
+
 **Notatki wdrożeniowe:**
-- **Luka nazewnicza:** w katalogu nie ma koloru „beżowy". Zapytanie `koperta dl beżowa` obsługują
-  `ecru` (#EADFC8) i `taupe` (#9C8C7E). Rozwiązanie: na stronach tych kolorów dodać zdanie
-  mostkujące („odcień beżowy — w naszym katalogu **Ecru**"), a nie tworzyć fikcyjnego koloru
-  w katalogu produktowym. To samo dotyczy potocznych nazw: kremowy → Ecru, grafitowy → Czarny,
-  butelkowy → Ciemnozielony, morelowy/pudrowy → Różowa.
+- **Luka nazewnicza — zamknięta dla `ecru`.** W katalogu nie ma koloru „beżowy". Zapytanie
+  `koperta dl beżowa` obsługuje `ecru` (#EADFC8): most nazewniczy stoi w `h1`, w sekcji
+  o charakterze papieru i w pierwszym pytaniu FAQ, obejmując też „kremowy" i „kość słoniową".
+  Fikcyjnego koloru w katalogu nie tworzymy. `taupe` (#9C8C7E) dostanie własny most przy poz. 36.
+  Pozostałe nazwy potoczne do obsłużenia tak samo: grafitowy → Czarny (zrobione), navy
+  i marynarski → Granatowy (zrobione), butelkowy → Ciemnozielony, morelowy/pudrowy → Różowa.
+- **Pytanie „czy ten kolor kosztuje więcej" ma jedną stronę-właścicielkę: `/koperty/zloty`.**
+  Powtórzone w FAQ każdego odcienia dałoby dziewiętnaście prawie identycznych bloków `FAQPage`.
+  Parytet ceny jest tematem strony złotej, bo wykończenie metaliczne nie podnosi kwoty; reszta
+  kolorów pyta w FAQ o swoje własne różnice.
 - `czarne koperty z logo` należy jednocześnie do K1 i K5. Właścicielem jest strona koloru
   (bardziej szczegółowa), a strona `/koperty-z-nadrukiem` linkuje do niej z sekcji „popularne
   kolory pod nadruk".
