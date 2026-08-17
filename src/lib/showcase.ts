@@ -213,6 +213,25 @@ export const PRINT_AREA_SHOT: ShowcaseShot = {
  * `INDUSTRY_SHOTS` wskazany po nazwie pliku, więc alt i podpis pozostają
  * wspólne dla obu stron i nie mogą się rozjechać.
  */
+/**
+ * Sześć kolorów pokazanych na `/koperty-na-vouchery` — węższy wybór niż
+ * paleta na F1, bo pytanie na tej stronie brzmi „ile kosztuje gotowa koperta
+ * na bon", a nie „jaki mam papier".
+ *
+ * Lista mieszka tutaj, a nie w komponencie strony, bo korzysta z niej także
+ * sitemapa obrazów: zestaw zdjęć zgłoszony wyszukiwarce musi odpowiadać temu,
+ * co strona faktycznie renderuje, a dwie kopie tej samej listy rozjechałyby
+ * się przy pierwszej zmianie doboru kolorów.
+ */
+export const VOUCHER_COLOR_IDS = [
+  'czarny',
+  'granatowy',
+  'ciemnozielony',
+  'czerwony',
+  'ecru',
+  'bialy',
+];
+
 export const VOUCHER_SHOT_FILES = [
   'taupe-koperta-dl-nadruk-logo-salonu-spa',
   'biala-perlowa-koperta-dl-nadruk-logo-salonu-fryzjerskiego',
@@ -233,3 +252,17 @@ export const ALL_SHOWCASE_SHOTS: ShowcaseShot[] = [
   ...OCCASION_SHOTS,
   PRINT_AREA_SHOT,
 ];
+
+/**
+ * Kadr wskazany po nazwie pliku. Ten sam mechanizm, co w `VOUCHER_SHOTS`:
+ * strona, która chce pokazać istniejący kadr, bierze go stąd, a nie przepisuje
+ * `alt` i `note` u siebie — inaczej opis kadru rozjechałby się między stronami.
+ *
+ * Rzuca wyjątkiem przy literówce w nazwie, więc błąd wychodzi przy budowaniu,
+ * a nie jako puste miejsce po obrazku na produkcji.
+ */
+export function shotByFile(file: string): ShowcaseShot {
+  const shot = ALL_SHOWCASE_SHOTS.find((s) => s.file === file);
+  if (!shot) throw new Error(`Brak kadru „${file}" w katalogu kadrów`);
+  return shot;
+}

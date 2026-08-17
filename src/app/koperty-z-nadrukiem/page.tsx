@@ -160,13 +160,20 @@ export const metadata: Metadata = {
   /* „brutto" schodzi z tytułu do description — razem z szablonem `| Envelopes`
      tytuł przekraczał 60 znaków. Liczba kolorów czytana z katalogu, nie
      wpisana z pamięci: `19` w tekście rozjechałoby się przy zmianie palety. */
-  title: `Koperty z nadrukiem logo — ${formatPrice(printed.unitTotal)}/szt.`,
+  /* Bez kwoty w tytule — decyzja właściciela z 17 sierpnia 2026. Cena stoi
+     w pasku faktów, w tabeli cennika i w `description`; nagłówek wyniku
+     wyszukiwania niesie frazę i minimum zamówienia, czyli realną przewagę. */
+  title: `Koperty z nadrukiem logo firmowego od ${DEFAULT_PRICING.moqWithPrint} sztuk`,
   description: `Nadruk logo na kopertach ozdobnych DL w ${COLORS.length} kolorach — ${formatPrice(printed.unitTotal)} brutto/szt. od ${DEFAULT_PRICING.moqWithPrint} sztuk. Wizualizacja do akceptacji przed drukiem, faktura VAT.`,
+  /* `koperty z nadrukiem cena` przeszła 17 sierpnia 2026 do wpisu
+     `/blog/cena-kopert-z-nadrukiem-i-koszt-zamowienia` — jeden właściciel
+     frazy na serwis. Filar zostaje przy frazie usługowej i transakcyjnej;
+     sekcja `#cena` i pytanie cenowe w `PRINT_FAQ_ITEMS` zostają nietknięte. */
   keywords: [
     'koperty z nadrukiem',
     'koperty firmowe z nadrukiem',
     'koperty z logo firmy',
-    'koperty z nadrukiem cena',
+    'koperty z własnym nadrukiem',
     'koperty dl z nadrukiem',
   ],
   alternates: { canonical: '/koperty-z-nadrukiem' },
@@ -186,7 +193,10 @@ export const metadata: Metadata = {
 
 export default function PrintedEnvelopesPage() {
   const filesPost = getPost('jak-przygotowac-pliki-do-druku-na-kopertach');
-  const relatedPosts = [filesPost].filter((post): post is BlogPost => post !== undefined);
+  /* Wpis kosztowy z content-plan.md poz. 9 — liczy całe zamówienie razem
+     z dostawą, czego ta strona nie robi (tu osią jest cena jednostkowa). */
+  const costPost = getPost('cena-kopert-z-nadrukiem-i-koszt-zamowienia');
+  const relatedPosts = [costPost, filesPost].filter((post): post is BlogPost => post !== undefined);
 
   return (
     <>
@@ -403,6 +413,18 @@ export default function PrintedEnvelopesPage() {
               </tbody>
             </table>
           </div>
+
+          {/* Anchor = fraza docelowa wpisu, nie fraza tej strony. Filar zostaje
+              przy cenie jednostkowej, wpis liczy całe zamówienie razem
+              z dostawą (content-plan.md poz. 9). */}
+          {costPost && (
+            <p className="small" style={{ marginTop: 'var(--space-5)', maxWidth: '68ch' }}>
+              Koszt całego zamówienia razem z dostawą — i pozycje, których do niego nie doliczamy —
+              rozpisaliśmy w poradniku{' '}
+              <Link href={`/blog/${costPost.slug}`}>cena kopert z nadrukiem i koszt zamówienia</Link>
+              .
+            </p>
+          )}
 
           <div className="row" style={{ marginTop: 'var(--space-6)' }}>
             <ConfigureLink format="DL" print className="btn">
@@ -812,7 +834,9 @@ export default function PrintedEnvelopesPage() {
               <span className="eyebrow">Poradniki</span>
               <h2>Zanim zamówią Państwo nadruk</h2>
             </div>
-            <div className="grid grid-3">
+            {/* Trzy kolumny dopiero od trzeciego wpisu — przy dwóch siatka
+                trzykolumnowa zostawiałaby pustą kolumnę. */}
+            <div className={relatedPosts.length > 2 ? 'grid grid-3' : 'grid grid-2'}>
               {relatedPosts.map((post) => (
                 <article className="post-card" key={post.slug}>
                   <EnvelopePlaceholder

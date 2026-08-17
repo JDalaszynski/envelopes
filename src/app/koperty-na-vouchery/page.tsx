@@ -6,7 +6,7 @@ import { EnvelopePlaceholder } from '@/components/ui/EnvelopePlaceholder';
 import { ParallaxBackground } from '@/components/ui/ParallaxBackground';
 import { ShowcaseGrid } from '@/components/ui/ShowcaseGrid';
 import { JsonLd } from '@/components/seo/JsonLd';
-import { VOUCHER_SHOTS } from '@/lib/showcase';
+import { VOUCHER_COLOR_IDS, VOUCHER_SHOTS } from '@/lib/showcase';
 import { getPost } from '@/lib/blog';
 import type { BlogPost } from '@/lib/blog';
 import { BULK_QUOTE_THRESHOLD, COLORS, COLOR_MAP, FORMAT_MAP } from '@/lib/catalog';
@@ -96,10 +96,9 @@ const EXAMPLE_QUANTITIES = [DEFAULT_PRICING.moqWithPrint, 25, 50, 100];
 /**
  * Sześć kolorów z realnym zdjęciem nadruku (`public/images/prints/`).
  * F1 pokazuje wszystkie dwanaście z podpisem gramaturowym — tutaj świadomie
- * węższy wybór i podpis cenowy, bo pytanie na tej stronie brzmi „ile
- * kosztuje gotowa koperta na bon", a nie „jaki mam papier".
+ * węższy wybór i podpis cenowy. Sama lista `id` mieszka w `showcase.ts`,
+ * bo korzysta z niej również sitemapa obrazów.
  */
-const VOUCHER_COLOR_IDS = ['czarny', 'granatowy', 'ciemnozielony', 'czerwony', 'ecru', 'bialy'];
 const VOUCHER_COLORS = VOUCHER_COLOR_IDS.map((id) => COLOR_MAP[id]).filter(
   (color) => color?.printImages?.DL
 );

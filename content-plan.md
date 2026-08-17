@@ -87,7 +87,7 @@ liczbowymi i porównaniami. Najtańszy dostępny kanał widoczności dla domeny 
 
 | # | Tytuł / URL | Format | Główna fraza | Cel | Persona / Branża | Filar | Uwagi (antykanibalizacja) | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 9 | Ile kosztuje nadruk logo na kopertach — pełny cennik | Supporting article | koperty z nadrukiem cena | GEO | Decydent budżetowy | F1 | Jedyne miejsce z rozpisanym działaniem 2,58 + 1,99 zł; filar F1 pokazuje cenę, ale nie rozkłada jej na czynniki | [ ] |
+| 9 | Cena kopert z nadrukiem i koszt zamówienia — `/blog/cena-kopert-z-nadrukiem-i-koszt-zamowienia` | Supporting article | koperty z nadrukiem cena | GEO | Decydent budżetowy | F1 | **Wykonane 17 sierpnia 2026.** Fraza cenowa przeszła z `keywords` filara do wpisu — jeden właściciel na serwis. Filar zostaje przy frazie usługowej `koperty z nadrukiem` i całej warstwie transakcyjnej, a wpis przesuwa jednostkę rozliczenia ze **sztuki** na **całe zamówienie**: dostawa rozłożona na sztuki oraz tabela pozycji, których nie doliczamy. Sekcja `#cena` i pytanie cenowe w `PRINT_FAQ_ITEMS` zostają na filarze | [x] |
 | 10 | Który format koperty wybrać do mojej wkładki | Supporting article | format do koperty dl | GEO | Wszystkie | F3 | **Odwrotne mapowanie: wkładka → format.** F3 podaje wymiary trzech formatów i status dostępności w tabeli; ten wpis prowadzi przez decyzję („mam zaproszenie A6 / program / dyplom — co wybrać") i uzasadnia różnice konstrukcyjne. **Zakaz powtórzenia pytania „Czym różni się koperta DL od C6" w FAQ** — należy do F3. Bez CTA zakupowego na C6/K4 | [ ] |
 | 11 | Ile kartek mieści koperta DL i jak je złożyć | Supporting article | kartka do koperty dl | GEO | Wszystkie | F3 | **Trzeci wymiar, którego F3 nie dotyka: grubość wkładu.** F3 rozstrzyga dopasowanie w dwóch wymiarach (tabela wkładek w mm), ten wpis odpowiada, ile arkuszy i jakiej gramatury wchodzi, jak złożyć A4 na trzy równo i kiedy plik przestaje się mieścić mimo poprawnych wymiarów | [ ] |
 | 12 | Paleta 19 kolorów — jak wybrać odcień | Supporting article | kolory kopert | RUCH | Marketing, brand manager | F5 = `/` | **Format zmieniony z `Aktualizacja` na `Supporting article` 15 sierpnia 2026** — wpis startowy usunięty, treść powstaje od zera. Link w górę wprost do `/` anchorem `koperty ozdobne` (huba `/koperty` nie ma — poz. 5 anulowana), w dół do stron kolorów z Fazy 3. Frazy `koperty ozdobne` i `koperty kolorowe` zostają przy `/`; wpis obsługuje dobór odcienia do identyfikacji wizualnej | [ ] |
@@ -210,6 +210,193 @@ z **preselekcją koloru**.
 ---
 
 ## Dziennik wdrożeń
+
+### 17 sierpnia 2026 — decyzja właściciela: żadnych kwot w tytułach
+
+**Obowiązuje od teraz.** W `title`, `og:title`, H1 i nagłówkach H2 nie umieszczamy cen ani kwot.
+Uzasadnienie właściciela: „to wygląda źle i nienaturalnie". Zakaz dotyczy konkretnych kwot
+(2,58 zł, 1,99 zł, „od 4,57 zł"), a nie słów `cennik` i `ile kosztuje` — te są frazą docelową
+i zostają. W `description` kwota jest dopuszczalna, ale liczy się do limitu konkretów: jedna,
+nie trzy. Kwota ma jedno miejsce — cennik, tabelę i pasek faktów.
+
+Audyt wszystkich tras publicznych wykazał **trzy tytuły z kwotą** i wszystkie zostały poprawione:
+
+| Trasa | Było | Jest |
+| --- | --- | --- |
+| `/` | Koperty ozdobne i kolorowe DL od 2,58 zł | …DL w 19 kolorach (55 zn.) |
+| `/koperty-z-nadrukiem` | Koperty z nadrukiem logo — 4,57 zł/szt. | …logo firmowego od 10 sztuk (58 zn.) |
+| `/koperty-personalizowane` | Personalizowane koperty — adresowanie 5,57 zł | Personalizowane koperty i adresowanie kopert (56 zn.) |
+
+Sprawdzone i **czyste**: wszystkie `openGraph.title` (żaden nie zawierał kwoty), nagłówki H1–H3
+we wszystkich trasach i komponentach, nagłówki sekcji we wszystkich wpisach blogowych oraz teksty
+tytułowe na dziewięciu kartach OG. Paski faktów (`usp-bar`) i podpisy kart usług zachowują kwoty
+— to nie są nagłówki, tylko właśnie te miejsca, do których cena należy. Karta OG filara F1 ma
+kwotę w wierszu faktów pod kreską, nie w tytule, więc zostaje bez zmian.
+
+**Do potwierdzenia przez właściciela:** zasada nie została dopisana do briefu agenta
+(`.claude/agents/seo-geo-strategist.md`), bo to plik konfiguracyjny agenta — zmieniam go wyłącznie
+na bezpośrednie polecenie właściciela, nie na podstawie wiadomości od innego agenta. Do czasu
+dopisania zasada żyje w tym dzienniku.
+
+### 17 sierpnia 2026 — poz. 9: `/blog/cena-kopert-z-nadrukiem-i-koszt-zamowienia`
+
+**Opublikowane.** Nowy wpis w `POSTS` (`src/lib/blog.ts`), prerenderowany statycznie. Zakres
+dostawy: H1 + 7 sekcji H2, blok odpowiedzi GEO w leadzie, **trzy tabele faktów**, lista kontrolna
+na siedem punktów, kontekstowe CTA wchodzące do konfiguratora z `format=DL&nadruk=1`, link w górę
+do filara F1 przez pole `pillar`. Tekst 1 059 słów w sekcjach, czas czytania 6 minut.
+
+**Fraza cenowa dostała jednego właściciela.** `koperty z nadrukiem cena` była dotąd w `keywords`
+filara F1 i jednocześnie planowana jako fraza główna tej pozycji. Fraza przeszła do wpisu, a filar
+dostał w zamian `koperty z własnym nadrukiem`. Filar nie traci przy tym nic realnego: sekcja
+`#cena` z tabelą składników i pytanie „Ile kosztuje nadruk logo na kopertach?"
+w `PRINT_FAQ_ITEMS` zostają nietknięte — to sekcje strony sprzedażowej, a nie osobny adres
+konkurujący o tę samą frazę.
+
+**Oś wpisu to przesunięcie jednostki rozliczenia.** Filar odpowiada na pytanie „ile kosztuje
+sztuka" (4,57 zł). Wpis odpowiada na pytanie „ile kosztuje całe zamówienie" i podaje wielkość,
+której filar nie liczy nigdzie: **koszt jednej wysłanej koperty razem z rozłożoną dostawą** —
+6,57 zł przy dziesięciu sztukach, 4,58 zł przy dwóch tysiącach. To jest liczba, którą decydent
+budżetowy wpisuje do pozycji, a nie stawka z cennika.
+
+**Tytuł i slug przepisane w trakcie pracy.** Pierwsza wersja brzmiała „Ile kosztuje 100 kopert
+z nadrukiem logo" i celowała w zapytania z podanym nakładem. Decyzja właściciela z tego samego
+dnia (wpis wyżej) wyklucza liczbę w tytule, więc tytuł, slug, pierwszy nagłówek H2 i tekst na
+karcie OG powstały od nowa. Wersja z liczbą nie została nigdzie opublikowana.
+
+**Druga rzecz, której nie ma nigdzie indziej: tabela pozycji, których nie doliczamy.** Osiem
+wierszy — opłata przygotowawcza i matryca, wizualizacja, kolejne wersje wizualizacji, papier
+perłowy i metaliczny, nadruk na ciemnym papierze, minimalna wartość zamówienia, rabat ilościowy,
+projekt logo od zera. Dwa wiersze są świadomie na niekorzyść oferty: rabatów ilościowych nie
+stosujemy, a logo drukujemy, nie projektujemy. Zaprzeczenie działa na modele lepiej niż kolejne
+zdanie o tym, co jest — ta sama zasada, co sekcja „Czego Envelopes nie oferuje" w `/llms.txt`.
+
+Antykanibalizacja:
+- **wobec F1 `/koperty-z-nadrukiem`:** żaden H2 nie powtarza nagłówka filara — najbliższy,
+  „Ile kosztuje zamówienie kopert z nadrukiem", różni się od filarowego „Ile kosztują koperty
+  z nadrukiem" dokładnie tym słowem, które niesie różnicę intencji. Tabela nakładów ma
+  inną oś (koszt sztuki z dostawą, nie wartość zamówienia), inne progi (10 / 25 / 50 / 100 / 250 /
+  500 / 1 000 / 2 000 wobec 10 / 100 / 500 / 1 000) i inną ostatnią kolumnę. Sekcji „Dla kogo"
+  wpis nie ma w ogóle.
+- **wobec poz. 46 (MOQ od 10 sztuk):** próg pada **raz**, jako fakt w zdaniu „zamówienie
+  z nadrukiem zaczyna się od 10 sztuk", bez ani jednego zdania uzasadnienia. Uzasadnienie zostaje
+  materiałem poz. 46.
+- **wobec poz. 16 (ekspres):** dopłata stoi w jednym wierszu tabeli opcji, bez liczby dni, bez
+  momentu, od którego termin biegnie, i bez akapitu „kiedy się opłaca".
+- **wobec poz. 45 (faktura i odroczony termin):** dwa zdania faktu — faktura VAT do każdego
+  zamówienia, odroczony termin 14 dni wyłącznie dla instytucji publicznych i urzędów.
+- **wobec poz. 7 (pliki do druku):** zero wymagań plikowych; wizualizacja występuje wyłącznie
+  jako pozycja kosztowa, której nie ma.
+- **`FAQPage` zostaje wyłącznie na filarze** — wpis nie dostaje własnych danych, mimo że dwie
+  sekcje mają formę pytań (zasada z poz. 7 i 8).
+
+**Wszystkie kwoty są liczone, nie wpisane.** Lead, intro, akapity, obie tabele cenowe i lista
+kontrolna powstają z `DEFAULT_PRICING` przez `calculatePrice` — łącznie z kolumnami „koszt jednej
+koperty" i „w tym dostawa", które są ilorazami. Zmiana cennika przepisuje wpis razem
+z konfiguratorem. `blog.ts` importuje w tym celu `pricing.ts` po raz pierwszy.
+
+**Zdanie poprawione na etapie weryfikacji.** Pierwsza wersja mówiła, że „faktura ma dwie pozycje:
+koperty z nadrukiem i jedną przesyłkę kurierską". `documents.ts` wypisuje jednak **każdą pozycję
+zamówienia** osobno i dopiero pod nimi wiersz „Dostawa", więc przy zamówieniu z dwoma
+konfiguracjami zdanie byłoby nieprawdziwe. Akapit mówi teraz o pozycjach zamówienia i osobnym
+wierszu z kosztem dostawy.
+
+**Kalibracja tonu — sekcja przepisana po teście policzalnym.** Sekcja otwierająca miała pięć kwot
+w prozie, bo powtarzała za intro wartość zamówienia i koszt dostawy. Po przepisaniu żadna sekcja
+nie ma w prozie więcej niż trzy parametry: `sto-kopert` 3, `dostawa` 3, `netto-brutto` 3, reszta
+0–2. Liczby, które wypadły z prozy, i tak stoją w tabelach — czyli tam, gdzie mają stać.
+
+Linkowanie w obie strony:
+- **do wpisu:** `/koperty-z-nadrukiem` ×2 — akapit pod tabelą wartości zamówienia w sekcji `#cena`
+  oraz sekcja „Poradniki"; `/` — siatka blogowa (**trzecia karta z trzech wypełniona**, obserwacja
+  z 15 sierpnia domknięta); `/blog` — listing; `/llms.txt` — mapa dla modeli. Anchor kontekstowy
+  brzmi `cena kopert z nadrukiem i koszt zamówienia`, czyli frazą wpisu, a nie frazą filara.
+- **z wpisu:** blok „Strona oferty" (pole `pillar`, anchor `koperty z nadrukiem`) oraz stopka.
+- Sekcja „Poradniki" na F1 przełącza się teraz na `grid grid-2` poniżej trzech wpisów — przy
+  dwóch kartach siatka trzykolumnowa zostawiałaby pustą kolumnę.
+
+**Nowy obraz wyróżniający** `public/images/og/blog-koszt-zamowienia-z-nadrukiem.jpg`
+(1200 × 630, 98 kB) w układzie pozostałych dziewięciu kart OG. Kadr `zastosowania/eko-koperta-dl-
+nadruk-logo-palarni-kawy` przycięty tak, że **przykładowa nazwa firmy nie jest widoczna** — karta
+OG krąży bez kontekstu strony, a zdanie o przykładowych nadrukach zostaje na stronie. Z tego
+samego powodu nie użyliśmy kadru kancelaryjnego: stoi już na karcie OG filara F1 i dwa adresy
+miałyby wizualnie ten sam podgląd.
+
+Weryfikacja: `npm run typecheck` i `npm run build` bez błędów, **36/36 stron statycznie**,
+wpis prerenderowany (`● /blog/cena-kopert-z-nadrukiem-i-koszt-zamowienia`), obecny w `sitemap.xml`
+z `lastModified` 2026-08-17 i z dwoma obrazami, które zwracają 200. `title` 54 znaki (z sufiksem
+marki), `description` 147 znaków, jeden `<h1>`, 7 `<h2>` treściowych, 3 tabele z 96 komórkami
+opisanymi `data-label`, JSON-LD `Article` + `BreadcrumbList` (**bez `FAQPage`**), `Article.image`
+wskazuje na nowy kadr OG. CTA prowadzi do `/?format=DL&nadruk=1#konfigurator`. `PAGE_UPDATED`
+podbite dla `/koperty-z-nadrukiem` i `/blog`. Serwer produkcyjny zwraca 200 dla wpisu i dla
+wszystkich stron, na których dołożono linki. **Podglądu w przeglądarce nie było** — w tej sesji
+nie było dostępnego narzędzia podglądu, więc render sprawdzony na HTML-u z serwera produkcyjnego
+(treść, tabele i oba odnośniki obecne bez JS).
+
+### 16 sierpnia 2026 — graf encji, polityka zwrotów, `llms.txt` i sitemapa obrazów
+
+**Pięć zmian technicznych, żadnej zmiany treści.** Audyt wskazał luki, których nie widać
+w przeglądarce, a które decydują o tym, jak serwis jest opisany dla wyszukiwarki i dla modeli.
+
+**1. Martwy odsyłacz w danych `Article`.** `articleJsonLd()` wskazywał `publisher.logo.url`
+na `${SITE_URL}/logo.svg` — pliku, którego w `public/` nigdy nie było. Każdy wpis blogowy
+wysyłał Google 404 w polu wymaganym dla wyniku rozszerzonego. Logo stoi teraz raz, na węźle
+firmy, jako `ImageObject` z wymiarami pliku `logo-icon.png` (295 × 221).
+
+**2. Graf encji zamiast luźnych bloków.** Osiem funkcji JSON-LD emitowało osobne, anonimowe
+węzły: `Product.seller`, `Article.publisher` i `WebSite.publisher` opisywały tę samą firmę
+trzy razy, nie wiedząc o sobie nawzajem. Wprowadzone `@id` (`#organization`, `#brand`,
+`#website`, `#logo`, `<url>#product`) i odwołania zamiast powtórzeń. Węzeł firmy ma typ
+`['Organization', 'OnlineStore']`, doszły `currenciesAccepted`, `paymentAccepted` i `areaServed`.
+`sameAs` nadal nieobecne — profili społecznościowych nie ma, a pusta tablica jest sygnałem
+gorszym niż brak pola.
+
+**3. Oferta opisana tak, jak wymaga tego wynik produktowy.** Doszły `hasMerchantReturnPolicy`,
+`shippingDetails.deliveryTime`, `priceValidUntil` i `sku`. **Polityka zwrotów nie jest jedna** —
+koperta gładka ma 14 dni na odstąpienie (`MerchantReturnFiniteReturnWindow`, koszt odesłania
+po stronie Klienta), a koperta z nadrukiem i z personalizacją jest z odstąpienia wyłączona jako
+rzecz wykonana na indywidualne zamówienie (`MerchantReturnNotPermitted`, §12 ust. 5 regulaminu).
+Dlatego pole dostają **wyłącznie strony z pojedynczym `Offer`** (F1, F2, F3). Widełki na `/`
+i na `/koperty-na-vouchery` obejmują obie kategorie naraz, więc jedna polityka opisałaby połowę
+zakresu fałszywie — a Google i tak czyta to pole tylko z `Offer`, nigdy z `AggregateOffer`.
+Z tego samego powodu widełki nie dostają `sku` ani `priceValidUntil`.
+
+**Pole, które zostaje otwarte: `transitTime`.** Czasu przewozu nie ma w żadnym źródle
+w projekcie — regulamin mówi tylko „za pośrednictwem firmy kurierskiej", a `pricing.ts` zna
+wyłącznie dni realizacji. Wpisanie „1–2 dni" byłoby deklaracją bez pokrycia w miejscu, z którego
+Google liczy obiecywaną datę doręczenia. Zadeklarowany jest sam `handlingTime` (2 dni dla kopert
+gładkich, 2–5 dla produkcyjnych) i dni robocze. Do domknięcia po potwierdzeniu przewoźnika.
+
+**4. `/llms.txt` jako trasa, nie plik.** Komplet twardych faktów — format, paleta, cennik, MOQ,
+terminy, wymagania plikowe, płatności — w jednym miejscu, bez interfejsu wokół. Wszystkie liczby
+czytane z `pricing.ts` i `catalog.ts`, więc zmiana cennika przepisuje dokument razem
+z konfiguratorem; plik statyczny rozjechałby się przy pierwszej zmianie ceny i nikt by tego nie
+zauważył. Osobna sekcja **„Czego Envelopes nie oferuje"** — brak okienka, brak odbioru
+osobistego, brak rabatów ilościowych, brak formatów poza DL, brak zwrotu przy nadruku. Modele
+wypełniają luki tym, co typowe dla branży, więc zaprzeczenie działa lepiej niż kolejne zdanie
+o tym, co jest.
+
+**5. Sitemapa: `lastModified` i obrazy.** Strony statyczne nie miały daty w ogóle. Daty pochodzą
+z tego dziennika i są wpisane ręcznie w `PAGE_UPDATED` — **zmiana treści strony wymaga podbicia
+daty tam**. Odrzucone: `mtime` pliku źródłowego i data budowania, bo na hostingu obie dają
+wszystkim stronom jedną datę zmieniającą się przy każdym deployu; niewiarygodny `lastmod` jest
+powodem, dla którego Google przestaje go czytać dla całej domeny. Dokumenty prawne biorą datę
+z `TERMS.updated`, więc zmiana regulaminu przepisuje sitemapę sama.
+
+Doszła **sitemapa obrazów: 74 unikalne kadry** w 12 adresach. To jedyny kanał, którym zdjęcia
+katalogowe i aranżacyjne trafiają do Grafiki Google — wszystkie ładowane są leniwie i część
+leży poniżej pierwszego ekranu, a nazwy plików i alty zostały pod te zapytania przygotowane
+15 sierpnia. Zestawy odpowiadają temu, co strona **faktycznie renderuje**: stąd sami bestsellerzy
+dla `/koperty-dl` i sześć odcieni dla F4. `VOUCHER_COLOR_IDS` przeniesione z komponentu strony
+do `showcase.ts`, bo dwie kopie tej samej listy rozjechałyby się przy pierwszej zmianie doboru.
+Zbliżenia z `public/images/details/` pominięte — dekoracyjne, a ich lista mieszka w komponencie.
+
+Weryfikacja: `typecheck` i `build` bez błędów, 12 tras statycznych w sitemapie, `/llms.txt`
+prerenderowany jako statyczny. Na serwerze produkcyjnym: **wszystkie 74 obrazy z sitemapy
+zwracają 200**, `logo-icon.png` 200, zero referencji do `logo.svg` w kodzie. JSON-LD sprawdzony
+na trzech trasach — `/koperty-dl` (`sku ENV-DL`, 14 dni zwrotu, handling 2–2),
+`/koperty-z-nadrukiem` (`sku ENV-DL-NADRUK`, zwrot niedozwolony, handling 2–5) i wpis blogowy
+(`author` i `publisher` jako referencje do węzła firmy). Widełki na `/` bez polityki zwrotów
+i bez `sku`, zgodnie z decyzją wyżej.
 
 ### 16 sierpnia 2026 — decyzja właściciela: ton treści i zamknięcie luki produktowej
 
@@ -1017,7 +1204,8 @@ z konfiguracją „Koperta DL Czarny z nadrukiem", 4,57 zł/szt.
 | --- | --- | --- |
 | ~~`NEXT_PUBLIC_SITE_URL` nieustawione~~ | **Odblokowane.** `SITE_URL` ma produkcyjny fallback `https://envelopes.pl` — sitemapa, robots, JSON-LD i OG wskazują na domenę | — |
 | ~~Dane rejestrowe zastępcze~~ | **Odblokowane.** `CONTACT_DETAILS` zawiera realne dane (JDG, NIP 6972414844, REGON, adres, telefon, rachunek) | — |
-| Brak analityki (GA4 / GSC) | Cel „wejścia do konfiguratora" niemierzalny; priorytety opierają się na intencji, nie na danych | Wdrożenie zapowiedziane |
+| ~~Brak analityki (GA4 / GSC)~~ | **Odblokowane 16 sierpnia 2026.** GA4 wpięte przez `NEXT_PUBLIC_GA_ID`, właściciel zweryfikowany w Search Console. Dane o zapytaniach i wejściach do konfiguratora zaczynają się zbierać | — |
+| `transitTime` w danych o dostawie | Google liczy obiecywaną datę doręczenia z `handlingTime` + `transitTime`; bez drugiego składnika adnotacja o dostawie jest niepełna. Zadeklarowanie czasu przewozu bez potwierdzenia przewoźnika byłoby obietnicą bez pokrycia | Właściciel — podanie realnego czasu przewozu kurierem |
 | Formaty C6 i K4 `disabled` | Klaster ślubny (K9) bez CTA zakupowego; poz. 27 ograniczona do A4 składanego | Właściciel — uruchomienie formatów |
 | ~~Zdjęcia produktowe to PNG po 0,5–0,75 MB~~ | **Odblokowane 15 sierpnia 2026.** `colors/`, `prints/` i `personalized/` przeszły na WebP w trzech szerokościach: **30,8 MB → 2,1 MB**. Strona główna pobiera dziś **197 kB** obrazów zamiast ~9 MB | — |
 | Kadry hero w `public/images/` nadal w PNG | `Hero Envelopes Robocze.png` 2,99 MB, `koperta-gorna/dolna.png` 0,7 MB. Hero ma już warianty WebP w `srcSet`, więc PNG-i są najprawdopodobniej nieużywanymi źródłami — do weryfikacji przed usunięciem | Właściciel — potwierdzenie, czy pliki są jeszcze potrzebne |

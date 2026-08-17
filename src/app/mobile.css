@@ -93,6 +93,42 @@
     box-shadow: none;
   }
 
+  /* Dokument pod konfiguratorem — kafle galerii, próbki i tablica kolorów
+     unoszą się na `:hover`. Na dotyku uniesienie zostawałoby po odjęciu
+     palca, więc odpowiedź niesie samo wciśnięcie. */
+  .home-doc .tile-gallery .paper-shot:hover,
+  .home-doc .sample:hover,
+  .home-doc .usecase-card:hover,
+  .home-doc .palette-board .palette-chip:hover {
+    transform: none;
+    border-color: var(--color-line);
+    box-shadow: none;
+  }
+
+  .home-doc .usecase-card:hover .usecase-frame img {
+    transform: none;
+  }
+
+  .home-doc .palette-board .palette-chip:hover {
+    background: transparent;
+    border-color: transparent;
+  }
+
+  .home-doc .tile-gallery .paper-shot:hover img {
+    transform: none;
+  }
+
+  .home-doc .faq-list .faq-item summary:hover {
+    background: transparent;
+  }
+
+  .home-doc .tile-gallery .paper-shot:active,
+  .home-doc .sample:active,
+  .home-doc .usecase-card:active,
+  .home-doc .palette-board .palette-chip:active {
+    transform: scale(0.98);
+  }
+
   .summary-chip:hover {
     border-color: var(--color-line);
     color: var(--color-ink-soft);
@@ -618,6 +654,385 @@
   }
 
   .final-cta .btn {
+    width: 100%;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+     Dokument pod konfiguratorem — układ mobilny
+
+     Nie jest to zwężony wariant `home.css`. Na wąskim ekranie znika
+     nośnik całej tamtej kompozycji — margines z numerem rozdziału,
+     który na desktopie jedzie z czytelnikiem przez cały rozdział.
+     Zamiast niego rozdział otwiera się jednym wierszem: kreska lakowa,
+     numer, nadtytuł. Reszta układów jest dobrana pod kciuk i pod to,
+     ile czego mieści się na 390 px:
+
+     • galeria papieru — kadr pionowy 4:5 zamiast kwadratu, bo zdjęcie
+       jest tu produktem, a nie ilustracją akapitu;
+     • tablica 19 kolorów — dwa rzędy w poziomie zamiast dziewięciu
+       w pionie: 840 px przewijania w bok zamiast 1 700 px w dół;
+     • rejestr zastosowań — pion, nie karuzela: sześć akapitów czyta się
+       kciukiem w dół, a nie przesuwaniem w bok;
+     • proces — oś pionowa z plakietką kroku na kresce;
+     • wklejka cenowa i panele usług — przyciski na pełną szerokość.
+     ═══════════════════════════════════════════════════════════════ */
+
+  /* ── Otwarcie rozdziału ──
+     Na desktopie rozdziały rozdziela 128 px światła, bo tam separacji nie
+     niesie nic poza nim. Na mobile robi to wiersz otwarcia — kreska lakowa,
+     numer, nadtytuł — więc pole sekcji schodzi z 48 na 32 px. Dwanaście
+     rozdziałów razy 32 px z góry i z dołu to 384 px mniej przewijania przy
+     nietkniętej czytelności podziału. */
+  .home-doc .chapter {
+    padding: var(--space-6) 0;
+  }
+
+  .home-doc .chapter-rail {
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
+  }
+
+  .home-doc .chapter-rail .eyebrow {
+    color: var(--color-seal);
+  }
+
+  .home-doc .chapter-head {
+    margin-bottom: var(--space-5);
+  }
+
+  .home-doc .chapter-head h2 {
+    max-width: none;
+    letter-spacing: -0.02em;
+  }
+
+  .home-doc .chapter-lead {
+    margin-top: var(--space-3);
+    font-size: 17px;
+    max-width: none;
+  }
+
+  .home-doc .chapter-note {
+    margin-top: var(--space-4);
+  }
+
+  .home-doc .subhead {
+    margin-top: var(--space-6);
+    padding-top: var(--space-5);
+  }
+
+  .home-doc .subhead h3 {
+    font-size: 20px;
+  }
+
+  /* ── Wklejka ── */
+  .home-doc .plate {
+    padding: var(--space-5) var(--space-4);
+    border-radius: var(--radius-md);
+  }
+
+  .home-doc .plate-tearoff {
+    padding-top: var(--space-6);
+  }
+
+  .home-doc .plate-tearoff::before {
+    top: var(--space-4);
+  }
+
+  /* ── 01 Papier: kadr pionowy ── */
+  .home-doc .tile-gallery .paper-shot img {
+    aspect-ratio: 4 / 5;
+  }
+
+  .home-doc .tile-gallery .paper-shot figcaption {
+    padding: var(--space-3) var(--space-6) var(--space-3) var(--space-4);
+  }
+
+  .home-doc .tile-gallery .paper-shot figcaption::after {
+    right: var(--space-3);
+  }
+
+  /* ── 02 Formaty: rejestr jako lista kart ──
+     `.m-cards` zamienia tabelę w karty, ale reguły rejestru z `home.css`
+     mają wyższą specyficzność, więc padding komórek trzeba tu podać
+     wprost. Lakowa krawędź wiersza w sprzedaży zostaje — na karcie
+     działa tak samo jak w tabeli. */
+  .home-doc .spec-ledger {
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    overflow: visible;
+  }
+
+  /* Bez tego `min-width` rejestru z `home.css` (640 px, żeby cztery
+     kolumny nie ściskały się na wąskim laptopie) wygrywa specyficznością
+     z `.m-cards table.data` i rozpycha dokument w poziomie. */
+  .home-doc .spec-ledger table.data {
+    min-width: 0;
+  }
+
+  .home-doc .spec-ledger table.data tbody th[scope='row'] {
+    padding: 0 0 var(--space-2);
+    font-size: 19px;
+  }
+
+  .home-doc .spec-ledger table.data td {
+    padding: 3px 0;
+  }
+
+  .home-doc .spec-ledger table.data thead th {
+    padding: 0;
+  }
+
+  /* ── 03 Cennik: infografika w pionie ──
+     Na 390 px cena i trzy fakty nie zmieszczą się obok siebie, więc blok
+     ceny idzie nad listę faktów, a pionowa kreska rozdzielająca kolumny
+     zamienia się w poziomą. */
+  .home-doc .price-figure-value {
+    font-size: 44px;
+  }
+
+  .home-doc .price-figure-facts li {
+    grid-template-columns: 76px minmax(0, 1fr);
+  }
+
+  /* ── Drobny druk ── */
+  .home-doc .chapter-fineprint {
+    margin-top: var(--space-5);
+    padding-top: var(--space-4);
+  }
+
+  /* ── 04 Usługi ── */
+  .home-doc .service-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-4);
+  }
+
+  .home-doc .service-panel h3 {
+    font-size: 20px;
+  }
+
+  .home-doc .service-figure {
+    margin: var(--space-3) 0;
+  }
+
+  .home-doc .service-figure-value {
+    font-size: 32px;
+  }
+
+  .home-doc .service-panel .row {
+    padding-top: var(--space-4);
+  }
+
+  .home-doc .service-panel .row .btn {
+    width: 100%;
+  }
+
+  /* Plakietka nad tekstem: przy szerokości 390 px pasek obok plakietki
+     zostawiłby na zdanie jakieś 260 px, czyli cztery słowa w wierszu. */
+  .home-doc .express-strip {
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-4);
+  }
+
+  .home-doc .service-panel .row .btn {
+    width: 100%;
+  }
+
+  /* ── 05 Proces: oś pionowa ──
+     Plakietka „Krok N" zostaje tekstem, a strukturę niesie kreska
+     z pieczęcią — ten sam znacznik, którym konfigurator oznacza krok. */
+  .home-doc .flow {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    padding-top: 0;
+  }
+
+  .home-doc .flow::before {
+    display: none;
+  }
+
+  .home-doc .flow-step {
+    padding: 0 0 var(--space-5) var(--space-6);
+    border-top: none;
+  }
+
+  .home-doc .flow-step:last-child {
+    padding-bottom: 0;
+  }
+
+  .home-doc .flow-step::before {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: var(--space-5);
+    bottom: 0;
+    width: 2px;
+    background: var(--color-line);
+  }
+
+  .home-doc .flow-step:last-child::before {
+    display: none;
+  }
+
+  .home-doc .flow-step::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 6px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--color-seal);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.3),
+      inset 0 -1px 2px rgba(0, 0, 0, 0.32);
+  }
+
+  .home-doc .flow-step .eyebrow {
+    position: static;
+    margin-bottom: var(--space-2);
+  }
+
+  .home-doc .flow-step h3 {
+    margin-top: 0;
+    font-size: 18px;
+  }
+
+  /* ── 06 Zastosowania: karuzela kafli ──
+     Kiedy sekcja była samym tekstem, przesuwanie w bok kazało wracać do
+     początku wiersza po każdej karcie — dlatego szła w pionie. Z kadrem
+     na górze kafla kryterium się odwraca: obraz ocenia się jednym
+     spojrzeniem, więc karuzela mieści sześć zastosowań w jednym ekranie
+     zamiast w sześciu. */
+  .home-doc .usecase-grid.m-snap {
+    display: flex;
+    gap: var(--space-3);
+    grid-template-columns: none;
+  }
+
+  .home-doc .usecase-body {
+    padding: var(--space-3) var(--space-4) var(--space-4);
+  }
+
+  .home-doc .usecase-body h3 {
+    font-size: 17px;
+  }
+
+  /* ── 07 Realizacje i 11 Blog: karuzela ──
+     Reguły siatki z `home.css` mają wyższą specyficzność niż `.m-snap`,
+     więc przełączenie na tor poziomy trzeba tu powtórzyć. */
+  .home-doc .sample-grid.m-snap,
+  .home-doc .journal.m-snap {
+    display: flex;
+    gap: var(--space-3);
+  }
+
+  .home-doc .sample-body {
+    padding: var(--space-3) var(--space-4);
+  }
+
+  /* ── 08 Kolory: dwa rzędy w poziomie ──
+     Dziewiętnaście odcieni w siatce po trzy to sześć rzędów i 1 700 px
+     pionu. Dwa rzędy jadące w bok mieszczą komplet w 840 px toru, a próg
+     dotyku (84 × 90 px na kafel) zostaje z zapasem. */
+  .home-doc .palette-board {
+    grid-auto-flow: column;
+    grid-template-rows: repeat(2, auto);
+    grid-template-columns: none;
+    grid-auto-columns: 84px;
+    gap: var(--space-3) var(--space-2);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    margin-inline: calc(-1 * var(--m-gutter));
+    padding-inline: var(--m-gutter);
+    scroll-padding-inline: var(--m-gutter);
+    padding-block-end: var(--space-2);
+  }
+
+  .home-doc .palette-board::-webkit-scrollbar {
+    display: none;
+  }
+
+  .home-doc .palette-board .palette-chip {
+    padding: 0;
+    font-size: 12px;
+    scroll-snap-align: start;
+  }
+
+  .home-doc .palette-board .palette-chip .swatch-shape {
+    border: 1px solid var(--color-line);
+  }
+
+  /* ── 09 Dla firm ── */
+  .home-doc .ledger {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-5);
+  }
+
+  .home-doc .ledger h2 {
+    font-size: 24px;
+    max-width: none;
+  }
+
+  .home-doc .ledger .row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .home-doc .ledger .row .btn {
+    width: 100%;
+  }
+
+  /* ── 10 Pytania ── */
+  .home-doc .faq-list .faq-item summary {
+    min-height: 56px;
+    padding: var(--space-4) var(--space-2);
+    gap: var(--space-4);
+  }
+
+  .home-doc .faq-list .faq-item summary h3 {
+    font-size: 16px;
+  }
+
+  .home-doc .faq-list .faq-answer {
+    padding: 0 var(--space-2) var(--space-4);
+  }
+
+  /* ── 11 Blog ── */
+  .home-doc .journal-head {
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: var(--space-4);
+    margin-bottom: var(--space-5);
+  }
+
+  /* ── 12 Kolofon ── */
+  .home-doc .colophon {
+    gap: var(--space-4);
+  }
+
+  .home-doc .colophon > div + div {
+    padding-top: var(--space-4);
+  }
+
+  .home-doc .colophon p {
+    font-size: 14px;
+    max-width: none;
+  }
+
+  /* ── Wezwanie zamykające ── */
+  .home-doc .final-cta {
+    padding: var(--space-5);
+    gap: var(--space-5);
+  }
+
+  .home-doc .final-cta h2 {
+    font-size: 24px;
+  }
+
+  .home-doc .final-cta .btn {
     width: 100%;
   }
 

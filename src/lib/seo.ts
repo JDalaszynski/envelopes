@@ -44,10 +44,69 @@ export function ogImage(slug: string, alt: string) {
   return { url: `/images/og/${slug}.jpg`, width: 1200, height: 630, alt };
 }
 
+/* ── Graf encji ────────────────────────────────────────────────────────── */
+
+/**
+ * Adresy węzłów, na które wskazują wszystkie pozostałe bloki danych.
+ *
+ * Bez nich każdy blok był osobną, niepowiązaną wzmianką: `Product.seller`
+ * mówił „Organization o nazwie Envelopes", `Article.publisher` to samo,
+ * a `WebSite.publisher` jeszcze raz — trzy anonimowe węzły zamiast trzech
+ * odwołań do jednej firmy. Wyszukiwarka i model językowy scalają encję po
+ * `@id`, więc dane rejestrowe, logo i adres wystarczy podać **raz**.
+ *
+ * Węzeł firmy renderuje `layout.tsx` na każdej stronie serwisu, więc żadna
+ * referencja nie zostaje bez definicji — również na wpisach blogowych.
+ */
+export const ORGANIZATION_ID = `${SITE_URL}/#organization`;
+export const BRAND_ID = `${SITE_URL}/#brand`;
+export const WEBSITE_ID = `${SITE_URL}/#website`;
+const LOGO_ID = `${SITE_URL}/#logo`;
+
+/**
+ * Logo firmy. Wymiary są wpisane, bo `ImageObject` bez `width` i `height`
+ * jest przez Google traktowany jako niepełny — muszą odpowiadać plikowi
+ * `public/images/logo-icon.png` (295 × 221 px). Podmiana pliku wymaga
+ * poprawienia tych dwóch liczb.
+ *
+ * Wcześniej `articleJsonLd()` wskazywał tu na `${SITE_URL}/logo.svg`, którego
+ * w `public/` nigdy nie było — każdy wpis blogowy wysyłał do Google 404
+ * w polu wymaganym dla wyniku rozszerzonego `Article`.
+ */
+const LOGO = { path: '/images/logo-icon.png', width: 295, height: 221 };
+
+/** Odwołanie do węzła firmy — używane wszędzie zamiast powielania danych. */
+const organizationRef = { '@id': ORGANIZATION_ID };
+
+/**
+ * To samo odwołanie, ale z typem i nazwą. Wytyczne Google dla `Article`
+ * wymagają `publisher.name`, więc blok artykułu niesie je wprost i pozostaje
+ * czytelny nawet dla parsera, który nie rozwiązuje referencji po `@id`.
+ */
+const organizationRefNamed = {
+  '@id': ORGANIZATION_ID,
+  '@type': 'Organization',
+  name: 'Envelopes',
+};
+
+const brandRef = { '@id': BRAND_ID, '@type': 'Brand', name: 'Envelopes' };
+
+/**
+ * Węzeł firmy. Typ `OnlineStore` (podtyp `Organization`) zamiast samego
+ * `Organization` — Envelopes sprzedaje wyłącznie wysyłkowo przez własny sklep,
+ * a bardziej szczegółowy typ jest tym, co model językowy potrafi wykorzystać
+ * przy pytaniu „gdzie kupić koperty z nadrukiem". Oba typy zostają na węźle,
+ * bo pozostałe bloki odwołują się do niego jako do `Organization`.
+ *
+ * `sameAs` świadomie nieobecne: profili społecznościowych jeszcze nie ma,
+ * a pusta tablica jest sygnałem gorszym niż brak pola (content-plan.md,
+ * sekcja „Zależności i blokady").
+ */
 export function organizationJsonLd() {
   return {
     '@context': 'https://schema.org',
-    '@type': 'Organization',
+    '@type': ['Organization', 'OnlineStore'],
+    '@id': ORGANIZATION_ID,
     name: 'Envelopes',
     legalName: CONTACT_DETAILS.company,
     url: SITE_URL,
@@ -57,6 +116,20 @@ export function organizationJsonLd() {
     email: CONTACT_DETAILS.email,
     taxID: CONTACT_DETAILS.nip,
     vatID: `PL${CONTACT_DETAILS.nip}`,
+    logo: {
+      '@type': 'ImageObject',
+      '@id': LOGO_ID,
+      url: `${SITE_URL}${LOGO.path}`,
+      contentUrl: `${SITE_URL}${LOGO.path}`,
+      width: LOGO.width,
+      height: LOGO.height,
+      caption: 'Envelopes',
+    },
+    image: { '@id': LOGO_ID },
+    brand: brandRef,
+    areaServed: { '@type': 'Country', name: 'Polska' },
+    currenciesAccepted: 'PLN',
+    paymentAccepted: 'BLIK, karta płatnicza, przelew, faktura z odroczonym terminem płatności',
     address: {
       '@type': 'PostalAddress',
       streetAddress: CONTACT_DETAILS.street,
@@ -76,6 +149,135 @@ export function organizationJsonLd() {
 }
 
 /**
+ * Identyfikatory handlowe pojedynczych ofert.
+ *
+ * Sklep nie prowadzi magazynu indeksowanego po symbolach — produkt powstaje
+ * z konfiguracji, nie z pozycji katalogowej — więc symbole definiujemy tutaj:
+ * format plus usługa, czyli dokładnie to, co odróżnia trzy oferty opisane
+ * pojedynczym `Offer`. Nadaje je sprzedawca i nie muszą pochodzić z żadnego
+ * rejestru zewnętrznego, ale **muszą być stałe**: po tym polu Google i Merchant
+ * Center sklejają historię tej samej oferty w czasie.
+ *
+ * Widełki na `/` i `/koperty-na-vouchery` symbolu nie dostają — obejmują
+ * kilka konfiguracji naraz, więc jeden identyfikator byłby nieprawdziwy.
+ */
+const SKU = {
+  plain: 'ENV-DL',
+  print: 'ENV-DL-NADRUK',
+  personalization: 'ENV-DL-PERS',
+};
+
+/* ── Dostawa i zwroty — pola, po których Google opisuje ofertę ─────────── */
+
+/**
+ * Data ważności ceny. Liczona przy budowaniu jako dzień budowania + rok:
+ * oferta bez tego pola jest opisana gorzej, a z datą przeszłą — traktowana
+ * jako nieaktualna. Wartość zamraża się w chwili budowania, więc serwis
+ * niewdrażany przez rok zacznie podawać datę wsteczną; przy kadencji
+ * publikacji z `content-plan.md` to nie jest realne ryzyko.
+ */
+const PRICE_VALID_UNTIL = (() => {
+  const date = new Date();
+  date.setFullYear(date.getFullYear() + 1);
+  return date.toISOString().slice(0, 10);
+})();
+
+const BUSINESS_DAYS = [
+  'https://schema.org/Monday',
+  'https://schema.org/Tuesday',
+  'https://schema.org/Wednesday',
+  'https://schema.org/Thursday',
+  'https://schema.org/Friday',
+];
+
+/**
+ * Termin dostawy w rozbiciu na czas obsługi i dni robocze.
+ *
+ * `transitTime` jest **świadomie pominięty**: czasu przewozu nie ma dziś
+ * w żadnym źródle w projekcie — regulamin mówi tylko „za pośrednictwem firmy
+ * kurierskiej", a `pricing.ts` zna wyłącznie dni realizacji. Wpisanie tu
+ * „1–2 dni" byłoby deklaracją bez pokrycia, składaną w miejscu, z którego
+ * Google liczy obiecywaną datę doręczenia. Sam `handlingTime` jest poprawny,
+ * tylko niepełny — pole domknie się, gdy przewoźnik zostanie potwierdzony.
+ *
+ * Dni robocze podajemy wprost, bo `addWorkingDays()` w `pricing.ts` pomija
+ * weekendy — deklaracja odpowiada temu, co faktycznie liczy kalkulator.
+ */
+function deliveryTime(minDays: number, maxDays: number) {
+  return {
+    '@type': 'ShippingDeliveryTime',
+    handlingTime: {
+      '@type': 'QuantitativeValue',
+      minValue: minDays,
+      maxValue: maxDays,
+      unitCode: 'DAY',
+    },
+    businessDays: {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: BUSINESS_DAYS,
+    },
+  };
+}
+
+/**
+ * Warunki wysyłki. Stawka jest jedna, niezależna od przewoźnika i nakładu
+ * (`DEFAULT_PRICING.delivery`), a obszar to wyłącznie Polska — wysyłka
+ * zagraniczna wymaga indywidualnego uzgodnienia (§9 regulaminu), więc nie
+ * deklarujemy jej jako dostępnej.
+ */
+function shippingDetails(handling: { min: number; max: number }) {
+  return {
+    '@type': 'OfferShippingDetails',
+    shippingRate: {
+      '@type': 'MonetaryAmount',
+      value: DELIVERY_COST.toFixed(2),
+      currency: 'PLN',
+    },
+    shippingDestination: {
+      '@type': 'DefinedRegion',
+      addressCountry: 'PL',
+    },
+    deliveryTime: deliveryTime(handling.min, handling.max),
+  };
+}
+
+/**
+ * Zwrot koperty gładkiej — 14 dni na odstąpienie na zasadach ogólnych
+ * (§12 ust. 1 i 6 regulaminu). Bezpośrednie koszty odesłania ponosi Klient,
+ * stąd `ReturnFeesCustomerResponsibility`, a nie `ReturnShippingFees`: to
+ * drugie oznacza opłatę **pobieraną przez sprzedawcę** i wymagałoby podania
+ * jej kwoty, której nie ma — Klient nadaje przesyłkę zwrotną sam.
+ */
+function plainReturnPolicy() {
+  return {
+    '@type': 'MerchantReturnPolicy',
+    applicableCountry: 'PL',
+    returnPolicyCountry: 'PL',
+    returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
+    merchantReturnDays: 14,
+    returnMethod: 'https://schema.org/ReturnByMail',
+    returnFees: 'https://schema.org/ReturnFeesCustomerResponsibility',
+    merchantReturnLink: `${SITE_URL}/regulamin`,
+  };
+}
+
+/**
+ * Koperty z nadrukiem i z personalizacją są wyłączone z prawa odstąpienia —
+ * są rzeczą wykonaną według specyfikacji Klienta (art. 38 ust. 1 pkt 3 ustawy
+ * o prawach konsumenta, §12 ust. 5 regulaminu). Deklarowanie przy nich
+ * czternastu dni byłoby obietnicą, której regulamin nie pokrywa.
+ */
+function customReturnPolicy() {
+  return {
+    '@type': 'MerchantReturnPolicy',
+    applicableCountry: 'PL',
+    returnPolicyCountry: 'PL',
+    returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
+    merchantReturnLink: `${SITE_URL}/regulamin`,
+  };
+}
+
+/**
  * WebSite — encja serwisu dla wyszukiwarek i modeli generatywnych (pkt 6.9).
  *
  * Świadomie bez `SearchAction`: w serwisie nie ma wyszukiwarki, więc
@@ -85,14 +287,14 @@ export function webSiteJsonLd() {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    '@id': `${SITE_URL}/#website`,
+    '@id': WEBSITE_ID,
     name: 'Envelopes',
     alternateName: 'Envelopes — koperty ozdobne',
     url: SITE_URL,
     inLanguage: 'pl-PL',
     description:
       'Sklep z kopertami ozdobnymi DL w 19 kolorach, z nadrukiem logo firmowego i adresowaniem. Wysyłka na terenie Polski.',
-    publisher: { '@type': 'Organization', name: 'Envelopes', url: SITE_URL },
+    publisher: organizationRef,
   };
 }
 
@@ -124,14 +326,24 @@ export function productJsonLd() {
   return {
     '@context': 'https://schema.org',
     '@type': 'Product',
+    '@id': `${SITE_URL}/#product`,
     name: `Koperty ozdobne DL ${FORMAT_MAP.DL.dimensions}`,
     description: `Koperty ozdobne z papieru barwionego w masie, format DL ${FORMAT_MAP.DL.dimensions}, dostępne w ${COLORS.length} kolorach w jednej cenie. Gramatura 115–140 g/m², bez okienka adresowego. Opcjonalny nadruk logo firmowego i personalizacja, czyli nadruk adresu odbiorcy.`,
-    brand: { '@type': 'Brand', name: 'Envelopes' },
+    brand: brandRef,
     category: 'Koperty ozdobne',
     material: 'Papier ozdobny 115–140 g/m²',
     size: FORMAT_MAP.DL.dimensions,
     image: images,
     url: `${SITE_URL}/#konfigurator`,
+    /*
+     * `AggregateOffer` **bez** `hasMerchantReturnPolicy` — świadomie.
+     * Te widełki obejmują jednocześnie kopertę gładką (14 dni na odstąpienie)
+     * i kopertę z nadrukiem (wyłączona z odstąpienia jako rzecz wykonana
+     * na indywidualne zamówienie). Jedna polityka opisałaby połowę zakresu
+     * fałszywie, a Google i tak czyta to pole wyłącznie z pojedynczego
+     * `Offer` — tam, gdzie konfiguracja jest jednoznaczna, czyli na F1, F2
+     * i F3. To samo dotyczy `priceValidUntil`, które opisuje jedną cenę.
+     */
     offers: {
       '@type': 'AggregateOffer',
       priceCurrency: 'PLN',
@@ -146,19 +358,11 @@ export function productJsonLd() {
         minValue: DEFAULT_PRICING.moqWithoutPrint,
         unitCode: 'C62',
       },
-      shippingDetails: {
-        '@type': 'OfferShippingDetails',
-        shippingRate: {
-          '@type': 'MonetaryAmount',
-          value: DELIVERY_COST.toFixed(2),
-          currency: 'PLN',
-        },
-        shippingDestination: {
-          '@type': 'DefinedRegion',
-          addressCountry: 'PL',
-        },
-      },
-      seller: { '@type': 'Organization', name: 'Envelopes' },
+      shippingDetails: shippingDetails({
+        min: DEFAULT_PRICING.leadDaysPlain,
+        max: DEFAULT_PRICING.leadDaysStandard,
+      }),
+      seller: organizationRef,
     },
   };
 }
@@ -211,9 +415,11 @@ export function printedEnvelopeProductJsonLd() {
   return {
     '@context': 'https://schema.org',
     '@type': 'Product',
+    '@id': `${url}#product`,
     name: 'Koperty DL z nadrukiem logo firmowego',
     description: `Koperta DL ${FORMAT_MAP.DL.dimensions} z nadrukiem logo firmowego, w 19 kolorach papieru ozdobnego. Minimalna ilość ${DEFAULT_PRICING.moqWithPrint} sztuk, realizacja ${DEFAULT_PRICING.leadDaysStandard} dni roboczych lub ${DEFAULT_PRICING.leadDaysExpress} dni w trybie ekspresowym.`,
-    brand: { '@type': 'Brand', name: 'Envelopes' },
+    brand: brandRef,
+    sku: SKU.print,
     category: 'Koperty firmowe z nadrukiem',
     material: 'Papier ozdobny 115–140 g/m²',
     size: FORMAT_MAP.DL.dimensions,
@@ -223,6 +429,7 @@ export function printedEnvelopeProductJsonLd() {
       '@type': 'Offer',
       priceCurrency: 'PLN',
       price: unitPrice.toFixed(2),
+      priceValidUntil: PRICE_VALID_UNTIL,
       availability: 'https://schema.org/InStock',
       itemCondition: 'https://schema.org/NewCondition',
       url,
@@ -232,7 +439,14 @@ export function printedEnvelopeProductJsonLd() {
         minValue: DEFAULT_PRICING.moqWithPrint,
         unitCode: 'C62',
       },
-      seller: { '@type': 'Organization', name: 'Envelopes' },
+      /* Wysyłka nie była tu dotąd opisana w ogóle, mimo że koszt dostawy
+         jest taki sam jak na pozostałych stronach. */
+      shippingDetails: shippingDetails({
+        min: DEFAULT_PRICING.leadDaysExpress,
+        max: DEFAULT_PRICING.leadDaysStandard,
+      }),
+      hasMerchantReturnPolicy: customReturnPolicy(),
+      seller: organizationRef,
     },
   };
 }
@@ -264,9 +478,11 @@ export function dlEnvelopeProductJsonLd() {
   return {
     '@context': 'https://schema.org',
     '@type': 'Product',
+    '@id': `${url}#product`,
     name: `Koperta DL ${dl.dimensions}`,
     description: `Koperta ozdobna w formacie DL o wymiarach ${dl.dimensions}. Papier barwiony w masie 115–140 g/m², bez okienka adresowego. Mieści kartkę A4 złożoną na trzy (99 × 210 mm) oraz voucher w tym samym wymiarze. Największa wkładka: ${maxInsert.short} × ${maxInsert.long} mm. Dostępna w ${COLORS.length} kolorach w jednej cenie.`,
-    brand: { '@type': 'Brand', name: 'Envelopes' },
+    brand: brandRef,
+    sku: SKU.plain,
     category: 'Koperty DL',
     material: 'Papier ozdobny 115–140 g/m²',
     size: dl.dimensions,
@@ -290,6 +506,7 @@ export function dlEnvelopeProductJsonLd() {
       '@type': 'Offer',
       priceCurrency: 'PLN',
       price: DEFAULT_PRICING.base.DL.toFixed(2),
+      priceValidUntil: PRICE_VALID_UNTIL,
       availability: 'https://schema.org/InStock',
       itemCondition: 'https://schema.org/NewCondition',
       url,
@@ -299,19 +516,16 @@ export function dlEnvelopeProductJsonLd() {
         minValue: DEFAULT_PRICING.moqWithoutPrint,
         unitCode: 'C62',
       },
-      shippingDetails: {
-        '@type': 'OfferShippingDetails',
-        shippingRate: {
-          '@type': 'MonetaryAmount',
-          value: DELIVERY_COST.toFixed(2),
-          currency: 'PLN',
-        },
-        shippingDestination: {
-          '@type': 'DefinedRegion',
-          addressCountry: 'PL',
-        },
-      },
-      seller: { '@type': 'Organization', name: 'Envelopes' },
+      /* Koperta gładka nie przechodzi przez produkcję ani przez akceptację
+         wizualizacji, więc czas obsługi jest jedną liczbą, nie widełkami. */
+      shippingDetails: shippingDetails({
+        min: DEFAULT_PRICING.leadDaysPlain,
+        max: DEFAULT_PRICING.leadDaysPlain,
+      }),
+      /* Jedyna oferta w serwisie objęta prawem odstąpienia — koperta bez
+         nadruku i bez personalizacji nie jest rzeczą wykonaną na zamówienie. */
+      hasMerchantReturnPolicy: plainReturnPolicy(),
+      seller: organizationRef,
     },
   };
 }
@@ -369,9 +583,11 @@ export function personalizedEnvelopeProductJsonLd() {
   return {
     '@context': 'https://schema.org',
     '@type': 'Product',
+    '@id': `${url}#product`,
     name: 'Personalizowane koperty DL z adresowaniem',
     description: `Koperta DL ${FORMAT_MAP.DL.dimensions} z personalizacją, czyli nadrukiem indywidualnych danych odbiorcy: imienia i nazwiska, pełnego adresu albo dedykacji. Dostępna w ${COLORS.length} kolorach papieru ozdobnego. Minimalna ilość ${DEFAULT_PRICING.moqWithPrint} sztuk, realizacja ${DEFAULT_PRICING.leadDaysStandard} dni roboczych lub ${DEFAULT_PRICING.leadDaysExpress} dni w trybie ekspresowym.`,
-    brand: { '@type': 'Brand', name: 'Envelopes' },
+    brand: brandRef,
+    sku: SKU.personalization,
     category: 'Koperty personalizowane z adresowaniem',
     material: 'Papier ozdobny 115–140 g/m²',
     size: FORMAT_MAP.DL.dimensions,
@@ -381,6 +597,7 @@ export function personalizedEnvelopeProductJsonLd() {
       '@type': 'Offer',
       priceCurrency: 'PLN',
       price: unitPrice.toFixed(2),
+      priceValidUntil: PRICE_VALID_UNTIL,
       availability: 'https://schema.org/InStock',
       itemCondition: 'https://schema.org/NewCondition',
       url,
@@ -390,19 +607,12 @@ export function personalizedEnvelopeProductJsonLd() {
         minValue: DEFAULT_PRICING.moqWithPrint,
         unitCode: 'C62',
       },
-      shippingDetails: {
-        '@type': 'OfferShippingDetails',
-        shippingRate: {
-          '@type': 'MonetaryAmount',
-          value: DELIVERY_COST.toFixed(2),
-          currency: 'PLN',
-        },
-        shippingDestination: {
-          '@type': 'DefinedRegion',
-          addressCountry: 'PL',
-        },
-      },
-      seller: { '@type': 'Organization', name: 'Envelopes' },
+      shippingDetails: shippingDetails({
+        min: DEFAULT_PRICING.leadDaysExpress,
+        max: DEFAULT_PRICING.leadDaysStandard,
+      }),
+      hasMerchantReturnPolicy: customReturnPolicy(),
+      seller: organizationRef,
     },
   };
 }
@@ -436,9 +646,10 @@ export function voucherEnvelopeProductJsonLd() {
   return {
     '@context': 'https://schema.org',
     '@type': 'Product',
+    '@id': `${url}#product`,
     name: 'Koperty DL na vouchery i bony podarunkowe',
     description: `Koperty ozdobne DL ${FORMAT_MAP.DL.dimensions} do pakowania bonów podarunkowych i voucherów na usługi. Voucher drukowany na jednej trzeciej arkusza A4, czyli 99 × 210 mm, wchodzi płasko, bez zaginania. Dostępne w ${COLORS.length} kolorach, opcjonalnie z nadrukiem logo firmy i z imieniem obdarowanego. Minimalna ilość ${DEFAULT_PRICING.moqWithPrint} sztuk przy nadruku, ${DEFAULT_PRICING.moqWithoutPrint} sztuka bez nadruku.`,
-    brand: { '@type': 'Brand', name: 'Envelopes' },
+    brand: brandRef,
     category: 'Koperty na vouchery i bony podarunkowe',
     material: 'Papier ozdobny 115–140 g/m²',
     size: FORMAT_MAP.DL.dimensions,
@@ -459,19 +670,14 @@ export function voucherEnvelopeProductJsonLd() {
         minValue: DEFAULT_PRICING.moqWithoutPrint,
         unitCode: 'C62',
       },
-      shippingDetails: {
-        '@type': 'OfferShippingDetails',
-        shippingRate: {
-          '@type': 'MonetaryAmount',
-          value: DELIVERY_COST.toFixed(2),
-          currency: 'PLN',
-        },
-        shippingDestination: {
-          '@type': 'DefinedRegion',
-          addressCountry: 'PL',
-        },
-      },
-      seller: { '@type': 'Organization', name: 'Envelopes' },
+      shippingDetails: shippingDetails({
+        min: DEFAULT_PRICING.leadDaysPlain,
+        max: DEFAULT_PRICING.leadDaysStandard,
+      }),
+      /* Bez `hasMerchantReturnPolicy` i bez `sku` — z tego samego powodu co
+         na `/`: widełki obejmują kopertę gładką i kopertę z nadrukiem, a te
+         dwie różnią się prawem odstąpienia. */
+      seller: organizationRef,
     },
   };
 }
@@ -523,12 +729,11 @@ export function articleJsonLd(post: BlogPost) {
     image: [`${SITE_URL}${ogImage(post.ogImageSlug ?? 'blog', post.title).url}`],
     datePublished: post.date,
     dateModified: post.updated ?? post.date,
-    author: { '@type': 'Organization', name: 'Envelopes' },
-    publisher: {
-      '@type': 'Organization',
-      name: 'Envelopes',
-      logo: { '@type': 'ImageObject', url: `${SITE_URL}/logo.svg` },
-    },
+    /* Autor i wydawca to ten sam węzeł firmy, który renderuje `layout.tsx` —
+       logo, dane rejestrowe i adres stoją tam raz, zamiast być powtarzane
+       (i rozjeżdżać się) w każdym wpisie. */
+    author: organizationRefNamed,
+    publisher: organizationRefNamed,
     mainEntityOfPage: { '@type': 'WebPage', '@id': `${SITE_URL}/blog/${post.slug}` },
     articleSection: post.category,
     inLanguage: 'pl-PL',

@@ -36,6 +36,10 @@ Najsilniejszy komercyjnie klaster. Pokrywa się 1:1 z płatną usługą (+1,99 z
 klienta z bazy wiedzy (kancelarie, hotele, kliniki, agencje). Intencja niemal wyłącznie firmowa.
 
 **URL docelowy:** `/koperty-z-nadrukiem` `[ISTNIEJE]` — opublikowany 13 sierpnia 2026.
+**Wsparcie:** wpis `cena-kopert-z-nadrukiem-i-koszt-zamowienia` `[ISTNIEJE]` — opublikowany
+17 sierpnia 2026 (content-plan.md poz. 9), **właściciel frazy `koperty z nadrukiem cena`**.
+Odpowiada na pytanie o **koszt całego zamówienia** (dostawa rozłożona na sztuki, tabela pozycji,
+których nie doliczamy); cena jednostkowa i jej składniki zostają w sekcji `#cena` na filarze.
 **Wsparcie:** wpis `jak-przygotowac-pliki-do-druku-na-kopertach` `[ISTNIEJE]` — przepisany
 15 sierpnia 2026 (content-plan.md poz. 7). Oddał filarowi całą warstwę transakcyjną i obsługuje
 wyłącznie intencję procesową „jak przygotować plik do druku": jest właścicielem frazy
@@ -57,7 +61,7 @@ wspierającą tego klastra — przekierowanie 308 stoi w `next.config.mjs`.
 | koperta z własnym nadrukiem | wariant lp. | TRANS | BOFU | — | P1 |
 | koperty z własnym logo | wspierająca | TRANS | BOFU | — | P1 |
 | koperty na zamówienie z nadrukiem | wspierająca | TRANS | BOFU | — | P1 |
-| koperty z nadrukiem cena | **sekcja cenowa** | KOM | BOFU | — | P0 |
+| koperty z nadrukiem cena | **wpis kosztowy** | KOM | BOFU | — | P0 |
 | koperty dl z nadrukiem | pomost do K4 | TRANS | BOFU | — | P0 |
 | koperta dl z nadrukiem | wariant lp. | TRANS | BOFU | — | P0 |
 | czarne koperty z logo | pomost do K5 | TRANS | BOFU | — | P1 |
@@ -66,6 +70,15 @@ wspierającą tego klastra — przekierowanie 308 stoi w `next.config.mjs`.
 - `koperty z nadrukiem cena` to fraza o najwyższym potencjale GEO — wymaga jawnej, cytowalnej
   tabeli cenowej (2,58 zł DL + 1,99 zł nadruk = 4,57 zł brutto/szt., MOQ 10 szt.). Modele językowe
   cytują konkretne liczby z jednostką i statusem VAT, nie „ceny od".
+- **Właściciel frazy cenowej to wpis, nie filar (17 sierpnia 2026).** `koperty z nadrukiem cena`
+  wyszła z `keywords` filara i przeszła do `/blog/cena-kopert-z-nadrukiem-i-koszt-zamowienia`;
+  filar dostał w zamian `koperty z własnym nadrukiem`. Podział pracy: filar odpowiada „ile
+  kosztuje sztuka" (sekcja `#cena`, tabela składników, pytanie w `PRINT_FAQ_ITEMS` — wszystko
+  zostaje), wpis odpowiada „ile kosztuje całe zamówienie" i podaje koszt jednej wysłanej koperty
+  z rozłożoną dostawą, czego filar nie liczy nigdzie.
+- **Kwot nie ma w tytułach (decyzja właściciela z 17 sierpnia 2026).** `title`, `og:title`, H1 i H2
+  nie zawierają cen. Tytuł filara brzmi dziś „Koperty z nadrukiem logo firmowego od 10 sztuk";
+  kwota została w `description`, w pasku faktów i w tabeli cennika.
 - Wejście do konfiguratora z tej strony musi ustawiać krok nadruku (`step`), nie krok 1.
 - **Rozgraniczenie filar ↔ poradnik plikowy** (15 sierpnia 2026). Filar odpowiada na pytanie
   **„jakie pliki przyjmujemy"** — jednym wierszem tabeli specyfikacji i jednym pytaniem

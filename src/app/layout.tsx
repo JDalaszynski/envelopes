@@ -4,6 +4,11 @@ import Script from 'next/script';
 
 import './globals.css';
 import './components.css';
+/* Pas strony głównej pod konfiguratorem — własna warstwa, bo to jedyny
+   fragment serwisu o formie dokumentu (numerowane rozdziały, marginalia).
+   Wszystkie selektory schodzą po `.home-doc`, więc plik nie może wpłynąć
+   na strony filarowe ani na blog. */
+import './home.css';
 /* Warstwa mobilna wchodzi po komponentach — nadpisuje je świadomie,
    bez podbijania specyficzności selektorów. */
 import './mobile.css';

@@ -9,6 +9,8 @@
  */
 
 import {
+  BULK_QUOTE_THRESHOLD,
+  COLORS,
   FORMAT_MAP,
   PERSONALIZATION_REQUIRED_COLUMNS,
   PERSONALIZATION_SHEET_EXTENSIONS_LABEL,
@@ -19,6 +21,13 @@ import {
   PRINT_SAFE_MARGIN_MM,
 } from './catalog';
 import type { FormatId } from './catalog';
+import {
+  DEFAULT_PRICING,
+  DELIVERY_COST,
+  calculatePrice,
+  formatPrice,
+  round2,
+} from './pricing';
 
 export const BLOG_CATEGORIES = ['Poradniki', 'Inspiracje', 'Realizacje', 'Aktualności'] as const;
 export type BlogCategory = (typeof BLOG_CATEGORIES)[number];
@@ -150,7 +159,280 @@ const REQUIRED_ADDRESS_FIELDS = PERSONALIZATION_REQUIRED_COLUMNS.map((column) =>
 /** Przykład kolumny, której nazwy nie wolno zmieniać — „Ulica i numer". */
 const FIRST_REQUIRED_COLUMN = PERSONALIZATION_REQUIRED_COLUMNS[0].label;
 
+/* ── Wartości wyliczane dla wpisu o koszcie zamówienia z nadrukiem ─────── */
+
+/**
+ * Wpis z content-plan.md poz. 9 jest w całości cenowy, więc **żadna kwota nie
+ * jest w nim wpisana ręcznie** — wszystkie powstają z `DEFAULT_PRICING` przez
+ * `calculatePrice`. Zmiana cennika przepisuje lead, akapity, tabelę kosztu
+ * zamówienia i listę kontrolną razem z konfiguratorem.
+ */
+const PRINT_ORDER_BASE = {
+  format: 'DL' as FormatId,
+  color: '',
+  print: true,
+  printFiles: [],
+  personalization: false,
+  shippingSpeed: 'standard' as const,
+};
+
+/** Rachunek dla jednej koperty DL z nadrukiem — stawka jednostkowa. */
+const PRINTED_UNIT = calculatePrice({ ...PRINT_ORDER_BASE, quantity: 1 });
+
+/**
+ * Nakłady w tabeli kosztu zamówienia. Świadomie inne niż na filarze
+ * (`/koperty-z-nadrukiem` pokazuje 10 / 100 / 500 / 1 000): tam osią jest
+ * wartość zamówienia, tutaj — koszt jednej wysłanej koperty, więc siatka jest
+ * gęstsza w dolnym zakresie, gdzie dostawa faktycznie zmienia wynik.
+ * Ostatni wiersz to próg wyceny indywidualnej.
+ */
+const PRINT_ORDER_QUANTITIES = [
+  DEFAULT_PRICING.moqWithPrint,
+  25,
+  50,
+  100,
+  250,
+  500,
+  1000,
+  BULK_QUOTE_THRESHOLD,
+];
+
+interface PrintOrderCost {
+  quantity: number;
+  /** Same koperty, bez dostawy */
+  gross: number;
+  net: number;
+  /** Zamówienie razem z jedną przesyłką kurierską */
+  withDelivery: number;
+  /** Koszt jednej gotowej koperty — kwota do pozycji budżetowej */
+  perUnit: number;
+  /** Ile z tej kwoty przypada na dostawę */
+  deliveryPerUnit: number;
+}
+
+function printOrderCost(quantity: number): PrintOrderCost {
+  const price = calculatePrice({ ...PRINT_ORDER_BASE, quantity });
+  const withDelivery = round2(price.gross + DELIVERY_COST);
+  return {
+    quantity,
+    gross: price.gross,
+    net: price.net,
+    withDelivery,
+    perUnit: round2(withDelivery / quantity),
+    deliveryPerUnit: round2(DELIVERY_COST / quantity),
+  };
+}
+
+const PRINT_ORDER_COSTS = PRINT_ORDER_QUANTITIES.map(printOrderCost);
+
+/** Nakład referencyjny wpisu — ten sam, który stoi w tytule i w leadzie. */
+const REFERENCE_ORDER = printOrderCost(100);
+const SMALLEST_ORDER = PRINT_ORDER_COSTS[0];
+const MID_ORDER = printOrderCost(500);
+const VAT_PERCENT = Math.round(DEFAULT_PRICING.vatRate * 100);
+const DELIVERY_NET = round2(DELIVERY_COST / (1 + DEFAULT_PRICING.vatRate));
+const BULK_QUOTE_LABEL = BULK_QUOTE_THRESHOLD.toLocaleString('pl-PL');
+
 const POSTS: BlogPost[] = [
+  {
+    /* content-plan.md poz. 9 — treść wspierająca filar K1, cel GEO.
+
+       Rozgraniczenie z filarem `/koperty-z-nadrukiem` (decyzja z 17 sierpnia
+       2026). Filar zostaje właścicielem frazy usługowej `koperty z nadrukiem`
+       i całej warstwy transakcyjnej; ten wpis przejmuje frazę cenową
+       `koperty z nadrukiem cena` i przesuwa jednostkę rozliczenia ze **sztuki**
+       na **całe zamówienie**: dostawa rozłożona na sztuki oraz tabela pozycji,
+       których nie doliczamy. Filar nadal ma sekcję `#cena` i pytanie „Ile
+       kosztuje nadruk logo na kopertach?" w `PRINT_FAQ_ITEMS` — to sekcja
+       strony sprzedażowej, nie osobny adres konkurujący o tę frazę.
+
+       Świadomie nieobecne: uzasadnienie minimum 10 sztuk (poz. 46), terminy
+       realizacji i moment, od którego biegną (poz. 16 i filar), specyfikacja
+       plików (poz. 7). `FAQPage` zostaje wyłącznie na filarze. */
+    slug: 'cena-kopert-z-nadrukiem-i-koszt-zamowienia',
+    /* Tytuł bez kwoty i bez liczby — decyzja właściciela z 17 sierpnia 2026.
+       Kwota należy do tabeli cennika, nie do nagłówka wyniku wyszukiwania. */
+    title: 'Cena kopert z nadrukiem i koszt zamówienia',
+    /* Lead zasila `description`. Jedna kwota, nie trzy: koszt jednej wysłanej
+       koperty jest liczbą, której nie ma nigdzie indziej w serwisie. */
+    lead: `Koperty z nadrukiem kosztują ${formatPrice(PRINTED_UNIT.unitTotal)} brutto za sztukę. Pokazujemy, ile wychodzi całe zamówienie razem z dostawą i czego do tej kwoty nie doliczamy.`,
+    category: 'Poradniki',
+    date: '2026-08-17',
+    readingMinutes: 6,
+    colorId: 'eko',
+    format: 'DL',
+    /* Kadr z nadrukiem — /images/prints/eko-koperty-z-nadrukiem-dl-1200.webp */
+    imageVariant: 'nadruk',
+    ogImageSlug: 'blog-koszt-zamowienia-z-nadrukiem',
+    ogImageAlt:
+      'Dwie koperty DL z papieru Eko na ciemnym drewnianym blacie — widok klapki i przedniej ścianki',
+    keywords: [
+      'koperty z nadrukiem cena',
+      'cena kopert z nadrukiem',
+      'koszt zamówienia kopert z nadrukiem',
+      'koperty z nadrukiem koszt dostawy',
+    ],
+    intro: `Zamówienie stu kopert DL z nadrukiem logo kosztuje ${formatPrice(REFERENCE_ORDER.withDelivery)} brutto: ${formatPrice(REFERENCE_ORDER.gross)} za koperty i ${formatPrice(DELIVERY_COST)} za jedną przesyłkę kurierską. Jedna gotowa koperta wychodzi więc ${formatPrice(REFERENCE_ORDER.perUnit)}. Poniżej rozpisujemy tę kwotę na czynniki, pokazujemy, jak zmienia się przy innym nakładzie, i wymieniamy pozycje, których do zamówienia nie doliczamy.`,
+    sections: [
+      {
+        id: 'koszt-zamowienia',
+        heading: 'Ile kosztuje zamówienie kopert z nadrukiem',
+        paragraphs: [
+          `Zamówienie kopert z nadrukiem kosztuje tyle, ile wynosi stawka jednostkowa razy liczba kopert, plus jedna przesyłka kurierska. Koperta DL z nadrukiem logo to ${formatPrice(PRINTED_UNIT.unitTotal)} brutto za sztukę — składają się na to sama koperta (${formatPrice(DEFAULT_PRICING.base.DL)}) i nadruk (${formatPrice(DEFAULT_PRICING.print)}). Kuriera liczymy raz, niezależnie od liczby kopert w paczce.`,
+          'Stawka za sztukę nie zależy od nakładu. Sto kopert i tysiąc kopert rozliczamy tą samą kwotą jednostkową, bo rabatów ilościowych nie stosujemy. Zmienia się wyłącznie to, jak jednorazowy koszt dostawy rozkłada się na sztuki.',
+          'Tabela poniżej pokazuje tę zależność. Ostatnie dwie kolumny wchodzą wprost do pozycji budżetowej: koszt jednej wysłanej koperty i część tej kwoty, która przypada na kuriera.',
+        ],
+        table: {
+          caption:
+            'Koszt zamówienia kopert DL z nadrukiem logo razem z dostawą, dla wybranych nakładów',
+          head: ['Nakład', 'Zamówienie z dostawą', 'Koszt jednej koperty', 'W tym dostawa'],
+          rows: PRINT_ORDER_COSTS.map((cost) => [
+            `${cost.quantity.toLocaleString('pl-PL')} szt.`,
+            formatPrice(cost.withDelivery),
+            formatPrice(cost.perUnit),
+            formatPrice(cost.deliveryPerUnit),
+          ]),
+        },
+      },
+      {
+        id: 'czego-nie-doliczamy',
+        heading: 'Czego nie doliczamy do zamówienia z nadrukiem',
+        paragraphs: [
+          'Do zamówienia z nadrukiem nie doliczamy opłaty przygotowawczej, kosztu matrycy, kosztu wizualizacji ani dopłaty za papier perłowy, metaliczny czy eko. Na fakturze stoją wyłącznie pozycje zamówienia i osobny wiersz z kosztem dostawy.',
+          'Ta lista bierze się z pytań, które dostajemy przed pierwszym zamówieniem. Najczęstsze brzmi „co jeszcze dojdzie do tej kwoty” — więc odpowiadamy na nie wprost, pozycja po pozycji.',
+          'Dwa wiersze wymagają komentarza. Wizualizację przygotowuje nasz grafik z Państwa pliku i przesyła ją do akceptacji przed drukiem; kolejne wersje po Państwa uwagach też są bez dopłaty. Logo natomiast drukujemy, a nie projektujemy — plik przygotowują Państwo po swojej stronie.',
+        ],
+        table: {
+          caption: 'Pozycje, o które pytają Państwo przed zamówieniem kopert z nadrukiem',
+          head: ['Pozycja', 'Czy doliczamy', 'Co to znaczy'],
+          rows: [
+            [
+              'Opłata przygotowawcza, matryca, przygotowanie druku',
+              'Nie doliczamy',
+              'Koszt przygotowania druku jest już w stawce za nadruk',
+            ],
+            [
+              'Wizualizacja koperty przed drukiem',
+              'Nie doliczamy',
+              'Grafik przygotowuje ją z Państwa pliku i przesyła e-mailem',
+            ],
+            [
+              'Kolejne wersje wizualizacji po uwagach',
+              'Nie doliczamy',
+              'Cennik nie przewiduje opłaty za poprawkę',
+            ],
+            [
+              'Papier perłowy, metaliczny albo eko',
+              'Nie doliczamy',
+              `Wszystkie ${COLORS.length} kolorów kosztuje tyle samo`,
+            ],
+            [
+              'Nadruk na ciemnym papierze',
+              'Nie doliczamy',
+              'Druk na czarnej kopercie kosztuje tyle samo, co na białej',
+            ],
+            [
+              'Minimalna wartość zamówienia',
+              'Nie ma takiego progu',
+              'Ograniczeniem jest liczba kopert, nie kwota zamówienia',
+            ],
+            [
+              'Rabat ilościowy',
+              'Nie stosujemy',
+              'Stawka jednostkowa nie spada wraz z nakładem',
+            ],
+            [
+              'Projekt logo od zera',
+              'Nie wykonujemy',
+              'Drukujemy plik, który Państwo przesyłają',
+            ],
+          ],
+        },
+      },
+      {
+        id: 'dostawa',
+        heading: 'Dostawa to jedyna pozycja, której nie liczymy od sztuki',
+        paragraphs: [
+          `Dostawa kurierem kosztuje ${formatPrice(DELIVERY_COST)} brutto i naliczamy ją raz na zamówienie, niezależnie od liczby kopert w paczce. Progu darmowej dostawy nie ma, odbioru osobistego również — Envelopes sprzedaje wyłącznie wysyłkowo, na terenie Polski.`,
+          `Dla budżetu ma to jedną konsekwencję. Przy zamówieniu minimalnym przesyłka dokłada do każdej koperty ${formatPrice(SMALLEST_ORDER.deliveryPerUnit)}, przy pięciuset sztukach — ${formatPrice(MID_ORDER.deliveryPerUnit)}. Im mniejszy nakład, tym mocniej kurier podbija koszt pojedynczej sztuki.`,
+          'Stąd praktyczny wniosek dla korespondencji cyklicznej. Jeżeli koperty na dwa kwartały mogą pojechać w jednej przesyłce, płacą Państwo za kuriera raz zamiast dwa razy. Stawka za samą kopertę na tym nie zyskuje, ale koszt całej pozycji — tak.',
+          'Odwrotnie działa to przy zamówieniach dzielonych na kilka adresów dostawy. Każdy adres to osobne zamówienie, więc również osobna przesyłka i osobna kwota za kuriera.',
+        ],
+      },
+      {
+        id: 'netto-brutto',
+        heading: 'Którą kwotę wpisać do budżetu: netto czy brutto',
+        paragraphs: [
+          `Do budżetu wchodzi kwota netto, jeżeli Państwa firma odlicza VAT. Sto kopert DL z nadrukiem to ${formatPrice(REFERENCE_ORDER.net)} netto, dostawa — ${formatPrice(DELIVERY_NET)} netto. Ceny w cenniku i w konfiguratorze podajemy brutto, ze stawką ${VAT_PERCENT} procent, a podsumowanie zamówienia pokazuje obie kwoty.`,
+          'Fakturę VAT wystawiamy do każdego zamówienia, również przy zakupie bez numeru NIP. Płatność z odroczonym terminem 14 dni jest dostępna dla instytucji publicznych i urzędów, których obieg zakupowy nie przewiduje przedpłaty. Pozostali klienci, w tym firmy komercyjne, płacą z góry — BLIK-iem, kartą albo przelewem.',
+          'Przy przelewie tradycyjnym warto doliczyć czas księgowania. Termin realizacji zaczynamy liczyć od zaksięgowania wpłaty, a przy nadruku dodatkowo od akceptacji wizualizacji — oba warunki muszą być spełnione łącznie.',
+        ],
+      },
+      {
+        id: 'co-zmienia-kwote',
+        heading: 'Co jeszcze może zmienić kwotę zamówienia',
+        paragraphs: [
+          'Stawkę jednostkową podnoszą dwie opcje: personalizacja i tryb ekspresowy. Obie włączają Państwo w konfiguratorze i obie widać w podsumowaniu, zanim zamówienie trafi do koszyka. Poza nimi kwota wynika wyłącznie z liczby kopert.',
+          'Personalizacja bywa mylona z nadrukiem, więc warto rozdzielić te dwie usługi. Nadruk powtarza ten sam projekt na całym nakładzie i mieści się w stawce z tabeli wyżej. Personalizacja daje każdej kopercie inną treść — imię, nazwisko albo adres odbiorcy — i jest liczona osobno.',
+          `Powyżej ${BULK_QUOTE_LABEL} sztuk kwota przestaje wynikać wprost z cennika. Zamówienia tej wielkości wyceniamy indywidualnie przez formularz; ustalamy wtedy również harmonogram dostaw i sposób rozliczenia.`,
+        ],
+        table: {
+          caption: 'Opcje, które zmieniają koszt zamówienia kopert z nadrukiem',
+          head: ['Opcja', 'Wpływ na kwotę', 'Kiedy wchodzi w grę'],
+          rows: [
+            [
+              'Personalizacja danymi odbiorcy',
+              `+${formatPrice(DEFAULT_PRICING.personalization)} brutto za sztukę`,
+              'Gdy każda koperta ma nieść inne imię, nazwisko albo adres',
+            ],
+            [
+              'Tryb ekspresowy',
+              `+${formatPrice(DEFAULT_PRICING.express)} brutto za sztukę`,
+              'Gdy koperty mają wyjść szybciej niż w trybie standardowym',
+            ],
+            [
+              `Nakład powyżej ${BULK_QUOTE_LABEL} sztuk`,
+              'Wycena indywidualna',
+              'Kwotę i harmonogram dostaw ustalamy przez formularz wyceny',
+            ],
+            [
+              'Zmiana koloru albo gramatury papieru',
+              'Bez wpływu',
+              'Cena zależy wyłącznie od formatu i wybranych usług',
+            ],
+          ],
+        },
+      },
+      {
+        id: 'jak-policzyc',
+        heading: 'Jak policzyć koszt własnego nakładu',
+        paragraphs: [
+          'Koszt dowolnego zamówienia liczy się jednym działaniem: stawka jednostkowa razy liczba kopert, plus jedna dostawa. Stawka jest stała, więc jedyną zmienną w tym rachunku jest nakład.',
+          `Jeden próg trzeba sprawdzić przed liczeniem. Zamówienie z nadrukiem zaczyna się od ${DEFAULT_PRICING.moqWithPrint} sztuk; koperty gładkie, bez nadruku, zamawiają Państwo od ${DEFAULT_PRICING.moqWithoutPrint} sztuki.`,
+          'Konfigurator na stronie głównej wykonuje to działanie na bieżąco. Po wpisaniu ilości i włączeniu nadruku podsumowanie pokazuje kwotę brutto, netto oraz koszt dostawy — zanim cokolwiek trafi do koszyka i zanim podadzą Państwo jakiekolwiek dane.',
+        ],
+      },
+      {
+        id: 'lista-kontrolna',
+        heading: 'Lista kontrolna przed zatwierdzeniem budżetu',
+        paragraphs: [
+          'Poniższe punkty wystarczą, żeby kwota z wyceny zgadzała się z kwotą na fakturze.',
+        ],
+        list: [
+          'Liczba kopert — stawka jednostkowa jest ta sama przy każdym nakładzie, więc to jedyna zmienna rachunku',
+          'Jedna dostawa na zamówienie — dwa adresy dostawy oznaczają dwa zamówienia i dwie przesyłki',
+          'Nadruk czy personalizacja — druga usługa jest liczona osobno i podnosi stawkę za sztukę',
+          'Tryb realizacji — ekspres podnosi stawkę jednostkową, tryb standardowy jej nie zmienia',
+          'Kwota netto do pozycji budżetowej, kwota brutto do płatności',
+          `Nakład powyżej ${BULK_QUOTE_LABEL} sztuk — zamiast konfiguratora formularz wyceny`,
+          'Termin płatności — odroczone 14 dni dotyczy instytucji publicznych i urzędów',
+        ],
+      },
+    ],
+    cta: 'Koszt swojego nakładu policzą Państwo w konfiguratorze — kwota przelicza się przy każdej zmianie ilości.',
+    ctaConfigure: { label: 'Policz koszt swojego nakładu', format: 'DL', print: true },
+    pillar: { href: '/koperty-z-nadrukiem', anchor: 'koperty z nadrukiem' },
+  },
   {
     /* content-plan.md poz. 8 — treść wspierająca filar K2. Wpis startowy
        `adresowanie-kopert-recznie-czy-z-arkusza` usunięto 15 sierpnia 2026

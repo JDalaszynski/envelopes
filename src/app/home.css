@@ -1,0 +1,1216 @@
+/* ═══════════════════════════════════════════════════════════════
+   Envelopes — strona główna: dokument pod konfiguratorem
+
+   Ta warstwa obsługuje wyłącznie pas strony głównej poniżej
+   konfiguratora (`.home-doc`). Nagłówek, hero, konfigurator i stopka
+   mają własne reguły w `components.css` i nie są tu ruszane. Każdy
+   selektor schodzi po `.home-doc`, więc strony filarowe, blog i panel
+   klienta korzystają z niezmienionych klas wspólnych (`.how-steps`,
+   `.faq-item`, `.post-card`, `.final-cta`, `.paper-shot`).
+
+   ── Założenie projektowe ──
+   Do tej pory dwanaście sekcji miało jeden i ten sam rytm: nadtytuł,
+   nagłówek, akapit, siatka kart. Przy 9 800 px pionu nic w tym paśmie
+   nie mówiło, gdzie się jest ani ile jeszcze zostało — kolejne rozdziały
+   różniły się treścią, ale nie kształtem.
+
+   Punktem wyjścia redesignu jest to, czym Envelopes handluje: papierem
+   i korespondencją. Pas pod konfiguratorem dostaje więc formę **arkusza
+   specyfikacji**: numerowane rozdziały z marginaliami (kreska lakowa,
+   numer, nadtytuł), a każdy rozdział — układ dobrany do tego, czym
+   naprawdę jest. Galeria wygląda jak galeria, tabela jak rejestr,
+   cennik jak wklejka z perforacją, proces jak oś. Marka mówi tu samą
+   strukturą dokumentu, a nie kolejnym akcentem kolorystycznym.
+
+   ── Zasady ──
+   1. Wyłącznie tokeny z `globals.css`. Żadnych nowych kolorów, cieni,
+      promieni ani krojów.
+   2. Granat lakowy zostaje jedynym akcentem, a ciemny pas na stronie
+      pozostaje jeden — konfigurator. Rozdziały rozdziela biel i papier.
+   3. Ruch tylko na `transform`, `opacity` i `box-shadow`, 150–220 ms.
+      Żadnych animacji wejścia przy przewijaniu: pas ma 12 rozdziałów,
+      więc animowane wejście byłoby dwunastoma poruszeniami pod rząd.
+   4. Warstwa mobilna (≤ 720 px) siedzi w `mobile.css` — tam pas dostaje
+      osobny układ, nie zwężony wariant tego pliku.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ═══ 1. Rozdział ═══════════════════════════════════════════════
+   Numeracja jest licznikiem CSS, nie tekstem w DOM: numer rozdziału
+   to element nawigacyjny, a nie treść: robot i czytnik ekranu dostają
+   dokładnie ten sam materiał, co przed redesignem. */
+
+.home-doc {
+  counter-reset: chapter;
+}
+
+.chapter {
+  counter-increment: chapter;
+}
+
+/* Kontener rozdziału: marginalia + kolumna treści. 152 px marginesu to
+   szerokość, w której mieści się dwucyfrowy numer w mono i najdłuższy
+   nadtytuł („Zastosowania") bez łamania wiersza. */
+.chapter-inner {
+  display: grid;
+  grid-template-columns: 152px minmax(0, 1fr);
+  gap: var(--space-6);
+  align-items: start;
+}
+
+/* Marginalia jadą z czytelnikiem przez cały rozdział — numer strony
+   w dokumencie zachowuje się tak samo. `top` odpowiada wysokości
+   przyklejonego nagłówka powiększonej o światło. */
+.chapter-rail {
+  position: sticky;
+  top: 96px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-top: 6px;
+}
+
+/* Kreska lakowa — znak drukarski otwierający rozdział. */
+.chapter-rail::before {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 2px;
+  background: var(--color-seal);
+  margin-bottom: var(--space-2);
+}
+
+.chapter-index {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  color: var(--color-seal);
+  font-variant-numeric: tabular-nums;
+}
+
+.chapter-index::before {
+  content: counter(chapter, decimal-leading-zero);
+}
+
+.chapter-rail .eyebrow {
+  margin: 0;
+}
+
+/* Kolumna treści. Nagłówek dostaje o dwa punkty więcej niż globalny h2 —
+   w tym paśmie h2 otwiera rozdział, a nie podsekcję. */
+.chapter-head {
+  margin-bottom: var(--space-6);
+}
+
+.chapter-head h2 {
+  font-size: 34px;
+  line-height: 1.12;
+  max-width: 20ch;
+  text-wrap: balance;
+}
+
+.chapter-lead {
+  margin: var(--space-4) 0 0;
+  font-size: 19px;
+  line-height: 1.6;
+  color: var(--color-ink-soft);
+  max-width: 62ch;
+}
+
+/* Akapit ciągły w rozdziale — miara wiersza zamiast `style` w JSX. */
+.chapter-main p {
+  max-width: 68ch;
+}
+
+.chapter-note {
+  margin-top: var(--space-5);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--color-ink-soft);
+  max-width: 68ch;
+}
+
+/* Rozdział czytelniczy (FAQ) — spina zostaje, miara wiersza schodzi
+   do szerokości komfortowej dla pytań i odpowiedzi. */
+.chapter-narrow .chapter-main {
+  max-width: 760px;
+}
+
+/* Poniżej 1080 px marginalia nie mieszczą się obok treści bez zjadania
+   kolumny — numer i nadtytuł wchodzą wtedy nad nagłówek, w jeden wiersz. */
+@media (max-width: 1080px) {
+  .chapter-inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .chapter-rail {
+    position: static;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-3);
+    padding-top: 0;
+    margin-bottom: var(--space-4);
+  }
+
+  .chapter-rail::before {
+    margin-bottom: 0;
+  }
+
+  .chapter-head h2 {
+    max-width: 24ch;
+  }
+}
+
+/* ═══ 2. Wklejka — wspólna forma dla paneli w rozdziałach ═══════
+   Wklejka odsuwa się od tła zawsze o jeden stopień: na papierze jest
+   biała, na białym pasie papierowa. Ta sama zasada, którą karty
+   konfiguratora stosują wobec granatu. */
+
+.home-doc .plate {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+}
+
+.home-doc .section-surface .plate {
+  background: var(--color-paper);
+}
+
+/* Perforacja u górnej krawędzi — ten sam papierowy detal, którym pasek
+   podsumowania w konfiguratorze odrywa się od karty. Tu oznacza wklejkę
+   cenową: część dokumentu, którą się wyrywa i zabiera. */
+.home-doc .plate-tearoff {
+  position: relative;
+  padding-top: var(--space-7);
+}
+
+.home-doc .plate-tearoff::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: var(--space-5);
+  height: 10px;
+  background-image: radial-gradient(circle at 5px 0, transparent 5px, var(--color-surface) 5px);
+  background-size: 12px 10px;
+  background-repeat: repeat-x;
+  border-top: 1px dashed var(--color-line);
+}
+
+.home-doc .section-surface .plate-tearoff::before {
+  background-image: radial-gradient(circle at 5px 0, transparent 5px, var(--color-paper) 5px);
+}
+
+/* ═══ 3. Galeria kadrów (01 Papier, 06 Zastosowania) ═══════════
+   Kadr i podpis stają się jednym przedmiotem: ramka trzyma zdjęcie
+   i papierową plakietkę pod nim. Wcześniej podpis wisiał w powietrzu
+   pod obrazkiem i nie było widać, że cały kafel jest odnośnikiem. */
+
+.home-doc .tile-gallery .paper-shot {
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  overflow: hidden;
+  transition: transform var(--duration-base) var(--ease-standard),
+    box-shadow var(--duration-base) var(--ease-standard),
+    border-color var(--duration-fast) var(--ease-standard);
+}
+
+.home-doc .section-surface .tile-gallery .paper-shot {
+  background: var(--color-paper);
+}
+
+.home-doc .tile-gallery .paper-shot img {
+  border: none;
+  border-radius: 0;
+  transition: transform var(--duration-seal) var(--ease-standard);
+}
+
+.home-doc .tile-gallery .paper-shot figcaption {
+  position: relative;
+  margin: 0;
+  padding: var(--space-3) var(--space-4) var(--space-4);
+  border-top: 1px solid var(--color-line);
+  padding-right: var(--space-7);
+}
+
+/* Szewron mówi, dokąd prowadzi kafel. Na papierze leży cicho, przy
+   najechaniu dosuwa się do krawędzi — afordancja bez podkreślenia,
+   które rozbiłoby spokój galerii. */
+.home-doc .tile-gallery .paper-shot figcaption::after {
+  content: '›';
+  position: absolute;
+  right: var(--space-4);
+  top: var(--space-3);
+  font-size: 20px;
+  line-height: 1.2;
+  color: var(--color-seal);
+  opacity: 0.45;
+  transition: opacity var(--duration-fast) var(--ease-standard),
+    transform var(--duration-fast) var(--ease-standard);
+}
+
+.home-doc .tile-gallery .paper-shot:hover,
+.home-doc .tile-gallery .paper-shot:focus-visible {
+  transform: translateY(-3px);
+  border-color: var(--color-seal);
+  box-shadow: var(--shadow-md);
+}
+
+.home-doc .tile-gallery .paper-shot:hover img,
+.home-doc .tile-gallery .paper-shot:focus-visible img {
+  transform: scale(1.03);
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.home-doc .tile-gallery .paper-shot:hover figcaption::after,
+.home-doc .tile-gallery .paper-shot:focus-visible figcaption::after {
+  opacity: 1;
+  transform: translateX(3px);
+}
+
+/* ═══ 4. Rejestr formatów (02 Formaty) ═════════════════════════
+   Tabela przestaje być siatką danych, a staje się rejestrem
+   dostępności: format pisany szeryfem jak pozycja katalogowa, wymiar
+   i cena w cyfrach tabelarycznych, status w plakietce. Wiersz produktu,
+   który da się dziś kupić, ma lakową krawędź — jedno spojrzenie
+   wystarcza, żeby wiedzieć, co jest w sprzedaży. */
+
+.home-doc .spec-ledger {
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  /* `auto`, nie `hidden`: promień i tak przycina narożniki wierszy, a przy
+     wąskim oknie tabela zachowuje własne przewijanie zamiast chować
+     kolumnę statusu poza zasięgiem. */
+  overflow-x: auto;
+}
+
+.home-doc .spec-ledger table.data {
+  min-width: 640px;
+  font-size: 15px;
+}
+
+.home-doc .spec-ledger table.data thead th {
+  background: var(--color-paper);
+  padding: var(--space-3) var(--space-5);
+}
+
+.home-doc .spec-ledger table.data td,
+.home-doc .spec-ledger table.data tbody th {
+  padding: var(--space-4) var(--space-5);
+  vertical-align: middle;
+}
+
+.home-doc .spec-ledger table.data tbody th[scope='row'] {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  color: var(--color-ink);
+}
+
+/* Wymiary i ceny w cyfrach o stałej szerokości — kolumny stoją w pionie
+   nawet przy różnej liczbie znaków. */
+.home-doc .spec-ledger .figure {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+  font-size: 14px;
+  color: var(--color-ink);
+}
+
+.home-doc .spec-ledger tr[data-status='live'] {
+  box-shadow: inset 3px 0 0 var(--color-seal);
+}
+
+.home-doc .spec-ledger tr[data-status='soon'] {
+  background: var(--color-paper);
+}
+
+.home-doc .spec-ledger tr[data-status='soon'] th,
+.home-doc .spec-ledger tr[data-status='soon'] .figure {
+  color: var(--color-ink-soft);
+}
+
+.home-doc .spec-ledger tbody tr:hover {
+  background: var(--color-seal-wash);
+}
+
+.home-doc .spec-ledger tr[data-status='soon']:hover {
+  background: var(--color-paper);
+}
+
+/* Plakietka dostępności. Status niesie kolor **i** kształt obramowania
+   (ciągłe kontra kreskowane), więc informacja nie zależy od barwy. */
+.home-doc .avail {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 3px var(--space-3);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.home-doc .avail::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.home-doc .avail-live {
+  border: 1px solid var(--color-seal);
+  background: var(--color-seal-wash);
+  color: var(--color-seal);
+}
+
+.home-doc .avail-live::before {
+  background: var(--color-seal);
+}
+
+.home-doc .avail-soon {
+  border: 1px dashed var(--color-line);
+  color: var(--color-ink-soft);
+}
+
+.home-doc .avail-soon::before {
+  border: 1px solid var(--color-ink-soft);
+}
+
+/* ═══ 5. Infografika cenowa (03 Cennik) ════════════════════════
+   Rozdział sprowadza się do jednej liczby i jednej reguły. Liczba dostaje
+   skalę nagłówka, reguła — drabinę: trzy ilości, trzy identyczne ceny
+   jednostkowe. „Rabatów nie stosujemy" przestaje być zapewnieniem
+   i staje się czymś, co widać. */
+
+.home-doc .price-figure {
+  max-width: 780px;
+}
+
+.home-doc .price-figure-head {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--space-6);
+  align-items: center;
+}
+
+.home-doc .price-figure-main {
+  display: flex;
+  flex-direction: column;
+  padding-right: var(--space-6);
+  border-right: 1px solid var(--color-line);
+}
+
+.home-doc .price-figure-value {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 52px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-seal);
+  white-space: nowrap;
+}
+
+.home-doc .price-figure-unit {
+  margin-top: var(--space-2);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.home-doc .price-figure-net {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-ink-soft);
+}
+
+/* Trzy fakty, które kupujący sprawdza zaraz po cenie: czy kolor kosztuje
+   dodatkowo, od ilu sztuk i ile dochodzi za wysyłkę. */
+.home-doc .price-figure-facts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-3);
+}
+
+.home-doc .price-figure-facts li {
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr);
+  gap: var(--space-3);
+  align-items: baseline;
+  font-size: 14px;
+  color: var(--color-ink-soft);
+}
+
+.home-doc .price-figure-facts .figure {
+  text-align: right;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-ink);
+}
+
+/* ═══ 5b. Drobny druk ══════════════════════════════════════════
+   Akapity, które infografika mówi szybciej. Zostają w pełnym brzmieniu —
+   niosą frazy, dla których ten rozdział istnieje — ale schodzą o stopień
+   w hierarchii: mniejszy stopień pisma, kolor drugorzędny, kreska nad
+   blokiem. Kontrast 6,1:1 trzyma je czytelnymi (WCAG AA). */
+
+.home-doc .chapter-fineprint {
+  margin-top: var(--space-6);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-line);
+  max-width: 74ch;
+}
+
+.home-doc .chapter-fineprint p {
+  margin: 0 0 var(--space-3);
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--color-ink-soft);
+  max-width: none;
+}
+
+.home-doc .chapter-fineprint p:last-child {
+  margin-bottom: 0;
+}
+
+.home-doc .chapter-fineprint strong {
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+/* Wspólne cyfry infografik — mono z tabelarycznymi cyframi. */
+.home-doc .figure {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ═══ 6. Infografika usług (04 Usługi) ═════════════════════════
+   Obie usługi opisuje ten sam komplet parametrów, więc obie stoją
+   w identycznej matrycy — dopłata w skali nagłówka, pod nią trzy wiersze
+   etykieta ↔ wartość. Panele da się porównać wzrokiem wiersz po wierszu,
+   czego nie dawał jeden ciąg oddzielony kropkami. */
+
+.home-doc .service-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-5);
+}
+
+.home-doc .service-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.home-doc .service-panel h3 {
+  font-size: 23px;
+  line-height: 1.2;
+}
+
+/* Dopłata — jedyna liczba, dla której otwiera się ten panel. */
+.home-doc .service-figure {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: var(--space-4) 0 var(--space-4);
+}
+
+.home-doc .service-figure-value {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 38px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-seal);
+  white-space: nowrap;
+}
+
+.home-doc .service-figure-unit {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-ink-soft);
+}
+
+/* Matryca parametrów. `dl` zamiast tabeli: to są pary etykieta–wartość,
+   nie siatka danych, a czytnik ekranu dostaje z listy definicji poprawne
+   powiązanie bez nagłówków kolumn. */
+.home-doc .service-specs {
+  margin: 0;
+  border-top: 1px solid var(--color-line);
+}
+
+.home-doc .service-specs > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.home-doc .service-specs dt {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-ink-soft);
+}
+
+.home-doc .service-specs dd {
+  margin: 0;
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-ink);
+  text-align: right;
+}
+
+/* Alternatywa dla tej samej pozycji — termin ekspresowy pod standardowym.
+   Osobny wiersz matrycy sugerowałby osobny parametr; drugi wiersz w tej
+   samej komórce mówi „to samo, tylko szybciej". */
+.home-doc .service-specs-note {
+  display: block;
+  margin-top: 2px;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--color-seal);
+}
+
+/* Opis usługi — treść bez zmian, rola drobnego druku pod matrycą. */
+.home-doc .service-copy {
+  margin: var(--space-4) 0 0;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--color-ink-soft);
+  max-width: 54ch;
+}
+
+/* Przycisk siada na dole panelu, więc oba panele mają CTA w jednej
+   linii niezależnie od długości opisu. */
+.home-doc .service-panel .row {
+  margin-top: auto;
+  padding-top: var(--space-5);
+}
+
+/* ── Pasek ekspresu ──
+   Dotyczy obu usług tak samo, więc stoi pod matrycą zamiast powtarzać się
+   jako czwarty wiersz w dwóch panelach. Lakowa krawędź z lewej to ten sam
+   znacznik, którym rejestr formatów oznacza pozycję dostępną. */
+.home-doc .express-strip {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+  padding: var(--space-4) var(--space-5);
+  border-left: 3px solid var(--color-seal);
+}
+
+.home-doc .express-tag {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 0 var(--space-3);
+  border-radius: 999px;
+  background: var(--color-seal);
+  color: #fff;
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.home-doc .express-strip p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--color-ink-soft);
+  max-width: 78ch;
+}
+
+.home-doc .express-strip strong {
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+/* ═══ 7. Oś procesu (05 Jak to działa) ═════════════════════════
+   Cztery kroki spina jedna kreska z plakietkami na niej. Numer kroku
+   zostaje tekstem (czytnik ekranu nadal słyszy „Krok 3"), a nie
+   znakiem dorysowanym licznikiem. */
+
+.home-doc .flow {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-5);
+  padding-top: var(--space-6);
+}
+
+.home-doc .flow::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 12px;
+  height: 1px;
+  background: var(--color-line);
+}
+
+.home-doc .flow-step {
+  position: relative;
+  padding-top: var(--space-2);
+}
+
+.home-doc .flow-step .eyebrow {
+  position: absolute;
+  top: calc(-1 * var(--space-6));
+  left: 0;
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 0 var(--space-3);
+  border-radius: 999px;
+  background: var(--color-seal);
+  color: #fff;
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  margin: 0;
+}
+
+.home-doc .flow-step h3 {
+  font-size: 20px;
+  line-height: 1.25;
+  margin-top: var(--space-4);
+}
+
+.home-doc .flow-step p {
+  margin-top: var(--space-2);
+}
+
+@media (max-width: 900px) {
+  .home-doc .flow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-6) var(--space-5);
+  }
+
+  /* Przy dwóch wierszach jedna kreska przez całą szerokość opisywałaby
+     tylko pierwszy z nich — każdy krok dostaje wtedy własną. */
+  .home-doc .flow::before {
+    display: none;
+  }
+
+  .home-doc .flow-step {
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--color-line);
+  }
+
+  .home-doc .flow-step .eyebrow {
+    top: var(--space-3);
+  }
+}
+
+/* ═══ 8. Zastosowania (06) ═════════════════════════════════════
+   Sześć sytuacji, w każdej kadr pokazujący dokładnie to, co mówi
+   nagłówek. Kafel jest w całości wejściem do konfiguratora z kolorem
+   i usługą z kadru, więc obejrzenie zastosowania i zamówienie go dzieli
+   jedno kliknięcie.
+
+   Numeracja zostaje po rejestrze, który był tu wcześniej — trzyma pas
+   w jednej konwencji dokumentu i pozwala odwołać się do pozycji. */
+
+.home-doc .usecase-grid {
+  counter-reset: usecase;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-5);
+}
+
+.home-doc .usecase-card {
+  counter-increment: usecase;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--color-ink);
+  transition: transform var(--duration-base) var(--ease-standard),
+    box-shadow var(--duration-base) var(--ease-standard),
+    border-color var(--duration-fast) var(--ease-standard);
+}
+
+.home-doc .section-surface .usecase-card {
+  background: var(--color-paper);
+}
+
+/* Ramka kadru trzyma proporcje 4:3 niezależnie od tego, czy w środku
+   stoi kadr aranżacyjny (kwadrat, kadrowany) czy zdjęcie produktowe
+   (wpisane w ramkę) — siatka sześciu kafli nie może się rozjeżdżać. */
+.home-doc .usecase-frame {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--color-paper);
+}
+
+.home-doc .usecase-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--duration-seal) var(--ease-standard);
+}
+
+.home-doc .usecase-frame .placeholder {
+  height: 100%;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  background: var(--color-surface);
+}
+
+.home-doc .usecase-body {
+  position: relative;
+  flex: 1;
+  padding: var(--space-4);
+  border-top: 1px solid var(--color-line);
+}
+
+.home-doc .usecase-body::before {
+  content: counter(usecase, decimal-leading-zero);
+  display: block;
+  margin-bottom: var(--space-2);
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  color: var(--color-seal);
+  font-variant-numeric: tabular-nums;
+}
+
+.home-doc .usecase-body h3 {
+  font-size: 19px;
+  line-height: 1.25;
+}
+
+.home-doc .usecase-body p {
+  margin: var(--space-2) 0 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--color-ink-soft);
+  max-width: none;
+}
+
+.home-doc .usecase-card:hover,
+.home-doc .usecase-card:focus-visible {
+  transform: translateY(-3px);
+  border-color: var(--color-seal);
+  box-shadow: var(--shadow-md);
+}
+
+.home-doc .usecase-card:hover .usecase-frame img,
+.home-doc .usecase-card:focus-visible .usecase-frame img {
+  transform: scale(1.03);
+}
+
+/* Podrozdział wewnątrz rozdziału — nadruk okolicznościowy pod spisem
+   zastosowań. Kreska oddziela go od rejestru, bez zmiany poziomu
+   nagłówka. */
+.home-doc .subhead {
+  margin-top: var(--space-8);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-line);
+}
+
+.home-doc .subhead h3 {
+  font-size: 24px;
+}
+
+.home-doc .subhead p {
+  margin-top: var(--space-3);
+  color: var(--color-ink-soft);
+}
+
+/* ═══ 9. Próbki realizacji (07 Realizacje) ═════════════════════ */
+
+.home-doc .sample-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.home-doc .sample {
+  display: block;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--color-ink);
+  transition: transform var(--duration-base) var(--ease-standard),
+    box-shadow var(--duration-base) var(--ease-standard),
+    border-color var(--duration-fast) var(--ease-standard);
+}
+
+.home-doc .section-surface .sample {
+  background: var(--color-paper);
+}
+
+/* Kadr wypełnia górę kafla — ramka kafla przejmuje rolę ramki zdjęcia. */
+.home-doc .sample .placeholder {
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  background: var(--color-surface);
+}
+
+.home-doc .sample-body {
+  padding: var(--space-3) var(--space-4) var(--space-4);
+  border-top: 1px solid var(--color-line);
+}
+
+.home-doc .sample-body strong {
+  display: block;
+  font-size: 15px;
+  line-height: 1.35;
+}
+
+.home-doc .sample-body span {
+  display: block;
+  margin-top: var(--space-1);
+}
+
+.home-doc .sample:hover,
+.home-doc .sample:focus-visible {
+  transform: translateY(-3px);
+  border-color: var(--color-seal);
+  box-shadow: var(--shadow-md);
+}
+
+/* ═══ 10. Tablica kolorów (08 Kolory) ══════════════════════════
+   Poziomy scroller pokazywał na szerokim ekranie siedem odcieni
+   z dziewiętnastu, a rozdział sprzedaje właśnie to, że jest ich
+   dziewiętnaście i wszystkie kosztują tyle samo. Tablica pokazuje
+   komplet bez przewijania. */
+
+.home-doc .palette-board {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+  gap: var(--space-4) var(--space-3);
+}
+
+.home-doc .palette-board .palette-chip {
+  width: auto;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  transition: border-color var(--duration-fast) var(--ease-standard),
+    background var(--duration-fast) var(--ease-standard),
+    transform var(--duration-fast) var(--ease-standard);
+}
+
+.home-doc .palette-board .palette-chip .swatch-shape {
+  /* `flex: 1` z konfiguratora rozciągałoby kadr na wysokość kafla —
+     w tablicy proporcje trzyma `aspect-ratio`. */
+  flex: none;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.home-doc .palette-board .palette-chip:hover,
+.home-doc .palette-board .palette-chip:focus-visible {
+  border-color: var(--color-seal);
+  background: var(--color-surface);
+  transform: translateY(-2px);
+}
+
+.home-doc .section-surface .palette-board .palette-chip:hover {
+  background: var(--color-paper);
+}
+
+/* ═══ 11. Panel dla firm (09 Dla firm) ═════════════════════════ */
+
+.home-doc .ledger {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+  gap: var(--space-7);
+  align-items: center;
+}
+
+.home-doc .ledger h2 {
+  font-size: 28px;
+  max-width: 22ch;
+}
+
+.home-doc .ledger > div > p {
+  margin-top: var(--space-4);
+  color: var(--color-ink-soft);
+  max-width: 60ch;
+}
+
+/* Pięć warunków handlowych jako wiersze rejestru — kreska rozdziela je
+   tak samo, jak rozdziela pozycje na fakturze. */
+.home-doc .ledger-list {
+  list-style: none;
+  margin: var(--space-5) 0 0;
+  padding: 0;
+}
+
+.home-doc .ledger-list li {
+  position: relative;
+  padding: var(--space-3) 0 var(--space-3) var(--space-6);
+  border-top: 1px solid var(--color-line);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.home-doc .ledger-list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  top: var(--space-3);
+  color: var(--color-seal);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ═══ 12. Pytania (10 FAQ) ═════════════════════════════════════ */
+
+.home-doc .faq-list {
+  border-top: 1px solid var(--color-line);
+}
+
+.home-doc .faq-list .faq-item summary {
+  padding: var(--space-4) var(--space-3);
+  gap: var(--space-5);
+  border-radius: var(--radius-sm);
+  transition: background var(--duration-fast) var(--ease-standard);
+}
+
+.home-doc .faq-list .faq-item summary:hover {
+  background: var(--color-surface);
+}
+
+.home-doc .section-surface .faq-list .faq-item summary:hover {
+  background: var(--color-paper);
+}
+
+.home-doc .faq-list .faq-item summary h3 {
+  font-family: var(--font-plex-sans), sans-serif;
+  font-size: 17px;
+  line-height: 1.4;
+  font-weight: 600;
+}
+
+/* Znacznik rozwijania w kwadracie — ten sam kształt, co przyciski
+   ilości w konfiguratorze, więc gest „to się otwiera" jest już znany. */
+.home-doc .faq-list .faq-item summary::after {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  font-size: 17px;
+  line-height: 1;
+  transition: border-color var(--duration-fast) var(--ease-standard),
+    background var(--duration-fast) var(--ease-standard);
+}
+
+.home-doc .faq-list .faq-item[open] summary::after {
+  border-color: var(--color-seal);
+  background: var(--color-seal-wash);
+}
+
+.home-doc .faq-list .faq-answer {
+  padding: 0 var(--space-3) var(--space-5);
+}
+
+/* ═══ 13. Poradniki (11 Blog) ══════════════════════════════════ */
+
+.home-doc .journal-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-5);
+  margin-bottom: var(--space-6);
+}
+
+.home-doc .journal {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-5);
+}
+
+.home-doc .journal .post-card .badge {
+  align-self: flex-start;
+  border-color: transparent;
+  background: transparent;
+  padding: 0;
+  color: var(--color-seal);
+}
+
+.home-doc .journal .post-card h3 {
+  font-size: 19px;
+  line-height: 1.25;
+}
+
+.home-doc .journal .post-meta {
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-line);
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 12px;
+}
+
+/* ═══ 14. Kolofon (12 Szczegóły produktu) ══════════════════════
+   Zamknięcie dokumentu: dwie kolumny drobnego pisma rozdzielone
+   kreską, bez kart i bez akcentu. Ten rozdział ma być ostatnim, co
+   czyta się przed wezwaniem do działania, a nie kolejnym pasem
+   rywalizującym o uwagę. */
+
+.home-doc .colophon {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-7);
+}
+
+.home-doc .colophon > div + div {
+  padding-left: var(--space-7);
+  border-left: 1px solid var(--color-line);
+}
+
+.home-doc .colophon p {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--color-ink-soft);
+  max-width: 52ch;
+}
+
+/* ═══ 15. Wezwanie zamykające ══════════════════════════════════
+   Jedyny ciemny element w tym paśmie i jedyne miejsce, w którym
+   pojawia się ziarno — to samo, którym pokryte są hero i strefa
+   konfiguratora. Zamknięcie odsyła wzrokowo do początku strony. */
+
+.home-doc .final-cta {
+  position: relative;
+  overflow: hidden;
+  padding: var(--space-7);
+  gap: var(--space-6);
+}
+
+.home-doc .final-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.055;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23g)'/%3E%3C/svg%3E");
+}
+
+.home-doc .final-cta > * {
+  position: relative;
+}
+
+.home-doc .final-cta h2 {
+  font-size: 30px;
+  line-height: 1.15;
+}
+
+.home-doc .final-cta .btn {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  flex-shrink: 0;
+}
+
+.home-doc .final-cta .btn:hover:not(:disabled) {
+  background: #fff;
+  color: var(--color-ink);
+}
+
+/* ═══ 16. Zejście na średnie ekrany ════════════════════════════
+   Zakres 721–1080 px to tablet i wąskie okno na laptopie: marginalia
+   są już nad treścią (blok 1), więc zostają siatki wielokolumnowe. */
+
+@media (max-width: 1080px) {
+  .home-doc .sample-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .home-doc .ledger {
+    gap: var(--space-6);
+  }
+}
+
+@media (max-width: 900px) {
+  .home-doc .service-grid,
+  .home-doc .journal {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .home-doc .usecase-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* Blok ceny nad faktami zamiast obok — pionowa kreska rozdzielająca
+     dwie kolumny nie ma czego rozdzielać, kiedy kolumna jest jedna. */
+  .home-doc .price-figure-head {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-5);
+  }
+
+  .home-doc .price-figure-main {
+    padding-right: 0;
+    padding-bottom: var(--space-5);
+    border-right: none;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .home-doc .sample-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .home-doc .ledger {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .home-doc .ledger > figure,
+  .home-doc .ledger > .placeholder {
+    max-width: 320px;
+    margin-inline: auto;
+  }
+
+  .home-doc .colophon {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-5);
+  }
+
+  .home-doc .colophon > div + div {
+    padding-left: 0;
+    padding-top: var(--space-5);
+    border-left: none;
+    border-top: 1px solid var(--color-line);
+  }
+}

@@ -185,7 +185,8 @@ const INDUSTRIES: { heading: string; text: string }[] = [
 ];
 
 export const metadata: Metadata = {
-  title: `Personalizowane koperty — adresowanie ${formatPrice(personalized.unitTotal)}`,
+  /* Bez kwoty w tytule — decyzja właściciela z 17 sierpnia 2026. */
+  title: 'Personalizowane koperty i adresowanie kopert',
   description: `Drukujemy dane odbiorcy wprost na kopercie — pełny adres albo samo nazwisko. ${formatPrice(personalized.unitTotal)} brutto/szt. od ${DEFAULT_PRICING.moqWithPrint} sztuk, listę przekazują Państwo arkuszem.`,
   keywords: [
     'personalizowane koperty',
