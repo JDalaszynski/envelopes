@@ -996,7 +996,7 @@ export default function HomePage() {
               </div>
 
               <div className="tile-gallery" style={{ marginTop: 'var(--space-5)' }}>
-                <ShowcaseGrid shots={OCCASION_SHOTS} columns={3} showSpec={false} />
+                <ShowcaseGrid shots={OCCASION_SHOTS} columns={3} spec="none" />
               </div>
 
               {/* Odesłanie do filara K7 wewnątrz sekcji tematycznej — bez tworzenia
@@ -1316,6 +1316,8 @@ export default function HomePage() {
                     bez zapytania ofertowego i bez czekania na odpowiedź handlowca. Fakturę VAT
                     wystawiamy do każdego zamówienia, a instytucje publiczne i urzędy mogą zapłacić
                     po terminie — zamówienie rusza wtedy od razu, nie po zaksięgowaniu przelewu.
+                    Więcej o tym, kim jesteśmy i jak pracujemy —{' '}
+                    <Link href="/o-nas">o nas</Link>.
                   </p>
                 </div>
               </div>

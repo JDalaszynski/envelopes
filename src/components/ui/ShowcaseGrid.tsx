@@ -1,6 +1,7 @@
 import { ConfigureLink } from '@/components/home/ConfigureLink';
 import {
   showcaseCaption,
+  showcaseColorName,
   showcaseLinkTitle,
   showcaseSrc,
   showcaseSrcSet,
@@ -25,11 +26,15 @@ interface Props {
   /** Pierwszy kadr sekcji widocznej w pierwszym ekranie ładuje się od razu */
   eager?: boolean;
   /**
-   * Podpis z kolorem, gramaturą i wykończeniem. Strony filarowe sprzedają
-   * konkretny wariant papieru, więc go pokazują; strona główna nie —
-   * te dane podaje konfigurator.
+   * Ile z parametrów papieru niesie podpis kadru:
+   *
+   * - `full` — odcień, gramatura i wykończenie. Strony filarowe sprzedają
+   *   konkretny wariant papieru, więc go pokazują.
+   * - `color` — sam odcień. Dla stron, na których kadr jest ilustracją,
+   *   a gramatura byłaby parametrem bez właściciela na tej stronie.
+   * - `none` — bez podpisu produktowego; te dane podaje konfigurator.
    */
-  showSpec?: boolean;
+  spec?: 'full' | 'color' | 'none';
 }
 
 /**
@@ -42,7 +47,7 @@ const SIZES: Record<3 | 4, string> = {
   3: '(max-width: 720px) 62vw, (max-width: 900px) calc(50vw - 36px), (max-width: 1248px) calc(33.3vw - 32px), 368px',
 };
 
-export function ShowcaseGrid({ shots, columns, eager = false, showSpec = true }: Props) {
+export function ShowcaseGrid({ shots, columns, eager = false, spec = 'full' }: Props) {
   return (
     <div className={`grid grid-${columns} paper-shots m-snap m-snap-sm`}>
       {shots.map((shot, index) => (
@@ -70,7 +75,11 @@ export function ShowcaseGrid({ shots, columns, eager = false, showSpec = true }:
               decoding="async"
             />
             <figcaption>
-              {showSpec ? <strong>{showcaseCaption(shot)}</strong> : null}
+              {spec === 'none' ? null : (
+                <strong>
+                  {spec === 'full' ? showcaseCaption(shot) : showcaseColorName(shot)}
+                </strong>
+              )}
               <span className="small muted">{shot.note}</span>
             </figcaption>
           </figure>

@@ -80,6 +80,10 @@ export default function ContactPage() {
                 <br />
                 Działalność wpisana do CEIDG
               </p>
+              <p className="small" style={{ marginTop: 'var(--space-4)', marginBottom: 0 }}>
+                Więcej o marce Envelopes i o tym, jak pracujemy, znajdą Państwo na stronie{' '}
+                <Link href="/o-nas">o nas</Link>.
+              </p>
             </div>
 
 

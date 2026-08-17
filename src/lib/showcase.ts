@@ -61,6 +61,15 @@ export function showcaseCaption(shot: ShowcaseShot): string {
   return parts.join(' · ');
 }
 
+/**
+ * Sam odcień, bez gramatury i wykończenia — podpis dla stron, które pokazują
+ * kadr jako ilustrację, a nie jako ofertę konkretnego papieru. Gramatura jest
+ * parametrem sprzedażowym i należy do stron filarowych oraz do konfiguratora.
+ */
+export function showcaseColorName(shot: ShowcaseShot): string {
+  return COLOR_MAP[shot.colorId]?.name ?? shot.colorId;
+}
+
 /** Tytuł odnośnika do konfiguratora — ten sam wzorzec na każdej stronie. */
 export function showcaseLinkTitle(shot: ShowcaseShot): string {
   const color = COLOR_MAP[shot.colorId];
@@ -266,3 +275,18 @@ export function shotByFile(file: string): ShowcaseShot {
   if (!shot) throw new Error(`Brak kadru „${file}" w katalogu kadrów`);
   return shot;
 }
+
+/**
+ * Trzy kadry na stronie „O nas" — po jednym na to, co faktycznie robimy:
+ * nadruk logo, adresowanie imienne i nadruk okolicznościowy.
+ *
+ * Lista mieszka tutaj, a nie w komponencie strony, z tego samego powodu co
+ * `VOUCHER_COLOR_IDS`: korzysta z niej sitemapa obrazów, a zestaw zgłoszony
+ * wyszukiwarce musi odpowiadać temu, co strona renderuje. Dwie kopie tej
+ * samej listy rozjechałyby się przy pierwszej zmianie doboru kadrów.
+ */
+export const ABOUT_SHOTS: ShowcaseShot[] = [
+  'granatowa-koperta-dl-nadruk-logo-kancelarii',
+  'biala-perlowa-koperta-dl-adresowanie-odbiorcy',
+  'matcha-koperta-dl-nadruk-podziekowania',
+].map(shotByFile);

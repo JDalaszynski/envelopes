@@ -71,6 +71,10 @@ export function Footer() {
           <div>
             <h3>Informacje</h3>
             <ul className="footer-list">
+              {/* Strona podmiotu stoi w tej kolumnie, a nie w „Sklep": sąsiaduje
+                  z regulaminem i polityką, czyli z dokumentami, w których
+                  występują te same dane rejestrowe. */}
+              <li><Link href="/o-nas">O nas</Link></li>
               <li><Link href="/regulamin">Regulamin</Link></li>
               <li><Link href="/polityka-prywatnosci">Polityka Prywatności</Link></li>
               <li><Link href="/pliki-cookies">Pliki Cookies</Link></li>

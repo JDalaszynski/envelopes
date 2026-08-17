@@ -4,6 +4,7 @@ import { getAllPosts, type BlogPost } from '@/lib/blog';
 import { COLORS, COLOR_MAP } from '@/lib/catalog';
 import { TERMS, PRIVACY, COOKIES } from '@/lib/legal';
 import {
+  ABOUT_SHOTS,
   INDUSTRY_SHOTS,
   OCCASION_SHOTS,
   PERSONALIZATION_SHOTS,
@@ -47,8 +48,10 @@ const PAGE_UPDATED: Record<string, string> = {
   '/koperty-na-vouchery': '2026-08-16',
   /* Doszedł wpis o koszcie zamówienia kopert z nadrukiem */
   '/blog': '2026-08-17',
-  /* Metadane i opis OG doprowadzone do normy */
-  '/kontakt': '2026-08-15',
+  /* Odnośnik do strony „O nas" w karcie danych rejestrowych */
+  '/kontakt': '2026-08-17',
+  /* Publikacja strony „O nas" */
+  '/o-nas': '2026-08-17',
 };
 
 /** Adres bezwzględny — sitemapa obrazów nie przyjmuje ścieżek względnych. */
@@ -104,6 +107,10 @@ const PAGE_IMAGES: Record<string, string[]> = {
       .map((color) => abs(color.printImages!.DL!)),
     ...shotUrls(VOUCHER_SHOTS),
   ],
+  /* Trzy kadry, które strona „O nas" faktycznie renderuje — te same pliki
+     co na filarach, więc zgłoszenie nie obiecuje wyszukiwarce nic ponad to,
+     co jest w HTML-u. */
+  '/o-nas': shotUrls(ABOUT_SHOTS),
 };
 
 /**
@@ -152,6 +159,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     page('/koperty-na-vouchery', 'monthly', 0.9),
     page('/blog', 'weekly', 0.8),
     page('/kontakt', 'monthly', 0.7),
+    /* Strona podmiotu — encja firmy dla wyszukiwarki i modeli (AboutPage) */
+    page('/o-nas', 'yearly', 0.5),
     /* Dokumenty prawne niosą własną datę obowiązywania — bierzemy ją stamtąd,
        więc zmiana regulaminu przepisuje sitemapę bez wpisu w `PAGE_UPDATED`. */
     page('/regulamin', 'yearly', 0.3, TERMS.updated),

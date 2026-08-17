@@ -89,6 +89,11 @@ const PAGES: { url: string; title: string; note: string }[] = [
     title: 'Kontakt i formularz wyceny',
     note: `Dane kontaktowe, godziny pracy, formularz wyceny dla zamówień powyżej ${BULK_QUOTE_THRESHOLD.toLocaleString('pl-PL')} sztuk.`,
   },
+  {
+    url: '/o-nas',
+    title: 'O nas — marka kopert ozdobnych dla firm',
+    note: 'Opis marki Envelopes: dla kogo pracujemy, jakie potrzeby obsługujemy i czym różni się zakup u nas. Bez parametrów oferty — te opisują strony produktowe.',
+  },
 ];
 
 function body(): string {

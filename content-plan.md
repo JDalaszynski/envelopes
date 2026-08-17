@@ -209,7 +209,129 @@ z **preselekcją koloru**.
 
 ---
 
+## Poza fazami · strony serwisowe
+
+Trasy, które nie należą do żadnego klastra z `keywords.md` i nie celują we frazę produktową.
+Powstają na polecenie właściciela albo dlatego, że bez nich serwis jest niepełny jako sklep —
+nie liczą się do kadencji czterech pozycji tygodniowo i nie mają filara.
+
+| # | Tytuł / URL | Format | Główna fraza | Cel | Persona / Branża | Filar | Uwagi (antykanibalizacja) | Status |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| S1 | O nas — marka kopert ozdobnych dla firm — `/o-nas` | Strona serwisowa | `envelopes o nas` (brandowa, poza `keywords.md`) | AUTORYTET · GEO | Decydent poznający markę przed pierwszym zamówieniem | — (encja firmy) | **Zero fraz produktowych i zero parametrów oferty.** Bez kwot, wymiarów, terminów, progów i liczby odcieni — te należą do `/`, F1, F2 i F3. Bez danych rejestrowych i FAQ — te należą do `/kontakt` i do zestawów w `faq.ts`. Jedyna trasa, której tematem jest **marka**, a nie koperta | [x] |
+
+---
+
 ## Dziennik wdrożeń
+
+### 17 sierpnia 2026 — poz. S1: `/o-nas`, przepisanie na polecenie właściciela
+
+**Decyzja właściciela: strona ma być standardową stroną „o nas", a nie kartoteką podmiotu.**
+Z pierwszej wersji usunięte zostały trzy sekcje: FAQ („Najczęstsze pytania o sklep Envelopes"),
+tabela „Granice oferty" („Czego Envelopes nie robi") i tabela „Dane rejestrowe i kontaktowe".
+Treść przepisana w liczbie mnogiej jako opis **marki**, nie osoby właściciela, i oczyszczona
+z parametrów oferty — bez kwot, wymiarów, terminów, progów i liczby odcieni.
+
+Struktura po zmianie: hero, pasek czterech korzyści, „Kim jesteśmy" (proza), „Dla kogo
+pracujemy" (cztery potrzeby klienta), „Dlaczego Envelopes" (sześć korzyści), „Czym się
+zajmujemy" (rozdzielacz ruchu do czterech filarów + kadry), CTA końcowe.
+
+Konsekwencje w innych plikach:
+- `ABOUT_FAQ_ITEMS` usunięte z `src/lib/faq.ts` — zestaw nie miał drugiego odbiorcy, więc plik
+  wrócił do stanu sprzed poz. S1. `FAQPage` zniknął ze strony; `AboutPage` i `BreadcrumbList`
+  zostają.
+- `aboutPageJsonLd()` w `src/lib/seo.ts` — zaktualizowane `name`, doprecyzowany komentarz
+  o braku `FAQPage`.
+- `llms.txt`, kolofon na `/` i karta na `/kontakt` — anchory i noty przestały obiecywać dane
+  rejestrowe oraz listę „czego nie robimy".
+
+**Dane rejestrowe mają teraz jednego właściciela: `/kontakt`.** To jest czystsze niż stan
+poprzedni, w którym stały w dwóch miejscach — ale kosztuje: strona „O nas" przestała odpowiadać
+na zapytania o podmiot („kto prowadzi envelopes.pl", NIP, forma prawna). Te zapytania wracają
+do `/kontakt`, gdzie karta „Dane rejestrowe" stoi od początku.
+
+Weryfikacja: `npm run typecheck` i `npm run build` bez błędów, `/o-nas` nadal prerenderowana
+statycznie i obecna w `sitemap.xml`. Render sprawdzony na serwerze deweloperskim — wszystkie
+sekcje i odnośniki obecne, konsola bez błędów. Lint nadal niedostępny (`next lint` usunięty
+w Next 16, brak konfiguracji ESLint — stan zastany).
+
+---
+
+### 17 sierpnia 2026 — poz. S1: `/o-nas`, wdrożenie pierwotne
+
+**Opublikowane.** Nowa trasa `src/app/o-nas/page.tsx`, prerenderowana statycznie. Zakres
+dostawy: H1 + 5 sekcji H2, blok odpowiedzi GEO w leadzie, pasek czterech faktów o podmiocie,
+**dwie tabele** (dane rejestrowe i granice oferty), sześć pytań FAQ, trzy kadry z odnośnikiem do
+konfiguratora oraz kontekstowe CTA w czterech miejscach strony.
+
+**Po co ta strona w ogóle powstała.** Kupującym w tej niszy bywa asystentka albo office manager,
+która wydaje cudze pieniądze i nie może zaliczyć wpadki przed szefem (`knowledge-base.md`,
+pkt 2). Zanim wpisze dane do konfiguratora, sprawdza, komu je wpisuje. Domena bez historii nie ma
+tego kredytu z góry, a jedyne, czym można go zbudować, są sprawdzalne fakty: kto sprzedaje, pod
+jakim numerem, na jakich zasadach i czego świadomie nie robi. Dotąd te dane były rozsypane po
+stopce, karcie na `/kontakt` i regulaminie — nigdzie nie stały razem.
+
+**Slug.** `/o-nas` zamiast `/o-firmie`: polski, bez ogonków, myślnik, zgodny z konwencją
+pozostałych tras (`/koperty-dl`, `/koperty-na-vouchery`) i zgodny z tym, jak użytkownik pyta
+(„envelopes o nas"). `grep` po `keywords.md`, `content-plan.md`, `src/app/` i `src/lib/blog.ts`
+nie znalazł ani jednej wzmianki o takiej stronie — pozycja nie była wcześniej zaplanowana, więc
+weszła do planu jako S1 w nowej sekcji „Poza fazami".
+
+**Strona nie ma ani jednej kwoty — świadomie.** Zasada „parametr ma jednego właściciela na
+stronie" ma tu wariant mocniejszy: strona nie zawiera tabeli, do której kwota mogłaby należeć,
+więc każda cena byłaby drugą kopią cudzego parametru. Kontrola na wyrenderowanym HTML-u:
+**0 wystąpień kwot**, 3 wystąpienia gramatury (wyłącznie podpisy kadrów generowane
+z `catalog.ts`), 3 wystąpienia wymiaru w milimetrach — jedno w anchorze do F3 i dwa w wierszu
+tabeli o formatach zapowiedzianych. Wszystkie dane rejestrowe czytane z `CONTACT_DETAILS`,
+nie wpisane.
+
+**Najmocniejszy materiał strony to tabela ośmiu rzeczy, których nie robimy.** Brak sklepu
+stacjonarnego i odbioru osobistego, brak formatów poza DL, brak okienka adresowego, brak rabatów
+ilościowych i progu darmowej dostawy, brak portfolio z realizacjami klientów, brak projektowania
+logo, brak wzornika i próbek, brak papeterii i wkładek. Zaprzeczenie działa na modele lepiej niż
+kolejne zdanie o tym, co jest — ta sama zasada, co sekcja „Czego Envelopes nie oferuje"
+w `/llms.txt`, tyle że tutaj każdy wiersz ma drugą kolumnę: co to oznacza dla zamówienia.
+
+Antykanibalizacja:
+- **wobec `/kontakt`:** tamta strona obsługuje **zadanie** (napisać, zadzwonić, wysłać zapytanie
+  o wycenę) i ma formularz; ta obsługuje **weryfikację podmiotu** i formularza nie ma. Karta
+  „Dane rejestrowe" na `/kontakt` zostaje nietknięta, dostała tylko odnośnik w dół.
+- **wobec czterech filarów:** żaden nagłówek nie powtarza nagłówka filara, a wszystkie cztery
+  usługi opisane są jednym akapitem z anchorem będącym frazą filara.
+- **wobec `/regulamin`:** prawo odstąpienia pada w jednym zdaniu i w roli skutku, z odesłaniem;
+  strona nie przepisuje paragrafów.
+- **`FAQPage` bez kolizji:** sześć pytań dotyczy wyłącznie sprzedawcy — kto prowadzi sklep, czy
+  jest punkt stacjonarny, jaki obszar sprzedaży, czy sprzedajemy tylko firmom, skąd pochodzą
+  zdjęcia nadruków, jak szybko odpowiadamy. Ani jedno nie dotyczy ceny, formatu, wymiaru, plików
+  ani MOQ. Skan `src/lib/faq.ts` nie wykazał powtórzonego pytania w żadnym z sześciu zestawów.
+
+**Dane strukturalne: nowy typ w projekcie.** `aboutPageJsonLd()` emituje `AboutPage`
+z `mainEntity` i `about` wskazującymi na `#organization`. Kierunek jest odwrotny niż we
+wszystkich pozostałych blokach: tam koperta odwołuje się do firmy jako sprzedawcy, tu firma jest
+tematem strony. Bez tego powiązania „O nas" jest dla parsera anonimowym tekstem. Świadomie bez
+`Product`, `Offer` i `HowTo`.
+
+**Karta OG** `public/images/og/o-nas.jpg` (1200 × 630, 40 kB) w układzie pozostałych dziesięciu
+kart, na zbliżeniu złotego papieru metalicznego (master z `.data/source-images/`) — kadr, którego
+żadna inna karta nie używa, więc podglądy odnośników się nie powtarzają. Wiersz faktów pod kreską niesie nazwisko i NIP, czyli dokładnie to, po co
+użytkownik na tę stronę wchodzi. Strona jako jedyna w serwisie nadpisuje też `twitter.images`:
+`layout.tsx` ustawia je globalnie na kartę strony głównej, a Next scala te obiekty płytko.
+
+Linkowanie w obie strony:
+- **do strony:** stopka (kolumna „Informacje", nad regulaminem — sąsiaduje z dokumentami,
+  w których występują te same dane rejestrowe); `/` — kolofon w sekcji „Więcej o kopertach";
+  `/kontakt` — karta „Dane rejestrowe"; `/llms.txt` — mapa dla modeli.
+- **ze strony:** cztery filary (anchory = ich frazy główne), `/kontakt`, `/regulamin`, `/blog`
+  oraz cztery wejścia do konfiguratora, w tym jedno z preselekcją nadruku.
+
+Weryfikacja: `npm run typecheck` i `npm run build` bez błędów, **37/37 stron statycznie**,
+`/o-nas` prerenderowana i obecna w `sitemap.xml` z `lastModified` 2026-08-17 oraz z trzema
+obrazami. `title` 50 znaków z sufiksem marki, `description` 150, jeden `<h1>`, 6 `<h2>`,
+JSON-LD `AboutPage` + `FAQPage` + `BreadcrumbList` obok globalnego węzła firmy. Na serwerze
+produkcyjnym 200 dla `/o-nas`, `/kontakt`, `/`, `/llms.txt` i pliku karty OG. **`npm run lint`
+nie przeszedł — nie z powodu błędów w kodzie:** `next lint` został usunięty w Next 16, a projekt
+nie ma konfiguracji ESLint, więc polecenie kończy się komunikatem o nieistniejącym katalogu.
+**Podglądu w przeglądarce nie było** — render sprawdzony na HTML-u z serwera produkcyjnego
+(cała treść, obie tabele, wszystkie odnośniki i FAQ obecne bez JS).
 
 ### 17 sierpnia 2026 — decyzja właściciela: żadnych kwot w tytułach
 

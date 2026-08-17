@@ -682,6 +682,47 @@ export function voucherEnvelopeProductJsonLd() {
   };
 }
 
+/**
+ * AboutPage dla `/o-nas` — strona, której encją główną jest **firma**,
+ * a nie produkt.
+ *
+ * Wszystkie pozostałe bloki w tym pliku opisują kopertę i odwołują się do
+ * węzła firmy jako do sprzedawcy. Tutaj kierunek jest odwrotny: `mainEntity`
+ * wskazuje wprost na `#organization`, więc wyszukiwarka i model językowy
+ * dostają jednoznaczną informację, że opis marki i sposobu jej pracy na tej
+ * stronie dotyczy **tego samego podmiotu**, który sprzedaje na `/`.
+ * Bez tego powiązania strona „O nas" jest dla parsera anonimowym tekstem.
+ *
+ * Świadomie **bez** `Product`, `Offer`, `HowTo` i `FAQPage`: strona nie
+ * sprzedaje konfiguracji, nie opisuje procesu zamówienia i nie odpowiada na
+ * pytania szczegółowe — te dane mają swoich właścicieli na `/`, F1, F2 i F3,
+ * a powielenie ich tutaj tworzyłoby drugi adres konkurujący o ten sam wynik
+ * rozszerzony.
+ */
+export function aboutPageJsonLd(input: { description: string; image: string }) {
+  const url = `${SITE_URL}/o-nas`;
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    '@id': `${url}#webpage`,
+    url,
+    name: 'O nas — marka kopert ozdobnych dla firm',
+    description: input.description,
+    inLanguage: 'pl-PL',
+    isPartOf: { '@id': WEBSITE_ID },
+    about: organizationRef,
+    mainEntity: organizationRef,
+    publisher: organizationRef,
+    primaryImageOfPage: {
+      '@type': 'ImageObject',
+      url: `${SITE_URL}${input.image}`,
+      width: 1200,
+      height: 630,
+    },
+  };
+}
+
 /** HowTo — proces zamówienia opisany krok po kroku (pkt 8.3, GEO pkt 6.6). */
 export function howToJsonLd(input: {
   name: string;
