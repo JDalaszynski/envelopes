@@ -317,6 +317,44 @@ export function getColorByName(name: string): EnvelopeColor | undefined {
   return COLORS.find((c) => c.name.toLowerCase() === name.toLowerCase());
 }
 
+/**
+ * Czy odcień ma wykończenie **powierzchniowe** — perłowe albo metaliczne.
+ *
+ * Rozróżnienie jest potrzebne wszędzie, gdzie opisujemy papier: połysk jest
+ * z definicji cechą powierzchni, więc zdanie „barwiony w masie, wykończenie
+ * metaliczne" jest wewnętrznie sprzeczne. Warunek stał wcześniej w dwóch
+ * miejscach naraz — w danych strukturalnych i w tabeli specyfikacji strony
+ * koloru — i te dwa miejsca zdążyły się rozjechać. Teraz jest jeden.
+ *
+ * `eko` świadomie **nie** jest wykończeniem powierzchniowym: opisuje rodzaj
+ * papieru, a nie jego powierzchnię, więc barwienie w masie zostaje przy nim
+ * prawdziwe.
+ */
+export function hasSurfaceFinish(finish?: EnvelopeColor['finish']): boolean {
+  return finish === 'perłowe' || finish === 'metaliczne';
+}
+
+/** Gramatura w formie czytelnej dla użytkownika — `115g` → `115 g/m²`. */
+export function weightLabel(weight: string): string {
+  return weight.replace('g', ' g/m²');
+}
+
+/**
+ * Opis papieru do wiersza „Papier" w tabeli specyfikacji.
+ *
+ * Dla odcieni matowych „Ozdobny, barwiony w masie, 115 g/m²". Dla papieru
+ * z połyskiem barwienie wypada — wykończenie ma w tabeli własny wiersz,
+ * a doklejenie go do barwienia w masie dawało opis sprzeczny z `material`
+ * w danych strukturalnych tej samej strony.
+ */
+export function paperSpecLabel(color: Pick<EnvelopeColor, 'finish' | 'weight'>): string {
+  return [
+    'Ozdobny',
+    ...(hasSurfaceFinish(color.finish) ? [] : ['barwiony w masie']),
+    ...(color.weight ? [weightLabel(color.weight)] : []),
+  ].join(', ');
+}
+
 /** Dozwolone rozszerzenia plików nadruku (pkt 1.4) */
 export const PRINT_FILE_EXTENSIONS = ['pdf', 'ai', 'eps', 'cdr', 'png', 'jpg', 'jpeg', 'webp', 'svg'];
 

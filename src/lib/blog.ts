@@ -337,7 +337,220 @@ const UPCOMING_FORMATS_LABEL = UPCOMING_FORMATS.map(
   (format) => `${format.id} ${format.dimensions}`
 ).join(' i ');
 
+/* ── Wartości wyliczane dla wpisu o liczbie kartek i składaniu A4 ─────── */
+
+const A4_SHEET_MM = { width: 210, height: 297 };
+const A4_FOLDED_MM = { width: 210, height: Math.round(297 / 3) }; // 210 × 99 mm
+const DL_LONG_CLEARANCE_MM = Math.max(DL_FORMAT.width, DL_FORMAT.height) - A4_FOLDED_MM.width; // 10 mm (220 - 210)
+const DL_SHORT_CLEARANCE_MM = Math.min(DL_FORMAT.width, DL_FORMAT.height) - A4_FOLDED_MM.height; // 11 mm (110 - 99)
+
 const POSTS: BlogPost[] = [
+  {
+    /* content-plan.md poz. 11 — treść wspierająca filar K4 (`/koperty-dl`),
+       cel GEO. Fraza główna: `kartka do koperty dl`.
+
+       Rozgraniczenie z filarem i poz. 10. Filar `/koperty-dl` rozstrzyga
+       dopasowanie w dwóch wymiarach (tabela wkładek w mm), poz. 10 mapuje
+       wkładkę na format. Ten wpis odpowiada na trzeci wymiar: grubość wkładu,
+       pojemność w arkuszach per gramatura, dwa sposoby składania A4 (litera C
+       i litera Z) oraz przyczyny blokowania się pliku o poprawnych wymiarach
+       (sprężynowanie grzbietu, brak bigowania, zszywki).
+
+       Świadomie nieobecne: cennik i koszty nadruku (poz. 9 i F1), nietypowe
+       wkładki (poz. 10), argumenty o braku okienka (poz. 13). Wpis nie ma
+       własnego `FAQPage` — dane strukturalne pytań zostają na filarze. */
+    slug: 'ile-kartek-miesci-koperta-dl-i-jak-je-zlozyc',
+    title: 'Ile kartek mieści koperta DL i jak je złożyć',
+    /* Lead zasila `description` wpisu — 156 zn., optymalne pod CTR w SERP */
+    lead: 'Koperta DL mieści bezpiecznie do 5 arkuszy A4 złożonych na trzy. Jak grubość papieru zmienia pojemność i czym różni się składanie w literę C od litery Z.',
+    category: 'Poradniki',
+    date: '2026-08-18',
+    readingMinutes: 6,
+    colorId: 'granatowy',
+    format: 'DL',
+    ogImageSlug: 'blog-ile-kartek-koperta-dl',
+    ogImageAlt:
+      'Dwie granatowe koperty DL na drewnianym stole, z widoczną klapką i polem na wkład',
+    keywords: [
+      'kartka do koperty dl',
+      'ile kartek do koperty dl',
+      'jak złożyć kartkę a4 do koperty dl',
+      'składanie a4 do koperty dl',
+      'grubość wkładu koperty dl',
+    ],
+    intro: `Standardowa koperta ozdobna DL ${DL_FORMAT.dimensions} przyjmuje wkładki o wymiarach do ${DL_MAX_INSERT.short} × ${DL_MAX_INSERT.long} mm, ale o dopasowaniu decyduje również trzeci wymiar: grubość wkładu. Jeden arkusz A4 złożony na trzy ma grubość ułamka milimetra i wchodzi swobodnie. Plik kilku arkuszy tworzy na krawędzi zgięcia sprężynujący grzbiet, który wypycha ścianki koperty i utrudnia domknięcie klapki. Poniżej zestawiamy dopuszczalną liczbę kartek dla różnych gramatur papieru, instrukcję dwóch sposobów składania oraz przyczyny, dla których arkusze o poprawnych wymiarach blokują się przy wkładaniu.`,
+    sections: [
+      {
+        id: 'pojemnosc-a-gramatura',
+        heading: 'Ile kartek A4 mieści koperta DL w zależności od gramatury',
+        paragraphs: [
+          'Standardowa koperta DL mieści bezpiecznie do 5 arkuszy papieru biurowego 80 g/m² złożonych na trzy. Taki plik tworzy 15 warstw papieru o łącznej grubości około 1,5 mm i wsuwa się do środka bez oporu. Przy 6–8 arkuszach wkładka nadal wchodzi, ale wymaga mocniejszego wygładzenia grzbietu i dociśnięcia paska klejowego przy zamykaniu. Powyżej 8 arkuszy koperta ulega wybrzuszeniu, a klapka napręża się i grozi rozszczelnieniem w transporcie.',
+          'Wraz ze wzrostem gramatury papieru dopuszczalna liczba kartek maleje. Papier firmowy 90–100 g/m² pozwala na komfortowe zamknięcie 3–4 arkuszy. Papiery kredowe i ozdobne 120–135 g/m² mieszczą 1–3 arkusze. W przypadku kartonów i zaproszeń o gramaturze 200–250 g/m² zaleca się pojedynczy arkusz (np. bigowany folder), a dla sztywnych kart 300–350 g/m² — wyłącznie jedną płaską kartę.',
+          'Tabela poniżej podaje orientacyjną grubość arkusza, bezpieczną liczbę kartek oraz zachowanie koperty przy różnych gramaturach papieru.',
+        ],
+        table: {
+          caption:
+            'Dopuszczalna liczba arkuszy A4 złożonych na trzy w kopercie DL dla wybranych gramatur',
+          head: [
+            'Gramatura papieru',
+            'Grubość 1 arkusza',
+            'Bezpieczna liczba arkuszy A4',
+            'Liczba warstw po złożeniu',
+            'Uwagi użytkowe',
+          ],
+          rows: [
+            [
+              '80 g/m² (standard biurowy)',
+              '~0,10 mm',
+              '1–5 arkuszy',
+              '3–15 warstw',
+              'Optymalna pojemność; 6–8 arkuszy to limit maksymalny',
+            ],
+            [
+              '90–100 g/m² (papier firmowy / preprint)',
+              '~0,12 mm',
+              '1–4 arkusze',
+              '3–12 warstw',
+              'Elegancki układ korespondencji zarządczej i umów',
+            ],
+            [
+              '120–135 g/m² (ulotki / kreda)',
+              '~0,15 mm',
+              '1–3 arkusze',
+              '3–9 warstw',
+              'Wymaga mocnego docisku zgięcia przy 3 arkuszach',
+            ],
+            [
+              '200–250 g/m² (zaproszenia / vouchery)',
+              '~0,25–0,30 mm',
+              '1 arkusz',
+              '1–3 warstwy (przy bigowaniu)',
+              'Składanie wyłącznie z fabrycznym bigowaniem',
+            ],
+            [
+              '300–350 g/m² (karton ozdobny / karta)',
+              '~0,35–0,45 mm',
+              '1 wkładka płaska',
+              '1 warstwa',
+              'Bez składania — pojedyncza karta 99 × 210 mm',
+            ],
+          ],
+        },
+      },
+      {
+        id: 'grubosc-wkladu',
+        heading: 'Dlaczego koperta płaska ma limit 3–4 mm grubości',
+        paragraphs: [
+          'Koperty ozdobne DL w ofercie Envelopes — o gramaturach 115 g/m², 120 g/m² oraz 140 g/m² — to koperty płaskie. Przednia i tylna ścianka są sklejone bezpośrednio na bocznych krawędziach, bez poszerzanego boku ani dna harmonijkowego.',
+          'Gdy do środka trafia wkład o grubości powyżej 3 mm, przednia ścianka wybrzusza się, przyciągając krawędzie boczne do środka. W efekcie użytkowa szerokość i wysokość wnętrza koperty ulegają pozornemu skróceniu o około 2–4 mm. Jeśli wkładka miała maksymalny wymiar graniczny, przy grubym pliku zaczyna napierać na boczne zgrzewy koperty.',
+          'Dlatego przy wielostronicowych dokumentach (np. powyżej 8 kartek A4) bezpieczniejszym rozwiązaniem jest rozbicie przesyłki na dwie koperty lub zastosowanie większego formatu.',
+        ],
+      },
+      {
+        id: 'skladanie-litera-c',
+        heading: 'Jak złożyć arkusz A4 do koperty DL: składanie listowe (w literę C)',
+        paragraphs: [
+          'Składanie w literę C (tzw. standardowe składanie listowe lub kopertowe) to najpopularniejsza i najbardziej elegancka metoda przygotowania dokumentu A4 do wysyłki.',
+          'Procedura składania w trzech krokach:',
+        ],
+        list: [
+          'Krok 1: Kładziemy arkusz A4 (210 × 297 mm) tekstem do góry, w orientacji pionowej.',
+          'Krok 2: Dolną jedną trzecią arkusza (dokładnie 99 mm od dołu) zaginamy do góry, zakrywając środkową część pisma.',
+          'Krok 3: Górną jedną trzecią arkusza (99 mm od góry) zaginamy w dół na wierzch, przykrywając dolne zagięcie.',
+        ],
+      },
+      {
+        id: 'zalety-litery-c',
+        heading: 'Dlaczego składanie w literę C jest standardem w biurze',
+        paragraphs: [
+          `Złożony w ten sposób arkusz ma wymiary ${A4_FOLDED_MM.height} × ${A4_FOLDED_MM.width} mm. W kopercie DL ${DL_FORMAT.dimensions} pozostawia to ${DL_SHORT_CLEARANCE_MM} mm zapasu na wysokości i ${DL_LONG_CLEARANCE_MM} mm zapasu na szerokości — wkładka wsuwa się gładko i leży stabilnie.`,
+          'Największą zaletą składania w literę C jest ergonomia otwarcia: po rozcięciu koperty i wyjęciu arkusza adresat widzi od razu nagłówek dokumentu, logo firmy oraz dane nadawcy, podczas gdy treść właściwa pisma jest chroniona wewnątrz zagięcia.',
+        ],
+      },
+      {
+        id: 'skladanie-litera-z',
+        heading: 'Składanie harmonijkowe (w literę Z) — kiedy je stosować',
+        paragraphs: [
+          'Składanie w literę Z (harmonijkowe, tzw. zig-zag) polega na zagięciu dolnej jednej trzeciej arkusza do tyłu, a górnej jednej trzeciej do przodu. Arkusz oglądany z boku tworzy kształt litery Z.',
+          'To układ stosowany przede wszystkim przy ulotkach potrójnych, voucherach rozkładanych, programach konferencji i pismach z grafiką. Dokument rozkłada się jednym pociągnięciem, bez konieczności odchylania dwóch osobnych skrzydełek.',
+          'Tabela poniżej zestawia różnice między oboma typami zagięć.',
+        ],
+        table: {
+          caption: 'Porównanie składania arkusza A4 w literę C oraz w literę Z',
+          head: [
+            'Cecha',
+            'Składanie listowe (litera C)',
+            'Składanie harmonijkowe (litera Z)',
+          ],
+          rows: [
+            [
+              'Kierunek zagięć',
+              'Dolna 1/3 do góry, górna 1/3 w dół (oba do wewnątrz)',
+              'Dolna 1/3 do tyłu, górna 1/3 do przodu (naprzemiennie)',
+            ],
+            [
+              'Wymiar po złożeniu',
+              '99 × 210 mm',
+              '99 × 210 mm',
+            ],
+            [
+              'Widok po wyjęciu',
+              'Nagłówek pisma i dane nadawcy',
+              'Pierwsza strona / okładka wkładki',
+            ],
+            [
+              'Ochrona treści poufnych',
+              'Wysoka — treść zamknięta wewnątrz',
+              'Umiarkowana — jedna strona pozostaje na zewnątrz',
+            ],
+            [
+              'Zastosowanie',
+              'Pisma urzędowe, umowy, faktury, oficjalne listy',
+              'Vouchery, ulotki informacyjne, programy eventów',
+            ],
+          ],
+        },
+      },
+      {
+        id: 'dlaczego-sie-nie-miesci',
+        heading: 'Dlaczego plik kartek nie mieści się mimo poprawnych wymiarów',
+        paragraphs: [
+          'Zdarza się, że wkładka ma przepisowy wymiar 99 × 210 mm, a mimo to stawia opór przy wsuwaniu do koperty. Odpowiadają za to trzy zjawiska fizyczne:',
+          '1. Sprężynowanie grzbietu (efekt klina). Gdy zginamy kilka kartek naraz, arkusze wewnętrzne są wypychane przez promień zgięcia. Grzbiet zyskuje zaokrągloną, sprężystą krawędź o grubości większej niż suma grubości papieru. Rozwiązaniem jest mocne dociśnięcie linii zagięcia krawędzią dłoni lub kostką introligatorską.',
+          '2. Pękanie papieru bez bigowania. Papier o gramaturze powyżej 150 g/m² zaginany ręcznie łamie się na włóknach celulozy, tworząc poszarpaną, pogrubioną krawędź. Grube wkładki wymagają wcześniejszego maszynowego zrobienia rowka (bigi).',
+          '3. Zszywki i spinacze. Metalowa zszywka w rogu dokumentu tworzy punktowe zgrubienie o grubości do 2 mm. Podczas wsuwania do wąskiej koperty DL może zahaczyć o krawędź lub rozciąć papier koperty od środka. Zszywkę należy umieszczać z zapasem minimum 10 mm od brzegu.',
+        ],
+      },
+      {
+        id: 'pakowanie-reczne',
+        heading: 'Pakowanie ręczne a automatyczne kopertowanie',
+        paragraphs: [
+          'Wszystkie koperty ozdobne Envelopes posiadają zamknięcie samoprzylepne z paskiem silikonowym (tzw. pasek Peel & Seal / HK — zerwij i przyklej) oraz papier barwiony w masie o gramaturze 115–140 g/m².',
+          'Koperty te są zoptymalizowane pod pakowanie ręczne: pasek HK zapewnia natychmiastowe, trwałe sklejenie bez konieczności zwilżania, a sztywny papier nadaje przesyłce prestiżowy wygląd. Nie są to koperty do maszynowych automatów pakujących (kopertówek), które wymagają kleju wodnego na mokro i cienkiego papieru 75–80 g/m².',
+          'Do korespondencji firmowej, pism zarządczych, voucherów i zaproszeń pakowanie ręczne gwarantuje nienaganny stan każdego egzemplarza.',
+        ],
+      },
+      {
+        id: 'lista-kontrolna',
+        heading: 'Lista kontrolna przed pakowaniem korespondencji do koperty DL',
+        paragraphs: [
+          'Siedem punktów wystarczy, aby korespondencja weszła do koperty gładko i bezpiecznie dotarła do odbiorcy:',
+        ],
+        list: [
+          'Liczba arkuszy: do 5 kartek A4 80 g/m² w jednym pliku',
+          'Wymiary po złożeniu: dokładnie 99 × 210 mm przy złożeniu A4 na trzy',
+          'Zapas bezpieczeństwa: zachowane minimum 10 mm luzu na szerokości i 11 mm na wysokości koperty',
+          'Sposób składania: litera C dla pism poufnych i umów, litera Z dla materiałów informacyjnych i voucherów',
+          'Wygładzenie grzbietu: mocne dociśnięcie linii zgięcia przed wsunięciem do koperty',
+          'Zszywki: zagięte płasko i odsunięte od zewnętrznych krawędzi wkładu',
+          'Pasek samoprzylepny HK: zerwanie paska ochronnego i równomierny docisk klapki na całej długości',
+        ],
+      },
+    ],
+    cta: 'Koperta DL mieści do 5 arkuszy A4 złożonych na trzy — konfigurator otworzy się z tym formatem.',
+    ctaConfigure: { label: 'Wybierz kolor koperty DL', format: 'DL' },
+    pillar: { href: '/koperty-dl', anchor: 'wymiary koperty DL' },
+  },
   {
     /* content-plan.md poz. 10 — treść wspierająca filar K4 (`/koperty-dl`),
        cel GEO. Fraza główna: `format do koperty dl`.

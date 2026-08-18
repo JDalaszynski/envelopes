@@ -1,4 +1,4 @@
-import { COLOR_MAP, type EnvelopeColor } from './catalog';
+import { COLORS, COLOR_MAP, type EnvelopeColor } from './catalog';
 
 /**
  * Treść stron kolorów `/koperty/[kolor]` (content-plan.md, Faza 3).
@@ -177,7 +177,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
         },
         {
           name: 'Agencje kreatywne i eventowe',
-          text: 'Zaproszenia na premiery, gale i pokazy. Jedno jasne słowo na czerni działa tu tak samo jak pełne logo — kadr z takim nadrukiem pokazujemy niżej.',
+          text: 'Zaproszenia na premiery, gale i pokazy. Jedno jasne słowo na czerni działa tu tak samo jak pełne logo — kadr z takim nadrukiem pokazujemy wyżej.',
         },
         {
           name: 'Gabinety i kliniki z ofertą premium',
@@ -204,9 +204,9 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
           'Jasnym — na ciemnym papierze o czytelności decyduje kontrast. Przed drukiem przygotowujemy wizualizację na tym odcieniu i do produkcji trafia wyłącznie wersja zaakceptowana przez Państwa.',
       },
       {
-        question: 'Czy czarne koperty kosztują więcej niż białe?',
+        question: 'Czy koperta grafitowa to ten sam produkt co czarna?',
         answer:
-          'Nie. Cena zależy wyłącznie od formatu — wszystkie odcienie w katalogu kosztują tyle samo, łącznie z wykończeniami perłowymi i metalicznymi. Dopłata za nadruk i za personalizację też jest niezależna od koloru.',
+          'Tak. W rozmowie ten odcień bywa nazywany grafitowym, ale w katalogu, w konfiguratorze i na fakturze występuje jako Czarny. To jeden papier i jedna karta produktu, nie dwa warianty do wyboru.',
       },
       {
         question: 'Czy na czarnej kopercie da się napisać adres ręcznie?',
@@ -260,7 +260,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
         },
         {
           name: 'Instytucje kultury i orkiestry',
-          text: 'Zaproszenia na koncert, karnety abonamentowe i pisma do mecenasów. Kadr niżej pokazuje taki nadruk: jeden znak i nazwa zespołu, bez dodatków.',
+          text: 'Zaproszenia na koncert, karnety abonamentowe i pisma do mecenasów. Kadr wyżej pokazuje taki nadruk: jeden znak i nazwa zespołu, bez dodatków.',
         },
         {
           name: 'Uczelnie i szkoły wyższe',
@@ -351,7 +351,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
         },
         {
           name: 'Studia tatuażu i barbershopy',
-          text: 'Vouchery na sesję i karty podarunkowe. Czerń na złocie to zestawienie, które ta branża stosuje na co dzień — kadr niżej pokazuje taki bon.',
+          text: 'Vouchery na sesję i karty podarunkowe. Czerń na złocie to zestawienie, które ta branża stosuje na co dzień — kadr wyżej pokazuje taki bon.',
         },
         {
           name: 'Hotele i restauracje',
@@ -387,8 +387,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
       },
       {
         question: 'Czy złote koperty kosztują więcej niż białe?',
-        answer:
-          'Nie. Cena zależy wyłącznie od formatu — wykończenia metaliczne i perłowe kosztują tyle samo co odcienie matowe. Dopłata za nadruk i za personalizację również nie zmienia się z kolorem papieru.',
+        answer: `Nie. Cena zależy wyłącznie od formatu — wszystkie ${COLORS.length} odcieni kosztuje tyle samo, łącznie z wykończeniami metalicznymi i perłowymi. Dopłata za nadruk i za personalizację również nie zmienia się z kolorem papieru.`,
       },
       {
         question: 'Czym złota koperta różni się od koperty ze złoceniem?',
@@ -480,7 +479,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
       {
         question: 'Czym koperta ecru różni się od białej?',
         answer:
-          'Temperaturą odcienia. Ecru jest ciepłą, złamaną bielą, więc obok papieru śnieżnobiałego wygląda wyraźnie cieplej. Gramatura, dostępny nadruk i cena są w obu wypadkach takie same.',
+          'Temperaturą odcienia. Ecru jest ciepłą, złamaną bielą, więc obok papieru śnieżnobiałego wygląda wyraźnie cieplej. Format, gramatura i dostępny nadruk są w obu wypadkach takie same.',
       },
       {
         question: 'Jakim kolorem drukujecie logo na kopercie ecru?',
@@ -491,6 +490,373 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
     ogImageSlug: 'koperty-ecru',
     ogImageAlt:
       'Zbliżenie na kopertę ozdobną DL w odcieniu ecru — przednia ścianka z klapką, na jasnym tle',
+  },
+
+  bialy: {
+    title: 'Białe koperty DL z nadrukiem logo',
+    description:
+      'Białe koperty ozdobne DL 110 × 220 mm bez okienka adresowego. Czyste tło pod nadruk w pełnym kolorze i pod pismo odręczne. Wysyłka kurierem w Polsce.',
+    phrase: 'białe koperty DL',
+    phraseShort: 'białe koperty',
+    eyebrow: 'Kolor · Biały',
+    h1: 'Białe koperty DL 110 × 220 mm',
+    lead: 'Biała koperta DL w wersji ozdobnej jest zrobiona z gładkiego, jednolitego papieru bez okienka adresowego — przednia ścianka zostaje pełną płaszczyzną. Daje maksymalny kontrast dla każdego koloru nadruku, od czerni po pastele, łącznie z logo wielobarwnym. Adres można na niej wypisać zwykłym długopisem albo piórem.',
+    paperUsp: {
+      title: 'Bez okienka adresowego',
+      note: 'Przednia ścianka jest pełną płaszczyzną papieru, a nie ramką wokół folii',
+    },
+    shotFiles: [],
+    character: {
+      heading: 'Czym biała koperta ozdobna różni się od standardowej koperty biurowej',
+      paragraphs: [
+        'Standardowa koperta pocztowa jest cieńsza, ma okienko foliowe i wzór maskujący nadrukowany w środku. Biała koperta ozdobna DL to papier grubszy i jednolity: przednia ścianka nie ma okienka, a klapka biegnie wzdłuż dłuższego boku.',
+        'Od Białej Perłowej odróżnia ją całkowicie matowa powierzchnia. Nie odbija światła i nie zmienia odcienia pod kątem, dzięki czemu dokumenty czyta się bez odblasków, a skanowanie i fotografowanie przesyłki nie tworzy jasnych plam.',
+        'Czysta biel stanowi najbardziej neutralne tło w poligrafii. W zestawieniu z kolorowym papierem firmowym lub kartą okolicznościową nie narzuca własnej tonacji i pozwala wybrzmieć zawartości.',
+      ],
+    },
+    printing: {
+      heading: 'Nadruk logo firmowego i adresowanie na białej kopercie',
+      paragraphs: [
+        'Biały papier przyjmuje każdy kolor nadruku bez zniekształceń barwnych. Kolorowe logotypy, drobne detale graficzne oraz wielobarwne herby drukujemy bezpośrednio w oryginalnych barwach marki, bez konieczności upraszczania znaku do jednej barwy.',
+        'Na białej kopercie można bez przeszkód pisać odręcznie. Papier nie ma powłoki śliskiej, więc tusz z długopisu, pióra czy cienkopisu schnie natychmiast i nie rozmazuje się przy dotknięciu.',
+        'Przed uruchomieniem druku przesyłamy cyfrową wizualizację z naniesionym projektem. Produkcja rusza dopiero po Państwa jednoznacznej akceptacji pliku.',
+      ],
+    },
+    audience: {
+      heading: 'Kto zamawia białe koperty ozdobne',
+      intro:
+        'Biel wybierają instytucje i firmy stawiające na klasyczną estetykę, oficjalny obieg dokumentów lub pełne odwzorowanie kolorystyki własnego znaku.',
+      items: [
+        {
+          name: 'Kancelarie prawne i notariusze',
+          text: 'Korespondencja urzędowa, odpisy aktów i pisma przewodnie. Czysta biel o podwyższonej gramaturze podkreśla formalny charakter dokumentu bez odwracania uwagi od treści.',
+        },
+        {
+          name: 'Biura rachunkowe i audytorskie',
+          text: 'Sprawozdania finansowe, deklaracje i raporty roczne dla zarządów. Format DL mieści arkusz A4 złożony na trzy, a brak okienka zapewnia pełną dyskrecję korespondencji.',
+        },
+        {
+          name: 'Firmy szkoleniowe i uczelnie',
+          text: 'Certyfikaty ukończenia kursów, zaświadczenia i listy gratulacyjne. Na białym tle wielobarwne herby i logotypy patronów zachowują stuprocentową zgodność z księgą znaku.',
+        },
+        {
+          name: 'Agencje marketingowe i PR',
+          text: 'Wysyłki prasowe, zaproszenia z wielokolorowym brandingiem i karty powitalne. Biel pozwala na precyzyjne odwzorowanie kolorów Pantone i pełnej palety CMYK.',
+        },
+        {
+          name: 'Gabinety lekarskie i kliniki',
+          text: 'Wyniki badań, zalecenia lekarskie i oficjalne zaświadczenia. Odcień budzi naturalne skojarzenie z czystością, sterylnością i profesjonalizmem placówki.',
+        },
+      ],
+    },
+    caution: {
+      heading: 'Kiedy biała koperta nie jest najlepszym wyborem',
+      paragraphs: [
+        'Gdy przesyłka ma wyraźnie wyróżnić się w stosie poczty przychodzącej na biurko odbiorcy. Standardowa biel może zlać się ze zwykłą korespondencją pocztową — wtedy lepszy efekt daje odcień kontrastowy, jak Granatowy, Matcha czy Złoty.',
+        'Gdy identyfikacja wizualna marki opiera się na ciepłych, naturalnych odcieniach ziemi i drewna. W takim zestawieniu chłodna biel bywa zbyt surowa i warto rozważyć ciepły odcień Ecru lub papier Eko.',
+      ],
+    },
+    faq: [
+      {
+        question: 'Czy biała koperta DL ma okienko adresowe?',
+        answer:
+          'Nie. Przednia ścianka jest pełną płaszczyzną papieru, więc nadruk i dane odbiorcy rozkładamy na całej jej powierzchni. Koperta pocztowa oddaje część tego pola na foliowe okno i na ramkę wokół niego.',
+      },
+      {
+        question: 'Czym biała koperta ozdobna różni się od Białej Perłowej?',
+        answer:
+          'Powierzchnią. Biała koperta jest matowa i wygląda tak samo w każdym oświetleniu, a Biała Perłowa ma poświatę, która zmienia jasność razem z kątem padania światła.',
+      },
+      {
+        question: 'Czy na białej kopercie można wydrukować wielokolorowe logo?',
+        answer:
+          'Tak. Białe podłoże pozwala na druk w pełnym kolorze bez przekłamywania odcieni znaku. Na ciemnych papierach zalecamy nadruk jednobarwny, natomiast na bieli drukujemy pełną paletę barw.',
+      },
+      {
+        question: 'Czy na białej kopercie można wypisać adres ręcznie?',
+        answer:
+          'Tak. Matowy papier doskonale chłonie tusz długopisu, pióra wiecznego oraz pisaka, nie powodując rozmazywania ani przebijania na drugą stronę.',
+      },
+    ],
+    ogImageSlug: 'koperty-biale',
+    ogImageAlt:
+      'Dwie białe koperty ozdobne DL bez nadruku — przednia od strony klapki, druga ustawiona płasko za nią',
+  },
+
+  matcha: {
+    title: 'Koperty matcha DL z nadrukiem logo',
+    description:
+      'Koperty ozdobne DL 110 × 220 mm w odcieniu Matcha — pastelowa, szałwiowa zieleń barwiona w masie. Ciemny i jasny nadruk logo, wysyłka kurierem.',
+    phrase: 'koperty matcha DL',
+    phraseShort: 'koperty matcha',
+    eyebrow: 'Kolor · Matcha',
+    h1: 'Koperty matcha DL 110 × 220 mm',
+    lead: 'Koperta DL w kolorze Matcha to pastelowa, szałwiowa zieleń wykonana z papieru barwionego w masie. Kolor jest jednolity w całym przekroju arkusza, także na zagięciach klapki i na rozciętych krawędziach. Na tym tle czytają się zarówno nadruki ciemne — butelkowa zieleń, grafit i czerń — jak i biel przy napisach okolicznościowych.',
+    paperUsp: {
+      title: 'Gramatura 120 g/m²',
+      note: 'Grubszy papier barwiony w masie — szałwiowy odcień na całej grubości arkusza',
+    },
+    shotFiles: [
+      'matcha-koperta-dl-nadruk-podziekowania',
+      'matcha-koperta-dl-nadruk-wyrazy-uznania',
+    ],
+    character: {
+      heading: 'Charakter odcienia Matcha — pastelowa zieleń szałwiowa',
+      paragraphs: [
+        'Matcha to zgaszona, naturalna zieleń o pastelowym, szałwiowym tonie. W odróżnieniu od jaskrawych zieleni biurowych prezentuje się spokojnie i nowocześnie, budząc bezpośrednie skojarzenia z naturą, roślinnością i estetyką organiczną.',
+        'Arkusz jest wyraźnie sztywniejszy od podstawowej palety, więc koperta trzyma kształt w przesyłce zbiorczej i nie faluje w dłoni. Papier jest barwiony w masie, więc po złożeniu klapki oraz na rozciętych krawędziach nie pojawiają się białe przebarwienia.',
+        'W zapytaniach klientów ten kolor bywa określany jako szałwiowy, pistacjowy, oliwkowy lub jasnozielony zgaszony. W naszym katalogu i konfiguratorze figuruje pod nazwą Matcha — to jeden, unikalny odcień papieru.',
+      ],
+    },
+    printing: {
+      heading: 'Nadruk logo i personalizacja na kopercie matcha',
+      paragraphs: [
+        'Na odcieniu Matcha doskonale prezentują się ciemne nadruki: głęboka butelkowa zieleń, czerń, ciemny grafit oraz czekoladowy brąz. Taki zestaw tworzy subtelny, organiczny kontrast czytelny z dużej odległości.',
+        'Równie efektownie wygląda nadruk biały lub kremowy, zwłaszcza przy krojach odręcznych i dedykacjach okolicznościowych — kadr z białym nadrukiem prezentujemy w galerii poniżej.',
+        'Wizualizację przygotowujemy bezpłatnie na dokładnym tle koloru Matcha, dzięki czemu przed rozpoczęciem druku widzą Państwo rzeczywisty kontrast i układ elementów na kopercie.',
+      ],
+    },
+    audience: {
+      heading: 'Kto zamawia koperty w odcieniu Matcha',
+      intro:
+        'Kolor Matcha jest chętnie wybierany przez marki promujące zrównoważony rozwój, branżę beauty oraz organizatorów uroczystości w stylu botanicznym.',
+      items: [
+        {
+          name: 'Marki ekologiczne i kosmetyki naturalne',
+          text: 'Podziękowania za zakupy, karty ze składem produktów i certyfikaty autentyczności. Szałwiowa zieleń naturalnie współgra z filozofią eko i minimalistycznym brandingiem.',
+        },
+        {
+          name: 'Salony wellness, SPA i gabinety masażu',
+          text: 'Bony podarunkowe i zaproszenia na zabiegi relaksacyjne. Spokojny, pastelowy odcień wprowadza klienta w atmosferę wyciszenia i pielęgnacji.',
+        },
+        {
+          name: 'Kawiarnie, cukiernie i pracownie rzemieślnicze',
+          text: 'Karty podarunkowe, vouchery na warsztaty kulinarne i bileciki degustacyjne. Format DL idealnie mieści bon podłużny lub zaproszenie na event.',
+        },
+        {
+          name: 'Pracownie florystyczne i dekoratorzy',
+          text: 'Bileciki do bukietów, podziękowania dla klientów oraz zaproszenia na warsztaty florystyczne. Odcień Matcha harmonizuje z zielenią roślin i naturalnym papierem.',
+        },
+        {
+          name: 'Przyjęcia i śluby w stylu boho lub greenery',
+          text: 'Koperty na podziękowania dla gości, karty menu i wkładki informacyjne. Zgaszona zieleń stanowi wiodący motyw przyjęć ogrodowych i rustykalnych.',
+        },
+      ],
+    },
+    caution: {
+      heading: 'Kiedy odcień Matcha nie jest najlepszym wyborem',
+      paragraphs: [
+        'Gdy logo firmy zawiera bardzo jasne, pastelowe żółcie lub jasne szarości. Elementy o niskim kontraście mogą zlewać się z zielonym tłem — w takiej sytuacji rekomendujemy zastosowanie ciemniejszej wersji znaku.',
+        'Gdy identyfikacja marki wymaga ściśle zdefiniowanego, chłodnego błękitu korporacyjnego. Zieleń Matcha ma ciepły, organiczny charakter, który może gryźć się z rygorystycznym błękitnym manualem identyfikacji.',
+      ],
+    },
+    faq: [
+      {
+        question: 'Czy kolor Matcha to to samo co zieleń szałwiowa lub pistacjowa?',
+        answer:
+          'Tak. Matcha to nasza katalogowa nazwa dla pastelowej, zgaszonej zieleni szałwiowej. Klienci poszukujący kopert pistacjowych lub oliwkowych wybierają właśnie ten odcień.',
+      },
+      {
+        question: 'Czy papier w kolorze Matcha jest barwiony w masie?',
+        answer:
+          'Tak. Pigment znajduje się w całej strukturze arkusza, dzięki czemu zgięcia klapki i krawędzie boczne zachowują jednolity, zielony kolor.',
+      },
+      {
+        question: 'Jaki kolor nadruku najlepiej wygląda na kopertach Matcha?',
+        answer:
+          'Najlepszy kontrast daje nadruk w kolorze butelkowej zieleni, grafitowym lub czarnym. Bardzo elegancko prezentuje się także nadruk biały, szczególnie przy napisach okolicznościowych.',
+      },
+      {
+        question: 'Czym Matcha różni się od Zielonego i Butelkowej Zieleni?',
+        answer:
+          'Nasyceniem, a w praktyce doborem nadruku. Matcha jest pastelowa i zgaszona, Zielony wyraźnie jaśniejszy, a Butelkowa Zieleń na tyle ciemna, że przyjmuje wyłącznie nadruk jasny. Na Matchy pracuje i ciemny, i jasny.',
+      },
+    ],
+    ogImageSlug: 'koperty-matcha',
+    ogImageAlt:
+      'Dwie koperty DL w kolorze Matcha z ciemnozielonym nadrukiem słowa „Dziękujemy” na drewnianym blacie',
+  },
+
+  'blekit-lupkowy': {
+    title: 'Koperty błękit łupkowy DL z nadrukiem logo',
+    description:
+      'Koperty ozdobne DL 110 × 220 mm w kolorze błękitu łupkowego — zgaszony stalowy odcień, papier barwiony w masie. Nadruk logo i adresowanie imienne.',
+    phrase: 'koperty DL w kolorze błękitu łupkowego',
+    phraseShort: 'koperty w kolorze błękitu łupkowego',
+    eyebrow: 'Kolor · Błękit Łupkowy',
+    h1: 'Koperty błękit łupkowy DL 110 × 220 mm',
+    lead: 'Koperta DL w kolorze błękitu łupkowego to zgaszony, stalowy błękit z papieru barwionego w masie. W katalogu, w konfiguratorze i na fakturze ten odcień występuje pod nazwą Jeansowy. Jest wyraźnie jaśniejszy od granatu i spokojniejszy od pastelowego błękitu, a jako podłoże przyjmuje zarówno nadruk biały i srebrny, jak i grafitowy oraz czarny.',
+    paperUsp: {
+      title: 'Gramatura 120 g/m²',
+      note: 'Sztywny papier barwiony w masie — stalowy błękit na całej grubości arkusza',
+    },
+    shotFiles: ['blekit-lupkowy-koperta-dl-nadruk-na-chrzest'],
+    character: {
+      heading: 'Czym błękit łupkowy różni się od granatu i jasnego błękitu',
+      paragraphs: [
+        'Błękit łupkowy, nazwany w naszym katalogu Jeansowym, to odcień pośredni o stalowo-szarym zabarwieniu. Jest znacznie jaśniejszy od ciemnego granatu, ale bardziej stonowany i dostojny niż klasyczna, pastelowa błękitna koperta.',
+        'Papier jest barwiony w masie, a arkusz wyraźnie grubszy od podstawowej palety. Sztywność czuć w dłoni przy wyjmowaniu koperty z paczki, a pigment sięgający przez cały przekrój sprawia, że krawędzie po rozcięciu i zagięcia klapki zachowują jednolity, szaroniebieski ton.',
+        'W zapytaniach użytkowników odcień ten występuje jako błękit łupkowy, stalowy błękit, jeansowy, gołębi błękit lub slate blue. W konfiguratorze i na fakturze oznaczony jest jako Jeansowy — to dokładnie ten sam papier.',
+      ],
+    },
+    printing: {
+      heading: 'Nadruk logo firmowego i personalizacja na błękicie łupkowym',
+      paragraphs: [
+        'Na stalowoniebieskim tle świetnie pracują dwa kierunki kolorystyczne: kontrastowy nadruk biały (oraz srebrny) lub klasyczny nadruk czarny i grafitowy. Oba warianty zapewniają nienaganną czytelność tekstu i znaków graficznych.',
+        'Biały nadruk nadaje przesyłce lekkości i świeżości — doskonale sprawdza się przy zaproszeniach okolicznościowych i voucherach, co prezentuje kadr w galerii poniżej.',
+        'Ciemny nadruk podkreśla formalny, techniczny profil korespondencji, chętnie wybierany przez biura inżynieryjne, pracownie architektoniczne i firmy konsultingowe.',
+      ],
+    },
+    audience: {
+      heading: 'Kto zamawia koperty w kolorze błękitu łupkowego',
+      intro:
+        'Zgaszony błękit łupkowy wybierają nadawcy szukający koloru eleganckiego, nowoczesnego i neutralnego biznesowo.',
+      items: [
+        {
+          name: 'Biura architektoniczne i projektowe',
+          text: 'Oferty koncepcyjne, umowy projektowe i dokumentacja dla inwestorów. Stalowy odcień nawiązuje do rysunku technicznego i nowoczesnych materiałów konstrukcyjnych.',
+        },
+        {
+          name: 'Hotele, resorty i apartamenty nadmorskie',
+          text: 'Vouchery pobytowe, karty powitalne i materiały informacyjne dla gości. Kolor harmonizuje z motywami marynistycznymi bez popadania w dosłowność.',
+        },
+        {
+          name: 'Agencje doradcze i firmy technologiczne',
+          text: 'Korespondencja z kluczowymi klientami, raporty analityczne i zaproszenia na konferencje branżowe. Stonowany błękit buduje zaufanie i poczucie stabilności.',
+        },
+        {
+          name: 'Uroczystości rodzinne i jubileusze',
+          text: 'Zaproszenia na chrzest, komunię czy rocznice. Kadr wyżej pokazuje realizację z białym nadrukiem okolicznościowym na jasnych deskach.',
+        },
+        {
+          name: 'Kliniki medyczne i stomatologia estetyczna',
+          text: 'Bony na zabiegi i pakiety powitalne. Błękit łupkowy łączy profesjonalizm medyczny ze współczesnym, eleganckim wzornictwem.',
+        },
+      ],
+    },
+    caution: {
+      heading: 'Kiedy błękit łupkowy nie jest najlepszym wyborem',
+      paragraphs: [
+        'Gdy logo marki jest utrzymane w średnich odcieniach błękitu lub szarości. Znaki o tonacji zbliżonej do koloru podłoża stracą kontrast — w takim wypadku grafik na wizualizacji zaproponuje wersję białą lub czarną.',
+        'Gdy przesyłka ma mieć charakter ciepły, rustykalny lub eko. W takich projektach lepiej sprawdzają się odcienie ziemiste: Taupe, Eko lub Matcha.',
+      ],
+    },
+    faq: [
+      {
+        question: 'Czy błękit łupkowy i jeansowy to ten sam kolor koperty?',
+        answer:
+          'Tak. Jeansowy to nasza oficjalna nazwa katalogowa odcienia błękitu łupkowego (slate blue / stalowoniebieski). Na stronie, w konfiguratorze i na fakturze to ten sam produkt.',
+      },
+      {
+        question: 'Czym błękit łupkowy różni się od koperty granatowej?',
+        answer:
+          'Jasnością i wydźwiękiem. Granat jest ciemny i czyta się jako kolor urzędowy, a błękit łupkowy pozostaje wyraźnie jaśniejszy i bardziej stalowy. Granat wymaga nadruku jasnego, na błękicie łupkowym sprawdza się także czerń i grafit.',
+      },
+      {
+        question: 'Jaki kolor nadruku najlepiej sprawdza się na błękicie łupkowym?',
+        answer:
+          'Zarówno nadruk biały (dający świeży, wyrazisty kontrast), jak i czarny lub grafitowy (o charakterze formalnym) gwarantują doskonałą czytelność na tym papierze.',
+      },
+      {
+        question: 'Czy na kopercie w kolorze błękitu łupkowego można zamówić adresowanie imienne?',
+        answer:
+          'Tak. W ramach usługi personalizacji na każdej kopercie drukujemy inne dane odbiorcy białym lub ciemnym kolorem, zgodnie z przekazanym arkuszem.',
+      },
+    ],
+    ogImageSlug: 'koperty-blekit-lupkowy',
+    ogImageAlt:
+      'Trzy koperty DL w kolorze błękitu łupkowego ułożone jedna na drugiej, matowy stalowy papier na jasnych deskach',
+  },
+
+  taupe: {
+    title: 'Koperty taupe DL z nadrukiem logo',
+    description:
+      'Koperty ozdobne DL 110 × 220 mm w odcieniu taupe — szarobrązowy papier 140 g/m² barwiony w masie. Nadruk logo i adresowanie imienne, wysyłka kurierem.',
+    phrase: 'koperty taupe DL',
+    phraseShort: 'koperty taupe',
+    eyebrow: 'Kolor · Taupe',
+    h1: 'Koperty taupe DL 110 × 220 mm',
+    lead: 'Koperta DL w odcieniu taupe to szarobrązowy, ciepły i ziemisty kolor wykonany z najgrubszego papieru w ofercie o gramaturze 140 g/m². W katalogu i konfiguratorze występuje pod nazwą Szarobrązowy. Papier jest barwiony w masie, więc krawędzie i zagięcia klapki zachowują jednolity ton. Przyjmuje zarówno kontrastowy nadruk biały, jak i elegancką czerń.',
+    paperUsp: {
+      title: 'Gramatura 140 g/m²',
+      note: 'Najgrubszy papier w katalogu — wyjątkowa sztywność i barwienie w masie',
+    },
+    shotFiles: ['taupe-koperta-dl-nadruk-logo-salonu-spa'],
+    character: {
+      heading: 'Czym odcień taupe różni się od szarości i klasycznego brązu',
+      paragraphs: [
+        'Taupe to zbalansowany odcień łączący chłodną szarość z ciepłym brązem i beżem. W odróżnieniu od surowego grafitu ma organiczny, naturalny ton, a w porównaniu z ciemnym brązem pozostaje lekki i neutralny. W świetle dziennym ujawnia ciepłe, ziemiste nuty, które przy sztucznym oświetleniu nabierają głębszego, eleganckiego wyrazu.',
+        'Papier o gramaturze 140 g/m² to najgrubszy arkusz w całym naszym katalogu. Zapewnia wyjątkową sztywność w dłoni, co od razu buduje wrażenie produktu z najwyższej półki. Papier jest barwiony w masie — pigment sięga w głąb struktury, więc zagięcia klapki oraz rozcięte krawędzie nie odsłaniają jasnego rdzenia.',
+        'W zapytaniach klientów odcień ten bywa nazywany taupe, szarobrązowym, ciemnym beżem, greige lub ciepłym szarym. W naszym konfiguratorze, katalogu i na fakturze występuje pod nazwą Szarobrązowy — to dokładnie ten sam odcień papieru.',
+      ],
+    },
+    printing: {
+      heading: 'Nadruk logo i adresowanie na kopercie taupe',
+      paragraphs: [
+        'Na szarobrązowym tle znakomicie pracują dwa kierunki kolorystyczne: świeży nadruk biały lub kremowy oraz głęboka czerń, ciemny grafit i czekoladowy brąz. Zastosowanie bieli nadaje projektowi lekkości, co widać na kadrze z logo salonu SPA poniżej.',
+        'Ciemny nadruk podkreśla formalny, minimalistyczny i prestiżowy charakter korespondencji, chętnie wybierany przez biura prawne i agencje nieruchomości.',
+        'Wizualizację przygotowujemy bezpłatnie na rzeczywistym tle odcienia taupe przed uruchomieniem maszyn. Produkcja rusza dopiero po jednoznacznej akceptacji projektu przez Państwa.',
+      ],
+    },
+    audience: {
+      heading: 'Kto zamawia koperty w odcieniu taupe',
+      intro:
+        'Kolor taupe wybierają nadawcy szukający bezkompromisowej jakości papieru, prestiżu i stonowanej, naturalnej elegancji.',
+      items: [
+        {
+          name: 'Kancelarie prawne i doradcy podatkowi',
+          text: 'Umowy, opinie prawne i pisma zarządcze. Gramatura 140 g/m² daje poczucie solidności i bezpieczeństwa ważnych dokumentów.',
+        },
+        {
+          name: 'Agencje nieruchomości premium i deweloperzy',
+          text: 'Prezentacje luksusowych inwestycji, akty notarialne i vouchery dla nabywców. Ziemisty odcień doskonale współgra ze współczesną architekturą.',
+        },
+        {
+          name: 'Salony SPA, kliniki beauty i medycyna estetyczna',
+          text: 'Karty podarunkowe i ekskluzywne zaproszenia na zabiegi. Kadr wyżej prezentuje realizację z białym nadrukiem logo salonu wellness.',
+        },
+        {
+          name: 'Studia architektury i projektowania wnętrz',
+          text: 'Oferty projektowe, próbki materiałowe i korespondencja do klientów indywidualnych. Odcień greige to standard współczesnego designu.',
+        },
+        {
+          name: 'Marki modowe i biżuteria autorska',
+          text: 'Bileciki z podziękowaniem za zakup i certyfikaty autentyczności dołączane do przesyłek w segmencie luksusowym.',
+        },
+      ],
+    },
+    caution: {
+      heading: 'Kiedy odcień taupe nie jest najlepszym wyborem',
+      paragraphs: [
+        'Gdy logo marki zawiera średnie, zgaszone odcienie brązu lub szarości o niskim kontraście względem podłoża. W takiej sytuacji nasz grafik na wizualizacji zaproponuje wersję w bieli lub głębokiej czerni.',
+        'Gdy przesyłka wymaga ekspresyjnych, jaskrawych kolorów neonowych. Naturalna, ziemista tonacja taupe najlepiej prezentuje się z kolorami stonowanymi lub w zdecydowanym kontraście.',
+      ],
+    },
+    faq: [
+      {
+        question: 'Czy koperta taupe i szarobrązowa to ten sam produkt?',
+        answer:
+          'Tak. Szarobrązowy to oficjalna nazwa katalogowa odcienia taupe (greige / ciepły szary). W konfiguratorze, w katalogu i na fakturze jest to dokładnie ten sam papier.',
+      },
+      {
+        question: 'Czym wyróżnia się gramatura 140 g/m² w kopercie taupe?',
+        answer:
+          'To najgrubszy papier w całej naszej ofercie — zapewnia wyjątkową sztywność, elegancję w dotyku i pełne krycie korespondencji bez ryzyka prześwitywania.',
+      },
+      {
+        question: 'Jaki kolor nadruku najlepiej wygląda na kopercie taupe?',
+        answer:
+          'Najwyższy kontrast i elegancję daje nadruk biały lub kremowy (dający świeży efekt) oraz głęboka czerń i ciemny brąz (do oficjalnej korespondencji biznesowej).',
+      },
+      {
+        question: 'Czy na kopertach taupe można zamówić personalizację imienną?',
+        answer:
+          'Tak. W ramach usługi personalizacji na każdej kopercie drukujemy inne dane odbiorcy lub pełny adres pocztowy, wybranym jasnym lub ciemnym kolorem.',
+      },
+    ],
+    ogImageSlug: 'koperty-taupe',
+    ogImageAlt:
+      'Koperta DL w odcieniu taupe z białym nadrukiem logo salonu SPA, na jasnym drewnianym blacie',
   },
 };
 

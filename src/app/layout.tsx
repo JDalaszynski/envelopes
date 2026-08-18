@@ -97,10 +97,15 @@ export const metadata: Metadata = {
       : {}),
   },
   robots: { index: true, follow: true },
-  icons: {
-    icon: '/images/favicon.png',
-    apple: '/images/favicon.png',
-  },
+  /*
+   * Ikona serwisu nie jest tu deklarowana celowo. Google pokazuje favikonę
+   * w wynikach tylko wtedy, gdy jest kwadratowa i ma bok będący wielokrotnością
+   * 48 px — poprzedni plik miał 434 × 408 px, więc Search Console pomijał go
+   * bez komunikatu o błędzie. Zestaw ikon leży teraz w konwencji plikowej
+   * App Routera (`app/favicon.ico`, `app/icon.png`, `app/apple-icon.png`),
+   * a Next sam wstrzykuje odpowiednie `<link rel>` do każdej strony.
+   * Pole `icons` w metadanych nadpisałoby tę konwencję, dlatego go nie ma.
+   */
 };
 
 /* `viewport-fit: cover` wpuszcza `env(safe-area-inset-*)` do CSS — bez tego

@@ -118,9 +118,10 @@ const BESTSELLERS = COLORS.filter((color) => color.bestseller);
  * wpisem klastra. `filter` zostawia listę pustą, dopóki wpisu nie ma —
  * nagłówek nie renderuje się nad pustą siatką.
  */
-const GUIDES = [getPost('jaki-format-koperty-wybrac-do-wkladki')].filter(
-  (post) => post !== undefined
-);
+const GUIDES = [
+  getPost('jaki-format-koperty-wybrac-do-wkladki'),
+  getPost('ile-kartek-miesci-koperta-dl-i-jak-je-zlozyc'),
+].filter((post) => post !== undefined);
 
 /** Formaty zapowiedziane, wypisane zdaniem: „C6 114 × 162 mm i K4 155 × 155 mm". */
 const UPCOMING_LABEL = UPCOMING_FORMATS.map((f) => `${f.id} ${f.dimensions}`).join(' i ');
@@ -552,10 +553,13 @@ export default function DlEnvelopesPage() {
           {GUIDES.length > 0 && (
             <p className="small muted" style={{ marginTop: 'var(--space-3)', maxWidth: '68ch' }}>
               Jeżeli Państwa wkładki nie ma w tabeli, wymiar trzeba zmierzyć samodzielnie. Metodę
-              pomiaru, wielkość zapasu i to, co zrobić z wkładką, która się nie mieści, opisaliśmy
-              w poradniku{' '}
+              pomiaru i dobór formatu opisaliśmy w poradniku{' '}
               <Link href="/blog/jaki-format-koperty-wybrac-do-wkladki">
                 jaki format koperty wybrać do wkładki
+              </Link>
+              , a kwestię pojemności i techniki składania A4 — w poradniku{' '}
+              <Link href="/blog/ile-kartek-miesci-koperta-dl-i-jak-je-zlozyc">
+                ile kartek mieści koperta DL i jak je złożyć
               </Link>
               .
             </p>

@@ -43,18 +43,16 @@ import { SITE_URL, ogImage } from '@/lib/seo';
  * dla całej domeny, więc lepszy jest wpis ręczny niż automat, który kłamie.
  */
 const PAGE_UPDATED: Record<string, string> = {
-  /* Siatka blogowa pokazuje trzy najnowsze wpisy — doszedł poradnik o doborze
-     formatu do wkładki (poz. 10) */
-  '/': '2026-08-17',
+  /* Siatka blogowa pokazuje trzy najnowsze wpisy — doszedł poradnik o liczbie kartek (poz. 11) */
+  '/': '2026-08-18',
   /* Odnośnik do poradnika o koszcie zamówienia w sekcji cenowej (poz. 9) */
   '/koperty-z-nadrukiem': '2026-08-17',
   '/koperty-personalizowane': '2026-08-16',
-  /* Sekcja „Poradniki" i odnośnik pod tabelą dopasowań — treść wspierająca
-     z poz. 10 planu */
-  '/koperty-dl': '2026-08-17',
+  /* Sekcja „Poradniki" i odnośnik pod tabelą dopasowań — treść wspierająca z poz. 11 planu */
+  '/koperty-dl': '2026-08-18',
   '/koperty-na-vouchery': '2026-08-16',
-  /* Doszedł wpis o doborze formatu koperty do wkładki (poz. 10) */
-  '/blog': '2026-08-17',
+  /* Doszedł wpis o liczbie kartek w kopercie DL i składaniu A4 (poz. 11) */
+  '/blog': '2026-08-18',
   /* Odnośnik do strony „O nas" w karcie danych rejestrowych */
   '/kontakt': '2026-08-17',
   /* Publikacja strony „O nas" */
@@ -65,6 +63,11 @@ const PAGE_UPDATED: Record<string, string> = {
   '/koperty/granatowy': '2026-08-17',
   '/koperty/zloty': '2026-08-17',
   '/koperty/ecru': '2026-08-17',
+  /* Poz. 33–36 planu — Faza 3 stron kolorów */
+  '/koperty/bialy': '2026-08-18',
+  '/koperty/matcha': '2026-08-18',
+  '/koperty/blekit-lupkowy': '2026-08-18',
+  '/koperty/taupe': '2026-08-18',
 };
 
 /** Adres bezwzględny — sitemapa obrazów nie przyjmuje ścieżek względnych. */

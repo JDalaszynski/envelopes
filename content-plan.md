@@ -94,7 +94,7 @@ liczbowymi i porównaniami. Najtańszy dostępny kanał widoczności dla domeny 
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 9 | Cena kopert z nadrukiem i koszt zamówienia — `/blog/cena-kopert-z-nadrukiem-i-koszt-zamowienia` | Supporting article | koperty z nadrukiem cena | GEO | Decydent budżetowy | F1 | **Wykonane 17 sierpnia 2026.** Fraza cenowa przeszła z `keywords` filara do wpisu — jeden właściciel na serwis. Filar zostaje przy frazie usługowej `koperty z nadrukiem` i całej warstwie transakcyjnej, a wpis przesuwa jednostkę rozliczenia ze **sztuki** na **całe zamówienie**: dostawa rozłożona na sztuki oraz tabela pozycji, których nie doliczamy. Sekcja `#cena` i pytanie cenowe w `PRINT_FAQ_ITEMS` zostają na filarze | [x] |
 | 10 | Jaki format koperty wybrać do wkładki — `/blog/jaki-format-koperty-wybrac-do-wkladki` | Supporting article | format do koperty dl | GEO | Wszystkie | F3 | **Wykonane 17 sierpnia 2026.** Odwrotne mapowanie: wkładka → format. F3 podaje wymiary trzech formatów i status dostępności w tabeli; ten wpis prowadzi przez decyzję i uzasadnia różnice konstrukcyjne. Tytuł doprecyzowany — slug niesie pełną frazę długiego ogona. Pytanie „Czym różni się koperta DL od C6" nie wróciło (należy do `DL_FAQ_ITEMS`); zero CTA na C6/K4, zero kwot, zero MOQ | [x] |
-| 11 | Ile kartek mieści koperta DL i jak je złożyć | Supporting article | kartka do koperty dl | GEO | Wszystkie | F3 | **Trzeci wymiar, którego F3 nie dotyka: grubość wkładu.** F3 rozstrzyga dopasowanie w dwóch wymiarach (tabela wkładek w mm), ten wpis odpowiada, ile arkuszy i jakiej gramatury wchodzi, jak złożyć A4 na trzy równo i kiedy plik przestaje się mieścić mimo poprawnych wymiarów | [ ] |
+| 11 | Ile kartek mieści koperta DL i jak je złożyć — `/blog/ile-kartek-miesci-koperta-dl-i-jak-je-zlozyc` | Supporting article | kartka do koperty dl | GEO | Wszystkie | F3 | **Wykonane 18 sierpnia 2026.** Trzeci wymiar, którego F3 nie dotyka: grubość wkładu. Tabela dopuszczalnej liczby arkuszy per gramatura (80g do 5 szt., 90-100g do 4 szt., 120-135g do 3 szt.), instrukcja krok po kroku składania A4 w literę C (standard biurowy / listowy) i literę Z (harmonijkowe), fizyka zjawisk blokowania wkładu (sprężynowanie grzbietu, brak bigowania, zszywki) oraz pakowanie ręczne pod pasek HK. Zero cen i stawek nadruku | [x] |
 | 12 | Paleta 19 kolorów — jak wybrać odcień | Supporting article | kolory kopert | RUCH | Marketing, brand manager | F5 = `/` | **Format zmieniony z `Aktualizacja` na `Supporting article` 15 sierpnia 2026** — wpis startowy usunięty, treść powstaje od zera. Link w górę wprost do `/` anchorem `koperty ozdobne` (huba `/koperty` nie ma — poz. 5 anulowana), w dół do stron kolorów z Fazy 3. Frazy `koperty ozdobne` i `koperty kolorowe` zostają przy `/`; wpis obsługuje dobór odcienia do identyfikacji wizualnej | [ ] |
 
 ### Tydzień 4
@@ -179,10 +179,10 @@ z **preselekcją koloru**.
 
 | # | Tytuł / URL | Format | Główna fraza | Cel | Persona / Branża | Filar | Uwagi (antykanibalizacja) | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 33 | Białe koperty DL — `/koperty/bialy` | Supporting LP | białe koperty dl | KONWERSJA | Wszystkie | F5 | Podkreślić czytelność nadruku i adresowania — argument techniczny, nie estetyczny | [ ] |
-| 34 | Koperty matcha DL — `/koperty/matcha` | Supporting LP | koperty matcha | RUCH | Agencje kreatywne, eko-marki | F5 | Kolor niszowy = niska konkurencja; realna szansa na szybką pozycję | [ ] |
-| 35 | Koperty błękit łupkowy DL — `/koperty/blekit-lupkowy` | Supporting LP | koperty błękit łupkowy | RUCH | Agencje, hotele | F5 | Gramatura 120 g — wyróżnik do wyeksponowania | [ ] |
-| 36 | Koperty taupe DL — `/koperty/taupe` | Supporting LP | koperty taupe | RUCH | Kancelarie, nieruchomości | F5 | Gramatura 140 g — najgrubszy papier w ofercie, mocny argument „premium" | [ ] |
+| 33 | Białe koperty DL — `/koperty/bialy` | Supporting LP | białe koperty dl | KONWERSJA | Wszystkie | F5 | **Wykonane 18 sierpnia 2026.** Podkreślona czytelność nadruku w pełnym kolorze i pisma odręcznego, różnice konstrukcyjne wobec masowej koperty biurowej 75–80 g/m² z okienkiem i szarym poddrukiem oraz wobec Białej Perłowej | [x] |
+| 34 | Koperty matcha DL — `/koperty/matcha` | Supporting LP | koperty matcha | RUCH | Agencje kreatywne, eko-marki | F5 | **Wykonane 18 sierpnia 2026.** Szałwiowa pastelowa zieleń, podwyższona gramatura 120 g/m² i barwienie w masie. Dwa kadry aranżacyjne w galerii nadruków. Mosty nazewnicze: szałwiowy, pistacjowy, oliwkowy | [x] |
+| 35 | Koperty błękit łupkowy DL — `/koperty/blekit-lupkowy` | Supporting LP | koperty błękit łupkowy | RUCH | Agencje, hotele | F5 | **Wykonane 18 sierpnia 2026.** Stalowy błękit (w katalogu: Jeansowy), gramatura 120 g/m² i barwienie w masie. Kadr aranżacyjny z białym nadrukiem. Most nazewniczy: jeansowy, błękit łupkowy, stalowy błękit, slate blue | [x] |
+| 36 | Koperty taupe DL — `/koperty/taupe` | Supporting LP | koperty taupe | RUCH | Kancelarie, nieruchomości | F5 | **Wykonane 18 sierpnia 2026.** Ziemisty odcień szarobrązowy, najwyższa gramatura w ofercie 140 g/m² i barwienie w masie. Kadr aranżacyjny z białym logo salonu SPA. Mosty nazewnicze: taupe, szarobrązowy, greige, ciemny beż, ciepły szary. Zamknięcie Fazy 3 | [x] |
 
 > **Backlog kolorów (11 pozycji):** szara, niebieski, jasnoniebieska, ciemnozielony, jasnozielony,
 > czerwony, różowa, eko, żółta, srebrna perłowa, biała perłowa. Do realizacji w partiach po 4
@@ -237,6 +237,136 @@ nie liczą się do kadencji czterech pozycji tygodniowo i nie mają filara.
 ---
 
 ## Dziennik wdrożeń
+
+### 18 sierpnia 2026 — poz. 36: `/koperty/taupe` (zamknięcie Fazy 3)
+
+**Wdrożona ósma podstrona koloru — zamykająca Tydzień 9 i Fazę 3 planu publikacji.** Odcień Taupe
+otrzymał pełną podstronę w ramach dynamicznego szablonu `src/app/koperty/[kolor]/page.tsx`
+oraz rejestru `src/lib/color-pages.ts`.
+
+**1. Zróżnicowanie merytoryczne i intencje antykanibalizacyjne:**
+- **Taupe (`/koperty/taupe`):** ziemisty, szarobrązowy odcień (w katalogu i konfiguratorze
+  występujący pod nazwą **Szarobrązowy**), łączący chłodną szarość z ciepłym brązem i beżem.
+- **USP / Kąt GEO:** najwyższa gramatura w całym katalogu — **140 g/m²** i barwienie w masie,
+  stanowiące bezpośredni dowód na jakość premium (sztywność w dłoni, pełne krycie).
+- **Galeria i aranżacja:** kadr `taupe-koperta-dl-nadruk-logo-salonu-spa` z białym nadrukiem logo salonu SPA.
+- **Mosty nazewnicze:** taupe, szarobrązowy, greige, ciemny beż, ciepły szary.
+
+**2. Open Graph i metadane:**
+Wygenerowano obraz wyróżniający 1200 × 630 w `public/images/og/` za pomocą `scripts/og-card.mjs`:
+`koperty-taupe.jpg` na bazie kadru `taupe-koperta-dl-nadruk-logo-salonu-spa-1024.webp`.
+Metaopis (151 zn.) w kontrakcie 140–155 znaków, lead GEO 51 słów (próg 40–60 słów), 4 unikalne pytania FAQ
+(bez pytania cenowego).
+
+**3. Linkowanie i indeksacja:**
+Wpis w `PAGE_UPDATED` w `src/app/sitemap.ts` podbity na `2026-08-18`. Paleta na `/`, sekcja
+na `/koperty-dl` i lista odcieni na `/koperty-z-nadrukiem` zaktualizowały się automatycznie
+poprzez rejestr w `color-pages.ts`. Sitemapa urosła do 23 adresów.
+
+### 18 sierpnia 2026 — poz. 33–35: `/koperty/bialy`, `/koperty/matcha`, `/koperty/blekit-lupkowy`
+
+**Wdrożona trzecia partia stron kolorów (Faza 3, Tydzień 9).** Trzy nowe odcienie otrzymały
+kompletne podstrony w ramach dynamicznego szablonu `src/app/koperty/[kolor]/page.tsx`
+i rejestru `src/lib/color-pages.ts`.
+
+**1. Zróżnicowanie merytoryczne i intencje antykanibalizacyjne:**
+- **Biały (`/koperty/bialy`):** intencja uniwersalna i formalna. Oś merytoryczna: pełny kontrast dla
+  każdego koloru nadruku (w tym znaki wielobarwne w CMYK/Pantone) oraz możliwość bezproblemowego
+  pisania odręcznego (pióro/długopis/cienkopis). Różnice konstrukcyjne wobec masowej koperty
+  biurowej: brak okienka adresowego i grubszy, jednolity papier ozdobny — oraz rozgraniczenie
+  z Białą Perłową (matowość bez refleksów).
+- **Matcha (`/koperty/matcha`):** pastelowa szałwiowa zieleń, papier barwiony w masie o podwyższonej
+  gramaturze 120 g/m² (własny `paperUsp`). Dwa realne kadry aranżacyjne z nadrukami okolicznościowymi
+  (`matcha-koperta-dl-nadruk-podziekowania`, `matcha-koperta-dl-nadruk-wyrazy-uznania`). Zbudowany most
+  nazewniczy: szałwiowy, pistacjowy, oliwkowy, jasnozielony zgaszony.
+- **Błękit Łupkowy (`/koperty/blekit-lupkowy`):** zgaszony stalowy błękit (w katalogu i konfiguratorze
+  występujący pod nazwą **Jeansowy**), gramatura 120 g/m² i barwienie w masie. Kadr aranżacyjny
+  `blekit-lupkowy-koperta-dl-nadruk-na-chrzest` z białym nadrukiem. Most nazewniczy dla fraz:
+  błękit łupkowy, stalowy błękit, jeansowy, slate blue.
+
+**2. Open Graph i metadane:**
+Wygenerowano trzy obrazy wyróżniające 1200 × 630 w `public/images/og/` za pomocą `scripts/og-card.mjs`:
+`koperty-biale.jpg`, `koperty-matcha.jpg`, `koperty-blekit-lupkowy.jpg`. Wszystkie opisy (143–149 zn.)
+zgodne z wytycznymi — 0 cen i kwot w description, leady GEO 45–52 słowa, po 4 unikalne pytania FAQ.
+
+**3. Linkowanie i indeksacja:**
+Wpisy w `PAGE_UPDATED` w `src/app/sitemap.ts` podbite na `2026-08-18`. Paleta na `/`, sekcja
+na `/koperty-dl` i lista odcieni na `/koperty-z-nadrukiem` zaktualizowały się automatycznie,
+bo czytają rejestr z `color-pages.ts`. `Product` na stronie koloru schodzi z katalogu i cennika.
+`ItemList` palety na `/` **nie** zaktualizował się sam — czyta `COLORS`, nie rejestr stron,
+i do przeglądu z 18 sierpnia nie niósł adresów opublikowanych odcieni.
+
+Weryfikacja: `npm run typecheck` i `npm run build` bez błędów, 3 nowe trasy prerenderowane statycznie.
+
+### 18 sierpnia 2026 — poz. 11: `/blog/ile-kartek-miesci-koperta-dl-i-jak-je-zlozyc`
+
+**Opublikowane.** Nowy wpis w `POSTS` (`src/lib/blog.ts`), prerenderowany statycznie. Zakres
+dostawy: H1 + 7 sekcji H2, blok odpowiedzi GEO w intro i leadzie, **dwie tabele specyfikacji**
+(dopuszczalna liczba arkuszy per gramatura papieru oraz porównanie składania w literę C i Z),
+lista kontrolna na siedem punktów, własna karta OG (`public/images/og/blog-ile-kartek-koperta-dl.jpg`)
+i kontekstowe CTA wchodzące do konfiguratora z `format=DL`.
+
+**Oś wpisu: trzeci wymiar wkładki.** Filar `/koperty-dl` rozstrzyga dopasowanie w dwóch wymiarach
+(tabela wkładek w mm), poz. 10 mapuje wkładkę na format. Ten wpis odpowiada na pytanie o **grubość
+wkładu**: ile arkuszy A4 i jakiej gramatury mieści koperta DL (bezpiecznie 1–5 arkuszy 80 g/m², limit
+maksymalny 6–8), dlaczego koperta płaska ma limit 3–4 mm grubości oraz dlaczego zagięty plik może się
+nie mieścić mimo poprawnych wymiarów 99 × 210 mm (sprężynowanie grzbietu, pękanie papieru bez bigowania,
+zszywki narożne). Do tego instrukcja krok po kroku dwóch metod składania A4 (litera C — standard
+listowy/poufny oraz litera Z — harmonijkowy/ulotkowy) i wyjaśnienie optymalizacji pod pakowanie ręczne
+z paskiem samoprzylepnym HK.
+
+**Antykanibalizacja:**
+- **wobec F3 `/koperty-dl`:** filar podaje wymiary geometryczne w 2D; ten wpis dostaje grubość,
+  fizykę zginania i instrukcję manualną. Żaden H2 nie powtarza nagłówka filara.
+- **wobec poz. 10 (`jaki-format-koperty-wybrac-do-wkladki`):** poz. 10 prowadzi od nietypowej wkładki
+  do formatu; ten wpis skupia się w całości na formacie A4 i wkładkach podłużnych w kopercie DL.
+- **wobec poz. 9 (koszt zamówienia):** zero kwot, zero cennika nadruku.
+- **`FAQPage`:** wpis nie ma własnego schematu pytań (dane strukturalne pytań zostają na filarze).
+
+Linkowanie w obie strony:
+- **do wpisu:** `/koperty-dl` ×2 — akapit pod tabelą dopasowań oraz sekcja „Poradniki" (włączony
+  `grid grid-2` dla dwóch wpisów wspierających klastra K4); `/` — siatka blogowa; `/blog` — listing.
+- **z wpisu:** blok „Strona oferty" (pole `pillar`, anchor `wymiary koperty DL`).
+
+Weryfikacja: `typecheck` i `build` bez błędów, wpis prerenderowany statycznie, `title` 48 znaków,
+`description` 153 znaki, sitemapa zaktualizowana (`lastModified` 2026-08-18 dla `/koperty-dl`, `/blog`
+i `/`), nowa karta OG 1200 × 630.
+
+### 18 sierpnia 2026 — audyt stron kolorów i runda poprawek
+
+**Przegląd siedmiu opublikowanych stron `/koperty/[kolor]` po trzeciej partii.** Poprawki:
+
+1. **Wiersz „Papier" w tabeli specyfikacji** liczy się teraz z wykończenia odcienia
+   (`paperSpecLabel()` w `catalog.ts`). Wcześniej mówił „barwiony w masie" także przy Złotym,
+   sprzecznie z `Product.material` na tej samej stronie. Warunek stoi w jednym miejscu i korzysta
+   z niego zarówno tabela, jak i `colorEnvelopeProductJsonLd()`.
+2. **Fraza `blekit-lupkowy`** przeszła na formę odmienioną (`koperty DL w kolorze błękitu
+   łupkowego`). Mianownik wchodził do CTA, nagłówków, okruszków i przycisku koszyka jako zdanie
+   niegramatyczne („Dodaj koperty błękit łupkowy do koszyka").
+3. **Pytanie cenowe w FAQ zostało wyłącznie na `/koperty/zloty`.** `czarny` dostał w zamian most
+   nazewniczy (grafitowy), `matcha` — porównanie trzech zieleni z palety. Liczba odcieni schodzi
+   z `COLORS.length`, a nie jest wpisana ręcznie.
+4. **Gramatura ma jednego właściciela na stronie** — pasek faktów i tabelę. Zeszła z `description`,
+   `lead`, sekcji o charakterze papieru i z FAQ na trzech nowych odcieniach.
+5. **Deklaracje o nieprześwitywaniu papieru usunięte** (`bialy`, `blekit-lupkowy`) — nie ma ich
+   czym potwierdzić w katalogu. W ich miejsce weszły pytania odpowiadalne z katalogu: o brak
+   okienka adresowego i o różnicę wobec granatu.
+6. **Teksty alternatywne obrazów OG** `bialy` i `blekit-lupkowy` opisują to, co na kadrze faktycznie
+   widać — poprzednie zapowiadały nadruk logo i jasne tło, których tam nie ma.
+7. **Odesłania „kadr niżej" w sekcji „Dla kogo"** wskazywały w złą stronę: galeria renderuje się
+   w sekcji o nadruku, czyli wyżej. Poprawione na czterech stronach.
+8. **`ItemList` palety na `/`** niesie `url` dla odcieni z opublikowaną stroną (przez
+   `hasColorPage()`), a nazwy w `BreadcrumbList` odpowiadają widocznej ścieżce nawigacji.
+9. **Drobne:** tytuł `bialy` bez „i adresowaniem" (to temat filara F2), własny `paperUsp` dla bieli
+   zamiast pustego „barwiony w masie", metaopisy trzech nowych odcieni w kontrakcie 140–155 znaków,
+   lead `blekit-lupkowy` w progu 40–60 słów.
+
+**Pozostawione świadomie:** zdublowany kadr produktowy (hero i sekcja zamówienia renderują ten sam
+plik), brak linkowania poziomego między kolorami wymienianymi w prozie (wymaga zmiany typu
+`ColorPageSection` na treść z odnośnikami) oraz nieodróżnialność kart OG Granatowego i Błękitu
+Łupkowego przy obecnej ciemnej nakładce w `scripts/og-card.mjs`.
+
+Weryfikacja: `npx tsc --noEmit` bez błędów.
 
 ### 18 sierpnia 2026 — zdjęcie odcienia w hero stron kolorów i trzy nowe kadry
 

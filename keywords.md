@@ -248,8 +248,7 @@ wchodzącym do konfiguratora z **preselekcją koloru**).
 | koperta dl beżowa | główna wariantu | `ecru` / `taupe` — patrz notatka | TRANS | — | P1 |
 | czarne koperty z logo | główna wariantu | `czarny` (115g) + nadruk | TRANS | — | P1 |
 
-**Stan wdrożenia (17 sierpnia 2026).** Cztery adresy opublikowane, wszystkie trzy frazy z tabeli
-mają właściciela:
+**Stan wdrożenia (18 sierpnia 2026).** Osiem adresów opublikowanych (zamknięcie Fazy 3), kluczowe frazy mają właściciela:
 
 | Fraza | Właściciel |
 | --- | --- |
@@ -257,6 +256,10 @@ mają właściciela:
 | złote koperty dl | `/koperty/zloty` |
 | koperta dl beżowa | `/koperty/ecru` |
 | granatowe koperty dl | `/koperty/granatowy` |
+| białe koperty dl | `/koperty/bialy` |
+| koperty matcha | `/koperty/matcha` |
+| koperty błękit łupkowy | `/koperty/blekit-lupkowy` |
+| koperty taupe | `/koperty/taupe` |
 
 **Notatki wdrożeniowe:**
 - **Luka nazewnicza — zamknięta dla `ecru`.** W katalogu nie ma koloru „beżowy". Zapytanie

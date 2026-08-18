@@ -5,9 +5,13 @@ import {
   COLORS,
   FORMATS,
   FORMAT_MAP,
+  hasSurfaceFinish,
   maxInsertSize,
+  weightLabel,
+  type EnvelopeColor,
   type FormatId,
 } from './catalog';
+import { colorPagePath, hasColorPage } from './color-pages';
 import { INDUSTRY_SHOTS, PERSONALIZATION_SHOTS, showcaseSrc } from './showcase';
 import type { BlogPost } from './blog';
 
@@ -377,9 +381,11 @@ export function productJsonLd() {
 /**
  * ItemList palety kolorów — 19 pozycji wprost z katalogu (GEO pkt 6.6).
  *
- * Pozycje nie mają własnych adresów, bo strony kolorów `/koperty/[kolor]`
- * jeszcze nie istnieją. Zmyślony `url` byłby linkiem do 404, więc podajemy
- * nazwę, zdjęcie i gramaturę — komplet faktów, który model może zacytować.
+ * Odcień z opublikowaną stroną `/koperty/[kolor]` niesie `url`, bo ta lista
+ * jest dla modelu i dla crawlera jedyną mapą wariantów kolorystycznych —
+ * bez adresu wskazuje kolor, ale nie prowadzi do niczego. Adres bierzemy
+ * z `color-pages.ts`, czyli z rejestru opublikowanych stron, więc odcień
+ * bez treści zostaje przy samej nazwie i zdjęciu, zamiast linkować do 404.
  */
 export function colorPaletteJsonLd() {
   return {
@@ -394,6 +400,7 @@ export function colorPaletteJsonLd() {
       position: index + 1,
       name: `Koperta DL ${color.name}`,
       ...(color.images?.DL ? { image: `${SITE_URL}${color.images.DL}` } : {}),
+      ...(hasColorPage(color.id) ? { url: `${SITE_URL}${colorPagePath(color.id)}` } : {}),
     })),
   };
 }
@@ -592,12 +599,12 @@ export function colorEnvelopeProductJsonLd(input: {
   colorName: string;
   format: FormatId;
   weight?: string;
-  finish?: string;
+  finish?: EnvelopeColor['finish'];
   images: string[];
 }) {
   const spec = FORMAT_MAP[input.format];
   const url = `${SITE_URL}/koperty/${input.colorId}`;
-  const weight = input.weight?.replace('g', ' g/m²');
+  const weight = input.weight ? weightLabel(input.weight) : undefined;
 
   /*
    * Opis papieru schodzi z `finish`, a nie jest wpisany na sztywno.
@@ -614,11 +621,11 @@ export function colorEnvelopeProductJsonLd(input: {
    * papieru, a nie jego powierzchnię — barwienie w masie zostaje przy nim
    * prawdziwe i nie ma powodu go z opisu zdejmować.
    */
-  const hasSurfaceFinish = input.finish === 'perłowe' || input.finish === 'metaliczne';
+  const surfaceFinish = hasSurfaceFinish(input.finish);
   /* Nazwa wykończenia zostaje w mianowniku („wykończenie metaliczne"),
      bo katalog trzyma ją w tej formie. Zdanie budujemy tak, żeby nie
      wymagało jej odmiany — inaczej wyszłoby „z wykończeniem metaliczne". */
-  const paperBase = hasSurfaceFinish ? 'Papier ozdobny' : 'Papier barwiony w masie';
+  const paperBase = surfaceFinish ? 'Papier ozdobny' : 'Papier barwiony w masie';
   const finishClause = input.finish ? `, wykończenie ${input.finish}` : '';
 
   return {
@@ -626,14 +633,14 @@ export function colorEnvelopeProductJsonLd(input: {
     '@type': 'Product',
     '@id': `${url}#product`,
     name: `Koperta ${input.format} ${spec.dimensions} — kolor ${input.colorName}`,
-    description: `Koperta ozdobna ${input.format} ${spec.dimensions} w kolorze ${input.colorName}. ${paperBase}${weight ? ` o gramaturze ${weight}` : ''}${finishClause}, bez okienka adresowego. Cena identyczna jak w pozostałych ${COLORS.length} odcieniach — zależy wyłącznie od formatu. Opcjonalny nadruk logo i personalizacja, czyli nadruk danych odbiorcy.`,
+    description: `Koperta ozdobna ${input.format} ${spec.dimensions} w kolorze ${input.colorName}. ${paperBase}${weight ? ` o gramaturze ${weight}` : ''}${finishClause}, bez okienka adresowego. Cena identyczna jak w pozostałych ${COLORS.length - 1} odcieniach — zależy wyłącznie od formatu. Opcjonalny nadruk logo i personalizacja, czyli nadruk danych odbiorcy.`,
     brand: brandRef,
     sku: colorSku(input.colorId, input.format),
     inProductGroupWithID: colorGroupId(input.format),
     color: input.colorName,
     category: 'Koperty ozdobne',
     material: `Papier ozdobny${weight ? ` ${weight}` : ''}${
-      hasSurfaceFinish ? `, wykończenie ${input.finish}` : ', barwiony w masie'
+      surfaceFinish ? `, wykończenie ${input.finish}` : ', barwiony w masie'
     }`,
     size: spec.dimensions,
     width: { '@type': 'QuantitativeValue', value: spec.width, unitCode: 'MMT' },
@@ -647,7 +654,7 @@ export function colorEnvelopeProductJsonLd(input: {
          nie deklarujemy przy nim barwienia na wylot, bo tej cechy nie da się
          dla nich potwierdzić. Reszta palety, z papierem eko włącznie, dostaje
          ten wiersz jak dotąd. */
-      ...(hasSurfaceFinish
+      ...(surfaceFinish
         ? []
         : [{ '@type': 'PropertyValue', name: 'Barwienie papieru', value: 'W masie, na wylot' }]),
       ...(weight

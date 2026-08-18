@@ -8,7 +8,14 @@ import { StickyCta } from '@/components/ui/StickyCta';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { EnvelopePlaceholder } from '@/components/ui/EnvelopePlaceholder';
 import { ShowcaseGrid } from '@/components/ui/ShowcaseGrid';
-import { COLORS, COLOR_MAP, FORMAT_MAP, type FormatId } from '@/lib/catalog';
+import {
+  COLORS,
+  COLOR_MAP,
+  FORMAT_MAP,
+  paperSpecLabel,
+  weightLabel,
+  type FormatId,
+} from '@/lib/catalog';
 import { COLOR_PAGES, COLOR_PAGE_IDS, capitalize, colorPagePath } from '@/lib/color-pages';
 import { DEFAULT_PRICING, DELIVERY_COST, calculatePrice, formatPrice } from '@/lib/pricing';
 import {
@@ -110,7 +117,7 @@ export default async function ColorPage({ params }: { params: Promise<{ kolor: s
 
   const { content, color } = page;
   const shots = content.shotFiles.map(shotByFile);
-  const weightLabel = color.weight?.replace('g', ' g/m²');
+  const weight = color.weight ? weightLabel(color.weight) : undefined;
 
   /* Cena tego wariantu. Liczona z `DEFAULT_PRICING`, czyli z tego samego
      źródła co konfigurator, koszyk, dane strukturalne i feed produktowy —
@@ -152,10 +159,13 @@ export default async function ColorPage({ params }: { params: Promise<{ kolor: s
       />
       <JsonLd data={faqJsonLd(content.faq)} />
       <JsonLd
+        /* Nazwy okruszków muszą odpowiadać ścieżce widocznej pod nagłówkiem —
+           Google odrzuca znaczniki, które mówią co innego niż HTML. Stąd nazwa
+           katalogowa koloru, a nie odmieniona fraza strony. */
         data={breadcrumbJsonLd([
           { name: 'Strona główna', url: '/' },
-          { name: `Koperty ${FORMAT} ${SPEC.dimensions}`, url: '/koperty-dl' },
-          { name: capitalize(content.phrase), url: colorPagePath(color.id) },
+          { name: `Koperty ${FORMAT}`, url: '/koperty-dl' },
+          { name: color.name, url: colorPagePath(color.id) },
         ])}
       />
 
@@ -219,10 +229,10 @@ export default async function ColorPage({ params }: { params: Promise<{ kolor: s
                   title: 'Barwiony w masie',
                   note: 'Kolor sięga w głąb arkusza — zgięcie i krawędź zostają w odcieniu papieru',
                 },
-                ...(weightLabel
+                ...(weight
                   ? [
                       {
-                        title: weightLabel,
+                        title: weight,
                         note: 'Gramatura papieru w tym odcieniu, bez okienka adresowego',
                       },
                     ]
@@ -292,7 +302,11 @@ export default async function ColorPage({ params }: { params: Promise<{ kolor: s
               </tr>
               <tr>
                 <th scope="row">Papier</th>
-                <td>Ozdobny, barwiony w masie{weightLabel ? `, ${weightLabel}` : ''}</td>
+                {/* Barwienie w masie wypada dla papieru z połyskiem — wykończenie
+                    ma niżej własny wiersz, a złożenie obu w jedno zdanie dawało
+                    opis sprzeczny z `material` w danych strukturalnych tej samej
+                    strony. Warunek stoi raz, w `catalog.ts`. */}
+                <td>{paperSpecLabel(color)}</td>
               </tr>
               {color.finish && (
                 <tr>
