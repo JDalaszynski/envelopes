@@ -32,6 +32,8 @@ import {
   faqJsonLd,
   howToJsonLd,
   ogImage,
+  productId,
+  webPageJsonLd,
 } from '@/lib/seo';
 import {
   PLAIN_ENVELOPE_SHOT,
@@ -282,6 +284,17 @@ function FormatDiagram({ format, showInsert = false }: { format: EnvelopeFormat;
 export default function DlEnvelopesPage() {
   return (
     <>
+      <JsonLd
+        data={webPageJsonLd({
+          path: '/koperty-dl',
+          type: 'ItemPage',
+          name: String(metadata.title),
+          description: String(metadata.description),
+          mainEntityId: productId('/koperty-dl'),
+          image: ogImage('koperty-dl', '').url,
+          breadcrumb: true,
+        })}
+      />
       <JsonLd data={dlEnvelopeProductJsonLd()} />
       <JsonLd data={envelopeFormatsJsonLd()} />
       <JsonLd data={faqJsonLd(DL_FAQ_ITEMS)} />
@@ -302,7 +315,7 @@ export default function DlEnvelopesPage() {
       {/* ── Hero — blok odpowiedzi GEO + pierwsze CTA nad linią zgięcia ── */}
       <section className="hero hero-with-bg">
         <div className="hero-main-content">
-          <ParallaxBackground imageUrl="/images/Hero%20Envelopes%20Robocze.png" />
+          <ParallaxBackground imageUrl="/images/hero-tlo-2015.webp" />
           <div className="container">
             <nav
               aria-label="Ścieżka nawigacji"

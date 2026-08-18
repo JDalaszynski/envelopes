@@ -1,0 +1,61 @@
+/**
+ * Data ostatniej zmiany treści, osobno dla każdej trasy statycznej.
+ *
+ * Wartości są wpisane ręcznie i pochodzą z „Dziennika wdrożeń"
+ * w `content-plan.md` — to jedyne miejsce w projekcie, które wie, kiedy
+ * treść danej strony faktycznie się zmieniła. **Publikacja zmiany na stronie
+ * wymaga podbicia daty tutaj.**
+ *
+ * Odrzucone alternatywy: czas modyfikacji pliku źródłowego (`mtime`) jest
+ * na hostingu równy chwili pobrania repozytorium, więc wszystkie strony
+ * dostałyby jedną datę wdrożenia — sygnał nieprawdziwy i w dodatku zmieniający
+ * się przy każdym deployu bez zmiany treści. Data budowania ma tę samą wadę.
+ * Google traktuje niewiarygodny `lastmod` jako powód, żeby przestać go czytać
+ * dla całej domeny, więc lepszy jest wpis ręczny niż automat, który kłamie.
+ *
+ * **Dlaczego osobny moduł, a nie stała w `sitemap.ts`.** Ta sama data zasila
+ * dziś dwa wyjścia: `lastmod` w sitemapie i `dateModified` w węźle `WebPage`
+ * danych strukturalnych (`webPageJsonLd` w `seo.ts`). Rozjazd między nimi jest
+ * gorszy niż brak drugiego pola — wyszukiwarka dostałaby dwie różne odpowiedzi
+ * na to samo pytanie, z tej samej domeny. Rejestr stoi więc poza obydwoma
+ * konsumentami, w `lib/`, i nie należy do żadnego z nich.
+ *
+ * Trasy spoza rejestru (blog) datę mają w samej treści — wpis niesie `date`
+ * i `updated`, więc nie ma czego tu powielać.
+ */
+export const PAGE_UPDATED: Record<string, string> = {
+  /* Siatka blogowa pokazuje trzy najnowsze wpisy — doszedł poradnik o liczbie kartek (poz. 11) */
+  '/': '2026-08-18',
+  /* Odnośnik do poradnika o koszcie zamówienia w sekcji cenowej (poz. 9) */
+  '/koperty-z-nadrukiem': '2026-08-17',
+  '/koperty-personalizowane': '2026-08-16',
+  /* Sekcja „Poradniki" i odnośnik pod tabelą dopasowań — treść wspierająca z poz. 11 planu */
+  '/koperty-dl': '2026-08-18',
+  '/koperty-na-vouchery': '2026-08-16',
+  /* Doszedł wpis o liczbie kartek w kopercie DL i składaniu A4 (poz. 11) */
+  '/blog': '2026-08-18',
+  /* Odnośnik do strony „O nas" w karcie danych rejestrowych */
+  '/kontakt': '2026-08-17',
+  /* Publikacja strony „O nas" */
+  '/o-nas': '2026-08-17',
+  /* Pierwsza strona koloru — poz. 29 planu */
+  '/koperty/czarny': '2026-08-17',
+  /* Poz. 30–32 planu — druga partia stron kolorów */
+  '/koperty/granatowy': '2026-08-17',
+  '/koperty/zloty': '2026-08-17',
+  '/koperty/ecru': '2026-08-17',
+  /* Poz. 33–36 planu — Faza 3 stron kolorów */
+  '/koperty/bialy': '2026-08-18',
+  '/koperty/matcha': '2026-08-18',
+  '/koperty/blekit-lupkowy': '2026-08-18',
+  '/koperty/taupe': '2026-08-18',
+  /* Czwarta partia stron kolorów z backlogu klastra K5 */
+  '/koperty/szara': '2026-08-18',
+  '/koperty/niebieski': '2026-08-18',
+  '/koperty/jasnoniebieska': '2026-08-18',
+};
+
+/** Data zmiany treści dla trasy — `undefined`, gdy trasy nie ma w rejestrze. */
+export function pageUpdated(path: string): string | undefined {
+  return PAGE_UPDATED[path];
+}

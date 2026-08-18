@@ -5,7 +5,7 @@ import { JsonLd } from '@/components/seo/JsonLd';
 import { QuoteForm } from '@/components/forms/QuoteForm';
 import { BULK_QUOTE_THRESHOLD } from '@/lib/catalog';
 import { CONTACT_DETAILS } from '@/lib/orders';
-import { breadcrumbJsonLd, ogImage } from '@/lib/seo';
+import { breadcrumbJsonLd, ogImage, webPageJsonLd } from '@/lib/seo';
 
 export const metadata: Metadata = {
   title: 'Kontakt — Biuro Obsługi Klienta',
@@ -29,6 +29,15 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <>
+      <JsonLd
+        data={webPageJsonLd({
+          path: '/kontakt',
+          type: 'ContactPage',
+          name: String(metadata.title),
+          description: String(metadata.description),
+          breadcrumb: true,
+        })}
+      />
       <JsonLd
         data={breadcrumbJsonLd([
           { name: 'Strona główna', url: '/' },

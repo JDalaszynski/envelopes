@@ -858,6 +858,267 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
     ogImageAlt:
       'Koperta DL w odcieniu taupe z białym nadrukiem logo salonu SPA, na jasnym drewnianym blacie',
   },
+
+  szara: {
+    title: 'Szare koperty DL z nadrukiem logo',
+    description:
+      'Szare koperty ozdobne DL 110 × 220 mm, neutralny popielaty papier barwiony w masie. Czysty kontrast dla czerni, bieli i kolorów firmowych. Wysyłka kurierem.',
+    phrase: 'szare koperty DL',
+    phraseShort: 'szare koperty',
+    eyebrow: 'Kolor · Szary',
+    h1: 'Szare koperty DL 110 × 220 mm',
+    lead: 'Szara koperta DL jest zrobiona z neutralnego, popielatego papieru barwionego w masie — jednolicie szarego na całej grubości, także na zagięciu klapki i krawędziach. Kosztuje tyle samo co każdy inny odcień w katalogu. Przyjmuje nadruk ciemny, kontrastową biel oraz pismo odręczne, stanowiąc nowoczesną, stonowaną alternatywę dla bieli.',
+    shotFiles: [],
+    character: {
+      heading: 'Czym szary papier barwiony w masie różni się od bieli i odcienia taupe',
+      paragraphs: [
+        'Szary to odcień neutralny i architektoniczny. W zestawieniu z czystą bielą wygląda spokojniej i nowocześniej, nie budząc skojarzeń z masowym papierem biurowym. W odróżnieniu od Taupe nie zawiera nut brązu ani beżu, pozostając chłodnym, minimalistycznym tłem dla korespondencji.',
+        'Papier jest barwiony w masie: pigment sięga w głąb struktury arkusza, więc zagięcie klapki i rozcięty bok zachowują jednolity popielaty odcień, bez jasnego rdzenia widocznego na papierach barwionych powierzchniowo.',
+        'W rozmowach i zapytaniach odcień ten bywa nazywany popielatym, jasnoszarym lub jasnografitowym. W katalogu, konfiguratorze i na fakturze występuje pod nazwą Szara — to ten sam papier i jedna karta produktu.',
+      ],
+    },
+    printing: {
+      heading: 'Nadruk logo i pisanie odręczne na szarej kopercie',
+      paragraphs: [
+        'Na szarym papierze doskonale prezentują się dwa kierunki: głęboka czerń i ciemny grafit (nadające korespondencji oficjalny, techniczny profil) oraz czysta biel (tworząca nowoczesny, subtelny kontrast na zaproszeniach i voucherach).',
+        'Można na niej bez przeszkód pisać odręcznie. Matowa powierzchnia chłonie tusz długopisu, pióra wiecznego oraz cienkopisu bez rozmazywania, co pozwala na ręczne wypisanie dedykacji przy mniejszych nakładach.',
+        'Przed drukiem grafik przygotowuje bezpłatną cyfrową wizualizację na tle odcienia Szarego. Zamówienie trafia do produkcji dopiero po Państwa jednoznacznej akceptacji projektu.',
+      ],
+    },
+    audience: {
+      heading: 'Kto zamawia szare koperty',
+      intro:
+        'Szarość wybierają marki i instytucje poszukujące nowoczesnego minimalizmu, powagi oraz eleganckiej alternatywy dla standardowej bieli.',
+      items: [
+        {
+          name: 'Pracownie architektoniczne i biura projektowe',
+          text: 'Koncepcje architektoniczne, umowy i dokumentacja dla inwestorów. Popielaty odcień nawiązuje do estetyki betonu, stali i rysunku technicznego.',
+        },
+        {
+          name: 'Firmy technologiczne i startupy',
+          text: 'Pakiety powitalne dla pracowników, zaproszenia na prezentacje produktowe i korespondencja B2B. Chłodny szary podkreśla nowoczesny profil marki.',
+        },
+        {
+          name: 'Kancelarie prawne i doradcy biznesowi',
+          text: 'Opinie prawne, memoranda i raporty zarządcze. Szara koperta wyróżnia się w stosie poczty, zachowując pełną dyskrecję i oficjalną powagę.',
+        },
+        {
+          name: 'Studia wzornictwa i salony meblowe',
+          text: 'Katalogi miniaturowe, próbki materiałów i zaproszenia na targi designu. Neutralne tło nie narzuca tonacji prezentowanym projektom.',
+        },
+        {
+          name: 'Agencje brandingowe i kreatywne',
+          text: 'Korespondencja z kluczowymi klientami i karty podarunkowe. Szary kolor doskonale komponuje się z minimalistyczną typografią.',
+        },
+      ],
+    },
+    caution: {
+      heading: 'Kiedy szara koperta nie jest najlepszym wyborem',
+      paragraphs: [
+        'Gdy logo marki zawiera średnie szarości o jasności zbliżonej do koloru papieru. Elementy o niskim kontraście mogą zlewać się z tłem — w takim wypadku grafik na wizualizacji zaproponuje wersję czarną lub białą.',
+        'Gdy przesyłka wymaga ciepłej, organicznej stylistyki w klimacie boho lub vintage. W takich projektach znacznie lepiej sprawdza się ciepły odcień Ecru, Taupe lub papier Eko.',
+      ],
+    },
+    faq: [
+      {
+        question: 'Czy szara koperta jest jednolicie szara także na zgięciu i krawędzi?',
+        answer:
+          'Tak. Papier jest barwiony w masie, więc pigment sięga przez całą grubość arkusza. Zagięta klapka i rozcięty bok zachowują jednolity popielaty kolor, bez jasnych prążków.',
+      },
+      {
+        question: 'Czym szara koperta różni się od odcienia Taupe (Szarobrązowego)?',
+        answer:
+          'Temperaturą barwy. Szary to czysty, neutralny popiel bez domieszek, natomiast Taupe łączy szarość z ciepłym brązem i beżem oraz ma wyższą gramaturę (140 g/m² wobec 115 g/m²).',
+      },
+      {
+        question: 'Jaki kolor nadruku najlepiej wygląda na szarej kopercie?',
+        answer:
+          'Najwyższy kontrast zapewnia głęboka czerń, ciemny grafit oraz czysta biel. Dobrze prezentują się także nasycone kolory firmowe, takie jak granat czy butelkowa zieleń.',
+      },
+      {
+        question: 'Czy na szarej kopercie można wypisać adres ręcznie?',
+        answer:
+          'Tak. Papier jest całkowicie matowy i naturalnie chłonie tusz z pióra, długopisu oraz cienkopisu, nie powodując rozmazywania.',
+      },
+    ],
+    ogImageSlug: 'koperty-szare',
+    ogImageAlt:
+      'Szara koperta ozdobna DL z papieru barwionego w masie bez okienka adresowego',
+  },
+
+  niebieski: {
+    title: 'Niebieskie koperty DL z nadrukiem logo',
+    description:
+      'Niebieskie koperty ozdobne DL 110 × 220 mm w nasyconym odcieniu kobaltowym. Papier barwiony w masie, czytelny jasny nadruk logo. Wysyłka kurierem w Polsce.',
+    phrase: 'niebieskie koperty DL',
+    phraseShort: 'niebieskie koperty',
+    eyebrow: 'Kolor · Niebieski',
+    h1: 'Niebieskie koperty DL 110 × 220 mm',
+    lead: 'Niebieska koperta DL jest wykonana z papieru barwionego w masie o nasyconym, klasycznym odcieniu chabrowo-kobaltowym. Barwienie w masie zapewnia jednolity kolor na zgięciu klapki i krawędziach. Jako ciemny odcień najlepiej prezentuje się z jasnym nadrukiem logo — bielą, srebrem i kremem — oraz z personalizacją imienną.',
+    shotFiles: ['niebieska-koperta-dl-personalizacja-odreczna'],
+    character: {
+      heading: 'Czym odcień Niebieski różni się od Granatowego i Błękitu Łupkowego',
+      paragraphs: [
+        'Niebieski to kolor czysty, nasycony i wyrazisty — klasyczny kobalt i chaber. Jest wyraźnie jaśniejszy i bardziej dynamiczny niż głęboki, niemal czarny Granatowy, a jednocześnie bardziej żywy niż stalowo-szary, zgaszony Błękit Łupkowy.',
+        'Papier jest barwiony w masie, co oznacza, że pigment przenika cały przekrój arkusza. Przy otwieraniu koperty, zaginaniu klapki czy rozcinaniu krawędzi nie pojawiają się białe przetarcia charakterystyczne dla papierów zadrukowywanych powierzchniowo.',
+        'W zapytaniach klientów odcień ten funkcjonuje jako chabrowy, kobaltowy, szafirowy lub royal blue. W naszym katalogu, konfiguratorze i na fakturze występuje pod nazwą Niebieski — to ten sam produkt.',
+      ],
+    },
+    printing: {
+      heading: 'Nadruk logo i personalizacja na niebieskiej kopercie',
+      paragraphs: [
+        'Na nasyconym niebieskim tle optymalny kontrast zapewnia nadruk jasny: biel, srebro oraz ciepły krem. Jasny znak pozostaje doskonale czytelny nawet przy drobnych detalach logotypu i cienkich liniach kroju pisma.',
+        'Kadr wyżej prezentuje realizację z personalizacją imienną wykonaną jasnym drukiem odręcznym. Na ciemnym tle drukujemy zmienne dane odbiorców w ramach jednej serii, bez konieczności ręcznego wypisywania.',
+        'Logotypy wielobarwne zawierające ciemne elementy nasz grafik bezpłatnie adaptuje do wersji jednobarwnej jasnej, przedstawiając wizualizację do akceptacji przed uruchomieniem maszyn.',
+      ],
+    },
+    audience: {
+      heading: 'Kto zamawia niebieskie koperty',
+      intro:
+        'Niebieski to kolor zaufania, dynamiki i profesjonalizmu, chętnie wybierany przez sektor finansowy, edukacyjny oraz organizatorów uroczystości.',
+      items: [
+        {
+          name: 'Instytucje finansowe, fintech i ubezpieczenia',
+          text: 'Korespondencja zarządza, oferty dla kluczowych partnerów i pakiety polis. Klasyczny błękit korporacyjny buduje poczucie stabilności i bezpieczeństwa.',
+        },
+        {
+          name: 'Uczelnie, szkoły wyższe i centra szkoleniowe',
+          text: 'Listy gratulacyjne, certyfikaty ukończenia kursów i zaproszenia na inauguracje. Nasycony odcień harmonizuje z tradycyjną symboliką akademicką.',
+        },
+        {
+          name: 'Agencje eventowe i marketingowe',
+          text: 'Zaproszenia na gale, konferencje branżowe i wydarzenia firmowe. Żywy kobalt wyróżnia się w korespondencji i przyciąga uwagę adresata.',
+        },
+        {
+          name: 'Uroczystości rodzinne i okolicznościowe',
+          text: 'Zaproszenia na jubileusze, rocznice i gale prywatne. Kadr wyżej przedstawia wykorzystanie jasnego nadruku imiennego na tym odcieniu.',
+        },
+        {
+          name: 'Placówki medyczne i diagnostyczne',
+          text: 'Wyniki badań specjalistycznych, programy profilaktyczne i pakiety dla pacjentów. Kolor kojarzony z nowoczesną medycyną i spokojem.',
+        },
+      ],
+    },
+    caution: {
+      heading: 'Kiedy niebieska koperta nie jest najlepszym wyborem',
+      paragraphs: [
+        'Gdy adres ma być wypisywany ręcznie standardowym długopisem. Ciemny wkład długopisu lub cienkopisu traci kontrast na nasyconym niebieskim papierze — do wysyłek imiennych polecamy personalizację drukiem.',
+        'Gdy logo firmy zawiera wyłącznie ciemne barwy (grafit, czerń, ciemny brąz) i marka nie dopuszcza wersji w jasnym kolorze. W takiej sytuacji lepiej sprawdzi się odcień Błękitny lub Biały.',
+      ],
+    },
+    faq: [
+      {
+        question: 'Czym kolor Niebieski różni się od Granatowego?',
+        answer:
+          'Jasnością i nasyceniem. Granat jest bardzo ciemny i oficjalny, zbliżając się w sztucznym świetle do czerni. Niebieski zachowuje wyrazisty, nasycony odcień kobaltowy w każdym oświetleniu.',
+      },
+      {
+        question: 'Jakim kolorem drukujecie logo na niebieskiej kopercie?',
+        answer:
+          'Jasnym: bielą, srebrem lub kremem. Taki nadruk gwarantuje pełny kontrast i czytelność znaków firmowych oraz napisów okolicznościowych.',
+      },
+      {
+        question: 'Czy na niebieskiej kopercie można zamówić nadruk adresów odbiorców?',
+        answer:
+          'Tak. W ramach personalizacji drukujemy na każdej kopercie inne imię, nazwisko lub pełny adres jasnym kolorem, zgodnie z przekazaną listą.',
+      },
+      {
+        question: 'Czy niebieska koperta jest barwiona w masie?',
+        answer:
+          'Tak. Papier jest barwiony w masie na całej grubości, dzięki czemu zagięcie klapki oraz rozcięte krawędzie zachowują nasycony niebieski kolor.',
+      },
+    ],
+    ogImageSlug: 'koperty-niebieskie',
+    ogImageAlt:
+      'Niebieska koperta DL z białym nadrukiem imiennym na drewnianym blacie',
+  },
+
+  jasnoniebieska: {
+    title: 'Błękitne koperty DL z nadrukiem logo',
+    description:
+      'Błękitne koperty ozdobne DL 110 × 220 mm — pastelowy jasnoniebieski papier barwiony w masie. Czysty kontrast dla ciemnego nadruku. Wysyłka kurierem w Polsce.',
+    phrase: 'błękitne koperty DL',
+    phraseShort: 'błękitne koperty',
+    eyebrow: 'Kolor · Błękitny',
+    h1: 'Błękitne koperty DL 110 × 220 mm',
+    lead: 'Błękitna koperta DL jest wykonana z jasnego, pastelowego papieru barwionego w masie o delikatnej tonacji baby blue. W katalogu i konfiguratorze występuje pod nazwą Błękitna. Barwienie w masie chroni krawędzie przed białymi prążkami. Jasne tło idealnie przyjmuje ciemny nadruk logo — granat, grafit i czerń — oraz pismo odręczne.',
+    shotFiles: [],
+    character: {
+      heading: 'Czym odcień Błękitny różni się od Błękitu Łupkowego i Niebieskiego',
+      paragraphs: [
+        'Błękitna koperta to odcień jasny, pastelowy i świetlisty — popularny baby blue. W odróżnieniu od Błękitu Łupkowego (Jeansowego) nie zawiera szarych, stalowych domieszek, a w zestawieniu z odcieniem Niebieskim jest wielokrotnie jaśniejsza i subtelniejsza.',
+        'Papier jest barwiony w masie, co gwarantuje jednolity odcień na całej grubości arkusza. Zagięcie klapki oraz krawędzie po rozcięciu zachowują czysty pastelowy błękit, bez przebarwień.',
+        'W wyszukiwaniach i rozmowach odcień ten bywa nazywany błękitnym, jasnoniebieskim, pastelowym błękitem, baby blue lub błękitem paryskim jasnym. W konfiguratorze i katalogu oznaczony jest jako Błękitna — to jeden, spójny produkt.',
+      ],
+    },
+    printing: {
+      heading: 'Nadruk logo firmowego i adresowanie na błękitnej kopercie',
+      paragraphs: [
+        'Na jasnobłękitnym tle najczystszy i najbardziej wyrazisty kontrast dają ciemne kolory nadruku: głęboki granat, czerń, ciemny grafit oraz nasycony kobalt. Doskonale czytają się także herby i logotypy wielobarwne.',
+        'Koperta błękitna znakomicie nadaje się do pisania ręcznego. Matowy papier natychmiast chłonie tusz z długopisu, pióra oraz pisaka, dzięki czemu adresowanie odręczne lub dopisanie życzeń jest w pełni komfortowe.',
+        'Przed uruchomieniem druku przygotowujemy bezpłatną wizualizację na rzeczywistym tle koloru Błękitnego, dzięki czemu dokładnie oceniają Państwo czytelność i układ elementów.',
+      ],
+    },
+    audience: {
+      heading: 'Kto zamawia błękitne koperty',
+      intro:
+        'Pastelowy błękit wybierają marki i osoby poszukujące świeżości, lekkości, spokoju oraz łagodnej elegancji.',
+      items: [
+        {
+          name: 'Kliniki stomatologiczne, medyczne i laboratoria',
+          text: 'Bony na zabiegi, pakiety profilaktyczne i oficjalna korespondencja. Jasny błękit budzi naturalne skojarzenia ze sterylnością, spokojem i profesjonalizmem.',
+        },
+        {
+          name: 'Salony kosmetyczne, wellness i gabinety masażu',
+          text: 'Karty podarunkowe i zaproszenia na zabiegi pielęgnacyjne. Delikatna pastelowa tonacja wprowadza klienta w relaksujący nastrój.',
+        },
+        {
+          name: 'Uroczystości rodzinne, chrzciny i baby shower',
+          text: 'Zaproszenia na chrzest, powitanie dziecka i podziękowania dla gości. Klasyczny błękit stanowi tradycyjny motyw uroczystości dziecięcych.',
+        },
+        {
+          name: 'Agencje HR i działy personalne',
+          text: 'Listy powitalne dla nowych pracowników, bony nagrodowe i zaproszenia na integracje. Kolor wprowadza przyjazną, otwartą atmosferę.',
+        },
+        {
+          name: 'Hotele i apartamenty nadmorskie',
+          text: 'Vouchery pobytowe, karty powitalne i materiały informacyjne. Kolorystyka naturalnie nawiązuje do wody, nieba i wypoczynku.',
+        },
+      ],
+    },
+    caution: {
+      heading: 'Kiedy błękitna koperta nie jest najlepszym wyborem',
+      paragraphs: [
+        'Gdy nadruk ma być wykonany w kolorze białym lub w bardzo jasnych pastelach. Na jasnym błękicie biały nadruk traci kontrast i staje się nieczytelny — w takim przypadku rekomendujemy odcień Niebieski lub Granatowy.',
+        'Gdy identyfikacja marki opiera się na barwach ziemistych i ciepłych (beże, brązy, ciepła zieleń). Wówczas bardziej harmonijny efekt dadzą koperty Ecru, Matcha lub Taupe.',
+      ],
+    },
+    faq: [
+      {
+        question: 'Czy Błękitna i jasnoniebieska to ten sam kolor koperty?',
+        answer:
+          'Tak. Błękitna to nasza oficjalna nazwa katalogowa odcienia jasnoniebieskiego (pastelowy błękit / baby blue). Na stronie, w konfiguratorze i na fakturze jest to dokładnie ten sam produkt.',
+      },
+      {
+        question: 'Czym koperta Błękitna różni się od Błękitu Łupkowego (Jeansowego)?',
+        answer:
+          'Odcieniem i charakterem. Błękitna to czysty, jasny pastel, natomiast Błękit Łupkowy (Jeansowy) ma odcień ciemniejszy, zgaszony i stalowo-szary.',
+      },
+      {
+        question: 'Jaki kolor nadruku najlepiej sprawdza się na błękitnym papierze?',
+        answer:
+          'Najlepszy kontrast zapewnia nadruk w kolorze granatowym, czarnym, grafitowym lub ciemnoniebieskim. Znak wielobarwny również zachowuje pełną czytelność.',
+      },
+      {
+        question: 'Czy na błękitnej kopercie można pisać ręcznie?',
+        answer:
+          'Tak. Matowy papier doskonale przyjmuje tusz długopisu, pióra wiecznego i cienkopisu, nie powodując rozmazywania.',
+      },
+    ],
+    ogImageSlug: 'koperty-blekitne',
+    ogImageAlt:
+      'Błękitna koperta ozdobna DL z pastelowego papieru barwionego w masie bez okienka adresowego',
+  },
 };
 
 /** Identyfikatory kolorów z opublikowaną stroną — kolejność jak w katalogu. */

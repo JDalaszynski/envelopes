@@ -183,10 +183,13 @@ z **preselekcją koloru**.
 | 34 | Koperty matcha DL — `/koperty/matcha` | Supporting LP | koperty matcha | RUCH | Agencje kreatywne, eko-marki | F5 | **Wykonane 18 sierpnia 2026.** Szałwiowa pastelowa zieleń, podwyższona gramatura 120 g/m² i barwienie w masie. Dwa kadry aranżacyjne w galerii nadruków. Mosty nazewnicze: szałwiowy, pistacjowy, oliwkowy | [x] |
 | 35 | Koperty błękit łupkowy DL — `/koperty/blekit-lupkowy` | Supporting LP | koperty błękit łupkowy | RUCH | Agencje, hotele | F5 | **Wykonane 18 sierpnia 2026.** Stalowy błękit (w katalogu: Jeansowy), gramatura 120 g/m² i barwienie w masie. Kadr aranżacyjny z białym nadrukiem. Most nazewniczy: jeansowy, błękit łupkowy, stalowy błękit, slate blue | [x] |
 | 36 | Koperty taupe DL — `/koperty/taupe` | Supporting LP | koperty taupe | RUCH | Kancelarie, nieruchomości | F5 | **Wykonane 18 sierpnia 2026.** Ziemisty odcień szarobrązowy, najwyższa gramatura w ofercie 140 g/m² i barwienie w masie. Kadr aranżacyjny z białym logo salonu SPA. Mosty nazewnicze: taupe, szarobrązowy, greige, ciemny beż, ciepły szary. Zamknięcie Fazy 3 | [x] |
+| 36a | Szare koperty DL — `/koperty/szara` | Supporting LP | szare koperty dl | RUCH | Architekci, technologia, minimalizm | F5 | **Wykonane 18 sierpnia 2026.** Popielaty, neutralny odcień barwiony w masie (115 g/m²). Nowoczesna alternatywa dla biurowej bieli. Mosty nazewnicze: szary, popielaty, jasnoszary, jasnografitowy | [x] |
+| 36b | Niebieskie koperty DL — `/koperty/niebieski` | Supporting LP | niebieskie koperty dl | KONWERSJA | Finanse, edukacja, gale | F5 | **Wykonane 18 sierpnia 2026.** Nasycony odcień kobaltowy / chabrowy barwiony w masie (115 g/m²). Kadr aranżacyjny z personalizacją imienną. Mosty nazewnicze: niebieski, chabrowy, kobaltowy, szafirowy, royal blue | [x] |
+| 36c | Błękitne koperty DL — `/koperty/jasnoniebieska` | Supporting LP | błękitne koperty dl | RUCH | Kliniki, wellness, chrzest/baby shower | F5 | **Wykonane 18 sierpnia 2026.** Pastelowy baby blue barwiony w masie (115 g/m²). Czysty kontrast pod ciemny nadruk i pismo odręczne. Mosty nazewnicze: błękitna, jasnoniebieska, baby blue, pastelowy błękit | [x] |
 
-> **Backlog kolorów (11 pozycji):** szara, niebieski, jasnoniebieska, ciemnozielony, jasnozielony,
-> czerwony, różowa, eko, żółta, srebrna perłowa, biała perłowa. Do realizacji w partiach po 4
-> po zamknięciu Fazy 4 — priorytet niższy, bo brak dla nich fraz w eksporcie.
+> **Backlog kolorów (8 pozycji pozostałych):** ciemnozielony, jasnozielony, czerwony, różowa,
+> eko, żółta, srebrna perłowa, biała perłowa. Do realizacji w kolejnych partiach — priorytet
+> wspierający pokrycie całej palety 19 odcieni.
 
 ---
 
@@ -237,6 +240,108 @@ nie liczą się do kadencji czterech pozycji tygodniowo i nie mają filara.
 ---
 
 ## Dziennik wdrożeń
+
+### 18 sierpnia 2026 — poz. 36a–36c: `/koperty/szara`, `/koperty/niebieski`, `/koperty/jasnoniebieska`
+
+**Wdrożona czwarta partia stron kolorów z backlogu klastra K5.** Trzy kolejne odcienie otrzymały
+kompletne podstrony w ramach dynamicznego szablonu `src/app/koperty/[kolor]/page.tsx`
+i rejestru `src/lib/color-pages.ts`. Łączna liczba opublikowanych stron kolorów wynosi 11 z 19.
+
+**1. Zróżnicowanie merytoryczne i intencje antykanibalizacyjne:**
+- **Szara (`/koperty/szara`):** neutralny, popielaty odcień matowy (115 g/m²), barwiony w masie.
+  Pozycjonowany jako nowoczesna, minimalistyczna alternatywa dla biurowej bieli. Zgodność z ciemnym nadrukiem,
+  kontrastową bielą i pismem odręcznym. Mosty nazewnicze: szary, popielaty, jasnoszary, jasnografitowy.
+- **Niebieski (`/koperty/niebieski`):** nasycony odcień kobaltowy / chabrowy (115 g/m²), ciemny odcień barwiony w masie.
+  Kadr aranżacyjny `niebieska-koperta-dl-personalizacja-odreczna` z jasną personalizacją imienną.
+  Rozgraniczenie wobec formalnego Granatowego i zgaszonego Błękitu Łupkowego. Mosty nazewnicze:
+  niebieski, chabrowy, kobaltowy, szafirowy, royal blue.
+- **Błękitna (`/koperty/jasnoniebieska`):** pastelowy baby blue (115 g/m²), barwiony w masie.
+  Zoptymalizowany pod ciemny nadruk firmowy (granat, czerń, grafit) i pismo odręczne. Zastosowania: kliniki, wellness,
+  uroczystości dziecięce (chrzest, baby shower). Mosty nazewnicze: błękitna, jasnoniebieska, baby blue, pastelowy błękit.
+
+**2. Open Graph i metadane:**
+Wygenerowano trzy obrazy wyróżniające 1200 × 630 w `public/images/og/` za pomocą `scripts/og-card.mjs`:
+`koperty-szare.jpg`, `koperty-niebieskie.jpg`, `koperty-blekitne.jpg`. Metaopisy (dokładnie 154 zn.)
+mieszczą się w rygorystycznym kontrakcie 140–155 znaków (0 cen i kwot w description), leady GEO 49–50 słów
+(próg 40–60 słów), po 4 unikalne pytania FAQ na stronę.
+
+**3. Linkowanie i indeksacja:**
+Wpisy w `PAGE_UPDATED` w `src/lib/page-updated.ts` podbite na `2026-08-18`. Paleta na `/`, sekcja
+na `/koperty-dl` i lista odcieni na `/koperty-z-nadrukiem` zaktualizowały się automatycznie
+poprzez rejestr `color-pages.ts`. Sitemapa wzrosła do 26 adresów.
+
+### 18 sierpnia 2026 — węzeł `WebPage`, zdarzenia GA4 i tło hero w WebP
+
+Trzy pozycje techniczne z przeglądu widoczności, wszystkie poza kadencją treści.
+Żadna nie zmienia tekstu na stronie, więc **`PAGE_UPDATED` zostaje nietknięte** — data
+w rejestrze mówi, kiedy zmieniła się treść, a nie kiedy zmienił się kod pod nią.
+Z tego samego powodu nie idzie zgłoszenie przez `npm run indexnow`.
+
+**1. Węzeł `WebPage` — spoiwo grafu danych strukturalnych.**
+Do tej pory każda trasa wysyłała zestaw bloków stojących obok siebie: `Product` opisywał
+towar, `BreadcrumbList` ścieżkę, `FAQPage` pytania — i nic nie mówiło, że to jedna strona,
+że należy do tego serwisu i że jej tematem jest właśnie ten produkt. Parser musiał się tego
+domyślać z adresu. Doszedł `webPageJsonLd()` w `seo.ts`: `@id` trasy, `isPartOf` → `WebSite`,
+`mainEntity` → `Product` tej samej strony, `breadcrumb` → węzeł okruszków, `primaryImageOfPage`
+i `dateModified`. Podtyp schodzi z roli trasy: `ItemPage` na filarach i stronach kolorów,
+`CollectionPage` na `/blog`, `ContactPage` na `/kontakt`.
+
+Przy okazji domknęły się dwie wiszące referencje: `BreadcrumbList` dostał `@id` wyprowadzony
+z ostatniej pozycji ścieżki (czyli z adresu strony bieżącej), a `Article.mainEntityOfPage`
+wskazywał dotąd na `@id`, pod którym **nie było żadnego węzła** — teraz wskazuje na węzeł
+strony wpisu, a ten odwzajemnia się przez `mainEntity` → `#article`.
+
+`FAQPage` i `HowTo` zostają samodzielne. Wciągnięcie ich pod węzeł strony wymagałoby nadania
+jej drugiego typu i byłoby przebudową działających bloków bez zysku — tym bardziej że Google
+wygasił wyniki rozszerzone dla obu, więc ich rolą jest dziś wyłącznie cytowalność w modelach.
+Zysk z `WebPage` jest zresztą tej samej natury: żadnej gwiazdki w wynikach nie doda i dodać
+nie może.
+
+**Rejestr dat wyjechał z `sitemap.ts` do `src/lib/page-updated.ts`.** Ta sama data zasila teraz
+dwa wyjścia — `lastmod` w sitemapie i `dateModified` w węźle strony. Dwie różne odpowiedzi na
+to samo pytanie, z tej samej domeny, byłyby sygnałem gorszym niż brak drugiego pola, więc
+rejestr stoi poza obydwoma konsumentami. Zawartość bez zmian; sitemapa nadal wystawia 24 adresy,
+każdy z `lastmod`.
+
+**2. Zdarzenia GA4 — i bramka zgody, bez której nie mogły powstać.**
+`gtag` był skonfigurowany i na tym kończył rolę: zbierał odsłony. Odsłona mówi, że ktoś wszedł
+na `/koperty-z-nadrukiem`, ale nie mówi, czy z tej strony ktokolwiek wszedł do konfiguratora
+i czy cokolwiek zamówił — czyli plan treści prowadzony był na danych urwanych w połowie drogi
+do pieniędzy. Doszły cztery zdarzenia: `configurator_start` (własne — krok „wszedł i zaczął
+wybierać" nie ma odpowiednika w standardzie, a konfigurator nie ma własnego adresu),
+oraz `add_to_cart`, `begin_checkout` i `purchase` pod nazwami zarezerwowanymi przez GA4,
+więc wchodzą do gotowych raportów e-commerce bez konfigurowania czegokolwiek w panelu.
+
+`item_id` w pozycjach to `colorSku()` — ten sam symbol, który idzie do danych strukturalnych
+i do Merchant Center. Dzięki temu raport sprzedaży da się zestawić z ofertą w Shopping bez
+mapowania po nazwie produktu.
+
+**Przy okazji naprawiona niezgodność z własną polityką.** Skrypt `gtag` był w `layout.tsx`
+renderowany bezwarunkowo, przy samym `NEXT_PUBLIC_GA_ID` — podczas gdy baner obiecywał wprost
+„do czasu dokonania wyboru nie ładujemy żadnych skryptów analitycznych", a Polityka Cookies
+powtarzała to jako zobowiązanie. Skrypt szedł więc do przeglądarki przed decyzją, także wtedy,
+gdy odwiedzający wybierał „Odrzuć niekonieczne". Ładowanie przeniosło się do komponentu
+`Analytics`, który wpuszcza `gtag` dopiero po zgodzie analitycznej; wycofanie zgody zamyka
+wysyłkę zdarzeń natychmiast, jeszcze przed przeładowaniem strony. Sprawdzone w przeglądarce:
+bez zgody brak żądania do `googletagmanager.com`, po zgodzie `configurator_start` leci raz na
+sesję strony, `add_to_cart` i `begin_checkout` niosą poprawne kwoty (258 zł towar, 277,99 zł
+z dostawą), po cofnięciu zgody nie leci nic. `purchase` przetestuje dopiero pierwsze realne
+zamówienie — jest zabezpieczony podwójnie: `sessionStorage` i `transaction_id`.
+
+**3. Tło hero na WebP: 3,06 MB → 127 kB.**
+`Hero Envelopes Robocze.png` był w blokadach opisany jako „najprawdopodobniej nieużywane
+źródło". Okazał się plikiem używanym — stoi jako tło hero na `/` (w `components.css`)
+i na pięciu filarach przez `ParallaxBackground`, a nie znajdowały go wyszukiwania, bo adres
+jest zapisany z `%20` w miejscu spacji. Konwersja na WebP przy jakości 70 (obraz i tak leży
+pod 85-procentowym białym przesłonięciem, więc różnicy nie widać) dała **127 kB zamiast
+3,06 MB** — na sześciu najważniejszych trasach serwisu, w zasobie blokującym pierwsze
+wrażenie. Nazwa przy okazji straciła spacje.
+
+Faktycznie nieużywane były `koperta-gorna.png`, `koperta-dolna.png` (mają warianty WebP
+w `srcSet`) i `2.png` — usunięte. `public/images/` zeszło z 11 MB na 7 MB.
+`DL.pdf` zostaje: nie jest nigdzie podlinkowany, ale mógł zostać wysłany klientowi mailem,
+a 404 pod adresem, który ktoś ma zapisany, kosztuje więcej niż 450 kB na dysku.
+
 
 ### 18 sierpnia 2026 — poz. 36: `/koperty/taupe` (zamknięcie Fazy 3)
 
@@ -1847,7 +1952,7 @@ z konfiguracją „Koperta DL Czarny z nadrukiem", 4,57 zł/szt.
 | `transitTime` w danych o dostawie | Google liczy obiecywaną datę doręczenia z `handlingTime` + `transitTime`; bez drugiego składnika adnotacja o dostawie jest niepełna. Zadeklarowanie czasu przewozu bez potwierdzenia przewoźnika byłoby obietnicą bez pokrycia | Właściciel — podanie realnego czasu przewozu kurierem |
 | Formaty C6 i K4 `disabled` | Klaster ślubny (K9) bez CTA zakupowego; poz. 27 ograniczona do A4 składanego | Właściciel — uruchomienie formatów |
 | ~~Zdjęcia produktowe to PNG po 0,5–0,75 MB~~ | **Odblokowane 15 sierpnia 2026.** `colors/`, `prints/` i `personalized/` przeszły na WebP w trzech szerokościach: **30,8 MB → 2,1 MB**. Strona główna pobiera dziś **197 kB** obrazów zamiast ~9 MB | — |
-| Kadry hero w `public/images/` nadal w PNG | `Hero Envelopes Robocze.png` 2,99 MB, `koperta-gorna/dolna.png` 0,7 MB. Hero ma już warianty WebP w `srcSet`, więc PNG-i są najprawdopodobniej nieużywanymi źródłami — do weryfikacji przed usunięciem | Właściciel — potwierdzenie, czy pliki są jeszcze potrzebne |
+| ~~Kadry hero w `public/images/` nadal w PNG~~ | **Odblokowane 18 sierpnia 2026.** `Hero Envelopes Robocze.png` (3,06 MB) okazał się plikiem **używanym** — jako tło hero na `/` i pięciu filarach, przez adres z `%20`. Przeszedł na WebP (`hero-tlo-2015.webp`, 127 kB); `koperta-gorna/dolna.png` i `2.png` były faktycznie nieużywane i zostały usunięte | — |
 | Profile FB / Instagram / LinkedIn | `Organization.sameAs` pusty do czasu utworzenia | Właściciel — po założeniu przekazać adresy |
 | Konto w Bing Webmaster Tools | Kod po stronie serwisu gotowy (klucz IndexNow, `npm run indexnow`, znacznik `msvalidate.01`). Bez konta nie ma danych o indeksacji w Bing — a to indeks, z którego korzystają ChatGPT Search i Copilot | Właściciel — założenie konta, najprościej importem z Search Console |
 

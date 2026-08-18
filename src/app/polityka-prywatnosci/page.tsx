@@ -5,7 +5,7 @@ import { LegalPage } from '@/components/legal/LegalPage';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { PRIVACY } from '@/lib/legal';
 import { CONTACT_DETAILS } from '@/lib/orders';
-import { breadcrumbJsonLd } from '@/lib/seo';
+import { breadcrumbJsonLd, webPageJsonLd } from '@/lib/seo';
 
 export const metadata: Metadata = {
   title: 'Polityka Prywatności',
@@ -16,6 +16,18 @@ export const metadata: Metadata = {
 export default function PrivacyPage() {
   return (
     <>
+      <JsonLd
+        data={webPageJsonLd({
+          path: '/polityka-prywatnosci',
+          name: String(metadata.title),
+          description: String(metadata.description),
+          breadcrumb: true,
+          /* Dokument prawny niesie własną datę obowiązywania — ta sama, którą
+             sitemapa podaje jako `lastmod`. Rejestr `page-updated.ts` tych
+             tras nie obejmuje i obejmować nie powinien. */
+          dateModified: PRIVACY.updated,
+        })}
+      />
       <JsonLd
         data={breadcrumbJsonLd([
           { name: 'Strona główna', url: '/' },

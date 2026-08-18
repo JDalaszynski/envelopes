@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from 'next';
 import { Fraunces, IBM_Plex_Sans, IBM_Plex_Mono } from 'next/font/google';
-import Script from 'next/script';
 
 import './globals.css';
 import './components.css';
@@ -15,6 +14,7 @@ import './mobile.css';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { CookieBanner } from '@/components/layout/CookieBanner';
+import { Analytics } from '@/components/analytics/Analytics';
 import { TrustBar } from '@/components/layout/TrustBar';
 import { CartProvider } from '@/components/providers/CartProvider';
 import { AuthProvider } from '@/components/providers/AuthProvider';
@@ -127,20 +127,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     >
       <body>
         {process.env.NEXT_PUBLIC_GA_ID && (
-          <>
-            <Script
-              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
-              strategy="afterInteractive"
-            />
-            <Script id="google-analytics" strategy="afterInteractive">
-              {`
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');
-              `}
-            </Script>
-          </>
+          <Analytics measurementId={process.env.NEXT_PUBLIC_GA_ID} />
         )}
         <script
           type="application/ld+json"

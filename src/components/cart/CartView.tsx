@@ -6,6 +6,7 @@ import { Suspense, useEffect, useState } from 'react';
 
 import { EnvelopePlaceholder } from '@/components/ui/EnvelopePlaceholder';
 import { useCart, EDIT_KEY } from '@/components/providers/CartProvider';
+import { trackBeginCheckout } from '@/lib/analytics';
 import { COLOR_MAP, FORMAT_MAP, personalizationScope } from '@/lib/catalog';
 import { DEFAULT_PRICING, DELIVERY_COST, formatPrice, leadTimeDays, round2 } from '@/lib/pricing';
 import type { EnvelopeConfig, ShippingSpeed } from '@/lib/types';
@@ -303,7 +304,11 @@ function CartInner() {
             <span className="price">{formatPrice(gross)}</span>
           </div>
 
-          <Link href="/zamowienie" className="btn btn-block btn-lg">
+          <Link
+            href="/zamowienie"
+            className="btn btn-block btn-lg"
+            onClick={() => trackBeginCheckout(items, gross)}
+          >
             Przejdź do zamówienia
           </Link>
 

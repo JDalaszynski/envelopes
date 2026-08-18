@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { EnvelopePlaceholder } from '@/components/ui/EnvelopePlaceholder';
+import { PurchaseEvent } from '@/components/analytics/PurchaseEvent';
 import { getOrder } from '@/lib/store';
 import { formatDate, formatPrice } from '@/lib/pricing';
 import {
@@ -39,6 +40,13 @@ export default async function ConfirmationPage({
   return (
     <section className="section">
       <div className="container container-narrow">
+        <PurchaseEvent
+          number={order.number}
+          items={order.items}
+          itemsGross={order.totals.itemsGross}
+          deliveryGross={order.totals.deliveryGross}
+          gross={order.totals.gross}
+        />
         <span className="eyebrow">Zamówienie przyjęte</span>
 
         {gateway && order.paymentStatus === 'oplacone' && (

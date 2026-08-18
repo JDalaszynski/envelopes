@@ -86,6 +86,10 @@ export interface BlogPost {
   colorId: string;
   format: string;
   /**
+   * Kadr aranżacyjny z `public/images/zastosowania/` jako zdjęcie główne wpisu.
+   */
+  showcaseFile?: string;
+  /**
    * Wariant zdjęcia nagłówkowego. Wpis o nadruku ilustrujemy zdjęciem koperty
    * z nadrukiem, a nie gładkiej — zdjęcia są w `public/images/prints/`
    * i mają własny tekst alternatywny (`buildImageAlt`).
@@ -368,6 +372,7 @@ const POSTS: BlogPost[] = [
     readingMinutes: 6,
     colorId: 'granatowy',
     format: 'DL',
+    showcaseFile: 'granatowa-koperta-dl-nadruk-logo-kancelarii',
     ogImageSlug: 'blog-ile-kartek-koperta-dl',
     ogImageAlt:
       'Dwie granatowe koperty DL na drewnianym stole, z widoczną klapką i polem na wkład',
@@ -581,6 +586,7 @@ const POSTS: BlogPost[] = [
     readingMinutes: 6,
     colorId: 'taupe',
     format: 'DL',
+    showcaseFile: 'taupe-koperta-dl-nadruk-logo-salonu-spa',
     ogImageSlug: 'blog-format-do-wkladki',
     ogImageAlt:
       'Koperta ozdobna DL w kolorze Szarobrązowy od strony klapki, za nią druga koperta tego samego formatu',
@@ -722,7 +728,8 @@ const POSTS: BlogPost[] = [
     readingMinutes: 6,
     colorId: 'eko',
     format: 'DL',
-    /* Kadr z nadrukiem — /images/prints/eko-koperty-z-nadrukiem-dl-1200.webp */
+    /* Kadr z nadrukiem — /images/zastosowania/eko-koperta-dl-nadruk-logo-palarni-kawy-1024.webp */
+    showcaseFile: 'eko-koperta-dl-nadruk-logo-palarni-kawy',
     imageVariant: 'nadruk',
     ogImageSlug: 'blog-koszt-zamowienia-z-nadrukiem',
     ogImageAlt:
@@ -919,7 +926,8 @@ const POSTS: BlogPost[] = [
     readingMinutes: 6,
     colorId: 'granatowy',
     format: 'DL',
-    /* Kadr z personalizacją — /images/personalized/granatowe-koperty-personalizowane-dl-1200.webp */
+    /* Kadr z personalizacją — /images/zastosowania/biala-perlowa-koperta-dl-adresowanie-odbiorcy-1024.webp */
+    showcaseFile: 'biala-perlowa-koperta-dl-adresowanie-odbiorcy',
     imageVariant: 'personalizacja',
     ogImageSlug: 'blog-adresowanie-z-arkusza',
     ogImageAlt:
@@ -1132,7 +1140,8 @@ const POSTS: BlogPost[] = [
     readingMinutes: 6,
     colorId: 'bialy',
     format: 'DL',
-    /* Kadr z zaznaczonym polem nadruku — /images/prints/biale-koperty-z-nadrukiem-dl-1200.webp */
+    /* Kadr z polem nadruku — /images/zastosowania/ciemnozielona-koperta-dl-miejsce-na-logo-1024.webp */
+    showcaseFile: 'ciemnozielona-koperta-dl-miejsce-na-logo',
     imageVariant: 'nadruk',
     ogImageSlug: 'blog-pliki-do-druku',
     ogImageAlt:

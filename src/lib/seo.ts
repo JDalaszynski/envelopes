@@ -12,7 +12,8 @@ import {
   type FormatId,
 } from './catalog';
 import { colorPagePath, hasColorPage } from './color-pages';
-import { INDUSTRY_SHOTS, PERSONALIZATION_SHOTS, showcaseSrc } from './showcase';
+import { pageUpdated } from './page-updated';
+import { INDUSTRY_SHOTS, PERSONALIZATION_SHOTS, shotByFile, showcaseSrc } from './showcase';
 import type { BlogPost } from './blog';
 
 /** Dane strukturalne JSON-LD (pkt 8.3). */
@@ -872,9 +873,11 @@ export function aboutPageJsonLd(input: { description: string; image: string }) {
     description: input.description,
     inLanguage: 'pl-PL',
     isPartOf: { '@id': WEBSITE_ID },
+    breadcrumb: { '@id': breadcrumbId('/o-nas') },
     about: organizationRef,
     mainEntity: organizationRef,
     publisher: organizationRef,
+    ...(pageUpdated('/o-nas') ? { dateModified: pageUpdated('/o-nas') } : {}),
     primaryImageOfPage: {
       '@type': 'ImageObject',
       url: `${SITE_URL}${input.image}`,
@@ -918,17 +921,23 @@ export function faqJsonLd(items: { question: string; answer: string }[]) {
 }
 
 export function articleJsonLd(post: BlogPost) {
+  const showcaseImage = post.showcaseFile
+    ? `${SITE_URL}${showcaseSrc(shotByFile(post.showcaseFile))}`
+    : undefined;
+
   return {
     '@context': 'https://schema.org',
     '@type': 'Article',
+    '@id': `${SITE_URL}/blog/${post.slug}#article`,
     headline: post.title,
     description: post.lead,
     /* Obraz wyróżniający jest w wytycznych Google warunkiem wyniku
-       rozszerzonego dla `Article`. Wskazujemy ten sam kadr, który idzie
-       w `og:image`, żeby wynik wyszukiwania i podgląd odnośnika pokazywały
-       jedno zdjęcie; wpis bez własnego kadru dziedziczy zbiorczy obraz bloga.
-       Adres bezwzględny, bo dane strukturalne nie mają `metadataBase`. */
-    image: [`${SITE_URL}${ogImage(post.ogImageSlug ?? 'blog', post.title).url}`],
+       rozszerzonego dla `Article`. Wskazujemy zdjęcie aranżacyjne z zastosowania
+       lub dedykowany kadr OG. */
+    image: [
+      ...(showcaseImage ? [showcaseImage] : []),
+      `${SITE_URL}${ogImage(post.ogImageSlug ?? 'blog', post.title).url}`,
+    ],
     datePublished: post.date,
     dateModified: post.updated ?? post.date,
     /* Autor i wydawca to ten sam węzeł firmy, który renderuje `layout.tsx` —
@@ -936,16 +945,120 @@ export function articleJsonLd(post: BlogPost) {
        (i rozjeżdżać się) w każdym wpisie. */
     author: organizationRefNamed,
     publisher: organizationRefNamed,
-    mainEntityOfPage: { '@type': 'WebPage', '@id': `${SITE_URL}/blog/${post.slug}` },
+    mainEntityOfPage: { '@id': webPageId(`/blog/${post.slug}`) },
     articleSection: post.category,
     inLanguage: 'pl-PL',
   };
 }
 
+/* ── Węzeł strony ────────────────────────────────────────── */
+
+/** `@id` węzła strony — jeden adres, pod który podpina się wszystko na trasie. */
+export function webPageId(path: string): string {
+  return `${SITE_URL}${path}#webpage`;
+}
+
+/**
+ * `@id` węzła produktu na danej trasie — ten sam wzorzec, który każdy blok
+ * `Product` nadaje sobie sam. Strona podaje go w `mainEntity`, żeby powiedzieć
+ * wprost, o czym jest, zamiast zostawiać to domysłowi parsera.
+ */
+export function productId(path: string): string {
+  return `${SITE_URL}${path}#product`;
+}
+
+/** `@id` węzła artykułu — temat strony wpisu blogowego. */
+export function articleId(slug: string): string {
+  return `${SITE_URL}/blog/${slug}#article`;
+}
+
+/** `@id` węzła okruszków tej samej trasy. */
+function breadcrumbId(path: string): string {
+  return `${SITE_URL}${path}#breadcrumb`;
+}
+
+/**
+ * `WebPage` — węzeł samej strony, czyli brakujące spoiwo grafu.
+ *
+ * Do tej pory każda trasa wysyłała zestaw bloków stojących obok siebie bez
+ * żadnego powiązania: `Product` opisywał towar, `BreadcrumbList` ścieżkę,
+ * `FAQPage` pytania — i nic nie mówiło, że to **jedna strona**, że należy ona
+ * do tego serwisu i że jej tematem jest właśnie ten produkt. Parser musiał
+ * się tego domyślać z adresu. Ten węzeł mówi to wprost, a `@id` pozwala
+ * pozostałym blokom się do niego odwołać zamiast powtarzać dane.
+ *
+ * Największy zysk jest po stronie modeli generatywnych, nie wyników
+ * rozszerzonych: `WebPage` żadnej gwiazdki w SERP-ie nie dodało i nie doda.
+ * Model, który odpowiada na pytanie o koperty, dostaje natomiast czytelne
+ * „ta strona należy do sklepu Envelopes i jest o tym produkcie" — zamiast
+ * kilku anonimowych fragmentów do sklejenia na własną odpowiedzialność.
+ *
+ * `dateModified` schodzi z rejestru w `page-updated.ts`, czyli z tego samego
+ * miejsca co `lastmod` w sitemapie. Data podana tu i tam musi być ta sama:
+ * dwie różne odpowiedzi na to samo pytanie są sygnałem gorszym niż brak
+ * drugiej. Trasy spoza rejestru (wpisy blogowe) podają datę wprost.
+ *
+ * Bloków `FAQPage` i `HowTo` świadomie **nie** podpinamy pod ten węzeł.
+ * Zostają samodzielne, tak jak były — wciągnięcie ich tutaj wymagałoby nadania
+ * stronie drugiego typu i byłoby przebudową działających bloków bez zysku.
+ */
+export function webPageJsonLd(input: {
+  path: string;
+  name: string;
+  description: string;
+  /**
+   * Podtyp strony. `ItemPage` dla trasy opisującej jeden produkt,
+   * `CollectionPage` dla listy, `ContactPage` dla kontaktu — typ ogólny
+   * niesie mniej niż ten, który parser potrafi wykorzystać.
+   */
+  type?: 'WebPage' | 'ItemPage' | 'CollectionPage' | 'ContactPage';
+  /** Ścieżka względna do kadru wyróżniającego — rozwijana do adresu bezwzględnego. */
+  image?: string;
+  /** `@id` węzła, który jest tematem strony — zwykle `Product` z tej samej trasy. */
+  mainEntityId?: string;
+  /** Czy trasa renderuje okruszki — wtedy węzeł wskazuje na ich blok. */
+  breadcrumb?: boolean;
+  datePublished?: string;
+  dateModified?: string;
+}) {
+  const url = `${SITE_URL}${input.path}`;
+  const modified = input.dateModified ?? pageUpdated(input.path);
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': input.type ?? 'WebPage',
+    '@id': webPageId(input.path),
+    url,
+    name: input.name,
+    description: input.description,
+    inLanguage: 'pl-PL',
+    isPartOf: { '@id': WEBSITE_ID },
+    publisher: organizationRef,
+    ...(input.mainEntityId ? { mainEntity: { '@id': input.mainEntityId } } : {}),
+    ...(input.breadcrumb ? { breadcrumb: { '@id': breadcrumbId(input.path) } } : {}),
+    ...(input.image
+      ? {
+          primaryImageOfPage: {
+            '@type': 'ImageObject',
+            url: `${SITE_URL}${input.image}`,
+          },
+        }
+      : {}),
+    ...(input.datePublished ? { datePublished: input.datePublished } : {}),
+    ...(modified ? { dateModified: modified } : {}),
+  };
+}
+
 export function breadcrumbJsonLd(items: { name: string; url: string }[]) {
+  /* Ostatnia pozycja ścieżki to zawsze strona bieżąca, więc `@id` węzła
+     wyprowadzamy z niej — zamiast prosić każde wywołanie o powtórzenie adresu,
+     który już przekazało. Dzięki temu `WebPage.breadcrumb` ma na co wskazać. */
+  const path = items[items.length - 1]?.url ?? '/';
+
   return {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
+    '@id': breadcrumbId(path),
     itemListElement: items.map((item, index) => ({
       '@type': 'ListItem',
       position: index + 1,

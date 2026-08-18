@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { LegalPage } from '@/components/legal/LegalPage';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { TERMS } from '@/lib/legal';
-import { breadcrumbJsonLd } from '@/lib/seo';
+import { breadcrumbJsonLd, webPageJsonLd } from '@/lib/seo';
 
 export const metadata: Metadata = {
   title: 'Regulamin sklepu',
@@ -14,6 +14,18 @@ export const metadata: Metadata = {
 export default function TermsPage() {
   return (
     <>
+      <JsonLd
+        data={webPageJsonLd({
+          path: '/regulamin',
+          name: String(metadata.title),
+          description: String(metadata.description),
+          breadcrumb: true,
+          /* Dokument prawny niesie własną datę obowiązywania — ta sama, którą
+             sitemapa podaje jako `lastmod`. Rejestr `page-updated.ts` tych
+             tras nie obejmuje i obejmować nie powinien. */
+          dateModified: TERMS.updated,
+        })}
+      />
       <JsonLd
         data={breadcrumbJsonLd([
           { name: 'Strona główna', url: '/' },

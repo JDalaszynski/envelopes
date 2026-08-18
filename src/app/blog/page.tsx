@@ -4,7 +4,7 @@ import { BlogList } from '@/components/blog/BlogList';
 import { StickyCta } from '@/components/ui/StickyCta';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { getAllPosts } from '@/lib/blog';
-import { breadcrumbJsonLd, ogImage } from '@/lib/seo';
+import { breadcrumbJsonLd, ogImage, webPageJsonLd } from '@/lib/seo';
 
 export const metadata: Metadata = {
   /* Pełne „…i korespondencji firmowej" dawało 68 znaków razem z szablonem
@@ -33,6 +33,16 @@ export default function BlogPage() {
 
   return (
     <>
+      <JsonLd
+        data={webPageJsonLd({
+          path: '/blog',
+          type: 'CollectionPage',
+          name: String(metadata.title),
+          description: String(metadata.description),
+          image: ogImage('blog', '').url,
+          breadcrumb: true,
+        })}
+      />
       <JsonLd
         data={breadcrumbJsonLd([
           { name: 'Strona główna', url: '/' },

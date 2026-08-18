@@ -133,7 +133,7 @@ export default function AboutPage() {
       {/* ── Hero ── */}
       <section className="hero hero-with-bg">
         <div className="hero-main-content">
-          <ParallaxBackground imageUrl="/images/Hero%20Envelopes%20Robocze.png" />
+          <ParallaxBackground imageUrl="/images/hero-tlo-2015.webp" />
           <div className="container">
             <nav
               aria-label="Ścieżka nawigacji"

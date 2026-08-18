@@ -14,6 +14,16 @@ const STORAGE_KEY = 'envelopes.cookieConsent';
 const EVENT = 'envelopes:cookies';
 
 /**
+ * Zdarzenie rozgłaszane po każdej zapisanej decyzji o zgodach.
+ *
+ * Eksportowane, bo nasłuchuje go `Analytics` — komponent, który dopiero po
+ * zgodzie analitycznej wpuszcza na stronę `gtag`. Wpisana z ręki kopia tego
+ * łańcucha rozjechałaby się przy pierwszej zmianie nazwy i objawiła się jako
+ * analityka, która milczy do przeładowania strony.
+ */
+export const COOKIE_CONSENT_EVENT = EVENT;
+
+/**
  * Ważność zapisanej decyzji. Pamięć lokalna przeglądarki nie wygasa sama,
  * więc termin egzekwujemy przy odczycie — po roku baner pojawia się ponownie,
  * tak jak deklaruje to Polityka Cookies (pkt 5 ust. 3).

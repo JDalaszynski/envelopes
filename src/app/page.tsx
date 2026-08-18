@@ -7,6 +7,7 @@ import { ConfiguratorAmbience } from '@/components/configurator/ConfiguratorAmbi
 import { ConfigureLink } from '@/components/home/ConfigureLink';
 import { HeroEnvelopes } from '@/components/home/HeroEnvelopes';
 import { MobileCta } from '@/components/home/MobileCta';
+import { BlogCoverImage } from '@/components/blog/BlogCoverImage';
 import { EnvelopePlaceholder } from '@/components/ui/EnvelopePlaceholder';
 import { EnvelopeShape } from '@/components/ui/EnvelopeShape';
 import { ShowcaseGrid } from '@/components/ui/ShowcaseGrid';
@@ -36,7 +37,9 @@ import {
   faqJsonLd,
   howToJsonLd,
   ogImage,
+  productId,
   productJsonLd,
+  webPageJsonLd,
   webSiteJsonLd,
 } from '@/lib/seo';
 import type { EnvelopeConfig } from '@/lib/types';
@@ -314,6 +317,15 @@ export default function HomePage() {
   return (
     <>
       <JsonLd data={webSiteJsonLd()} />
+      <JsonLd
+        data={webPageJsonLd({
+          path: '/',
+          name: String(metadata.title),
+          description: String(metadata.description),
+          mainEntityId: productId('/'),
+          image: ogImage('home', '').url,
+        })}
+      />
       <JsonLd data={productJsonLd()} />
       <JsonLd data={colorPaletteJsonLd()} />
       <JsonLd data={faqJsonLd(FAQ_ITEMS)} />
@@ -1263,11 +1275,9 @@ export default function HomePage() {
               <div className="journal m-snap">
                 {posts.map((post) => (
                   <article className="post-card" key={post.slug}>
-                    <EnvelopePlaceholder
-                      format={post.format}
-                      colorId={post.colorId}
+                    <BlogCoverImage
+                      post={post}
                       ratio="wide"
-                      hideCaption
                       size="sm"
                       sizes="(max-width: 720px) 78vw, (max-width: 900px) calc(50vw - 36px), (max-width: 1080px) calc(33.3vw - 32px), 306px"
                     />

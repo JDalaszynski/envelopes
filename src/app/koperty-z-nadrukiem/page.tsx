@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 import { ConfigureLink } from '@/components/home/ConfigureLink';
+import { BlogCoverImage } from '@/components/blog/BlogCoverImage';
 import { EnvelopePlaceholder } from '@/components/ui/EnvelopePlaceholder';
 import { ParallaxBackground } from '@/components/ui/ParallaxBackground';
 import { ShowcaseGrid } from '@/components/ui/ShowcaseGrid';
@@ -35,6 +36,8 @@ import {
   howToJsonLd,
   ogImage,
   printedEnvelopeProductJsonLd,
+  productId,
+  webPageJsonLd,
 } from '@/lib/seo';
 import type { EnvelopeConfig } from '@/lib/types';
 
@@ -202,6 +205,17 @@ export default function PrintedEnvelopesPage() {
 
   return (
     <>
+      <JsonLd
+        data={webPageJsonLd({
+          path: '/koperty-z-nadrukiem',
+          type: 'ItemPage',
+          name: String(metadata.title),
+          description: String(metadata.description),
+          mainEntityId: productId('/koperty-z-nadrukiem'),
+          image: ogImage('koperty-z-nadrukiem', '').url,
+          breadcrumb: true,
+        })}
+      />
       <JsonLd data={printedEnvelopeProductJsonLd()} />
       <JsonLd data={faqJsonLd(PRINT_FAQ_ITEMS)} />
       <JsonLd
@@ -221,7 +235,7 @@ export default function PrintedEnvelopesPage() {
       {/* ── Hero — blok odpowiedzi GEO + pierwsze CTA nad linią zgięcia ── */}
       <section className="hero hero-with-bg">
         <div className="hero-main-content">
-          <ParallaxBackground imageUrl="/images/Hero%20Envelopes%20Robocze.png" />
+          <ParallaxBackground imageUrl="/images/hero-tlo-2015.webp" />
           <div className="container">
             <nav aria-label="Ścieżka nawigacji" className="small muted" style={{ marginBottom: 'var(--space-4)' }}>
               <Link href="/">Strona główna</Link> <span aria-hidden="true">›</span> Koperty z nadrukiem
@@ -854,12 +868,11 @@ export default function PrintedEnvelopesPage() {
             <div className={relatedPosts.length > 2 ? 'grid grid-3' : 'grid grid-2'}>
               {relatedPosts.map((post) => (
                 <article className="post-card" key={post.slug}>
-                  <EnvelopePlaceholder
-                    format={post.format}
-                    colorId={post.colorId}
+                  <BlogCoverImage
+                    post={post}
                     ratio="wide"
-                    hideCaption
                     size="sm"
+                    sizes="(max-width: 720px) calc(100vw - 48px), (max-width: 900px) calc(50vw - 36px), 368px"
                   />
                   <div className="post-card-body">
                     <span className="badge">{post.category}</span>

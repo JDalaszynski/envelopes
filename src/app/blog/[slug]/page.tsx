@@ -3,13 +3,13 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { ConfigureLink } from '@/components/home/ConfigureLink';
-import { EnvelopePlaceholder } from '@/components/ui/EnvelopePlaceholder';
+import { BlogCoverImage } from '@/components/blog/BlogCoverImage';
 import { ShareButtons } from '@/components/blog/ShareButtons';
 import { StickyCta } from '@/components/ui/StickyCta';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { getAllPosts, getPost, getRelatedPosts } from '@/lib/blog';
 import { formatDate } from '@/lib/pricing';
-import { articleJsonLd, breadcrumbJsonLd, ogImage } from '@/lib/seo';
+import { articleId, articleJsonLd, breadcrumbJsonLd, ogImage, webPageJsonLd } from '@/lib/seo';
 
 /** Generowanie statyczne wszystkich wpisów (SSG) — pkt 8.3. */
 export function generateStaticParams() {
@@ -66,6 +66,20 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   return (
     <>
+      <JsonLd
+        data={webPageJsonLd({
+          path: `/blog/${post.slug}`,
+          name: post.title,
+          description: post.lead,
+          mainEntityId: articleId(post.slug),
+          image: ogImage(post.ogImageSlug ?? 'blog', '').url,
+          breadcrumb: true,
+          /* Wpis niesie własne daty — rejestr `page-updated.ts` obsługuje
+             wyłącznie trasy statyczne, a data publikacji stoi w treści. */
+          datePublished: post.date,
+          dateModified: post.updated ?? post.date,
+        })}
+      />
       <JsonLd data={articleJsonLd(post)} />
       <JsonLd
         data={breadcrumbJsonLd([
@@ -90,14 +104,13 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           </p>
 
           <div style={{ margin: 'var(--space-6) 0' }}>
-            {/* Kadr zgodny z tematem wpisu: poradnik o nadruku ilustrujemy
-                zdjęciem koperty z nadrukiem, nie gładkiej (pkt 5.6 briefu SEO). */}
-            <EnvelopePlaceholder
-              format={post.format}
-              colorId={post.colorId}
+            {/* Kadr ze zdjęciem aranżacyjnym z folderu zastosowania,
+                dopasowany do tematyki artykułu (pkt 5.6 briefu SEO). */}
+            <BlogCoverImage
+              post={post}
               ratio="wide"
-              hasPrint={post.imageVariant === 'nadruk'}
-              hasPersonalization={post.imageVariant === 'personalizacja'}
+              eager
+              sizes="(max-width: 800px) calc(100vw - 48px), 760px"
             />
           </div>
 
@@ -215,12 +228,11 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             <div className="grid grid-3">
               {related.map((entry) => (
                 <article className="post-card" key={entry.slug}>
-                  <EnvelopePlaceholder
-                    format={entry.format}
-                    colorId={entry.colorId}
+                  <BlogCoverImage
+                    post={entry}
                     ratio="wide"
-                    hideCaption
                     size="sm"
+                    sizes="(max-width: 720px) calc(100vw - 48px), (max-width: 900px) calc(50vw - 36px), 270px"
                   />
                   <div className="post-card-body">
                     <span className="badge">{entry.category}</span>

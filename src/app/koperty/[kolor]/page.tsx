@@ -24,6 +24,8 @@ import {
   colorEnvelopeProductJsonLd,
   faqJsonLd,
   ogImage,
+  productId,
+  webPageJsonLd,
 } from '@/lib/seo';
 import { shotByFile, showcaseSrc } from '@/lib/showcase';
 import type { EnvelopeConfig } from '@/lib/types';
@@ -147,6 +149,17 @@ export default async function ColorPage({ params }: { params: Promise<{ kolor: s
 
   return (
     <>
+      <JsonLd
+        data={webPageJsonLd({
+          path: colorPagePath(color.id),
+          type: 'ItemPage',
+          name: content.title,
+          description: content.description,
+          mainEntityId: productId(colorPagePath(color.id)),
+          image: ogImage(content.ogImageSlug, '').url,
+          breadcrumb: true,
+        })}
+      />
       <JsonLd
         data={colorEnvelopeProductJsonLd({
           colorId: color.id,

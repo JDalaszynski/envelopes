@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 
-import { EnvelopePlaceholder } from '@/components/ui/EnvelopePlaceholder';
+import { BlogCoverImage } from '@/components/blog/BlogCoverImage';
 import { BLOG_CATEGORIES, type BlogPost } from '@/lib/blog';
 import { formatDate } from '@/lib/pricing';
 
@@ -103,12 +103,11 @@ export function BlogList({ posts }: { posts: BlogPost[] }) {
         <div className="grid grid-3">
           {visible.map((post) => (
             <article className="post-card" key={post.slug}>
-              <EnvelopePlaceholder
-                format={post.format}
-                colorId={post.colorId}
+              <BlogCoverImage
+                post={post}
                 ratio="wide"
-                hideCaption
                 size="sm"
+                sizes="(max-width: 720px) calc(100vw - 48px), (max-width: 900px) calc(50vw - 36px), (max-width: 1248px) calc(33.3vw - 32px), 368px"
               />
               <div className="post-card-body">
                 <span className="badge">{post.category}</span>

@@ -26,6 +26,8 @@ import {
   howToJsonLd,
   ogImage,
   personalizedEnvelopeProductJsonLd,
+  productId,
+  webPageJsonLd,
 } from '@/lib/seo';
 import type { EnvelopeConfig } from '@/lib/types';
 
@@ -215,6 +217,17 @@ export const metadata: Metadata = {
 export default function PersonalizedEnvelopesPage() {
   return (
     <>
+      <JsonLd
+        data={webPageJsonLd({
+          path: '/koperty-personalizowane',
+          type: 'ItemPage',
+          name: String(metadata.title),
+          description: String(metadata.description),
+          mainEntityId: productId('/koperty-personalizowane'),
+          image: ogImage('koperty-personalizowane', '').url,
+          breadcrumb: true,
+        })}
+      />
       <JsonLd data={personalizedEnvelopeProductJsonLd()} />
       <JsonLd data={faqJsonLd(PERSONALIZATION_FAQ_ITEMS)} />
       <JsonLd
@@ -234,7 +247,7 @@ export default function PersonalizedEnvelopesPage() {
       {/* ── Hero — blok odpowiedzi GEO + pierwsze CTA nad linią zgięcia ── */}
       <section className="hero hero-with-bg">
         <div className="hero-main-content">
-          <ParallaxBackground imageUrl="/images/Hero%20Envelopes%20Robocze.png" />
+          <ParallaxBackground imageUrl="/images/hero-tlo-2015.webp" />
           <div className="container">
             <nav
               aria-label="Ścieżka nawigacji"

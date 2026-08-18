@@ -8,6 +8,7 @@ import { ConfigProgress } from '@/components/configurator/ConfigProgress';
 import type { StepNumber } from '@/components/configurator/ConfigProgress';
 import { SummaryBar } from '@/components/configurator/SummaryBar';
 
+import { trackAddToCart, trackConfiguratorStart } from '@/lib/analytics';
 import { StepFormat } from '@/components/configurator/steps/StepFormat';
 import { StepColor } from '@/components/configurator/steps/StepColor';
 import { StepPrint } from '@/components/configurator/steps/StepPrint';
@@ -70,9 +71,35 @@ export function Configurator() {
   
   const [showScrollBack, setShowScrollBack] = useState(false);
 
-  const patch = useCallback((changes: Partial<EnvelopeConfig>) => {
-    setConfig((prev) => ({ ...prev, ...changes }));
+  /*
+   * `configurator_start` — jedno zdarzenie na sesję strony, przy pierwszej
+   * realnej zmianie konfiguracji. Ref, a nie stan: przestawienie flagi nie ma
+   * niczego przerysować, a stan wywołałby dodatkowy render przy każdym
+   * kliknięciu w krok. Konfigurator otwiera się na kroku 2 z formatem DL,
+   * więc bez tego sygnału odsłona strony głównej i faktyczne rozpoczęcie
+   * konfiguracji są w GA4 nie do rozróżnienia.
+   */
+  const startedRef = useRef(false);
+  const configRef = useRef(config);
+  useEffect(() => {
+    configRef.current = config;
+  }, [config]);
+
+  const markConfiguratorStart = useCallback((format?: FormatId) => {
+    if (startedRef.current) return;
+    startedRef.current = true;
+    /* Format bierzemy z samej zmiany, jeśli to on się właśnie zmienia —
+       ref niesie jeszcze wartość sprzed kliknięcia. */
+    trackConfiguratorStart(format ?? configRef.current.format);
   }, []);
+
+  const patch = useCallback(
+    (changes: Partial<EnvelopeConfig>) => {
+      markConfiguratorStart(changes.format);
+      setConfig((prev) => ({ ...prev, ...changes }));
+    },
+    [markConfiguratorStart]
+  );
 
   const scrollToRef = useCallback((ref: React.RefObject<HTMLDivElement | null>) => {
     setTimeout(() => {
@@ -91,6 +118,12 @@ export function Configurator() {
 
       if (!format && !color && !detail.print && !detail.personalization) return;
 
+      /* Wejście z preselekcją — z wpisu blogowego albo ze strony koloru — jest
+         rozpoczęciem konfiguracji tak samo jak kliknięcie w krok. To zresztą
+         ścieżka, którą buduje cały plan treści, więc pominięcie jej wycięłoby
+         z pomiaru ruch organiczny. */
+      markConfiguratorStart(format);
+
       setConfig((prev) => ({
         ...prev,
         ...(format ? { format } : {}),
@@ -108,7 +141,7 @@ export function Configurator() {
         scrollToRef(colorRef);
       }
     },
-    [scrollToRef]
+    [scrollToRef, markConfiguratorStart]
   );
 
   useEffect(() => {
@@ -208,7 +241,10 @@ export function Configurator() {
       setEditingItemId(null);
       setToast('Zaktualizowano pozycję w koszyku.');
     } else {
-      addItem(config);
+      /* `addItem` zwraca gotową pozycję — z utrwaloną nazwą i przeliczoną
+         ceną — więc zdarzenie opisuje dokładnie to, co wylądowało w koszyku,
+         a nie konfigurację odtworzoną drugi raz obok. */
+      trackAddToCart(addItem(config));
       setToast('Dodano do koszyka.');
     }
     router.push('/koszyk');

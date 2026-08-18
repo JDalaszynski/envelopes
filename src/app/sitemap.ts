@@ -18,6 +18,7 @@ import {
   showcaseSrc,
   type ShowcaseShot,
 } from '@/lib/showcase';
+import { PAGE_UPDATED } from '@/lib/page-updated';
 import { SITE_URL, ogImage } from '@/lib/seo';
 
 /**
@@ -26,49 +27,6 @@ import { SITE_URL, ogImage } from '@/lib/seo';
  * świadomie pominięte — to strony prywatne i przejściowe.
  * Nowe wpisy blogowe trafiają tu automatycznie.
  */
-
-/**
- * Data ostatniej zmiany treści, osobno dla każdej trasy statycznej.
- *
- * Wartości są wpisane ręcznie i pochodzą z „Dziennika wdrożeń"
- * w `content-plan.md` — to jedyne miejsce w projekcie, które wie, kiedy
- * treść danej strony faktycznie się zmieniła. **Publikacja zmiany na stronie
- * wymaga podbicia daty tutaj.**
- *
- * Odrzucone alternatywy: czas modyfikacji pliku źródłowego (`mtime`) jest
- * na hostingu równy chwili pobrania repozytorium, więc wszystkie strony
- * dostałyby jedną datę wdrożenia — sygnał nieprawdziwy i w dodatku zmieniający
- * się przy każdym deployu bez zmiany treści. Data budowania ma tę samą wadę.
- * Google traktuje niewiarygodny `lastmod` jako powód, żeby przestać go czytać
- * dla całej domeny, więc lepszy jest wpis ręczny niż automat, który kłamie.
- */
-const PAGE_UPDATED: Record<string, string> = {
-  /* Siatka blogowa pokazuje trzy najnowsze wpisy — doszedł poradnik o liczbie kartek (poz. 11) */
-  '/': '2026-08-18',
-  /* Odnośnik do poradnika o koszcie zamówienia w sekcji cenowej (poz. 9) */
-  '/koperty-z-nadrukiem': '2026-08-17',
-  '/koperty-personalizowane': '2026-08-16',
-  /* Sekcja „Poradniki" i odnośnik pod tabelą dopasowań — treść wspierająca z poz. 11 planu */
-  '/koperty-dl': '2026-08-18',
-  '/koperty-na-vouchery': '2026-08-16',
-  /* Doszedł wpis o liczbie kartek w kopercie DL i składaniu A4 (poz. 11) */
-  '/blog': '2026-08-18',
-  /* Odnośnik do strony „O nas" w karcie danych rejestrowych */
-  '/kontakt': '2026-08-17',
-  /* Publikacja strony „O nas" */
-  '/o-nas': '2026-08-17',
-  /* Pierwsza strona koloru — poz. 29 planu */
-  '/koperty/czarny': '2026-08-17',
-  /* Poz. 30–32 planu — druga partia stron kolorów */
-  '/koperty/granatowy': '2026-08-17',
-  '/koperty/zloty': '2026-08-17',
-  '/koperty/ecru': '2026-08-17',
-  /* Poz. 33–36 planu — Faza 3 stron kolorów */
-  '/koperty/bialy': '2026-08-18',
-  '/koperty/matcha': '2026-08-18',
-  '/koperty/blekit-lupkowy': '2026-08-18',
-  '/koperty/taupe': '2026-08-18',
-};
 
 /** Adres bezwzględny — sitemapa obrazów nie przyjmuje ścieżek względnych. */
 function abs(path: string): string {
@@ -136,11 +94,15 @@ const PAGE_IMAGES: Record<string, string[]> = {
 };
 
 /**
- * Kadr nagłówkowy wpisu — ten sam plik, który renderuje `EnvelopePlaceholder`
- * na stronie wpisu, wybrany po `colorId` i wariancie zdjęcia. Do tego obraz
- * wyróżniający z `public/images/og/`, bo to on idzie w podgląd odnośnika.
+ * Kadr nagłówkowy wpisu — zdjęcie aranżacyjne z `public/images/zastosowania/`
+ * lub kadr produktowy `EnvelopePlaceholder`. Do tego obraz wyróżniający
+ * z `public/images/og/`, bo to on idzie w podgląd odnośnika.
  */
 function postImages(post: BlogPost): string[] {
+  const showcaseImage = post.showcaseFile
+    ? abs(showcaseSrc(shotByFile(post.showcaseFile)))
+    : undefined;
+
   const color = COLOR_MAP[post.colorId];
   const header =
     post.imageVariant === 'nadruk'
@@ -150,7 +112,7 @@ function postImages(post: BlogPost): string[] {
         : color?.images?.DL;
 
   return [
-    ...(header ? [abs(header)] : []),
+    ...(showcaseImage ? [showcaseImage] : header ? [abs(header)] : []),
     abs(ogImage(post.ogImageSlug ?? 'blog', post.title).url),
   ];
 }
