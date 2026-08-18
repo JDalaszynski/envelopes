@@ -49,6 +49,8 @@ export const PAGE_UPDATED: Record<string, string> = {
   '/koperty/matcha': '2026-08-18',
   '/koperty/blekit-lupkowy': '2026-08-18',
   '/koperty/taupe': '2026-08-18',
+  /* Filar K6 — Eleganckie koperty premium (content-plan.md poz. 37) */
+  '/koperty-premium': '2026-08-18',
   /* Czwarta partia stron kolorów z backlogu klastra K5 */
   '/koperty/szara': '2026-08-18',
   '/koperty/niebieski': '2026-08-18',

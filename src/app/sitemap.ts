@@ -87,6 +87,20 @@ const PAGE_IMAGES: Record<string, string[]> = {
       .map((color) => abs(color.printImages!.DL!)),
     ...shotUrls(VOUCHER_SHOTS),
   ],
+  '/koperty-premium': [
+    ...['zloty', 'biala-perlowa', 'taupe', 'srebrna-perlowa', 'czarny', 'granatowy', 'matcha', 'ciemnozielony']
+      .map((id) => COLOR_MAP[id])
+      .filter((color) => color?.images?.DL)
+      .map((color) => abs(color.images!.DL!)),
+    ...shotUrls([
+      shotByFile('zlota-koperta-dl-nadruk-logo-studia-tatuazu'),
+      shotByFile('granatowa-koperta-dl-nadruk-logo-kancelarii'),
+      shotByFile('taupe-koperta-dl-nadruk-logo-salonu-spa'),
+      shotByFile('biala-perlowa-koperta-dl-nadruk-logo-salonu-fryzjerskiego'),
+      shotByFile('niebieska-koperta-dl-personalizacja-odreczna'),
+      shotByFile('czerwona-koperta-dl-nadruk-logo-restauracji'),
+    ]),
+  ],
   /* Trzy kadry, które strona „O nas" faktycznie renderuje — te same pliki
      co na filarach, więc zgłoszenie nie obiecuje wyszukiwarce nic ponad to,
      co jest w HTML-u. */
@@ -141,6 +155,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     page('/koperty-dl', 'monthly', 0.9),
     /* Filar K7 — koperty na vouchery i bony podarunkowe (content-plan.md poz. 4) */
     page('/koperty-na-vouchery', 'monthly', 0.9),
+    /* Filar K6 — eleganckie koperty premium (content-plan.md poz. 37) */
+    page('/koperty-premium', 'monthly', 0.9),
     page('/blog', 'weekly', 0.8),
     page('/kontakt', 'monthly', 0.7),
     /* Strona podmiotu — encja firmy dla wyszukiwarki i modeli (AboutPage) */

@@ -199,7 +199,7 @@ z **preselekcją koloru**.
 
 | # | Tytuł / URL | Format | Główna fraza | Cel | Persona / Branża | Filar | Uwagi (antykanibalizacja) | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 37 | Eleganckie koperty premium — `/koperty-premium` | Pillar (LP) | koperty premium | KONWERSJA | Premium B2B | H `/` | „Premium" udowodnione parametrem (115–140 g, perła i metalik bez dopłaty), nie przymiotnikiem | [ ] |
+| 37 | Eleganckie koperty premium — `/koperty-premium` | Pillar (LP) | koperty premium | KONWERSJA | Premium B2B | H `/` | **Wykonane 18 sierpnia 2026.** Kompletny filar K6 z twardymi parametrami poligraficznymi (115–140 g/m², perła i metalik bez dopłaty, barwienie w masie, zamknięcie HK, MOQ 10 dla nadruku). | [x] |
 | 38 | Gramatura papieru w kopertach — 115, 120 i 140 g | Supporting article | eleganckie koperty premium | GEO | Zakupowiec, grafik | `/koperty-premium` | Tabela gramatur per kolor — materiał wprost pod cytowanie przez modele | [ ] |
 | 39 | Koperty na pieniądze — `/koperty-na-pieniadze` | Pillar (LP) | koperty na pieniądze | KONWERSJA | Detal + firmy (premie, nagrody) | H `/` | Klaster detaliczny — **termin realizacji podany nad CTA**, inaczej wygeneruje odbicia | [ ] |
 | 40 | Personalizowana koperta na pieniądze — kiedy się opłaca | Supporting article | personalizowana koperta na pieniądze | KONWERSJA | Detal, HR (premie imienne) | F2 | Upsell usługi +2,99 zł; poz. 39 sprzedaje kopertę gładką, ta pozycja usługę | [ ] |
@@ -240,6 +240,27 @@ nie liczą się do kadencji czterech pozycji tygodniowo i nie mają filara.
 ---
 
 ## Dziennik wdrożeń
+
+### 18 sierpnia 2026 — poz. 37: `/koperty-premium` (Filar K6)
+
+**Opublikowany filar klastra K6 — Eleganckie koperty premium.** Strona ofertowo-wizerunkowa dla decydentów B2B, kancelarii, instytucji i marek luksusowych, udowadniająca jakość twardymi faktami poligraficznymi.
+
+**1. Konstrukcja merytoryczna i GEO:**
+- **Lead GEO (51 słów):** precyzyjna, samowystarczalna definicja oferty premium (format DL, 115–140 g/m², barwienie w masie, perła/metalik, brak okienka, pasek HK, MOQ 10, równa cena bazowa).
+- **Tabela porównawcza:** twarde zderzenie parametrów kopert Envelopes z masową kopertą biurową 75–80 g/m².
+- **Cztery filary materiałowe:** Złoty metalik, Biała i Srebrna Perła, Taupe 140 g/m² (najgrubszy papier w ofercie) oraz głębokie maty barwione w masie.
+- **Siatka realizacji `ShowcaseGrid`:** wyselekcjonowane kadry premium z logotypami i personalizacją.
+- **Sekcja „Dla kogo":** 8 profili zastosowań biznesowych i oficjalnych (zarządy, kancelarie, hotele boutique, medycyna estetyczna, salony jubilerskie, PR, architektura, śluby).
+- **Zasady kontrastu druku:** reguły doboru bieli/srebra na ciemnych tłach i czerni/grafitu na złocie i perle.
+- **Sekcja rozbrajania obiekcji:** kiedy koperta premium nie jest potrzebna (masowa wysyłka transakcyjna).
+- **FAQ:** 6 pytań w `PREMIUM_FAQ_ITEMS` zasila komponent i schemat `FAQPage`.
+
+**2. Aspekty techniczne, SEO i linkowanie:**
+- Metadane zoptymalizowane pod limit znaków (title 48 zn., description dokładnie 154 zn., 0 cen w opisie).
+- Schemat `Product` z `AggregateOffer` (widełki 2,58–7,56 zł) i pełnym opisem materiałowym.
+- Karta Open Graph wygenerowana w `public/images/og/koperty-premium.jpg` (1200 × 630 px).
+- Dodany wpis w sitemapie (`priority: 0.9`) wraz z zestawem zdjęć produktowych i aranżacyjnych oraz w `PAGE_UPDATED`.
+- Linkowanie wewnętrzne: stopka globalna (kolumna Oferta), sekcja zastosowań na `/`, podsumowanie gramatur na `/koperty-dl`.
 
 ### 18 sierpnia 2026 — poz. 36a–36c: `/koperty/szara`, `/koperty/niebieski`, `/koperty/jasnoniebieska`
 

@@ -770,8 +770,9 @@ export default function DlEnvelopesPage() {
           <p className="small muted" style={{ marginTop: 'var(--space-5)', maxWidth: '68ch' }}>
             Gramatura papieru rozkłada się następująco: {WEIGHT_SUMMARY}. Wymiar koperty jest ten
             sam we wszystkich odcieniach — grubszy papier nie zmienia formatu, zmienia sztywność.
-            Wszystkie {COLORS.length} odcieni obejrzą Państwo w{' '}
-            <Link href="/#kolory">palecie kolorów kopert ozdobnych</Link>.
+            Szlachetne wykończenia i podwyższone gramatury opisaliśmy na stronie{' '}
+            <Link href="/koperty-premium">koperty premium</Link>, a wszystkie {COLORS.length} odcieni
+            obejrzą Państwo w <Link href="/#kolory">palecie kolorów kopert ozdobnych</Link>.
           </p>
 
           {/* Odcienie z własną kartą — lista rośnie razem z `color-pages.ts`,

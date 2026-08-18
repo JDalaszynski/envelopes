@@ -1005,6 +1005,8 @@ export default function HomePage() {
                 Bony sprzedają się sezonowo i zamawia się je całymi seriami pod jedną akcję. Kiedy
                 złożyć zamówienie, żeby zdążyć przed szczytem, i ile kosztuje gotowa seria —
                 opisaliśmy na stronie <Link href="/koperty-na-vouchery">koperty na vouchery</Link>.
+                Ofertę dla korespondencji zarządczej i marek luksusowych przedstawia strona{' '}
+                <Link href="/koperty-premium">koperty premium</Link>.
               </p>
             </div>
           </div>

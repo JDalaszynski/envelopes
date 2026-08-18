@@ -845,6 +845,72 @@ export function voucherEnvelopeProductJsonLd() {
 }
 
 /**
+ * Product + AggregateOffer dla filara „Koperty premium" (/koperty-premium) — klaster K6.
+ *
+ * Reprezentuje ofertę kopert ozdobnych klasy premium: gramatury 115–140 g/m²,
+ * barwienie w masie, szlachetne wykończenia perłowe i metaliczne bez dopłaty,
+ * brak okienka foliowego i silny pasek samoprzylepny HK.
+ *
+ * Widełki cenowe obejmują opcje: koperta gładka (${formatPrice(DEFAULT_PRICING.base.DL)}),
+ * z nadrukiem logo (+${formatPrice(DEFAULT_PRICING.print)}) oraz z personalizacją (+${formatPrice(DEFAULT_PRICING.personalization)}).
+ */
+export function premiumEnvelopeProductJsonLd() {
+  const lowPrice = DEFAULT_PRICING.base.DL;
+  const highPrice = round2(
+    DEFAULT_PRICING.base.DL + DEFAULT_PRICING.print + DEFAULT_PRICING.personalization
+  );
+  const url = `${SITE_URL}/koperty-premium`;
+  const images = [
+    ...COLORS.filter(
+      (color) =>
+        color.finish === 'metaliczne' ||
+        color.finish === 'perłowe' ||
+        color.weight === '140g' ||
+        color.id === 'czarny' ||
+        color.id === 'granatowy'
+    )
+      .slice(0, 6)
+      .map((color) => `${SITE_URL}${color.images?.DL}`),
+    ...INDUSTRY_SHOTS.slice(0, 4).map((shot) => `${SITE_URL}${showcaseSrc(shot)}`),
+  ];
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    '@id': `${url}#product`,
+    name: 'Eleganckie koperty premium DL 110 × 220 mm',
+    description: `Koperty ozdobne premium DL ${FORMAT_MAP.DL.dimensions} o gramaturze 115–140 g/m² z papieru barwionego w masie oraz z wykończeniem perłowym i metalicznym. Bez okienka adresowego, z paskiem samoprzylepnym HK. Dostępne w ${COLORS.length} kolorach w równej cenie, z opcjonalnym nadrukiem logo i personalizacją od ${DEFAULT_PRICING.moqWithPrint} sztuk.`,
+    brand: brandRef,
+    category: 'Eleganckie koperty premium',
+    material: 'Papier ozdobny 115–140 g/m², wykończenia perłowe i metaliczne, barwienie w masie',
+    size: FORMAT_MAP.DL.dimensions,
+    image: images,
+    url,
+    offers: {
+      '@type': 'AggregateOffer',
+      priceCurrency: 'PLN',
+      lowPrice: lowPrice.toFixed(2),
+      highPrice: highPrice.toFixed(2),
+      offerCount: COLORS.length,
+      availability: 'https://schema.org/InStock',
+      itemCondition: 'https://schema.org/NewCondition',
+      url,
+      areaServed: 'PL',
+      eligibleQuantity: {
+        '@type': 'QuantitativeValue',
+        minValue: DEFAULT_PRICING.moqWithoutPrint,
+        unitCode: 'C62',
+      },
+      shippingDetails: shippingDetails({
+        min: DEFAULT_PRICING.leadDaysPlain,
+        max: DEFAULT_PRICING.leadDaysStandard,
+      }),
+      seller: organizationRef,
+    },
+  };
+}
+
+/**
  * AboutPage dla `/o-nas` — strona, której encją główną jest **firma**,
  * a nie produkt.
  *

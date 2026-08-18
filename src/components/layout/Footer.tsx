@@ -89,6 +89,7 @@ export function Footer() {
           <div>
             <h3>Oferta</h3>
             <ul className="footer-list">
+              <li><Link href="/koperty-premium">Koperty premium</Link></li>
               <li><Link href="/koperty-dl">Koperty DL 110 × 220 mm</Link></li>
               <li><Link href="/koperty-z-nadrukiem">Koperty z nadrukiem</Link></li>
               <li><Link href="/koperty-personalizowane">Koperty personalizowane</Link></li>

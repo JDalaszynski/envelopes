@@ -338,3 +338,45 @@ export const VOUCHER_FAQ_ITEMS: FaqItem[] = [
     answer: `Tak. Każdy kolor konfigurują Państwo osobno i dodają do koszyka jako oddzielną pozycję — jedno zamówienie może obejmować dowolnie wiele kolorów. Minimalna ilość ${DEFAULT_PRICING.moqWithPrint} sztuk dotyczy pojedynczej pozycji z nadrukiem, więc trzy kolory z logo to minimum ${3 * DEFAULT_PRICING.moqWithPrint} kopert. Dostawę ${formatPrice(DELIVERY_COST)} brutto naliczamy raz na całe zamówienie, niezależnie od liczby pozycji.`,
   },
 ];
+
+/* ── FAQ filara „Koperty premium" (/koperty-premium) ─────────────────── */
+
+/**
+ * Pytania o koperty premium, gramatury i szlachetne wykończenia — klaster K6 (keywords.md).
+ *
+ * Zakres rozgraniczony z pozostałymi filarami:
+ * - F1 odpowiada na pytania o techniczne przygotowanie plików i cennik nadruku,
+ * - F2 o mechanizm importu arkusza i pola adresowe,
+ * - F3 o geometrię formatu i dopasowanie kartki A4,
+ * - F4 o formaty bonów i sezonowość voucherów.
+ * Tutaj wyłącznie pytania o parametry jakościowe papieru premium: gramatury (115–140 g/m²),
+ * wykończenia perłowe i metaliczne, brak dopłat, kontrast nadruku oraz brak okienka.
+ */
+export const PREMIUM_FAQ_ITEMS: FaqItem[] = [
+  {
+    question: 'Czym różnią się koperty premium od standardowych kopert biurowych?',
+    answer: `Koperty premium w Envelopes wykonane są ze sztywnego papieru ozdobnego o gramaturze 115–140 g/m² barwionego w masie lub o wykończeniu perłowym i metalicznym. W odróżnieniu od masowych kopert biurowych (75–80 g/m²) nie posiadają foliowego okienka adresowego ani wewnętrznego poddruku, a klapka zamykana jest trwałym paskiem samoprzylepnym z taśmą zrywaną (HK).`,
+  },
+  {
+    question: 'Jaka jest najwyższa gramatura papieru w ofercie kopert premium?',
+    answer: `Najwyższa gramatura w naszym katalogu to 140 g/m² w odcieniu Taupe (Szarobrązowy). Zapewnia wyjątkową sztywność i mięsistość w dłoni. Odcienie Matcha i Jeansowy mają gramaturę 120 g/m², a pozostałe kolory palety — 115 g/m². Wszystkie są znacznie grubsze od standardowego papieru pocztowego.`,
+  },
+  {
+    question: 'Czy koperty premium z metalicznym połyskiem lub perłowe kosztują więcej?',
+    answer: `Nie. Wszystkie ${COLORS.length} odcieni oferujemy w równej cenie ${formatPrice(PLAIN_DL)} brutto za sztukę w formacie DL. Za wykończenie metaliczne (Złoty), perłowe (Biała Perłowa, Srebrna Perłowa) ani za najwyższą gramaturę 140 g/m² nie pobieramy żadnych dopłat.`,
+  },
+  {
+    question: 'Od ilu sztuk można zamówić koperty premium z własnym nadrukiem logo?',
+    answer: `Koperty premium z nadrukiem logo realizujemy już od ${DEFAULT_PRICING.moqWithPrint} sztuk. Przygotowujemy bezpłatną cyfrową wizualizację na wybranym papierze, a produkcję uruchamiamy dopiero po Państwa akceptacji. Koperty gładkie, bez nadruku, dostępne są już od ${DEFAULT_PRICING.moqWithoutPrint} sztuki.`,
+  },
+  {
+    question: 'Jakie kolory nadruku stosuje się na ciemnych i metalicznych kopertach premium?',
+    answer:
+      'Na ciemnych odcieniach barwionych w masie (Czarny, Granatowy, Butelkowa Zieleń) stosujemy kontrastowy nadruk jasny: biel, srebro lub krem. Na papierze złotym metalicznym oraz jasnym perłowym drukujemy kolorem ciemnym: głęboką czernią, grafitem lub granatem, co zapewnia doskonałą czytelność detali.',
+  },
+  {
+    question: 'Czy na kopertach premium można wydrukować personalizację imienną?',
+    answer: `Tak. W ramach usługi personalizacji (+${formatPrice(DEFAULT_PRICING.personalization)} brutto/szt.) na każdej kopercie z serii drukujemy inne imię, nazwisko lub dedykację. Usługę można połączyć z nadrukiem logo firmowego — całość wykonujemy w jednym precyzyjnym procesie produkcyjnym.`,
+  },
+];
+

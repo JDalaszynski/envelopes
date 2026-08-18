@@ -291,6 +291,10 @@
     color: var(--color-ink-soft);
   }
 
+  .mobile-account-logout {
+    min-height: 56px;
+  }
+
   .mobile-nav .btn {
     min-height: 52px;
   }

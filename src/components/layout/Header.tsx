@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import { useCart } from '@/components/providers/CartProvider';
@@ -22,8 +22,9 @@ const NAV = [
 
 export function Header() {
   const { count, ready } = useCart();
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const pathname = usePathname();
+  const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -93,16 +94,20 @@ export function Header() {
         </nav>
 
         <div className="header-actions">
+          {/* Zalogowani widzą przy ikonie swój adres — to jedyne miejsce
+              w chrome, gdzie widać, na którym koncie się jest. Adres bywa
+              długi, więc pole go przycina, a pełną wartość niesie title. */}
           <Link
             href={user ? '/profil' : '/logowanie'}
-            className="icon-btn"
-            aria-label={user ? 'Państwa konto' : 'Zaloguj się'}
-            title={user ? 'Państwa konto' : 'Zaloguj się'}
+            className={`icon-btn${user ? ' account-btn' : ''}`}
+            aria-label={user ? `Państwa konto: ${user.email}` : 'Zaloguj się'}
+            title={user ? user.email : 'Zaloguj się'}
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
               <circle cx="12" cy="8" r="4" />
               <path d="M4 21c0-4 3.6-6 8-6s8 2 8 6" />
             </svg>
+            {user && <span className="account-email">{user.email}</span>}
           </Link>
 
           <Link href="/koszyk" className="icon-btn" aria-label={`Koszyk, pozycji: ${ready ? count : 0}`}>
@@ -132,12 +137,37 @@ export function Header() {
       {menuOpen && (
         <div className="mobile-nav" id="menu-mobilne">
           <div className="container">
+            {/* W arkuszu mobilnym adres nie mieści się przy ikonie, więc
+                stoi tu — nad pozycjami konta, których dotyczy. */}
+            {user && (
+              <p className="mobile-account">
+                <span className="mobile-account-label">Zalogowano jako</span>
+                <span className="mobile-account-email" title={user.email}>{user.email}</span>
+              </p>
+            )}
             {NAV.map((item) => (
               <Link key={item.href} href={item.href}>
                 {item.label}
               </Link>
             ))}
             <Link href="/zamowienia">Złożone zamówienia</Link>
+            {user ? (
+              <>
+                <Link href="/profil">Państwa konto</Link>
+                <button
+                  type="button"
+                  className="mobile-account-logout"
+                  onClick={() => {
+                    setMenuOpen(false);
+                    void logout().then(() => router.push('/'));
+                  }}
+                >
+                  Wyloguj się
+                </button>
+              </>
+            ) : (
+              <Link href="/logowanie">Zaloguj się</Link>
+            )}
             <div style={{ paddingTop: 'var(--space-4)' }}>
               <Link href="/#konfigurator" className="btn btn-block">
                 Przejdź do sklepu
