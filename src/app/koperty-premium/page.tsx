@@ -39,7 +39,6 @@ import type { EnvelopeConfig } from '@/lib/types';
  * - papier barwiony w masie na wylot (jednolity kolor na zgięciach i krawędziach),
  * - szlachetne wykończenia perłowe i metaliczne w cenie odcieni matowych (2,58 zł brutto/szt.),
  * - brak foliowego okienka adresowego — pełna płaszczyzna papieru ozdobnego,
- * - mocny pasek samoprzylepny z taśmą zrywaną (HK) wzdłuż dłuższego boku,
  * - nadruk logo i personalizacja imienna realizowane już od 10 sztuk.
  *
  * Rozgraniczenia klastrowe (brief SEO/GEO pkt 5.1 i 8):
@@ -163,7 +162,7 @@ export default function KopertyPremiumPage() {
             <p className="hero-lead">
               Koperty premium w Envelopes to seria ozdobnych kopert DL 110 × 220 mm o gramaturze
               115–140 g/m², z papieru barwionego w masie oraz z wykończeniem perłowym i metalicznym.
-              Nie mają okienka adresowego, a klapka zamykana jest paskiem HK. Wszystkie 19 kolorów
+              Nie mają okienka adresowego ani wewnętrznego poddruku. Wszystkie 19 kolorów
               oferujemy w równej cenie, z nadrukiem logo już od 10 sztuk.
             </p>
 
@@ -201,7 +200,7 @@ export default function KopertyPremiumPage() {
                 },
                 {
                   title: 'Brak okienka foliowego',
-                  note: 'Jednolita przednia ścianka z papieru ozdobnego i mocny pasek samoprzylepny HK',
+                  note: 'Jednolita przednia ścianka z papieru ozdobnego, bez folii i poddruku',
                 },
               ].map((usp) => (
                 <div className="usp" key={usp.title}>
@@ -262,13 +261,6 @@ export default function KopertyPremiumPage() {
                     <strong>Pełna płaszczyzna papieru ozdobnego</strong> (bez okienka)
                   </td>
                   <td>Foliowe okienko adresowe dzielące powierzchnię</td>
-                </tr>
-                <tr>
-                  <th scope="row">Zamykanie klapki</th>
-                  <td>
-                    <strong>Pasek samoprzylepny z taśmą zrywaną (HK)</strong>
-                  </td>
-                  <td>Zwilżany klej wodny (SK) lub wąski pasek kleju</td>
                 </tr>
                 <tr>
                   <th scope="row">Krawędzie i zgięcia</th>

@@ -94,7 +94,7 @@ liczbowymi i porównaniami. Najtańszy dostępny kanał widoczności dla domeny 
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 9 | Cena kopert z nadrukiem i koszt zamówienia — `/blog/cena-kopert-z-nadrukiem-i-koszt-zamowienia` | Supporting article | koperty z nadrukiem cena | GEO | Decydent budżetowy | F1 | **Wykonane 17 sierpnia 2026.** Fraza cenowa przeszła z `keywords` filara do wpisu — jeden właściciel na serwis. Filar zostaje przy frazie usługowej `koperty z nadrukiem` i całej warstwie transakcyjnej, a wpis przesuwa jednostkę rozliczenia ze **sztuki** na **całe zamówienie**: dostawa rozłożona na sztuki oraz tabela pozycji, których nie doliczamy. Sekcja `#cena` i pytanie cenowe w `PRINT_FAQ_ITEMS` zostają na filarze | [x] |
 | 10 | Jaki format koperty wybrać do wkładki — `/blog/jaki-format-koperty-wybrac-do-wkladki` | Supporting article | format do koperty dl | GEO | Wszystkie | F3 | **Wykonane 17 sierpnia 2026.** Odwrotne mapowanie: wkładka → format. F3 podaje wymiary trzech formatów i status dostępności w tabeli; ten wpis prowadzi przez decyzję i uzasadnia różnice konstrukcyjne. Tytuł doprecyzowany — slug niesie pełną frazę długiego ogona. Pytanie „Czym różni się koperta DL od C6" nie wróciło (należy do `DL_FAQ_ITEMS`); zero CTA na C6/K4, zero kwot, zero MOQ | [x] |
-| 11 | Ile kartek mieści koperta DL i jak je złożyć — `/blog/ile-kartek-miesci-koperta-dl-i-jak-je-zlozyc` | Supporting article | kartka do koperty dl | GEO | Wszystkie | F3 | **Wykonane 18 sierpnia 2026.** Trzeci wymiar, którego F3 nie dotyka: grubość wkładu. Tabela dopuszczalnej liczby arkuszy per gramatura (80g do 5 szt., 90-100g do 4 szt., 120-135g do 3 szt.), instrukcja krok po kroku składania A4 w literę C (standard biurowy / listowy) i literę Z (harmonijkowe), fizyka zjawisk blokowania wkładu (sprężynowanie grzbietu, brak bigowania, zszywki) oraz pakowanie ręczne pod pasek HK. Zero cen i stawek nadruku | [x] |
+| 11 | Ile kartek mieści koperta DL i jak je złożyć — `/blog/ile-kartek-miesci-koperta-dl-i-jak-je-zlozyc` | Supporting article | kartka do koperty dl | GEO | Wszystkie | F3 | **Wykonane 18 sierpnia 2026.** Trzeci wymiar, którego F3 nie dotyka: grubość wkładu. Tabela dopuszczalnej liczby arkuszy per gramatura (80g do 5 szt., 90-100g do 4 szt., 120-135g do 3 szt.), instrukcja krok po kroku składania A4 w literę C (standard biurowy / listowy) i literę Z (harmonijkowe), fizyka zjawisk blokowania wkładu (sprężynowanie grzbietu, brak bigowania, zszywki) oraz pakowanie ręczne. Zero cen i stawek nadruku | [x] |
 | 12 | Paleta 19 kolorów — jak wybrać odcień | Supporting article | kolory kopert | RUCH | Marketing, brand manager | F5 = `/` | **Format zmieniony z `Aktualizacja` na `Supporting article` 15 sierpnia 2026** — wpis startowy usunięty, treść powstaje od zera. Link w górę wprost do `/` anchorem `koperty ozdobne` (huba `/koperty` nie ma — poz. 5 anulowana), w dół do stron kolorów z Fazy 3. Frazy `koperty ozdobne` i `koperty kolorowe` zostają przy `/`; wpis obsługuje dobór odcienia do identyfikacji wizualnej | [ ] |
 
 ### Tydzień 4
@@ -199,7 +199,7 @@ z **preselekcją koloru**.
 
 | # | Tytuł / URL | Format | Główna fraza | Cel | Persona / Branża | Filar | Uwagi (antykanibalizacja) | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 37 | Eleganckie koperty premium — `/koperty-premium` | Pillar (LP) | koperty premium | KONWERSJA | Premium B2B | H `/` | **Wykonane 18 sierpnia 2026.** Kompletny filar K6 z twardymi parametrami poligraficznymi (115–140 g/m², perła i metalik bez dopłaty, barwienie w masie, zamknięcie HK, MOQ 10 dla nadruku). | [x] |
+| 37 | Eleganckie koperty premium — `/koperty-premium` | Pillar (LP) | koperty premium | KONWERSJA | Premium B2B | H `/` | **Wykonane 18 sierpnia 2026.** Kompletny filar K6 z twardymi parametrami poligraficznymi (115–140 g/m², perła i metalik bez dopłaty, barwienie w masie, brak okienka i poddruku, MOQ 10 dla nadruku). | [x] |
 | 38 | Gramatura papieru w kopertach — 115, 120 i 140 g | Supporting article | eleganckie koperty premium | GEO | Zakupowiec, grafik | `/koperty-premium` | Tabela gramatur per kolor — materiał wprost pod cytowanie przez modele | [ ] |
 | 39 | Koperty na pieniądze — `/koperty-na-pieniadze` | Pillar (LP) | koperty na pieniądze | KONWERSJA | Detal + firmy (premie, nagrody) | H `/` | Klaster detaliczny — **termin realizacji podany nad CTA**, inaczej wygeneruje odbicia | [ ] |
 | 40 | Personalizowana koperta na pieniądze — kiedy się opłaca | Supporting article | personalizowana koperta na pieniądze | KONWERSJA | Detal, HR (premie imienne) | F2 | Upsell usługi +2,99 zł; poz. 39 sprzedaje kopertę gładką, ta pozycja usługę | [ ] |
@@ -246,7 +246,7 @@ nie liczą się do kadencji czterech pozycji tygodniowo i nie mają filara.
 **Opublikowany filar klastra K6 — Eleganckie koperty premium.** Strona ofertowo-wizerunkowa dla decydentów B2B, kancelarii, instytucji i marek luksusowych, udowadniająca jakość twardymi faktami poligraficznymi.
 
 **1. Konstrukcja merytoryczna i GEO:**
-- **Lead GEO (51 słów):** precyzyjna, samowystarczalna definicja oferty premium (format DL, 115–140 g/m², barwienie w masie, perła/metalik, brak okienka, pasek HK, MOQ 10, równa cena bazowa).
+- **Lead GEO (51 słów):** precyzyjna, samowystarczalna definicja oferty premium (format DL, 115–140 g/m², barwienie w masie, perła/metalik, brak okienka, MOQ 10, równa cena bazowa).
 - **Tabela porównawcza:** twarde zderzenie parametrów kopert Envelopes z masową kopertą biurową 75–80 g/m².
 - **Cztery filary materiałowe:** Złoty metalik, Biała i Srebrna Perła, Taupe 140 g/m² (najgrubszy papier w ofercie) oraz głębokie maty barwione w masie.
 - **Siatka realizacji `ShowcaseGrid`:** wyselekcjonowane kadry premium z logotypami i personalizacją.
@@ -438,8 +438,7 @@ wkładu**: ile arkuszy A4 i jakiej gramatury mieści koperta DL (bezpiecznie 1�
 maksymalny 6–8), dlaczego koperta płaska ma limit 3–4 mm grubości oraz dlaczego zagięty plik może się
 nie mieścić mimo poprawnych wymiarów 99 × 210 mm (sprężynowanie grzbietu, pękanie papieru bez bigowania,
 zszywki narożne). Do tego instrukcja krok po kroku dwóch metod składania A4 (litera C — standard
-listowy/poufny oraz litera Z — harmonijkowy/ulotkowy) i wyjaśnienie optymalizacji pod pakowanie ręczne
-z paskiem samoprzylepnym HK.
+listowy/poufny oraz litera Z — harmonijkowy/ulotkowy) i wyjaśnienie optymalizacji pod pakowanie ręczne.
 
 **Antykanibalizacja:**
 - **wobec F3 `/koperty-dl`:** filar podaje wymiary geometryczne w 2D; ten wpis dostaje grubość,

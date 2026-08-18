@@ -849,7 +849,7 @@ export function voucherEnvelopeProductJsonLd() {
  *
  * Reprezentuje ofertę kopert ozdobnych klasy premium: gramatury 115–140 g/m²,
  * barwienie w masie, szlachetne wykończenia perłowe i metaliczne bez dopłaty,
- * brak okienka foliowego i silny pasek samoprzylepny HK.
+ * brak okienka foliowego i wewnętrznego poddruku.
  *
  * Widełki cenowe obejmują opcje: koperta gładka (${formatPrice(DEFAULT_PRICING.base.DL)}),
  * z nadrukiem logo (+${formatPrice(DEFAULT_PRICING.print)}) oraz z personalizacją (+${formatPrice(DEFAULT_PRICING.personalization)}).
@@ -879,7 +879,7 @@ export function premiumEnvelopeProductJsonLd() {
     '@type': 'Product',
     '@id': `${url}#product`,
     name: 'Eleganckie koperty premium DL 110 × 220 mm',
-    description: `Koperty ozdobne premium DL ${FORMAT_MAP.DL.dimensions} o gramaturze 115–140 g/m² z papieru barwionego w masie oraz z wykończeniem perłowym i metalicznym. Bez okienka adresowego, z paskiem samoprzylepnym HK. Dostępne w ${COLORS.length} kolorach w równej cenie, z opcjonalnym nadrukiem logo i personalizacją od ${DEFAULT_PRICING.moqWithPrint} sztuk.`,
+    description: `Koperty ozdobne premium DL ${FORMAT_MAP.DL.dimensions} o gramaturze 115–140 g/m² z papieru barwionego w masie oraz z wykończeniem perłowym i metalicznym. Bez okienka adresowego i wewnętrznego poddruku. Dostępne w ${COLORS.length} kolorach w równej cenie, z opcjonalnym nadrukiem logo i personalizacją od ${DEFAULT_PRICING.moqWithPrint} sztuk.`,
     brand: brandRef,
     category: 'Eleganckie koperty premium',
     material: 'Papier ozdobny 115–140 g/m², wykończenia perłowe i metaliczne, barwienie w masie',

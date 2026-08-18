@@ -355,7 +355,7 @@ export const VOUCHER_FAQ_ITEMS: FaqItem[] = [
 export const PREMIUM_FAQ_ITEMS: FaqItem[] = [
   {
     question: 'Czym różnią się koperty premium od standardowych kopert biurowych?',
-    answer: `Koperty premium w Envelopes wykonane są ze sztywnego papieru ozdobnego o gramaturze 115–140 g/m² barwionego w masie lub o wykończeniu perłowym i metalicznym. W odróżnieniu od masowych kopert biurowych (75–80 g/m²) nie posiadają foliowego okienka adresowego ani wewnętrznego poddruku, a klapka zamykana jest trwałym paskiem samoprzylepnym z taśmą zrywaną (HK).`,
+    answer: `Koperty premium w Envelopes wykonane są ze sztywnego papieru ozdobnego o gramaturze 115–140 g/m² barwionego w masie lub o wykończeniu perłowym i metalicznym. W odróżnieniu od masowych kopert biurowych (75–80 g/m²) nie posiadają foliowego okienka adresowego ani wewnętrznego poddruku — przednia ścianka pozostaje jednolitą płaszczyzną papieru ozdobnego.`,
   },
   {
     question: 'Jaka jest najwyższa gramatura papieru w ofercie kopert premium?',
