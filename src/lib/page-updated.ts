@@ -55,6 +55,10 @@ export const PAGE_UPDATED: Record<string, string> = {
   '/koperty/szara': '2026-08-18',
   '/koperty/niebieski': '2026-08-18',
   '/koperty/jasnoniebieska': '2026-08-18',
+  /* Piąta partia stron kolorów z backlogu klastra K5 */
+  '/koperty/ciemnozielony': '2026-08-18',
+  '/koperty/jasnozielony': '2026-08-18',
+  '/koperty/czerwony': '2026-08-18',
 };
 
 /** Data zmiany treści dla trasy — `undefined`, gdy trasy nie ma w rejestrze. */

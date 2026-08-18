@@ -1119,6 +1119,267 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
     ogImageAlt:
       'Błękitna koperta ozdobna DL z pastelowego papieru barwionego w masie bez okienka adresowego',
   },
+
+  ciemnozielony: {
+    title: 'Ciemnozielone koperty DL z nadrukiem logo',
+    description:
+      'Ciemnozielone koperty ozdobne DL 110 × 220 mm, butelkowa zieleń barwiona w masie. Czysty kontrast dla jasnego nadruku logo. Wysyłka kurierem w całej Polsce.',
+    phrase: 'ciemnozielone koperty DL',
+    phraseShort: 'ciemnozielone koperty',
+    eyebrow: 'Kolor · Butelkowa Zieleń',
+    h1: 'Ciemnozielone koperty DL 110 × 220 mm',
+    lead: 'Ciemnozielona koperta DL jest wykonana z papieru barwionego w masie o głębokim, szlachetnym odcieniu butelkowej zieleni. W katalogu, konfiguratorze i na fakturze występuje jako Butelkowa Zieleń. Barwienie w masie sprawia, że krawędzie i zagięcia zachowują ciemną barwę. Jako ciemny odcień najlepiej komponuje się z jasnym nadrukiem logo — bielą, złotem, kremem i srebrem.',
+    shotFiles: [],
+    character: {
+      heading: 'Czym Butelkowa Zieleń różni się od Matchy i odcienia Zielonego',
+      paragraphs: [
+        'Butelkowa Zieleń to najciemniejszy odcień zieleni w naszej palecie — głęboki, leśny i dostojny. W zestawieniu z pastelową, zgaszoną Matchą jest wielokrotnie ciemniejsza, a w odróżnieniu od jasnego, trawiastego Zielonego ma charakter wybitnie oficjalny i prestiżowy.',
+        'Papier jest barwiony w masie: pigment nasyca całą strukturę arkusza. Zagięcie klapki, rozcięty bok i wewnętrzne krawędzie pozostają głęboko zielone, bez jasnego rdzenia, który odsłania się na papierach barwionych wyłącznie powierzchniowo.',
+        'W zapytaniach klientów odcień ten funkcjonuje jako butelkowa zieleń, ciemnozielony, zieleń leśna, szmaragdowy, ciemny szmaragd lub bottle green. W katalogu, konfiguratorze i na fakturze występuje pod nazwą Butelkowa Zieleń — to ten sam papier i jedna karta produktu.',
+      ],
+    },
+    printing: {
+      heading: 'Nadruk logo i personalizacja na ciemnozielonej kopercie',
+      paragraphs: [
+        'Na głębokim, ciemnozielonym tle najwyższy kontrast i czytelność dają jasne barwy nadruku: czysta biel, metaliczne srebro, ciepły krem oraz złoty. Jasny znak jest doskonale widoczny nawet przy drobnej typografii i detalach sygnetu.',
+        'Podobnie jak na innych ciemnych odcieniach, w przypadku wysyłki imiennej rekomendujemy personalizację drukiem. Zmienne dane odbiorców nanosi się tym samym jasnym kolorem co logo, co eliminuje problem nieczytelnego pisma odręcznego.',
+        'Przed uruchomieniem druku nasz grafik przygotowuje bezpłatną wizualizację cyfrową na tle Butelkowej Zieleni. Zamówienie trafia do produkcji wyłącznie po Państwa jednoznacznej akceptacji projektu.',
+      ],
+    },
+    audience: {
+      heading: 'Kto zamawia ciemnozielone koperty',
+      intro:
+        'Głęboką zieleń wybierają marki i instytucje, które budują wizerunek oparty na tradycji, zrównoważonym rozwoju, szlachetności i prestiżu.',
+      items: [
+        {
+          name: 'Nadleśnictwa, instytucje ochrony środowiska i parki narodowe',
+          text: 'Oficjalna korespondencja, dyplomy, podziękowania i zaproszenia na wydarzenia przyrodnicze. Leśna zieleń to naturalny wybór instytucjonalny.',
+        },
+        {
+          name: 'Luksusowe marki jubilerskie i domy mody',
+          text: 'Karty gwarancyjne, certyfikaty autentyczności kamieni szlachetnych i vouchery prezentowe. Butelkowa zieleń w połączeniu z jasnym nadrukiem tworzy ekskluzywny duet.',
+        },
+        {
+          name: 'Hotele i resorty w otoczeniu natury',
+          text: 'Welcome letters, zaproszenia na pobyty degustacyjne i pakiety wypoczynkowe w obiektach spa & wellness położonych w górach lub lasach.',
+        },
+        {
+          name: 'Winnice, destylarnie i marki kraftowe',
+          text: 'Karty menu na kolacje degustacyjne, vouchery podarunkowe i zaproszenia na premiery roczników. Szlachetny odcień doskonale pasuje do tradycji rzemieślniczych.',
+        },
+        {
+          name: 'Kancelarie prawne i doradcy majątkowi',
+          text: 'Korespondencja dla klientów private banking i family office. Głęboka zieleń kojarzy się ze stabilnością, bezpieczeństwem i powagą kapitału.',
+        },
+      ],
+    },
+    caution: {
+      heading: 'Kiedy ciemnozielona koperta nie jest najlepszym wyborem',
+      paragraphs: [
+        'Gdy logo marki zawiera wyłącznie ciemne barwy (czerń, ciemny grafit, granat) i nie dopuszcza wersji monochromatycznej jasnej. Na ciemnozielonym tle ciemny znak straci czytelność — w takiej sytuacji doradzamy wybór jasnego odcienia z palety, np. Ecru, Matcha lub Biały.',
+        'Gdy adresy na kopertach mają być wypisywane ręcznie standardowym długopisem lub ciemnym atramentem. Ciemny wkład jest na butelkowej zieleni słabo widoczny — polecamy skorzystanie z naszej usługi personalizacji.',
+      ],
+    },
+    faq: [
+      {
+        question: 'Czy Butelkowa Zieleń i ciemnozielona to ten sam kolor koperty?',
+        answer:
+          'Tak. Butelkowa Zieleń to oficjalna nazwa katalogowa naszego ciemnozielonego odcienia. W konfiguratorze, w wycenie i na fakturze jest to dokładnie ten sam produkt z papieru barwionego w masie.',
+      },
+      {
+        question: 'Czym Butelkowa Zieleń różni się od odcienia Matcha?',
+        answer:
+          'Nasyceniem i tonacją. Butelkowa Zieleń to bardzo ciemna, głęboka leśna zieleń wymagająca jasnego nadruku. Matcha jest pastelowa, zgaszona i oliwkowo-szałwiowa, przyjmując zarówno nadruk ciemny, jak i jasny.',
+      },
+      {
+        question: 'Jaki kolor nadruku najlepiej wygląda na butelkowej zieleni?',
+        answer:
+          'Najlepszy kontrast zapewnia nadruk biały, kremowy, srebrny lub jasnobeżowy. Jasne elementy są ostre i wyraziste na głębokim leśnym tle.',
+      },
+      {
+        question: 'Czy ciemnozielona koperta jest barwiona w masie?',
+        answer:
+          'Tak. Papier jest barwiony w masie na całej grubości, co oznacza brak białych krawędzi i przetarć na zgięciu klapki czy brzegach koperty.',
+      },
+    ],
+    ogImageSlug: 'koperty-ciemnozielone',
+    ogImageAlt:
+      'Ciemnozielona koperta ozdobna DL z papieru barwionego w masie w odcieniu butelkowej zieleni',
+  },
+
+  jasnozielony: {
+    title: 'Zielone koperty DL z nadrukiem logo',
+    description:
+      'Zielone koperty ozdobne DL 110 × 220 mm — świeża jasna zieleń z papieru barwionego w masie. Czysty kontrast dla ciemnego nadruku. Wysyłka kurierem w Polsce.',
+    phrase: 'zielone koperty DL',
+    phraseShort: 'zielone koperty',
+    eyebrow: 'Kolor · Zielony',
+    h1: 'Zielone koperty DL 110 × 220 mm',
+    lead: 'Zielona koperta DL jest wykonana z papieru barwionego w masie o świeżym, jasnym, trawiastym odcieniu. W katalogu i konfiguratorze występuje pod nazwą Zielony. Barwienie w masie zabezpiecza krawędzie i zagięcia przed białymi przetarciami. Jasne tło zapewnia znakomity kontrast pod ciemny nadruk logo, grafikę firmową oraz odręczne pismo.',
+    shotFiles: [],
+    character: {
+      heading: 'Czym odcień Zielony różni się od Butelkowej Zieleni i Matchy',
+      paragraphs: [
+        'Zielony to odcień jasny, żywy i świeży — klasyczna wiosenna i trawiasta zieleń. W odróżnieniu od głębokiej Butelkowej Zieleni jest wielokrotnie jaśniejszy i przyjmuje nadruki w ciemnych barwach. Z kolei w porównaniu do zgaszonej, szałwiowej Matchy ma cieplejszą, bardziej nasyconą i naturalną tonację roślinną.',
+        'Papier jest barwiony w masie, co gwarantuje pełną jednolitość koloru w całym przekroju arkusza. Rozcięte krawędzie i linia zagięcia klapki zachowują czysty zielony odcień, bez jasnego rdzenia.',
+        'W zapytaniach klientów kolor ten określany bywa jako zielony, jasnozielony, zieleń trawiasta, soczysta zieleń, pistacjowy jasny lub light green. W konfiguratorze, katalogu i na fakturze występuje pod nazwą Zielony — to ten sam papier i produkt.',
+      ],
+    },
+    printing: {
+      heading: 'Nadruk logo firmowego i pisanie odręczne na zielonej kopercie',
+      paragraphs: [
+        'Na jasnym zielonym tle optymalną czytelność zapewniają ciemne kolory nadruku: głęboka czerń, ciemny grafit, butelkowa zieleń, brąz oraz granat. Świetnie prezentują się także logotypy wielobarwne o zrównoważonym nasyceniu.',
+        'Papier o matowej fakturze idealnie przyjmuje atrament i tusz. Można na nim pisać piórem wiecznym, długopisem czy cienkopisem bez obawy o rozmazywanie, co czyni go wygodnym wyborem do ręcznie adresowanej korespondencji.',
+        'Przed rozpoczęciem produkcji grafik przygotowuje bezpłatną wizualizację na odcieniu Zielonym. Druk uruchamiamy po Państwa jednoznacznej akceptacji projektu.',
+      ],
+    },
+    audience: {
+      heading: 'Kto zamawia zielone koperty',
+      intro:
+        'Świeża jasna zieleń to barwa natury, odnowy, energii i ekologii, chętnie wybierana przez branże związane ze środowiskiem, zdrowiem i florystyką.',
+      items: [
+        {
+          name: 'Pracownie florystyczne i studia architektury krajobrazu',
+          text: 'Bony na aranżacje roślinne, zaproszenia na warsztaty florystyczne i oferty projektów ogrodów. Kolor harmonizuje z motywami botanicznymi.',
+        },
+        {
+          name: 'Marki produktów ekologicznych i żywności bio',
+          text: 'Vouchery do eko-sklepów, materiały informacyjne i korespondencja marketingowa. Jasna zieleń wzmacnia przekaz o naturalnym pochodzeniu produktów.',
+        },
+        {
+          name: 'Gospodarstwa agroturystyczne i zagrody edukacyjne',
+          text: 'Zaproszenia na pobyty weekendowe, warsztaty i imprezy plenerowe. Odcień trawiasty idealnie oddaje wiejski, relaksujący klimat.',
+        },
+        {
+          name: 'Organizacje proekologiczne i fundacje',
+          text: 'Podziękowania dla darczyńców, raporty z projektów środowiskowych i zaproszenia na konferencje naukowe poświęcone ekologii.',
+        },
+        {
+          name: 'Szkoły jogi, pilatesu i studia zdrowego stylu życia',
+          text: 'Karnety prezentowe, vouchery na sesje relaksacyjne i zaproszenia na warsztaty wyjazdowe w duchu mindfulness.',
+        },
+      ],
+    },
+    caution: {
+      heading: 'Kiedy zielona koperta nie jest najlepszym wyborem',
+      paragraphs: [
+        'Gdy nadruk ma być wykonany wyłącznie w kolorze białym lub bardzo jasnych pastelach. Na jasnym zielonym tle biały nadruk może mieć zbyt niski kontrast — w takim wypadku doradzamy Butelkową Zieleń lub odcień Ciemny/Niebieski.',
+        'Gdy identyfikacja marki wymaga surowej, chłodnej technologii i minimalizmu betonu/stali. Wówczas lepiej sprawdzi się odcień Szary, Czarny lub Błękit Łupkowy.',
+      ],
+    },
+    faq: [
+      {
+        question: 'Czy Zielony i jasnozielona to ta sama koperta?',
+        answer:
+          'Tak. Zielony to nazwa katalogowa naszego jasnego, trawiastego odcienia zieleni. W konfiguratorze i na fakturze występuje pod nazwą Zielony.',
+      },
+      {
+        question: 'Czym koperta Zielona różni się od Butelkowej Zieleni?',
+        answer:
+          'Jasnością i charakterem. Zielony to jasny, żywy odcień trawiasty pod ciemny nadruk, podczas gdy Butelkowa Zieleń jest bardzo ciemna i leśna, wymagając jasnego nadruku.',
+      },
+      {
+        question: 'Jaki kolor nadruku najlepiej sprawdza się na zielonej kopercie?',
+        answer:
+          'Najwyższy kontrast gwarantuje czerń, ciemny grafit, butelkowa zieleń, brąz i granat. Dobrze czytają się także herby i wielokolorowe logotypy.',
+      },
+      {
+        question: 'Czy na jasnozielonej kopercie można pisać ręcznie?',
+        answer:
+          'Tak. Matowy papier znakomicie wchłania tusz z długopisu, pióra i cienkopisu, nie pozostawiając smug.',
+      },
+    ],
+    ogImageSlug: 'koperty-zielone',
+    ogImageAlt:
+      'Jasnozielona koperta ozdobna DL z papieru barwionego w masie bez okienka adresowego',
+  },
+
+  czerwony: {
+    title: 'Czerwone koperty DL z nadrukiem logo',
+    description:
+      'Czerwone koperty ozdobne DL 110 × 220 mm w nasyconym odcieniu karminowym. Papier barwiony w masie pod nadruk logo i bony podarunkowe. Wysyłka kurierem.',
+    phrase: 'czerwone koperty DL',
+    phraseShort: 'czerwone koperty',
+    eyebrow: 'Kolor · Czerwony',
+    h1: 'Czerwone koperty DL 110 × 220 mm',
+    lead: 'Czerwona koperta DL jest wykonana z papieru barwionego w masie o głębokim, nasyconym odcieniu karminowo-bordowym. W katalogu i konfiguratorze występuje pod nazwą Czerwony. Barwienie w masie zapobiega jasnym krawędziom. Jako mocny, wyrazisty odcień doskonale współpracuje z ciemnym nadrukiem logo — czernią i grafitem — oraz jasnym drukiem okolicznościowym.',
+    shotFiles: ['czerwona-koperta-dl-nadruk-logo-restauracji'],
+    character: {
+      heading: 'Czym odcień Czerwony różni się od Różowej i ciepłych brązów',
+      paragraphs: [
+        'Czerwony to odcień nasycony, dostojny i głęboki — dojrzały karmin z nutą szlachetnego bordo, daleki od jaskrawej, krzykliwej czerwieni reklamowej. W zestawieniu z pastelową, pudrową Różową ma nieporównywalnie większą siłę wyrazu, a w odróżnieniu od ziemistych brązów wnawia energię i uroczysty charakter.',
+        'Papier jest barwiony w masie: głęboki pigment przenika całą strukturę arkusza. Zagięcie klapki, rozcięte boki i wnętrze koperty zachowują jednolity karminowy ton, bez białych pęknięć i jasnego rdzenia.',
+        'W zapytaniach klientów odcień ten bywa określany jako czerwony, karminowy, bordowy, ciemnoczerwony, wiśniowy lub rubinowy. W katalogu, konfiguratorze i na fakturze funkcjonuje jako Czerwony — to ten sam produkt.',
+      ],
+    },
+    printing: {
+      heading: 'Nadruk logo restauracji i voucherów na czerwonej kopercie',
+      paragraphs: [
+        'Kadr wyżej prezentuje realizację z czarnym nadrukiem logo restauracji. Na nasyconym czerwonym tle głęboka czerń i ciemny grafit dają mocny, wyrazisty kontrast, idealny pod vouchery gastronomiczne i karty podarunkowe.',
+        'Na czerwonym papierze znakomicie prezentuje się także nadruk jasny — czysta biel, srebro oraz złoty metalik — szczególnie na zaproszeniach świątecznych, jubileuszowych i karnawałowych.',
+        'Przed rozpoczęciem druku nasz grafik przygotowuje bezpłatną cyfrową wizualizację na odcieniu Czerwonym, co pozwala precyzyjnie ocenić kontrast i kompozycję przed produkcją.',
+      ],
+    },
+    audience: {
+      heading: 'Kto zamawia czerwone koperty',
+      intro:
+        'Czerwień to kolor emocji, pasji, świętowania i kulinarnej energii, chętnie wybierany przez restauracje, branżę rozrywkową i na wysyłki świąteczne.',
+      items: [
+        {
+          name: 'Restauracje fine dining, winiarnie i bistra',
+          text: 'Vouchery na kolacje degustacyjne, zaproszenia na wieczory tematyczne i karty podarunkowe. Kadr wyżej ilustruje zastosowanie czarnego logo na tym odcieniu.',
+        },
+        {
+          name: 'Kampanie świąteczne i wysyłki bożonarodzeniowe',
+          text: 'Firmowe kartki świąteczne, życzenia dla partnerów i bony podarunkowe. Czerwień stanowi nieodłączny element tradycji zimowej korespondencji.',
+        },
+        {
+          name: 'Teatry, filharmonie i instytucje kultury',
+          text: 'Zaproszenia na premiery teatralne, gale jubileuszowe i bilety VIP. Karminowy odcień nawiązuje do kurtyny teatralnej i uroczystego nastroju.',
+        },
+        {
+          name: 'Salony kosmetyczne, brafitting i marki zmysłowe',
+          text: 'Karty podarunkowe na walentynki, pakiety zabiegów i zaproszenia na dni otwarte. Kolor przyciąga uwagę i podkreśla emocjonalny wymiar prezentu.',
+        },
+        {
+          name: 'Agencje eventowe i organizatorzy gal',
+          text: 'Zaproszenia na gale rozdania nagród, imprezy charytatywne i eventy sylwestrowe. Czerwień natychmiast wyróżnia przesyłkę w rękach gościa.',
+        },
+      ],
+    },
+    caution: {
+      heading: 'Kiedy czerwona koperta nie jest najlepszym wyborem',
+      paragraphs: [
+        'Gdy koperta ma służyć do rutynowej korespondencji urzędowej lub prawnej. Czerwień jest barwą silnie emocjonalną — do pism sądowych, notarialnych i faktur polecamy Granatowy, Szary, Taupe lub Czarny.',
+        'Gdy logo marki zawiera średnie czerwienie lub pomarańcze o barwie zbliżonej do papieru. Elementy te zleją się z tłem — w takiej sytuacji grafik zaproponuje wersję czarną lub białą.',
+      ],
+    },
+    faq: [
+      {
+        question: 'Czy koperta Czerwona to jasna czerwień czy bordo?',
+        answer:
+          'To szlachetny, nasycony karmin z delikatną nutą bordo. Nie jest to jaskrawa, krzykliwa czerwień, lecz elegancki, głęboki odcień barwiony w masie.',
+      },
+      {
+        question: 'Jaki kolor nadruku najlepiej wygląda na czerwonej kopercie?',
+        answer:
+          'Doskonały kontrast daje głęboka czerń (tak jak na kadrze z logo restauracji) oraz czysta biel i złoto na zaproszeniach okolicznościowych i świątecznych.',
+      },
+      {
+        question: 'Czy czerwone koperty sprawdzają się na bony podarunkowe i vouchery?',
+        answer:
+          'Tak. To jeden z najchętniej wybieranych odcieni na vouchery restauracyjne, zaproszenia na kolacje oraz prezenty świąteczne i walentynkowe.',
+      },
+      {
+        question: 'Czy czerwona koperta jest barwiona w masie?',
+        answer:
+          'Tak. Pigment nasyca cały arkusz, dzięki czemu zagięcie klapki i krawędzie nie ujawniają białych przetarć.',
+      },
+    ],
+    ogImageSlug: 'koperty-czerwone',
+    ogImageAlt:
+      'Czerwona koperta ozdobna DL z czarnym nadrukiem logo restauracji na drewnianym blacie',
+  },
 };
 
 /** Identyfikatory kolorów z opublikowaną stroną — kolejność jak w katalogu. */

@@ -186,9 +186,11 @@ z **preselekcją koloru**.
 | 36a | Szare koperty DL — `/koperty/szara` | Supporting LP | szare koperty dl | RUCH | Architekci, technologia, minimalizm | F5 | **Wykonane 18 sierpnia 2026.** Popielaty, neutralny odcień barwiony w masie (115 g/m²). Nowoczesna alternatywa dla biurowej bieli. Mosty nazewnicze: szary, popielaty, jasnoszary, jasnografitowy | [x] |
 | 36b | Niebieskie koperty DL — `/koperty/niebieski` | Supporting LP | niebieskie koperty dl | KONWERSJA | Finanse, edukacja, gale | F5 | **Wykonane 18 sierpnia 2026.** Nasycony odcień kobaltowy / chabrowy barwiony w masie (115 g/m²). Kadr aranżacyjny z personalizacją imienną. Mosty nazewnicze: niebieski, chabrowy, kobaltowy, szafirowy, royal blue | [x] |
 | 36c | Błękitne koperty DL — `/koperty/jasnoniebieska` | Supporting LP | błękitne koperty dl | RUCH | Kliniki, wellness, chrzest/baby shower | F5 | **Wykonane 18 sierpnia 2026.** Pastelowy baby blue barwiony w masie (115 g/m²). Czysty kontrast pod ciemny nadruk i pismo odręczne. Mosty nazewnicze: błękitna, jasnoniebieska, baby blue, pastelowy błękit | [x] |
+| 36d | Ciemnozielone koperty DL — `/koperty/ciemnozielony` | Supporting LP | ciemnozielone koperty dl | KONWERSJA | Luksus, leśnictwo, jubilerzy | F5 | **Wykonane 18 sierpnia 2026.** Głęboka butelkowa zieleń barwiona w masie (115 g/m²). Znakomity kontrast pod jasny nadruk logo (biel, złoto, krem, srebro). Mosty: butelkowa zieleń, ciemnozielony, zieleń leśna, szmaragdowy, bottle green | [x] |
+| 36e | Zielone koperty DL — `/koperty/jasnozielony` | Supporting LP | zielone koperty dl | RUCH | Florystyka, eko, edukacja | F5 | **Wykonane 18 sierpnia 2026.** Świeża jasna zieleń trawiasta barwiona w masie (115 g/m²). Czysty kontrast dla ciemnego nadruku i pisma odręcznego. Mosty: zielony, jasnozielony, zieleń trawiasta, soczysta zieleń, light green | [x] |
+| 36f | Czerwone koperty DL — `/koperty/czerwony` | Supporting LP | czerwone koperty dl | KONWERSJA | Restauracje, święta, kultura | F5 | **Wykonane 18 sierpnia 2026.** Karminowo-bordowy szlachetny odcień barwiony w masie (115 g/m²). Kadr aranżacyjny z czarnym nadrukiem logo restauracji. Mosty: czerwony, karminowy, bordowy, wiśniowy, rubinowy | [x] |
 
-> **Backlog kolorów (8 pozycji pozostałych):** ciemnozielony, jasnozielony, czerwony, różowa,
-> eko, żółta, srebrna perłowa, biała perłowa. Do realizacji w kolejnych partiach — priorytet
+> **Backlog kolorów (5 pozycji pozostałych):** różowa, eko, żółta, srebrna perłowa, biała perłowa. Do realizacji w kolejnych partiach — priorytet
 > wspierający pokrycie całej palety 19 odcieni.
 
 ---
@@ -240,6 +242,37 @@ nie liczą się do kadencji czterech pozycji tygodniowo i nie mają filara.
 ---
 
 ## Dziennik wdrożeń
+
+### 18 sierpnia 2026 — poz. 36d–36f: `/koperty/ciemnozielony`, `/koperty/jasnozielony`, `/koperty/czerwony`
+
+**Wdrożona piąta partia stron kolorów z backlogu klastra K5.** Trzy kolejne odcienie otrzymały
+kompletne podstrony w ramach dynamicznego szablonu `src/app/koperty/[kolor]/page.tsx`
+i rejestru `src/lib/color-pages.ts`. Łączna liczba opublikowanych stron kolorów wzrosła do 14 z 19.
+
+**1. Zróżnicowanie merytoryczne i intencje antykanibalizacyjne:**
+- **Butelkowa Zieleń (`/koperty/ciemnozielony`):** głęboki, dostojny, leśny odcień barwiony w masie (115 g/m²).
+  Zoptymalizowany pod jasny nadruk logo (biel, srebro, złoto, krem) oraz ekskluzywne zastosowania (jubilerzy,
+  leśnictwo, winnice, hotele w naturze, private banking). Mosty nazewnicze: butelkowa zieleń, ciemnozielony,
+  zieleń leśna, szmaragdowy, bottle green.
+- **Zielony (`/koperty/jasnozielony`):** świeży, żywy odcień trawiasty barwiony w masie (115 g/m²).
+  Idealny pod ciemny nadruk firmowy (czerń, grafit, butelkowa zieleń, granat) i pismo odręczne. Zastosowania:
+  florystyka, eko-marki, agroturystyka, fundacje proekologiczne, yoga & wellness. Mosty nazewnicze:
+  zielony, jasnozielony, zieleń trawiasta, soczysta zieleń, light green.
+- **Czerwony (`/koperty/czerwony`):** nasycony, dojrzały karmin z nutą szlachetnego bordo, barwiony w masie (115 g/m²).
+  Kadr aranżacyjny `czerwona-koperta-dl-nadruk-logo-restauracji` z czarnym logo restauracji na drewnie.
+  Zastosowania: restauracje fine dining i winiarnie (bony podarunkowe), kampanie świąteczne i bożonarodzeniowe,
+  teatry, instytucje kultury, walentynki. Mosty nazewnicze: czerwony, karminowy, bordowy, wiśniowy, rubinowy.
+
+**2. Open Graph i metadane:**
+Wygenerowano trzy obrazy wyróżniające 1200 × 630 w `public/images/og/` za pomocą `scripts/og-card.mjs`:
+`koperty-ciemnozielone.jpg`, `koperty-zielone.jpg`, `koperty-czerwone.jpg`. Metaopisy (dokładnie 151–154 zn.)
+mieszczą się w rygorystycznym kontrakcie 140–155 znaków (0 cen i kwot w description), leady GEO 51–57 słów
+(próg 40–60 słów), po 4 unikalne pytania FAQ na stronę.
+
+**3. Linkowanie i indeksacja:**
+Wpisy w `PAGE_UPDATED` w `src/lib/page-updated.ts` podbite na `2026-08-18`. Paleta na `/`, sekcja
+na `/koperty-dl` i lista odcieni na `/koperty-z-nadrukiem` zaktualizowały się automatycznie
+poprzez rejestr `color-pages.ts`. Sitemapa wzrosła do 29 adresów.
 
 ### 18 sierpnia 2026 — poz. 37: `/koperty-premium` (Filar K6)
 
