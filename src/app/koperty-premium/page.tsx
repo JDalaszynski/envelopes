@@ -13,6 +13,7 @@ import {
   COLOR_MAP,
   FORMAT_MAP,
   PRINT_SAFE_MARGIN_MM,
+  hasSurfaceFinish,
   weightLabel,
 } from '@/lib/catalog';
 import { colorPagePath, hasColorPage } from '@/lib/color-pages';
@@ -417,7 +418,11 @@ export default function KopertyPremiumPage() {
                   </strong>
                   <span className="small muted" style={{ display: 'block', marginBottom: 'var(--space-3)' }}>
                     {color.weight ? weightLabel(color.weight) : '115 g/m²'}
-                    {color.finish ? ` · ${color.finish}` : ' · barwiony w masie'}
+                    {/* Warunek schodzi z `hasSurfaceFinish()`, a nie z samego
+                        `finish`: papier eko ma wpisane wykończenie, ale **jest**
+                        barwiony w masie, więc gałąź na sam `finish` powiedziałaby
+                        o nim co innego niż tabela specyfikacji na stronie koloru. */}
+                    {hasSurfaceFinish(color.finish) ? ` · ${color.finish}` : ' · barwiony w masie'}
                   </span>
                   <div className="row" style={{ gap: 'var(--space-2)', flexWrap: 'wrap' }}>
                     <ConfigureLink

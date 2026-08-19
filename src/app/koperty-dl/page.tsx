@@ -778,16 +778,33 @@ export default function DlEnvelopesPage() {
           {/* Odcienie z własną kartą — lista rośnie razem z `color-pages.ts`,
               więc link dokłada się sam przy publikacji kolejnego koloru. */}
           {colorPages().length > 0 && (
-            <p className="small muted" style={{ marginTop: 'var(--space-3)', maxWidth: '68ch' }}>
-              Osobną kartę z charakterystyką papieru, zastosowaniami i zamówieniem mają:{' '}
-              {colorPages().map(({ color, content }, index) => (
-                <span key={color.id}>
-                  {index > 0 ? ', ' : ''}
-                  <Link href={colorPagePath(color.id)}>{content.phrase}</Link>
-                </span>
-              ))}
-              .
-            </p>
+            <div style={{ marginTop: 'var(--space-6)' }}>
+              <p className="small muted" style={{ marginBottom: 'var(--space-3)' }}>
+                Osobną kartę z charakterystyką papieru, zastosowaniami i zamówieniem mają:
+              </p>
+              <div 
+                style={{ 
+                  display: 'flex', 
+                  flexWrap: 'wrap', 
+                  gap: 'var(--space-2)' 
+                }}
+              >
+                {colorPages().map(({ color, content }) => (
+                  <Link
+                    key={color.id}
+                    href={colorPagePath(color.id)}
+                    className="color-chip"
+                  >
+                    <span
+                      className="color-chip-swatch"
+                      style={{ backgroundColor: color.hex }}
+                      aria-hidden="true"
+                    />
+                    {content.phrase}
+                  </Link>
+                ))}
+              </div>
+            </div>
           )}
         </div>
       </section>

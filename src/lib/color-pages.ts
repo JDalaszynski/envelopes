@@ -140,7 +140,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
     phraseShort: 'czarne koperty',
     eyebrow: 'Kolor · Czarny',
     h1: 'Czarne koperty DL 110 × 220 mm',
-    lead: 'Czarna koperta DL jest zrobiona z papieru barwionego w masie — czarnego na wylot, także na zgięciu i na krawędzi po rozcięciu. Kosztuje tyle samo co każdy inny odcień w katalogu. Logo drukujemy na niej jasnym kolorem, a dane odbiorcy tym samym drukiem, bo długopis nie zostawia na czarnym papierze czytelnego śladu.',
+    lead: 'Czarna koperta DL jest zrobiona z papieru barwionego w masie — czarnego na wylot, także na zgięciu i na krawędzi po rozcięciu. Logo drukujemy na niej jasnym kolorem, a dane odbiorcy tym samym drukiem, bo długopis nie zostawia na czarnym papierze czytelnego śladu.',
     shotFiles: ['czarna-koperta-dl-nadruk-zaproszenie', 'czarna-koperta-dl-personalizacja-imienna'],
     character: {
       heading: 'Czym czarny papier barwiony w masie różni się od zadrukowanego na czarno',
@@ -529,7 +529,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
       items: [
         {
           name: 'Kancelarie prawne i notariusze',
-          text: 'Korespondencja urzędowa, odpisy aktów i pisma przewodnie. Czysta biel o podwyższonej gramaturze podkreśla formalny charakter dokumentu bez odwracania uwagi od treści.',
+          text: 'Korespondencja urzędowa, odpisy aktów i pisma przewodnie. Biel jest tu konwencją, więc koperta nie zwraca na siebie uwagi kosztem treści, którą niesie.',
         },
         {
           name: 'Biura rachunkowe i audytorskie',
@@ -537,7 +537,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
         },
         {
           name: 'Firmy szkoleniowe i uczelnie',
-          text: 'Certyfikaty ukończenia kursów, zaświadczenia i listy gratulacyjne. Na białym tle wielobarwne herby i logotypy patronów zachowują stuprocentową zgodność z księgą znaku.',
+          text: 'Certyfikaty ukończenia kursów, zaświadczenia i listy gratulacyjne. Na białym tle wielobarwne herby i logotypy patronów drukujemy w oryginalnych barwach, bez sprowadzania znaku do jednej.',
         },
         {
           name: 'Agencje marketingowe i PR',
@@ -575,7 +575,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
       {
         question: 'Czy na białej kopercie można wypisać adres ręcznie?',
         answer:
-          'Tak. Matowy papier doskonale chłonie tusz długopisu, pióra wiecznego oraz pisaka, nie powodując rozmazywania ani przebijania na drugą stronę.',
+          'Tak. Papier jest matowy i nie ma śliskiej powłoki, więc tusz długopisu, pióra wiecznego i pisaka schnie od razu i nie rozmazuje się pod palcem.',
       },
     ],
     ogImageSlug: 'koperty-biale',
@@ -593,8 +593,10 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
     h1: 'Koperty matcha DL 110 × 220 mm',
     lead: 'Koperta DL w kolorze Matcha to pastelowa, szałwiowa zieleń wykonana z papieru barwionego w masie. Kolor jest jednolity w całym przekroju arkusza, także na zagięciach klapki i na rozciętych krawędziach. Na tym tle czytają się zarówno nadruki ciemne — butelkowa zieleń, grafit i czerń — jak i biel przy napisach okolicznościowych.',
     paperUsp: {
-      title: 'Gramatura 120 g/m²',
-      note: 'Grubszy papier barwiony w masie — szałwiowy odcień na całej grubości arkusza',
+      /* Tytuł nie powtarza gramatury: sąsiedni kafelek paska faktów pokazuje ją
+         z `catalog.ts`, więc dwa razy z rzędu stała ta sama liczba. */
+      title: 'Grubszy arkusz',
+      note: 'Papier sztywniejszy od podstawowej palety, barwiony w masie na całej grubości',
     },
     shotFiles: [
       'matcha-koperta-dl-nadruk-podziekowania',
@@ -687,8 +689,8 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
     h1: 'Koperty błękit łupkowy DL 110 × 220 mm',
     lead: 'Koperta DL w kolorze błękitu łupkowego to zgaszony, stalowy błękit z papieru barwionego w masie. W katalogu, w konfiguratorze i na fakturze ten odcień występuje pod nazwą Jeansowy. Jest wyraźnie jaśniejszy od granatu i spokojniejszy od pastelowego błękitu, a jako podłoże przyjmuje zarówno nadruk biały i srebrny, jak i grafitowy oraz czarny.',
     paperUsp: {
-      title: 'Gramatura 120 g/m²',
-      note: 'Sztywny papier barwiony w masie — stalowy błękit na całej grubości arkusza',
+      title: 'Sztywny papier',
+      note: 'Arkusz grubszy od podstawowej palety — stalowy błękit na całym przekroju',
     },
     shotFiles: ['blekit-lupkowy-koperta-dl-nadruk-na-chrzest'],
     character: {
@@ -778,8 +780,8 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
     h1: 'Koperty taupe DL 110 × 220 mm',
     lead: 'Koperta DL w odcieniu taupe to szarobrązowy, ciepły i ziemisty kolor wykonany z najgrubszego papieru w ofercie o gramaturze 140 g/m². W katalogu i konfiguratorze występuje pod nazwą Szarobrązowy. Papier jest barwiony w masie, więc krawędzie i zagięcia klapki zachowują jednolity ton. Przyjmuje zarówno kontrastowy nadruk biały, jak i elegancką czerń.',
     paperUsp: {
-      title: 'Gramatura 140 g/m²',
-      note: 'Najgrubszy papier w katalogu — wyjątkowa sztywność i barwienie w masie',
+      title: 'Najgrubszy papier w katalogu',
+      note: 'Sztywność wyczuwalna w dłoni przy wyjmowaniu koperty, barwienie w masie',
     },
     shotFiles: ['taupe-koperta-dl-nadruk-logo-salonu-spa'],
     character: {
@@ -841,7 +843,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
       {
         question: 'Czym wyróżnia się gramatura 140 g/m² w kopercie taupe?',
         answer:
-          'To najgrubszy papier w całej naszej ofercie — zapewnia wyjątkową sztywność, elegancję w dotyku i pełne krycie korespondencji bez ryzyka prześwitywania.',
+          'To najgrubszy papier w całej naszej ofercie. Koperta jest wyraźnie sztywniejsza w dłoni od pozostałych odcieni z palety i nie faluje w przesyłce zbiorczej.',
       },
       {
         question: 'Jaki kolor nadruku najlepiej wygląda na kopercie taupe?',
@@ -862,12 +864,12 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
   szara: {
     title: 'Szare koperty DL z nadrukiem logo',
     description:
-      'Szare koperty ozdobne DL 110 × 220 mm, neutralny popielaty papier barwiony w masie. Czysty kontrast dla czerni, bieli i kolorów firmowych. Wysyłka kurierem.',
+      'Szare koperty ozdobne DL 110 × 220 mm, neutralny popielaty papier barwiony w masie. Czysty kontrast dla czerni, bieli i barw firmowych. Wysyłka kurierem.',
     phrase: 'szare koperty DL',
     phraseShort: 'szare koperty',
     eyebrow: 'Kolor · Szary',
     h1: 'Szare koperty DL 110 × 220 mm',
-    lead: 'Szara koperta DL jest zrobiona z neutralnego, popielatego papieru barwionego w masie — jednolicie szarego na całej grubości, także na zagięciu klapki i krawędziach. Kosztuje tyle samo co każdy inny odcień w katalogu. Przyjmuje nadruk ciemny, kontrastową biel oraz pismo odręczne, stanowiąc nowoczesną, stonowaną alternatywę dla bieli.',
+    lead: 'Szara koperta DL jest zrobiona z neutralnego, popielatego papieru barwionego w masie — jednolicie szarego na całej grubości, także na zagięciu klapki i krawędziach. Przyjmuje nadruk ciemny, kontrastową biel oraz pismo odręczne, więc jest stonowaną alternatywą dla bieli tam, gdzie koperta ma wyglądać nowocześnie, a nie biurowo.',
     shotFiles: [],
     character: {
       heading: 'Czym szary papier barwiony w masie różni się od bieli i odcienia taupe',
@@ -923,7 +925,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
       {
         question: 'Czy szara koperta jest jednolicie szara także na zgięciu i krawędzi?',
         answer:
-          'Tak. Papier jest barwiony w masie, więc pigment sięga przez całą grubość arkusza. Zagięta klapka i rozcięty bok zachowują jednolity popielaty kolor, bez jasnych prążków.',
+          'Tak. Pigment wchodzi w masę papieru na etapie produkcji arkusza, a nie w powłokę nałożoną na wierzch. Zagięta klapka i rozcięty bok zachowują ten sam popielaty odcień, bez jasnych prążków na krawędzi.',
       },
       {
         question: 'Czym szara koperta różni się od odcienia Taupe (Szarobrązowego)?',
@@ -979,7 +981,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
       items: [
         {
           name: 'Instytucje finansowe, fintech i ubezpieczenia',
-          text: 'Korespondencja zarządza, oferty dla kluczowych partnerów i pakiety polis. Klasyczny błękit korporacyjny buduje poczucie stabilności i bezpieczeństwa.',
+          text: 'Korespondencja do zarządów, oferty dla kluczowych partnerów i pakiety polis. Klasyczny błękit korporacyjny buduje poczucie stabilności i bezpieczeństwa.',
         },
         {
           name: 'Uczelnie, szkoły wyższe i centra szkoleniowe',
@@ -1036,7 +1038,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
   jasnoniebieska: {
     title: 'Błękitne koperty DL z nadrukiem logo',
     description:
-      'Błękitne koperty ozdobne DL 110 × 220 mm — pastelowy jasnoniebieski papier barwiony w masie. Czysty kontrast dla ciemnego nadruku. Wysyłka kurierem w Polsce.',
+      'Błękitne koperty ozdobne DL 110 × 220 mm — pastelowy jasnoniebieski papier barwiony w masie. Czysty kontrast dla ciemnego nadruku. Wysyłka kurierem.',
     phrase: 'błękitne koperty DL',
     phraseShort: 'błękitne koperty',
     eyebrow: 'Kolor · Błękitny',
@@ -1123,13 +1125,13 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
   ciemnozielony: {
     title: 'Ciemnozielone koperty DL z nadrukiem logo',
     description:
-      'Ciemnozielone koperty ozdobne DL 110 × 220 mm, butelkowa zieleń barwiona w masie. Czysty kontrast dla jasnego nadruku logo. Wysyłka kurierem w całej Polsce.',
+      'Ciemnozielone koperty ozdobne DL 110 × 220 mm, butelkowa zieleń barwiona w masie. Biel, srebro i złoto trzymają na niej pełny kontrast. Wysyłka kurierem.',
     phrase: 'ciemnozielone koperty DL',
     phraseShort: 'ciemnozielone koperty',
     eyebrow: 'Kolor · Butelkowa Zieleń',
     h1: 'Ciemnozielone koperty DL 110 × 220 mm',
     lead: 'Ciemnozielona koperta DL jest wykonana z papieru barwionego w masie o głębokim, szlachetnym odcieniu butelkowej zieleni. W katalogu, konfiguratorze i na fakturze występuje jako Butelkowa Zieleń. Barwienie w masie sprawia, że krawędzie i zagięcia zachowują ciemną barwę. Jako ciemny odcień najlepiej komponuje się z jasnym nadrukiem logo — bielą, złotem, kremem i srebrem.',
-    shotFiles: [],
+    shotFiles: ['ciemnozielona-koperta-dl-miejsce-na-logo'],
     character: {
       heading: 'Czym Butelkowa Zieleń różni się od Matchy i odcienia Zielonego',
       paragraphs: [
@@ -1144,6 +1146,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
         'Na głębokim, ciemnozielonym tle najwyższy kontrast i czytelność dają jasne barwy nadruku: czysta biel, metaliczne srebro, ciepły krem oraz złoty. Jasny znak jest doskonale widoczny nawet przy drobnej typografii i detalach sygnetu.',
         'Podobnie jak na innych ciemnych odcieniach, w przypadku wysyłki imiennej rekomendujemy personalizację drukiem. Zmienne dane odbiorców nanosi się tym samym jasnym kolorem co logo, co eliminuje problem nieczytelnego pisma odręcznego.',
         'Przed uruchomieniem druku nasz grafik przygotowuje bezpłatną wizualizację cyfrową na tle Butelkowej Zieleni. Zamówienie trafia do produkcji wyłącznie po Państwa jednoznacznej akceptacji projektu.',
+        'Kadr poniżej pokazuje samo pole nadruku na przedniej ściance — bez konkretnego logo, żeby było widać, ile miejsca zajmuje znak na tym odcieniu.',
       ],
     },
     audience: {
@@ -1161,7 +1164,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
         },
         {
           name: 'Hotele i resorty w otoczeniu natury',
-          text: 'Welcome letters, zaproszenia na pobyty degustacyjne i pakiety wypoczynkowe w obiektach spa & wellness położonych w górach lub lasach.',
+          text: 'Listy powitalne w pokoju, zaproszenia na pobyty degustacyjne i pakiety wypoczynkowe w obiektach spa położonych w górach lub w lasach.',
         },
         {
           name: 'Winnice, destylarnie i marki kraftowe',
@@ -1210,7 +1213,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
   jasnozielony: {
     title: 'Zielone koperty DL z nadrukiem logo',
     description:
-      'Zielone koperty ozdobne DL 110 × 220 mm — świeża jasna zieleń z papieru barwionego w masie. Czysty kontrast dla ciemnego nadruku. Wysyłka kurierem w Polsce.',
+      'Zielone koperty ozdobne DL 110 × 220 mm — świeża jasna zieleń barwiona w masie. Ciemne logo i pismo odręczne czytają się na niej wprost. Wysyłka kurierem.',
     phrase: 'zielone koperty DL',
     phraseShort: 'zielone koperty',
     eyebrow: 'Kolor · Zielony',
@@ -1263,8 +1266,8 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
     caution: {
       heading: 'Kiedy zielona koperta nie jest najlepszym wyborem',
       paragraphs: [
-        'Gdy nadruk ma być wykonany wyłącznie w kolorze białym lub bardzo jasnych pastelach. Na jasnym zielonym tle biały nadruk może mieć zbyt niski kontrast — w takim wypadku doradzamy Butelkową Zieleń lub odcień Ciemny/Niebieski.',
-        'Gdy identyfikacja marki wymaga surowej, chłodnej technologii i minimalizmu betonu/stali. Wówczas lepiej sprawdzi się odcień Szary, Czarny lub Błękit Łupkowy.',
+        'Gdy nadruk ma być wykonany wyłącznie w kolorze białym lub w bardzo jasnych pastelach. Na jasnym zielonym tle biały znak traci kontrast — wtedy doradzamy odcień ciemny: Butelkową Zieleń, Granatowy albo Niebieski.',
+        'Gdy identyfikacja marki jest surowa, chłodna i techniczna — zbudowana wokół betonu, stali i szkła. Wówczas lepiej sprawdzi się odcień Szary, Czarny lub Błękit Łupkowy.',
       ],
     },
     faq: [
@@ -1307,7 +1310,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
     character: {
       heading: 'Czym odcień Czerwony różni się od Różowej i ciepłych brązów',
       paragraphs: [
-        'Czerwony to odcień nasycony, dostojny i głęboki — dojrzały karmin z nutą szlachetnego bordo, daleki od jaskrawej, krzykliwej czerwieni reklamowej. W zestawieniu z pastelową, pudrową Różową ma nieporównywalnie większą siłę wyrazu, a w odróżnieniu od ziemistych brązów wnawia energię i uroczysty charakter.',
+        'Czerwony to odcień nasycony, dostojny i głęboki — dojrzały karmin z nutą szlachetnego bordo, daleki od jaskrawej, krzykliwej czerwieni reklamowej. W zestawieniu z pastelową, pudrową Różową ma nieporównywalnie większą siłę wyrazu, a w odróżnieniu od ziemistych brązów wnosi energię i uroczysty charakter.',
         'Papier jest barwiony w masie: głęboki pigment przenika całą strukturę arkusza. Zagięcie klapki, rozcięte boki i wnętrze koperty zachowują jednolity karminowy ton, bez białych pęknięć i jasnego rdzenia.',
         'W zapytaniach klientów odcień ten bywa określany jako czerwony, karminowy, bordowy, ciemnoczerwony, wiśniowy lub rubinowy. W katalogu, konfiguratorze i na fakturze funkcjonuje jako Czerwony — to ten sam produkt.',
       ],
@@ -1380,10 +1383,472 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
     ogImageAlt:
       'Czerwona koperta ozdobna DL z czarnym nadrukiem logo restauracji na drewnianym blacie',
   },
+
+  rozowa: {
+    title: 'Różowe koperty DL z nadrukiem logo',
+    description:
+      'Różowe koperty ozdobne DL 110 × 220 mm — przygaszony, dojrzały róż barwiony w masie. Czerń i grafit trzymają na nim pełny kontrast. Wysyłka kurierem.',
+    phrase: 'różowe koperty DL',
+    phraseShort: 'różowe koperty',
+    eyebrow: 'Kolor · Różowy',
+    h1: 'Różowe koperty DL 110 × 220 mm',
+    lead: 'Różowa koperta DL jest zrobiona z papieru barwionego w masie o przygaszonym, dojrzałym odcieniu różu. Kolor sięga przez całą grubość arkusza, więc zagięta klapka i rozcięta krawędź zostają różowe. Na tym tle pełny kontrast trzymają barwy ciemne — czerń, grafit i brąz — a biel czyta się jako akcent okolicznościowy.',
+    shotFiles: [],
+    character: {
+      heading: 'Czym Różowa różni się od Czerwonego i od jasnych neutralnych',
+      paragraphs: [
+        'Różowa to róż przygaszony, z wyraźną domieszką szarości — bliżej dusty rose niż fuksji. Odcień jest średnio głęboki: kopertę widać jako kolorową z drugiego końca biurka, ale barwa nigdzie nie przechodzi w jaskrawość.',
+        'Od Czerwonego dzieli ją siła wyrazu. Czerwony to nasycony karmin, który brzmi uroczyście i wymaga nadruku o mocnym kontraście. Różowa zostaje w rejestrze łagodnym i przyjmuje także znaki o średnim nasyceniu, więc ta sama okazja — walentynki, Dzień Matki, otwarcie salonu — wychodzi na niej zupełnie inaczej.',
+        'W zapytaniach ten kolor bywa nazywany brudnym różem, pudrowym, wrzosowym albo różem angielskim. W katalogu, w konfiguratorze i na fakturze występuje jako Różowa — to jeden papier, matowy i gładki, bez perłowej poświaty.',
+      ],
+    },
+    printing: {
+      heading: 'Nadruk logo i adresowanie na różowej kopercie',
+      paragraphs: [
+        'Na różowym tle najpewniej pracują barwy ciemne: czerń, grafit, czekoladowy brąz i chłodny granat. Znak zachowuje wtedy ostrość także przy cienkich liniach kroju pisma i przy drobnym sygnecie.',
+        'Biel jest tu wyborem dekoracyjnym, nie kontrastowym. Przy krótkich napisach okolicznościowych i krojach odręcznych wygląda bardzo dobrze, ale drobne logo w bieli zaczyna się na tym odcieniu gubić — grafik pokazuje to na wizualizacji, zanim zamówienie ruszy do produkcji.',
+        'Adres da się na różowej kopercie wypisać ręcznie. Papier jest matowy i nie ma śliskiej powłoki, więc tusz z długopisu i cienkopisu schnie od razu. Przy bilecikach dołączanych do bukietu albo do paczki bywa to wygodniejsze niż zamawianie personalizacji.',
+      ],
+    },
+    audience: {
+      heading: 'Kto zamawia różowe koperty',
+      intro:
+        'Róż wybierają nadawcy, dla których przesyłka ma być ciepła i osobista, a nie oficjalna — najczęściej w branży beauty, w modzie i przy uroczystościach rodzinnych.',
+      items: [
+        {
+          name: 'Kliniki medycyny estetycznej i salony kosmetyczne',
+          text: 'Bony na zabiegi i zaproszenia na dni otwarte. Róż zapowiada pielęgnację i spokój, zanim adresat wyjmie z koperty kartę — a to jest dokładnie ten nastrój, który sprzedaje voucher.',
+        },
+        {
+          name: 'Butiki modowe i marki biżuteryjne',
+          text: 'Bileciki do zamówień wysyłanych kurierem i podziękowania za zakup. Koperta wchodzi płasko na wierzch paczki i jest pierwszą rzeczą, którą klientka widzi po otwarciu pudełka.',
+        },
+        {
+          name: 'Kwiaciarnie i pracownie florystyczne',
+          text: 'Bileciki do bukietów i karty z dedykacją do kompozycji okolicznościowych. Odcień nie kłóci się z kwiatami, bo sam pozostaje przygaszony.',
+        },
+        {
+          name: 'Cukiernie, kawiarnie i pracownie tortów',
+          text: 'Bony podarunkowe, zaproszenia na degustacje i karty do zamówień na wynos. Przygaszony róż wpisuje się w identyfikację lokali rzemieślniczych bez sięgania po barwę dziecięcą.',
+        },
+        {
+          name: 'Fotografia rodzinna i sesje noworodkowe',
+          text: 'Vouchery na sesję i koperty na odbitki wręczane klientom. Format DL mieści odbitkę 10 × 15 cm płasko, bez zaginania rogów.',
+        },
+      ],
+    },
+    caution: {
+      heading: 'Kiedy różowa koperta nie jest najlepszym wyborem',
+      paragraphs: [
+        'Gdy koperta ma iść w oficjalnym obiegu dokumentów. W kancelarii, biurze rachunkowym i w korespondencji urzędowej róż czyta się jako materiał marketingowy — tam pewniej pracują Granatowy, Szara i Biały.',
+        'Gdy logo marki jest utrzymane w jasnych żółciach, pomarańczach albo w samej bieli i nie ma wersji ciemnej. Barwy o jasności zbliżonej do papieru tracą na tym odcieniu kontrast; grafik zaproponuje wtedy wersję jednobarwną ciemną albo odcień o innym tle.',
+      ],
+    },
+    faq: [
+      {
+        question: 'Czy różowa koperta to odcień jasny czy mocny?',
+        answer:
+          'Średni. To róż przygaszony, z domieszką szarości — mocniejszy od pastelu i wyraźnie łagodniejszy od czerwieni. Nie jest to barwa jaskrawa ani fluorescencyjna.',
+      },
+      {
+        question: 'Czy różowy papier ma perłowy połysk?',
+        answer:
+          'Nie. Różowa koperta jest w pełni matowa i w świetle dziennym oraz przy żarówce wygląda tak samo. Poświatę mają w palecie wyłącznie odcienie perłowe i metaliczne.',
+      },
+      {
+        question: 'Czym różowa koperta różni się od czerwonej?',
+        answer:
+          'Nasyceniem i doborem nadruku. Czerwony to głęboki karmin, który wymaga mocnego kontrastu i brzmi uroczyście. Różowa jest jaśniejsza i łagodniejsza, więc przyjmuje także znaki o średnim nasyceniu.',
+      },
+      {
+        question: 'Jakim kolorem drukować logo na różowej kopercie?',
+        answer:
+          'Ciemnym — czerń, grafit, brąz i granat dają na tym papierze pełny kontrast. Biel sprawdza się przy krótkich napisach okolicznościowych, ale drobny znak w bieli zaczyna się na różu gubić.',
+      },
+    ],
+    ogImageSlug: 'koperty-rozowe',
+    ogImageAlt:
+      'Dwie różowe koperty ozdobne DL na białym tle — przednia klapką do góry, druga ustawiona pionowo za nią',
+  },
+
+  eko: {
+    title: 'Koperty eko kraft DL z nadrukiem logo',
+    description:
+      'Koperty eko DL 110 × 220 mm z naturalnie brązowego papieru kraftowego. Czerń i biel trzymają na nim pełny kontrast. Nadruk od 10 sztuk, wysyłka kurierem.',
+    phrase: 'koperty eko DL',
+    phraseShort: 'koperty eko',
+    eyebrow: 'Kolor · Eko',
+    h1: 'Koperty eko kraft DL 110 × 220 mm',
+    lead: 'Koperta Eko DL jest zrobiona z naturalnie brązowego papieru kraftowego. Odcień pochodzi z samego surowca, a nie z warstwy farby, więc zagięta klapka i rozcięta krawędź zostają brązowe. To jedyny papier w palecie, który komunikuje materiał, zanim jeszcze zacznie mówić kolor. Nadruk czarny daje na nim najwyższy kontrast, a biel — efekt najbardziej współczesny.',
+    paperUsp: {
+      title: 'Papier kraftowy',
+      note: 'Naturalny brąz surowca — jedyny odcień w palecie, który mówi o materiale, a nie o barwie',
+    },
+    shotFiles: ['eko-koperta-dl-nadruk-logo-palarni-kawy'],
+    character: {
+      heading: 'Czym koperta eko różni się od Szarobrązowej i od Ecru',
+      paragraphs: [
+        'Eko to ciepły, średnio ciemny brąz papieru kraftowego. Powierzchnia jest matowa i gładka w dotyku, bez połysku i bez poddruku od wewnątrz — cały charakter tego arkusza robi barwa surowca.',
+        'Od Szarobrązowego (taupe) dzieli go temperatura i nasycenie: taupe jest szarawy i wyraźnie jaśniejszy, Eko idzie w stronę czystego brązu. Od Ecru dzieli go wszystko poza ciepłotą — Ecru to złamana biel, Eko to pełny kolor. Trzy odcienie z tej samej ciepłej rodziny obsługują trzy różne poziomy nasycenia i nie zastępują się nawzajem.',
+        'W zapytaniach ten papier występuje jako kraftowy, brązowy, szary z odzysku albo po prostu eko. W katalogu, w konfiguratorze i na fakturze figuruje jako Eko — to jeden papier, nie cztery warianty do wyboru.',
+      ],
+    },
+    printing: {
+      heading: 'Nadruk logo na brązowym papierze eko',
+      paragraphs: [
+        'Najwyższy kontrast na papierze eko daje czerń. Znak wygląda wtedy jednocześnie technicznie i rzemieślniczo, co odpowiada estetyce marek mówiących o pochodzeniu produktu — kadr poniżej pokazuje taką realizację dla palarni kawy.',
+        'Biel działa odwrotnie: odcina się od ciepłego tła i daje efekt lekki oraz współczesny. To jest wybór na krótkie napisy, monogramy i logotypy zbudowane z samej typografii.',
+        'Znak wielobarwny sprowadzamy przed drukiem do jednej barwy. Brązowe podłoże zmienia temperaturę nakładanych kolorów, więc pastele i jasne błękity gasną na nim najbardziej — grafik pokazuje efekt na wizualizacji, zanim zamówienie ruszy do produkcji.',
+      ],
+    },
+    audience: {
+      heading: 'Kto zamawia koperty eko',
+      intro:
+        'Papier kraftowy wybierają marki, dla których naturalny materiał jest częścią komunikacji, a nie tłem dla niej.',
+      items: [
+        {
+          name: 'Palarnie kawy, herbaciarnie i manufaktury spożywcze',
+          text: 'Karty z opisem pochodzenia ziarna, bony na degustację i wysyłki do klientów abonamentowych. Kadr wyżej pokazuje kopertę z logo palarni.',
+        },
+        {
+          name: 'Marki modowe slow fashion',
+          text: 'Bileciki i podziękowania w paczkach. Brązowa koperta wchodzi w ten sam rejestr materiałowy co karton, len i bawełna, w które marka pakuje zamówienie.',
+        },
+        {
+          name: 'Producenci kosmetyków naturalnych',
+          text: 'Wysyłki prasowe, karty ze składem i kody rabatowe do zamówień. Koperta powtarza to, co opakowanie produktu mówi o surowcu.',
+        },
+        {
+          name: 'Pracownie rzemieślnicze i warsztaty',
+          text: 'Vouchery na zajęcia garncarskie, stolarskie i florystyczne. Papier eko wygląda na wykonany ręcznie, tak samo jak sam prezent.',
+        },
+        {
+          name: 'Zespoły odpowiedzialne za raportowanie ESG',
+          text: 'Pisma przewodnie do raportów zrównoważonego rozwoju i korespondencja świąteczna. Koperta jest tu pierwszym elementem, który potwierdza deklarację z dokumentu.',
+        },
+      ],
+    },
+    caution: {
+      heading: 'Kiedy koperta eko nie jest najlepszym wyborem',
+      paragraphs: [
+        'Gdy logo ma zostać odtworzone w oryginalnych barwach. Brązowe podłoże zmienia temperaturę i jasność nakładanych kolorów, więc pełna paleta CMYK — a zwłaszcza barwy jasne i pastelowe — wychodzi na nim przygaszona. Wtedy pewniej pracuje Biały albo Ecru.',
+        'Gdy koperta ma trafić do obiegu ściśle formalnego. W korespondencji urzędowej i sądowej papier kraftowy czyta się jako opakowanie, a nie jako pismo — tam lepiej sprawdzą się Granatowy, Biały i Szara.',
+      ],
+    },
+    faq: [
+      {
+        question: 'Czy papier eko to to samo co kraftowy?',
+        answer:
+          'Tak. Eko to nasza nazwa katalogowa naturalnie brązowego papieru kraftowego. Pod tym samym odcieniem klienci szukają też kopert brązowych i kopert z papieru z odzysku.',
+      },
+      {
+        question: 'Czy papier eko ma wyczuwalną fakturę?',
+        answer:
+          'Powierzchnia jest matowa i gładka w dotyku. Charakter tego arkusza robi barwa surowca, a nie tłoczenie, prążkowanie ani powłoka — koperta nie ma reliefu, który dałoby się wyczuć palcem.',
+      },
+      {
+        question: 'Jak wygląda biały nadruk na brązowym papierze?',
+        answer:
+          'Biel jest kryjąca i wyraźnie odcina się od ciepłego tła. Sprawdza się przy krótkich napisach, monogramach i logotypach typograficznych; przy bardzo drobnych detalach pewniejsza jest czerń.',
+      },
+      {
+        question: 'Czym koperta eko różni się od Szarobrązowej?',
+        answer:
+          'Temperaturą i nasyceniem. Szarobrązowy (taupe) łączy szarość z beżem i jest wyraźnie jaśniejszy, a Eko to pełny, ciepły brąz papieru kraftowego. Taupe wygląda na kolor dobrany, Eko — na materiał.',
+      },
+    ],
+    ogImageSlug: 'koperty-eko',
+    ogImageAlt:
+      'Koperta DL z brązowego papieru eko z ciemnym nadrukiem logo palarni kawy, na ciemnym drewnie',
+  },
+
+  zolta: {
+    title: 'Żółte koperty DL z nadrukiem logo',
+    description:
+      'Żółte koperty ozdobne DL 110 × 220 mm, nasycony słoneczny odcień barwiony w masie. Czerń, granat i grafit trzymają na nim pełny kontrast. Wysyłka kurierem.',
+    phrase: 'żółte koperty DL',
+    phraseShort: 'żółte koperty',
+    eyebrow: 'Kolor · Żółty',
+    h1: 'Żółte koperty DL 110 × 220 mm',
+    lead: 'Żółta koperta DL jest zrobiona z papieru barwionego w masie o nasyconym, słonecznym odcieniu. Kolor sięga przez całą grubość arkusza, więc klapka po zamknięciu i krawędź po rozcięciu zostają żółte. Jest to najjaśniejszy mocny kolor w palecie: przyjmuje ciemny nadruk przy pełnej sile barwy i wychodzi z każdego stosu korespondencji na wierzch.',
+    shotFiles: [],
+    character: {
+      heading: 'Czym żółta koperta różni się od złotej',
+      paragraphs: [
+        'Żółta to kolor papieru: matowy, nasycony, jednakowy w każdym oświetleniu. Złota to wykończenie metaliczne — powierzchnia odbija światło i zmienia jasność razem z kątem patrzenia. Zapytanie o koperty żółte prowadzi do pierwszego papieru, o złote do drugiego, a w konfiguratorze są to dwa osobne odcienie.',
+        'Różnica rozstrzyga też o nadruku. Na żółtym pracuje każda barwa ciemna i znak nie ucieka w odblasku, na złotym jasny nadruk gubi się przy pierwszym odbiciu światła. Jeśli marka ma żółć w identyfikacji, papier matowy odda ją wierniej niż metalik.',
+        'W zapytaniach ten odcień bywa nazywany żółtym, słonecznym albo kanarkowym. Pojawia się też nazwa „musztardowy", ale ta opisuje barwę ciemniejszą i przygaszoną, której w palecie nie ma. W katalogu, w konfiguratorze i na fakturze papier występuje jako Żółta.',
+      ],
+    },
+    printing: {
+      heading: 'Nadruk logo na żółtej kopercie',
+      paragraphs: [
+        'Barwy ciemne osiągają na żółtym tle najwyższy kontrast w całej palecie. Czarny nadruk jest czytelny z drugiego końca pomieszczenia, co przy minimalistycznych znakach i mocnej typografii jest głównym argumentem za tym odcieniem.',
+        'Logotypy wielobarwne złożone z ciemnych składowych — granatu, brązu, butelkowej zieleni — zachowują tu czytelność bez sprowadzania do jednej barwy. Odpadają natomiast barwy jasne: biel, jasna szarość i beż toną w żółtym tle.',
+        'Wizualizację przygotowuje grafik na tym konkretnym odcieniu i przesyła ją do akceptacji. Termin realizacji liczymy dopiero od Państwa akceptacji, a kolejne wersje po uwagach są bez dopłaty.',
+      ],
+    },
+    audience: {
+      heading: 'Kto zamawia żółte koperty',
+      intro:
+        'Żółć wybierają nadawcy, którzy chcą, żeby przesyłkę otwarto jako pierwszą — w edukacji, w branżach kreatywnych i w wysyłkach do klienta indywidualnego.',
+      items: [
+        {
+          name: 'Przedszkola, szkoły językowe i centra edukacyjne',
+          text: 'Zaproszenia na zakończenie roku, dyplomy dla uczniów i podziękowania dla rodziców. Koperta nie ginie w plecaku ani w stosie papierów na biurku.',
+        },
+        {
+          name: 'Agencje kreatywne i marketingowe',
+          text: 'Wysyłki koncepcyjne, zaproszenia na premiery i pakiety dla dziennikarzy. Kolor sam w sobie jest komunikatem, że w środku nie ma faktury.',
+        },
+        {
+          name: 'Sklepy z zabawkami i produktami dla dzieci',
+          text: 'Bileciki do paczek i karty podarunkowe. Żółć trafia do kolorystyki asortymentu, zamiast się z nią kłócić.',
+        },
+        {
+          name: 'Biura podróży, hotele i obiekty wypoczynkowe',
+          text: 'Vouchery na pobyt i zaproszenia na wyjazdy. Skojarzenie ze słońcem robi tu połowę roboty, zanim gość przeczyta pierwsze zdanie.',
+        },
+        {
+          name: 'Marki z żółcią w identyfikacji',
+          text: 'Korespondencja firmowa i opakowania wysyłkowe. Jeden odcień papieru domyka spójność między znakiem, paczką a listem, który do niej dołączono.',
+        },
+      ],
+    },
+    caution: {
+      heading: 'Kiedy żółta koperta nie jest najlepszym wyborem',
+      paragraphs: [
+        'Gdy korespondencja ma być chłodna, stonowana i formalna. W bankowości, w prawie i w medycynie nasycona żółć obniża rangę pisma — tam pewniej pracują Biały, Granatowy i Ecru.',
+        'Gdy logo składa się z bieli albo z bardzo jasnych pasteli i marka nie dopuszcza wersji ciemnej. Na jasnym, żółtym tle biały nadruk przestaje być widoczny, a zamiana barwy znaku zmienia identyfikację.',
+      ],
+    },
+    faq: [
+      {
+        question: 'Czy żółta koperta to odcień pastelowy czy nasycony?',
+        answer:
+          'Nasycony. To ciepła, słoneczna żółć — nie jaskrawy neon i nie wypłowiały pastel. Kolor jest jednakowy w świetle dziennym i przy żarówce, bo papier jest matowy.',
+      },
+      {
+        question: 'Czym żółta koperta różni się od złotej?',
+        answer:
+          'Wykończeniem. Żółta to papier matowy barwiony w masie, a Złoty ma wykończenie metaliczne, które odbija światło i zmienia jasność z kątem patrzenia. Na żółtym pracuje nadruk ciemny i jest to inny produkt niż koperta złota.',
+      },
+      {
+        question: 'Czy na żółtym papierze widać ciemny nadruk?',
+        answer:
+          'Tak, to jedno z najbardziej kontrastowych zestawień w palecie. Czerń, granat i grafit czytają się na żółtym tle z odległości kilku metrów.',
+      },
+      {
+        question: 'Czy na żółtej kopercie można pisać zwykłym długopisem?',
+        answer:
+          'Tak. Papier jest matowy i nie ma śliskiej powłoki, więc tusz schnie od razu i nie rozmazuje się pod palcem. Przy dłuższej liście odbiorców szybsza jest personalizacja drukiem.',
+      },
+    ],
+    ogImageSlug: 'koperty-zolte',
+    ogImageAlt:
+      'Dwie żółte koperty ozdobne DL na białym tle — przednia klapką do góry, druga ustawiona pionowo za nią',
+  },
+
+  'srebrna-perlowa': {
+    title: 'Srebrne perłowe koperty DL z nadrukiem',
+    description:
+      'Srebrne perłowe koperty ozdobne DL 110 × 220 mm — chłodny połysk na całej powierzchni, także na klapce. Nadruk czarny i granatowy, wysyłka kurierem.',
+    phrase: 'srebrne perłowe koperty DL',
+    phraseShort: 'srebrne perłowe koperty',
+    eyebrow: 'Kolor · Srebrna Perłowa',
+    h1: 'Srebrne perłowe koperty DL 110 × 220 mm',
+    lead: 'Srebrna Perłowa koperta DL jest zrobiona z papieru o chłodnym, perłowym połysku. Powierzchnia odbija światło i zmienia jasność razem z kątem patrzenia, więc koperta wygląda inaczej w dłoni niż na blacie. Logo drukujemy na niej kolorem ciemnym — czerń i granat dają na perle pełny kontrast, a nadruk jasny gubi się w odblasku.',
+    paperUsp: {
+      title: 'Wykończenie perłowe',
+      note: 'Chłodny połysk obejmuje cały arkusz, także klapkę i wewnętrzną krawędź',
+    },
+    shotFiles: [],
+    character: {
+      heading: 'Czym Srebrna Perłowa różni się od Szarej i od Białej Perłowej',
+      paragraphs: [
+        'Od Szarej dzieli ją powierzchnia, nie barwa. Szara jest w pełni matowa i wygląda tak samo w każdym oświetleniu; Srebrna Perłowa ma poświatę, która przy świetle padającym z boku rozjaśnia całą ściankę, a pod lampą przygasa. Obie są chłodne, ale tylko jedna z nich zmienia się w ręku.',
+        'Od Białej Perłowej dzieli ją temperatura i jasność. Biała Perłowa jest wyraźnie jaśniejsza i neutralna, Srebrna Perłowa idzie w stronę chłodnej szarości i czyta się jako metal, a nie jako biel z poświatą. To rozstrzyga o wyborze: srebro ustawia przesyłkę technicznie, perłowa biel — uroczyście.',
+        'Połysk jest cechą powierzchni, więc przy tym papierze nie mówimy o barwieniu w masie — te dwa opisy wykluczają się nawzajem. Wykończenie obejmuje cały arkusz, także klapkę i krawędź po rozcięciu, i ma w tabeli specyfikacji własny wiersz.',
+      ],
+    },
+    printing: {
+      heading: 'Nadruk logo na srebrnej perłowej kopercie',
+      paragraphs: [
+        'Na srebrze drukujemy kolorem ciemnym. Głęboka czerń wygrywa tu z każdą inną barwą: na mieniącym się, chłodnym tle daje efekt techniczny i bardzo czysty, bez cieniowania. Dobrze bronią się też granat i grafit.',
+        'Nadruk jasny na srebrze odpada, podobnie jak srebro na srebrze. Barwy o jasności zbliżonej do papieru przestają być czytelne przy pierwszym odbiciu światła, więc znak w srebrze albo w bieli pokazujemy na wizualizacji w wersji ciemnej i dopiero ona idzie do produkcji.',
+        'Wizualizację przygotowuje grafik na tym konkretnym odcieniu. Zdjęcie nie odda stopnia połysku, bo ten zależy od światła w pomieszczeniu — wizualizacja rozstrzyga układ i barwę nadruku, nie intensywność odblasku.',
+      ],
+    },
+    audience: {
+      heading: 'Kto zamawia srebrne perłowe koperty',
+      intro:
+        'Srebro wybierają nadawcy, dla których przesyłka ma wyglądać nowocześnie i technicznie, a nie odświętnie.',
+      items: [
+        {
+          name: 'Marki technologiczne i zespoły produktowe',
+          text: 'Zaproszenia na premiery, pakiety dla partnerów i karty dostępu do wydarzeń zamkniętych. Chłodny połysk odpowiada estetyce sprzętu, o którym mowa w środku.',
+        },
+        {
+          name: 'Kliniki stomatologiczne i medycyny estetycznej',
+          text: 'Bony na zabiegi i podziękowania dla pacjentów. Srebro trzyma skojarzenie z czystością gabinetu, nie schodząc przy tym w biurową biel.',
+        },
+        {
+          name: 'Salony samochodowe i firmy leasingowe',
+          text: 'Dokumenty wydawane przy odbiorze pojazdu, zaproszenia na jazdy testowe i karty serwisowe. Koperta jest wręczana do ręki, więc gość ogląda ją z bliska.',
+        },
+        {
+          name: 'Organizatorzy wydarzeń zimowych i noworocznych',
+          text: 'Karty na bale sylwestrowe, spotkania świąteczne i gale podsumowujące rok. Srebrzysta poświata wchodzi w tę oprawę bez sięgania po złoto.',
+        },
+        {
+          name: 'Pracownie jubilerskie i marki z biżuterią srebrną',
+          text: 'Karty gwarancyjne, certyfikaty i bileciki do zamówień wysyłkowych. Papier powtarza materiał, z którego zrobiony jest sam produkt.',
+        },
+      ],
+    },
+    caution: {
+      heading: 'Kiedy srebrna perłowa koperta nie jest najlepszym wyborem',
+      paragraphs: [
+        'Gdy adres ma być wypisany ręcznie piórem albo zwykłym długopisem. Powierzchnia z połyskiem gorzej przyjmuje mokry tusz — ślad bywa przerywany i długo schnie. Dane odbiorcy drukujemy wtedy w ramach personalizacji, w tym samym przebiegu co logo.',
+        'Gdy identyfikacja marki stoi na barwach ciepłych: złocie, żółciach i brązach. Srebro jest skrajnie chłodne i takie zestawienie widać od razu — pewniejszym wyborem z połyskiem będzie wtedy Złoty albo Biała Perłowa.',
+      ],
+    },
+    faq: [
+      {
+        question: 'Czy srebrny połysk obejmuje całą kopertę, także klapkę?',
+        answer:
+          'Tak. Wykończenie perłowe pokrywa cały arkusz, więc połyskuje zarówno przednia ścianka, jak i klapka oraz krawędź po rozcięciu. Siła odblasku zmienia się razem z ustawieniem koperty wobec źródła światła.',
+      },
+      {
+        question: 'Czy nanosicie srebro folią, czyli metodą hot stamping?',
+        answer:
+          'Nie. Wykonujemy wyłącznie nadruk cyfrowy, a złocenia i srebrzenia folią nie prowadzimy. Srebrny blask ma sam papier, a znak drukujemy na nim kolorem ciemnym — najczęściej czernią.',
+      },
+      {
+        question: 'Czym Srebrna Perłowa różni się od Białej Perłowej?',
+        answer:
+          'Jasnością i temperaturą. Biała Perłowa jest jaśniejsza i neutralna, więc przyjmuje także nadruk wielobarwny. Srebrna Perłowa jest chłodniejsza i ciemniejsza, czyta się jako metal i wymaga nadruku ciemnego.',
+      },
+      {
+        question: 'Czym wypisać srebrną kopertę ręcznie?',
+        answer:
+          'Pewniej sprawdzi się cienkopis alkoholowy albo marker permanentny niż długopis czy pióro — wodny tusz na powierzchni z połyskiem schnie długo i bywa przerywany. Przy dłuższej liście prościej jest zamówić personalizację.',
+      },
+    ],
+    ogImageSlug: 'koperty-srebrne-perlowe',
+    ogImageAlt:
+      'Dwie srebrne perłowe koperty ozdobne DL na jasnym tle — przednia klapką do góry, druga ustawiona pionowo za nią',
+  },
+
+  'biala-perlowa': {
+    title: 'Białe perłowe koperty DL z nadrukiem logo',
+    description:
+      'Białe perłowe koperty ozdobne DL 110 × 220 mm z delikatną poświatą na całej powierzchni. Podłoże pod nadruk w pełnym kolorze. Wysyłka kurierem w Polsce.',
+    phrase: 'białe perłowe koperty DL',
+    phraseShort: 'białe perłowe koperty',
+    eyebrow: 'Kolor · Biała Perłowa',
+    h1: 'Białe perłowe koperty DL 110 × 220 mm',
+    lead: 'Biała Perłowa koperta DL jest zrobiona z papieru o delikatnej, neutralnej poświacie — jasność powierzchni zmienia się razem z kątem padania światła. To najjaśniejsze podłoże z połyskiem w naszej palecie i jedyne, które przyjmuje nadruk w pełnym kolorze: logo wielobarwne nie wymaga tu sprowadzania do jednej barwy.',
+    paperUsp: {
+      title: 'Wykończenie perłowe',
+      note: 'Najjaśniejsze podłoże z połyskiem w palecie — poświata na całym arkuszu, także na klapce',
+    },
+    shotFiles: [
+      'biala-perlowa-koperta-dl-nadruk-logo-auto-detailing',
+      'biala-perlowa-koperta-dl-nadruk-logo-salonu-fryzjerskiego',
+      'biala-perlowa-koperta-dl-adresowanie-odbiorcy',
+    ],
+    character: {
+      heading: 'Czym Biała Perłowa różni się od matowej Bieli i od Srebrnej Perłowej',
+      paragraphs: [
+        'Od Bieli dzieli ją powierzchnia. Biała koperta jest w pełni matowa i wygląda tak samo w każdym oświetleniu; Biała Perłowa ma poświatę, która przy świetle padającym z boku rozjaśnia całą ściankę. Barwa jest w obu wypadkach jasna i neutralna — różnica leży w tym, jak papier zachowuje się w ruchu.',
+        'Od Srebrnej Perłowej dzieli ją jasność. Srebrna Perłowa schodzi w chłodną szarość i czyta się jako metal, Biała Perłowa zostaje przy bieli. To dlatego tylko na niej drukujemy logo wielobarwne: podłoże jest na tyle jasne, że nie przekłamuje barw znaku.',
+        'Połysk jest cechą powierzchni, więc przy tym papierze nie mówimy o barwieniu w masie. Wykończenie obejmuje cały arkusz, także klapkę, i ma w tabeli specyfikacji własny wiersz.',
+      ],
+    },
+    printing: {
+      heading: 'Nadruk logo i adresowanie na białej perłowej kopercie',
+      paragraphs: [
+        'Papier przyjmuje każdy kolor nadruku. Znak ciemny ma pełny kontrast, a logo wielobarwne drukujemy w oryginalnych barwach marki — kadry poniżej pokazują dwie takie realizacje: czarny nadruk firmy detailingowej i miedziany znak salonu fryzjerskiego.',
+        'Ostrożności wymagają wyłącznie barwy bardzo jasne. Biel, jasny beż i pastelowy błękit zbliżają się na tym podłożu do koloru papieru i tracą czytelność; grafik pokazuje to na wizualizacji, zanim zamówienie ruszy do produkcji.',
+        'Dane odbiorcy drukujemy w ramach personalizacji — na każdej kopercie z serii inne, według przekazanego arkusza. Na powierzchni z połyskiem to pewniejsze niż pisanie ręczne, bo mokry tusz schnie na perle wolniej i bywa przerywany. Kadr z pełnym adresem stoi w galerii wyżej.',
+      ],
+    },
+    audience: {
+      heading: 'Kto zamawia białe perłowe koperty',
+      intro:
+        'Perłowa biel jest wybierana tam, gdzie koperta ma wyglądać odświętnie, a jednocześnie nie narzucać własnego koloru zawartości.',
+      items: [
+        {
+          name: 'Uroczystości rodzinne i przyjęcia weselne',
+          text: 'Koperta na pieniądze wręczana parze i karta z podziękowaniem dla gościa. Format DL mieści banknot najwyższego nominału płasko, bez składania, a poświata papieru robi z koperty część prezentu.',
+        },
+        {
+          name: 'Gabinety medycyny estetycznej i kliniki premium',
+          text: 'Karty podarunkowe i zaproszenia dla stałych pacjentek. Koperta jest wręczana do ręki, więc oglądana z bliska — a właśnie z bliska widać różnicę wobec papieru matowego.',
+        },
+        {
+          name: 'Salony fryzjerskie i studia beauty',
+          text: 'Bony na zabiegi i karty lojalnościowe. Kadr wyżej pokazuje nadruk w jednym kolorze na tym papierze — miedziany znak salonu na perłowej bieli.',
+        },
+        {
+          name: 'Firmy detailingowe i serwisy pojazdów premium',
+          text: 'Dokumenty pojazdu, umowy serwisowe i karty gwarancyjne wydawane przy odbiorze. Kadr wyżej pokazuje taką realizację z czarnym znakiem.',
+        },
+        {
+          name: 'Marki modowe i jubilerskie',
+          text: 'Podziękowania za zakup i bileciki do przesyłek. Perłowa biel jest ramą dla delikatnej typografii, której na papierze matowym nie widać tak wyraźnie.',
+        },
+      ],
+    },
+    caution: {
+      heading: 'Kiedy biała perłowa koperta nie jest najlepszym wyborem',
+      paragraphs: [
+        'Gdy koperta ma iść w rutynowym obiegu dokumentów — do segregatora, do kancelarii, do archiwum. Poświata jest wtedy kosztem bez zastosowania, a papier matowy skanuje się i fotografuje bez jasnych plam. Do tych zadań pewniej pracują Biały, Ecru i Szara.',
+        'Gdy adres ma być wypisany ręcznie piórem. Powierzchnia z połyskiem przyjmuje mokry tusz wolniej niż papier matowy, więc przy kaligrafii wygodniejszy będzie odcień bez perły — a przy dłuższej liście odbiorców i tak szybsza jest personalizacja drukiem.',
+      ],
+    },
+    faq: [
+      {
+        question: 'Czy ta koperta błyszczy się jak brokat?',
+        answer:
+          'Nie. To subtelna poświata rozłożona równomiernie na całej powierzchni, bez widocznych drobin. Efekt przypomina masę perłową, a nie brokat naklejony na papier.',
+      },
+      {
+        question: 'Czy wielobarwne logo zachowa na niej swoje kolory?',
+        answer:
+          'Tak. Podłoże jest jasne i neutralne, więc znak drukujemy w oryginalnych barwach marki, bez sprowadzania go do jednego koloru. To jedyny papier z połyskiem w naszej palecie, na którym jest to możliwe.',
+      },
+      {
+        question: 'Czym Biała Perłowa różni się od Srebrnej Perłowej?',
+        answer:
+          'Jasnością i temperaturą. Biała Perłowa zostaje przy bieli i przyjmuje nadruk w pełnym kolorze. Srebrna Perłowa schodzi w chłodną szarość, czyta się jako metal i wymaga nadruku ciemnego.',
+      },
+      {
+        question: 'Jaki kolor nadruku wygląda najlepiej na papierze perłowym?',
+        answer:
+          'Najpewniejsze są barwy ciemne — czerń, granat i butelkowa zieleń — oraz metaliczne złoto przy nadruku jednobarwnym. Odpadają wyłącznie barwy bardzo jasne, które zbliżają się do koloru podłoża.',
+      },
+    ],
+    ogImageSlug: 'koperty-biale-perlowe',
+    ogImageAlt:
+      'Dwie białe perłowe koperty ozdobne DL na jasnym tle — przednia klapką do góry, druga ustawiona pionowo za nią',
+  },
 };
 
-/** Identyfikatory kolorów z opublikowaną stroną — kolejność jak w katalogu. */
-export const COLOR_PAGE_IDS = Object.keys(COLOR_PAGES);
+/**
+ * Identyfikatory kolorów z opublikowaną stroną — **kolejność jak w katalogu**.
+ *
+ * Kolejność wyprowadzamy z `COLORS`, a nie z kluczy mapy wyżej, bo mapa rośnie
+ * w porządku publikacji. Ta lista zasila spisy odcieni na `/koperty-dl`
+ * i `/koperty-z-nadrukiem` oraz kolejność wpisów w sitemapie; przy porządku
+ * publikacyjnym Jeansowy stał między Matchą a Szarobrązowym, choć w palecie
+ * należy do rodziny niebieskich. Katalog grupuje odcienie po barwie, więc lista
+ * czytana z niego stawia obok siebie kolory, które klient faktycznie porównuje.
+ */
+export const COLOR_PAGE_IDS = COLORS.filter((color) => color.id in COLOR_PAGES).map(
+  (color) => color.id
+);
 
 /** Pierwsza litera wielką — odmieniona fraza w nagłówku i w okruszkach. */
 export function capitalize(value: string): string {

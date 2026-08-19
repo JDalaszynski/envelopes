@@ -190,8 +190,15 @@ z **preselekcją koloru**.
 | 36e | Zielone koperty DL — `/koperty/jasnozielony` | Supporting LP | zielone koperty dl | RUCH | Florystyka, eko, edukacja | F5 | **Wykonane 18 sierpnia 2026.** Świeża jasna zieleń trawiasta barwiona w masie (115 g/m²). Czysty kontrast dla ciemnego nadruku i pisma odręcznego. Mosty: zielony, jasnozielony, zieleń trawiasta, soczysta zieleń, light green | [x] |
 | 36f | Czerwone koperty DL — `/koperty/czerwony` | Supporting LP | czerwone koperty dl | KONWERSJA | Restauracje, święta, kultura | F5 | **Wykonane 18 sierpnia 2026.** Karminowo-bordowy szlachetny odcień barwiony w masie (115 g/m²). Kadr aranżacyjny z czarnym nadrukiem logo restauracji. Mosty: czerwony, karminowy, bordowy, wiśniowy, rubinowy | [x] |
 
-> **Backlog kolorów (5 pozycji pozostałych):** różowa, eko, żółta, srebrna perłowa, biała perłowa. Do realizacji w kolejnych partiach — priorytet
-> wspierający pokrycie całej palety 19 odcieni.
+| 36g | Różowe koperty DL — `/koperty/rozowa` | Supporting LP | różowe koperty dl | RUCH | Beauty, moda, florystyka | F5 | **Wykonane 19 sierpnia 2026.** Przygaszony, dojrzały róż barwiony w masie (115 g/m²). Argument własny: jedyny ciepły kolor w palecie, który zostaje jasny — przyjmuje ciemny nadruk przy pełnej sile barwy. Rozgraniczenie wobec `czerwony` stoi w sekcji „charakter" i w FAQ. Mosty: brudny róż, pudrowy, wrzosowy, róż angielski | [x] |
+| 36h | Koperty eko kraft DL — `/koperty/eko` | Supporting LP | koperty eko dl | KONWERSJA | Kawa, slow fashion, kosmetyki naturalne, ESG | F5 | **Wykonane 19 sierpnia 2026.** Naturalnie brązowy papier kraftowy (115 g/m²). Argument własny: jedyny odcień, który komunikuje materiał, a nie dobraną barwę. Kadr aranżacyjny z logo palarni kawy. Rozgraniczenie wobec `taupe` i `ecru` w sekcji „charakter" i w FAQ. Mosty: kraft, brązowy, papier z odzysku | [x] |
+| 36i | Żółte koperty DL — `/koperty/zolta` | Supporting LP | żółte koperty dl | RUCH | Edukacja, agencje kreatywne, turystyka | F5 | **Wykonane 19 sierpnia 2026.** Nasycona słoneczna żółć barwiona w masie (115 g/m²). Argument własny: najjaśniejszy mocny kolor w palecie, czyli najwyższy kontrast pod nadruk ciemny. Cała sekcja „charakter" rozgranicza **żółty od złotego** — to największa kolizja nazewnicza w palecie. Mosty: żółty, słoneczny, kanarkowy; „musztardowy" świadomie odesłany jako barwa spoza oferty | [x] |
+| 36j | Srebrne perłowe koperty DL — `/koperty/srebrna-perlowa` | Supporting LP | srebrne perłowe koperty dl | KONWERSJA | Technologia, motoryzacja, stomatologia | F5 | **Wykonane 19 sierpnia 2026.** Chłodny połysk perłowy (115 g/m²). Argument własny: jedyny odcień z połyskiem w tonacji zimnej. Rozgraniczenie dwustronne — wobec `szara` (powierzchnia) i wobec `biala-perlowa` (jasność i temperatura). Pytanie o hot stamping zostaje tutaj; pytanie cenowe pozostaje przy `zloty` | [x] |
+| 36k | Białe perłowe koperty DL — `/koperty/biala-perlowa` | Supporting LP | białe perłowe koperty dl | KONWERSJA | Uroczystości, beauty, detailing, moda | F5 | **Wykonane 19 sierpnia 2026.** Neutralna perła (115 g/m²). Argument własny: jedyny papier z połyskiem, który przyjmuje nadruk w pełnym kolorze. Trzy kadry aranżacyjne (auto detailing, salon fryzjerski, adresowanie z arkusza) — najbogatsza galeria w klastrze. Zamknięcie palety 19 odcieni | [x] |
+
+> **Backlog kolorów wyczerpany 19 sierpnia 2026.** Wszystkie 19 odcieni z `COLORS` ma opublikowaną
+> stronę; `COLOR_PAGES` i `catalog.ts` są komplementarne, więc kolejny kolor w katalogu wymaga
+> jednocześnie wpisu treściowego, inaczej nie powstanie adres.
 
 ---
 
@@ -242,6 +249,59 @@ nie liczą się do kadencji czterech pozycji tygodniowo i nie mają filara.
 ---
 
 ## Dziennik wdrożeń
+
+### 19 sierpnia 2026 — audyt kompletu 19 stron kolorów
+
+**Przegląd całego klastra K5 po domknięciu palety (poz. 36g–36k).** Kontrola objęła
+komplet dziewiętnastu wpisów w `src/lib/color-pages.ts`, a nie tylko pięć nowych, bo
+domknięcie palety zmienia warunki brzegowe dla stron opublikowanych wcześniej —
+zwłaszcza dla rodzin, w których dopiero teraz stanął pełny komplet odcieni.
+
+**Co przeszło bez zastrzeżeń.** Wszystkie 19 wpisów ma komplet pól kontraktu
+`ColorPageContent` — żadna strona nie jest cienka: każda ma cztery pytania FAQ i pięć
+grup odbiorców. Nie ma zdublowanych `phrase`, nie ma zdublowanych pytań FAQ (reguła
+antykanibalizacyjna trzyma: pytanie cenowe zostaje wyłącznie przy `zloty`), a każda
+strona wymienia swoją nazwę katalogową, więc most nazewniczy działa w obie strony —
+łącznie z odcieniami, których nazwa handlowa rozjeżdża się z frazą wyszukiwania
+(`blekit-lupkowy` → Jeansowy, `jasnoniebieska` → Błękitna, `taupe` → Szarobrązowy).
+Pliki OG istnieją dla wszystkich 19 slugów, kadry katalogowe stoją w trzech
+szerokościach z `COLOR_IMAGE_WIDTHS`, a wszystkie `shotFiles` mają pokrycie
+w `showcase.ts`. Barwienie w masie nigdzie nie stoi przy papierze z połyskiem —
+`zloty`, `srebrna-perlowa` i `biala-perlowa` są w tej kwestii czyste.
+
+**1. Wykryta sprzeczność między filarem K6 a stronami perłowymi.** FAQ na
+`/koperty-premium` twierdziło, że na papierze złotym metalicznym **oraz jasnym
+perłowym** drukujemy wyłącznie kolorem ciemnym. Po publikacji poz. 36k to zdanie stało
+się nieprawdziwe i — co gorsza — kasowało jedyny argument własny Białej Perłowej:
+to jedyne podłoże z połyskiem, które przyjmuje nadruk wielobarwny. Odpowiedź rozdziela
+teraz trzy papiery zamiast wrzucać je do jednego worka: ciemny nadruk zostaje przy
+Złotym i Srebrnej Perłowej, a Biała Perłowa dostaje wprost zapisany wyjątek. Filar
+i strona koloru mówią wreszcie to samo, a różnicowanie idzie w stronę, w której klaster
+ma sprzedawać.
+
+**2. Jedyne powtórzenie tekstu w klastrze — usunięte.** Zdanie o pigmencie sięgającym
+przez całą grubość arkusza stało dosłownie tak samo na `granatowy` i na `szara`.
+Przy dziewiętnastu stronach opisujących ten sam parametr papieru to była jedna kolizja
+na cały klaster, ale akurat w bloku FAQ, czyli w treści zgłaszanej jako `FAQPage` —
+tam powielenie kosztuje najwięcej. Odpowiedź na `szara` została przeredagowana.
+
+**3. Fałszywy trop, który warto zapisać: długości metaopisów.** Pierwszy pomiar na
+zbudowanym HTML pokazał dziesięć opisów ponad kontraktowe 155 znaków, w tym cztery
+powyżej 160. Pomiar liczył jednak bajty UTF-8, a nie znaki — przy polskich znakach
+diakrytycznych zawyża długość o kilka do kilkunastu procent. Zmierzone na źródle
+wszystkie 19 opisów mieszczą się w przedziale 143–155 znaków, a tytuły łącznie z marką
+nie przekraczają 60. **Metadanych nie trzeba ruszać** — i nie należy ich skracać na
+podstawie pomiaru bajtowego przy kolejnych partiach treści.
+
+**Weryfikacja.** `npx tsc --noEmit` bez błędów. `npm run build` kończy się kodem 0
+i prerenderuje komplet dziewiętnastu tras `/koperty/[kolor]`. Dane strukturalne na
+próbce (`srebrna-perlowa`) niosą `ItemPage`, `Product` z `Offer`, `FAQPage`
+i `BreadcrumbList`, a `material` czyta wykończenie z katalogu („wykończenie perłowe"),
+nie ze stałej w treści.
+
+**Otwarte — do decyzji właściciela.** W katalogu leży nieśledzony plik `env.local`
+obok `.env.local`; oba wyglądają na warianty tej samej konfiguracji z sekretami
+Firebase. Nie ruszam go, ale duplikat prędzej czy później rozjedzie się z oryginałem.
 
 ### 18 sierpnia 2026 — poz. 36d–36f: `/koperty/ciemnozielony`, `/koperty/jasnozielony`, `/koperty/czerwony`
 

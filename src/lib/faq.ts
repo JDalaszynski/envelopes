@@ -372,7 +372,7 @@ export const PREMIUM_FAQ_ITEMS: FaqItem[] = [
   {
     question: 'Jakie kolory nadruku stosuje się na ciemnych i metalicznych kopertach premium?',
     answer:
-      'Na ciemnych odcieniach barwionych w masie (Czarny, Granatowy, Butelkowa Zieleń) stosujemy kontrastowy nadruk jasny: biel, srebro lub krem. Na papierze złotym metalicznym oraz jasnym perłowym drukujemy kolorem ciemnym: głęboką czernią, grafitem lub granatem, co zapewnia doskonałą czytelność detali.',
+      'Na ciemnych odcieniach barwionych w masie (Czarny, Granatowy, Butelkowa Zieleń) stosujemy kontrastowy nadruk jasny: biel, srebro lub krem. Na papierach z połyskiem — Złotym metalicznym i Srebrnej Perłowej — drukujemy kolorem ciemnym: głęboką czernią, grafitem lub granatem, bo jasny znak gubi się w odblasku. Biała Perłowa jest wyjątkiem: to podłoże na tyle jasne i neutralne, że przyjmuje także nadruk wielobarwny w oryginalnych barwach marki.',
   },
   {
     question: 'Czy na kopertach premium można wydrukować personalizację imienną?',
