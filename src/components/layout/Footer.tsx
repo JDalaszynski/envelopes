@@ -80,9 +80,8 @@ export function Footer() {
               <li><CookieSettingsLink /></li>
             </ul>
             <div className="row" style={{ gap: 'var(--space-3)', marginTop: 'var(--space-5)' }}>
-              <span className="pay-badge">LinkedIn</span>
-              <span className="pay-badge">Instagram</span>
-              <span className="pay-badge">Facebook</span>
+              <a href="https://www.linkedin.com/company/envelopes-koperty/" target="_blank" rel="noopener noreferrer" className="pay-badge" style={{ textDecoration: 'none', color: 'inherit' }}>LinkedIn</a>
+              <a href="https://www.instagram.com/envelopes.pl" target="_blank" rel="noopener noreferrer" className="pay-badge" style={{ textDecoration: 'none', color: 'inherit' }}>Instagram</a>
             </div>
           </div>
 
