@@ -283,7 +283,7 @@ export const metadata: Metadata = {
   /* Bez kwoty w tytule — decyzja właściciela z 17 sierpnia 2026: cena należy
      do cennika i paska faktów, nie do nagłówka wyniku wyszukiwania. */
   title: `Koperty ozdobne i kolorowe DL w ${COLORS.length} kolorach | Envelopes`,
-  description: `Koperty ozdobne DL w ${COLORS.length} kolorach po ${formatPrice(plain.unitTotal)} brutto za sztukę — każdy odcień w tej samej cenie. Nadruk logo i adresowanie odbiorców, wysyłka w ${DEFAULT_PRICING.leadDaysPlain} dni robocze.`,
+  description: `Odkryj najwyższej jakości koperty ozdobne i koperty kolorowe. Wybierz eleganckie koperty ozdobne dl idealne do profesjonalnej korespondencji i zbuduj wizerunek swojej marki. Sprawdź naszą ofertę i złóż zamówienie online.`,
   keywords: [
     'koperty ozdobne',
     'koperta ozdobna',
@@ -295,7 +295,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     title: 'Koperty ozdobne DL w 19 kolorach — Envelopes',
-    description: `Koperta ozdobna DL ${DL.dimensions} za ${formatPrice(plain.unitTotal)} brutto, ${COLORS.length} kolorów w jednej cenie, od ${DEFAULT_PRICING.moqWithoutPrint} sztuki. Nadruk logo i adresowanie na życzenie.`,
+    description: `Odkryj najwyższej jakości koperty ozdobne i koperty kolorowe. Wybierz eleganckie koperty ozdobne dl idealne do profesjonalnej korespondencji i zbuduj wizerunek swojej marki. Sprawdź naszą ofertę i złóż zamówienie online.`,
     url: '/',
     images: [
       ogImage(
@@ -332,7 +332,7 @@ export default function HomePage() {
       <JsonLd
         data={howToJsonLd({
           name: 'Jak zamówić koperty ozdobne w Envelopes',
-          description: `Zamówienie kopert ozdobnych DL ${DL.dimensions} — od wyboru koloru w konfiguratorze po wysyłkę kurierem.`,
+          description: `Odkryj najwyższej jakości koperty ozdobne i koperty kolorowe. Wybierz eleganckie koperty ozdobne dl idealne do profesjonalnej korespondencji i zbuduj wizerunek swojej marki. Sprawdź naszą ofertę i złóż zamówienie online.`,
           steps: HOW_TO_STEPS,
         })}
       />

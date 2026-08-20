@@ -98,13 +98,13 @@ const PREMIUM_SHOTS = PREMIUM_SHOT_FILES.map(shotByFile);
 export const metadata: Metadata = {
   title: 'Eleganckie koperty premium DL z nadrukiem logo',
   description:
-    'Eleganckie koperty ozdobne premium DL 110 × 220 mm. Gramatury 115–140 g/m², perła i metalik bez dopłaty, barwienie w masie. Nadruk logo od 10 sztuk. Wysyłka kurierem.',
+    'Ekskluzywne koperty premium dla najbardziej wymagających odbiorców. Wybierz eleganckie koperty premium idealne do prestiżowej korespondencji biznesowej. Zadbaj o detale budujące zaufanie i poznaj nasze rozwiązania.',
   alternates: { canonical: `${SITE_URL}/koperty-premium` },
   openGraph: {
     type: 'website',
     title: 'Eleganckie koperty premium DL z nadrukiem logo',
     description:
-      'Eleganckie koperty ozdobne premium DL 110 × 220 mm. Gramatury 115–140 g/m², perła i metalik bez dopłaty, barwienie w masie. Nadruk logo od 10 sztuk.',
+      'Ekskluzywne koperty premium dla najbardziej wymagających odbiorców. Wybierz eleganckie koperty premium idealne do prestiżowej korespondencji biznesowej. Zadbaj o detale budujące zaufanie i poznaj nasze rozwiązania.',
     url: `${SITE_URL}/koperty-premium`,
     images: [
       ogImage(
@@ -117,7 +117,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Eleganckie koperty premium DL z nadrukiem logo',
     description:
-      'Eleganckie koperty ozdobne premium DL 110 × 220 mm. Gramatury 115–140 g/m², perła i metalik bez dopłaty, barwienie w masie. Nadruk logo od 10 sztuk.',
+      'Ekskluzywne koperty premium dla najbardziej wymagających odbiorców. Wybierz eleganckie koperty premium idealne do prestiżowej korespondencji biznesowej. Zadbaj o detale budujące zaufanie i poznaj nasze rozwiązania.',
     images: [`${SITE_URL}/images/og/koperty-premium.jpg`],
   },
 };
@@ -128,7 +128,7 @@ export default function KopertyPremiumPage() {
       path: '/koperty-premium',
       name: 'Eleganckie koperty premium DL z nadrukiem logo',
       description:
-        'Oferta eleganckich kopert ozdobnych klasy premium w formacie DL: gramatury 115–140 g/m², wykończenia perłowe i metaliczne, barwienie w masie, nadruk logo od 10 sztuk.',
+        'Ekskluzywne koperty premium dla najbardziej wymagających odbiorców. Wybierz eleganckie koperty premium idealne do prestiżowej korespondencji biznesowej. Zadbaj o detale budujące zaufanie i poznaj nasze rozwiązania.',
       type: 'ItemPage',
     }),
     breadcrumbJsonLd([

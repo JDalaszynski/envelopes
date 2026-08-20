@@ -169,7 +169,7 @@ export const metadata: Metadata = {
      w pasku faktów, w tabeli cennika i w `description`; nagłówek wyniku
      wyszukiwania niesie frazę i minimum zamówienia, czyli realną przewagę. */
   title: `Koperty z nadrukiem logo firmowego od ${DEFAULT_PRICING.moqWithPrint} sztuk`,
-  description: `Nadruk logo na kopertach ozdobnych DL w ${COLORS.length} kolorach — ${formatPrice(printed.unitTotal)} brutto/szt. od ${DEFAULT_PRICING.moqWithPrint} sztuk. Wizualizacja do akceptacji przed drukiem, faktura VAT.`,
+  description: `Profesjonalne koperty z nadrukiem ułatwią komunikację z klientem. Wyróżnij swoją markę wybierając eleganckie koperty firmowe z nadrukiem oraz koperty z logo firmy. Poznaj pełną ofertę i zleć nam realizację.`,
   /* `koperty z nadrukiem cena` przeszła 17 sierpnia 2026 do wpisu
      `/blog/cena-kopert-z-nadrukiem-i-koszt-zamowienia` — jeden właściciel
      frazy na serwis. Filar zostaje przy frazie usługowej i transakcyjnej;
@@ -185,7 +185,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     title: 'Koperty z nadrukiem logo firmowego — Envelopes',
-    description: `Koperta DL ${DL.dimensions} z nadrukiem logo: ${formatPrice(printed.unitTotal)} brutto za sztukę, 19 kolorów, minimum ${DEFAULT_PRICING.moqWithPrint} sztuk.`,
+    description: `Profesjonalne koperty z nadrukiem ułatwią komunikację z klientem. Wyróżnij swoją markę wybierając eleganckie koperty firmowe z nadrukiem oraz koperty z logo firmy. Poznaj pełną ofertę i zleć nam realizację.`,
     url: '/koperty-z-nadrukiem',
     images: [
       ogImage(
@@ -221,7 +221,7 @@ export default function PrintedEnvelopesPage() {
       <JsonLd
         data={howToJsonLd({
           name: 'Jak zamówić koperty z nadrukiem logo firmowego',
-          description: `Zamówienie kopert DL ${DL.dimensions} z nadrukiem logo w sklepie Envelopes — od konfiguracji po wysyłkę kurierem.`,
+          description: `Profesjonalne koperty z nadrukiem ułatwią komunikację z klientem. Wyróżnij swoją markę wybierając eleganckie koperty firmowe z nadrukiem oraz koperty z logo firmy. Poznaj pełną ofertę i zleć nam realizację.`,
           steps: HOW_TO_STEPS,
         })}
       />

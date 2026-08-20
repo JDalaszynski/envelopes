@@ -11,14 +11,14 @@ export const metadata: Metadata = {
   title: 'Kontakt — Biuro Obsługi Klienta',
   /* 97 znaków zostawiało w wyniku wyszukiwania pół wiersza pustki. Dopisany
      próg wyceny indywidualnej niesie konkret, po który klient B2B tu wchodzi. */
-  description: `Kontakt do Envelopes: telefon, e-mail i godziny pracy Biura Obsługi Klienta. Wycena indywidualna powyżej ${BULK_QUOTE_THRESHOLD.toLocaleString('pl-PL')} sztuk, faktura VAT do każdego zamówienia.`,
+  description: `Skontaktuj się z obsługą Envelopes. Oferujemy szybką odpowiedź na pytania o asortyment oraz przedstawiamy wyceny indywidualne dla dużych zamówień hurtowych. Zadzwoń lub napisz do nas aby uzyskać pomoc w zamówieniu.`,
   alternates: { canonical: '/kontakt' },
   openGraph: {
     type: 'website',
     title: 'Kontakt i wycena indywidualna — Envelopes',
     /* Bez `description` karta w podglądzie odnośnika dziedziczyła opis
        z layoutu, czyli ofertę zamiast informacji kontaktowej. */
-    description: `Telefon, e-mail i godziny pracy Biura Obsługi Klienta. Wycena indywidualna zamówień powyżej ${BULK_QUOTE_THRESHOLD.toLocaleString('pl-PL')} sztuk.`,
+    description: `Skontaktuj się z obsługą Envelopes. Oferujemy szybką odpowiedź na pytania o asortyment oraz przedstawiamy wyceny indywidualne dla dużych zamówień hurtowych. Zadzwoń lub napisz do nas aby uzyskać pomoc w zamówieniu.`,
     url: '/kontakt',
     images: [
       ogImage('kontakt', 'Koperta DL Biała Perłowa z nadrukiem logo firmowego na szczotkowanym metalu'),

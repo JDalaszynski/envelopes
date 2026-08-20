@@ -135,7 +135,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
   czarny: {
     title: 'Czarne koperty DL z nadrukiem logo',
     description:
-      'Czarne koperty ozdobne DL 110 × 220 mm, papier barwiony w masie — czarny także na zgięciu i krawędzi. Nadruk logo jasnym kolorem, wysyłka kurierem.',
+      'Wybierz eleganckie czarne koperty i zrób niezapomniane wrażenie na odbiorcach. Głęboki odcień idealnie podkreśli prestiż Twojej marki. Zamów z własnym nadrukiem.',
     phrase: 'czarne koperty DL',
     phraseShort: 'czarne koperty',
     eyebrow: 'Kolor · Czarny',
@@ -222,7 +222,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
   granatowy: {
     title: 'Granatowe koperty DL z nadrukiem logo',
     description:
-      'Granatowe koperty ozdobne DL 110 × 220 mm, papier barwiony w masie. Jasny nadruk logo trzyma na nich pełny kontrast. Wysyłka kurierem w całej Polsce.',
+      'Odkryj profesjonalne granatowe koperty, które wzbudzają zaufanie w relacjach biznesowych. Postaw na klasyczną elegancję i wyróżnij swoją korespondencję. Sprawdź opcje personalizacji.',
     phrase: 'granatowe koperty DL',
     phraseShort: 'granatowe koperty',
     eyebrow: 'Kolor · Granatowy',
@@ -313,7 +313,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
   zloty: {
     title: 'Złote koperty DL z nadrukiem logo',
     description:
-      'Złote koperty ozdobne DL 110 × 220 mm z metalicznym połyskiem, w cenie odcieni matowych. Nadruk logo ciemnym kolorem, wysyłka kurierem w całej Polsce.',
+      'Złote koperty z pięknym połyskiem dodadzą blasku Twoim voucherom i zaproszeniom. Zbuduj ekskluzywny wizerunek już od pierwszego wejrzenia. Skonfiguruj własny zestaw.',
     phrase: 'złote koperty DL',
     phraseShort: 'złote koperty',
     eyebrow: 'Kolor · Złoty',
@@ -408,7 +408,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
   ecru: {
     title: 'Beżowe koperty ecru DL z nadrukiem logo',
     description:
-      'Koperty ozdobne DL 110 × 220 mm w odcieniu ecru, czyli beżowym. Ciepła biel — czytelny na niej każdy kolor nadruku i pismo odręczne. Wysyłka kurierem.',
+      'Klasyczne koperty ecru wprowadzają ciepły i przyjazny ton do każdej wysyłki. Zadbaj o doskonałą czytelność logotypu oraz estetykę dokumentów. Zobacz dostępne warianty.',
     phrase: 'koperty ecru DL',
     phraseShort: 'koperty ecru',
     eyebrow: 'Kolor · Ecru',
@@ -495,7 +495,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
   bialy: {
     title: 'Białe koperty DL z nadrukiem logo',
     description:
-      'Białe koperty ozdobne DL 110 × 220 mm bez okienka adresowego. Czyste tło pod nadruk w pełnym kolorze i pod pismo odręczne. Wysyłka kurierem w Polsce.',
+      'Śnieżnobiałe koperty stanowią idealne tło dla Twojej komunikacji wizualnej. Pokaż profesjonalizm i dbaj o wyrazistość przekazu. Poznaj naszą ofertę i zamów online.',
     phrase: 'białe koperty DL',
     phraseShort: 'białe koperty',
     eyebrow: 'Kolor · Biały',
@@ -586,7 +586,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
   matcha: {
     title: 'Koperty matcha DL z nadrukiem logo',
     description:
-      'Koperty ozdobne DL 110 × 220 mm w odcieniu Matcha — pastelowa, szałwiowa zieleń barwiona w masie. Ciemny i jasny nadruk logo, wysyłka kurierem.',
+      'Pastelowe koperty w odcieniu matcha przyciągają wzrok swoją delikatnością. Podkreśl ekologiczne i nowoczesne wartości swojej marki. Stwórz unikalny projekt z nadrukiem.',
     phrase: 'koperty matcha DL',
     phraseShort: 'koperty matcha',
     eyebrow: 'Kolor · Matcha',
@@ -682,7 +682,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
   'blekit-lupkowy': {
     title: 'Koperty błękit łupkowy DL z nadrukiem logo',
     description:
-      'Koperty ozdobne DL 110 × 220 mm w kolorze błękitu łupkowego — zgaszony stalowy odcień, papier barwiony w masie. Nadruk logo i adresowanie imienne.',
+      'Unikalne koperty w kolorze błękitu łupkowego gwarantują stonowany i nowoczesny wygląd. Zaskocz klientów oryginalnym detalem w codziennej korespondencji. Przejdź do zamówienia.',
     phrase: 'koperty DL w kolorze błękitu łupkowego',
     phraseShort: 'koperty w kolorze błękitu łupkowego',
     eyebrow: 'Kolor · Błękit Łupkowy',
@@ -773,7 +773,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
   taupe: {
     title: 'Koperty taupe DL z nadrukiem logo',
     description:
-      'Koperty ozdobne DL 110 × 220 mm w odcieniu taupe — szarobrązowy papier 140 g/m² barwiony w masie. Nadruk logo i adresowanie imienne, wysyłka kurierem.',
+      'Wybierz modne koperty taupe łączące szarość i brąz, aby nadać wysyłce wyjątkowy charakter. Zadbaj o nowoczesny design i solidność opakowania. Zamów z dostawą do biura.',
     phrase: 'koperty taupe DL',
     phraseShort: 'koperty taupe',
     eyebrow: 'Kolor · Taupe',
@@ -864,7 +864,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
   szara: {
     title: 'Szare koperty DL z nadrukiem logo',
     description:
-      'Szare koperty ozdobne DL 110 × 220 mm, neutralny popielaty papier barwiony w masie. Czysty kontrast dla czerni, bieli i barw firmowych. Wysyłka kurierem.',
+      'Uniwersalne szare koperty świetnie współgrają z każdym projektem graficznym. Wykorzystaj ich minimalistyczny styl do budowania nowoczesnego wizerunku. Sprawdź możliwości nadruku.',
     phrase: 'szare koperty DL',
     phraseShort: 'szare koperty',
     eyebrow: 'Kolor · Szary',
@@ -951,7 +951,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
   niebieski: {
     title: 'Niebieskie koperty DL z nadrukiem logo',
     description:
-      'Niebieskie koperty ozdobne DL 110 × 220 mm w nasyconym odcieniu kobaltowym. Papier barwiony w masie, czytelny jasny nadruk logo. Wysyłka kurierem w Polsce.',
+      'Nasycone niebieskie koperty pozwolą Twojej ofercie wyróżnić się z daleka. Pokaż dynamikę swojej firmy i zadbaj o wyraziste pierwsze wrażenie. Skonfiguruj zamówienie.',
     phrase: 'niebieskie koperty DL',
     phraseShort: 'niebieskie koperty',
     eyebrow: 'Kolor · Niebieski',
@@ -1038,7 +1038,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
   jasnoniebieska: {
     title: 'Błękitne koperty DL z nadrukiem logo',
     description:
-      'Błękitne koperty ozdobne DL 110 × 220 mm — pastelowy jasnoniebieski papier barwiony w masie. Czysty kontrast dla ciemnego nadruku. Wysyłka kurierem.',
+      'Delikatne błękitne koperty wnoszą spokój i przejrzystość do komunikacji z klientem. Idealne rozwiązanie do lekkiej i eleganckiej korespondencji. Zobacz jak mogą wyglądać z Twoim logo.',
     phrase: 'błękitne koperty DL',
     phraseShort: 'błękitne koperty',
     eyebrow: 'Kolor · Błękitny',
@@ -1125,7 +1125,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
   ciemnozielony: {
     title: 'Ciemnozielone koperty DL z nadrukiem logo',
     description:
-      'Ciemnozielone koperty ozdobne DL 110 × 220 mm, butelkowa zieleń barwiona w masie. Biel, srebro i złoto trzymają na niej pełny kontrast. Wysyłka kurierem.',
+      'Prestiżowe ciemnozielone koperty budują wizerunek marki godnej zaufania. Elegancki odcień butelkowej zieleni doskonale komponuje się ze szlachetnymi dodatkami. Zleć nadruk swojego logo.',
     phrase: 'ciemnozielone koperty DL',
     phraseShort: 'ciemnozielone koperty',
     eyebrow: 'Kolor · Butelkowa Zieleń',
@@ -1213,7 +1213,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
   jasnozielony: {
     title: 'Zielone koperty DL z nadrukiem logo',
     description:
-      'Zielone koperty ozdobne DL 110 × 220 mm — świeża jasna zieleń barwiona w masie. Ciemne logo i pismo odręczne czytają się na niej wprost. Wysyłka kurierem.',
+      'Świeże zielone koperty natychmiast ożywią Twoją komunikację. Zwróć uwagę odbiorców pozytywnym przekazem już przed otwarciem listu. Zapoznaj się z naszymi rozwiązaniami dla firm.',
     phrase: 'zielone koperty DL',
     phraseShort: 'zielone koperty',
     eyebrow: 'Kolor · Zielony',
@@ -1300,7 +1300,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
   czerwony: {
     title: 'Czerwone koperty DL z nadrukiem logo',
     description:
-      'Czerwone koperty ozdobne DL 110 × 220 mm w nasyconym odcieniu karminowym. Papier barwiony w masie pod nadruk logo i bony podarunkowe. Wysyłka kurierem.',
+      'Energetyczne czerwone koperty przykują wzrok każdego adresata. Idealne do wysyłki specjalnych zaproszeń, voucherów czy ważnych ofert. Zrób krok w stronę odważnego wizerunku.',
     phrase: 'czerwone koperty DL',
     phraseShort: 'czerwone koperty',
     eyebrow: 'Kolor · Czerwony',
@@ -1387,7 +1387,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
   rozowa: {
     title: 'Różowe koperty DL z nadrukiem logo',
     description:
-      'Różowe koperty ozdobne DL 110 × 220 mm — przygaszony, dojrzały róż barwiony w masie. Czerń i grafit trzymają na nim pełny kontrast. Wysyłka kurierem.',
+      'Subtelne różowe koperty pomagają w kreowaniu ciepłych relacji z odbiorcą. Przygaszony odcień zapewnia elegancję i świetnie eksponuje firmowy nadruk. Obejrzyj realizacje i złóż zamówienie.',
     phrase: 'różowe koperty DL',
     phraseShort: 'różowe koperty',
     eyebrow: 'Kolor · Różowy',
@@ -1474,7 +1474,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
   eko: {
     title: 'Koperty eko kraft DL z nadrukiem logo',
     description:
-      'Koperty eko DL 110 × 220 mm z naturalnie brązowego papieru kraftowego. Czerń i biel trzymają na nim pełny kontrast. Nadruk od 10 sztuk, wysyłka kurierem.',
+      'Ekologiczne koperty z papieru kraftowego podkreślają odpowiedzialność społeczną Twojego biznesu. Zbuduj autentyczną więź z klientami poprzez dbałość o naturę. Skonfiguruj własną wysyłkę.',
     phrase: 'koperty eko DL',
     phraseShort: 'koperty eko',
     eyebrow: 'Kolor · Eko',
@@ -1565,7 +1565,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
   zolta: {
     title: 'Żółte koperty DL z nadrukiem logo',
     description:
-      'Żółte koperty ozdobne DL 110 × 220 mm, nasycony słoneczny odcień barwiony w masie. Czerń, granat i grafit trzymają na nim pełny kontrast. Wysyłka kurierem.',
+      'Optymistyczne żółte koperty gwarantują, że Twój list nie zostanie przeoczony. Wyróżnij się w gąszczu standardowej poczty pozytywnym i radosnym akcentem. Przejdź do naszego konfiguratora.',
     phrase: 'żółte koperty DL',
     phraseShort: 'żółte koperty',
     eyebrow: 'Kolor · Żółty',
@@ -1652,7 +1652,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
   'srebrna-perlowa': {
     title: 'Srebrne perłowe koperty DL z nadrukiem',
     description:
-      'Srebrne perłowe koperty ozdobne DL 110 × 220 mm — chłodny połysk na całej powierzchni, także na klapce. Nadruk czarny i granatowy, wysyłka kurierem.',
+      'Ekskluzywne srebrne koperty z perłowym połyskiem dodadzą wyjątkowej oprawy każdej przesyłce. Postaw na błysk i najwyższy standard w komunikacji premium. Poznaj możliwości personalizacji.',
     phrase: 'srebrne perłowe koperty DL',
     phraseShort: 'srebrne perłowe koperty',
     eyebrow: 'Kolor · Srebrna Perłowa',
@@ -1743,7 +1743,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
   'biala-perlowa': {
     title: 'Białe perłowe koperty DL z nadrukiem logo',
     description:
-      'Białe perłowe koperty ozdobne DL 110 × 220 mm z delikatną poświatą na całej powierzchni. Podłoże pod nadruk w pełnym kolorze. Wysyłka kurierem w Polsce.',
+      'Luksusowe białe koperty perłowe zapewniają niezwykłe wrażenia estetyczne. Delikatna poświata podkreśli rangę dokumentu i prestiż Twojej oferty. Zadbaj o detale budujące markę.',
     phrase: 'białe perłowe koperty DL',
     phraseShort: 'białe perłowe koperty',
     eyebrow: 'Kolor · Biała Perłowa',

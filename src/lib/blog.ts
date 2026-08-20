@@ -365,8 +365,7 @@ const POSTS: BlogPost[] = [
        własnego `FAQPage` — dane strukturalne pytań zostają na filarze. */
     slug: 'ile-kartek-miesci-koperta-dl-i-jak-je-zlozyc',
     title: 'Ile kartek mieści koperta DL i jak je złożyć',
-    /* Lead zasila `description` wpisu — 156 zn., optymalne pod CTR w SERP */
-    lead: 'Koperta DL mieści bezpiecznie do 5 arkuszy A4 złożonych na trzy. Jak grubość papieru zmienia pojemność i czym różni się składanie w literę C od litery Z.',
+    lead: 'Dowiedz się jak złożyć kartkę a4 do koperty dl aby zachować elegancję korespondencji. Zobacz ile kartek do koperty dl mieści się bezpiecznie i poznaj sprawdzone metody pakowania dokumentów biurowych.',
     category: 'Poradniki',
     date: '2026-08-18',
     readingMinutes: 6,
@@ -580,7 +579,7 @@ const POSTS: BlogPost[] = [
     title: 'Jaki format koperty wybrać do wkładki',
     /* Lead zasila `description`. Metoda, nie parametr — parametry stoją
        w tabeli niżej i w specyfikacji na filarze. */
-    lead: `Format koperty wybiera się od wkładki: mierzą ją Państwo po złożeniu i dokładają ${INSERT_CLEARANCE_MM} mm zapasu. Tabela ${STANDARD_INSERTS.length} wkładek i formatów, które je przyjmą.`,
+    lead: 'Sprawdź jaki format koperty wybrać dla różnych dokumentów. Poznaj zasady określające jaka koperta do wkładki będzie optymalna i uniknij pomyłek przy zamówieniach. Przejdź do naszego przewodnika po formatach.',
     category: 'Poradniki',
     date: '2026-08-17',
     readingMinutes: 6,
@@ -722,7 +721,7 @@ const POSTS: BlogPost[] = [
     title: 'Cena kopert z nadrukiem i koszt zamówienia',
     /* Lead zasila `description`. Jedna kwota, nie trzy: koszt jednej wysłanej
        koperty jest liczbą, której nie ma nigdzie indziej w serwisie. */
-    lead: `Koperty z nadrukiem kosztują ${formatPrice(PRINTED_UNIT.unitTotal)} brutto za sztukę. Pokazujemy, ile wychodzi całe zamówienie razem z dostawą i czego do tej kwoty nie doliczamy.`,
+    lead: 'Sprawdź jak kształtuje się koszt zamówienia kopert z nadrukiem dla Twojej firmy. Poznaj czynniki wpływające na ostateczną wycenę i dokładnie zaplanuj swój budżet marketingowy. Przeczytaj nasz przejrzysty cennik.',
     category: 'Poradniki',
     date: '2026-08-17',
     readingMinutes: 6,
@@ -920,7 +919,7 @@ const POSTS: BlogPost[] = [
     /* Lead zasila `description` wpisu, więc otwiera go fraza główna, ale nie
        powtarza tytułu słowo w słowo — pod kartą na `/blog`, `/` i na filarze
        stoi bezpośrednio pod nagłówkiem o tej samej treści. */
-    lead: 'Arkusz czy wpisanie z klawiatury? Decyduje nie liczba kopert, tylko to, gdzie ta lista już jest i kto ma ją sprawdzić. Sześć pytań rozstrzyga wybór.',
+    lead: 'Zastanawiasz się czy wybrać adresowanie kopert z arkusza czy zaadresować koperty ręcznie? Odkryj, która metoda przygotowania listy adresów do nadruku oszczędzi czas Twojej firmy. Sprawdź nasz poradnik i zdecyduj.',
     category: 'Poradniki',
     date: '2026-08-16',
     readingMinutes: 6,
@@ -1133,7 +1132,7 @@ const POSTS: BlogPost[] = [
        filar /koperty-z-nadrukiem. Stary adres przekierowuje `next.config.mjs`. */
     slug: 'jak-przygotowac-pliki-do-druku-na-kopertach',
     title: 'Jak przygotować pliki do druku na kopertach',
-    lead: `Pliki do druku na kopertach: ${PRINT_FILE_FORMAT_COUNT} formatów do ${PRINT_FILE_MAX_MB} MB, ${PRINT_MIN_DPI} dpi przy rastrach, czcionki na krzywych, ${PRINT_SAFE_MARGIN_MM} mm marginesu. Lista kontrolna przed wgraniem logo.`,
+    lead: 'Zobacz jak powinno wyglądać poprawne przygotowanie logo do druku, aby uniknąć opóźnień. Sprawdź jakie pliki do druku na kopertach przyjmujemy oraz dlaczego polecamy plik wektorowy do nadruku. Przygotuj materiały.',
     category: 'Poradniki',
     date: '2026-06-28',
     updated: '2026-08-15',

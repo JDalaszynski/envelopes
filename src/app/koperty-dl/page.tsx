@@ -202,7 +202,7 @@ export const metadata: Metadata = {
      `| Envelopes` z layoutu — Google ucinał go w wyniku. Intencję „co się
      mieści" niesie description i pierwszy nagłówek H2. */
   title: `Koperty DL — wymiary ${DL.dimensions}`,
-  description: `Koperta DL ma wymiary ${DL.dimensions}. Mieści A4 złożone na trzy i voucher ${A4_IN_THREE.width} × ${A4_IN_THREE.height} mm; największa wkładka to ${MAX_INSERT.short} × ${MAX_INSERT.long} mm. ${COLORS.length} kolorów, od ${DEFAULT_PRICING.moqWithoutPrint} sztuki.`,
+  description: `Sprawdź koperty dl wymiary i dowiedz się jaka kartka do koperty dl pasuje najlepiej. Wybierz estetyczne koperty bez okienka do codziennej i biznesowej korespondencji. Zobacz dostępne warianty i złóż zamówienie.`,
   keywords: [
     'koperty dl wymiary',
     'koperta dl wymiary',
@@ -215,7 +215,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     title: `Wymiary koperty DL — ${DL.dimensions} | Envelopes`,
-    description: `Wymiary koperty DL to ${DL.dimensions}. Największa wkładka: ${MAX_INSERT.short} × ${MAX_INSERT.long} mm. Tabela dopasowań, porównanie z formatami C6 i K4, ${COLORS.length} kolorów.`,
+    description: `Sprawdź koperty dl wymiary i dowiedz się jaka kartka do koperty dl pasuje najlepiej. Wybierz estetyczne koperty bez okienka do codziennej i biznesowej korespondencji. Zobacz dostępne warianty i złóż zamówienie.`,
     url: '/koperty-dl',
     images: [
       ogImage('koperty-dl', 'Koperta DL 110 × 220 mm w kolorze Biała Perłowa z nadrukowanym adresem'),
@@ -301,7 +301,7 @@ export default function DlEnvelopesPage() {
       <JsonLd
         data={howToJsonLd({
           name: 'Jak zamówić koperty DL',
-          description: `Zamówienie kopert DL ${DL.dimensions} bez nadruku w sklepie Envelopes — od wyboru koloru w konfiguratorze po wysyłkę kurierem w ${DEFAULT_PRICING.leadDaysPlain} dni robocze.`,
+          description: `Sprawdź koperty dl wymiary i dowiedz się jaka kartka do koperty dl pasuje najlepiej. Wybierz estetyczne koperty bez okienka do codziennej i biznesowej korespondencji. Zobacz dostępne warianty i złóż zamówienie.`,
           steps: HOW_TO_STEPS,
         })}
       />

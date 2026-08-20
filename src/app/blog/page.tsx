@@ -15,12 +15,12 @@ export const metadata: Metadata = {
      wyszukiwania treści, której na stronie nie ma, to najkrótsza droga
      do powrotu do wyników — i obietnica bez pokrycia. */
   description:
-    'Praktyczne poradniki o doborze kopert, przygotowaniu plików do nadruku i adresowaniu korespondencji firmowej. Konkrety z cennika, bez ogólników.',
+    'Baza wiedzy Envelopes zawiera praktyczne poradniki o doborze odpowiednich opakowań, przygotowaniu materiałów do druku oraz adresowaniu korespondencji firmowej. Czytaj nasze artykuły i poszerzaj swoją biznesową wiedzę.',
   // Kanoniczny adres listy — filtry i sortowanie nie tworzą osobnych URL-i (pkt 8.3)
   alternates: { canonical: '/blog' },
   openGraph: {
     title: 'Blog Envelopes — koperty i korespondencja firmowa',
-    description: 'Poradniki o doborze kopert, plikach do nadruku i adresowaniu korespondencji firmowej.',
+    description: 'Baza wiedzy Envelopes zawiera praktyczne poradniki o doborze odpowiednich opakowań, przygotowaniu materiałów do druku oraz adresowaniu korespondencji firmowej. Czytaj nasze artykuły i poszerzaj swoją biznesową wiedzę.',
     url: '/blog',
     type: 'website',
     images: [ogImage('blog', 'Koperta DL z papieru Eko z brązowym nadrukiem logo palarni kawy')],
@@ -38,7 +38,7 @@ export default function BlogPage() {
           path: '/blog',
           type: 'CollectionPage',
           name: String(metadata.title),
-          description: String(metadata.description),
+          description: 'Baza wiedzy Envelopes zawiera praktyczne poradniki o doborze odpowiednich opakowań, przygotowaniu materiałów do druku oraz adresowaniu korespondencji firmowej. Czytaj nasze artykuły i poszerzaj swoją biznesową wiedzę.',
           image: ogImage('blog', '').url,
           breadcrumb: true,
         })}

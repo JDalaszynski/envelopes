@@ -179,7 +179,7 @@ export const metadata: Metadata = {
      ma z sufiksem marki 61 znaków, czyli o jeden za dużo. Wybraliśmy pełne
      dopasowanie frazy zamiast MOQ — liczby niesie description. */
   title: 'Koperty na vouchery i bony podarunkowe',
-  description: `Koperty na vouchery i bony podarunkowe: bon ${VOUCHER_INSERT.width} × ${VOUCHER_INSERT.height} mm wchodzi do koperty DL płasko. ${COLORS.length} kolorów, nadruk logo od ${DEFAULT_PRICING.moqWithPrint} sztuk, ${formatPrice(printed.unitTotal)} brutto/szt.`,
+  description: `Eleganckie koperty na vouchery i bony podarunkowe podniosą rangę twojego prezentu. Idealnie dopasowane koperty do voucherów robią doskonałe pierwsze wrażenie na obdarowanym. Skonfiguruj własną serię i przejdź do zamówienia.`,
   keywords: [
     'koperty na vouchery',
     'koperty do voucherów',
@@ -191,7 +191,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     title: 'Koperty na vouchery i bony podarunkowe — Envelopes',
-    description: `Koperta DL ${DL.dimensions} pod bon ${VOUCHER_INSERT.width} × ${VOUCHER_INSERT.height} mm: ${COLORS.length} kolorów, nadruk logo ${formatPrice(printed.unitTotal)} brutto za sztukę, od ${DEFAULT_PRICING.moqWithPrint} sztuk. Wysyłka w ${DEFAULT_PRICING.leadDaysStandard} dni roboczych, faktura VAT.`,
+    description: `Eleganckie koperty na vouchery i bony podarunkowe podniosą rangę twojego prezentu. Idealnie dopasowane koperty do voucherów robią doskonałe pierwsze wrażenie na obdarowanym. Skonfiguruj własną serię i przejdź do zamówienia.`,
     url: '/koperty-na-vouchery',
     images: [
       ogImage(
@@ -224,7 +224,7 @@ export default function VoucherEnvelopesPage() {
       <JsonLd
         data={howToJsonLd({
           name: 'Jak przygotować koperty na vouchery i bony podarunkowe',
-          description: `Przygotowanie serii kopert pod bony podarunkowe w sklepie Envelopes — od ustalenia wymiaru bonu, przez konfigurację kopert DL ${DL.dimensions}, po wysyłkę kurierem.`,
+          description: `Eleganckie koperty na vouchery i bony podarunkowe podniosą rangę twojego prezentu. Idealnie dopasowane koperty do voucherów robią doskonałe pierwsze wrażenie na obdarowanym. Skonfiguruj własną serię i przejdź do zamówienia.`,
           steps: HOW_TO_STEPS,
         })}
       />

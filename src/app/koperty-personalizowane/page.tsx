@@ -190,7 +190,7 @@ const INDUSTRIES: { heading: string; text: string }[] = [
 export const metadata: Metadata = {
   /* Bez kwoty w tytule — decyzja właściciela z 17 sierpnia 2026. */
   title: 'Personalizowane koperty i adresowanie kopert',
-  description: `Drukujemy dane odbiorcy wprost na kopercie — pełny adres albo samo nazwisko. ${formatPrice(personalized.unitTotal)} brutto/szt. od ${DEFAULT_PRICING.moqWithPrint} sztuk, listę przekazują Państwo arkuszem.`,
+  description: `Zleć nam profesjonalne adresowanie kopert i przyspiesz wysyłkę pism. Oferujemy personalizowane koperty ułatwiające obieg dokumentów. Zobacz jak koperta z adresem buduje relacje biznesowe i zamów usługę online.`,
   keywords: [
     'personalizowane koperty',
     'koperta personalizowana',
@@ -203,7 +203,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     title: 'Personalizowane koperty i adresowanie kopert — Envelopes',
-    description: `Koperta DL ${DL.dimensions} z nadrukiem danych odbiorcy: ${formatPrice(personalized.unitTotal)} brutto za sztukę, ${COLORS.length} kolorów, minimum ${DEFAULT_PRICING.moqWithPrint} sztuk.`,
+    description: `Zleć nam profesjonalne adresowanie kopert i przyspiesz wysyłkę pism. Oferujemy personalizowane koperty ułatwiające obieg dokumentów. Zobacz jak koperta z adresem buduje relacje biznesowe i zamów usługę online.`,
     url: '/koperty-personalizowane',
     images: [
       ogImage(
@@ -233,7 +233,7 @@ export default function PersonalizedEnvelopesPage() {
       <JsonLd
         data={howToJsonLd({
           name: 'Jak zamówić personalizowane koperty z adresowaniem',
-          description: `Zamówienie kopert DL ${DL.dimensions} z nadrukiem danych odbiorcy w sklepie Envelopes — od konfiguracji, przez przekazanie listy adresów, po wysyłkę kurierem.`,
+          description: `Zleć nam profesjonalne adresowanie kopert i przyspiesz wysyłkę pism. Oferujemy personalizowane koperty ułatwiające obieg dokumentów. Zobacz jak koperta z adresem buduje relacje biznesowe i zamów usługę online.`,
           steps: HOW_TO_STEPS,
         })}
       />
