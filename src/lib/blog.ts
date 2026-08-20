@@ -1253,6 +1253,103 @@ const POSTS: BlogPost[] = [
     ctaConfigure: { label: 'Wgraj plik i wyceń nadruk', format: 'DL', print: true },
     pillar: { href: '/koperty-z-nadrukiem', anchor: 'koperty z nadrukiem' },
   },
+  {
+    /* content-plan.md poz. 12 — treść wspierająca filar F5 (`/`), cel RUCH.
+       Fraza główna: `kolory kopert`. Zmiana formatu na Supporting article
+       obsługujący dobór odcienia do marki i identyfikacji wizualnej.
+
+       Rozgraniczenie: Filar `/` (strona główna) prezentuje fizyczną paletę
+       kolorów, tabelę gramatur oraz obsługuje zapytanie "koperty kolorowe"
+       i "koperty ozdobne". Strony kolorów z Fazy 3 obsługują precyzyjne frazy
+       (np. "czarne koperty z logo"). Ten wpis odpowiada na pytania decyzyjne
+       dotyczące tego, jaki kolor pasuje do wizerunku firmy i czy nadruk
+       będzie na nim czytelny. */
+    slug: 'paleta-19-kolorow-jak-wybrac-odcien',
+    title: 'Paleta 19 kolorów — jak wybrać odcień',
+    lead: 'Sprawdź, jak dobrać odcień koperty ozdobnej do identyfikacji wizualnej firmy. Poznaj paletę 19 kolorów i wybierz najlepsze tło pod nadruk Twojego logo.',
+    category: 'Poradniki',
+    date: '2026-08-20',
+    readingMinutes: 5,
+    colorId: 'czarny',
+    format: 'DL',
+    showcaseFile: 'czarna-koperta-dl-nadruk-zaproszenie',
+    ogImageSlug: 'blog-paleta-19-kolorow',
+    ogImageAlt: 'Czarna koperta DL z białym nadrukiem zaproszenia obok czarnej klapki innej koperty',
+    keywords: [
+      'kolory kopert',
+      'jak wybrać odcień koperty',
+      'dobór koloru do marki',
+      'koperty ozdobne kolorowe',
+    ],
+    intro: `Kolor koperty to decyzja o tle, na którym wydrukowane zostanie Państwa logo. W ofercie Envelopes znajduje się 19 odcieni papieru ozdobnego o gramaturze od 115 do 140 g/m². Ponieważ każda koperta DL z naszej palety kosztuje dokładnie tyle samo — 2,58 zł brutto za sztukę — wybór koloru nie jest kwestią budżetu, lecz wyłącznie estetyki i spójności z marką. Poniżej pokazujemy, jak podzielona jest nasza paleta i który odcień będzie optymalny dla Państwa branży.`,
+    sections: [
+      {
+        id: 'podzial-palety',
+        heading: 'Jak podzielona jest paleta 19 kolorów kopert',
+        paragraphs: [
+          'Nasza paleta obejmuje 19 starannie wyselekcjonowanych odcieni, zgrupowanych w sześć rodzin kolorystycznych. Taki podział pozwala szybko zawęzić wybór z kilkunastu możliwości do kilku wariantów pasujących do tonacji Państwa marki.',
+          'Większość oferty to papiery całkowicie matowe, barwione w masie — oznacza to, że barwnik znajduje się w całej grubości arkusza, a nie tylko na jego powierzchni. Dzięki temu krawędzie koperty nie są białe, co jest charakterystyczne dla masowego druku offsetowego.',
+          'Poza matami paleta obejmuje trzy odcienie z wykończeniem powierzchniowym: Złoty z połyskiem metalicznym oraz Srebrną Perłową i Białą Perłową o delikatnym, chłodnym połysku.',
+        ],
+        table: {
+          caption: 'Podział palety 19 kolorów kopert ozdobnych w ofercie Envelopes',
+          head: ['Rodzina kolorów', 'Odcienie w ofercie', 'Charakter i najczęstsze zastosowania'],
+          rows: [
+            ['Szarości i Czernie', 'Czarny, Szara', 'Nowoczesny minimalizm, technologia, motoryzacja, kancelarie'],
+            ['Niebieskie', 'Granatowy, Niebieski, Jeansowy, Błękitna', 'Biznes korporacyjny, edukacja, prawo, finanse i doradztwo'],
+            ['Zielenie', 'Butelkowa Zieleń, Matcha, Zielony', 'Ekologia, rolnictwo, hotele w naturze, branża beauty i spa'],
+            ['Róże i Czerwienie', 'Czerwony, Różowa', 'Moda, kosmetyka, florystyka, restauracje, hotele i święta'],
+            ['Żółte i Ziemiste', 'Żółta, Szarobrązowy (Taupe), Eko', 'Agencje kreatywne, nieruchomości, budownictwo, palarnie kawy'],
+            ['Perłowe i Jasne', 'Złoty, Srebrna Perłowa, Biała Perłowa, Ecru, Biały', 'Śluby, uroczystości, medycyna estetyczna, jubilerzy i detal'],
+          ],
+        },
+      },
+      {
+        id: 'ciemne-kolory',
+        heading: 'Ciemne kolory z jasnym nadrukiem — ekskluzywność w biznesie',
+        paragraphs: [
+          'Wybór ciemnej koperty — takiej jak [Czarny](/koperty/czarny), [Granatowy](/koperty/granatowy) czy [Butelkowa Zieleń](/koperty/ciemnozielony) — jest sygnałem premium. Ciemne tło maskuje ewentualne zabrudzenia w transporcie i nadaje korespondencji prestiżowy charakter, obok którego trudno przejść obojętnie.',
+          'Decyzja o ciemnej kopercie wymusza jednak określoną technikę znakowania. Na ciemnym papierze barwionym w masie tradycyjny nadruk CMYK znika. Wyraźny efekt uzyskujemy stosując jasny nadruk — najczęściej całkowicie biały lub metalicznie złoty/srebrny.',
+          'To rozwiązanie idealne dla marek z ustabilizowaną, minimalistyczną identyfikacją wizualną, dla których wyrazisty kontrast bieli na ciemnym tle jest przedłużeniem logotypu.',
+        ],
+      },
+      {
+        id: 'jasne-kolory',
+        heading: 'Jasne i pastelowe kolory — kiedy liczy się wielobarwność',
+        paragraphs: [
+          'Jeśli logotyp Państwa firmy składa się z kilku kolorów, które muszą zostać precyzyjnie odwzorowane na wydruku, najbezpieczniejszym wyborem są odcienie jasne. [Biały](/koperty/bialy), [Ecru](/koperty/ecru), [Błękitna](/koperty/jasnoniebieska) czy [Biała Perłowa](/koperty/biala-perlowa) przyjmują nadruk w pełnym kolorze bez wpływu na odcień pigmentu.',
+          'Papiery pastelowe — takie jak [Różowa](/koperty/rozowa), [Matcha](/koperty/matcha), czy [Jasnozielony](/koperty/jasnozielony) — stanowią kompromis. Dodają do przesyłki unikalny kolor marki, a jednocześnie pozostają na tyle jasne, że czarny lub bardzo ciemny nadruk firmowy jest na nich doskonale czytelny.',
+          'Taka paleta sprawdza się znakomicie w branży medycznej, edukacyjnej, w salonach kosmetycznych oraz przy wysyłce zaproszeń i bonów podarunkowych.',
+        ],
+      },
+      {
+        id: 'kolory-perlowe',
+        heading: 'Wykończenie perłowe a matowe barwienie w masie',
+        paragraphs: [
+          'Trzy z naszych 19 odcieni — [Złoty](/koperty/zloty), [Srebrna Perłowa](/koperty/srebrna-perlowa) i Biała Perłowa — posiadają wykończenie powierzchniowe, które odbija światło. To papiery, które „pracują" pod kątem i dodają projektowi trójwymiarowości.',
+          'Matowe papiery barwione w masie absorbują światło i sprawiają wrażenie bardziej surowych, namacalnych i organicznych w dotyku. Wybór między perłą a matem jest pytaniem o to, czy przesyłka ma kojarzyć się z elegancją klasyczną, czy z nowoczesnym minimalizmem.',
+          'Wykończenie koperty nie wpływa na koszty. Wszystkie 19 kolorów objęte jest jednolitą stawką 2,58 zł brutto za kopertę DL.',
+        ],
+      },
+      {
+        id: 'podsumowanie',
+        heading: 'Lista kontrolna przy wyborze koloru koperty',
+        paragraphs: [
+          'Poniższe pięć pytań pozwoli błyskawicznie zawęzić paletę 19 kolorów do tego jednego, właściwego odcienia.',
+        ],
+        list: [
+          'Czy nadruk ma być jednokolorowy (biały/czarny), czy pełnokolorowy?',
+          'Czy kolorystyka przesyłki ma współgrać z kolorami w księdze znaku marki?',
+          'Czy szukają Państwo efektu luksusowego (ciemne tło), czy klasycznego (jasne)?',
+          'Czy papier ma posiadać połysk (perła/metalik), czy być całkowicie matowy?',
+          'Czy nadruk zdoła przebić się kontrastem, jeśli wybiorą Państwo papier pastelowy?',
+        ],
+      },
+    ],
+    cta: 'Pełną paletę 19 odcieni mogą Państwo sprawdzić w naszym konfiguratorze. Zaczynamy od klasycznej czerni.',
+    ctaConfigure: { label: 'Sprawdź czarne koperty DL', format: 'DL', color: 'czarny' },
+    pillar: { href: '/', anchor: 'koperty ozdobne' },
+  },
 ];
 
 export function getAllPosts(): BlogPost[] {

@@ -56,6 +56,27 @@ export async function generateMetadata({
   };
 }
 
+function renderTextWithLinks(text: string) {
+  const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+  const parts = [];
+  let lastIndex = 0;
+  let match;
+
+  while ((match = linkRegex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push(text.substring(lastIndex, match.index));
+    }
+    parts.push(<Link key={match.index} href={match[2]}>{match[1]}</Link>);
+    lastIndex = linkRegex.lastIndex;
+  }
+
+  if (lastIndex < text.length) {
+    parts.push(text.substring(lastIndex));
+  }
+
+  return parts.length > 0 ? parts : text;
+}
+
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const post = getPost(slug);
@@ -144,7 +165,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               <section key={section.id} id={section.id}>
                 <h2>{section.heading}</h2>
                 {section.paragraphs.map((paragraph, index) => (
-                  <p key={index}>{paragraph}</p>
+                  <p key={index}>{renderTextWithLinks(paragraph)}</p>
                 ))}
                 {/* Tabela faktów — najczęściej ekstrahowana struktura przez
                     modele generatywne (pkt 6.4 briefu SEO). Pierwsza kolumna

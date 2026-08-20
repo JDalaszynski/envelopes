@@ -24,16 +24,16 @@
  * i `updated`, więc nie ma czego tu powielać.
  */
 export const PAGE_UPDATED: Record<string, string> = {
-  /* Siatka blogowa pokazuje trzy najnowsze wpisy — doszedł poradnik o liczbie kartek (poz. 11) */
-  '/': '2026-08-18',
+  /* Siatka blogowa pokazuje trzy najnowsze wpisy — doszedł poradnik o palecie 19 kolorów (poz. 12) */
+  '/': '2026-08-20',
   /* Odnośnik do poradnika o koszcie zamówienia w sekcji cenowej (poz. 9) */
   '/koperty-z-nadrukiem': '2026-08-17',
   '/koperty-personalizowane': '2026-08-16',
   /* Sekcja „Poradniki" i odnośnik pod tabelą dopasowań — treść wspierająca z poz. 11 planu */
   '/koperty-dl': '2026-08-18',
   '/koperty-na-vouchery': '2026-08-16',
-  /* Doszedł wpis o liczbie kartek w kopercie DL i składaniu A4 (poz. 11) */
-  '/blog': '2026-08-18',
+  /* Doszedł wpis o palecie 19 kolorów (poz. 12) */
+  '/blog': '2026-08-20',
   /* Odnośnik do strony „O nas" w karcie danych rejestrowych */
   '/kontakt': '2026-08-17',
   /* Publikacja strony „O nas" */
