@@ -1265,8 +1265,8 @@ const POSTS: BlogPost[] = [
        dotyczące tego, jaki kolor pasuje do wizerunku firmy i czy nadruk
        będzie na nim czytelny. */
     slug: 'paleta-19-kolorow-jak-wybrac-odcien',
-    title: 'Paleta 19 kolorów — jak wybrać odcień',
-    lead: 'Sprawdź, jak dobrać odcień koperty ozdobnej do identyfikacji wizualnej firmy. Poznaj paletę 19 kolorów i wybierz najlepsze tło pod nadruk Twojego logo.',
+    title: 'Koperty ozdobne: paleta 19 kolorów — jak wybrać odcień',
+    lead: 'Sprawdź, jak dobrać odcień kolorowej koperty ozdobnej do identyfikacji wizualnej firmy. Poznaj paletę 19 kolorów i wybierz najlepsze tło pod nadruk Twojego logo.',
     category: 'Poradniki',
     date: '2026-08-20',
     readingMinutes: 5,
@@ -1285,7 +1285,7 @@ const POSTS: BlogPost[] = [
     sections: [
       {
         id: 'podzial-palety',
-        heading: 'Jak podzielona jest paleta 19 kolorów kopert',
+        heading: 'Jak podzielona jest paleta 19 kolorów kopert ozdobnych',
         paragraphs: [
           'Nasza paleta obejmuje 19 starannie wyselekcjonowanych odcieni, zgrupowanych w sześć rodzin kolorystycznych. Taki podział pozwala szybko zawęzić wybór z kilkunastu możliwości do kilku wariantów pasujących do tonacji Państwa marki.',
           'Większość oferty to papiery całkowicie matowe, barwione w masie — oznacza to, że barwnik znajduje się w całej grubości arkusza, a nie tylko na jego powierzchni. Dzięki temu krawędzie koperty nie są białe, co jest charakterystyczne dla masowego druku offsetowego.',
@@ -1306,7 +1306,7 @@ const POSTS: BlogPost[] = [
       },
       {
         id: 'ciemne-kolory',
-        heading: 'Ciemne kolory z jasnym nadrukiem — ekskluzywność w biznesie',
+        heading: 'Ciemne kolorowe koperty z jasnym nadrukiem — ekskluzywność w biznesie',
         paragraphs: [
           'Wybór ciemnej koperty — takiej jak [Czarny](/koperty/czarny), [Granatowy](/koperty/granatowy) czy [Butelkowa Zieleń](/koperty/ciemnozielony) — jest sygnałem premium. Ciemne tło maskuje ewentualne zabrudzenia w transporcie i nadaje korespondencji prestiżowy charakter, obok którego trudno przejść obojętnie.',
           'Decyzja o ciemnej kopercie wymusza jednak określoną technikę znakowania. Na ciemnym papierze barwionym w masie tradycyjny nadruk CMYK znika. Wyraźny efekt uzyskujemy stosując jasny nadruk — najczęściej całkowicie biały lub metalicznie złoty/srebrny.',
@@ -1315,7 +1315,7 @@ const POSTS: BlogPost[] = [
       },
       {
         id: 'jasne-kolory',
-        heading: 'Jasne i pastelowe kolory — kiedy liczy się wielobarwność',
+        heading: 'Jasne i pastelowe koperty ozdobne — kiedy liczy się wielobarwność',
         paragraphs: [
           'Jeśli logotyp Państwa firmy składa się z kilku kolorów, które muszą zostać precyzyjnie odwzorowane na wydruku, najbezpieczniejszym wyborem są odcienie jasne. [Biały](/koperty/bialy), [Ecru](/koperty/ecru), [Błękitna](/koperty/jasnoniebieska) czy [Biała Perłowa](/koperty/biala-perlowa) przyjmują nadruk w pełnym kolorze bez wpływu na odcień pigmentu.',
           'Papiery pastelowe — takie jak [Różowa](/koperty/rozowa), [Matcha](/koperty/matcha), czy [Jasnozielony](/koperty/jasnozielony) — stanowią kompromis. Dodają do przesyłki unikalny kolor marki, a jednocześnie pozostają na tyle jasne, że czarny lub bardzo ciemny nadruk firmowy jest na nich doskonale czytelny.',
@@ -1333,7 +1333,7 @@ const POSTS: BlogPost[] = [
       },
       {
         id: 'podsumowanie',
-        heading: 'Lista kontrolna przy wyborze koloru koperty',
+        heading: 'Lista kontrolna przy wyborze koloru koperty ozdobnej',
         paragraphs: [
           'Poniższe pięć pytań pozwoli błyskawicznie zawęzić paletę 19 kolorów do tego jednego, właściwego odcienia.',
         ],
