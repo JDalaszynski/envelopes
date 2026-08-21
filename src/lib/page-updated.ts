@@ -30,10 +30,10 @@ export const PAGE_UPDATED: Record<string, string> = {
   '/koperty-z-nadrukiem': '2026-08-17',
   '/koperty-personalizowane': '2026-08-16',
   /* Sekcja „Poradniki" i odnośnik pod tabelą dopasowań — treść wspierająca z poz. 11 planu */
-  '/koperty-dl': '2026-08-18',
+  '/koperty-dl': '2026-08-21',
   '/koperty-na-vouchery': '2026-08-16',
-  /* Doszedł wpis o palecie 19 kolorów (poz. 12) */
-  '/blog': '2026-08-20',
+  /* Doszedł wpis o kopertach bez okienka (poz. 13) */
+  '/blog': '2026-08-21',
   /* Odnośnik do strony „O nas" w karcie danych rejestrowych */
   '/kontakt': '2026-08-17',
   /* Publikacja strony „O nas" */

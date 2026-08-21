@@ -1348,7 +1348,99 @@ const POSTS: BlogPost[] = [
     ],
     cta: 'Pełną paletę 19 odcieni mogą Państwo sprawdzić w naszym konfiguratorze. Zaczynamy od klasycznej czerni.',
     ctaConfigure: { label: 'Sprawdź czarne koperty DL', format: 'DL', color: 'czarny' },
-    pillar: { href: '/', anchor: 'koperty ozdobne' },
+  {
+    /* content-plan.md poz. 13 — treść wspierająca filar K4 (`/koperty-dl`), cel GEO. 
+       Rozgraniczenie z filarem F3: ten wpis obsługuje intencję decyzyjną dotyczącą wyboru między oknem a jego brakiem, podczas gdy filar po prostu podaje fakt, że cała oferta jest bez okienka. */
+    slug: 'koperty-bez-okienka-kiedy-je-wybrac',
+    title: 'Koperty bez okienka — kiedy je wybrać',
+    lead: 'Brak okienka w kopercie buduje prestiż i chroni poufne dane. Wybierzcie Państwo gładkie koperty DL w 19 kolorach z nadrukiem realizowanym od 10 sztuk.',
+    category: 'Poradniki',
+    date: '2026-08-21',
+    readingMinutes: 5,
+    colorId: 'granatowy',
+    format: 'DL',
+    showcaseFile: 'granatowa-koperta-dl-nadruk-logo-kancelarii',
+    imageVariant: 'nadruk',
+    ogImageSlug: 'blog-koperty-bez-okienka',
+    ogImageAlt: 'Granatowa koperta DL z nadrukiem logo kancelarii na drewnianym blacie',
+    keywords: [
+      'koperty bez okienka',
+      'koperty dl bez okienka',
+      'kiedy koperty bez okienka',
+      'koperty firmowe gładkie',
+    ],
+    intro: `Cała oferta kopert Envelopes składa się z kopert gładkich — bez okienka adresowego i bez wewnętrznego szarego poddruku. Brak przezroczystego foliowego okna wymusza zewnętrzny nadruk danych adresata lub personalizację całej partii. Rezygnacja z okienka nie jest brakiem technicznym, lecz świadomą decyzją. Wybór jednolitego frontu koperty wpływa na bezpieczeństwo, estetykę korespondencji oficjalnej i pozwala na umieszczenie firmowego nadruku w dowolnym miejscu. Poniżej analizujemy, w których sytuacjach okienko ułatwia pracę, a kiedy staje się barierą estetyczną.`,
+    sections: [
+      {
+        id: 'estetyka',
+        heading: 'Koperty bez okienka to standard w korespondencji premium',
+        paragraphs: [
+          'Koperta bez okienka to tradycyjna forma listu oficjalnego, która swoim jednolitym frontem buduje prestiż. Okienko adresowe kojarzy się z masową wysyłką faktur i wezwań do zapłaty, co automatycznie obniża rangę dokumentu.',
+          'W korespondencji oficjalnej, zaproszeniach i przesyłkach od kancelarii prawnych liczy się prestiż i dyskrecja. Koperta bez okienka przypomina tradycyjną formę eleganckiego listu. Jej powierzchnia nie jest zakłócona foliową wstawką, a struktura matowego papieru jest ciągła i spójna.',
+          'Decyzja o rezygnacji z okienka natychmiast przesuwa przesyłkę do kategorii listu oficjalnego, zanim jeszcze odbiorca zdąży rozerwać klapkę zamykającą.',
+        ],
+      },
+      {
+        id: 'poufność',
+        heading: 'Brak okienka adresowego zapewnia poufność przesyłki',
+        paragraphs: [
+          'Koperty z okienkiem niosą jedno stałe ryzyko dla bezpieczeństwa: możliwość przesunięcia zawartości w transporcie. Pismo, które w trakcie dostawy osunie się wewnątrz koperty, może odsłonić przez foliowe okienko poufne informacje z treści dokumentu — kwoty z faktury lub warunki umowy handlowej.',
+          'Koperty bez okienka z grubego papieru barwionego w masie likwidują to zagrożenie. Nawet jeśli wkładka swobodnie przesuwa się w środku, z zewnątrz zawsze widać tylko jednolitą płaszczyznę nieprzezroczystego materiału. To kluczowa kwestia przy przesyłaniu aktów notarialnych, umów inwestycyjnych oraz dokumentacji pracowniczej.',
+        ],
+      },
+      {
+        id: 'powierzchnia-nadruku',
+        heading: 'Pełna przednia ścianka pod własny nadruk firmowy',
+        paragraphs: [
+          'Brak wyciętego otworu oznacza, że cała przednia ścianka koperty pozostaje dostępna pod projekt graficzny. W standardowej kopercie z okienkiem, prawy dolny róg jest zablokowany, co wymusza kompromisy przy pozycjonowaniu logotypu i haseł reklamowych.',
+          'Gładka koperta uwalnia proces projektowy — pozwala na umieszczenie logo centralnie, na równym marginesie, a nawet na powiększenie grafiki. Taka przestrzeń jest szczególnie istotna w kreowaniu wizerunku biur rachunkowych i agencji marketingowych, gdzie estetyka przesyłki stanowi przedłużenie identyfikacji wizualnej.',
+        ],
+      },
+      {
+        id: 'adresowanie-i-personalizacja',
+        heading: 'Jak adresować koperty, gdy brakuje okienka',
+        paragraphs: [
+          'Jeżeli adres nie jest widoczny z dokumentu umieszczonego w środku, dane odbiorcy muszą zostać nadrukowane bezpośrednio na zewnętrznej płaszczyźnie koperty. Zamiast składać dokument pod ścisłe okno i pilnować równego gięcia, zlecają Państwo personalizację całej korespondencji już na etapie zamówienia opakowań.',
+          'Przekazują Państwo arkusz z listą odbiorców w formularzu konfiguratora, a w efekcie otrzymują zapas kopert od razu zadrukowanych i gotowych do włożenia pism. Personalizacja imienna lub pełny nadruk adresowy kosztują dodatkowo 2,99 zł brutto za sztukę i zwalniają Państwa zespół z ręcznego wypisywania czy naklejania nieestetycznych etykiet.',
+        ],
+      },
+      {
+        id: 'kiedy-koperta-gladka',
+        heading: 'Zestawienie: kiedy koperta gładka, a kiedy okienkowa',
+        paragraphs: [
+          'Wybór opiera się na porównaniu wygody przy masowej wysyłce z jakością wizualną przesyłek dedykowanych.',
+        ],
+        table: {
+          caption: 'Porównanie zastosowań kopert bez okienka i kopert z okienkiem',
+          head: ['Sytuacja wysyłkowa', 'Koperta bez okienka (gładka)', 'Koperta z okienkiem'],
+          rows: [
+            [
+              'Korespondencja zarządów i pism prawnych',
+              'Rekomendowana, dba o prestiż i dyskrecję',
+              'Kojarzona negatywnie, z wezwaniami masowymi',
+            ],
+            [
+              'Zagrożenie ujawnieniem treści przy przesunięciu papieru',
+              'Całkowicie zamknięta powierzchnia gwarantuje dyskrecję',
+              'Wymaga bezwzględnie dopasowanego zgięcia wkładki',
+            ],
+            [
+              'Duży i skomplikowany nadruk firmowy',
+              'Brak ograniczeń pozycjonowania na froncie',
+              'Okienko zajmuje i blokuje spory fragment przedniej ściany',
+            ],
+            [
+              'Masowe wysyłki setek faktur miesięcznie',
+              'Uciążliwa, wymaga sprawdzania czy odpowiedni list trafił do koperty z odpowiednim adresem',
+              'Wysoce efektywna, pismo adresuje samo siebie na froncie',
+            ],
+          ],
+        },
+      },
+    ],
+    cta: 'Zapoznaj się z wymiarami gładkiej koperty DL, która nie posiada okienka ani szarego poddruku.',
+    ctaConfigure: { label: 'Sprawdź wymiary i dostępne kolory kopert', format: 'DL' },
+    pillar: { href: '/koperty-dl', anchor: 'koperty dl' },
   },
 ];
 
