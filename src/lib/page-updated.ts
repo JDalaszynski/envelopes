@@ -65,6 +65,8 @@ export const PAGE_UPDATED: Record<string, string> = {
   '/koperty/zolta': '2026-08-19',
   '/koperty/srebrna-perlowa': '2026-08-19',
   '/koperty/biala-perlowa': '2026-08-19',
+  /* Wpis blogowy wspierający filar K2 — poz. 14 planu */
+  '/blog/jak-zaadresowac-koperte-wysylana-przez-firme-wzor': '2026-08-22',
 };
 
 /** Data zmiany treści dla trasy — `undefined`, gdy trasy nie ma w rejestrze. */

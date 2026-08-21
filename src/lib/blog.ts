@@ -961,7 +961,7 @@ const POSTS: BlogPost[] = [
         heading: 'Pierwsze pytanie: pełny adres czy samo imię',
         paragraphs: [
           'Zanim wybiorą Państwo tryb, konfigurator pyta o coś innego: co ma stanąć na kopercie. Pełny adres, jeśli przesyłka idzie pocztą albo kurierem. Samo imię i nazwisko, jeśli koperty wręczają Państwo do ręki — karty powitalne w hotelu, dyplomy dla grupy szkoleniowej, bony z imieniem obdarowanego. Odpowiedź ustawia kolumny szablonu, więc lista bez adresów nie musi udawać listy wysyłkowej.',
-          `To rozróżnienie ma jedną praktyczną konsekwencję. W wariancie wysyłkowym każdy wypełniony wiersz musi nieść komplet pól — ${REQUIRED_ADDRESS_FIELDS} — bo koperta bez kodu pocztowego nigdzie nie dojedzie. W wariancie imiennym wymagane jest tylko nazwisko, a pozostałe kolumny są opcjonalne.`,
+          `To rozróżnienie ma jedną praktyczną konsekwencję. W wariancie wysyłkowym każdy wypełniony wiersz musi nieść komplet pól — ${REQUIRED_ADDRESS_FIELDS} — bo koperta bez kodu pocztowego nigdzie nie dojedzie. (Zasady rozmieszczenia tych pól opisujemy we wpisie o [poprawnym adresowaniu koperty firmowej](/blog/jak-zaadresowac-koperte-wysylana-przez-firme-wzor)). W wariancie imiennym wymagane jest tylko nazwisko, a pozostałe kolumny są opcjonalne.`,
           'Wysyłka mieszana, w której część kopert ma adres, a część samo imię, wymaga decyzji z góry: jedna pozycja zamówienia to jeden wariant. Prościej rozbić ją na dwie pozycje niż dopisywać adresy tam, gdzie nie są do niczego potrzebne.',
         ],
         table: {
@@ -1359,12 +1359,11 @@ const POSTS: BlogPost[] = [
     category: 'Poradniki',
     date: '2026-08-21',
     readingMinutes: 5,
-    colorId: 'granatowy',
+    colorId: 'biala-perlowa',
     format: 'DL',
-    showcaseFile: 'granatowa-koperta-dl-nadruk-logo-kancelarii',
-    imageVariant: 'nadruk',
+    showcaseFile: 'biala-perlowa-koperta-dl-gladka-przod-i-tyl',
     ogImageSlug: 'blog-koperty-bez-okienka',
-    ogImageAlt: 'Granatowa koperta DL z nadrukiem logo kancelarii na drewnianym blacie',
+    ogImageAlt: 'Biała perłowa koperta DL bez okienka adresowego na drewnianym blacie',
     keywords: [
       'koperty bez okienka',
       'koperty dl bez okienka',
@@ -1402,7 +1401,7 @@ const POSTS: BlogPost[] = [
         id: 'adresowanie-i-personalizacja',
         heading: 'Jak adresować koperty, gdy brakuje okienka',
         paragraphs: [
-          'Jeżeli adres nie jest widoczny z dokumentu umieszczonego w środku, dane odbiorcy muszą zostać nadrukowane bezpośrednio na zewnętrznej płaszczyźnie koperty. Zamiast składać dokument pod ścisłe okno i pilnować równego gięcia, zlecają Państwo personalizację całej korespondencji już na etapie zamówienia opakowań.',
+          'Jeżeli adres nie jest widoczny z dokumentu umieszczonego w środku, dane odbiorcy muszą zostać nadrukowane bezpośrednio na zewnętrznej płaszczyźnie koperty (zobacz [wzór rozmieszczenia danych adresowych](/blog/jak-zaadresowac-koperte-wysylana-przez-firme-wzor)). Zamiast składać dokument pod ścisłe okno i pilnować równego gięcia, zlecają Państwo personalizację całej korespondencji już na etapie zamówienia opakowań.',
           'Przekazują Państwo arkusz z listą odbiorców w formularzu konfiguratora, a w efekcie otrzymują zapas kopert od razu zadrukowanych i gotowych do włożenia pism. Personalizacja imienna lub pełny nadruk adresowy kosztują dodatkowo 2,99 zł brutto za sztukę i zwalniają Państwa zespół z ręcznego wypisywania czy naklejania nieestetycznych etykiet.',
         ],
       },
@@ -1443,6 +1442,78 @@ const POSTS: BlogPost[] = [
     cta: 'Zapoznaj się z wymiarami gładkiej koperty DL, która nie posiada okienka ani szarego poddruku.',
     ctaConfigure: { label: 'Sprawdź wymiary i dostępne kolory kopert', format: 'DL' },
     pillar: { href: '/koperty-dl', anchor: 'koperty dl' },
+  },
+  {
+    slug: 'jak-zaadresowac-koperte-wysylana-przez-firme-wzor',
+    title: 'Jak zaadresować kopertę wysyłaną przez firmę — wzór',
+    lead: 'Sprawdź poprawny wzór na adresowanie koperty od firmy. Poznaj układ danych nadawcy i odbiorcy, zasady formatowania i uniknij zwrotów korespondencji.',
+    category: 'Poradniki',
+    date: '2026-08-22',
+    readingMinutes: 5,
+    colorId: 'niebieski',
+    format: 'DL',
+    showcaseFile: 'niebieska-koperta-dl-personalizacja-odreczna',
+    imageVariant: 'personalizacja',
+    ogImageSlug: 'blog-wzor-adresowania',
+    ogImageAlt: 'Niebieska koperta DL z odręczną personalizacją imienną na drewnianym stole',
+    keywords: [
+      'adresowanie koperty od firmy',
+      'jak zaadresować kopertę firmową',
+      'wzór adresowania koperty',
+      'dane nadawcy na kopercie',
+    ],
+    intro: 'Adresowanie koperty od firmy wymaga przestrzegania ścisłych reguł pocztowych. Poprawny układ danych gwarantuje, że korespondencja trafi do odbiorcy bez opóźnień, a w przypadku błędu — wróci do nadawcy. Poniżej przedstawiamy kompletny wzór rozmieszczenia informacji na kopercie DL, zasady formatowania adresów biznesowych oraz najczęstsze błędy powodujące zwroty przesyłek.',
+    sections: [
+      {
+        id: 'wzor-adresowania',
+        heading: 'Wzór: poprawne adresowanie koperty od firmy',
+        paragraphs: [
+          'Na kopercie firmowej dane rozmieszcza się w dwóch przeciwległych narożnikach. Dane nadawcy (firmy wysyłającej) umieszczamy w lewym górnym rogu. Dane odbiorcy zajmują prawy dolny róg, z zachowaniem marginesów dla maszyn sortujących.',
+          'Prawy górny róg jest zarezerwowany wyłącznie dla opłaty pocztowej (znaczka lub nadruku opłaty). Lewy dolny róg pozostawiamy pusty — poczta nanosi tam kody kreskowe służące do automatycznego sortowania listów.',
+          'Tabela poniżej precyzuje układ danych adresowych z podziałem na wiersze.',
+        ],
+        table: {
+          caption: 'Wzór rozmieszczenia danych nadawcy i odbiorcy na kopercie firmowej',
+          head: ['Wiersz', 'Dane nadawcy (lewy górny róg)', 'Dane odbiorcy (prawy dolny róg)'],
+          rows: [
+            ['1', 'Nazwa firmy wysyłającej', 'Imię i nazwisko (lub nazwa działu)'],
+            ['2', 'Imię i nazwisko nadawcy (opcjonalnie)', 'Pełna nazwa firmy odbiorcy'],
+            ['3', 'Ulica i numer budynku/lokalu', 'Ulica i numer budynku/lokalu'],
+            ['4', 'Kod pocztowy i miejscowość', 'Kod pocztowy i miejscowość'],
+          ],
+        },
+      },
+      {
+        id: 'formatowanie-adresu',
+        heading: 'Jak sformatować adres docelowy',
+        paragraphs: [
+          'Poczta Polska i firmy kurierskie wymagają jednolitego zapisu adresu. Kod pocztowy zapisuje się zawsze z myślnikiem (np. 00-000), a nazwę miejscowości — w sposób czytelny, bez używania skrótów typu m. czy woj.',
+          'Numer lokalu oddzielamy od numeru budynku ukośnikiem, bez użycia słowa lokal czy m. Poprawny zapis to „ul. Nowa 15/2”. Jeśli list trafia do konkretnego działu w dużej korporacji, nazwę działu dopisujemy pod nazwiskiem odbiorcy, a nad nazwą firmy.',
+          'Dane adresowe wyrównujemy do lewej strony. Maszyny sortujące czytają tekst od lewej do prawej, dlatego środkowanie lub wyrównywanie do prawej (tzw. justowanie) spowalnia skanowanie i zwiększa ryzyko błędu.',
+        ],
+      },
+      {
+        id: 'adresowanie-reczne-czy-nadruk',
+        heading: 'Adresowanie ręczne czy nadruk maszynowy?',
+        paragraphs: [
+          'Wysyłka powyżej kilkunastu listów miesięcznie czyni adresowanie ręczne nieopłacalnym procesem. Ręczne wypisywanie danych generuje błędy (tzw. literówki) i obniża estetykę korespondencji, która w relacjach B2B jest wizytówką firmy.',
+          'Nadruk bezpośrednio na kopercie eliminuje ryzyko pomyłki i wygląda w pełni profesjonalnie. Envelopes oferuje usługę personalizacji kopert DL z gotowego arkusza Excel, w której drukujemy dane odbiorców i nadawcy w cenie 2,99 zł brutto za sztukę.',
+          'W przeciwieństwie do naklejanych etykiet, które mogą się odkleić w transporcie, nadruk płaski na papierze ozdobnym to rozwiązanie estetyczne, wybierane przez kancelarie i działy zarządcze.',
+        ],
+      },
+      {
+        id: 'najczestsze-bledy',
+        heading: 'Najczęstsze błędy przy adresowaniu kopert firmowych',
+        paragraphs: [
+          'Brak pełnej nazwy firmy. Samo imię i nazwisko odbiorcy w dużym biurowcu to za mało dla kuriera czy listonosza. Zawsze należy podać pełną nazwę podmiotu gospodarczego.',
+          'Odwrotne umieszczenie danych. Zmiana miejsc nadawcy i odbiorcy skutkuje dostarczeniem listu... do nadawcy. Prawy dolny róg jest dla poczty nienaruszalnym miejscem adresu docelowego.',
+          'Zbyt niska czcionka lub pismo nieczytelne. W przypadku nadruku należy stosować font bezszeryfowy (np. Arial, Roboto) o wielkości minimum 10 punktów. Pismo odręczne musi być wyraźne, najlepiej drukowane.',
+        ],
+      },
+    ],
+    cta: 'Usługa nadruku danych odbiorcy (personalizacji) eliminuje błędy w adresowaniu i przyspiesza wysyłkę korespondencji firmowej.',
+    ctaConfigure: { label: 'Zamów koperty DL z adresowaniem', format: 'DL', personalization: true },
+    pillar: { href: '/koperty-personalizowane', anchor: 'personalizowane koperty' },
   },
 ];
 
