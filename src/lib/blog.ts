@@ -1348,6 +1348,8 @@ const POSTS: BlogPost[] = [
     ],
     cta: 'Pełną paletę 19 odcieni mogą Państwo sprawdzić w naszym konfiguratorze. Zaczynamy od klasycznej czerni.',
     ctaConfigure: { label: 'Sprawdź czarne koperty DL', format: 'DL', color: 'czarny' },
+    pillar: { href: '/', anchor: 'koperty ozdobne' },
+  },
   {
     /* content-plan.md poz. 13 — treść wspierająca filar K4 (`/koperty-dl`), cel GEO. 
        Rozgraniczenie z filarem F3: ten wpis obsługuje intencję decyzyjną dotyczącą wyboru między oknem a jego brakiem, podczas gdy filar po prostu podaje fakt, że cała oferta jest bez okienka. */
