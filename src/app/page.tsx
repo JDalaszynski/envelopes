@@ -341,7 +341,6 @@ export default function HomePage() {
           Układ redakcyjny: kolumna tekstu po lewej, zdjęcie produktu po prawej,
           pod spodem pasek czterech faktów handlowych. Treść bez zmian. */}
       <section className={`home-hero ${greatVibes.variable}`}>
-        <span className="home-hero-grain" aria-hidden="true" />
 
         <div className="container home-hero-inner">
           {/* Kolumna tekstu jest rozbita na dwa bloki — nagłówek i obietnicę
@@ -356,8 +355,8 @@ export default function HomePage() {
                   niesie znaczenia wyłącznie barwą. Przecinek zostaje poza
                   kaligrafią: pochylona interpunkcja rozjeżdża światło w wierszu. */}
               <h1 className="home-hero-title">
-                Koperty ozdobne robiące <em className="hero-accent">wrażenie</em>, zanim zostaną
-                otwarte.
+                Koperty ozdobne robiące <em className="hero-accent">Wrażenie</em><span style={{ fontSize: '0.75em' }}>,</span> zanim zostaną
+                otwarte
               </h1>
             </div>
 
