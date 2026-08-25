@@ -386,7 +386,7 @@ export function Configurator() {
                 onMethodChange={(personalizationMethod) => patch({ personalizationMethod })}
                 onTextChange={(personalizationText) => patch({ personalizationText })}
                 onFileChange={(personalizationFile) => patch({ personalizationFile })}
-                onFixQuantity={() => patch({ quantity: minimumQuantity(true) })}
+                onSetQuantity={(quantity) => patch({ quantity })}
                 format={config.format}
                 colorId={config.color}
               />

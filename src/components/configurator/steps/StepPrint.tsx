@@ -102,7 +102,7 @@ export function StepPrint({
             label="Załącz grafikę do nadruku"
           />
 
-          <div className="field" style={{ width: '33.333%' }}>
+          <div className="field print-notes-field">
             <label htmlFor="print-notes">Uwagi dla grafika</label>
             <input
               type="text"

@@ -34,8 +34,10 @@ export function StepFormat({
             className="format-card"
             aria-pressed={value === format.id}
             onClick={() => {
+              // Wyboru formatu nie da się „odkliknąć" — ponowne kliknięcie
+              // zaznaczonej karty prowadzi dalej, do wyboru koloru.
               if (value === format.id) {
-                onChange('');
+                onNextStep?.();
               } else {
                 onChange(format.id);
               }
@@ -61,12 +63,6 @@ export function StepFormat({
             <span
               className={`btn btn-sm ${value === format.id ? '' : 'btn-secondary'} format-select-btn`}
               style={{ marginTop: 'var(--space-3)', width: '100%' }}
-              onClick={(e) => {
-                if (value === format.id && onNextStep) {
-                  e.stopPropagation();
-                  onNextStep();
-                }
-              }}
             >
               Wybierz kolor koperty
             </span>

@@ -173,37 +173,37 @@ const USE_CASES: {
   /** Kadr aranżacyjny z biblioteki — obowiązkowy, patrz komentarz wyżej */
   shot: ShowcaseShot;
 }[] = [
-  {
-    heading: 'Korespondencja firmowa i dokumenty',
-    text: 'Pismo, umowa i faktura złożone na trzy wchodzą do koperty DL bez dodatkowego zagięcia. Koperta ozdobna zamiast białej pocztowej sprawia, że przesyłka nie ląduje na stosie z reklamami.',
-    shot: shotByFile('granatowa-koperta-dl-nadruk-logo-kancelarii'),
-  },
-  {
-    heading: 'Vouchery i bony podarunkowe',
-    text: 'Bon w kopercie ozdobnej z logo wygląda jak prezent, a nie jak wydruk z drukarki biurowej. To najczęstszy powód, dla którego salony, kliniki i restauracje sięgają po koperty kolorowe — obdarowany dostaje coś, co chce się otworzyć.',
-    shot: shotByFile('czerwona-koperta-dl-nadruk-logo-restauracji'),
-  },
-  {
-    heading: 'Zaproszenia i programy wydarzeń',
-    text: `Zaproszenie składane i program wydarzenia wysyłamy dziś w kopercie DL. Na zaproszenia kwadratowe i w formacie A6 potrzebne są koperty ${UPCOMING_LABEL_SHORT}, które mają w katalogu status „Dostępne wkrótce".`,
-    shot: shotByFile('granatowa-koperta-dl-nadruk-logo-orkiestry'),
-  },
-  {
-    heading: 'Wysyłki VIP i prezentowe',
-    text: 'Kiedy przesyłka ma zostać zapamiętana, wybierane są odcienie, których nie widuje się codziennie na biurku: Matcha, Błękit Łupkowy albo Złoty z metalicznym połyskiem.',
-    shot: shotByFile('zlota-koperta-dl-nadruk-logo-studia-tatuazu'),
-  },
-  {
-    heading: 'Certyfikaty, dyplomy i podziękowania',
-    text: 'Certyfikat A4 złożony na trzy mieści się w kopercie DL. Jedna edycja kursu albo pojedyncza grupa szkoleniowa to już wystarczający nakład — nie trzeba czekać, aż uzbiera się większe zamówienie.',
-    shot: shotByFile('matcha-koperta-dl-nadruk-wyrazy-uznania'),
-  },
-  {
-    heading: 'Koperty na pieniądze i nagrody',
-    text: 'Banknot mieści się w kopercie DL płasko, bez składania — dlatego trafia do niej prezent na ślub i chrzciny tak samo jak premia czy nagroda w konkursie pracowniczym. Nadruk okolicznościowy zastępuje wtedy bilecik.',
-    shot: shotByFile('biala-perlowa-koperta-dl-nadruk-w-dniu-slubu'),
-  },
-];
+    {
+      heading: 'Korespondencja firmowa i dokumenty',
+      text: 'Pismo, umowa i faktura złożone na trzy wchodzą do koperty DL bez dodatkowego zagięcia. Koperta ozdobna zamiast białej pocztowej sprawia, że przesyłka nie ląduje na stosie z reklamami.',
+      shot: shotByFile('granatowa-koperta-dl-nadruk-logo-kancelarii'),
+    },
+    {
+      heading: 'Vouchery i bony podarunkowe',
+      text: 'Bon w kopercie ozdobnej z logo wygląda jak prezent, a nie jak wydruk z drukarki biurowej. To najczęstszy powód, dla którego salony, kliniki i restauracje sięgają po koperty kolorowe — obdarowany dostaje coś, co chce się otworzyć.',
+      shot: shotByFile('czerwona-koperta-dl-nadruk-logo-restauracji'),
+    },
+    {
+      heading: 'Zaproszenia i programy wydarzeń',
+      text: `Zaproszenie składane i program wydarzenia wysyłamy dziś w kopercie DL. Na zaproszenia kwadratowe i w formacie A6 potrzebne są koperty ${UPCOMING_LABEL_SHORT}, które mają w katalogu status „Dostępne wkrótce".`,
+      shot: shotByFile('granatowa-koperta-dl-nadruk-logo-orkiestry'),
+    },
+    {
+      heading: 'Wysyłki VIP i prezentowe',
+      text: 'Kiedy przesyłka ma zostać zapamiętana, wybierane są odcienie, których nie widuje się codziennie na biurku: Matcha, Błękit Łupkowy albo Złoty z metalicznym połyskiem.',
+      shot: shotByFile('zlota-koperta-dl-nadruk-logo-studia-tatuazu'),
+    },
+    {
+      heading: 'Certyfikaty, dyplomy i podziękowania',
+      text: 'Certyfikat A4 złożony na trzy mieści się w kopercie DL. Jedna edycja kursu albo pojedyncza grupa szkoleniowa to już wystarczający nakład — nie trzeba czekać, aż uzbiera się większe zamówienie.',
+      shot: shotByFile('matcha-koperta-dl-nadruk-wyrazy-uznania'),
+    },
+    {
+      heading: 'Koperty na pieniądze i nagrody',
+      text: 'Banknot mieści się w kopercie DL płasko, bez składania — dlatego trafia do niej prezent na ślub i chrzciny tak samo jak premia czy nagroda w konkursie pracowniczym. Nadruk okolicznościowy zastępuje wtedy bilecik.',
+      shot: shotByFile('biala-perlowa-koperta-dl-nadruk-w-dniu-slubu'),
+    },
+  ];
 
 /**
  * Zbliżenia na papier — zdjęcia z `public/images/details/`. Każdy plik ma
@@ -363,8 +363,7 @@ export default function HomePage() {
 
             <div className="home-hero-tail">
               <p className="hero-lead">
-                {COLORS.length} odcieni papieru barwionego w masie, z logo albo z nazwiskiem
-                odbiorcy. Cenę widzisz od razu, zamówienie składasz w kilka minut.
+                Koperta mówi o firmie wcześniej niż zawartość w środku. Sprawmy, żeby powiedziała coś dobrego o Państwa firmie.
               </p>
 
               <div className="home-hero-cta">
@@ -445,10 +444,7 @@ export default function HomePage() {
           <div className="section-head configurator-zone-head">
             <span className="eyebrow">Konfigurator kopert</span>
             <h2>Trzy kroki do gotowego zamówienia</h2>
-            <p>
-              Format, kolor, ilość — a jeśli trzeba, także nadruk logo i adresowanie. Cena
-              aktualizuje się przy każdej zmianie, razem z terminem wysyłki.
-            </p>
+
           </div>
           <Configurator />
         </div>

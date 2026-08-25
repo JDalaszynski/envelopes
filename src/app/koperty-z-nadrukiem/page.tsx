@@ -622,34 +622,34 @@ export default function PrintedEnvelopesPage() {
               koloru jest więc pytaniem o to, jak logo ma wyglądać, a nie ile ma kosztować.
             </p>
             {colorPages().length > 0 && (
-                <div style={{ marginTop: 'var(--space-5)' }}>
-                  <p className="small muted" style={{ marginBottom: 'var(--space-3)' }}>
-                    Charakterystykę papieru odcień po odcieniu opisujemy osobno:
-                  </p>
-                  <div 
-                    style={{ 
-                      display: 'flex', 
-                      flexWrap: 'wrap', 
-                      gap: 'var(--space-2)' 
-                    }}
-                  >
-                    {colorPages().map(({ color, content }) => (
-                      <Link
-                        key={color.id}
-                        href={colorPagePath(color.id)}
-                        className="color-chip"
-                      >
-                        <span
-                          className="color-chip-swatch"
-                          style={{ backgroundColor: color.hex }}
-                          aria-hidden="true"
-                        />
-                        {content.phraseShort} z logo
-                      </Link>
-                    ))}
-                  </div>
+              <div style={{ marginTop: 'var(--space-5)' }}>
+                <p className="small muted" style={{ marginBottom: 'var(--space-3)' }}>
+                  Charakterystykę papieru odcień po odcieniu opisujemy osobno:
+                </p>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    gap: 'var(--space-2)'
+                  }}
+                >
+                  {colorPages().map(({ color, content }) => (
+                    <Link
+                      key={color.id}
+                      href={colorPagePath(color.id)}
+                      className="color-chip"
+                    >
+                      <span
+                        className="color-chip-swatch"
+                        style={{ backgroundColor: color.hex }}
+                        aria-hidden="true"
+                      />
+                      {content.phraseShort} z logo
+                    </Link>
+                  ))}
                 </div>
-              )}
+              </div>
+            )}
           </div>
 
           <div className="grid grid-4" style={{ gap: 'var(--space-4)' }}>

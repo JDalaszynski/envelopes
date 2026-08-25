@@ -18,11 +18,25 @@ import type { PersonalizationMethod, UploadedFile } from '@/lib/types';
 /**
  * Personalizacja / adresowanie (pkt 1.3) — część wspólnego kroku z nadrukiem.
  *
- * Dwa pytania w tej kolejności: **co** ma stanąć na kopercie (pełny adres
- * czy samo nazwisko) i **jak** dane do nas trafią (wpisane ręcznie czy
- * arkuszem). Zakres wybieramy pierwszy, bo to on decyduje o kolumnach
- * szablonu i o tym, czego wymaga walidacja.
+ * Po włączeniu personalizacji klient ma **jedno** pytanie: wpisuje dane sam
+ * czy wgrywa arkusz. Nic więcej nie stoi przed tym wyborem.
+ *
+ * Zakres (`PersonalizationScope`) nie jest osobnym pytaniem, choć nadal jedzie
+ * w zamówieniu — to wybór **wersji pliku do pobrania**, więc ustawia go
+ * kliknięcie w jeden z dwóch przycisków pobierania. Przy ręcznym wpisywaniu
+ * nie ma go w ogóle, bo tekst drukujemy dokładnie tak, jak został wpisany.
+ *
+ * Wgrany arkusz trafia prosto do Storage przez `/api/uploads` — bez czytania
+ * zawartości. Sprawdzanie kolumn i liczby wierszy odrzucało pliki, które dla
+ * człowieka są w porządku (własny układ kolumn, lista dłuższa od nakładu),
+ * i zamieniało załączenie pliku w negocjację z walidatorem. Zawartość
+ * przeglądamy po stronie zamówienia.
  */
+
+/** Powyżej tej liczby kopert ręczne przepisywanie listy przestaje mieć sens. */
+const TEXT_PLACEHOLDER =
+  'Anna Nowak,\nJan Kowalski,\nMaria Wiśniewska,\n...';
+
 export function StepPersonalization({
   enabled,
   scope,
@@ -36,7 +50,7 @@ export function StepPersonalization({
   onMethodChange,
   onTextChange,
   onFileChange,
-  onFixQuantity,
+  onSetQuantity,
   format,
   colorId,
 }: {
@@ -52,51 +66,46 @@ export function StepPersonalization({
   onMethodChange: (method: PersonalizationMethod) => void;
   onTextChange: (text: string) => void;
   onFileChange: (file: UploadedFile | null) => void;
-  onFixQuantity: () => void;
+  onSetQuantity: (value: number) => void;
   format: string;
   colorId: string;
 }) {
   const [uploadError, setUploadError] = useState<string | null>(null);
-  const [uploadInfo, setUploadInfo] = useState<string | null>(null);
+  const [uploading, setUploading] = useState(false);
   const [dragging, setDragging] = useState(false);
+
   const belowMinimum = enabled && quantity < minimum;
   const activeScope = personalizationScope(scope);
-  const namesOnly = activeScope.id === 'imiona';
 
   /** Ile wierszy klient wpisał ręcznie — porównanie z nakładem, bez blokowania. */
   const typedRows = text.split('\n').filter((line) => line.trim() !== '').length;
+
+  const uploaded = file?.status === 'przeslano';
 
   async function handleTemplateFile(fileList: FileList | null) {
     const selected = fileList?.[0];
     if (!selected) return;
     setUploadError(null);
-    setUploadInfo(null);
 
     const ext = selected.name.split('.').pop()?.toLowerCase() ?? '';
     if (!PERSONALIZATION_SHEET_EXTENSIONS.includes(ext)) {
       setUploadError(
-        `Obsługujemy pliki ${PERSONALIZATION_SHEET_EXTENSIONS_LABEL} — prosimy wgrać uzupełniony szablon.`
+        `Obsługujemy pliki ${PERSONALIZATION_SHEET_EXTENSIONS_LABEL} — prosimy zapisać arkusz w jednym z tych formatów.`
       );
       return;
     }
 
     const body = new FormData();
     body.append('file', selected);
-    body.append('quantity', String(quantity));
-    body.append('zakres', activeScope.id);
+    body.append('purpose', 'personalizacja');
 
+    setUploading(true);
     try {
-      const res = await fetch('/api/personalizacja/walidacja', { method: 'POST', body });
-      const json = (await res.json()) as {
-        ok: boolean;
-        rows?: number;
-        error?: string;
-        path?: string;
-        url?: string;
-      };
+      const res = await fetch('/api/uploads', { method: 'POST', body });
+      const json = (await res.json()) as { error?: string; path?: string; url?: string };
 
-      if (!res.ok || !json.ok) {
-        setUploadError(json.error ?? 'Nie udało się odczytać pliku.');
+      if (!res.ok) {
+        setUploadError(json.error ?? 'Nie udało się przesłać pliku.');
         onFileChange({
           id: 'personalizacja',
           name: selected.name,
@@ -108,7 +117,6 @@ export function StepPersonalization({
         return;
       }
 
-      setUploadInfo(`Wczytano ${json.rows} kompletów danych.`);
       onFileChange({
         id: 'personalizacja',
         name: selected.name,
@@ -120,6 +128,8 @@ export function StepPersonalization({
       });
     } catch {
       setUploadError('Błąd połączenia podczas przesyłania pliku.');
+    } finally {
+      setUploading(false);
     }
   }
 
@@ -157,7 +167,7 @@ export function StepPersonalization({
               <span className="small muted">minimalna ilość {minimum} szt.</span>
             </div>
             <p className="small muted" style={{ margin: 0, maxWidth: '54ch' }}>
-              Nadrukujemy indywidualne dane na każdej kopercie — imię i nazwisko, dedykację albo pełny adres.
+              Każda koperta dostaje inne dane — nazwisko odbiorcy albo pełny adres pocztowy.
             </p>
           </div>
         </div>
@@ -165,7 +175,7 @@ export function StepPersonalization({
       </div>
 
       {enabled && (
-        <>
+        <div className="pers-body">
           {belowMinimum && (
             <p className="notice notice-error" role="alert">
               Wybrana ilość ({quantity} szt.) jest niższa niż minimum {minimum} szt. dla personalizacji.{' '}
@@ -173,132 +183,128 @@ export function StepPersonalization({
                 type="button"
                 className="btn btn-secondary btn-sm"
                 style={{ marginLeft: 'var(--space-2)' }}
-                onClick={onFixQuantity}
+                onClick={() => onSetQuantity(minimum)}
               >
                 Ustaw {minimum} szt.
               </button>
             </p>
           )}
 
-          <div className="stack" style={{ gap: 'var(--space-3)' }}>
-            <p className="small muted" style={{ margin: 0 }}>
-              Co ma stanąć na kopercie?
-            </p>
-            <div className="grid grid-2" role="group" aria-label="Zakres personalizacji">
-              {PERSONALIZATION_SCOPES.map((option) => (
-                <button
-                  key={option.id}
-                  type="button"
-                  className="option-card"
-                  aria-pressed={activeScope.id === option.id}
-                  onClick={() => onScopeChange(option.id)}
-                  style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}
-                >
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--color-seal)' }} aria-hidden="true">
-                    {option.id === 'adres' ? (
-                      <>
-                        <rect x="2" y="4" width="20" height="16" rx="2"></rect>
-                        <path d="M2 7l10 6 10-6"></path>
-                      </>
-                    ) : (
-                      <>
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="12" cy="7" r="4"></circle>
-                      </>
-                    )}
-                  </svg>
-                  <span>
-                    <strong>{option.label}</strong>
-                    <small>{option.hint}</small>
-                  </span>
-                </button>
-              ))}
-            </div>
-          </div>
+          {/* Jedyne pytanie tej sekcji. */}
+          <p className="pers-question" id="pers-metoda-label">
+            Jak mają być spersonalizowane koperty?
+          </p>
 
-          <div className="grid grid-2" role="group" aria-label="Metoda przekazania danych">
-            <button
-              type="button"
-              className="option-card"
-              aria-pressed={method === 'reczna'}
-              onClick={() => onMethodChange('reczna')}
-              style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}
-            >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--color-seal)' }}><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
-              <span>
-                <strong>Wpisz ręcznie</strong>
-                <small>
-                  Treść wpisują Państwo wprost w konfiguratorze. Wygodne przy krótkiej liście.
-                </small>
+          <div className="grid grid-2 pers-options" role="radiogroup" aria-labelledby="pers-metoda-label">
+            <label className="option-card pers-option" data-selected={method === 'reczna'}>
+              <input
+                type="radio"
+                className="sr-only"
+                name="personalizacja-metoda"
+                value="reczna"
+                checked={method === 'reczna'}
+                onChange={() => onMethodChange('reczna')}
+              />
+              <span className="pers-option-head">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--color-seal)', flexShrink: 0 }} aria-hidden="true"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
+                <strong>Wpiszę je tutaj</strong>
               </span>
-            </button>
-            <button
-              type="button"
-              className="option-card"
-              aria-pressed={method === 'szablon'}
-              onClick={() => onMethodChange('szablon')}
-              style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}
-            >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--color-seal)' }}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="16" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-              <span>
-                <strong>Pobierz i uzupełnij szablon</strong>
-                <small>
-                  Arkusz z {quantity} wierszami i gotowymi nagłówkami. Uzupełniony plik wgrywają
-                  Państwo z powrotem — sprawdzimy go od razu.
-                </small>
+              <small>Lista w polu tekstowym — jedna koperta w wierszu.</small>
+              {method === 'reczna' && (
+                <span className="option-check" aria-hidden="true">
+                  ✓
+                </span>
+              )}
+            </label>
+
+            <label className="option-card pers-option" data-selected={method === 'szablon'}>
+              <input
+                type="radio"
+                className="sr-only"
+                name="personalizacja-metoda"
+                value="szablon"
+                checked={method === 'szablon'}
+                onChange={() => onMethodChange('szablon')}
+              />
+              <span className="pers-option-head">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--color-seal)', flexShrink: 0 }} aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="16" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                <strong>Wgram gotowy arkusz</strong>
               </span>
-            </button>
+              <small>Pobiorą Państwo szablon, uzupełnią w Excelu i wgrają z powrotem.</small>
+              {method === 'szablon' && (
+                <span className="option-check" aria-hidden="true">
+                  ✓
+                </span>
+              )}
+            </label>
           </div>
 
           {method === 'reczna' && (
             <div className="field">
-              <label htmlFor="personalizacja-tekst">Treść do nadrukowania</label>
+              <label htmlFor="personalizacja-tekst">
+                Dane do nadruku — jedna koperta w wierszu
+              </label>
               <textarea
                 id="personalizacja-tekst"
                 className="textarea"
-                style={{ minHeight: 160 }}
+                style={{ minHeight: 190 }}
                 value={text}
-                placeholder={
-                  namesOnly
-                    ? 'Jedna osoba w wierszu:\nAnna Nowak\nJan Kowalski'
-                    : 'Jeden odbiorca w wierszu:\nAnna Nowak, ul. Kwiatowa 4, 00-001 Warszawa'
-                }
+                placeholder={TEXT_PLACEHOLDER}
                 onChange={(e) => onTextChange(e.target.value)}
               />
-              <span className="field-hint">
-                Odtworzymy tekst dokładnie w podanej postaci.
-              </span>
-              {typedRows > 0 && typedRows !== quantity && (
-                <p className="notice" role="status" style={{ marginTop: 'var(--space-2)' }}>
-                  Wpisali Państwo {typedRows} {plural(typedRows, 'wiersz', 'wiersze', 'wierszy')}{' '}
-                  przy {quantity} kopertach. Jeśli każda koperta ma mieć inne dane, prosimy
-                  uzupełnić listę — przy dłuższych wykazach wygodniejszy będzie szablon.
-                </p>
-              )}
+
+              <div className="pers-counter" role="status">
+                {typedRows === 0 && <span className="badge">0 z {quantity} wierszy</span>}
+                {typedRows > 0 && typedRows === quantity && (
+                  <span className="badge badge-success">
+                    Komplet — {typedRows} z {quantity} wierszy
+                  </span>
+                )}
+                {typedRows > 0 && typedRows !== quantity && (
+                  <>
+                    <span className="badge badge-seal">
+                      {typedRows} z {quantity} wierszy
+                    </span>
+                    {typedRows > quantity && typedRows >= minimum && (
+                      <button
+                        type="button"
+                        className="btn btn-secondary btn-sm"
+                        onClick={() => onSetQuantity(typedRows)}
+                      >
+                        Ustaw {typedRows} szt.
+                      </button>
+                    )}
+                  </>
+                )}
+              </div>
             </div>
           )}
 
           {method === 'szablon' && (
-            <div className="stack">
-              <a
-                className="btn btn-secondary"
-                href={`/api/personalizacja/szablon?ilosc=${quantity}&zakres=${activeScope.id}`}
-                style={{ alignSelf: 'flex-start' }}
-              >
-                Pobierz szablon dla {quantity} kopert (XLSX)
-              </a>
+            <div className="pers-template">
               <p className="small muted" style={{ margin: 0 }}>
-                Kolumny w szablonie:{' '}
-                {activeScope.columns
-                  .filter((column) => !column.ordinal)
-                  .map((column) => column.label.replace(' (opcjonalnie)', ''))
-                  .join(', ')}
-                .
+                Pobierz szablon na {quantity} {plural(quantity, 'wiersz', 'wiersze', 'wierszy')}:
               </p>
+              <div className="pers-download">
+                {PERSONALIZATION_SCOPES.map((option) => (
+                  <a
+                    key={option.id}
+                    className="btn btn-secondary"
+                    href={`/api/personalizacja/szablon?ilosc=${quantity}&zakres=${option.id}`}
+                    /* Pobranie jest zarazem wyborem wersji — zakres jedzie
+                       potem w zamówieniu jako opis, co drukujemy. */
+                    onClick={() => onScopeChange(option.id)}
+                  >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    {option.label}
+                  </a>
+                ))}
+              </div>
 
               <div
                 className="dropzone"
                 data-drag={dragging}
+                aria-busy={uploading}
                 onDragOver={(e) => {
                   e.preventDefault();
                   setDragging(true);
@@ -311,9 +317,9 @@ export function StepPersonalization({
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-2)', marginBottom: 'var(--space-2)' }}>
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--color-ink-soft)' }}><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--color-ink-soft)' }} aria-hidden="true"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg>
                   <strong style={{ display: 'block' }}>
-                    Wgraj uzupełniony szablon
+                    {uploading ? 'Przesyłamy arkusz…' : 'Wgraj uzupełniony arkusz'}
                   </strong>
                 </div>
                 <p className="small muted" style={{ margin: 0 }}>
@@ -324,12 +330,13 @@ export function StepPersonalization({
                   >
                     wybierz z dysku
                   </label>
-                  .
+                  . Przyjmujemy pliki {PERSONALIZATION_SHEET_EXTENSIONS_LABEL}.
                 </p>
                 <input
                   id="szablon-input"
                   type="file"
                   className="sr-only"
+                  disabled={uploading}
                   accept={PERSONALIZATION_SHEET_EXTENSIONS.map((ext) => `.${ext}`).join(',')}
                   onChange={(e) => void handleTemplateFile(e.target.files)}
                 />
@@ -340,7 +347,6 @@ export function StepPersonalization({
                   {uploadError}
                 </p>
               )}
-              {uploadInfo && <p className="notice notice-success">{uploadInfo}</p>}
 
               {file && (
                 <div className="file-card">
@@ -353,19 +359,14 @@ export function StepPersonalization({
                       {formatBytes(file.size)}
                     </span>
                   </span>
-                  <span
-                    className={
-                      file.status === 'przeslano' ? 'badge badge-success' : 'badge badge-error'
-                    }
-                  >
-                    {file.status === 'przeslano' ? 'Przesłano' : 'Błąd'}
+                  <span className={uploaded ? 'badge badge-success' : 'badge badge-error'}>
+                    {uploaded ? 'Przesłano' : 'Błąd'}
                   </span>
                   <button
                     type="button"
                     className="btn btn-secondary btn-sm"
                     onClick={() => {
                       onFileChange(null);
-                      setUploadInfo(null);
                       setUploadError(null);
                     }}
                   >
@@ -375,7 +376,7 @@ export function StepPersonalization({
               )}
             </div>
           )}
-        </>
+        </div>
       )}
     </div>
   );
