@@ -103,7 +103,7 @@ liczbowymi i porównaniami. Najtańszy dostępny kanał widoczności dla domeny 
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 13 | Koperty bez okienka — kiedy je wybrać | Supporting article | koperty bez okienka | GEO | Kancelarie, biura rachunkowe | F3 | Cała oferta jest bez okienka — treść wykorzystuje to jako wyróżnik, nie jako filtr produktowy. **Wykonane 21 sierpnia 2026.** F3 podaje sam fakt (wiersz specyfikacji + akapit „Brak okienka na całej ofercie"); ten wpis obsługuje intencję decyzyjną: kiedy okienko przeszkadza, a kiedy jego brak wymusza adresowanie | [x] |
 | 14 | Jak zaadresować kopertę wysyłaną przez firmę — wzór | Supporting article | adresowanie koperty od firmy | GEO | Sekretariat, office manager | F2 | Intencja **instruktażowa**, nie zakupowa: wzór adresu i układ, CTA dopiero pod treścią merytoryczną. Filar F2 świadomie **nie ma** sekcji ze wzorem adresu — opisuje wyłącznie zakres usługi („co drukujemy"), więc ta pozycja nie koliduje. **Wykonane 22 sierpnia 2026.** | [x] |
-| 15 | Koperty z imieniem i nazwiskiem — jak przygotować listę | Supporting article | koperty z imieniem i nazwiskiem | RUCH | Office manager, HR | F2 | Dotyczy **przygotowania danych po stronie klienta** (eksport z CRM, odmiana nazwisk, ujednolicenie zapisu); filar F2 podaje wyłącznie specyfikację arkusza (kolumny, pola wymagane, walidacja), poz. 8 — wybór trybu. Trzy różne pytania użytkownika. **Granica dopisana 16 sierpnia 2026:** poz. 8 zajęła już tabelę „skąd pochodzi lista → tryb" oraz przyczyny odrzucenia arkusza (druga zakładka, przemianowany nagłówek, wiersze ukryte filtrem). Ta pozycja zaczyna się **po** wyborze trybu: co zrobić z danymi między eksportem a wgraniem pliku | [ ] |
+| 15 | Koperty z imieniem i nazwiskiem — jak przygotować listę | Supporting article | koperty z imieniem i nazwiskiem | RUCH | Office manager, HR | F2 | Dotyczy **przygotowania danych po stronie klienta** (eksport z CRM, odmiana nazwisk, ujednolicenie zapisu); filar F2 podaje wyłącznie specyfikację arkusza (kolumny, pola wymagane, walidacja), poz. 8 — wybór trybu. Trzy różne pytania użytkownika. **Granica dopisana 16 sierpnia 2026:** poz. 8 zajęła już tabelę „skąd pochodzi lista → tryb" oraz przyczyny odrzucenia arkusza (druga zakładka, przemianowany nagłówek, wiersze ukryte filtrem). Ta pozycja zaczyna się **po** wyborze trybu: co zrobić z danymi między eksportem a wgraniem pliku. **Wykonane 25 sierpnia 2026.** Tytuł doprecyzowany na „Koperty z imieniem i nazwiskiem — lista do nadruku" (slug niesie pełną frazę długiego ogona). Granica utrzymana: zero tabeli „skąd pochodzi lista → tryb", zero przyczyn odrzucenia pliku, zero specyfikacji kolumn — wpis obsługuje wyłącznie higienę danych (scalanie kolumn, wersaliki, kodowanie polskich znaków, odmiana nazwiska, duplikaty, minimalizacja danych osobowych). Bez kwot, MOQ i terminów | [x] |
 | 16 | Realizacja ekspresowa w 2 dni robocze | Supporting article | szybka realizacja kopert | KONWERSJA | Agencje eventowe, „na już" | F1 | **Format zmieniony z `Aktualizacja` na `Supporting article` 15 sierpnia 2026** — wpis startowy usunięty, treść powstaje od zera. Oś wpisu: od kiedy liczymy termin (zaksięgowanie wpłaty + akceptacja wizualizacji) i kiedy dopłata za ekspres się zwraca. Tabela terminów, link w górę do F1. **Cennika nadruku nie dublować** — należy do F1 i poz. 9 | [ ] |
 
 ---
@@ -249,6 +249,63 @@ nie liczą się do kadencji czterech pozycji tygodniowo i nie mają filara.
 ---
 
 ## Dziennik wdrożeń
+
+### 25 sierpnia 2026 — poz. 15: `/blog/koperty-z-imieniem-i-nazwiskiem-jak-przygotowac-liste`
+
+**Trzecia treść wspierająca filar K2 i właściciel frazy `koperty z imieniem i nazwiskiem`**
+(keywords.md, K2, P1). Filar `/koperty-personalizowane` zostaje przy frazach
+`personalizowane koperty` i `adresowanie kopert`.
+
+**1. Rozgraniczenie w klastrze — trzy pytania, trzy adresy.** Filar podaje specyfikację
+arkusza (kolumny, pola wymagane, walidacja), poz. 8 rozstrzyga wybór trybu, a ten wpis
+zaczyna się dopiero po tym wyborze: co zrobić z danymi **między eksportem a wgraniem pliku**.
+Punktem zaczepienia jest zdanie, które już stało na filarze — tekst odtwarzamy dokładnie
+w postaci, w jakiej został przekazany, bez poprawiania odmiany, wielkich liter i skrótów.
+Skoro nie poprawiamy niczego, o wyglądzie serii decyduje arkusz, a nie produkcja; z tego
+wynika cała treść wpisu. Świadomie nieobecne: tabela „skąd pochodzi lista → tryb", druga
+zakładka skoroszytu, przemianowany nagłówek i wiersze ukryte filtrem (poz. 8), wzór
+rozmieszczenia adresu na kopercie (poz. 14), limit wierszy i cennik (filar, poz. 9).
+
+**2. Dziewięć sekcji, cztery tabele.** Scalanie kolumny „Imię i nazwisko" i wklejanie
+wartości zamiast formuły; wersaliki, kodowanie polskich znaków w CSV i odstępy na końcu
+komórek; **przypadek gramatyczny zależnie od tego, czym jest nadruk** (mianownik przy samym
+nazwisku, dopełniacz przy dedykacji, wołacz przy zwrocie grzecznościowym); tytuły naukowe
+i nazwiska dwuczłonowe; duplikaty i wiersze testowe; minimalizacja danych osobowych
+(administratorem pozostaje klient, Envelopes jest podmiotem przetwarzającym — Załącznik nr 2
+do regulaminu, 12 miesięcy przechowywania, wszystko czytane z `legal.ts`). Zamknięcie:
+ośmiopunktowa lista kontrolna i tabela pięciu pytań. Nagłówki kolumn szablonu nie są wpisane
+ręcznie — powstają z `PERSONALIZATION_NAME_COLUMNS`, więc przemianowanie kolumny w katalogu
+przepisuje treść poradnika.
+
+**3. Nowe pole `personalizationScope` w CTA wpisu.** `BlogCta` dostało zakres personalizacji,
+a `src/app/blog/[slug]/page.tsx` przekazuje go do `ConfigureLink` i `StickyCta`. Wpis
+o liście imiennej wchodzi do konfiguratora na wariancie „samo imię i nazwisko"
+(`/?format=DL&personalizacja=1&zakres=imiona#konfigurator`), zamiast otwierać wariant
+adresowy i kazać czytelnikowi cofnąć wybór. Pole jest opcjonalne — pozostałe wpisy działają
+bez zmian.
+
+**4. Linkowanie w obie strony.** Wpis linkuje w górę do filara (anchor `personalizowane
+koperty`), w bok do poz. 8 i poz. 14 oraz do `#lista-danych` na filarze, a w warstwie prawnej
+do regulaminu i polityki prywatności. Linki przychodzące: sekcja „Poradniki" na filarze
+urosła z jednej karty do trzech (doszły poz. 14 i 15 — poz. 14 nie została tam dopisana przy
+swojej publikacji), doszedł odnośnik kontekstowy pod tabelą kolumn arkusza, a poz. 8 i poz. 14
+dostały po akapicie odsyłającym do przygotowania listy. Obie zaktualizowane treści mają
+`updated: '2026-08-25'`.
+
+**5. Jedna fraza, jeden właściciel.** Frazy `koperty z imieniem i nazwiskiem` i `koperty
+imienne` stały dotąd w `keywords` filara. Przeszły do wpisu — filar zostaje przy
+`personalizowane koperty` i `adresowanie kopert`, a w treści używa fraz imiennych dalej,
+razem z przyciskiem wchodzącym do konfiguratora na wariancie imiennym. Zmiana dotyczy
+wyłącznie rejestru fraz; `keywords` nie są czynnikiem rankingowym, ale w tym projekcie
+pełnią funkcję mapy własności i rozjazd z `keywords.md` byłby mylący przy kolejnym audycie.
+
+**6. Zasoby i indeksacja.** Kadr nagłówkowy: `czarna-koperta-dl-personalizacja-imienna`
+(trzy czarne koperty DL, każda z innym nazwiskiem) — kadr nieużywany przez poz. 8 i 14.
+Karta OG `public/images/og/blog-koperty-imienne.jpg` wygenerowana `scripts/og-card.mjs`
+(1200 × 630, bez kwot). `PAGE_UPDATED` podbite dla `/`, `/blog`, `/koperty-personalizowane`
+i poz. 14; nowy adres dopisany do rejestru. Sitemapa urosła do 40 adresów. `npx tsc --noEmit`
+bez błędów, `npm run build` kończy się kodem 0 i prerenderuje wpis jako SSG.
+**Do wykonania po wdrożeniu na produkcję:** `npm run indexnow`.
 
 ### 19 sierpnia 2026 — audyt kompletu 19 stron kolorów
 

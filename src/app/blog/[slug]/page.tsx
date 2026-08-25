@@ -227,6 +227,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 color={post.ctaConfigure.color}
                 print={post.ctaConfigure.print}
                 personalization={post.ctaConfigure.personalization}
+                personalizationScope={post.ctaConfigure.personalizationScope}
                 className="btn"
               >
                 {post.ctaConfigure.label}
@@ -276,6 +277,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         color={post.ctaConfigure?.color}
         print={post.ctaConfigure?.print}
         personalization={post.ctaConfigure?.personalization}
+        personalizationScope={post.ctaConfigure?.personalizationScope}
       />
     </>
   );

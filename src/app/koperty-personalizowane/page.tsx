@@ -92,7 +92,9 @@ const PERSONALIZED_COLORS = COLORS.filter((color) => color.personalizedImages?.D
  * dopisanie slugu z wyprzedzeniem niczego nie psuje.
  */
 const sheetGuide = getPost('adresowanie-kopert-z-arkusza-czy-recznie');
-const GUIDES = [sheetGuide].filter((post) => post !== undefined);
+const addressGuide = getPost('jak-zaadresowac-koperte-wysylana-przez-firme-wzor');
+const nameListGuide = getPost('koperty-z-imieniem-i-nazwiskiem-jak-przygotowac-liste');
+const GUIDES = [sheetGuide, addressGuide, nameListGuide].filter((post) => post !== undefined);
 
 /** Gramatury papieru w podziale na kolory — dane wprost z katalogu. */
 const WEIGHT_GROUPS = Object.entries(
@@ -196,8 +198,12 @@ export const metadata: Metadata = {
     'koperta personalizowana',
     'adresowanie kopert',
     'koperty adresowane',
-    'koperty z imieniem i nazwiskiem',
-    'koperty imienne',
+    /* Frazy imienne (`koperty z imieniem i nazwiskiem`, `koperty imienne`)
+       przeszły 25 sierpnia 2026 do wpisu wspierającego z poz. 15 planu —
+       jedna fraza ma mieć jednego właściciela w serwisie. Filar używa ich
+       nadal w treści jako nazwy usługi i prowadzi do konfiguratora
+       z zakresem „samo imię i nazwisko"; zmiana dotyczy wyłącznie rejestru
+       fraz, bo `keywords` nie są czynnikiem rankingowym. */
   ],
   alternates: { canonical: '/koperty-personalizowane' },
   openGraph: {
@@ -617,7 +623,13 @@ export default function PersonalizedEnvelopesPage() {
             dokładnie w postaci, w jakiej został przekazany — nie poprawiamy odmiany nazwisk,
             wielkich liter ani skrótów. Jeśli w arkuszu stoi „ul." przed nazwą ulicy, taki zapis
             znajdzie się na kopercie. To celowe: dane bywają pobierane z systemów, w których zapis
-            jest już ustandaryzowany, i nie chcemy go po cichu zmieniać.
+            jest już ustandaryzowany, i nie chcemy go po cichu zmieniać. Co zrobić z listą po
+            eksporcie z CRM — scalanie kolumn, wersaliki, polskie znaki i duplikaty — prowadzimy
+            krok po kroku w poradniku{' '}
+            <Link href="/blog/koperty-z-imieniem-i-nazwiskiem-jak-przygotowac-liste">
+              koperty z imieniem i nazwiskiem
+            </Link>
+            .
           </p>
         </div>
       </section>

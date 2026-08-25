@@ -14,6 +14,7 @@ import {
   COLORS,
   FORMAT_MAP,
   INSERT_CLEARANCE_MM,
+  PERSONALIZATION_NAME_COLUMNS,
   PERSONALIZATION_REQUIRED_COLUMNS,
   PERSONALIZATION_SHEET_EXTENSIONS_LABEL,
   PRINT_FILE_EXTENSIONS,
@@ -27,7 +28,12 @@ import {
   formatMm,
   maxInsertSize,
 } from './catalog';
-import type { EnvelopeFormat, FormatId, StandardInsert } from './catalog';
+import type {
+  EnvelopeFormat,
+  FormatId,
+  PersonalizationScope,
+  StandardInsert,
+} from './catalog';
 import {
   DEFAULT_PRICING,
   DELIVERY_COST,
@@ -72,6 +78,13 @@ export interface BlogCta {
   color?: string;
   print?: boolean;
   personalization?: boolean;
+  /**
+   * Zakres personalizacji, z którym otwiera się konfigurator — pełny adres
+   * albo samo imię i nazwisko. Bez tego pola wpis o liście imiennej
+   * prowadziłby do wariantu adresowego i kazał czytelnikowi cofnąć wybór
+   * (pkt 7 briefu SEO — ciągłość intencji).
+   */
+  personalizationScope?: PersonalizationScope;
 }
 
 export interface BlogPost {
@@ -169,6 +182,23 @@ const REQUIRED_ADDRESS_FIELDS = PERSONALIZATION_REQUIRED_COLUMNS.map((column) =>
 ).join(', ');
 /** Przykład kolumny, której nazwy nie wolno zmieniać — „Ulica i numer". */
 const FIRST_REQUIRED_COLUMN = PERSONALIZATION_REQUIRED_COLUMNS[0].label;
+
+/* ── Wartości wyliczane dla wpisu o liście imion i nazwisk (poz. 15) ───── */
+
+/**
+ * Nagłówki szablonu imiennego czytane z `PERSONALIZATION_NAME_COLUMNS` —
+ * z tej samej definicji, z której generator buduje plik XLSX. Wpis mówi
+ * klientowi, co ma wpisać w danej kolumnie, więc przemianowanie kolumny
+ * w katalogu przepisuje też treść poradnika. Szukamy po `match`, a nie po
+ * indeksie tablicy, żeby dołożenie kolumny niczego nie przestawiło.
+ */
+const NAME_COLUMN_LABEL =
+  PERSONALIZATION_NAME_COLUMNS.find((column) => column.match.includes('nazwisko'))?.label ??
+  'Imię i nazwisko';
+/** Druga linia nadruku w wariancie imiennym — firma, dział albo stanowisko. */
+const NAME_SECOND_LINE_LABEL =
+  PERSONALIZATION_NAME_COLUMNS.find((column) => column.match.includes('stanowisko'))?.label ??
+  'Firma lub stanowisko (opcjonalnie)';
 
 /* ── Wartości wyliczane dla wpisu o koszcie zamówienia z nadrukiem ─────── */
 
@@ -922,6 +952,8 @@ const POSTS: BlogPost[] = [
     lead: 'Zastanawiasz się czy wybrać adresowanie kopert z arkusza czy zaadresować koperty ręcznie? Odkryj, która metoda przygotowania listy adresów do nadruku oszczędzi czas Twojej firmy. Sprawdź nasz poradnik i zdecyduj.',
     category: 'Poradniki',
     date: '2026-08-16',
+    /* Akapit odsyłający do poz. 15 — przygotowanie listy po eksporcie */
+    updated: '2026-08-25',
     readingMinutes: 6,
     colorId: 'granatowy',
     format: 'DL',
@@ -1002,6 +1034,7 @@ const POSTS: BlogPost[] = [
         paragraphs: [
           'Jeżeli lista odbiorców istnieje już w formie cyfrowej — w CRM, w systemie rezerwacji, w programie kadrowym albo w pliku przysłanym przez inny dział — wybierają Państwo arkusz. Eksport wystarczy przenieść do szablonu. Przepisywanie tych samych danych do pola tekstowego dokłada wyłącznie jedno: okazję do literówki, której w źródle nie było.',
           'Jedna zasada rozstrzyga przypadki wątpliwe. Jeśli w trakcie wpisywania danych zaczynają Państwo kopiować je z innego pliku, decyzja już zapadła — te dane są cyfrowe i należą do arkusza.',
+          'Sam eksport rzadko nadaje się do wgrania bez przeglądu: imię i nazwisko bywają w dwóch kolumnach, zapis w wersalikach, a ta sama osoba wraca w dwóch wierszach. Co zrobić z danymi między eksportem a wgraniem pliku, rozpisujemy w poradniku o [kopertach z imieniem i nazwiskiem](/blog/koperty-z-imieniem-i-nazwiskiem-jak-przygotowac-liste).',
           'Odwrotnie działa lista, która powstaje dopiero w chwili zamawiania: trzy nazwiska z wiadomości od przełożonego, gość dopisany w ostatniej chwili, imię na bon kupiony przez telefon. Otwieranie Excela po to, żeby wpisać do niego dane, których nigdzie jeszcze nie ma, wydłuża zamówienie bez żadnego zysku.',
         ],
         table: {
@@ -1449,6 +1482,8 @@ const POSTS: BlogPost[] = [
     lead: 'Sprawdź poprawny wzór na adresowanie koperty od firmy. Poznaj układ danych nadawcy i odbiorcy, zasady formatowania i uniknij zwrotów korespondencji.',
     category: 'Poradniki',
     date: '2026-08-22',
+    /* Akapit odsyłający do poz. 15 — przygotowanie listy po eksporcie */
+    updated: '2026-08-25',
     readingMinutes: 5,
     colorId: 'niebieski',
     format: 'DL',
@@ -1499,6 +1534,7 @@ const POSTS: BlogPost[] = [
           'Wysyłka powyżej kilkunastu listów miesięcznie czyni adresowanie ręczne nieopłacalnym procesem. Ręczne wypisywanie danych generuje błędy (tzw. literówki) i obniża estetykę korespondencji, która w relacjach B2B jest wizytówką firmy.',
           'Nadruk bezpośrednio na kopercie eliminuje ryzyko pomyłki i wygląda w pełni profesjonalnie. Envelopes oferuje usługę personalizacji kopert DL z gotowego arkusza Excel, w której drukujemy dane odbiorców i nadawcy w cenie 2,99 zł brutto za sztukę.',
           'W przeciwieństwie do naklejanych etykiet, które mogą się odkleić w transporcie, nadruk płaski na papierze ozdobnym to rozwiązanie estetyczne, wybierane przez kancelarie i działy zarządcze.',
+          'Nadruk odtwarza dane dokładnie w takiej postaci, w jakiej stoją w arkuszu, więc przed wysyłką listę warto przejrzeć: zapis nazwisk, polskie znaki i powtórzone rekordy. Prowadzi przez to poradnik o [kopertach z imieniem i nazwiskiem](/blog/koperty-z-imieniem-i-nazwiskiem-jak-przygotowac-liste).',
         ],
       },
       {
@@ -1513,6 +1549,265 @@ const POSTS: BlogPost[] = [
     ],
     cta: 'Usługa nadruku danych odbiorcy (personalizacji) eliminuje błędy w adresowaniu i przyspiesza wysyłkę korespondencji firmowej.',
     ctaConfigure: { label: 'Zamów koperty DL z adresowaniem', format: 'DL', personalization: true },
+    pillar: { href: '/koperty-personalizowane', anchor: 'personalizowane koperty' },
+  },
+  {
+    /* content-plan.md poz. 15 — trzecia treść wspierająca filar K2.
+       Właściciel frazy `koperty z imieniem i nazwiskiem` (keywords.md, K2).
+       Filar zostaje przy `personalizowane koperty` i `adresowanie kopert`.
+
+       Rozgraniczenie w klastrze (granica z 16 sierpnia 2026). Filar
+       /koperty-personalizowane podaje **specyfikację arkusza** — kolumny,
+       pola wymagane, walidację. Poz. 8 rozstrzyga **wybór trybu** (arkusz
+       czy wpisanie danych z klawiatury) i wymienia przyczyny odrzucenia
+       pliku. Ten wpis zaczyna się **po** wyborze trybu i opisuje wyłącznie
+       to, co dzieje się po stronie klienta między eksportem danych
+       a wgraniem pliku: scalenie kolumn, ujednolicenie zapisu, formę
+       nazwiska, duplikaty i minimalizację danych osobowych.
+
+       Świadomie nieobecne: tabela „skąd pochodzi lista → tryb", druga
+       zakładka skoroszytu, przemianowany nagłówek i wiersze ukryte filtrem
+       (wszystko poz. 8), specyfikacja kolumn i limit wierszy (filar), wzór
+       rozmieszczenia adresu na kopercie (poz. 14). Zero kwot, zero MOQ,
+       zero terminów — należą do filara i do poz. 9. Wpis nie ma własnego
+       `FAQPage`: dane strukturalne pytań zostają na filarze (zasada
+       z poz. 7), więc sekcja pytań jest tu tabelą treści, nie schematem. */
+    slug: 'koperty-z-imieniem-i-nazwiskiem-jak-przygotowac-liste',
+    title: 'Koperty z imieniem i nazwiskiem — lista do nadruku',
+    /* Lead zasila `description`. Bez parametrów oferty — wpis jest o danych,
+       nie o cenniku; jedyny konkret to trzy czynności, które czytelnik ma
+       wykonać w arkuszu. */
+    lead: 'Koperty z imieniem i nazwiskiem drukujemy dokładnie z Państwa listy. Co zrobić z danymi po eksporcie z CRM: zapis nazwisk, duplikaty, polskie znaki.',
+    category: 'Poradniki',
+    date: '2026-08-25',
+    readingMinutes: 7,
+    colorId: 'czarny',
+    format: 'DL',
+    /* Kadr aranżacyjny: trzy czarne koperty DL, każda z nadrukiem innego
+       nazwiska — dokładnie efekt, o który chodzi w tym wpisie. Poz. 8 i 14
+       używają innych kadrów personalizacyjnych, więc kadry się nie powtarzają. */
+    showcaseFile: 'czarna-koperta-dl-personalizacja-imienna',
+    imageVariant: 'personalizacja',
+    ogImageSlug: 'blog-koperty-imienne',
+    ogImageAlt:
+      'Trzy czarne koperty DL na drewnianym blacie, każda z nadrukiem imienia i nazwiska innego odbiorcy',
+    keywords: [
+      'koperty z imieniem i nazwiskiem',
+      'koperty imienne',
+      'nazwiska na kopertach',
+      'lista odbiorców do nadruku',
+    ],
+    intro:
+      'Koperty z imieniem i nazwiskiem drukujemy dokładnie z tego, co stoi w Państwa arkuszu — nie poprawiamy odmiany, wielkich liter ani skrótów. O wyglądzie całej serii decyduje więc lista, a nie produkcja. Ten poradnik prowadzi przez etap między eksportem danych a wgraniem pliku: scalenie kolumn, ujednolicenie zapisu, formę nazwiska i duplikaty.',
+    sections: [
+      {
+        id: 'lista-decyduje',
+        heading: 'Dlaczego to lista decyduje o wyglądzie kopert',
+        paragraphs: [
+          'Tekst z arkusza trafia na kopertę bez korekty. Nie zmieniamy wielkości liter, nie odmieniamy nazwisk, nie rozwijamy skrótów i nie poprawiamy literówek — nadruk odtwarza zapis z pliku znak w znak. To decyzja celowa: dane pochodzą zwykle z systemu, w którym ktoś już ustalił ich postać, a cicha korekta po naszej stronie rozjechałaby się z resztą korespondencji.',
+          'Praca nad serią kopert imiennych dzieje się więc w arkuszu, nie w drukarni. Nasz grafik przygotowuje wizualizację przed drukiem i wysyła ją do akceptacji, ale pokazuje ona układ nadruku i krój pisma — błąd w nazwisku będzie na niej widoczny, jednak nikt go za Państwa nie naprawi.',
+          'Ten poradnik zaczyna się w momencie, w którym dane są już po Państwa stronie i wiadomo, że pojadą arkuszem. Jeżeli ta decyzja jeszcze nie zapadła, prowadzi przez nią osobny wpis o [adresowaniu kopert z arkusza](/blog/adresowanie-kopert-z-arkusza-czy-recznie).',
+        ],
+      },
+      {
+        id: 'jedna-kolumna',
+        heading: 'Imię i nazwisko w jednej kolumnie, nie w dwóch',
+        paragraphs: [
+          `Szablon ma jedną kolumnę „${NAME_COLUMN_LABEL}”, a większość systemów eksportuje dwie osobne. Przed wgraniem trzeba je scalić — najpierw imię, potem nazwisko — i wkleić wynik jako wartości, nie jako formułę. Formuła po przeniesieniu do innego pliku traci odwołania i zostawia puste pole albo komunikat o błędzie w miejscu, w którym miało stanąć nazwisko.`,
+          'Eksport z systemu kadrowego bywa posortowany nazwiskami i w tej samej kolejności je zapisuje: najpierw nazwisko, potem imię. Na kopercie taki zapis czyta się jak wyciąg z ewidencji, a nie jak list do konkretnej osoby. Kolejność odwracamy raz, w arkuszu, zamiast tłumaczyć ją później odbiorcom.',
+          `Szablon imienny ma jeszcze drugą linię nadruku — kolumnę „${NAME_SECOND_LINE_LABEL}”. Wchodzi do niej dział, stanowisko albo nazwa firmy, jeśli sam kontekst nazwiska bywa niejasny. Pole jest opcjonalne, więc wiersze bez stanowiska przechodzą bez przeszkód i nie trzeba niczego w nich uzupełniać na siłę. Które kolumny są wymagane w którym wariancie, rozpisujemy na stronie [personalizowane koperty](/koperty-personalizowane#lista-danych).`,
+        ],
+      },
+      {
+        id: 'zapis-nazwisk',
+        heading: 'Wersaliki, polskie znaki i nadmiarowe spacje',
+        paragraphs: [
+          'Trzy defekty zapisu wracają niemal w każdym eksporcie: nazwiska w całości wersalikami, polskie znaki zamienione na przypadkowe symbole oraz spacje, których nie widać. Wszystkie trzy wyjdą na wydruku, bo drukujemy zapis z pliku bez ingerencji. Przegląd całej kolumny zajmuje kilka minut i najlepiej zrobić go, zanim lista pójdzie do akceptacji.',
+          'Zapis „JAN KOWALSKI” jest w systemach kadrowych normą, bo pole służy do wyszukiwania, a nie do druku. Na kopercie wersaliki brzmią jak korespondencja masowa i kasują cały efekt wysyłki imiennej. Zamiana na zapis z wielkiej litery zajmuje jedno przeciągnięcie formuły, ale wynik warto przejrzeć: nazwiska dwuczłonowe i te z przedrostkiem („de”, „van”) wymagają czasem ręcznej poprawki.',
+          `Przypadkowe symbole w miejscu liter ą, ę i ł biorą się z kodowania pliku CSV — dwa systemy zapisują polskie znaki inaczej i przy otwarciu w arkuszu wychodzi z tego zbitka. Prosimy sprawdzić kilka nazwisk z polskimi znakami po eksporcie i zapisać plik jako XLSX. Przyjmujemy pliki ${PERSONALIZATION_SHEET_EXTENSIONS_LABEL}, więc zmiana formatu niczego nie blokuje, a zdejmuje pytanie o kodowanie.`,
+        ],
+        table: {
+          caption: 'Typowe defekty zapisu w wyeksportowanej liście nazwisk',
+          head: ['Co widać w arkuszu', 'Jak wyjdzie na kopercie', 'Co zrobić przed wgraniem'],
+          rows: [
+            [
+              'Nazwisko w całości wersalikami',
+              'Nadruk wersalikami, w tonie korespondencji masowej',
+              'Zamienić na zapis z wielkiej litery i przejrzeć nazwiska dwuczłonowe',
+            ],
+            [
+              'Nazwisko przed imieniem',
+              'Zapis w kolejności ewidencyjnej, nie listowej',
+              'Odwrócić kolejność w scalonej kolumnie',
+            ],
+            [
+              'Przypadkowe symbole zamiast ą, ę, ł',
+              'Te same symbole trafią na wydruk',
+              'Sprawdzić kodowanie eksportu i zapisać plik jako XLSX',
+            ],
+            [
+              'Podwójna spacja w środku wiersza',
+              'Widoczna przerwa między imieniem a nazwiskiem',
+              'Usunąć nadmiarowe odstępy w całej kolumnie',
+            ],
+            [
+              'Spacja na końcu komórki',
+              'Na kopercie niewidoczna',
+              'Wyczyścić odstępy — inaczej dwa identyczne nazwiska nie zostaną rozpoznane jako duplikat',
+            ],
+            [
+              'Skrót stanowiska zrozumiały tylko wewnątrz firmy',
+              'Nadruk z kodem, którego odbiorca nie rozszyfruje',
+              'Rozwinąć skrót albo zostawić drugą linię pustą',
+            ],
+          ],
+        },
+      },
+      {
+        id: 'odmiana-nazwisk',
+        heading: 'Czy nazwisko na kopercie trzeba odmienić',
+        paragraphs: [
+          'Nazwisko odmieniają Państwo tylko wtedy, gdy nadruk jest zwrotem do adresata. Samo imię i nazwisko na froncie koperty zostaje w mianowniku — tak samo jak w bloku adresowym przesyłki pocztowej. Odmiana wchodzi dopiero razem z przyimkiem albo tytułem grzecznościowym: „Dla Pani Marty Skomorowskiej” wymaga dopełniacza, a „Szanowna Pani Marto” — wołacza.',
+          'Rozstrzygnięcie należy do Państwa, bo drukujemy zapis z arkusza bez ingerencji w gramatykę. Przy wysyłce, w której część kopert ma nieść samo nazwisko, a część dedykację, prościej przygotować dwie listy niż mieszać formy w jednej kolumnie — inaczej po kilkudziesięciu wierszach nikt już nie pamięta, który wariant obowiązuje.',
+          'Nazwiska obce i nietypowe warto zostawić w mianowniku. Błędna odmiana rzuca się w oczy mocniej niż jej brak, a reguły bywają w takich przypadkach sporne nawet wśród językoznawców. Zasady rozmieszczenia danych na kopercie wysyłkowej — nadawca, odbiorca, miejsce na opłatę — opisujemy osobno we wpisie o [poprawnym adresowaniu koperty firmowej](/blog/jak-zaadresowac-koperte-wysylana-przez-firme-wzor).',
+        ],
+        table: {
+          caption: 'Forma nazwiska zależnie od tego, czym jest nadruk na kopercie',
+          head: ['Co stoi na kopercie', 'Przypadek', 'Zapis w arkuszu'],
+          rows: [
+            ['Samo imię i nazwisko odbiorcy', 'Mianownik', 'Marta Skomorowska'],
+            ['Imię i nazwisko w bloku adresowym', 'Mianownik', 'Jerzy Trzmiel'],
+            ['Dedykacja zaczynająca się od „Dla”', 'Dopełniacz', 'Dla Pani Marty Skomorowskiej'],
+            ['Zwrot grzecznościowy do adresata', 'Wołacz', 'Szanowna Pani Marto'],
+            ['Jedna koperta dla dwóch osób', 'Mianownik liczby mnogiej', 'Państwo Anna i Jan Kowalscy'],
+            ['Nazwisko obce lub nietypowe', 'Mianownik', 'Yannick Dubois — bez odmiany'],
+          ],
+        },
+      },
+      {
+        id: 'tytuly-i-nazwiska-zlozone',
+        heading: 'Tytuły, nazwiska dwuczłonowe i koperta dla dwóch osób',
+        paragraphs: [
+          'Tytuł naukowy albo zawodowy stawiamy przed imieniem, w tej samej komórce co nazwisko: „dr Anna Nowak”. Jeżeli baza ma tytuły tylko przy części osób, warto zdecydować z góry, czy pojawiają się u wszystkich, u których występują, czy u nikogo. Rozwiązanie połowiczne widać na stosie kopert od razu, a przy zaproszeniach bywa odczytane jako hierarchia gości.',
+          'Nazwiska dwuczłonowe przenoszą z bazy ślady po formularzu, w którym powstały: raz z łącznikiem bez spacji, raz ze spacjami wokół łącznika, czasem z jednym tylko członem. Zapis warto ujednolicić przed wgraniem, a przy wątpliwościach zostawić tę wersję, której odbiorca używa w podpisie służbowej korespondencji.',
+          'Jeden wiersz to jedna koperta, więc para mieszkająca pod wspólnym adresem dostaje jeden wiersz z dwoma nazwiskami, a nie dwa wiersze. Odwrotnie działa to w firmie: jeżeli list ma trafić osobno do dwóch osób z tego samego działu, potrzebne są dwa wiersze i dwie koperty. Znaki spoza alfabetu polskiego — akcenty, przegłosy — zobaczą Państwo na wizualizacji przed drukiem i to jest moment na ich sprawdzenie.',
+        ],
+      },
+      {
+        id: 'duplikaty',
+        heading: 'Duplikaty, wiersze testowe i liczba kopert',
+        paragraphs: [
+          'Liczba wypełnionych wierszy musi zgadzać się z liczbą zamówionych kopert. Najczęstszym powodem rozjazdu nie jest błąd w liczeniu, tylko duplikat: ta sama osoba wyeksportowana z dwóch segmentów bazy albo widniejąca raz jako kontakt, a raz jako reprezentant firmy. Na liście wygląda to jak dwa różne rekordy, w skrzynce pocztowej — jak pomyłka.',
+          'Duplikaty ukrywają się za różnicami w zapisie, dlatego kolejność pracy ma znaczenie. „Anna Kowalska”, „KOWALSKA ANNA” i „Anna Kowalska ” ze spacją na końcu to dla arkusza trzy różne wartości i żadne narzędzie do usuwania duplikatów ich nie połączy. Najpierw ujednolicamy zapis, dopiero potem szukamy powtórzeń.',
+          'Z listy warto też usunąć wiersze, które nigdy nie miały pojechać: przykład z szablonu, rekord testowy sprzed lat, osobę, która odeszła z firmy odbiorcy. Wiersz, w którym został sam numer porządkowy, traktujemy jako pusty — numeracja nie czyni z niego pozycji do druku.',
+        ],
+        table: {
+          caption: 'Skąd biorą się duplikaty i nadmiarowe wiersze w eksportowanej liście',
+          head: ['Sytuacja w danych', 'Skutek przy zamówieniu', 'Decyzja przed wgraniem'],
+          rows: [
+            [
+              'Ta sama osoba w dwóch segmentach bazy',
+              'Dwie identyczne koperty i wiersz więcej niż kopert',
+              'Usunąć powtórzenie po ujednoliceniu zapisu',
+            ],
+            [
+              'Kontakt i firma jako osobne rekordy',
+              'Dwie koperty pod ten sam adres',
+              'Zostawić rekord, do którego korespondencja ma faktycznie trafić',
+            ],
+            [
+              'Dwie osoby pod wspólnym adresem domowym',
+              'Dwie koperty zamiast jednej',
+              'Scalić w jeden wiersz z dwoma nazwiskami',
+            ],
+            [
+              'Przykład z szablonu albo wiersz testowy',
+              'Koperta z nazwiskiem spoza listy',
+              'Usunąć przed zapisaniem pliku',
+            ],
+            [
+              'Wiersz z samym numerem porządkowym',
+              'Liczymy go jako pusty',
+              'Uzupełnić nazwisko albo usunąć numer',
+            ],
+            [
+              'Osoba, która odeszła z firmy odbiorcy',
+              'Koperta imienna wraca albo trafia w próżnię',
+              'Zaktualizować dane w systemie, nie dopiero w eksporcie',
+            ],
+          ],
+        },
+      },
+      {
+        id: 'dane-osobowe',
+        heading: 'Ile danych osobowych trzeba nam przekazać',
+        paragraphs: [
+          'Tyle, ile ma stanąć na kopercie — i nic ponad to. Do serii imiennej wystarcza kolumna z imieniem i nazwiskiem, a przy wysyłce pocztowej dochodzą pola adresowe. Numery PESEL, kwoty premii, oceny okresowe i notatki z CRM prosimy usunąć z pliku przed wgraniem; nie są nam do niczego potrzebne i nie chcemy ich przechowywać.',
+          'Eksport z systemu kadrowego albo z CRM wychodzi zwykle z kilkunastoma kolumnami naraz, bo tak jest ustawiony domyślnie. Skasowanie zbędnych kolumn jest jedyną czynnością na tej liście, która nie służy wyglądowi nadruku, tylko Państwu: danych, których nam nie przekazano, nie da się ani zgubić, ani użyć w niewłaściwy sposób.',
+          'W odniesieniu do danych odbiorców administratorem pozostają Państwo, a Envelopes występuje wyłącznie jako podmiot przetwarzający i działa na Państwa polecenie. Warunki powierzenia określa Załącznik nr 2 do [regulaminu](/regulamin), zawierany z chwilą złożenia zamówienia z personalizacją. Dane adresowe przechowujemy przez 12 miesięcy od realizacji zamówienia — dla obsługi reklamacji i wysyłek powtarzalnych — a na wcześniejsze żądanie usuwamy je niezwłocznie; szczegóły stoją w [polityce prywatności](/polityka-prywatnosci).',
+        ],
+      },
+      {
+        id: 'lista-kontrolna',
+        heading: 'Lista kontrolna przed wgraniem arkusza',
+        paragraphs: [
+          'Poniższe osiem punktów zamyka przygotowanie listy. Przejście przez nie zajmuje kilka minut i zdejmuje najczęstszą przyczynę poprawek — nie odrzucenie pliku przy wgrywaniu, tylko nazwisko wydrukowane w postaci, w jakiej nikt nie chciał go zobaczyć.',
+        ],
+        list: [
+          'Imię i nazwisko stoją w jednej kolumnie, wklejone jako wartości, a nie jako formuła',
+          'Kolejność jest listowa: najpierw imię, potem nazwisko',
+          'Zapis jest jednolity — bez wersalików tam, gdzie reszta listy ich nie ma',
+          'Polskie znaki wyświetlają się poprawnie po otwarciu pliku, który mają Państwo wgrać',
+          'Kolumna nie zawiera podwójnych spacji ani odstępów na końcu komórek',
+          'Duplikaty zostały usunięte po ujednoliceniu zapisu, a nie przed nim',
+          'Z pliku zniknęły wiersze testowe, przykłady z szablonu i kolumny z danymi, które nie idą na druk',
+          'Liczba wypełnionych wierszy zgadza się z liczbą zamawianych kopert',
+        ],
+      },
+      {
+        id: 'pytania',
+        heading: 'Pytania, które wracają przy listach imiennych',
+        paragraphs: [
+          'Pięć pytań, które wracają przy pierwszej liście imiennej — razem z krótkimi odpowiedziami.',
+        ],
+        table: {
+          caption: 'Najczęstsze pytania o listę imion i nazwisk do nadruku na kopertach',
+          head: ['Pytanie', 'Odpowiedź'],
+          rows: [
+            [
+              'Czy poprawiacie literówki w nazwiskach?',
+              'Nie. Drukujemy zapis z arkusza znak w znak, a wizualizacja przed drukiem pokazuje układ nadruku, nie poprawia treści.',
+            ],
+            [
+              'Czy nazwisko trzeba odmienić?',
+              'Nie, jeśli na kopercie stoi samo imię i nazwisko — wtedy zostaje mianownik. Odmiana jest potrzebna wyłącznie w dedykacji albo w zwrocie grzecznościowym.',
+            ],
+            [
+              'Czy imię i nazwisko mogą być w osobnych kolumnach?',
+              'Szablon ma jedną kolumnę na oba pola. Kolumny z eksportu prosimy scalić i wkleić jako wartości.',
+            ],
+            [
+              'Czy do listy imiennej trzeba dopisać adresy?',
+              'Nie. Wariant imienny nie ma pól adresowych — wymagane jest samo imię i nazwisko odbiorcy.',
+            ],
+            [
+              'W jakim formacie zapisać plik?',
+              `Przyjmujemy ${PERSONALIZATION_SHEET_EXTENSIONS_LABEL}. Przy polskich znakach najbezpieczniejszy jest XLSX, bo jego odczyt nie zależy od kodowania.`,
+            ],
+          ],
+        },
+      },
+    ],
+    cta: 'Koperty z imieniem i nazwiskiem wyceniają Państwo w konfiguratorze — szablon listy pobierają w trzecim kroku.',
+    ctaConfigure: {
+      label: 'Wyceń koperty z imieniem i nazwiskiem',
+      format: 'DL',
+      personalization: true,
+      /* Wejście z preselekcją zakresu „samo imię i nazwisko" — czytelnik
+         przyszedł po listę imienną, więc konfigurator nie każe mu cofać się
+         do wyboru wariantu adresowego (pkt 7 briefu SEO). */
+      personalizationScope: 'imiona',
+    },
     pillar: { href: '/koperty-personalizowane', anchor: 'personalizowane koperty' },
   },
 ];

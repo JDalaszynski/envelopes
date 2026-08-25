@@ -105,6 +105,11 @@ Klaster jest rozdrobniony leksykalnie — jedna strona musi obsłużyć trzy naz
 16 sierpnia 2026 (poz. 8 planu), właściciel frazy `adresowanie kopert z arkusza`. Wpis startowy
 `adresowanie-kopert-recznie-czy-z-arkusza` usunięto 15 sierpnia; nowy powstał od zera i stoi pod
 innym adresem, bo docelowa fraza wchodzi teraz w slug w całości. Stary adres zwraca 404.
+**Wsparcie:** `/blog/jak-zaadresowac-koperte-wysylana-przez-firme-wzor` `[ISTNIEJE]` — poz. 14,
+właściciel frazy `adresowanie koperty od firmy`.
+**Wsparcie:** `/blog/koperty-z-imieniem-i-nazwiskiem-jak-przygotowac-liste` `[ISTNIEJE]` —
+opublikowany 25 sierpnia 2026 (poz. 15 planu), właściciel fraz `koperty z imieniem
+i nazwiskiem`, `koperty imienne` i `nazwiska na kopertach`.
 
 | Fraza | Rola | Intencja | Lejek | Wol. | P |
 | --- | --- | --- | --- | --- | --- |
@@ -115,9 +120,9 @@ innym adresem, bo docelowa fraza wchodzi teraz w slug w całości. Stary adres z
 | koperty adresowane | wspierająca | TRANS | BOFU | — | P1 |
 | koperta z adresem | wspierająca | KOM | MOFU | — | P1 |
 | adresowanie koperty od firmy | wspierająca B2B | INFO | MOFU | — | P1 |
-| koperty z imieniem i nazwiskiem | wspierająca | TRANS | BOFU | — | P1 |
-| koperty imienne | wspierająca | TRANS | BOFU | — | P1 |
-| nazwiska na kopertach | wspierająca | INFO | MOFU | — | P2 |
+| koperty z imieniem i nazwiskiem | wspierająca → poz. 15 | TRANS | BOFU | — | P1 |
+| koperty imienne | wspierająca → poz. 15 | TRANS | BOFU | — | P1 |
+| nazwiska na kopertach | wspierająca → poz. 15 | INFO | MOFU | — | P2 |
 
 **Notatki wdrożeniowe:**
 - `adresowanie koperty od firmy` ma intencję instruktażową („jak zaadresować kopertę wysyłaną
@@ -133,6 +138,11 @@ innym adresem, bo docelowa fraza wchodzi teraz w slug w całości. Stary adres z
   wpisu (arkusz odrzuca wiersz bez pełnego adresu, więc listy samych imion idą trybem ręcznym)
   **nie może** trafić na filar jako osobna sekcja — filar podaje wyłącznie pola wymagane
   w tabeli specyfikacji.
+- **Podział pracy z poz. 15 (25 sierpnia 2026).** Trzy adresy odpowiadają na trzy różne
+  pytania o tę samą listę: filar — „jakie kolumny wypełnić", poz. 8 — „którym trybem przekazać
+  dane", poz. 15 — „co zrobić z danymi po eksporcie, zanim trafią do szablonu". Frazy imienne
+  (`koperty z imieniem i nazwiskiem`, `koperty imienne`, `nazwiska na kopertach`) przechodzą
+  do poz. 15; filar wymienia je w treści jako nazwę usługi, ale **nie ma ich w `keywords`**.
 - Specyfikacja arkusza na filarze (kolumny, pola wymagane, walidacja) jest generowana
   z `PERSONALIZATION_SHEET_COLUMNS` w `src/lib/catalog.ts` — tej samej listy, z której powstaje
   szablon XLSX. Treść nie może rozjechać się z plikiem, który klient faktycznie pobiera.

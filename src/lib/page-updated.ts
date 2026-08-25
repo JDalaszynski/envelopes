@@ -24,16 +24,19 @@
  * i `updated`, więc nie ma czego tu powielać.
  */
 export const PAGE_UPDATED: Record<string, string> = {
-  /* Siatka blogowa pokazuje trzy najnowsze wpisy — doszedł poradnik o palecie 19 kolorów (poz. 12) */
-  '/': '2026-08-20',
+  /* Siatka blogowa pokazuje trzy najnowsze wpisy — doszedł poradnik o liście
+     imion i nazwisk do nadruku (poz. 15) */
+  '/': '2026-08-25',
   /* Odnośnik do poradnika o koszcie zamówienia w sekcji cenowej (poz. 9) */
   '/koperty-z-nadrukiem': '2026-08-17',
-  '/koperty-personalizowane': '2026-08-16',
+  /* Sekcja „Poradniki" rozrosła się do trzech kart (poz. 8, 14 i 15) i doszedł
+     odnośnik pod tabelą kolumn arkusza — treść wspierająca z poz. 15 planu */
+  '/koperty-personalizowane': '2026-08-25',
   /* Sekcja „Poradniki" i odnośnik pod tabelą dopasowań — treść wspierająca z poz. 11 planu */
   '/koperty-dl': '2026-08-21',
   '/koperty-na-vouchery': '2026-08-16',
-  /* Doszedł wpis o kopertach bez okienka (poz. 13) */
-  '/blog': '2026-08-21',
+  /* Doszedł wpis o liście imion i nazwisk do nadruku (poz. 15) */
+  '/blog': '2026-08-25',
   /* Odnośnik do strony „O nas" w karcie danych rejestrowych */
   '/kontakt': '2026-08-17',
   /* Publikacja strony „O nas" */
@@ -65,8 +68,10 @@ export const PAGE_UPDATED: Record<string, string> = {
   '/koperty/zolta': '2026-08-19',
   '/koperty/srebrna-perlowa': '2026-08-19',
   '/koperty/biala-perlowa': '2026-08-19',
-  /* Wpis blogowy wspierający filar K2 — poz. 14 planu */
-  '/blog/jak-zaadresowac-koperte-wysylana-przez-firme-wzor': '2026-08-22',
+  /* Wpisy blogowe wspierające filar K2 — poz. 14 i 15 planu. Poz. 14 dostała
+     przy publikacji poz. 15 akapit odsyłający do przygotowania listy. */
+  '/blog/jak-zaadresowac-koperte-wysylana-przez-firme-wzor': '2026-08-25',
+  '/blog/koperty-z-imieniem-i-nazwiskiem-jak-przygotowac-liste': '2026-08-25',
 };
 
 /** Data zmiany treści dla trasy — `undefined`, gdy trasy nie ma w rejestrze. */
