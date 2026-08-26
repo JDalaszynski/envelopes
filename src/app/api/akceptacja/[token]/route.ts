@@ -1,8 +1,6 @@
 import { NextResponse } from 'next/server';
 
 import { getOrderByToken, updateOrder } from '@/lib/store';
-import { evaluatePrintGate, ORDER_STATUS_LABEL } from '@/lib/orders';
-import { sendEmail, statusChangeEmail } from '@/lib/brevo';
 import type { Order } from '@/lib/types';
 
 export const runtime = 'nodejs';
@@ -56,39 +54,16 @@ export async function POST(
       v.id === latest?.id ? { ...v, status: 'zaakceptowano' as const, respondedAt: now } : v
     );
 
-    // Po akceptacji sprawdzamy regułę bramkującą — zamówienie przechodzi
-    // do druku tylko wtedy, gdy płatność jest już potwierdzona (pkt 1.12).
-    const gate = evaluatePrintGate({
-      paymentStatus: order.paymentStatus,
-      paymentMethod: order.paymentMethod,
-      requiresVisualization: order.requiresVisualization,
-      visualizationStatus: 'zaakceptowano',
-    });
-
-    const status: Order['status'] = gate.allowed ? 'do_druku' : 'czeka_na_akceptacje';
-
     const updated = await updateOrder(order.number, {
       visualizations,
       visualizationStatus: 'zaakceptowano',
-      status,
       history: [
         ...order.history,
         { at: now, by: 'klient', action: 'Wizualizacja zaakceptowana' },
-        ...(gate.allowed
-          ? [{ at: now, by: 'system', action: `Status: ${ORDER_STATUS_LABEL.do_druku}` }]
-          : []),
       ],
     });
 
-    if (updated && gate.allowed) {
-      await sendEmail(statusChangeEmail(updated, ORDER_STATUS_LABEL.do_druku));
-    }
-
-    return NextResponse.json({
-      order: updated ? publicView(updated) : null,
-      movedToPrint: gate.allowed,
-      note: gate.allowed ? null : 'Czekamy jeszcze na wpłatę — po jej zaksięgowaniu zamówienie trafi do druku.',
-    });
+    return NextResponse.json({ order: updated ? publicView(updated) : null });
   }
 
   const comment = (body.comment ?? '').trim();
@@ -105,7 +80,6 @@ export async function POST(
   const updated = await updateOrder(order.number, {
     visualizations,
     visualizationStatus: 'uwagi',
-    status: 'czeka_na_akceptacje',
     history: [
       ...order.history,
       { at: now, by: 'klient', action: 'Zgłoszono uwagi do wizualizacji', detail: comment },
@@ -119,7 +93,6 @@ export async function POST(
 function publicView(order: Order) {
   return {
     number: order.number,
-    status: order.status,
     paymentStatus: order.paymentStatus,
     paymentMethod: order.paymentMethod,
     visualizationStatus: order.visualizationStatus,

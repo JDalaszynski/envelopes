@@ -12,7 +12,6 @@ import type { EnvelopeConfig, PaymentMethod, PaymentStatus, VisualizationVersion
 
 interface PublicOrder {
   number: string;
-  status: string;
   paymentStatus: PaymentStatus;
   paymentMethod: PaymentMethod;
   visualizationStatus: 'brak' | 'oczekuje' | 'zaakceptowano' | 'uwagi';
@@ -68,9 +67,7 @@ function ApprovalInner({ token }: { token: string }) {
     }
     setResult(
       action === 'akceptuj'
-        ? json.movedToPrint
-          ? 'Dziękujemy. Projekt zaakceptowany — zamówienie zostało skierowane do druku.'
-          : (json.note ?? 'Dziękujemy. Projekt został zaakceptowany.')
+        ? 'Dziękujemy. Projekt został zaakceptowany.'
         : 'Dziękujemy. Uwagi trafiły do grafika — przygotujemy poprawioną wersję i prześlemy ją do ponownej akceptacji.'
     );
     setShowComment(false);

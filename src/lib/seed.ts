@@ -97,7 +97,6 @@ export function seedOrders(): Order[] {
     paymentMethod: 'p24',
     paymentStatus: 'oplacone',
     p24Reference: 'P24-8842137',
-    status: 'zrealizowane',
     requiresVisualization: false,
     visualizationStatus: 'brak',
     visualizations: [],
@@ -108,8 +107,6 @@ export function seedOrders(): Order[] {
     history: [
       { at: daysAgo(9), by: 'system', action: 'Zamówienie złożone' },
       { at: daysAgo(9), by: 'Przelewy24', action: 'Płatność potwierdzona' },
-      { at: daysAgo(7), by: 'admin@envelopes.pl', action: 'Status: Do druku' },
-      { at: daysAgo(2), by: 'admin@envelopes.pl', action: 'Status: Zrealizowane' },
     ],
   };
 
@@ -169,7 +166,6 @@ export function seedOrders(): Order[] {
     paymentMethod: 'przelew',
     paymentStatus: 'oczekuje',
     p24Reference: null,
-    status: 'czeka_na_akceptacje',
     requiresVisualization: true,
     visualizationStatus: 'oczekuje',
     visualizations: [
@@ -193,12 +189,11 @@ export function seedOrders(): Order[] {
     history: [
       { at: daysAgo(3), by: 'system', action: 'Zamówienie złożone' },
       { at: daysAgo(3), by: 'system', action: 'Wysłano fakturę proforma' },
-      { at: daysAgo(2), by: 'admin@envelopes.pl', action: 'Status: W trakcie' },
       {
         at: daysAgo(1),
         by: 'admin@envelopes.pl',
         action: 'Dołączono wizualizację (wersja 1)',
-        detail: 'Status: Czeka na akceptację',
+        detail: 'wysłano do klienta, czeka na akceptację',
       },
     ],
   };
@@ -234,7 +229,6 @@ export function seedOrders(): Order[] {
     paymentStatus: 'oczekuje',
     paymentDueDate: daysAhead(9),
     p24Reference: null,
-    status: 'do_druku',
     requiresVisualization: true,
     visualizationStatus: 'zaakceptowano',
     visualizations: [
@@ -254,7 +248,6 @@ export function seedOrders(): Order[] {
       { at: daysAgo(5), by: 'system', action: 'Zamówienie złożone' },
       { at: daysAgo(3), by: 'admin@envelopes.pl', action: 'Dołączono wizualizację (wersja 1)' },
       { at: daysAgo(2), by: 'klient', action: 'Wizualizacja zaakceptowana' },
-      { at: daysAgo(1), by: 'admin@envelopes.pl', action: 'Status: Do druku' },
     ],
   };
 
@@ -294,7 +287,6 @@ export function seedOrders(): Order[] {
     paymentMethod: 'blik',
     paymentStatus: 'oplacone',
     p24Reference: 'P24-9012884',
-    status: 'nowe',
     requiresVisualization: true,
     visualizationStatus: 'brak',
     visualizations: [],

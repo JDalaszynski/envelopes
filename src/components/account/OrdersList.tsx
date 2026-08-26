@@ -4,9 +4,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { StatusPill, PaymentPill } from '@/components/ui/StatusPill';
+import { PaymentPill } from '@/components/ui/StatusPill';
 import { useAuth } from '@/components/providers/AuthProvider';
-import { ORDER_STATUSES } from '@/lib/orders';
+import { PAYMENT_STATUSES } from '@/lib/orders';
 import { formatDate, formatPrice } from '@/lib/pricing';
 import type { Order } from '@/lib/types';
 
@@ -15,7 +15,7 @@ export function OrdersList() {
   const router = useRouter();
 
   const [orders, setOrders] = useState<Order[]>([]);
-  const [status, setStatus] = useState('all');
+  const [payment, setPayment] = useState('all');
   const [search, setSearch] = useState('');
   const [from, setFrom] = useState('');
   const [busy, setBusy] = useState(true);
@@ -39,7 +39,7 @@ export function OrdersList() {
 
   const filtered = useMemo(() => {
     return orders.filter((order) => {
-      if (status !== 'all' && order.status !== status) return false;
+      if (payment !== 'all' && order.paymentStatus !== payment) return false;
       if (from && order.createdAt < from) return false;
       if (search) {
         const q = search.trim().toLowerCase();
@@ -51,7 +51,7 @@ export function OrdersList() {
       }
       return true;
     });
-  }, [orders, status, search, from]);
+  }, [orders, payment, search, from]);
 
   if (loading || !user) return <p className="muted">Wczytywanie…</p>;
 
@@ -77,15 +77,15 @@ export function OrdersList() {
             />
           </div>
           <div className="field">
-            <label htmlFor="status">Status</label>
+            <label htmlFor="platnosc">Płatność</label>
             <select
-              id="status"
+              id="platnosc"
               className="select input"
-              value={status}
-              onChange={(e) => setStatus(e.target.value)}
+              value={payment}
+              onChange={(e) => setPayment(e.target.value)}
             >
               <option value="all">Wszystkie</option>
-              {ORDER_STATUSES.map((s) => (
+              {PAYMENT_STATUSES.map((s) => (
                 <option key={s.id} value={s.id}>
                   {s.label}
                 </option>
@@ -147,7 +147,6 @@ export function OrdersList() {
                     {formatPrice(order.totals.gross)}
                   </p>
                   <div className="row" style={{ justifyContent: 'flex-end', gap: 'var(--space-2)' }}>
-                    <StatusPill status={order.status} />
                     <PaymentPill status={order.paymentStatus} />
                   </div>
                 </div>

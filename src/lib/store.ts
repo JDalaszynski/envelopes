@@ -162,7 +162,7 @@ export async function getOrderByToken(token: string): Promise<Order | null> {
 export interface OrderQuery {
   userId?: string;
   email?: string;
-  status?: string;
+  paymentStatus?: string;
   from?: string;
   to?: string;
   search?: string;
@@ -188,8 +188,8 @@ export async function listOrders(query: OrderQuery = {}): Promise<Order[]> {
       (o) => o.customer.email.toLowerCase() === query.email!.toLowerCase()
     );
   }
-  if (query.status && query.status !== 'all') {
-    orders = orders.filter((o) => o.status === query.status);
+  if (query.paymentStatus && query.paymentStatus !== 'all') {
+    orders = orders.filter((o) => o.paymentStatus === query.paymentStatus);
   }
   if (query.from) {
     orders = orders.filter((o) => o.createdAt >= query.from!);

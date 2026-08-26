@@ -14,7 +14,7 @@ import type { Order } from './types';
 
 /**
  * Brevo — wyłącznie e-maile transakcyjne (pkt 8.1): potwierdzenie zamówienia,
- * wizualizacja do akceptacji, potwierdzenie wpłaty, zmiana statusu oraz
+ * wizualizacja do akceptacji, potwierdzenie wpłaty oraz
  * wiadomość z formularza kontaktowego.
  *
  * Wszystkie wywołania idą z serwerowych endpointów na Vercel; klucz API
@@ -226,35 +226,6 @@ export function paymentConfirmedEmail(order: Order): EmailPayload {
           ? 'Do rozpoczęcia produkcji potrzebna jest jeszcze akceptacja wizualizacji projektu.'
           : 'Zamówienie zostało skierowane do produkcji.'
       }</p>`
-    ),
-  };
-}
-
-export function statusChangeEmail(order: Order, statusLabel: string): EmailPayload {
-  let customMessage = '';
-
-  if (order.status === 'czeka_na_akceptacje') {
-    customMessage = `
-<div style="background:#f4f2ec;border-left:3px solid #2a4e7e;padding:16px 20px;margin:24px 0;border-radius:0 8px 8px 0;">
-  <p style="margin:0 0 8px;font-weight:600;color:#2a4e7e;">Projekt graficzny jest już gotowy!</p>
-  <p style="margin:0;font-size:14px;line-height:1.5;color:#575e6e;">Nasz grafik przygotował wizualizację i wysłał ją do Państwa w osobnej wiadomości. Bardzo prosimy o rzut okiem i odpowiedź bezpośrednio na tamtego e-maila (z akceptacją lub uwagami), abyśmy mogli bezzwłocznie ruszyć z drukiem.</p>
-</div>`;
-  } else if (order.status === 'gotowe_do_wysylki') {
-    customMessage = `
-<div style="margin:24px 0;">
-  <p style="margin:0;font-size:15px;line-height:1.5;">Paczka została starannie spakowana i obecnie oczekuje na odbiór przez kuriera. Już niebawem wyruszy w drogę!</p>
-</div>`;
-  }
-
-  return {
-    to: order.customer.email,
-    subject: `Zamówienie ${order.number} — status: ${statusLabel}`,
-    html: shell(
-      `Status zamówienia: ${statusLabel}`,
-      `<p>Status zamówienia <strong style="font-family:monospace">${order.number}</strong>
-został zmieniony na <strong>${statusLabel}</strong>.</p>
-${customMessage}
-<p><a href="${siteUrl}/zamowienia/${order.number}" style="color:#2a4e7e;font-weight:bold;">Szczegóły zamówienia</a></p>`
     ),
   };
 }

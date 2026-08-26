@@ -1,10 +1,4 @@
-import type {
-  Order,
-  OrderStatus,
-  PaymentMethod,
-  PaymentStatus,
-  CartItem,
-} from './types';
+import type { PaymentMethod, PaymentStatus, CartItem } from './types';
 
 /* ── Numer zamówienia (pkt 1.8) ─────────────────────────────── */
 
@@ -25,26 +19,12 @@ export function isValidOrderNumber(value: string): boolean {
   return ORDER_NUMBER_PATTERN.test(value);
 }
 
-/* ── Statusy (pkt 1.10) ─────────────────────────────────────── */
+/* ── Status płatności (pkt 1.10) ────────────────────────────── */
 
-export const ORDER_STATUSES: { id: OrderStatus; label: string; description: string }[] = [
-  { id: 'nowe', label: 'Nowe', description: 'Zamówienie przyjęte, czeka na przydzielenie.' },
-  { id: 'w_trakcie', label: 'W trakcie', description: 'Trwa przygotowanie zamówienia.' },
-  {
-    id: 'czeka_na_akceptacje',
-    label: 'Czeka na akceptację',
-    description: 'Wizualizacja przesłana do klienta — czekamy na zatwierdzenie projektu.',
-  },
-  { id: 'do_druku', label: 'Do druku', description: 'Wszystkie warunki spełnione — zamówienie skierowane do produkcji.' },
-  { id: 'gotowe_do_wysylki', label: 'Gotowe do wysyłki', description: 'Zamówienie zostało spakowane i oczekuje na odbiór przez kuriera.' },
-  { id: 'zrealizowane', label: 'Zrealizowane', description: 'Zamówienie wysłane do klienta.' },
-  { id: 'anulowane', label: 'Anulowane', description: 'Zamówienie anulowane lub zwrócone.' },
+export const PAYMENT_STATUSES: { id: PaymentStatus; label: string }[] = [
+  { id: 'oczekuje', label: 'Oczekuje na wpłatę' },
+  { id: 'oplacone', label: 'Opłacone' },
 ];
-
-export const ORDER_STATUS_LABEL: Record<OrderStatus, string> = ORDER_STATUSES.reduce(
-  (acc, s) => ({ ...acc, [s.id]: s.label }),
-  {} as Record<OrderStatus, string>
-);
 
 export const PAYMENT_STATUS_LABEL: Record<PaymentStatus, string> = {
   oczekuje: 'Oczekuje na wpłatę',
@@ -66,46 +46,6 @@ export function isGatewayPayment(method: PaymentMethod): boolean {
 /** Faktura z odroczonym terminem nie blokuje rozpoczęcia produkcji (pkt 1.12) */
 export function isDeferredInvoice(method: PaymentMethod): boolean {
   return method === 'faktura_odroczona';
-}
-
-/* ── Reguła bramkująca status „Do druku" (pkt 1.12) ─────────── */
-
-export interface PrintGateResult {
-  allowed: boolean;
-  /** Powód blokady — pokazywany jako podpowiedź przy wyszarzonej opcji */
-  reason?: string;
-  missingPayment: boolean;
-  missingApproval: boolean;
-}
-
-export function evaluatePrintGate(order: {
-  paymentStatus: PaymentStatus;
-  paymentMethod: PaymentMethod;
-  requiresVisualization: boolean;
-  visualizationStatus: Order['visualizationStatus'];
-}): PrintGateResult {
-  const paymentOk =
-    order.paymentStatus === 'oplacone' || isDeferredInvoice(order.paymentMethod);
-  const approvalOk =
-    !order.requiresVisualization || order.visualizationStatus === 'zaakceptowano';
-
-  const missingPayment = !paymentOk;
-  const missingApproval = !approvalOk;
-
-  if (paymentOk && approvalOk) {
-    return { allowed: true, missingPayment: false, missingApproval: false };
-  }
-
-  const reasons: string[] = [];
-  if (missingPayment) reasons.push('brak potwierdzonej wpłaty');
-  if (missingApproval) reasons.push('klient nie zaakceptował jeszcze wizualizacji');
-
-  return {
-    allowed: false,
-    reason: `Nie można skierować do druku: ${reasons.join(' oraz ')}.`,
-    missingPayment,
-    missingApproval,
-  };
 }
 
 /** Czy zamówienie w ogóle przechodzi przez krok akceptacji wizualizacji (pkt 1.11) */

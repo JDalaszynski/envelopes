@@ -4,9 +4,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 
-import { StatusPill, PaymentPill } from '@/components/ui/StatusPill';
+import { PaymentPill } from '@/components/ui/StatusPill';
 import { useAuth } from '@/components/providers/AuthProvider';
-import { ORDER_STATUSES, PAYMENT_METHOD_LABEL } from '@/lib/orders';
+import { PAYMENT_STATUSES, PAYMENT_METHOD_LABEL } from '@/lib/orders';
 import { formatDate, formatPrice } from '@/lib/pricing';
 import type { Order } from '@/lib/types';
 
@@ -16,7 +16,7 @@ export function AdminOrders() {
   const router = useRouter();
 
   const [orders, setOrders] = useState<Order[]>([]);
-  const [status, setStatus] = useState('all');
+  const [payment, setPayment] = useState('all');
   const [search, setSearch] = useState('');
   const [from, setFrom] = useState('');
   const [to, setTo] = useState('');
@@ -27,7 +27,7 @@ export function AdminOrders() {
     if (!token) return;
     setBusy(true);
     const query = new URLSearchParams();
-    if (status !== 'all') query.set('status', status);
+    if (payment !== 'all') query.set('platnosc', payment);
     if (search) query.set('szukaj', search);
     if (from) query.set('od', `${from}T00:00:00.000Z`);
     if (to) query.set('do', to);
@@ -39,7 +39,7 @@ export function AdminOrders() {
       setOrders(json.orders ?? []);
     }
     setBusy(false);
-  }, [getToken, status, search, from, to]);
+  }, [getToken, payment, search, from, to]);
 
   useEffect(() => {
     if (loading) return;
@@ -52,11 +52,6 @@ export function AdminOrders() {
 
   if (loading || !user || user.role !== 'admin') return <p className="muted">Weryfikacja dostępu…</p>;
 
-  const counts = ORDER_STATUSES.map((s) => ({
-    ...s,
-    count: orders.filter((o) => o.status === s.id).length,
-  }));
-
   return (
     <>
       <div className="row-between" style={{ marginBottom: 'var(--space-5)' }}>
@@ -66,17 +61,6 @@ export function AdminOrders() {
             {orders.length} {orders.length === 1 ? 'zamówienie' : 'zamówień'} w widoku
           </p>
         </div>
-      </div>
-
-      <div className="grid grid-4" style={{ marginBottom: 'var(--space-5)' }}>
-        {counts.slice(0, 4).map((entry) => (
-          <div className="card" key={entry.id}>
-            <span className="eyebrow">{entry.label}</span>
-            <p className="price" style={{ margin: 0 }}>
-              {entry.count}
-            </p>
-          </div>
-        ))}
       </div>
 
       <div className="card" style={{ marginBottom: 'var(--space-5)' }}>
@@ -92,15 +76,15 @@ export function AdminOrders() {
             />
           </div>
           <div className="field">
-            <label htmlFor="status">Status</label>
+            <label htmlFor="platnosc">Płatność</label>
             <select
-              id="status"
+              id="platnosc"
               className="select input"
-              value={status}
-              onChange={(e) => setStatus(e.target.value)}
+              value={payment}
+              onChange={(e) => setPayment(e.target.value)}
             >
               <option value="all">Wszystkie</option>
-              {ORDER_STATUSES.map((s) => (
+              {PAYMENT_STATUSES.map((s) => (
                 <option key={s.id} value={s.id}>
                   {s.label}
                 </option>
@@ -135,7 +119,6 @@ export function AdminOrders() {
                 <th>Produkt</th>
                 <th>Ilość</th>
                 <th>Kwota</th>
-                <th>Status</th>
                 <th>Płatność</th>
                 <th />
               </tr>
@@ -166,9 +149,6 @@ export function AdminOrders() {
                     </td>
                     <td className="mono-sm">{quantity}</td>
                     <td className="mono-sm">{formatPrice(order.totals.gross)}</td>
-                    <td>
-                      <StatusPill status={order.status} />
-                    </td>
                     <td>
                       <PaymentPill status={order.paymentStatus} />
                       <span className="mono-sm muted" style={{ display: 'block', marginTop: 4 }}>

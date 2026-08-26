@@ -104,7 +104,7 @@ liczbowymi i porównaniami. Najtańszy dostępny kanał widoczności dla domeny 
 | 13 | Koperty bez okienka — kiedy je wybrać | Supporting article | koperty bez okienka | GEO | Kancelarie, biura rachunkowe | F3 | Cała oferta jest bez okienka — treść wykorzystuje to jako wyróżnik, nie jako filtr produktowy. **Wykonane 21 sierpnia 2026.** F3 podaje sam fakt (wiersz specyfikacji + akapit „Brak okienka na całej ofercie"); ten wpis obsługuje intencję decyzyjną: kiedy okienko przeszkadza, a kiedy jego brak wymusza adresowanie | [x] |
 | 14 | Jak zaadresować kopertę wysyłaną przez firmę — wzór | Supporting article | adresowanie koperty od firmy | GEO | Sekretariat, office manager | F2 | Intencja **instruktażowa**, nie zakupowa: wzór adresu i układ, CTA dopiero pod treścią merytoryczną. Filar F2 świadomie **nie ma** sekcji ze wzorem adresu — opisuje wyłącznie zakres usługi („co drukujemy"), więc ta pozycja nie koliduje. **Wykonane 22 sierpnia 2026.** | [x] |
 | 15 | Koperty z imieniem i nazwiskiem — jak przygotować listę | Supporting article | koperty z imieniem i nazwiskiem | RUCH | Office manager, HR | F2 | Dotyczy **przygotowania danych po stronie klienta** (eksport z CRM, odmiana nazwisk, ujednolicenie zapisu); filar F2 podaje wyłącznie specyfikację arkusza (kolumny, pola wymagane, walidacja), poz. 8 — wybór trybu. Trzy różne pytania użytkownika. **Granica dopisana 16 sierpnia 2026:** poz. 8 zajęła już tabelę „skąd pochodzi lista → tryb" oraz przyczyny odrzucenia arkusza (druga zakładka, przemianowany nagłówek, wiersze ukryte filtrem). Ta pozycja zaczyna się **po** wyborze trybu: co zrobić z danymi między eksportem a wgraniem pliku. **Wykonane 25 sierpnia 2026.** Tytuł doprecyzowany na „Koperty z imieniem i nazwiskiem — lista do nadruku" (slug niesie pełną frazę długiego ogona). Granica utrzymana: zero tabeli „skąd pochodzi lista → tryb", zero przyczyn odrzucenia pliku, zero specyfikacji kolumn — wpis obsługuje wyłącznie higienę danych (scalanie kolumn, wersaliki, kodowanie polskich znaków, odmiana nazwiska, duplikaty, minimalizacja danych osobowych). Bez kwot, MOQ i terminów | [x] |
-| 16 | Realizacja ekspresowa w 2 dni robocze | Supporting article | szybka realizacja kopert | KONWERSJA | Agencje eventowe, „na już" | F1 | **Format zmieniony z `Aktualizacja` na `Supporting article` 15 sierpnia 2026** — wpis startowy usunięty, treść powstaje od zera. Oś wpisu: od kiedy liczymy termin (zaksięgowanie wpłaty + akceptacja wizualizacji) i kiedy dopłata za ekspres się zwraca. Tabela terminów, link w górę do F1. **Cennika nadruku nie dublować** — należy do F1 i poz. 9 | [ ] |
+| 16 | Szybka realizacja kopert — terminy i ekspres — `/blog/szybka-realizacja-kopert-terminy-i-ekspres` | Supporting article | szybka realizacja kopert | KONWERSJA | Agencje eventowe, „na już" | F1 | **Format zmieniony z `Aktualizacja` na `Supporting article` 15 sierpnia 2026** — wpis startowy usunięty, treść powstała od zera. **Wykonane 26 sierpnia 2026.** Tytuł doprecyzowany — slug niesie frazę główną i różnicę intencji. Oś przesunięta z **ile trwa** na **od kiedy liczymy**: filar podaje liczbę dni w tabeli `#terminy` i w `PRINT_FAQ_ITEMS`, a wpis dokłada arytmetykę kalendarza — późniejsze z dwóch zdarzeń uruchamiających bieg terminu, równoległość wpłaty i wizualizacji, czas przewoźnika poza terminem realizacji i liczenie wstecz od daty wydarzenia. Cennik nadruku i personalizacji nieobecny; dopłata ekspresowa wyłącznie w tabeli przeliczeniowej na jeden zyskany dzień roboczy | [x] |
 
 ---
 
@@ -249,6 +249,54 @@ nie liczą się do kadencji czterech pozycji tygodniowo i nie mają filara.
 ---
 
 ## Dziennik wdrożeń
+
+### 26 sierpnia 2026 — poz. 16: `/blog/szybka-realizacja-kopert-terminy-i-ekspres`
+
+**Druga treść wspierająca filar K1 i właściciel frazy `szybka realizacja kopert`**
+(keywords.md, K1). Filar `/koperty-z-nadrukiem` zostaje przy frazie usługowej, poz. 9 —
+przy cenowej.
+
+**1. Rozgraniczenie: ile trwa kontra od kiedy liczymy.** Liczbę dni realizacji podaje dziś
+pięć miejsc w serwisie (tabela `#terminy` na filarze, pasek ekspresu na `/`, `FAQ_ITEMS`,
+`PRINT_FAQ_ITEMS`, `/llms.txt`) — powtórzenie jej byłoby kanibalizacją własnego filara.
+Wpis bierze więc to, czego nie opisuje nikt: bieg terminu rusza od **późniejszego** z dwóch
+zdarzeń (zaksięgowanie wpłaty, akceptacja wizualizacji), wizualizacja powstaje niezależnie
+od statusu płatności, więc oba warunki mogą zamknąć się tego samego dnia, czas przewoźnika
+(1–2 dni robocze) dolicza się **poza** terminem realizacji, a data z potwierdzenia jest
+szacunkiem liczonym od dnia złożenia zamówienia. Wszystkie te reguły są cytowane
+z `legal.ts` (§ 8–11) i z README, nie z pamięci.
+
+**2. Siedem sekcji, pięć tabel.** Dwa warunki startu terminu (kto je spełnia); tabela
+terminów z trzecią kolumną „od kiedy liczymy" zamiast kolumny z dopłatą, żeby nie
+odtwarzać tabeli filara; równoległość wpłaty i wizualizacji; **dopłata ekspresowa
+w przeliczeniu na jeden zyskany dzień roboczy** (10 / 100 / 500 szt. — kwoty liczone
+z `DEFAULT_PRICING.express`, nie wpisane); czego ekspres nie przyspiesza (księgowanie,
+akceptacja, korekty, kurier, koperty gładkie); liczenie wstecz od daty wydarzenia
+z przykładem na dniach tygodnia — bez dat kalendarzowych, żeby przykład nie zdezaktualizował
+się z rokiem; tabela sześciu pytań. Bez własnego `FAQPage` — dane strukturalne pytań
+zostają na filarze (zasada z poz. 7).
+
+**3. Czego w tekście nie ma.** Ceny nadruku i personalizacji (filar, poz. 9), MOQ jako
+temat (poz. 46), wymagania dla pliku (poz. 7 — wpis tylko do niej linkuje). Dopłata
+ekspresowa zostaje, bo jest osią pozycji, ale wyłącznie w jednej tabeli i w wierszu tabeli
+terminów. Odroczony termin 14 dni pada dwa razy i za każdym razem z zawężeniem do
+instytucji publicznych i urzędów — persona wpisu (agencja eventowa) go nie dostanie.
+
+**4. Linkowanie w obie strony.** Wpis linkuje w górę do filara (anchor `koperty
+z nadrukiem`), w bok do poz. 7 i do regulaminu (`/regulamin#realizacja`). Linki
+przychodzące: sekcja „Poradniki" na filarze urosła z dwóch kart do trzech, pod akapitem
+o terminach stanął odnośnik kontekstowy anchorem `szybka realizacja kopert`, a poz. 9
+dostała akapit o tym, że ekspresem kupuje się wyłącznie czas — z odesłaniem do tego wpisu.
+Poz. 9 ma `updated: '2026-08-26'`.
+
+**5. Zasoby i indeksacja.** Kadr nagłówkowy: `granatowa-koperta-dl-nadruk-logo-orkiestry`
+(zaproszenia na koncert — wysyłka ze sztywną datą w kalendarzu), nieużywany przez żaden
+inny wpis. Karta OG `public/images/og/blog-szybka-realizacja.jpg` wygenerowana
+`scripts/og-card.mjs` (1200 × 630, bez kwot). `PAGE_UPDATED` podbite dla `/`, `/blog`,
+`/koperty-z-nadrukiem` i poz. 9; nowy adres dopisany do rejestru. Sitemapa urosła do
+41 adresów. `npx tsc --noEmit` bez błędów, `npm run build` kończy się kodem 0
+i prerenderuje wpis jako SSG. **Do wykonania po wdrożeniu na produkcję:**
+`npm run indexnow`.
 
 ### 25 sierpnia 2026 — poz. 15: `/blog/koperty-z-imieniem-i-nazwiskiem-jak-przygotowac-liste`
 

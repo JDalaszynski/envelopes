@@ -2,9 +2,8 @@ import { NextResponse } from 'next/server';
 
 import { verifyRequest } from '@/lib/firebase/admin';
 import { getOrder, updateOrder } from '@/lib/store';
-import { evaluatePrintGate, ORDER_STATUS_LABEL } from '@/lib/orders';
-import { paymentConfirmedEmail, sendEmail, statusChangeEmail } from '@/lib/brevo';
-import type { Order, OrderStatus } from '@/lib/types';
+import { paymentConfirmedEmail, sendEmail } from '@/lib/brevo';
+import type { Order } from '@/lib/types';
 
 export const runtime = 'nodejs';
 
@@ -34,7 +33,6 @@ export async function GET(
 }
 
 interface PatchBody {
-  status?: OrderStatus;
   paymentStatus?: 'oczekuje' | 'oplacone';
   trackingNumber?: string;
   customer?: Partial<Order['customer']>;
@@ -77,28 +75,6 @@ export async function PATCH(
     if (body.paymentStatus === 'oplacone') {
       await sendEmail(paymentConfirmedEmail({ ...order, paymentStatus: 'oplacone' }));
     }
-  }
-
-  if (body.status && body.status !== order.status) {
-    // Reguła bramkująca „Do druku" (pkt 1.12) — egzekwowana po stronie serwera
-    if (body.status === 'do_druku') {
-      const gate = evaluatePrintGate({
-        paymentStatus: patch.paymentStatus ?? order.paymentStatus,
-        paymentMethod: order.paymentMethod,
-        requiresVisualization: order.requiresVisualization,
-        visualizationStatus: order.visualizationStatus,
-      });
-      if (!gate.allowed) {
-        return NextResponse.json({ error: gate.reason }, { status: 409 });
-      }
-    }
-    patch.status = body.status;
-    history.push({
-      at: now,
-      by: user.email ?? 'admin',
-      action: `Status: ${ORDER_STATUS_LABEL[body.status]}`,
-    });
-    await sendEmail(statusChangeEmail(order, ORDER_STATUS_LABEL[body.status]));
   }
 
   if (body.trackingNumber !== undefined && body.trackingNumber !== order.trackingNumber) {

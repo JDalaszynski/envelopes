@@ -201,7 +201,13 @@ export default function PrintedEnvelopesPage() {
   /* Wpis kosztowy z content-plan.md poz. 9 — liczy całe zamówienie razem
      z dostawą, czego ta strona nie robi (tu osią jest cena jednostkowa). */
   const costPost = getPost('cena-kopert-z-nadrukiem-i-koszt-zamowienia');
-  const relatedPosts = [costPost, filesPost].filter((post): post is BlogPost => post !== undefined);
+  /* Wpis o terminach z content-plan.md poz. 16 — ta strona podaje, ile dni
+     trwa realizacja, wpis odpowiada na pytanie, od kiedy je liczymy i jak
+     policzyć datę wysyłki wstecz od dnia wydarzenia. */
+  const deadlinePost = getPost('szybka-realizacja-kopert-terminy-i-ekspres');
+  const relatedPosts = [costPost, deadlinePost, filesPost].filter(
+    (post): post is BlogPost => post !== undefined
+  );
 
   return (
     <>
@@ -794,6 +800,17 @@ export default function PrintedEnvelopesPage() {
             zaakceptowana. Przy przelewie tradycyjnym prosimy doliczyć czas księgowania; przy
             fakturze z odroczonym terminem produkcja rusza bez oczekiwania na wpłatę.
           </p>
+
+          {/* Anchor = fraza docelowa wpisu (`szybka realizacja kopert`), nie
+              fraza tej strony. Filar podaje liczbę dni, wpis — arytmetykę
+              kalendarza (content-plan.md poz. 16). */}
+          {deadlinePost && (
+            <p className="small" style={{ maxWidth: '68ch', marginTop: 'var(--space-4)' }}>
+              Jak policzyć datę wysyłki wstecz od dnia wydarzenia i kiedy dopłata za ekspres się
+              zwraca — rozpisaliśmy w poradniku{' '}
+              <Link href={`/blog/${deadlinePost.slug}`}>szybka realizacja kopert</Link>.
+            </p>
+          )}
 
           <div className="grid grid-2" style={{ gap: 'var(--space-5)', alignItems: 'start' }}>
             <div className="table-wrap">

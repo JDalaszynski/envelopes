@@ -37,7 +37,7 @@ export async function GET(request: Request) {
   const isAdmin = user.role === 'admin';
   const orders = await listOrders({
     ...(isAdmin ? {} : { userId: user.uid }),
-    status: searchParams.get('status') ?? undefined,
+    paymentStatus: searchParams.get('platnosc') ?? undefined,
     from: searchParams.get('od') ?? undefined,
     to: searchParams.get('do') ?? undefined,
     search: searchParams.get('szukaj') ?? undefined,
@@ -148,7 +148,6 @@ export async function POST(request: Request) {
     paymentStatus: 'oczekuje',
     p24Reference: null,
     paymentDueDate: isDeferredInvoice(body.paymentMethod) ? dueDate.toISOString() : null,
-    status: 'nowe',
     requiresVisualization: needsVisualization,
     visualizationStatus: 'brak',
     visualizations: [],

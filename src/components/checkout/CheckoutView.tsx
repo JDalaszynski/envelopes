@@ -264,15 +264,36 @@ export function CheckoutView() {
     }
   }
 
-  const paymentOptions: { id: PaymentMethod; note: string }[] = [
-    { id: 'p24', note: 'Karta płatnicza lub szybki przelew. Potwierdzenie natychmiastowe.' },
-    { id: 'blik', note: 'Kod z aplikacji bankowej. Potwierdzenie natychmiastowe.' },
-    { id: 'przelew', note: 'Faktura proforma z danymi do przelewu. Druk rusza po zaksięgowaniu wpłaty.' },
-    {
-      id: 'faktura_odroczona',
-      note: 'Dla instytucji i jednostek budżetowych. Termin płatności 14 dni, produkcja rusza bez oczekiwania na wpłatę.',
-    },
-  ];
+  /* Logotypy operatorów przy dwóch pierwszych opcjach — kupujący rozpoznaje
+     bramkę po znaku szybciej niż po nazwie. Pozostałe dwie dostają ikonę,
+     żeby wiersze w sekcji zachowały wspólny rytm. */
+  const paymentOptions: {
+    id: PaymentMethod;
+    note: string;
+    logo?: { src: string; alt: string; width: number; height: number };
+    icon?: 'transfer' | 'invoice';
+  }[] = [
+      {
+        id: 'p24',
+        note: 'Karta płatnicza lub szybki przelew. Potwierdzenie natychmiastowe.',
+        logo: { src: '/images/Przelewy24_logo.webp', alt: 'Przelewy24', width: 256, height: 90 },
+      },
+      {
+        id: 'blik',
+        note: 'Kod z aplikacji bankowej. Potwierdzenie natychmiastowe.',
+        logo: { src: '/images/BLIK-LOGO-RGB.png', alt: 'BLIK', width: 910, height: 427 },
+      },
+      {
+        id: 'przelew',
+        note: 'Faktura proforma z danymi do przelewu. Druk rusza po zaksięgowaniu wpłaty.',
+        icon: 'transfer',
+      },
+      {
+        id: 'faktura_odroczona',
+        note: 'Dla instytucji i jednostek budżetowych. Termin płatności 14 dni, produkcja rusza bez oczekiwania na wpłatę.',
+        icon: 'invoice',
+      },
+    ];
 
   const missing = submitAttempted ? ORDER.filter((name) => errors[name]) : [];
 
@@ -283,8 +304,9 @@ export function CheckoutView() {
         <h1>Zamówienie</h1>
       </div>
 
-      <div className="checkout-layout">
+      <div className="checkout-layout checkout-layout-order">
         <form
+          id="checkout-form"
           className="stack"
           style={{ gap: 'var(--space-5)' }}
           noValidate
@@ -616,6 +638,22 @@ export function CheckoutView() {
                   aria-pressed={payment === option.id}
                   onClick={() => setPayment(option.id)}
                 >
+                  <span className="payment-mark" aria-hidden="true">
+                    {option.logo ? (
+                      <img
+                        src={option.logo.src}
+                        alt=""
+                        width={option.logo.width}
+                        height={option.logo.height}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    ) : option.icon === 'transfer' ? (
+                      <TransferIcon />
+                    ) : (
+                      <InvoiceIcon />
+                    )}
+                  </span>
                   <span>
                     <strong>{PAYMENT_METHOD_LABEL[option.id]}</strong>
                     <small>{option.note}</small>
@@ -649,76 +687,6 @@ export function CheckoutView() {
                 </p>
               </div>
             )}
-          </section>
-
-          {/* ── 5. Zgody i potwierdzenie ── */}
-          <section className="card card-lg checkout-section" aria-labelledby="sekcja-zgody">
-            <header className="checkout-section-head">
-              <span className="checkout-num" aria-hidden="true">
-                5
-              </span>
-              <div>
-                <h2 id="sekcja-zgody">Potwierdzenie</h2>
-              </div>
-            </header>
-
-            {requiresApproval && (
-              <p className="notice notice-seal">
-                Zamówienie zawiera nadruk lub personalizację. Po jego złożeniu grafik przygotuje
-                wizualizację i prześle ją e-mailem do akceptacji — produkcja ruszy po zatwierdzeniu
-                projektu.
-              </p>
-            )}
-
-            <div
-              ref={(node) => {
-                refs.current.regulamin = node;
-              }}
-              tabIndex={-1}
-            >
-              <label className="checkbox-row">
-                <input
-                  type="checkbox"
-                  checked={terms}
-                  onChange={(e) => {
-                    setTerms(e.target.checked);
-                    if (e.target.checked) setErrors((p) => ({ ...p, regulamin: undefined }));
-                  }}
-                />
-                <span>
-                  Akceptuję <Link href="/regulamin">Regulamin</Link> oraz{' '}
-                  <Link href="/polityka-prywatnosci">Politykę Prywatności</Link>. Przyjmuję do
-                  wiadomości, że koperty z nadrukiem i personalizacją są wykonywane według mojej
-                  specyfikacji i nie podlegają prawu odstąpienia od umowy.
-                </span>
-              </label>
-              {errorFor('regulamin') && (
-                <p className="field-error" id="regulamin-error" role="alert">
-                  {errorFor('regulamin')}
-                </p>
-              )}
-            </div>
-
-            {missing.length > 0 && (
-              <div className="notice notice-error" role="alert">
-                <strong>Brakuje jeszcze {missing.length} informacji:</strong>
-                <ul style={{ margin: 'var(--space-2) 0 0', paddingLeft: 'var(--space-5)' }}>
-                  {missing.map((name) => (
-                    <li key={name}>{errors[name]}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {submitError && (
-              <p className="notice notice-error" role="alert">
-                {submitError}
-              </p>
-            )}
-
-            <button type="submit" className="btn btn-lg btn-block" disabled={submitting}>
-              {submitting ? 'Przetwarzanie…' : `Zamawiam i płacę ${formatPrice(gross)}`}
-            </button>
           </section>
         </form>
 
@@ -778,6 +746,86 @@ export function CheckoutView() {
             <span className="label">Razem brutto</span>
             <span className="price">{formatPrice(gross)}</span>
           </div>
+
+          {/* ── Potwierdzenie ──
+              Zgoda i przycisk stoją tuż pod kwotą, którą zatwierdzają. Blok
+              leży poza <form>, więc przycisk wskazuje formularz atrybutem
+              `form` — walidacja i wysyłka działają tak samo jak wcześniej. */}
+          <section className="checkout-confirm" aria-label="Potwierdzenie zamówienia">
+            {requiresApproval && (
+              <p className="notice notice-seal">
+                Zamówienie zawiera nadruk lub personalizację. Po jego złożeniu grafik przygotuje
+                wizualizację i prześle ją e-mailem do akceptacji — produkcja ruszy po zatwierdzeniu
+                projektu.
+              </p>
+            )}
+
+            <div
+              ref={(node) => {
+                refs.current.regulamin = node;
+              }}
+              tabIndex={-1}
+            >
+              <label className="checkbox-row">
+                <input
+                  type="checkbox"
+                  form="checkout-form"
+                  checked={terms}
+                  onChange={(e) => {
+                    setTerms(e.target.checked);
+                    if (e.target.checked) setErrors((p) => ({ ...p, regulamin: undefined }));
+                  }}
+                />
+                <span>
+                  Akceptuję <Link href="/regulamin">Regulamin</Link> oraz{' '}
+                  <Link href="/polityka-prywatnosci">Politykę Prywatności</Link>.
+                </span>
+              </label>
+              {errorFor('regulamin') && (
+                <p className="field-error" id="regulamin-error" role="alert">
+                  {errorFor('regulamin')}
+                </p>
+              )}
+            </div>
+
+            {missing.length > 0 && (
+              <div className="notice notice-error" role="alert">
+                <strong>Brakuje jeszcze {missing.length} informacji:</strong>
+                <ul style={{ margin: 'var(--space-2) 0 0', paddingLeft: 'var(--space-5)' }}>
+                  {missing.map((name) => (
+                    <li key={name}>{errors[name]}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {submitError && (
+              <p className="notice notice-error" role="alert">
+                {submitError}
+              </p>
+            )}
+
+            <button
+              type="submit"
+              form="checkout-form"
+              className="btn btn-lg btn-block"
+              disabled={submitting}
+            >
+              {submitting ? 'Przetwarzanie…' : 'Zamawiam i płacę'}
+            </button>
+          </section>
+
+          {/* Logotypy banków i kart obsługiwanych przez bramkę — dowód, że
+              płatność da się dokończyć znaną klientowi metodą. */}
+          <img
+            className="payment-methods-strip"
+            src="/images/metody-platnosci-przelewy24.webp"
+            alt="Metody płatności obsługiwane przez Przelewy24: Apple Pay, Google Pay, BLIK, Visa, Mastercard oraz przelewy z banków mBank, Idea, Crédit Agricole, iPKO, Millennium, Alior Bank, Santander, Bank Pekao, ING, BNP Paribas i T-Mobile Usługi Bankowe."
+            width={780}
+            height={180}
+            loading="lazy"
+            decoding="async"
+          />
 
           <ul className="checkout-trust">
             <li>Płatność szyfrowana — Przelewy24</li>
@@ -888,11 +936,11 @@ function ProcessingOverlay() {
   useEffect(() => {
     // Blokada przewijania pod spodem
     document.body.style.overflow = 'hidden';
-    
+
     // Progresywne komunikaty dające poczucie zaawansowanego procesu
     const t1 = setTimeout(() => setStep(1), 1800);
     const t2 = setTimeout(() => setStep(2), 3500);
-    
+
     return () => {
       document.body.style.overflow = '';
       clearTimeout(t1);
@@ -937,7 +985,8 @@ function ProcessingOverlay() {
           Prosimy nie odświeżać i nie zamykać okna przeglądarki. Za chwilę nastąpi przekierowanie.
         </p>
       </div>
-      <style dangerouslySetInnerHTML={{ __html: `
+      <style dangerouslySetInnerHTML={{
+        __html: `
         @keyframes fadeIn {
           from { opacity: 0; }
           to { opacity: 1; }
@@ -966,6 +1015,24 @@ function LockIcon() {
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
       <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+    </svg>
+  );
+}
+
+function TransferIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3 21h18M5 21V10M10 21V10M14 21V10M19 21V10" />
+      <path d="M12 3 3 8h18l-9-5z" />
+    </svg>
+  );
+}
+
+function InvoiceIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M6 2h9l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" />
+      <path d="M14 2v6h6M9 13h6M9 17h4" />
     </svg>
   );
 }

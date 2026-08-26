@@ -378,7 +378,7 @@ export const TERMS: LegalDocument = {
           text: 'Zamówienie zostaje skierowane do produkcji po łącznym spełnieniu dwóch warunków: potwierdzenia płatności (albo wyboru faktury z odroczonym terminem płatności) oraz akceptacji Wizualizacji, jeżeli jest wymagana.',
         },
         {
-          text: 'Status Zamówienia Klient śledzi w panelu „Złożone zamówienia”. Statusy oznaczają kolejno: przyjęcie Zamówienia, przygotowanie, oczekiwanie na akceptację projektu, skierowanie do produkcji, wysyłkę oraz anulowanie.',
+          text: 'Przebieg Zamówienia Klient śledzi w panelu „Złożone zamówienia”: znajdzie tam status płatności, historię zmian Zamówienia oraz numer przesyłki po jej nadaniu. O istotnych zdarzeniach — potwierdzeniu wpłaty i gotowej Wizualizacji — Sprzedawca informuje dodatkowo wiadomością e-mail.',
         },
         {
           text: 'Ze względu na technologię druku i naturalny charakter papieru dopuszczalne są:',

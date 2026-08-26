@@ -39,6 +39,7 @@ import {
   DELIVERY_COST,
   calculatePrice,
   formatPrice,
+  plural,
   round2,
 } from './pricing';
 
@@ -377,6 +378,32 @@ const A4_SHEET_MM = { width: 210, height: 297 };
 const A4_FOLDED_MM = { width: 210, height: Math.round(297 / 3) }; // 210 × 99 mm
 const DL_LONG_CLEARANCE_MM = Math.max(DL_FORMAT.width, DL_FORMAT.height) - A4_FOLDED_MM.width; // 10 mm (220 - 210)
 const DL_SHORT_CLEARANCE_MM = Math.min(DL_FORMAT.width, DL_FORMAT.height) - A4_FOLDED_MM.height; // 11 mm (110 - 99)
+
+/* ── Wartości wyliczane dla wpisu o realizacji ekspresowej (poz. 16) ──── */
+
+/**
+ * Ile dni roboczych kupuje dopłata ekspresowa — różnica dwóch terminów
+ * z cennika, a nie liczba wpisana z pamięci. Zmiana `leadDaysStandard`
+ * albo `leadDaysExpress` przepisuje treść wpisu razem z koszykiem.
+ */
+const EXPRESS_SAVED_DAYS = DEFAULT_PRICING.leadDaysStandard - DEFAULT_PRICING.leadDaysExpress;
+const EXPRESS_SAVED_DAYS_LABEL = `${EXPRESS_SAVED_DAYS} ${plural(
+  EXPRESS_SAVED_DAYS,
+  'dzień roboczy',
+  'dni robocze',
+  'dni roboczych'
+)}`;
+
+/**
+ * Dopłata ekspresowa dla trzech nakładów. Trzecia kolumna tabeli przelicza
+ * ją na jeden zyskany dzień roboczy — to jedyna postać tej kwoty, która
+ * odpowiada na pytanie „czy się zwraca", a nie „ile kosztuje".
+ */
+const EXPRESS_SURCHARGE_ROWS = [DEFAULT_PRICING.moqWithPrint, 100, 500].map((quantity) => ({
+  quantity,
+  total: round2(DEFAULT_PRICING.express * quantity),
+  perDay: round2((DEFAULT_PRICING.express * quantity) / EXPRESS_SAVED_DAYS),
+}));
 
 const POSTS: BlogPost[] = [
   {
@@ -754,6 +781,8 @@ const POSTS: BlogPost[] = [
     lead: 'Sprawdź jak kształtuje się koszt zamówienia kopert z nadrukiem dla Twojej firmy. Poznaj czynniki wpływające na ostateczną wycenę i dokładnie zaplanuj swój budżet marketingowy. Przeczytaj nasz przejrzysty cennik.',
     category: 'Poradniki',
     date: '2026-08-17',
+    /* Doszedł akapit odsyłający do poradnika o terminach (poz. 16) */
+    updated: '2026-08-26',
     readingMinutes: 6,
     colorId: 'eko',
     format: 'DL',
@@ -870,6 +899,9 @@ const POSTS: BlogPost[] = [
         heading: 'Co jeszcze może zmienić kwotę zamówienia',
         paragraphs: [
           'Stawkę jednostkową podnoszą dwie opcje: personalizacja i tryb ekspresowy. Obie włączają Państwo w konfiguratorze i obie widać w podsumowaniu, zanim zamówienie trafi do koszyka. Poza nimi kwota wynika wyłącznie z liczby kopert.',
+          /* Odnośnik w bok do poz. 16 — ten wpis podaje wpływ ekspresu na
+             kwotę, tamten rozstrzyga, czy dopłata w ogóle coś kupuje. */
+          'Tryb ekspresowy jest jedyną z tych opcji, której nie wybiera się dla samego produktu — kupują Państwo nim wyłącznie czas. Czy ta zamiana się opłaca, rozstrzygamy w poradniku o [szybkiej realizacji kopert](/blog/szybka-realizacja-kopert-terminy-i-ekspres).',
           'Personalizacja bywa mylona z nadrukiem, więc warto rozdzielić te dwie usługi. Nadruk powtarza ten sam projekt na całym nakładzie i mieści się w stawce z tabeli wyżej. Personalizacja daje każdej kopercie inną treść — imię, nazwisko albo adres odbiorcy — i jest liczona osobno.',
           `Powyżej ${BULK_QUOTE_LABEL} sztuk kwota przestaje wynikać wprost z cennika. Zamówienia tej wielkości wyceniamy indywidualnie przez formularz; ustalamy wtedy również harmonogram dostaw i sposób rozliczenia.`,
         ],
@@ -1809,6 +1841,258 @@ const POSTS: BlogPost[] = [
       personalizationScope: 'imiona',
     },
     pillar: { href: '/koperty-personalizowane', anchor: 'personalizowane koperty' },
+  },
+  {
+    /* content-plan.md poz. 16 — treść wspierająca filar K1
+       (`/koperty-z-nadrukiem`), cel KONWERSJA. Fraza główna:
+       `szybka realizacja kopert`. Wpis startowy o ekspresie usunięto
+       15 sierpnia 2026 razem z treściami sprzed strategii; ta wersja
+       powstała od zera.
+
+       Oś wpisu: **od kiedy** liczymy termin, a nie ile on wynosi. Filar
+       podaje same terminy w tabeli i w FAQ (`#terminy`, `PRINT_FAQ_ITEMS`),
+       strona główna — pasek ekspresu pod matrycą usług. Nikt natomiast nie
+       opisuje arytmetyki kalendarza: późniejszego z dwóch zdarzeń
+       uruchamiających bieg terminu, równoległości wpłaty i wizualizacji,
+       czasu przewoźnika doliczanego do terminu ani liczenia wstecz od daty
+       wydarzenia. To jest treść tego wpisu.
+
+       Świadomie nieobecne: cennik nadruku i personalizacji (należy do
+       filara i do poz. 9), MOQ jako temat (poz. 46), wymagania dla pliku
+       (poz. 7 — wpis tylko do niej linkuje). Dopłata ekspresowa zostaje,
+       bo jest osią pozycji — ale wyłącznie w tabeli przeliczeniowej,
+       nie w rozbiciu ceny jednostkowej.
+
+       Wpis nie ma własnego `FAQPage`: dane strukturalne pytań stoją na
+       filarze (zasada z poz. 7), więc sekcja pytań jest tabelą treści. */
+    slug: 'szybka-realizacja-kopert-terminy-i-ekspres',
+    title: 'Szybka realizacja kopert — terminy i ekspres',
+    /* Lead zasila `description`. Jeden konkret różnicujący — moment startu
+       terminu — plus termin ekspresowy czytany z cennika. */
+    lead: `Szybka realizacja kopert zaczyna się nie w dniu zamówienia, tylko po zaksięgowaniu wpłaty i akceptacji wizualizacji. Kiedy ekspres w ${DEFAULT_PRICING.leadDaysExpress} dni się zwraca.`,
+    category: 'Poradniki',
+    date: '2026-08-26',
+    readingMinutes: 7,
+    colorId: 'granatowy',
+    format: 'DL',
+    /* Kadr aranżacyjny: zaproszenia na koncert — wysyłka, która ma sztywną
+       datę w kalendarzu, czyli dokładnie sytuacja z tego wpisu. Kadr
+       nieużywany przez żaden inny wpis. */
+    showcaseFile: 'granatowa-koperta-dl-nadruk-logo-orkiestry',
+    imageVariant: 'nadruk',
+    ogImageSlug: 'blog-szybka-realizacja',
+    ogImageAlt:
+      'Granatowa koperta DL z białym nadrukiem logo orkiestry symfonicznej, przygotowana pod wysyłkę zaproszeń na koncert',
+    keywords: [
+      'szybka realizacja kopert',
+      'koperty ekspresowo',
+      'ile trwa druk kopert z logo',
+      'termin realizacji kopert z nadrukiem',
+    ],
+    intro: `Termin realizacji liczymy od późniejszego z dwóch zdarzeń: zaksięgowania wpłaty i akceptacji wizualizacji. Dopiero wtedy rusza licznik — ${DEFAULT_PRICING.leadDaysStandard} dni roboczych w trybie standardowym albo ${DEFAULT_PRICING.leadDaysExpress} dni robocze w ekspresie. Ten poradnik pokazuje, jak policzyć datę wysyłki wstecz od dnia wydarzenia i kiedy dopłata za ekspres faktycznie coś kupuje.`,
+    sections: [
+      {
+        id: 'od-kiedy-liczymy',
+        heading: 'Od kiedy liczymy dni realizacji',
+        paragraphs: [
+          'Licznik startuje w dniu, w którym spełniony jest późniejszy z dwóch warunków: wpłata jest zaksięgowana, a wizualizacja zaakceptowana. Dzień złożenia zamówienia nie jest jeszcze pierwszym dniem realizacji. Przy kopertach gładkich drugi warunek odpada, bo taka partia nie przechodzi przez produkcję ani przez akceptację projektu.',
+          'Rozróżnienie jest praktyczne, a nie formalne. Zamówienie opłacone BLIK-iem w poniedziałek, ale zaakceptowane dopiero w czwartek, zaczyna bieg w czwartek. Odwrotnie działa to przy przelewie tradycyjnym: projekt zatwierdzony od razu nic nie da, dopóki wpłata nie wejdzie na rachunek.',
+          'Instytucje publiczne i urzędy płacące fakturą z odroczonym terminem 14 dni mają pierwszy warunek spełniony z chwilą przyjęcia zamówienia do realizacji — produkcja nie czeka wtedy na wpłatę. Regułę biegu terminu zapisaliśmy w [regulaminie](/regulamin#realizacja), w paragrafie o realizacji zamówienia.',
+        ],
+        table: {
+          caption: 'Dwa warunki, od których zaczyna się bieg terminu realizacji kopert',
+          head: ['Warunek', 'Co go spełnia', 'Po czyjej stronie'],
+          rows: [
+            [
+              'Zaksięgowana wpłata',
+              'BLIK i karta — potwierdzenie natychmiastowe. Przelew tradycyjny — dzień wpływu na rachunek',
+              'Klient',
+            ],
+            [
+              'Faktura z odroczonym terminem',
+              'Przyjęcie zamówienia do realizacji, bez oczekiwania na wpłatę',
+              'Envelopes — wyłącznie dla instytucji publicznych i urzędów',
+            ],
+            [
+              'Akceptacja wizualizacji',
+              'Kliknięcie akceptacji w linku z e-maila albo w panelu złożonych zamówień',
+              'Klient',
+            ],
+            [
+              'Zamówienie bez nadruku',
+              'Warunek nie występuje — koperty gładkie pomijają etap wizualizacji',
+              'Nie dotyczy',
+            ],
+          ],
+        },
+      },
+      {
+        id: 'ile-trwa',
+        heading: 'Ile trwa realizacja kopert',
+        paragraphs: [
+          `Koperty gładkie wysyłamy w ${DEFAULT_PRICING.leadDaysPlain} dni robocze, a koperty z nadrukiem lub personalizacją — w ${DEFAULT_PRICING.leadDaysStandard} dni roboczych w trybie standardowym albo w ${DEFAULT_PRICING.leadDaysExpress} dni robocze w ekspresie. Wszystkie te terminy dotyczą momentu nadania przesyłki, a nie doręczenia jej pod wskazany adres.`,
+          'Czas przewoźnika, zwykle jeden do dwóch dni roboczych, dolicza się do terminu realizacji. Kurier nie jest częścią naszego terminu i nie skraca go dopłata ekspresowa — ekspres przyspiesza produkcję, nie transport.',
+          'Dzień roboczy to poniedziałek, wtorek, środa, czwartek i piątek, z wyłączeniem dni ustawowo wolnych. Termin przeskakuje więc weekendy: pięć dni roboczych ze startem we wtorek kończy się w kolejny wtorek, czyli po siedmiu dniach kalendarza. Święto w liczonym okresie przesuwa datę o kolejną dobę.',
+        ],
+        table: {
+          caption: 'Terminy realizacji zamówienia kopert i moment, od którego je liczymy',
+          head: ['Zamówienie', 'Czas do nadania', 'Od kiedy liczymy'],
+          rows: [
+            [
+              'Koperty gładkie, bez nadruku',
+              `${DEFAULT_PRICING.leadDaysPlain} dni robocze`,
+              'Od zaksięgowania wpłaty',
+            ],
+            [
+              'Koperty z nadrukiem lub personalizacją — standard',
+              `${DEFAULT_PRICING.leadDaysStandard} dni roboczych`,
+              'Od późniejszego z dwóch zdarzeń: wpłaty albo akceptacji wizualizacji',
+            ],
+            [
+              'Koperty z nadrukiem lub personalizacją — ekspres',
+              `${DEFAULT_PRICING.leadDaysExpress} dni robocze`,
+              `Jak wyżej, za dopłatą ${formatPrice(DEFAULT_PRICING.express)} brutto od sztuki`,
+            ],
+            [
+              'Dostawa kurierem',
+              'Zwykle 1–2 dni robocze',
+              'Od nadania przesyłki — poza terminem realizacji',
+            ],
+          ],
+        },
+      },
+      {
+        id: 'wplata-i-wizualizacja',
+        heading: 'Wpłata i wizualizacja biegną równolegle',
+        paragraphs: [
+          'Wizualizację przygotowujemy niezależnie od statusu płatności — nie czekamy z projektem na wpłatę. Oba warunki mogą więc zostać spełnione tego samego dnia, a przy płatności natychmiastowej cała zwłoka sprowadza się do tego, jak szybko zatwierdzą Państwo projekt.',
+          'Wizualizacja przychodzi e-mailem, pod indywidualnym linkiem, który nie wymaga logowania. Link da się przekazać dalej i to jest jego sens: w firmie projekt zatwierdza zwykle ktoś inny niż osoba składająca zamówienie, a przekładanie tego między skrzynkami kosztuje dzień albo dwa.',
+          'Jeżeli nie zaakceptują Państwo projektu ani nie zgłoszą do niego uwag, przypomnienie wysyłamy po trzech dniach roboczych. Zamówienie stoi wtedy w miejscu — termin nie tyle się wydłuża, co jeszcze nie zaczął biec. To najczęstszy powód rozjazdu między datą z potwierdzenia a rzeczywistą datą wysyłki.',
+          'Data w potwierdzeniu zamówienia jest szacunkiem liczonym od dnia jego złożenia. Zakłada niezwłoczną wpłatę i niezwłoczną akceptację, więc każdy dzień zwłoki przy którymkolwiek z tych kroków przesuwa ją o tyle samo.',
+        ],
+      },
+      {
+        id: 'kiedy-doplata-sie-zwraca',
+        heading: 'Kiedy dopłata za ekspres się zwraca',
+        paragraphs: [
+          `Tryb ekspresowy skraca produkcję o ${EXPRESS_SAVED_DAYS_LABEL}: zamiast ${DEFAULT_PRICING.leadDaysStandard} dni roboczych zamówienie idzie do wysyłki po ${DEFAULT_PRICING.leadDaysExpress}. Dopłata nalicza się od łącznej liczby sztuk w zamówieniu, więc jej wysokość zależy od nakładu, ale to, co kupuje, jest stałe — tyle samo dni przy dziesięciu kopertach, co przy pięciuset.`,
+          'Ekspres ma sens wtedy, gdy te dni faktycznie rozstrzygają — data gali jest ustalona, zaproszenia mają wyjść razem z programem wydarzenia, a wysyłka nie ma drugiego terminu. Kiedy w kalendarzu jest zapas, tryb standardowy daje dokładnie ten sam produkt: tę samą kopertę, ten sam nadruk, ten sam papier.',
+          'Tryb wybiera się w koszyku, a nie w konfiguratorze, i dotyczy całego zamówienia — z jednego zamówienia wychodzi jedna przesyłka. Podsumowanie koszyka pokazuje wtedy dopłatę osobną pozycją, przeliczoną przez liczbę sztuk, zanim potwierdzą Państwo zakup.',
+        ],
+        table: {
+          caption: 'Dopłata za tryb ekspresowy w przeliczeniu na jeden zyskany dzień roboczy',
+          head: ['Nakład', 'Dopłata za ekspres', 'Koszt jednego zyskanego dnia'],
+          rows: EXPRESS_SURCHARGE_ROWS.map((row) => [
+            `${row.quantity} szt.`,
+            `${formatPrice(row.total)} brutto`,
+            `${formatPrice(row.perDay)} brutto`,
+          ]),
+        },
+      },
+      {
+        id: 'czego-ekspres-nie-przyspieszy',
+        heading: 'Czego ekspres nie przyspieszy',
+        paragraphs: [
+          'Ekspres skraca wyłącznie produkcję. Nie przyspieszy księgowania przelewu, nie zastąpi Państwa akceptacji projektu i nie skróci drogi kuriera. Zamówienie ekspresowe, które czeka na zatwierdzenie wizualizacji, stoi dokładnie tak samo jak zamówienie standardowe.',
+          'Osobnym przypadkiem są korekty. Dwie korekty wizualizacji mieszczą się w cenie zamówienia; kolejne wersje uzgadniamy indywidualnie i do czasu tego uzgodnienia bieg terminu jest zawieszony. Plik przygotowany zgodnie z wymaganiami zdejmuje ten scenariusz — rozpisaliśmy je w poradniku [jak przygotować pliki do druku na kopertach](/blog/jak-przygotowac-pliki-do-druku-na-kopertach).',
+          'Koperty gładkie nie mają trybu ekspresowego i nie ma w nich za co dopłacać. Partia bez nadruku nie przechodzi przez produkcję ani przez akceptację projektu, więc jedzie zawsze w tym samym terminie — koszyk nawet nie pyta wtedy o wybór trybu.',
+        ],
+        table: {
+          caption: 'Które etapy zamówienia skraca tryb ekspresowy, a których nie dotyczy',
+          head: ['Etap zamówienia', 'Czy skraca go ekspres', 'Co skraca go naprawdę'],
+          rows: [
+            [
+              'Księgowanie płatności',
+              'Nie',
+              'BLIK albo karta — potwierdzenie jest natychmiastowe',
+            ],
+            [
+              'Oczekiwanie na akceptację wizualizacji',
+              'Nie',
+              'Przekazanie linku wprost osobie, która zatwierdza projekt',
+            ],
+            [
+              'Kolejne wersje projektu',
+              'Nie — bieg terminu jest wtedy zawieszony',
+              'Plik przygotowany zgodnie z wymaganiami',
+            ],
+            [
+              'Druk, kontrola i pakowanie',
+              `Tak — z ${DEFAULT_PRICING.leadDaysStandard} dni roboczych do ${DEFAULT_PRICING.leadDaysExpress}`,
+              'Dopłata ekspresowa naliczana od sztuki',
+            ],
+            [
+              'Dostawa kurierem',
+              'Nie',
+              'Nic po naszej stronie — czas przewoźnika jest poza terminem realizacji',
+            ],
+            [
+              'Zamówienie kopert gładkich',
+              'Nie dotyczy — tryb w ogóle nie występuje',
+              `Termin jest stały: ${DEFAULT_PRICING.leadDaysPlain} dni robocze bez dopłaty`,
+            ],
+          ],
+        },
+      },
+      {
+        id: 'licz-wstecz',
+        heading: 'Jak policzyć termin wstecz od daty wydarzenia',
+        paragraphs: [
+          'Liczenie zaczyna się od dnia, w którym koperty mają być gotowe do użycia, i cofa się przez cztery odcinki: zapas na miejscu, drogę kuriera, produkcję i akceptację projektu. Ostatni odcinek jest jedynym, którego długość zależy wyłącznie od Państwa.',
+          `Przykład na trybie standardowym. Koperty mają leżeć na biurku w czwartek. Kurier potrzebuje do dwóch dni roboczych, więc przesyłka musi wyjść najpóźniej we wtorek tego samego tygodnia. Produkcja w trybie standardowym zajmuje ${DEFAULT_PRICING.leadDaysStandard} dni roboczych, co cofa start terminu na wtorek tydzień wcześniej — i to jest dzień, w którym wpłata ma być już zaksięgowana, a wizualizacja zaakceptowana. Samo zamówienie trzeba więc złożyć jeszcze wcześniej.`,
+          `W ekspresie ten sam punkt dojścia przesuwa się o ${EXPRESS_SAVED_DAYS_LABEL}: start terminu wypada w piątek przed wysyłką, a nie we wtorek tydzień wcześniej. Tyle właśnie kupuje dopłata — ${EXPRESS_SAVED_DAYS_LABEL} więcej na zebranie wpłaty i akceptacji.`,
+        ],
+        list: [
+          'Dzień, w którym koperty mają być gotowe do użycia — zwykle wcześniejszy niż dzień wydarzenia',
+          'Zapas na miejscu: rozpakowanie, włożenie wkładek, sprawdzenie kompletu',
+          'Droga kuriera — zwykle 1–2 dni robocze, doliczane do terminu realizacji',
+          `Produkcja: ${DEFAULT_PRICING.leadDaysStandard} dni roboczych w standardzie albo ${DEFAULT_PRICING.leadDaysExpress} dni robocze w ekspresie`,
+          'Akceptacja wizualizacji — odcinek, którego długość zależy wyłącznie od Państwa',
+          'Płatność: natychmiastowa przy BLIK-u i karcie, kilkudniowa przy przelewie tradycyjnym',
+          'Dni ustawowo wolne w liczonym okresie — termin biegnie wyłącznie w dni robocze',
+        ],
+      },
+      {
+        id: 'pytania',
+        heading: 'Pytania, które wracają przy krótkim terminie',
+        paragraphs: [
+          'Sześć pytań, które wracają, kiedy koperty mają być gotowe na konkretny dzień — razem z krótkimi odpowiedziami.',
+        ],
+        table: {
+          caption: 'Najczęstsze pytania o termin realizacji i tryb ekspresowy',
+          head: ['Pytanie', 'Odpowiedź'],
+          rows: [
+            [
+              'Ile trwa druk kopert z logo?',
+              `${DEFAULT_PRICING.leadDaysStandard} dni roboczych do nadania w trybie standardowym, ${DEFAULT_PRICING.leadDaysExpress} dni robocze w ekspresie. Termin biegnie od późniejszego z dwóch zdarzeń: zaksięgowania wpłaty i akceptacji wizualizacji.`,
+            ],
+            [
+              `Czy ${DEFAULT_PRICING.leadDaysExpress} dni robocze to termin dostawy?`,
+              'Nie, to termin do nadania przesyłki. Czas przewoźnika, zwykle 1–2 dni robocze, dolicza się do terminu realizacji.',
+            ],
+            [
+              'Gdzie włącza się tryb ekspresowy?',
+              'W koszyku, nie w konfiguratorze. Tryb dotyczy całego zamówienia, bo wychodzi z niego jedna przesyłka.',
+            ],
+            [
+              'Czy ekspres dotyczy kopert bez nadruku?',
+              `Nie. Koperty gładkie nie przechodzą przez produkcję i jadą w ${DEFAULT_PRICING.leadDaysPlain} dni robocze bez dopłaty — koszyk nie pyta wtedy o tryb realizacji.`,
+            ],
+            [
+              'Co się stanie, jeśli zgłoszę uwagi do wizualizacji?',
+              'Przygotujemy kolejną wersję projektu. Dwie korekty mieszczą się w cenie zamówienia, a termin realizacji zaczyna biec dopiero od akceptacji.',
+            ],
+            [
+              'Czy przy fakturze z odroczonym terminem trzeba czekać na wpłatę?',
+              'Nie. Realizacja rusza z chwilą przyjęcia zamówienia. Faktura z odroczonym terminem 14 dni jest dostępna dla instytucji publicznych i urzędów.',
+            ],
+          ],
+        },
+      },
+    ],
+    cta: 'Termin dla swojego zamówienia zobaczą Państwo w konfiguratorze — tryb ekspresowy wybierają w koszyku.',
+    ctaConfigure: { label: 'Zaplanuj koperty z nadrukiem', format: 'DL', print: true },
+    pillar: { href: '/koperty-z-nadrukiem', anchor: 'koperty z nadrukiem' },
   },
 ];
 

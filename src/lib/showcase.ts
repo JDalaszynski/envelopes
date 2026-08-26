@@ -338,6 +338,21 @@ export const ALL_SHOWCASE_SHOTS: ShowcaseShot[] = [
 ];
 
 /**
+ * Kadry koperty **czystej** w danym odcieniu — bez nadruku i bez adresowania.
+ *
+ * Wydzielone, bo feed produktowy potrzebuje innego zestawu zdjęć niż strona:
+ * oferta w Merchant Center obejmuje kopertę gładką, więc kadr z wydrukowanym
+ * logo obiecywałby w karcie produktu usługę, która kosztuje osobno i ma własne
+ * minimum nakładu. Reguła jest ogólna, a nie wskazaniem jednego pliku —
+ * kolejny kadr gładki dodany do katalogu wejdzie do feedu sam.
+ */
+export function plainShotsForColor(colorId: string): ShowcaseShot[] {
+  return ALL_SHOWCASE_SHOTS.filter(
+    (shot) => shot.colorId === colorId && shot.variant === 'gladka'
+  );
+}
+
+/**
  * Kadr wskazany po nazwie pliku. Ten sam mechanizm, co w `VOUCHER_SHOTS`:
  * strona, która chce pokazać istniejący kadr, bierze go stąd, a nie przepisuje
  * `alt` i `note` u siebie — inaczej opis kadru rozjechałby się między stronami.

@@ -5,18 +5,13 @@ import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { EnvelopePlaceholder } from '@/components/ui/EnvelopePlaceholder';
-import { StatusPill, PaymentPill } from '@/components/ui/StatusPill';
+import { PaymentPill } from '@/components/ui/StatusPill';
 import { formatBytes } from '@/components/ui/FileDropzone';
 import { useAuth } from '@/components/providers/AuthProvider';
 import { personalizationScope } from '@/lib/catalog';
-import {
-  ORDER_STATUSES,
-  PAYMENT_METHOD_LABEL,
-  evaluatePrintGate,
-  isGatewayPayment,
-} from '@/lib/orders';
+import { PAYMENT_METHOD_LABEL, isGatewayPayment } from '@/lib/orders';
 import { formatDate, formatDateTime, formatPrice } from '@/lib/pricing';
-import type { CustomerData, Order, OrderStatus } from '@/lib/types';
+import type { CustomerData, Order } from '@/lib/types';
 
 /** Szczegóły zamówienia w panelu Admina (pkt 6.12). */
 export function AdminOrderDetail({ number }: { number: string }) {
@@ -112,7 +107,6 @@ export function AdminOrderDetail({ number }: { number: string }) {
   }
   if (!order) return <p className="muted">Wczytywanie zamówienia…</p>;
 
-  const gate = evaluatePrintGate(order);
   const latest = order.visualizations[order.visualizations.length - 1];
 
   return (
@@ -132,7 +126,6 @@ export function AdminOrderDetail({ number }: { number: string }) {
           </p>
         </div>
         <div className="row">
-          <StatusPill status={order.status} />
           <PaymentPill status={order.paymentStatus} />
         </div>
       </div>
@@ -143,41 +136,6 @@ export function AdminOrderDetail({ number }: { number: string }) {
       <div className="grid grid-2" style={{ alignItems: 'start' }}>
         {/* ── Kolumna operacyjna ── */}
         <div className="stack">
-          {/* Status zamówienia */}
-          <div className="card">
-            <h2 style={{ fontSize: 20, marginBottom: 'var(--space-3)' }}>Status zamówienia</h2>
-            <div className="field">
-              <label htmlFor="status">Zmień status</label>
-              <select
-                id="status"
-                className="select input"
-                value={order.status}
-                disabled={busy}
-                onChange={(e) => void patch({ status: e.target.value as OrderStatus })}
-              >
-                {ORDER_STATUSES.map((s) => {
-                  const blocked = s.id === 'do_druku' && !gate.allowed;
-                  return (
-                    <option key={s.id} value={s.id} disabled={blocked}>
-                      {s.label}
-                      {blocked ? ' — niedostępne' : ''}
-                    </option>
-                  );
-                })}
-              </select>
-              {!gate.allowed && (
-                <p className="field-hint" style={{ color: 'var(--color-error)' }}>
-                  {gate.reason} Opcja „Do druku" pozostaje zablokowana, dopóki oba warunki nie
-                  zostaną spełnione.
-                </p>
-              )}
-            </div>
-            <p className="small muted" style={{ marginTop: 'var(--space-3)' }}>
-              Każda zmiana statusu jest natychmiast widoczna w panelu klienta i wyzwala
-              powiadomienie e-mail.
-            </p>
-          </div>
-
           {/* Płatność */}
           <div className="card">
             <h2 style={{ fontSize: 20, marginBottom: 'var(--space-3)' }}>Płatność</h2>

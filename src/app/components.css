@@ -2432,6 +2432,35 @@
   margin-top: 2px;
 }
 
+/* Znak operatora płatności — wspólna ramka dla logotypu i ikony, żeby
+   wszystkie cztery kafelki miały tę samą siatkę. */
+.payment-mark {
+  flex-shrink: 0;
+  width: 64px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  background: var(--color-paper);
+  border: 1px solid var(--color-line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-seal);
+  overflow: hidden;
+}
+
+.payment-mark img {
+  width: auto;
+  height: auto;
+  max-width: calc(100% - 8px);
+  max-height: calc(100% - 8px);
+  object-fit: contain;
+}
+
+.option-card[aria-pressed='true'] .payment-mark {
+  background: var(--color-surface);
+  border-color: var(--color-seal);
+}
+
 /* Uwagi dla grafika — na szerokim ekranie wąskie pole wystarczy na jedno
    zdanie, na wąskim każdy piksel mniej to przycięty tekst w trakcie pisania. */
 .print-notes-field {
@@ -2717,7 +2746,7 @@ table.data.legal-table {
   font-size: 13px;
 }
 
-/* ── Statusy zamówień ── */
+/* ── Status płatności ── */
 .status-pill {
   display: inline-flex;
   align-items: center;
@@ -2742,45 +2771,16 @@ table.data.legal-table {
   flex-shrink: 0;
 }
 
-.status-nowe {
-  color: var(--color-ink);
-  border-color: var(--color-ink);
-}
-
-.status-w_trakcie {
+.status-payment-oczekuje {
   color: #7a5c1e;
   border-color: #c9a227;
   background: rgba(201, 162, 39, 0.1);
 }
 
-.status-czeka_na_akceptacje {
-  color: var(--color-seal);
-  border-color: var(--color-seal);
-  background: var(--color-seal-wash);
-}
-
-.status-do_druku {
-  color: #1f4b73;
-  border-color: #1f4b73;
-  background: rgba(31, 75, 115, 0.08);
-}
-
-.status-gotowe_do_wysylki {
-  color: #5b3d75;
-  border-color: #5b3d75;
-  background: rgba(91, 61, 117, 0.08);
-}
-
-.status-zrealizowane {
+.status-payment-oplacone {
   color: var(--color-success);
   border-color: var(--color-success);
   background: rgba(63, 107, 74, 0.08);
-}
-
-.status-anulowane {
-  color: var(--color-ink-soft);
-  border-color: var(--color-line);
-  text-decoration: line-through;
 }
 
 /* ── Baner cookies ── */
@@ -2839,8 +2839,14 @@ table.data.legal-table {
 
 .cart-item {
   display: grid;
-  grid-template-columns: 140px minmax(0, 1fr);
+  grid-template-columns: 220px minmax(0, 1fr);
   gap: var(--space-4);
+}
+
+/* Miniaturka wypełnia całą kolumnę siatki — na wąskim ekranie kolumna
+   znika, więc kadr trzeba ograniczyć samodzielnie. */
+.cart-item-thumb {
+  width: 100%;
 }
 
 @media (max-width: 620px) {
@@ -2848,8 +2854,8 @@ table.data.legal-table {
     grid-template-columns: 1fr;
   }
 
-  .cart-item>figure {
-    max-width: 160px;
+  .cart-item-thumb {
+    max-width: 240px;
   }
 }
 
@@ -2861,8 +2867,21 @@ table.data.legal-table {
   align-items: start;
 }
 
+/* Strona zamówienia — w panelu stoi też potwierdzenie i przycisk zakupu,
+   więc 340 px za bardzo ściska zgodę i pasek metod płatności. */
+.checkout-layout-order {
+  grid-template-columns: minmax(0, 1fr) 420px;
+}
+
+@media (max-width: 1180px) {
+  .checkout-layout-order {
+    grid-template-columns: minmax(0, 1fr) 360px;
+  }
+}
+
 @media (max-width: 980px) {
-  .checkout-layout {
+  .checkout-layout,
+  .checkout-layout-order {
     grid-template-columns: 1fr;
   }
 }
@@ -2982,6 +3001,30 @@ table.data.legal-table {
 .checkout-item-thumb :is(figure) {
   padding: var(--space-1);
   gap: 0;
+}
+
+/* Potwierdzenie zamówienia — mieszka w panelu podsumowania, tuż pod kwotą,
+   więc rezygnuje z chromu karty i trzyma się szerokości panelu. */
+.checkout-confirm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-line);
+}
+
+.checkout-confirm .checkbox-row {
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+/* Pasek logotypów banków i kart pod potwierdzeniem. */
+.payment-methods-strip {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-top: var(--space-4);
+  opacity: 0.85;
 }
 
 .checkout-trust {

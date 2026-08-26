@@ -73,15 +73,6 @@ export interface CartItem {
 
 /* ── Zamówienie ─────────────────────────────────────────────── */
 
-export type OrderStatus =
-  | 'nowe'
-  | 'w_trakcie'
-  | 'czeka_na_akceptacje'
-  | 'do_druku'
-  | 'gotowe_do_wysylki'
-  | 'zrealizowane'
-  | 'anulowane';
-
 export type PaymentStatus = 'oczekuje' | 'oplacone';
 
 export type PaymentMethod = 'p24' | 'blik' | 'przelew' | 'faktura_odroczona';
@@ -161,7 +152,6 @@ export interface Order {
   /** Identyfikator transakcji zwrócony przez bramkę Przelewy24 */
   p24Reference?: string | null;
   paymentDueDate?: string | null;
-  status: OrderStatus;
   /** Czy zamówienie w ogóle przechodzi przez akceptację wizualizacji (pkt 1.11) */
   requiresVisualization: boolean;
   visualizationStatus: VisualizationStatus;

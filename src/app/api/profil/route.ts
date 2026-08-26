@@ -34,7 +34,7 @@ export async function GET(request: Request) {
   const unique = new Map(byUser.map((o) => [o.number, o]));
   byEmail.forEach((o) => unique.set(o.number, o));
   const orders = [...unique.values()];
-  const completed = orders.filter((o) => o.status === 'zrealizowane').length;
+  const paid = orders.filter((o) => o.paymentStatus === 'oplacone').length;
 
   // Faktura z odroczonym terminem 14 dni jest ofertą dla instytucji
   // publicznych i urzędów — tak opisują ją treści serwisu i checkout.
@@ -44,7 +44,7 @@ export async function GET(request: Request) {
   // ani warunku na podstawie NIP-u czy pola w profilu.
   return NextResponse.json({
     profile: { ...profile, role: user.role, deferredPaymentEligible: true },
-    stats: { ordersTotal: orders.length, ordersCompleted: completed },
+    stats: { ordersTotal: orders.length, ordersPaid: paid },
   });
 }
 

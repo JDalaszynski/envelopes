@@ -100,8 +100,8 @@ function RegisterInner() {
     <div className="card card-lg">
       <h1 style={{ fontSize: 28 }}>Rejestracja</h1>
       <p className="muted small" style={{ marginTop: 'var(--space-2)' }}>
-        Konto pozwala zapisywać konfiguracje, powtarzać zamówienia jednym kliknięciem i śledzić
-        status realizacji.
+        Konto pozwala zapisywać konfiguracje, powtarzać zamówienia jednym kliknięciem i mieć
+        wszystkie złożone zamówienia w jednym miejscu.
       </p>
 
       <form onSubmit={submit} className="stack" style={{ marginTop: 'var(--space-5)' }}>

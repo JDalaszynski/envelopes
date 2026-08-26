@@ -24,19 +24,20 @@
  * i `updated`, więc nie ma czego tu powielać.
  */
 export const PAGE_UPDATED: Record<string, string> = {
-  /* Siatka blogowa pokazuje trzy najnowsze wpisy — doszedł poradnik o liście
-     imion i nazwisk do nadruku (poz. 15) */
-  '/': '2026-08-25',
-  /* Odnośnik do poradnika o koszcie zamówienia w sekcji cenowej (poz. 9) */
-  '/koperty-z-nadrukiem': '2026-08-17',
+  /* Siatka blogowa pokazuje trzy najnowsze wpisy — doszedł poradnik
+     o terminach realizacji i trybie ekspresowym (poz. 16) */
+  '/': '2026-08-26',
+  /* Sekcja „Poradniki" urosła do trzech kart i doszedł odnośnik pod akapitem
+     o terminach — treść wspierająca z poz. 16 planu */
+  '/koperty-z-nadrukiem': '2026-08-26',
   /* Sekcja „Poradniki" rozrosła się do trzech kart (poz. 8, 14 i 15) i doszedł
      odnośnik pod tabelą kolumn arkusza — treść wspierająca z poz. 15 planu */
   '/koperty-personalizowane': '2026-08-25',
   /* Sekcja „Poradniki" i odnośnik pod tabelą dopasowań — treść wspierająca z poz. 11 planu */
   '/koperty-dl': '2026-08-21',
   '/koperty-na-vouchery': '2026-08-16',
-  /* Doszedł wpis o liście imion i nazwisk do nadruku (poz. 15) */
-  '/blog': '2026-08-25',
+  /* Doszedł wpis o terminach realizacji i trybie ekspresowym (poz. 16) */
+  '/blog': '2026-08-26',
   /* Odnośnik do strony „O nas" w karcie danych rejestrowych */
   '/kontakt': '2026-08-17',
   /* Publikacja strony „O nas" */
@@ -72,6 +73,10 @@ export const PAGE_UPDATED: Record<string, string> = {
      przy publikacji poz. 15 akapit odsyłający do przygotowania listy. */
   '/blog/jak-zaadresowac-koperte-wysylana-przez-firme-wzor': '2026-08-25',
   '/blog/koperty-z-imieniem-i-nazwiskiem-jak-przygotowac-liste': '2026-08-25',
+  /* Wpisy wspierające filar K1 — poz. 9 i 16 planu. Poz. 9 dostała przy
+     publikacji poz. 16 akapit odsyłający do poradnika o terminach. */
+  '/blog/cena-kopert-z-nadrukiem-i-koszt-zamowienia': '2026-08-26',
+  '/blog/szybka-realizacja-kopert-terminy-i-ekspres': '2026-08-26',
 };
 
 /** Data zmiany treści dla trasy — `undefined`, gdy trasy nie ma w rejestrze. */

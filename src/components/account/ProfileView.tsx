@@ -12,7 +12,7 @@ export function ProfileView() {
   const router = useRouter();
 
   const [profile, setProfile] = useState<UserProfile | null>(null);
-  const [stats, setStats] = useState<{ ordersTotal: number; ordersCompleted: number } | null>(null);
+  const [stats, setStats] = useState<{ ordersTotal: number; ordersPaid: number } | null>(null);
   const [status, setStatus] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [confirmDelete, setConfirmDelete] = useState(false);
@@ -99,8 +99,8 @@ export function ProfileView() {
               {profile?.accountType === 'firmowe' ? 'Konto firmowe' : 'Konto indywidualne'}
             </strong>
             <p className="small muted" style={{ margin: '2px 0 0' }}>
-              Złożone zamówienia: {stats?.ordersTotal ?? 0}, w tym zrealizowanych:{' '}
-              {stats?.ordersCompleted ?? 0}. Płatność fakturą z odroczonym terminem 14 dni jest
+              Złożone zamówienia: {stats?.ordersTotal ?? 0}, w tym opłaconych:{' '}
+              {stats?.ordersPaid ?? 0}. Płatność fakturą z odroczonym terminem 14 dni jest
               dostępna dla instytucji publicznych i urzędów.
             </p>
           </div>

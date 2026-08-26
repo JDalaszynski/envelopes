@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 
 import { EnvelopePlaceholder } from '@/components/ui/EnvelopePlaceholder';
-import { StatusPill, PaymentPill } from '@/components/ui/StatusPill';
+import { PaymentPill } from '@/components/ui/StatusPill';
 import { useAuth } from '@/components/providers/AuthProvider';
 import { useCart } from '@/components/providers/CartProvider';
 import { formatBytes } from '@/components/ui/FileDropzone';
@@ -69,9 +69,7 @@ export function OrderDetail({ number }: { number: string }) {
     setComment('');
     setNote(
       action === 'akceptuj'
-        ? json.movedToPrint
-          ? 'Projekt zaakceptowany — zamówienie skierowane do druku.'
-          : (json.note ?? 'Projekt zaakceptowany.')
+        ? 'Projekt zaakceptowany — dziękujemy.'
         : 'Uwagi przekazane grafikowi. Przygotujemy poprawioną wersję.'
     );
     await load();
@@ -91,9 +89,7 @@ export function OrderDetail({ number }: { number: string }) {
   if (!order) return <p className="muted">Wczytywanie zamówienia…</p>;
 
   const awaitingApproval =
-    order.status === 'czeka_na_akceptacje' &&
-    order.requiresVisualization &&
-    order.visualizationStatus !== 'zaakceptowano';
+    order.requiresVisualization && order.visualizationStatus === 'oczekuje';
   const latest = order.visualizations[order.visualizations.length - 1];
   const showPaymentDetails = order.paymentStatus === 'oczekuje' && order.paymentMethod === 'przelew';
 
@@ -113,7 +109,6 @@ export function OrderDetail({ number }: { number: string }) {
           </p>
         </div>
         <div className="row">
-          <StatusPill status={order.status} />
           <PaymentPill status={order.paymentStatus} />
         </div>
       </div>

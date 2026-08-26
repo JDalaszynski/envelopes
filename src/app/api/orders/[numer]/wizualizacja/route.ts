@@ -53,14 +53,13 @@ export async function POST(
   const updated = await updateOrder(numer, {
     visualizations: [...order.visualizations, version],
     visualizationStatus: 'oczekuje',
-    status: 'czeka_na_akceptacje',
     history: [
       ...order.history,
       {
         at: now,
         by: user.email ?? 'admin',
         action: `Dołączono wizualizację (wersja ${version.version})`,
-        detail: 'Status: Czeka na akceptację',
+        detail: 'wysłano do klienta, czeka na akceptację',
       },
     ],
   });
