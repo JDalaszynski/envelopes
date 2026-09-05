@@ -105,6 +105,15 @@ const PAGE_IMAGES: Record<string, string[]> = {
      co na filarach, więc zgłoszenie nie obiecuje wyszukiwarce nic ponad to,
      co jest w HTML-u. */
   '/o-nas': shotUrls(ABOUT_SHOTS),
+  /* Supporting LP poz. 19 — jedyny realny kadr aranżacyjny dla SPA (Taupe)
+     plus próbki katalogowe trzech jasnych odcieni pokazanych obok niego. */
+  '/koperty-dla-salonow-spa': [
+    ...shotUrls([shotByFile('taupe-koperta-dl-nadruk-logo-salonu-spa')]),
+    ...['biala-perlowa', 'ecru', 'bialy']
+      .map((id) => COLOR_MAP[id])
+      .filter((color) => color?.images?.DL)
+      .map((color) => abs(color.images!.DL!)),
+  ],
 };
 
 /**
@@ -157,6 +166,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     page('/koperty-na-vouchery', 'monthly', 0.9),
     /* Filar K6 — eleganckie koperty premium (content-plan.md poz. 37) */
     page('/koperty-premium', 'monthly', 0.9),
+    /* Supporting LP pod F4 — koperty dla salonów SPA (content-plan.md poz. 19) */
+    page('/koperty-dla-salonow-spa', 'monthly', 0.8),
     page('/blog', 'weekly', 0.8),
     page('/kontakt', 'monthly', 0.7),
     /* Strona podmiotu — encja firmy dla wyszukiwarki i modeli (AboutPage) */

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import type { ReactNode } from 'react';
 import Link from 'next/link';
 
 import { ConfigureLink } from '@/components/home/ConfigureLink';
@@ -131,14 +132,21 @@ const HOW_TO_STEPS = [
  * Dziesięć branż z profili 4, 5 i 12–22 bazy wiedzy. Filar mówi do wszystkich
  * naraz; zawężenie do jednej branży to zadanie LP branżowych z Fazy 2.
  */
-const INDUSTRIES: { heading: string; text: string }[] = [
+const INDUSTRIES: { heading: string; text: ReactNode }[] = [
   {
     heading: 'Salony kosmetyczne i studia masażu',
     text: 'Bon na zabieg sprzedaje się w krótkich seriach i w rytmie okazji: Walentynki, Dzień Matki, Boże Narodzenie. Koperty zamawia się wtedy pod jedną akcję, a nie na zapas — i to wystarczy, żeby złożyć zamówienie.',
   },
   {
     heading: 'Salony SPA i kliniki medycyny estetycznej',
-    text: 'Bon na zabieg kosztuje kilkaset złotych, więc opakowanie jest częścią tego, za co klient płaci. Sprawdzają się odcienie jasne — Biała Perłowa, Ecru, Biały — bo ciemne logo wychodzi na nich najczytelniej.',
+    text: (
+      <>
+        Bon na zabieg kosztuje kilkaset złotych, więc opakowanie jest częścią tego, za co klient
+        płaci. Sprawdzają się odcienie jasne — Biała Perłowa, Ecru, Biały — bo ciemne logo wychodzi
+        na nich najczytelniej. Wybór koloru i kalendarz sezonowy sprzedaży bonów opisaliśmy na
+        stronie <Link href="/koperty-dla-salonow-spa">koperty dla salonów SPA</Link>.
+      </>
+    ),
   },
   {
     heading: 'Salony fryzjerskie i barber shopy',
@@ -180,11 +188,12 @@ export const metadata: Metadata = {
      dopasowanie frazy zamiast MOQ — liczby niesie description. */
   title: 'Koperty na vouchery i bony podarunkowe',
   description: `Eleganckie koperty na vouchery i bony podarunkowe podniosą rangę twojego prezentu. Idealnie dopasowane koperty do voucherów robią doskonałe pierwsze wrażenie na obdarowanym. Skonfiguruj własną serię i przejdź do zamówienia.`,
+  /* `koperty na bony podarunkowe` przeniesiona do `/koperty-dla-salonow-spa`
+     (poz. 19 planu, keywords.md K7) — dwa adresy nie mogą celować w tę samą frazę. */
   keywords: [
     'koperty na vouchery',
     'koperty do voucherów',
     'koperta do vouchera',
-    'koperty na bony podarunkowe',
     'koperta na bon podarunkowy',
   ],
   alternates: { canonical: '/koperty-na-vouchery' },

@@ -120,7 +120,7 @@ lub `personalized/` — buduj treść wokół zdjęcia, które faktycznie masz.
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 17 | Koperty dla kancelarii prawnych — `/koperty-dla-kancelarii` | Supporting LP | koperty dla kancelarii | KONWERSJA | Kancelarie, notariusze | F1 | Kolory stonowane (czarny, granat, taupe), pisma i akty. Nie powtarza cennika z poz. 9 — linkuje | [ ] |
 | 18 | Koperty dla hoteli — `/koperty-dla-hoteli` | Supporting LP | koperty firmowe dla hotelu | KONWERSJA | Hotele 4–5*, resorty | F4 | Welcome letters i vouchery pobytowe; filar F4, bo dominuje zastosowanie voucherowe. **Rozgraniczenie:** F4 poświęca hotelom jeden akapit w sekcji „Dla kogo", ten LP celuje we frazę branżową i dokłada scenariusz welcome letter, którego filar nie ma | [ ] |
-| 19 | Koperty na bony do salonu SPA — `/koperty-dla-salonow-spa` | Supporting LP | koperty na bony podarunkowe | KONWERSJA | SPA, kosmetyka, masaż | F4 | Język branży usługowej („bon", „zabieg"), nie poligrafii. Sezon: publikować przed IV kw. **Uwaga:** fraza `koperty na bony podarunkowe` jest w `keywords` filara F4 jako wariant nazewniczy — przy publikacji tego LP przenieść ją tutaj i zostawić filarowi wyłącznie `koperty na vouchery` i `koperty do voucherów` | [ ] |
+| 19 | Koperty na bony do salonu SPA — `/koperty-dla-salonow-spa` | Supporting LP | koperty na bony podarunkowe | KONWERSJA | SPA, kosmetyka, masaż | F4 | **Wykonane 5 września 2026.** Fraza `koperty na bony podarunkowe` przeniesiona z `keywords` filara F4 (zostaje przy `koperty na vouchery`, `koperty do voucherów`, `koperta do vouchera`, `koperta na bon podarunkowy`). Wybrana jako pierwsza LP Fazy 2 zamiast poz. 17/18: sezonowe okno („publikować przed IV kw.") jest jedynym twardym terminem w całym planie, a domena potrzebuje 3–6 miesięcy dojrzewania w indeksie (K7, keywords.md) | [x] |
 | 20 | Koperta na voucher — jaki format i kolor wybrać | Supporting article | koperta ozdobna na voucher | GEO | Właściciel salonu | F4 | Doradcza; filar F4 sprzedaje, ten wpis odpowiada na pytanie „jaka". **Granica po publikacji F4:** filar podaje wymiary trzech postaci bonu (DL / A6 / karta ID-1) i jeden fakt o kolorze — nadruk kosztuje tyle samo na każdym odcieniu, a o czytelności decyduje kontrast. Ten wpis dostaje dobór odcienia do branży i okazji oraz kiedy sięgnąć po metalik i perłę | [ ] |
 
 ### Tydzień 6
@@ -249,6 +249,57 @@ nie liczą się do kadencji czterech pozycji tygodniowo i nie mają filara.
 ---
 
 ## Dziennik wdrożeń
+
+### 5 września 2026 — poz. 19: `/koperty-dla-salonow-spa` · pierwsza LP Fazy 2
+
+**Opublikowane poza kolejnością planu.** Faza 2 zaczynała się od poz. 17 (kancelarie) i poz. 18
+(hotele), ale poz. 19 miała w uwagach jedyny twardy termin całego planu — „publikować przed
+IV kw." — i K7 w `keywords.md` ostrzega, że domena startująca od zera potrzebuje 3–6 miesięcy
+dojrzewania w indeksie. Publikacja we wrześniu zamiast w kolejce oznaczała różnicę między
+złapaniem sezonu Walentynek/Dnia Kobiet a stratą go.
+
+**Właściciel frazy `koperty na bony podarunkowe`.** Fraza siedziała w `keywords` filara
+`/koperty-na-vouchery` jako wariant nazewniczy (K7). Usunięta stamtąd i przeniesiona tutaj;
+filar zostaje przy `koperty na vouchery`, `koperty do voucherów`, `koperta do vouchera`
+i `koperta na bon podarunkowy`.
+
+**Rozgraniczenie wobec F4.** Filar mówi do dziesięciu branż naraz i podaje jeden fakt
+o kolorze. Ta strona zawęża się do SPA i dokłada to, czego filar nie ma: dobór odcienia między
+kierunkiem klinicznym (Biała Perłowa, Ecru, Biały — z pkt 5 bazy wiedzy) a naturalnym (Taupe),
+argument dyskrecji przy zabiegach medycyny estetycznej i kalendarz trzech szczytów sprzedażowych
+(Walentynki, Dzień Kobiet, święta) z terminem zamówienia liczonym wstecz. Wymiar bonu i pełna
+tabela branż zostają na F4 — stąd tylko odnośnik.
+
+**Bez własnego `FAQPage`.** Pytania, które mogłaby zadać ta strona — czy voucher musi mieć
+nadruk, czy da się dopisać imię, czy można zamówić kilka kolorów naraz — pokrywa już
+`VOUCHER_FAQ_ITEMS` na F4. Drugi adres z tym samym zestawem pytań konkurowałby o ten sam wynik
+rozszerzony, więc `WebPage.mainEntity` wskazuje na węzeł `Product` filara zamiast tworzyć drugi.
+
+**Jedyny realny kadr aranżacyjny dla SPA to Taupe** (`taupe-koperta-dl-nadruk-logo-salonu-spa`).
+Sekcja kolorów pokazuje ten kadr wprost i obok niego trzy próbki katalogowe (nie zdjęcia
+aranżacyjne, których nie ma) dla kierunku jasnego — `EnvelopePlaceholder`, nie podszywanie się
+pod fotografię.
+
+Karta OG wygenerowana przez `scripts/og-card.mjs` z tego samego kadru
+(`public/images/og/koperty-dla-salonow-spa.jpg`), zgodnie z regułą „bez kwot na karcie" —
+parametry stałe (gramatura, brak okienka), żadnej ceny.
+
+Linkowanie w obie strony:
+- **do LP:** karta „Salony SPA i kliniki medycyny estetycznej" na F4 (sekcja „Dla kogo") i karta
+  „Kliniki medycyny estetycznej i SPA" na `/koperty-premium` (sekcja „Dla kogo").
+- **z LP:** `/koperty-na-vouchery` (koszt, pełna tabela branż), `/koperty-z-nadrukiem` (rozbicie
+  ceny nadruku), `/koperty/taupe`, `/koperty/biala-perlowa`, `/koperty/ecru`, `/koperty/bialy`.
+
+`PAGE_UPDATED` podbite dla `/koperty-dla-salonow-spa`, `/koperty-na-vouchery` i `/koperty-premium`
+(nowe odnośniki). `llms.txt` i sitemapa (wpis + obrazy: kadr Taupe i trzy zdjęcia katalogowe
+jasnych odcieni) zaktualizowane w tym samym wdrożeniu.
+
+Weryfikacja: `npm run typecheck` i `npm run build` bez błędów, **70/70 stron statycznie**,
+strona obecna w `sitemap.xml` i w `/llms.txt`. `title` 53 znaki (z sufiksem marki), `description`
+153 znaki, jeden `<h1>`, sześć bloków JSON-LD renderują się serwerowo (`WebPage` + `BreadcrumbList`
+własne, cztery globalne z `layout.tsx`). Sprawdzone w przeglądarce: hero, sekcja kolorów (kadr
+Taupe + trzy próbki), tabela kosztu i kalendarz sezonowy renderują się poprawnie, zero błędów
+konsoli, zdjęcia zwracają 200. **Do wykonania po wdrożeniu na produkcję:** `npm run indexnow`.
 
 ### 26 sierpnia 2026 — poz. 16: `/blog/szybka-realizacja-kopert-terminy-i-ekspres`
 

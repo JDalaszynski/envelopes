@@ -9,6 +9,7 @@ import {
   maxInsertSize,
 } from '@/lib/catalog';
 import { getAllPosts } from '@/lib/blog';
+import { colorPagePath, colorPages } from '@/lib/color-pages';
 import { CONTACT_DETAILS } from '@/lib/orders';
 import { DEFAULT_PRICING, DELIVERY_COST, formatPrice, round2 } from '@/lib/pricing';
 import { SITE_URL } from '@/lib/seo';
@@ -75,6 +76,11 @@ const PAGES: { url: string; title: string; note: string }[] = [
     note: 'Nadruk zmiennych danych odbiorcy: pełny adres pocztowy albo samo imię i nazwisko. Specyfikacja arkusza adresowego, walidacja danych, różnica względem nadruku logo.',
   },
   {
+    url: '/koperty-premium',
+    title: 'Koperty premium DL z nadrukiem logo',
+    note: 'Kolekcja premium: gramatura 115–140 g/m², papier barwiony w masie, wykończenia perłowe i metaliczne, brak okienka adresowego, nadruk logo i personalizacja od 10 sztuk.',
+  },
+  {
     url: '/koperty-dl',
     title: `Koperty DL — wymiary ${DL.dimensions}`,
     note: `Specyfikacja formatu: wymiary, największa wkładka, tabela dopasowań, porównanie z C6 i K4, co się mieści i czego nie da się włożyć.`,
@@ -83,6 +89,11 @@ const PAGES: { url: string; title: string; note: string }[] = [
     url: '/koperty-na-vouchery',
     title: 'Koperty na vouchery i bony podarunkowe',
     note: 'Pakowanie bonów: wymiary wydruku, dobór koloru do marki, koszt gotowej serii w trzech konfiguracjach, terminy przed sezonem.',
+  },
+  {
+    url: '/koperty-dla-salonow-spa',
+    title: 'Koperty na bony podarunkowe do salonu SPA',
+    note: 'Bon na zabieg w salonie SPA: dyskrecja bez okienka adresowego, wybór między odcieniem Taupe a jasnymi barwami klinicznymi, kalendarz sezonowy (Walentynki, Dzień Kobiet, święta).',
   },
   {
     url: '/kontakt',
@@ -159,6 +170,16 @@ Kontakt: ${CONTACT_DETAILS.email}, tel. ${CONTACT_DETAILS.phone} (${CONTACT_DETA
 ## Strony
 
 ${PAGES.map((page) => `- [${page.title}](${SITE_URL}${page.url}): ${page.note}`).join('\n')}
+
+## Kolory
+
+Każdy z ${COLORS.length} kolorów ma własną stronę z opisem charakteru papieru, sekcją o nadruku i FAQ — poniższy opis to pierwszy akapit każdej strony.
+
+${colorPages()
+  .map(
+    ({ color, content }) => `- [${content.title}](${SITE_URL}${colorPagePath(color.id)}): ${content.lead}`
+  )
+  .join('\n')}
 
 ## Blog
 

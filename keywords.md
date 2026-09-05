@@ -327,7 +327,6 @@ wprost pod cel LTV z bazy wiedzy.
 | koperty do voucherow | wariant bez PL znaków | TRANS | BOFU | — | P0 |
 | koperta do vouchera | wariant lp. | TRANS | BOFU | — | P0 |
 | koperta ozdobna na voucher | wspierająca | TRANS | BOFU | — | P1 |
-| koperty na bony podarunkowe | wariant nazewniczy | TRANS | BOFU | — | P1 |
 
 **Notatki wdrożeniowe:**
 - ~~Strona musi mówić językiem branży usługowej~~ — **wykonane.** Filar operuje słownikiem
@@ -336,9 +335,10 @@ wprost pod cel LTV z bazy wiedzy.
 - **Właścicielem fraz `koperty na vouchery`, `koperty do voucherów`, `koperty do voucherow`
   i `koperta do vouchera` jest filar.** `koperta do vouchera` to liczba pojedyncza frazy
   filara — nie może trafić do wpisu blogowego (content-plan.md, korekta poz. 24).
-- `koperty na bony podarunkowe` siedzi dziś w `keywords` filara. **Przy publikacji
-  `/koperty-dla-salonow-spa` (poz. 19 planu) przenieść ją tam** i zostawić filarowi wyłącznie
-  warianty voucherowe — inaczej dwa adresy będą celować w tę samą frazę.
+- ~~`koperty na bony podarunkowe` siedzi dziś w `keywords` filara~~ — **wykonane 5 września
+  2026.** Fraza przeniesiona do `/koperty-dla-salonow-spa` (poz. 19 planu) przy jego publikacji;
+  filar zostaje wyłącznie przy wariantach voucherowych (`koperty na vouchery`, `koperty do
+  voucherów`, `koperty do voucherow`, `koperta do vouchera`, `koperta na bon podarunkowy`).
 - `koperta ozdobna na voucher` należy do poz. 20 (wpis doradczy). Filar podaje **fakt**
   o kolorze — nadruk kosztuje tyle samo na każdym z 19 odcieni, a o czytelności logo decyduje
   kontrast — i pokazuje 6 kolorów ze zdjęciami nadruku. Dobór odcienia do branży i okazji

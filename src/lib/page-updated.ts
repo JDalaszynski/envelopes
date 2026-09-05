@@ -35,7 +35,8 @@ export const PAGE_UPDATED: Record<string, string> = {
   '/koperty-personalizowane': '2026-08-25',
   /* Sekcja „Poradniki" i odnośnik pod tabelą dopasowań — treść wspierająca z poz. 11 planu */
   '/koperty-dl': '2026-08-21',
-  '/koperty-na-vouchery': '2026-08-16',
+  /* Karta SPA w sekcji „Dla kogo" dostała odnośnik do nowej LP (poz. 19) */
+  '/koperty-na-vouchery': '2026-09-05',
   /* Doszedł wpis o terminach realizacji i trybie ekspresowym (poz. 16) */
   '/blog': '2026-08-26',
   /* Odnośnik do strony „O nas" w karcie danych rejestrowych */
@@ -53,8 +54,9 @@ export const PAGE_UPDATED: Record<string, string> = {
   '/koperty/matcha': '2026-08-19',
   '/koperty/blekit-lupkowy': '2026-08-19',
   '/koperty/taupe': '2026-08-19',
-  /* Filar K6 — Eleganckie koperty premium (content-plan.md poz. 37) */
-  '/koperty-premium': '2026-08-19',
+  /* Filar K6 — Eleganckie koperty premium (content-plan.md poz. 37).
+     Karta „Kliniki medycyny estetycznej i SPA" dostała odnośnik do poz. 19. */
+  '/koperty-premium': '2026-09-05',
   /* Czwarta partia stron kolorów z backlogu klastra K5 */
   '/koperty/szara': '2026-08-19',
   '/koperty/niebieski': '2026-08-19',
@@ -77,6 +79,8 @@ export const PAGE_UPDATED: Record<string, string> = {
      publikacji poz. 16 akapit odsyłający do poradnika o terminach. */
   '/blog/cena-kopert-z-nadrukiem-i-koszt-zamowienia': '2026-08-26',
   '/blog/szybka-realizacja-kopert-terminy-i-ekspres': '2026-08-26',
+  /* Poz. 19 planu — pierwsza LP branżowa Fazy 2, filar F4 */
+  '/koperty-dla-salonow-spa': '2026-09-05',
 };
 
 /** Data zmiany treści dla trasy — `undefined`, gdy trasy nie ma w rejestrze. */

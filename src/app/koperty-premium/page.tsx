@@ -98,13 +98,13 @@ const PREMIUM_SHOTS = PREMIUM_SHOT_FILES.map(shotByFile);
 export const metadata: Metadata = {
   title: 'Eleganckie koperty premium DL z nadrukiem logo',
   description:
-    'Ekskluzywne koperty premium dla najbardziej wymagających odbiorców. Wybierz eleganckie koperty premium idealne do prestiżowej korespondencji biznesowej. Zadbaj o detale budujące zaufanie i poznaj nasze rozwiązania.',
+    'Koperty premium DL: papier barwiony w masie 115–140 g/m², wykończenia perłowe i metaliczne, bez okienka adresowego. Nadruk logo i personalizacja od 10 sztuk.',
   alternates: { canonical: `${SITE_URL}/koperty-premium` },
   openGraph: {
     type: 'website',
     title: 'Eleganckie koperty premium DL z nadrukiem logo',
     description:
-      'Ekskluzywne koperty premium dla najbardziej wymagających odbiorców. Wybierz eleganckie koperty premium idealne do prestiżowej korespondencji biznesowej. Zadbaj o detale budujące zaufanie i poznaj nasze rozwiązania.',
+      'Koperty premium DL: papier barwiony w masie 115–140 g/m², wykończenia perłowe i metaliczne, bez okienka adresowego. Nadruk logo i personalizacja od 10 sztuk.',
     url: `${SITE_URL}/koperty-premium`,
     images: [
       ogImage(
@@ -117,7 +117,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Eleganckie koperty premium DL z nadrukiem logo',
     description:
-      'Ekskluzywne koperty premium dla najbardziej wymagających odbiorców. Wybierz eleganckie koperty premium idealne do prestiżowej korespondencji biznesowej. Zadbaj o detale budujące zaufanie i poznaj nasze rozwiązania.',
+      'Koperty premium DL: papier barwiony w masie 115–140 g/m², wykończenia perłowe i metaliczne, bez okienka adresowego. Nadruk logo i personalizacja od 10 sztuk.',
     images: [`${SITE_URL}/images/og/koperty-premium.jpg`],
   },
 };
@@ -128,7 +128,7 @@ export default function KopertyPremiumPage() {
       path: '/koperty-premium',
       name: 'Eleganckie koperty premium DL z nadrukiem logo',
       description:
-        'Ekskluzywne koperty premium dla najbardziej wymagających odbiorców. Wybierz eleganckie koperty premium idealne do prestiżowej korespondencji biznesowej. Zadbaj o detale budujące zaufanie i poznaj nasze rozwiązania.',
+        'Koperty premium DL: papier barwiony w masie 115–140 g/m², wykończenia perłowe i metaliczne, bez okienka adresowego. Nadruk logo i personalizacja od 10 sztuk.',
       type: 'ItemPage',
     }),
     breadcrumbJsonLd([
@@ -495,7 +495,9 @@ export default function KopertyPremiumPage() {
               <h3 style={{ fontSize: 19 }}>Kliniki medycyny estetycznej i SPA</h3>
               <p className="small" style={{ marginTop: 'var(--space-2)', marginBottom: 0 }}>
                 Bony podarunkowe na zabiegi i zaproszenia na konsultacje. Koperta staje się
-                integralną częścią prezentu wręczanego bliskiej osobie.
+                integralną częścią prezentu wręczanego bliskiej osobie. Dobór koloru i kalendarz
+                sezonowy sprzedaży bonów opisaliśmy na stronie{' '}
+                <Link href="/koperty-dla-salonow-spa">koperty dla salonów SPA</Link>.
               </p>
             </div>
 
