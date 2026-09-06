@@ -35,8 +35,8 @@ export const PAGE_UPDATED: Record<string, string> = {
   '/koperty-personalizowane': '2026-08-25',
   /* Sekcja „Poradniki" i odnośnik pod tabelą dopasowań — treść wspierająca z poz. 11 planu */
   '/koperty-dl': '2026-08-21',
-  /* Karta SPA w sekcji „Dla kogo" dostała odnośnik do nowej LP (poz. 19) */
-  '/koperty-na-vouchery': '2026-09-05',
+  /* Karty SPA i Restauracje w sekcji „Dla kogo" dostały odnośniki do poz. 19 i 23 */
+  '/koperty-na-vouchery': '2026-09-06',
   /* Doszedł wpis o terminach realizacji i trybie ekspresowym (poz. 16) */
   '/blog': '2026-08-26',
   /* Odnośnik do strony „O nas" w karcie danych rejestrowych */
@@ -81,6 +81,8 @@ export const PAGE_UPDATED: Record<string, string> = {
   '/blog/szybka-realizacja-kopert-terminy-i-ekspres': '2026-08-26',
   /* Poz. 19 planu — pierwsza LP branżowa Fazy 2, filar F4 */
   '/koperty-dla-salonow-spa': '2026-09-05',
+  /* Poz. 23 planu — druga LP branżowa Fazy 2, filar F4 */
+  '/koperty-dla-restauracji': '2026-09-06',
 };
 
 /** Data zmiany treści dla trasy — `undefined`, gdy trasy nie ma w rejestrze. */

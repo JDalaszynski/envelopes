@@ -129,7 +129,7 @@ lub `personalized/` — buduj treść wokół zdjęcia, które faktycznie masz.
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 21 | Koperty dla biur rachunkowych — `/koperty-dla-biur-rachunkowych` | Supporting LP | koperty firmowe z logo | KONWERSJA | Biura rachunkowe, audyt | F1 | Sprawozdania i korespondencja cykliczna; odróżnia się od poz. 17 sezonowością (zamknięcie roku) | [ ] |
 | 22 | Koperty dla klinik i gabinetów — `/koperty-dla-klinik` | Supporting LP | koperty na vouchery dla kliniki | KONWERSJA | Med. estetyczna, stomatologia | F4 | Jasne, „czyste" barwy; osobno od poz. 19 — inny cykl zakupowy i inny język | [ ] |
-| 23 | Koperty dla restauracji — `/koperty-dla-restauracji` | Supporting LP | koperty na vouchery do restauracji | KONWERSJA | Fine dining, winiarnie | F4 | Vouchery na kolacje; publikacja przed sezonem świątecznym | [ ] |
+| 23 | Koperty dla restauracji — `/koperty-dla-restauracji` | Supporting LP | koperty na vouchery do restauracji | KONWERSJA | Fine dining, winiarnie | F4 | **Wykonane 6 września 2026.** Vouchery na kolacje; wybrana jako druga LP Fazy 2 zaraz po poz. 19 z tego samego powodu — szczyt sprzedażowy w grudniu i przed Walentynkami, domena potrzebuje czasu na dojrzewanie w indeksie. Brak konfliktu frazowego — fraza nie występowała wcześniej w `keywords` żadnej strony | [x] |
 | 24 | Bon podarunkowy — jak go wręczyć, żeby wyglądał jak prezent | Supporting article | ~~koperta do vouchera~~ → `jak wręczyć bon podarunkowy` | RUCH | Właściciel usługi | F4 | Poradnik prezentacyjny; poz. 20 dotyczy doboru koperty, ten — sposobu wręczenia. **Fraza główna przepisana 14 sierpnia 2026:** `koperta do vouchera` to liczba pojedyncza frazy filara `koperty do voucherów` — dwa adresy na tę samą intencję to kanibalizacja z definicji. Fraza zostaje przy F4 (jest w jego `keywords`), wpis celuje w intencję czynnościową | [ ] |
 
 ### Tydzień 7
@@ -249,6 +249,40 @@ nie liczą się do kadencji czterech pozycji tygodniowo i nie mają filara.
 ---
 
 ## Dziennik wdrożeń
+
+### 6 września 2026 — poz. 23: `/koperty-dla-restauracji` · druga LP Fazy 2
+
+**Opublikowane zaraz po poz. 19, z tego samego powodu.** F4 wspomina restauracje jednym zdaniem
+w sekcji „Dla kogo" („Koperta w Ciemnozielonym albo Czarnym sprawia, że bon nie wygląda jak
+rachunek"). Ta LP zawęża się do fine diningu, winiarni i kawiarni i dokłada dobór koloru między
+kierunkiem stonowanym (rekomendacja F4) a mocnym — Czerwony, jedyny realny kadr aranżacyjny dla
+tej branży (`czerwona-koperta-dl-nadruk-logo-restauracji`) — argument dyskrecji przy
+niespodziance i kalendarz dwóch szczytów sprzedażowych (Walentynki, sezon świąteczny).
+
+**Bez konfliktu frazowego.** W przeciwieństwie do poz. 19 fraza `koperty na vouchery do
+restauracji` nie występowała dotąd w `keywords` żadnej strony — `keywords.md` nie wymagał zmian.
+
+**Bez własnego `FAQPage`**, z tego samego powodu co poz. 19: `VOUCHER_FAQ_ITEMS` na F4 pokrywa już
+pytania o nadruk, personalizację i wielokolorowe zamówienia. `WebPage.mainEntity` wskazuje na
+węzeł `Product` filara zamiast tworzyć drugi.
+
+Karta OG wygenerowana przez `scripts/og-card.mjs` z kadru Czerwonego
+(`public/images/og/koperty-dla-restauracji.jpg`).
+
+Linkowanie w obie strony:
+- **do LP:** karta „Restauracje fine dining, winiarnie i kawiarnie" na F4 (sekcja „Dla kogo").
+- **z LP:** `/koperty-na-vouchery` (koszt, pełna tabela branż), `/koperty-z-nadrukiem` (rozbicie
+  ceny nadruku), `/koperty/czerwony`, `/koperty/ciemnozielony`, `/koperty/czarny`.
+
+`PAGE_UPDATED` podbite dla `/koperty-dla-restauracji` i `/koperty-na-vouchery` (nowy odnośnik).
+`llms.txt` i sitemapa (wpis + obrazy: kadr Czerwony i dwa zdjęcia katalogowe odcieni stonowanych)
+zaktualizowane w tym samym wdrożeniu.
+
+Weryfikacja: `npm run typecheck` i `npm run build` bez błędów, **71/71 stron statycznie**, strona
+obecna w `sitemap.xml` i w `/llms.txt`. `title` 46 znaków (z sufiksem marki), `description`
+147 znaków, jeden `<h1>`. Sprawdzone w przeglądarce: hero, sekcja kolorów (kadr Czerwony + dwie
+próbki), tabela kosztu i kalendarz sezonowy renderują się poprawnie, zero błędów konsoli, oba
+odnośniki z F4 obecne w HTML-u. **Do wykonania po wdrożeniu na produkcję:** `npm run indexnow`.
 
 ### 5 września 2026 — poz. 19: `/koperty-dla-salonow-spa` · pierwsza LP Fazy 2
 

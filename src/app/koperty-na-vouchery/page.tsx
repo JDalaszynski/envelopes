@@ -154,7 +154,14 @@ const INDUSTRIES: { heading: string; text: ReactNode }[] = [
   },
   {
     heading: 'Restauracje fine dining, winiarnie i kawiarnie',
-    text: 'Voucher na kolację degustacyjną albo warsztaty winiarskie sprzedaje się sezonowo, ze szczytem w grudniu. Koperta w Ciemnozielonym albo Czarnym sprawia, że bon nie wygląda jak rachunek — a to on ma być pamiątką z wieczoru.',
+    text: (
+      <>
+        Voucher na kolację degustacyjną albo warsztaty winiarskie sprzedaje się sezonowo, ze
+        szczytem w grudniu. Koperta w Ciemnozielonym albo Czarnym sprawia, że bon nie wygląda jak
+        rachunek — a to on ma być pamiątką z wieczoru. Dobór koloru i kalendarz sezonowy
+        opisaliśmy na stronie <Link href="/koperty-dla-restauracji">koperty dla restauracji</Link>.
+      </>
+    ),
   },
   {
     heading: 'Kluby fitness, studia jogi i pilatesu',

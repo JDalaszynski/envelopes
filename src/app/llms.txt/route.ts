@@ -96,6 +96,11 @@ const PAGES: { url: string; title: string; note: string }[] = [
     note: 'Bon na zabieg w salonie SPA: dyskrecja bez okienka adresowego, wybór między odcieniem Taupe a jasnymi barwami klinicznymi, kalendarz sezonowy (Walentynki, Dzień Kobiet, święta).',
   },
   {
+    url: '/koperty-dla-restauracji',
+    title: 'Koperty na vouchery do restauracji',
+    note: 'Voucher na kolację w kopercie: dyskrecja bez okienka adresowego, wybór między odcieniem Czerwonym a stonowanym Ciemnozielonym lub Czarnym, dwa szczyty sprzedażowe (Walentynki, sezon świąteczny).',
+  },
+  {
     url: '/kontakt',
     title: 'Kontakt i formularz wyceny',
     note: `Dane kontaktowe, godziny pracy, formularz wyceny dla zamówień powyżej ${BULK_QUOTE_THRESHOLD.toLocaleString('pl-PL')} sztuk.`,
