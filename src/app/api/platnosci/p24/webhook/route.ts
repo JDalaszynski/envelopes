@@ -62,7 +62,22 @@ export async function POST(request: Request) {
     ],
   });
 
-  if (updated) await sendEmail(orderConfirmationEmail(updated));
+  if (updated) {
+    const result = await sendEmail(orderConfirmationEmail(updated));
+    await updateOrder(updated.number, {
+      history: [
+        ...updated.history,
+        {
+          at: new Date().toISOString(),
+          by: 'system',
+          action: result.sent
+            ? 'Wysłano e-mail z potwierdzeniem zamówienia do klienta'
+            : 'Błąd wysyłki e-maila z potwierdzeniem zamówienia do klienta',
+          detail: result.reason,
+        },
+      ],
+    });
+  }
 
   return NextResponse.json({ ok: true });
 }

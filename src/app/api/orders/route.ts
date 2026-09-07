@@ -196,13 +196,33 @@ export async function POST(request: Request) {
 
   // Zawsze wysyłamy powiadomienie do obsługi sklepu o nowym zamówieniu.
   // Nie czekamy na webhook, aby sklep wiedział o każdym rozpoczętym zamówieniu.
-  await sendEmail(await adminNewOrderEmail(order));
+  // Wynik wysyłki zapisujemy w historii zamówienia — inaczej awaria Brevo
+  // (np. brak klucza API na środowisku) przechodzi bez śladu.
+  const adminEmailResult = await sendEmail(await adminNewOrderEmail(order));
+  order.history.push({
+    at: new Date().toISOString(),
+    by: 'system',
+    action: adminEmailResult.sent
+      ? 'Wysłano powiadomienie e-mail do sklepu'
+      : 'Błąd wysyłki powiadomienia e-mail do sklepu',
+    detail: adminEmailResult.reason,
+  });
 
   // E-mail potwierdzający — treść zależna od metody płatności (pkt 1.12).
   // Przy płatności bramką wysyłamy go dopiero po potwierdzeniu transakcji.
   if (!isGatewayPayment(order.paymentMethod) || order.paymentStatus === 'oplacone') {
-    await sendEmail(orderConfirmationEmail(order));
+    const confirmationResult = await sendEmail(orderConfirmationEmail(order));
+    order.history.push({
+      at: new Date().toISOString(),
+      by: 'system',
+      action: confirmationResult.sent
+        ? 'Wysłano e-mail z potwierdzeniem zamówienia do klienta'
+        : 'Błąd wysyłki e-maila z potwierdzeniem zamówienia do klienta',
+      detail: confirmationResult.reason,
+    });
   }
+
+  await saveOrder(order);
 
   return NextResponse.json({
     order,
