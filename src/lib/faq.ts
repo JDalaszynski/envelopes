@@ -380,3 +380,49 @@ export const PREMIUM_FAQ_ITEMS: FaqItem[] = [
   },
 ];
 
+/* ── FAQ pillara „Koperty na pieniądze" (/koperty-na-pieniadze) ──────── */
+
+const MONEY_MAX_INSERT = maxInsertSize(FORMAT_MAP.DL);
+
+/**
+ * Pytania klienta detalicznego kupującego 1–5 sztuk na prezent — klaster K8
+ * (keywords.md). Zakres rozdzielony od sąsiadów:
+ * - `DL_FAQ_ITEMS` (F3) ma już pytanie „Czy w kopercie DL zmieści się
+ *   banknot?" z wymiarami trzech nominałów — tu **nie powtarzamy** tego
+ *   pytania, tylko pytanie o dwa banknoty naraz, którego F3 nie ma.
+ * - `PERSONALIZATION_FAQ_ITEMS` (F2) tłumaczy mechanizm arkusza — tu
+ *   wyłącznie to, co specyficzne dla pojedynczego, detalicznego zamówienia.
+ *
+ * **Pytanie o termin jest tu obowiązkowe** (keywords.md, notatki K8):
+ * klient detaliczny szuka koperty „na już", a realizacja z nadrukiem lub
+ * personalizacją trwa dni, nie godziny — brak tego zastrzeżenia z góry
+ * generuje odbicia i reklamacje.
+ */
+export const MONEY_FAQ_ITEMS: FaqItem[] = [
+  {
+    question: 'Czy mogę zamówić tylko jedną kopertę na pieniądze?',
+    answer: `Tak. Koperta gładka, bez nadruku i personalizacji, kosztuje ${formatPrice(PLAIN_DL)} brutto i zamawia się ją od ${DEFAULT_PRICING.moqWithoutPrint} sztuki — nie trzeba kupować całej serii, żeby przygotować prezent na jedną uroczystość.`,
+  },
+  {
+    question: 'Ile trwa realizacja koperty na pieniądze?',
+    answer: `Koperta gładka wysyłana jest w ${DEFAULT_PRICING.leadDaysPlain} dni robocze — to najszybsza opcja, ale nie jest to wysyłka tego samego dnia. Koperta z nadrukiem okolicznościowym lub personalizacją trwa ${DEFAULT_PRICING.leadDaysStandard} dni robocze w trybie standardowym albo ${DEFAULT_PRICING.leadDaysExpress} dni robocze w trybie ekspresowym za dopłatą ${formatPrice(DEFAULT_PRICING.express)} brutto od sztuki. Przy uroczystości za kilka dni prosimy liczyć czas z zapasem na dostawę kurierem.`,
+  },
+  {
+    question: 'Czy koperta na pieniądze musi mieć nadruk okolicznościowy?',
+    answer: `Nie. Koperta gładka w wybranym kolorze wystarczy — to najszybsza i najtańsza opcja, dostępna od ${DEFAULT_PRICING.moqWithoutPrint} sztuki. Nadruk okolicznościowy (np. „Wszystkiego najlepszego" albo „W dniu Ślubu") to opcja dodatkowa, dostępna od ${DEFAULT_PRICING.moqWithPrint} sztuk, bo tyle wynosi minimalny nakład przy każdym nadruku w naszej produkcji.`,
+  },
+  {
+    question: 'Czy da się dodać imię obdarowanego na kopercie z pieniędzmi?',
+    answer: `Tak, usługą personalizacji — drukujemy wtedy inne imię lub dedykację na każdej kopercie z serii, od ${DEFAULT_PRICING.moqWithPrint} sztuk. Przy jednorazowym prezencie dla jednej osoby minimalny nakład bywa niewspółmierny do potrzeby — w takiej sytuacji szybciej wychodzi kupić kopertę gładką i podpisać ją odręcznie. Personalizacja sprawdza się przy większej liczbie obdarowanych naraz: nagrodach firmowych, kopertach dla wielu gości weselnych albo całej rodziny na święta.`,
+  },
+  {
+    question: 'Czy w jednej kopercie zmieszczą się dwa banknoty?',
+    answer: `Tak. Największa wkładka mieszcząca się w kopercie DL to ${MONEY_MAX_INSERT.short} × ${MONEY_MAX_INSERT.long} mm — z zapasem na kilka złożonych banknotów naraz, nie tylko jeden. Wymiary poszczególnych nominałów i to, że każdy z nich wchodzi płasko, bez składania, opisaliśmy na stronie wymiarów koperty DL.`,
+  },
+  {
+    question: 'Na jakie okazje najczęściej kupuje się kopertę na pieniądze?',
+    answer:
+      'Najczęściej na wesele, komunię i chrzciny — tam pieniądze w prezencie są normą, a koperta ozdobna zastępuje zwykłą, białą kopertę pocztową. Firmy sięgają po nią przy premiach i nagrodach w konkursach pracowniczych, a osoby prywatne — przy prezentach urodzinowych i świątecznych, gdy gotówka jest praktyczniejsza niż zgadywanie z upominkiem.',
+  },
+];
+

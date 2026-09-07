@@ -106,6 +106,11 @@ const PAGES: { url: string; title: string; note: string }[] = [
     note: 'Korespondencja prawna: typologia pism (akt notarialny, wezwanie, pismo procesowe), kolory stonowane (Granatowy, Czarny, Taupe), adresowanie wielu klientów w jednym zamówieniu.',
   },
   {
+    url: '/koperty-na-pieniadze',
+    title: 'Koperty na pieniądze — ozdobne, od 1 sztuki',
+    note: 'Prezent pieniężny na wesele, komunię, chrzciny lub jako nagrodę: MOQ 1 sztuka bez nadruku, banknot wchodzi płasko, termin realizacji 2 dni robocze (nie tego samego dnia).',
+  },
+  {
     url: '/kontakt',
     title: 'Kontakt i formularz wyceny',
     note: `Dane kontaktowe, godziny pracy, formularz wyceny dla zamówień powyżej ${BULK_QUOTE_THRESHOLD.toLocaleString('pl-PL')} sztuk.`,

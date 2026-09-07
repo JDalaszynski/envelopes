@@ -210,7 +210,7 @@ z **preselekcją koloru**.
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 37 | Eleganckie koperty premium — `/koperty-premium` | Pillar (LP) | koperty premium | KONWERSJA | Premium B2B | H `/` | **Wykonane 18 sierpnia 2026.** Kompletny filar K6 z twardymi parametrami poligraficznymi (115–140 g/m², perła i metalik bez dopłaty, barwienie w masie, brak okienka i poddruku, MOQ 10 dla nadruku). | [x] |
 | 38 | Gramatura papieru w kopertach — 115, 120 i 140 g | Supporting article | eleganckie koperty premium | GEO | Zakupowiec, grafik | `/koperty-premium` | Tabela gramatur per kolor — materiał wprost pod cytowanie przez modele | [ ] |
-| 39 | Koperty na pieniądze — `/koperty-na-pieniadze` | Pillar (LP) | koperty na pieniądze | KONWERSJA | Detal + firmy (premie, nagrody) | H `/` | Klaster detaliczny — **termin realizacji podany nad CTA**, inaczej wygeneruje odbicia | [ ] |
+| 39 | Koperty na pieniądze — `/koperty-na-pieniadze` | Pillar (LP) | koperty na pieniądze | KONWERSJA | Detal + firmy (premie, nagrody) | H `/` | **Wykonane 7 września 2026, wyprzedzająco z Fazy 4.** Klaster detaliczny — termin realizacji podany nad CTA (hero, pasek faktów, sekcja kosztowa), inaczej wygeneruje odbicia. Prerekwizyt „dopiero po wdrożeniu K1, K2, K7" spełniony — wszystkie trzy istnieją | [x] |
 | 40 | Personalizowana koperta na pieniądze — kiedy się opłaca | Supporting article | personalizowana koperta na pieniądze | KONWERSJA | Detal, HR (premie imienne) | F2 | Upsell usługi +2,99 zł; poz. 39 sprzedaje kopertę gładką, ta pozycja usługę | [ ] |
 
 ### Tydzień 11 — klaster ślubny w trybie content-first
@@ -249,6 +249,64 @@ nie liczą się do kadencji czterech pozycji tygodniowo i nie mają filara.
 ---
 
 ## Dziennik wdrożeń
+
+### 7 września 2026 — poz. 39: `/koperty-na-pieniadze` · pillar K8, wyprzedzająco z Fazy 4
+
+**Wyprzedzenie kolejki planu, drugi raz w tej sesji roboczej.** K8 ma duży wolumen i szczyt
+sezonowy w grudniu — ta sama zasada dojrzewania indeksu, która przesunęła poz. 19 i 23 przed
+poz. 17. Prerekwizyt zapisany przy tej pozycji („dopiero po wdrożeniu K1, K2, K7") jest spełniony:
+`/koperty-z-nadrukiem`, `/koperty-personalizowane` i `/koperty-na-vouchery` już istnieją.
+
+**Pierwszy pillar tej sesji z własnym węzłem `Product` i własnym `FAQPage`.** Poz. 17/19/23
+pożyczały węzeł produktu filara, bo były „Supporting LP" pod istniejącym pillarem. Ta pozycja ma
+format „Pillar (LP)" wprost pod Hub `/`, własną frazę główną i intencję detaliczną odrębną od
+reszty serwisu — dostała więc `moneyEnvelopeProductJsonLd()` (nowa funkcja w `seo.ts`, ten sam
+wzorzec co `voucherEnvelopeProductJsonLd()` i `premiumEnvelopeProductJsonLd()`) i `MONEY_FAQ_ITEMS`
+(nowy zestaw w `faq.ts`, sześć pytań).
+
+**Jedyny pillar z dominującym klientem detalicznym.** MOQ 1 sztuka dla koperty gładkiej jest
+głównym argumentem strony (pasek faktów, hero, FAQ), nie szczegółem w tabeli — pozostałe pillary
+sprzedają od 10 sztuk z nadrukiem.
+
+**Termin realizacji nad CTA — wymóg z notatek K8 w `keywords.md`, nie stylistyka.** Zdanie
+„2 dni robocze, ale nie wysyłka tego samego dnia" stoi w leadzie hero, w pasku faktów i w sekcji
+kosztowej — zawsze przed przyciskiem. Klient detaliczny szuka koperty „na już"; brak tego
+zastrzeżenia z góry generowałby odbicia i reklamacje.
+
+**Rozgraniczenie wobec F3.** `DL_FAQ_ITEMS` ma już pytanie „Czy w kopercie DL zmieści się
+banknot?" z wymiarami trzech nominałów — `MONEY_FAQ_ITEMS` go nie powtarza, tylko odsyła do F3
+i dokłada pytanie o dwa banknoty naraz, którego F3 nie miał.
+
+**Jedyny realny kadr to kadr ślubny „W dniu Ślubu" na Białej Perłowej** (`USE_CASE_SHOTS`,
+`biala-perlowa-koperta-dl-nadruk-w-dniu-slubu`) — ten sam, który już renderuje strona główna
+w karcie „Koperty na pieniądze i nagrody". Treść trzyma się wyłącznie pieniędzy, zgodnie
+z ostrzeżeniem w `showcase.ts` (kadr pokazuje kopertę na prezent pieniężny, nie na zaproszenie
+ślubne — to wymagałoby formatu K4 ze statusem „Dostępne wkrótce"). Złoty i Srebrna Perłowa pokazane
+jako próbki katalogowe, nie zdjęcia.
+
+Karta OG wygenerowana przez `scripts/og-card.mjs` z tego samego kadru
+(`public/images/og/koperty-na-pieniadze.jpg`) — bez kwoty w overlayu poza ceną bazową (stała,
+niezależna od kolorów).
+
+Linkowanie w obie strony:
+- **do pillara:** sekcja „Do czego używa się kopert ozdobnych" na `/` (akapit `chapter-note` obok
+  odnośników do F4 i do `/koperty-premium`). Karta „Koperty na pieniądze i nagrody" w siatce
+  `USE_CASES` na `/` **nie** dostała odnośnika — cała karta jest już linkiem do konfiguratora
+  (`ConfigureLink`), a zagnieżdżenie drugiego odnośnika `<a>` w środku byłoby nieprawidłowym HTML-em.
+- **z pillara:** `/koperty-z-nadrukiem` (nadruk okolicznościowy), `/koperty-personalizowane`
+  (personalizacja imienia), `/koperty-dl` (wymiary i dopasowanie wkładek), `/koperty/biala-perlowa`,
+  `/koperty/zloty`, `/koperty/srebrna-perlowa`, `/#kolory` (pełna paleta).
+
+`PAGE_UPDATED` podbite dla `/koperty-na-pieniadze` i `/` (nowy odnośnik). `llms.txt` i sitemapa
+(wpis priorytet 0.9 jak pozostałe pillary + obrazy: kadr ślubny i dwa zdjęcia katalogowe odcieni
+odświętnych) zaktualizowane w tym samym wdrożeniu.
+
+Weryfikacja: `npm run typecheck` i `npm run build` bez błędów, strona obecna w `sitemap.xml`
+i w `/llms.txt`. `title` 55 znaków (z sufiksem marki), `description` 142 znaki, jeden `<h1>`,
+dziesięć bloków JSON-LD renderuje się serwerowo (4 własne + 6 globalnych z `layout.tsx`).
+Sprawdzone w przeglądarce: hero z terminem realizacji widocznym przed CTA, sześć kart okazji,
+sekcja kolorów (kadr ślubny + dwie próbki), tabela cena/termin, akordeon FAQ, zero błędów konsoli,
+odnośnik z `/` obecny w HTML-u. **Do wykonania po wdrożeniu na produkcję:** `npm run indexnow`.
 
 ### 7 września 2026 — poz. 17: `/koperty-dla-kancelarii` · trzecia LP Fazy 2
 

@@ -1001,7 +1001,9 @@ export default function HomePage() {
                 złożyć zamówienie, żeby zdążyć przed szczytem, i ile kosztuje gotowa seria —
                 opisaliśmy na stronie <Link href="/koperty-na-vouchery">koperty na vouchery</Link>.
                 Ofertę dla korespondencji zarządczej i marek luksusowych przedstawia strona{' '}
-                <Link href="/koperty-premium">koperty premium</Link>.
+                <Link href="/koperty-premium">koperty premium</Link>. Prezent pieniężny na wesele,
+                komunię czy chrzciny — bez minimalnego nakładu na serię — opisuje strona{' '}
+                <Link href="/koperty-na-pieniadze">koperty na pieniądze</Link>.
               </p>
             </div>
           </div>

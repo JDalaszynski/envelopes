@@ -132,6 +132,15 @@ const PAGE_IMAGES: Record<string, string[]> = {
       .filter((color) => color?.images?.DL)
       .map((color) => abs(color.images!.DL!)),
   ],
+  /* Pillar poz. 39 — jedyny realny kadr aranżacyjny (kadr ślubny na Białej
+     Perłowej z USE_CASE_SHOTS) plus próbki katalogowe dwóch odcieni odświętnych. */
+  '/koperty-na-pieniadze': [
+    ...shotUrls([shotByFile('biala-perlowa-koperta-dl-nadruk-w-dniu-slubu')]),
+    ...['zloty', 'srebrna-perlowa']
+      .map((id) => COLOR_MAP[id])
+      .filter((color) => color?.images?.DL)
+      .map((color) => abs(color.images!.DL!)),
+  ],
 };
 
 /**
@@ -190,6 +199,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     page('/koperty-dla-restauracji', 'monthly', 0.8),
     /* Supporting LP pod F1 — koperty dla kancelarii (content-plan.md poz. 17) */
     page('/koperty-dla-kancelarii', 'monthly', 0.8),
+    /* Pillar K8 — koperty na pieniądze (content-plan.md poz. 39) */
+    page('/koperty-na-pieniadze', 'monthly', 0.9),
     page('/blog', 'weekly', 0.8),
     page('/kontakt', 'monthly', 0.7),
     /* Strona podmiotu — encja firmy dla wyszukiwarki i modeli (AboutPage) */

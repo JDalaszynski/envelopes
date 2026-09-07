@@ -24,9 +24,9 @@
  * i `updated`, więc nie ma czego tu powielać.
  */
 export const PAGE_UPDATED: Record<string, string> = {
-  /* Siatka blogowa pokazuje trzy najnowsze wpisy — doszedł poradnik
-     o terminach realizacji i trybie ekspresowym (poz. 16) */
-  '/': '2026-08-26',
+  /* Odnośnik do nowego pillara „koperty na pieniądze" (poz. 39) w sekcji
+     „Do czego używa się kopert ozdobnych" */
+  '/': '2026-09-07',
   /* Karta „Kancelarie prawne i notarialne" w sekcji „Dla kogo" dostała
      odnośnik do poz. 17 */
   '/koperty-z-nadrukiem': '2026-09-07',
@@ -86,6 +86,8 @@ export const PAGE_UPDATED: Record<string, string> = {
   '/koperty-dla-restauracji': '2026-09-06',
   /* Poz. 17 planu — trzecia LP branżowa Fazy 2, filar F1 */
   '/koperty-dla-kancelarii': '2026-09-07',
+  /* Poz. 39 planu — pillar K8, wykonany wyprzedzająco z Fazy 4 */
+  '/koperty-na-pieniadze': '2026-09-07',
 };
 
 /** Data zmiany treści dla trasy — `undefined`, gdy trasy nie ma w rejestrze. */

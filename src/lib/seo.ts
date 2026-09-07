@@ -911,6 +911,69 @@ export function premiumEnvelopeProductJsonLd() {
 }
 
 /**
+ * Product + AggregateOffer dla „Koperty na pieniądze" (/koperty-na-pieniadze) — klaster K8.
+ *
+ * Jedyny pillar w serwisie z dominującym klientem detalicznym (wesele, komunia,
+ * chrzciny) kupującym 1–5 sztuk — stąd `eligibleQuantity.minValue` bierze
+ * `moqWithoutPrint`, nie `moqWithPrint` jak na pozostałych pillarach. Widełki
+ * obejmują kopertę gładką, z nadrukiem okolicznościowym i z personalizacją.
+ *
+ * **Bez `hasMerchantReturnPolicy`** — z tego samego powodu co na F4 i na `/`:
+ * widełki łączą kopertę gładką (14 dni na odstąpienie) i kopertę z nadrukiem
+ * lub personalizacją (rzecz wykonana na indywidualne zamówienie, wyłączona
+ * z odstąpienia) — jedna polityka opisałaby połowę zakresu fałszywie.
+ */
+export function moneyEnvelopeProductJsonLd() {
+  const lowPrice = DEFAULT_PRICING.base.DL;
+  const highPrice = round2(
+    DEFAULT_PRICING.base.DL + DEFAULT_PRICING.print + DEFAULT_PRICING.personalization
+  );
+  const url = `${SITE_URL}/koperty-na-pieniadze`;
+  const images = [
+    ...['biala-perlowa', 'zloty', 'srebrna-perlowa', 'ecru']
+      .map((id) => COLORS.find((color) => color.id === id))
+      .filter((color): color is EnvelopeColor => Boolean(color?.images?.DL))
+      .map((color) => `${SITE_URL}${color.images?.DL}`),
+    `${SITE_URL}${showcaseSrc(shotByFile('biala-perlowa-koperta-dl-nadruk-w-dniu-slubu'))}`,
+  ];
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    '@id': `${url}#product`,
+    name: 'Koperty DL na pieniądze',
+    description: `Ozdobna koperta DL ${FORMAT_MAP.DL.dimensions} na pieniądze wręczane w prezencie — na wesele, komunię, chrzciny lub jako nagrodę. Banknot mieści się płasko, bez składania. Dostępna w ${COLORS.length} kolorach od ${DEFAULT_PRICING.moqWithoutPrint} sztuki, opcjonalnie z nadrukiem okolicznościowym lub personalizacją imienia obdarowanego.`,
+    brand: brandRef,
+    category: 'Koperty na pieniądze',
+    material: 'Papier ozdobny 115–140 g/m²',
+    size: FORMAT_MAP.DL.dimensions,
+    image: images,
+    url,
+    offers: {
+      '@type': 'AggregateOffer',
+      priceCurrency: 'PLN',
+      lowPrice: lowPrice.toFixed(2),
+      highPrice: highPrice.toFixed(2),
+      offerCount: COLORS.length,
+      availability: 'https://schema.org/InStock',
+      itemCondition: 'https://schema.org/NewCondition',
+      url,
+      areaServed: 'PL',
+      eligibleQuantity: {
+        '@type': 'QuantitativeValue',
+        minValue: DEFAULT_PRICING.moqWithoutPrint,
+        unitCode: 'C62',
+      },
+      shippingDetails: shippingDetails({
+        min: DEFAULT_PRICING.leadDaysPlain,
+        max: DEFAULT_PRICING.leadDaysStandard,
+      }),
+      seller: organizationRef,
+    },
+  };
+}
+
+/**
  * AboutPage dla `/o-nas` — strona, której encją główną jest **firma**,
  * a nie produkt.
  *
