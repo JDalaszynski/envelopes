@@ -753,14 +753,16 @@
 
 /* Koperta ze stroną klapki — górna w stosie, zostaje w tyle mocniej.
    Bez dodatkowego `rotate`: przechył jest już wpisany w kadr zdjęcia.
-   `scale(1.08)` powiększa kadr z własnego środka, więc nie trzeba
-   przeliczać `top`/`left` — kompozycja rośnie w miejscu. */
+   Powiększenie o 8% jest wpisane wprost w `width`/`top`/`left` (środek
+   kadru bez zmian), a nie w `transform: scale()` — na niektórych
+   silnikach (WebKit) skalowanie transformem rastrowego PNG z `filter:
+   drop-shadow` potrafi wprowadzać widoczny szum/ziarno przy renderze. */
 .hero-envelope-back {
   z-index: 2;
-  width: 92%;
-  top: 8%;
-  left: 1.8%;
-  transform: translate3d(0, calc(var(--drift, 0) * 34px), 0) scale(1.08);
+  width: 99.4%;
+  top: 5.8%;
+  left: -1.9%;
+  transform: translate3d(0, calc(var(--drift, 0) * 34px), 0);
   animation: hero-levitate 7s ease-in-out infinite;
 }
 
@@ -768,10 +770,10 @@
    pod górną mniej więcej jedną dziesiątą wysokości kadru. */
 .hero-envelope-front {
   z-index: 1;
-  width: 90.6%;
-  top: 46.7%;
-  left: 7.6%;
-  transform: translate3d(0, calc(var(--drift, 0) * 13px), 0) scale(1.08);
+  width: 97.8%;
+  top: 44.6%;
+  left: 4%;
+  transform: translate3d(0, calc(var(--drift, 0) * 13px), 0);
   animation: hero-levitate 9s ease-in-out infinite;
   animation-delay: -2s;
 }
