@@ -130,7 +130,7 @@ lub `personalized/` — buduj treść wokół zdjęcia, które faktycznie masz.
 | 21 | Koperty dla biur rachunkowych — `/koperty-dla-biur-rachunkowych` | Supporting LP | koperty dla biur rachunkowych | KONWERSJA | Biura rachunkowe, audyt | F1 | **Fraza skorygowana 7 września 2026** — `koperty firmowe z logo` należy do K1 (keywords.md, wspierająca fraza filara F1), a LP branżowa musi celować we frazę branżową, nie frazę filara pod którym stoi. Sprawozdania i korespondencja cykliczna; odróżnia się od poz. 17 sezonowością (zamknięcie roku) | [ ] |
 | 22 | Koperty dla klinik i gabinetów — `/koperty-dla-klinik` | Supporting LP | koperty na vouchery dla kliniki | KONWERSJA | Med. estetyczna, stomatologia | F4 | Jasne, „czyste" barwy; osobno od poz. 19 — inny cykl zakupowy i inny język | [ ] |
 | 23 | Koperty dla restauracji — `/koperty-dla-restauracji` | Supporting LP | koperty na vouchery do restauracji | KONWERSJA | Fine dining, winiarnie | F4 | **Wykonane 6 września 2026.** Vouchery na kolacje; wybrana jako druga LP Fazy 2 zaraz po poz. 19 z tego samego powodu — szczyt sprzedażowy w grudniu i przed Walentynkami, domena potrzebuje czasu na dojrzewanie w indeksie. Brak konfliktu frazowego — fraza nie występowała wcześniej w `keywords` żadnej strony | [x] |
-| 24 | Bon podarunkowy — jak go wręczyć, żeby wyglądał jak prezent | Supporting article | ~~koperta do vouchera~~ → `jak wręczyć bon podarunkowy` | RUCH | Właściciel usługi | F4 | Poradnik prezentacyjny; poz. 20 dotyczy doboru koperty, ten — sposobu wręczenia. **Fraza główna przepisana 14 sierpnia 2026:** `koperta do vouchera` to liczba pojedyncza frazy filara `koperty do voucherów` — dwa adresy na tę samą intencję to kanibalizacja z definicji. Fraza zostaje przy F4 (jest w jego `keywords`), wpis celuje w intencję czynnościową | [ ] |
+| 24 | Bon podarunkowy — jak go wręczyć, żeby wyglądał jak prezent | Supporting article | ~~koperta do vouchera~~ → `jak wręczyć bon podarunkowy` | RUCH | Właściciel usługi | F4 | **Wykonane 7 września 2026.** Poradnik prezentacyjny; poz. 20 dotyczy doboru koperty, ten — sposobu wręczenia. **Fraza główna przepisana 14 sierpnia 2026:** `koperta do vouchera` to liczba pojedyncza frazy filara `koperty do voucherów` — dwa adresy na tę samą intencję to kanibalizacja z definicji. Fraza zostaje przy F4 (jest w jego `keywords`), wpis celuje w intencję czynnościową. `title` skrócony do 66 znaków z sufiksem marki — pełna wersja z planu dawała 71 | [x] |
 
 ### Tydzień 7
 
@@ -249,6 +249,45 @@ nie liczą się do kadencji czterech pozycji tygodniowo i nie mają filara.
 ---
 
 ## Dziennik wdrożeń
+
+### 7 września 2026 — poz. 24: `/blog/jak-wreczyc-bon-podarunkowy-zeby-wygladal-jak-prezent`
+
+**Pierwszy wpis blogowy tej sesji roboczej — dotąd wyłącznie strony statyczne.** Różnica
+w mechanice: blog niesie własną datę i `dateModified` w treści (`post.date` / `post.updated`),
+więc **nie wchodzi do `page-updated.ts`** — ten rejestr obsługuje wyłącznie trasy statyczne
+(komentarz w samym pliku).
+
+**Rozgraniczenie wobec sąsiadów w klastrze K7.** Poz. 19 i 23 (LP branżowe) oraz przyszła poz. 20
+odpowiadają na pytanie „jaką kopertę i jaki kolor wybrać". Ten wpis odpowiada na inne pytanie —
+„jak fizycznie wręczyć bon, żeby nie zepsuć wrażenia" — więc nie powiela ich treści, tylko dodaje
+brakującą warstwę: moment sprzedaży, nie parametry produktu.
+
+**Fraza główna z korekty z 14 sierpnia 2026 pozostaje aktualna** (`jak wręczyć bon podarunkowy` —
+`koperta do vouchera` była liczbą pojedynczą frazy filara i wyszła z tej pozycji już wcześniej).
+
+**Tytuł skrócony w trakcie pisania.** Wersja z planu, z sufiksem `| Envelopes`, dawała 71 znaków —
+więcej niż jakikolwiek inny tytuł w bazie (maks. 66 do tej pory). Przeformułowany tak, żeby fraza
+docelowa stała na początku: „Jak wręczyć bon podarunkowy, żeby wyglądał jak prezent" (66 znaków
+z sufiksem). Znaczenie bez zmian, `lead`/`description` przycięty do ok. 155 znaków tym samym
+tokiem.
+
+Kadr nagłówkowy: `biala-perlowa-koperta-dl-nadruk-logo-salonu-fryzjerskiego` — dotąd nieużywany
+w treści blogowej, sceneria kontuaru pasująca tematycznie do wpisu o wręczaniu. Karta OG
+wygenerowana `scripts/og-card.mjs` (`public/images/og/blog-jak-wreczyc-bon-podarunkowy.jpg`).
+
+Linkowanie w obie strony:
+- **do wpisu:** `/koperty-na-vouchery` — nowa pozycja w sekcji „Poradniki" (siatka przełączona
+  na `grid-2` przy dwóch kartach, ten sam wybór co na F1 przy dwóch/trzech wpisach).
+- **z wpisu:** blok „Strona oferty" (pole `pillar`, anchor `koperty na vouchery`) oraz link
+  kontekstowy do `/koperty-personalizowane` w sekcji o wysyłce zdalnej.
+
+Weryfikacja: `npm run typecheck` i `npm run build` bez błędów, wpis prerenderowany statycznie,
+obecny w `/blog` i w `sitemap.xml` (przez `getAllPosts()`, automatycznie). `title` 66 znaków
+z sufiksem, `description` 155 znaków, jeden `<h1>`, tabela czterech błędów, lista sześciu
+punktów checklisty, osiem bloków JSON-LD (2 własne + 6 globalnych). Sprawdzone w przeglądarce:
+spis treści, tabela, checklist, blok „Strona oferty", CTA, link do `/koperty-na-vouchery`
+obecny w HTML-u filara, zero błędów konsoli. **Do wykonania po wdrożeniu na produkcję:**
+`npm run indexnow`.
 
 ### 7 września 2026 — poz. 39: `/koperty-na-pieniadze` · pillar K8, wyprzedzająco z Fazy 4
 

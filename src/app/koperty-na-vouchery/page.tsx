@@ -220,7 +220,12 @@ export const metadata: Metadata = {
 
 export default function VoucherEnvelopesPage() {
   const filesPost = getPost('jak-przygotowac-pliki-do-druku-na-kopertach');
-  const relatedPosts = [filesPost].filter((post): post is BlogPost => post !== undefined);
+  /* Poradnik prezentacyjny z content-plan.md poz. 24 — sposób wręczenia bonu,
+     nie dobór koperty (tamten opisują poz. 19/23 i przyszła poz. 20). */
+  const handoverPost = getPost('jak-wreczyc-bon-podarunkowy-zeby-wygladal-jak-prezent');
+  const relatedPosts = [handoverPost, filesPost].filter(
+    (post): post is BlogPost => post !== undefined
+  );
 
   return (
     <>
@@ -827,7 +832,9 @@ export default function VoucherEnvelopesPage() {
               <span className="eyebrow">Poradniki</span>
               <h2>Zanim zamówią Państwo koperty na bony</h2>
             </div>
-            <div className="grid grid-3">
+            {/* Trzy kolumny dopiero od trzeciego wpisu — przy dwóch siatka
+                trzykolumnowa zostawiałaby pustą kolumnę (ten sam wybór co na F1). */}
+            <div className={relatedPosts.length > 2 ? 'grid grid-3' : 'grid grid-2'}>
               {relatedPosts.map((post) => (
                 <article className="post-card" key={post.slug}>
                   <BlogCoverImage

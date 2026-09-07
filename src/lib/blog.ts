@@ -2094,6 +2094,117 @@ const POSTS: BlogPost[] = [
     ctaConfigure: { label: 'Zaplanuj koperty z nadrukiem', format: 'DL', print: true },
     pillar: { href: '/koperty-z-nadrukiem', anchor: 'koperty z nadrukiem' },
   },
+  {
+    slug: 'jak-wreczyc-bon-podarunkowy-zeby-wygladal-jak-prezent',
+    /* Tytuł z content-plan.md ("Bon podarunkowy — jak go wręczyć, żeby
+       wyglądał jak prezent") dawał z sufiksem `| Envelopes` 71 znaków —
+       poza próg wyświetlania ustalony przy innych wpisach (maks. 66 znaków
+       w tej bazie). Przeformułowany tak, by fraza docelowa `jak wręczyć bon
+       podarunkowy` stała na początku, a znaczenie zostało nietknięte. */
+    title: 'Jak wręczyć bon podarunkowy, żeby wyglądał jak prezent',
+    /* Lead niesie oś wpisu: forma wręczenia, nie sam produkt, i zasila
+       `description` — stąd długość trzymana w progu ok. 155 znaków, tak jak
+       przy innych wpisach. Liczba czterech błędów zapowiada tabelę w pierwszej
+       sekcji. */
+    lead: 'Sposób wręczenia bonu podarunkowego liczy się bardziej niż sama usługa w środku. Cztery częste błędy przy wydawaniu bonu klientowi — i to, co je zastępuje.',
+    category: 'Poradniki',
+    date: '2026-09-07',
+    readingMinutes: 6,
+    colorId: 'biala-perlowa',
+    format: 'DL',
+    /* Kadr salonu fryzjerskiego — scenariusz wręczenia bonu przy kontuarze,
+       ten sam, o którym mówi cały wpis, a nieużywany jeszcze w treści blogowej. */
+    showcaseFile: 'biala-perlowa-koperta-dl-nadruk-logo-salonu-fryzjerskiego',
+    imageVariant: 'nadruk',
+    ogImageSlug: 'blog-jak-wreczyc-bon-podarunkowy',
+    ogImageAlt:
+      'Koperta DL Biała Perłowa z nadrukiem logo salonu fryzjerskiego, przygotowana do wręczenia jako prezent',
+    keywords: [
+      'jak wręczyć bon podarunkowy',
+      'jak wręczyć voucher',
+      'prezentacja bonu podarunkowego',
+      'koperta na bon jak prezent',
+    ],
+    intro: 'Bon podarunkowy jest wydrukiem, za który klient zapłacił pełną cenę usługi — a to, jak trafia do rąk obdarowanego, decyduje, czy zostanie zapamiętany jako prezent, czy jako paragon. Ten poradnik pokazuje, co najczęściej psuje to wrażenie i czym to zastąpić, zanim bon wyjdzie za drzwi lokalu.',
+    sections: [
+      {
+        id: 'dlaczego-forma-ma-znaczenie',
+        heading: 'Dlaczego forma wręczenia liczy się bardziej niż sama koperta',
+        paragraphs: [
+          'Koperta ozdobna rozwiązuje połowę problemu — bon nie wygląda już jak wydruk z biurowej drukarki. Druga połowa dzieje się w momencie wręczenia, którego żadna koperta nie naprawi, jeśli klient go zepsuje pośpiechem albo niedopatrzeniem przy kontuarze.',
+          'Klient kupujący bon w prezencie płaci nie tylko za usługę w środku, ale za wrażenie, jakie wywoła u obdarowanego w chwili otwierania koperty. To ten moment, nie sama transakcja, zostaje w pamięci — i to on decyduje, czy klient wróci po kolejny bon na następną okazję.',
+        ],
+      },
+      {
+        id: 'cztery-bledy',
+        heading: 'Cztery błędy, które zamieniają prezent w formalność',
+        paragraphs: [
+          'Żaden z nich nie wynika ze złej woli — każdy da się naprawić samą organizacją momentu sprzedaży, bez dodatkowego kosztu.',
+        ],
+        table: {
+          caption: 'Częste błędy przy wręczaniu bonu podarunkowego i ich skutek',
+          head: ['Błąd', 'Co widzi obdarowany', 'Czym go zastąpić'],
+          rows: [
+            [
+              'Bon wypełniany przy kontuarze, w obecności klienta',
+              'Pośpiech i wrażenie, że prezent powstał na poczekaniu',
+              'Przygotowanie bonu i koperty przed przyjściem klienta po odbiór',
+            ],
+            [
+              'Paragon albo metka z ceną w tej samej kopercie',
+              'Kwotę usługi zamiast samego prezentu',
+              'Osobna koperta na dokument sprzedaży, jeśli klient go potrzebuje',
+            ],
+            [
+              'Koperta z okienkiem adresowym, przez które widać numer bonu',
+              'Dane bonu, zanim jeszcze go otworzy',
+              'Koperta bez okienka — przednia ścianka zostaje jednolitą płaszczyzną',
+            ],
+            [
+              'Bon podany bez podpisu, dedykacji czy nadruku',
+              'Produkt, nie prezent od konkretnej osoby albo marki',
+              'Nadruk okolicznościowy na kopercie albo odręczny dopisek',
+            ],
+          ],
+        },
+      },
+      {
+        id: 'jak-przygotowac',
+        heading: 'Jak przygotować kopertę, zanim klient przyjdzie po bon',
+        paragraphs: [
+          'Koperta gładka w kolorze marki wystarczy, jeśli bon wręcza się od razu, w momencie zakupu — perła, metalik i papier eko kosztują tyle samo co biel, więc wybór koloru jest wizerunkowy, nie budżetowy.',
+          `Nadruk logo albo hasło okolicznościowe zmienia kopertę z opakowania w część prezentu, ale wymaga minimum ${DEFAULT_PRICING.moqWithPrint} sztuk i ${DEFAULT_PRICING.leadDaysStandard} dni roboczych na wizualizację i druk (albo ${DEFAULT_PRICING.leadDaysExpress} dni robocze w trybie ekspresowym) — to trzeba zamówić z wyprzedzeniem, nie na dzień przed sprzedażą pierwszego bonu w sezonie.`,
+          'Sam bon powinien wejść do koperty płasko, bez składania. Wydruk na jednej trzeciej arkusza A4 (99 × 210 mm) mieści się w kopercie DL z zapasem po każdej stronie — złożony bon wygląda na dopasowany naprędce, nawet w najlepszej kopercie.',
+        ],
+      },
+      {
+        id: 'kiedy-osobiscie-kiedy-wysylka',
+        heading: 'Kiedy wręczyć bon osobiście, a kiedy wysłać go pocztą',
+        paragraphs: [
+          'Bon kupowany na miejscu i wręczany od razu obdarowanemu — najczęstszy scenariusz — potrzebuje tylko gładkiej koperty w kolorze marki, bez adresu i bez zwłoki. Klient wychodzi z lokalu z gotowym prezentem w tej samej wizycie.',
+          'Bon kupowany zdalnie, z prośbą o wysłanie prezentu wprost do obdarowanego, to inny proces: koperta potrzebuje wtedy adresu odbiorcy i zwykle imienia w miejscu nadruku. Mechanizm adresowania i wymagania dla listy danych opisaliśmy na stronie [personalizowane koperty](/koperty-personalizowane) — dotyczy to zarówno jednego bonu, jak i całej serii wysyłanej naraz.',
+        ],
+      },
+      {
+        id: 'checklist',
+        heading: 'Checklista przed wręczeniem bonu',
+        paragraphs: [
+          'Sześć punktów do sprawdzenia, zanim bon trafi do rąk klienta albo do skrzynki kuriera.',
+        ],
+        list: [
+          'Bon leży płasko w kopercie, bez zagięć i bez śladów składania',
+          'Koperta jest zamknięta i nie ma okienka, przez które widać numer albo kwotę bonu',
+          'Kolor koperty jest dobrany do marki, nie przypadkowy',
+          'Jest nadruk okolicznościowy albo odręczna dedykacja, jeśli bon jest prezentem',
+          'Paragon i dokumenty sprzedaży leżą w osobnej kopercie, nie razem z bonem',
+          'Bon wręczany jest do ręki, a nie zostawiony na kontuarze do samodzielnego odebrania',
+        ],
+      },
+    ],
+    cta: 'Skonfigurują Państwo kopertę na bon dokładnie w wariancie, którego potrzebują — gładką na już albo z nadrukiem na kolejną serię.',
+    ctaConfigure: { label: 'Wyceń koperty na bony', format: 'DL', print: true },
+    pillar: { href: '/koperty-na-vouchery', anchor: 'koperty na vouchery' },
+  },
 ];
 
 export function getAllPosts(): BlogPost[] {
