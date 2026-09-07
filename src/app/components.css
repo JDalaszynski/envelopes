@@ -752,14 +752,37 @@
 }
 
 /* Koperta ze stroną klapki — górna w stosie, zostaje w tyle mocniej.
-   Bez dodatkowego `rotate`: przechył jest już wpisany w kadr zdjęcia. */
+   Bez dodatkowego `rotate`: przechył jest już wpisany w kadr zdjęcia.
+   `scale(1.08)` powiększa kadr z własnego środka, więc nie trzeba
+   przeliczać `top`/`left` — kompozycja rośnie w miejscu. */
 .hero-envelope-back {
   z-index: 2;
   width: 92%;
   top: 8%;
   left: 1.8%;
-  transform: translate3d(0, calc(var(--drift, 0) * 34px), 0);
+  transform: translate3d(0, calc(var(--drift, 0) * 34px), 0) scale(1.08);
   animation: hero-levitate 7s ease-in-out infinite;
+}
+
+/* Kontaktowy cień rzucany przez kopertę górną na kopertę dolną —
+   doklejony jako pseudoelement, więc dziedziczy jej transform i porusza
+   się razem z nią (parallaksa, lewitacja). Umieszczony w rogu klapki,
+   który w kadrze najniżej styka się z kopertą pod spodem; reszta
+   pseudoelementu wychodzi poza własny kadr koperty, tam gdzie widoczna
+   jest już koperta dolna. */
+.hero-envelope-back::after {
+  content: '';
+  position: absolute;
+  left: 64%;
+  top: 86%;
+  width: 40%;
+  height: 30%;
+  background: radial-gradient(ellipse 60% 55% at 62% 38%,
+      rgba(10, 14, 24, 0.32) 0%,
+      rgba(10, 14, 24, 0.15) 48%,
+      rgba(10, 14, 24, 0) 78%);
+  filter: blur(9px);
+  pointer-events: none;
 }
 
 /* Koperta z nadrukiem — dolna w stosie, przesunięta w prawo, zachodzi
@@ -769,7 +792,7 @@
   width: 90.6%;
   top: 46.7%;
   left: 7.6%;
-  transform: translate3d(0, calc(var(--drift, 0) * 13px), 0);
+  transform: translate3d(0, calc(var(--drift, 0) * 13px), 0) scale(1.08);
   animation: hero-levitate 9s ease-in-out infinite;
   animation-delay: -2s;
 }
