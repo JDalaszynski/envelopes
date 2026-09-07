@@ -101,6 +101,11 @@ const PAGES: { url: string; title: string; note: string }[] = [
     note: 'Voucher na kolację w kopercie: dyskrecja bez okienka adresowego, wybór między odcieniem Czerwonym a stonowanym Ciemnozielonym lub Czarnym, dwa szczyty sprzedażowe (Walentynki, sezon świąteczny).',
   },
   {
+    url: '/koperty-dla-kancelarii',
+    title: 'Koperty dla kancelarii prawnych i notarialnych',
+    note: 'Korespondencja prawna: typologia pism (akt notarialny, wezwanie, pismo procesowe), kolory stonowane (Granatowy, Czarny, Taupe), adresowanie wielu klientów w jednym zamówieniu.',
+  },
+  {
     url: '/kontakt',
     title: 'Kontakt i formularz wyceny',
     note: `Dane kontaktowe, godziny pracy, formularz wyceny dla zamówień powyżej ${BULK_QUOTE_THRESHOLD.toLocaleString('pl-PL')} sztuk.`,

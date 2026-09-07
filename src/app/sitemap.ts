@@ -123,6 +123,15 @@ const PAGE_IMAGES: Record<string, string[]> = {
       .filter((color) => color?.images?.DL)
       .map((color) => abs(color.images!.DL!)),
   ],
+  /* Supporting LP poz. 17 — jedyny realny kadr aranżacyjny dla kancelarii
+     (Granatowy) plus próbki katalogowe dwóch odcieni stonowanych. */
+  '/koperty-dla-kancelarii': [
+    ...shotUrls([shotByFile('granatowa-koperta-dl-nadruk-logo-kancelarii')]),
+    ...['czarny', 'taupe']
+      .map((id) => COLOR_MAP[id])
+      .filter((color) => color?.images?.DL)
+      .map((color) => abs(color.images!.DL!)),
+  ],
 };
 
 /**
@@ -179,6 +188,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     page('/koperty-dla-salonow-spa', 'monthly', 0.8),
     /* Supporting LP pod F4 — koperty dla restauracji (content-plan.md poz. 23) */
     page('/koperty-dla-restauracji', 'monthly', 0.8),
+    /* Supporting LP pod F1 — koperty dla kancelarii (content-plan.md poz. 17) */
+    page('/koperty-dla-kancelarii', 'monthly', 0.8),
     page('/blog', 'weekly', 0.8),
     page('/kontakt', 'monthly', 0.7),
     /* Strona podmiotu — encja firmy dla wyszukiwarki i modeli (AboutPage) */

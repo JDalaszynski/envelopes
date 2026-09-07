@@ -472,6 +472,8 @@ export default function KopertyPremiumPage() {
               <p className="small" style={{ marginTop: 'var(--space-2)', marginBottom: 0 }}>
                 Akty notarialne, opinie prawne i poufne umowy. Sztywny arkusz 115–140 g/m² w odcieniach
                 Czarnym, Granatowym lub Taupe chroni dokument przed zagnieceniami i wzmacnia powagę pisma.
+                Typologię pism i adresowanie wielu klientów naraz opisaliśmy na stronie{' '}
+                <Link href="/koperty-dla-kancelarii">koperty dla kancelarii</Link>.
               </p>
             </div>
 

@@ -27,9 +27,9 @@ export const PAGE_UPDATED: Record<string, string> = {
   /* Siatka blogowa pokazuje trzy najnowsze wpisy — doszedł poradnik
      o terminach realizacji i trybie ekspresowym (poz. 16) */
   '/': '2026-08-26',
-  /* Sekcja „Poradniki" urosła do trzech kart i doszedł odnośnik pod akapitem
-     o terminach — treść wspierająca z poz. 16 planu */
-  '/koperty-z-nadrukiem': '2026-08-26',
+  /* Karta „Kancelarie prawne i notarialne" w sekcji „Dla kogo" dostała
+     odnośnik do poz. 17 */
+  '/koperty-z-nadrukiem': '2026-09-07',
   /* Sekcja „Poradniki" rozrosła się do trzech kart (poz. 8, 14 i 15) i doszedł
      odnośnik pod tabelą kolumn arkusza — treść wspierająca z poz. 15 planu */
   '/koperty-personalizowane': '2026-08-25',
@@ -55,8 +55,9 @@ export const PAGE_UPDATED: Record<string, string> = {
   '/koperty/blekit-lupkowy': '2026-08-19',
   '/koperty/taupe': '2026-08-19',
   /* Filar K6 — Eleganckie koperty premium (content-plan.md poz. 37).
-     Karta „Kliniki medycyny estetycznej i SPA" dostała odnośnik do poz. 19. */
-  '/koperty-premium': '2026-09-05',
+     Karty „Kliniki medycyny estetycznej i SPA" i „Kancelarie prawne
+     i notarialne" dostały odnośniki do poz. 19 i poz. 17. */
+  '/koperty-premium': '2026-09-07',
   /* Czwarta partia stron kolorów z backlogu klastra K5 */
   '/koperty/szara': '2026-08-19',
   '/koperty/niebieski': '2026-08-19',
@@ -83,6 +84,8 @@ export const PAGE_UPDATED: Record<string, string> = {
   '/koperty-dla-salonow-spa': '2026-09-05',
   /* Poz. 23 planu — druga LP branżowa Fazy 2, filar F4 */
   '/koperty-dla-restauracji': '2026-09-06',
+  /* Poz. 17 planu — trzecia LP branżowa Fazy 2, filar F1 */
+  '/koperty-dla-kancelarii': '2026-09-07',
 };
 
 /** Data zmiany treści dla trasy — `undefined`, gdy trasy nie ma w rejestrze. */

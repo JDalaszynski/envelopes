@@ -118,7 +118,7 @@ lub `personalized/` — buduj treść wokół zdjęcia, które faktycznie masz.
 
 | # | Tytuł / URL | Format | Główna fraza | Cel | Persona / Branża | Filar | Uwagi (antykanibalizacja) | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 17 | Koperty dla kancelarii prawnych — `/koperty-dla-kancelarii` | Supporting LP | koperty dla kancelarii | KONWERSJA | Kancelarie, notariusze | F1 | Kolory stonowane (czarny, granat, taupe), pisma i akty. Nie powtarza cennika z poz. 9 — linkuje | [ ] |
+| 17 | Koperty dla kancelarii prawnych — `/koperty-dla-kancelarii` | Supporting LP | koperty dla kancelarii | KONWERSJA | Kancelarie, notariusze | F1 | **Wykonane 7 września 2026.** Kolory stonowane (czarny, granat, taupe), pisma i akty. Nie powtarza cennika z poz. 9 — linkuje. Trzecia i ostatnia LP z realnym kadrem aranżacyjnym z trójki wskazanej przy poz. 19/23 — bez presji sezonowej, więc zrobiona jako ostatnia z trzech | [x] |
 | 18 | Koperty dla hoteli — `/koperty-dla-hoteli` | Supporting LP | koperty firmowe dla hotelu | KONWERSJA | Hotele 4–5*, resorty | F4 | Welcome letters i vouchery pobytowe; filar F4, bo dominuje zastosowanie voucherowe. **Rozgraniczenie:** F4 poświęca hotelom jeden akapit w sekcji „Dla kogo", ten LP celuje we frazę branżową i dokłada scenariusz welcome letter, którego filar nie ma | [ ] |
 | 19 | Koperty na bony do salonu SPA — `/koperty-dla-salonow-spa` | Supporting LP | koperty na bony podarunkowe | KONWERSJA | SPA, kosmetyka, masaż | F4 | **Wykonane 5 września 2026.** Fraza `koperty na bony podarunkowe` przeniesiona z `keywords` filara F4 (zostaje przy `koperty na vouchery`, `koperty do voucherów`, `koperta do vouchera`, `koperta na bon podarunkowy`). Wybrana jako pierwsza LP Fazy 2 zamiast poz. 17/18: sezonowe okno („publikować przed IV kw.") jest jedynym twardym terminem w całym planie, a domena potrzebuje 3–6 miesięcy dojrzewania w indeksie (K7, keywords.md) | [x] |
 | 20 | Koperta na voucher — jaki format i kolor wybrać | Supporting article | koperta ozdobna na voucher | GEO | Właściciel salonu | F4 | Doradcza; filar F4 sprzedaje, ten wpis odpowiada na pytanie „jaka". **Granica po publikacji F4:** filar podaje wymiary trzech postaci bonu (DL / A6 / karta ID-1) i jeden fakt o kolorze — nadruk kosztuje tyle samo na każdym odcieniu, a o czytelności decyduje kontrast. Ten wpis dostaje dobór odcienia do branży i okazji oraz kiedy sięgnąć po metalik i perłę | [ ] |
@@ -249,6 +249,43 @@ nie liczą się do kadencji czterech pozycji tygodniowo i nie mają filara.
 ---
 
 ## Dziennik wdrożeń
+
+### 7 września 2026 — poz. 17: `/koperty-dla-kancelarii` · trzecia LP Fazy 2
+
+**Zamyka trójkę LP z realnym kadrem aranżacyjnym** wskazaną przy publikacji poz. 19: kancelarie,
+salony SPA (7.09), restauracje (8.09) — w tej kolejności odwróconej względem numeracji planu,
+bo dwie pierwsze miały twardy termin sezonowy, a kancelarie nie. Filar F1 i `/koperty-premium`
+poświęcają kancelariom po jednej karcie; ta strona dokłada typologię pism (akt notarialny,
+wezwanie do zapłaty, pismo procesowe, opinia prawna, umowa) i scenariusz, którego LP voucherowe
+nie miały — adresowanie **wielu różnych odbiorców** w jednym zamówieniu, nie jednego imienia na
+serii identycznych bonów. Sekcja linkuje do `/koperty-personalizowane` po mechanizm arkusza
+zamiast powtarzać wymagane kolumny.
+
+**Nie powtarza cennika F1**, zgodnie z uwagą przy tej pozycji w planie — sekcja „Cena i terminy"
+podaje jedną cenę z hero i linkuje do `#cena` na filarze zamiast rozpisywać składniki drugi raz.
+
+**Bez własnego `FAQPage`** — `PRINT_FAQ_ITEMS` na F1 pokrywa już pytania o cenę, MOQ i pliki.
+`WebPage.mainEntity` wskazuje na węzeł `Product` filara.
+
+Karta OG wygenerowana przez `scripts/og-card.mjs` z kadru Granatowego
+(`public/images/og/koperty-dla-kancelarii.jpg`) — tego samego, którego już używają F1
+i `/koperty-premium`.
+
+Linkowanie w obie strony:
+- **do LP:** karta „Kancelarie prawne i notarialne" na F1 i na `/koperty-premium` (obie sekcje
+  „Dla kogo").
+- **z LP:** `/koperty-z-nadrukiem#cena` (cennik), `/koperty-personalizowane` (mechanizm arkusza
+  adresowego), `/koperty/granatowy`, `/koperty/czarny`, `/koperty/taupe`.
+
+`PAGE_UPDATED` podbite dla `/koperty-dla-kancelarii`, `/koperty-z-nadrukiem` i `/koperty-premium`
+(nowe odnośniki). `llms.txt` i sitemapa (wpis + obrazy: kadr Granatowy i dwa zdjęcia katalogowe
+odcieni stonowanych) zaktualizowane w tym samym wdrożeniu.
+
+Weryfikacja: `npm run typecheck` i `npm run build` bez błędów, strona obecna w `sitemap.xml`
+i w `/llms.txt`. `title` 58 znaków (z sufiksem marki), `description` 137 znaków, jeden `<h1>`.
+Sprawdzone w przeglądarce: hero, typologia pism (5 kart), sekcja kolorów (kadr Granatowy + dwie
+próbki), sekcja adresowania, zero błędów konsoli, oba odnośniki zwrotne (F1, premium) obecne
+w HTML-u. **Do wykonania po wdrożeniu na produkcję:** `npm run indexnow`.
 
 ### 6 września 2026 — poz. 23: `/koperty-dla-restauracji` · druga LP Fazy 2
 

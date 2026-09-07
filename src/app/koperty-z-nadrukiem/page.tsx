@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import type { ReactNode } from 'react';
 import Link from 'next/link';
 
 import { ConfigureLink } from '@/components/home/ConfigureLink';
@@ -118,10 +119,18 @@ const HOW_TO_STEPS = [
  * i progi ilościowe mają swoje miejsce w tabelach niżej i nie muszą wracać
  * w każdym z dziesięciu akapitów.
  */
-const INDUSTRIES: { heading: string; text: string }[] = [
+const INDUSTRIES: { heading: string; text: ReactNode }[] = [
   {
     heading: 'Kancelarie prawne i notarialne',
-    text: 'Pismo procesowe złożone na trzy wchodzi do koperty DL bez dodatkowego zagięcia. Do korespondencji formalnej wybierane są kolory stonowane — czerń, granat i szarobrązowy — bo koperta ma wyglądać poważnie, zanim ktokolwiek ją otworzy.',
+    text: (
+      <>
+        Pismo procesowe złożone na trzy wchodzi do koperty DL bez dodatkowego zagięcia. Do
+        korespondencji formalnej wybierane są kolory stonowane — czerń, granat i szarobrązowy —
+        bo koperta ma wyglądać poważnie, zanim ktokolwiek ją otworzy. Typologię pism i adresowanie
+        wielu klientów naraz opisaliśmy na stronie{' '}
+        <Link href="/koperty-dla-kancelarii">koperty dla kancelarii</Link>.
+      </>
+    ),
   },
   {
     heading: 'Biura rachunkowe i doradztwo finansowe',
