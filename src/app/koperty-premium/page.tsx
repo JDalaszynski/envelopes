@@ -531,7 +531,9 @@ export default function KopertyPremiumPage() {
               <h3 style={{ fontSize: 19 }}>Uroczystości ślubne i jubileusze VIP</h3>
               <p className="small" style={{ marginTop: 'var(--space-2)', marginBottom: 0 }}>
                 Podziękowania dla gości, zaproszenia podłużne oraz eleganckie wręczanie upominków
-                finansowych bez konieczności składania banknotów.
+                finansowych bez konieczności składania banknotów. Ofertę kopert pod prezent
+                pieniężny, dostępną już od 1 sztuki, opisaliśmy na stronie{' '}
+                <Link href="/koperty-na-pieniadze">koperty na pieniądze</Link>.
               </p>
             </div>
           </div>

@@ -55,8 +55,9 @@ export const PAGE_UPDATED: Record<string, string> = {
   '/koperty/blekit-lupkowy': '2026-08-19',
   '/koperty/taupe': '2026-08-19',
   /* Filar K6 — Eleganckie koperty premium (content-plan.md poz. 37).
-     Karty „Kliniki medycyny estetycznej i SPA" i „Kancelarie prawne
-     i notarialne" dostały odnośniki do poz. 19 i poz. 17. */
+     Karty „Kliniki medycyny estetycznej i SPA", „Kancelarie prawne
+     i notarialne" i „Uroczystości ślubne i jubileusze VIP" dostały
+     odnośniki do poz. 19, poz. 17 i poz. 39. */
   '/koperty-premium': '2026-09-07',
   /* Czwarta partia stron kolorów z backlogu klastra K5 */
   '/koperty/szara': '2026-08-19',

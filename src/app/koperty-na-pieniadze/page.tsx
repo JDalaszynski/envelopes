@@ -335,7 +335,8 @@ export default function MoneyEnvelopesPage() {
               <p className="small" style={{ marginTop: 'var(--space-2)' }}>
                 Wykończenie metaliczne i perłowe nie podnosi ceny — kosztują tyle samo, co odcienie
                 matowe. Połysk dobrze komponuje się z okazjami świątecznymi i jubileuszowymi, gdzie
-                prezent ma się wyróżniać na stole.
+                prezent ma się wyróżniać na stole. Pełną kolekcję odcieni szlachetnych opisaliśmy
+                na stronie <Link href="/koperty-premium">koperty premium</Link>.
               </p>
               <div
                 className="grid grid-2"
