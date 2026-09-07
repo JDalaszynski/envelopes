@@ -76,8 +76,8 @@ export function HeroEnvelopes() {
           }}
         >
           <img
-            src="/images/koperta-gorna-1127.webp"
-            srcSet="/images/koperta-gorna-564.webp 564w, /images/koperta-gorna-1127.webp 1127w"
+            src="/images/koperta-gorna-1127.png"
+            srcSet="/images/koperta-gorna-564.png 564w, /images/koperta-gorna-1127.png 1127w"
             sizes="(max-width: 980px) 76vw, 41vw"
             width={1127}
             height={763}
@@ -104,8 +104,8 @@ export function HeroEnvelopes() {
           }}
         >
           <img
-            src="/images/koperta-dolna-1036.webp"
-            srcSet="/images/koperta-dolna-518.webp 518w, /images/koperta-dolna-1036.webp 1036w"
+            src="/images/koperta-dolna-1036.png"
+            srcSet="/images/koperta-dolna-518.png 518w, /images/koperta-dolna-1036.png 1036w"
             sizes="(max-width: 980px) 70vw, 38vw"
             width={1036}
             height={671}
