@@ -621,10 +621,13 @@
   color: var(--color-seal);
 }
 
-/* Trzy wiersze na desktopie — stąd 19ch i pułap 52px zamiast pełnej skali. */
+/* Trzy wiersze na desktopie — stąd 19ch i pułap 52px zamiast pełnej skali.
+   `line-height: 1.16` (a nie 1.06) daje wierszom zapas na wysoką pętlę
+   „W” w `.hero-accent`, która potrafi wchodzić w linię wyżej i stykać się
+   z „o” z „ozdobne”, gdy złamanie wiersza ustawi je jedno nad drugim. */
 .home-hero-title {
   font-size: clamp(32px, 3.9vw, 52px);
-  line-height: 1.06;
+  line-height: 1.16;
   letter-spacing: -0.022em;
   max-width: 19ch;
   text-wrap: balance;
