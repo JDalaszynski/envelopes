@@ -1,0 +1,70 @@
+INSTAGRAM — POSTY STARTOWE (seeding profilu)
+=============================================
+Instrukcja: odznacz [x] przy poście, który już opublikowałeś.
+Odstęp: co 1-2 dni, żeby wypełnić siatkę profilu przed promocją.
+Seria kolorów (19 osobnych postów) jest w osobnym pliku:
+instagram-seria-kolorow.txt — przeplataj ją z postami poniżej,
+nie publikuj wszystkiego w bloku.
+
+-------------------------------------------------------------------
+
+[ ] POST 1 — Otwierający "Poznaj markę" (karuzela, 4-5 slajdów)
+
+Wizualnie: logo/nazwa na tle jednego z kolorów katalogowych, kolejne
+slajdy z krótkimi hasłami.
+
+Podpis:
+Koperty ozdobne dla firm i na prezenty. 19 kolorów, bez okienka,
+z nadrukiem lub bez. Format DL już dostępny — C6 i K4 w drodze.
+
+-------------------------------------------------------------------
+
+[ ] POST 2 — Karuzela "Jak zapakować bon podarunkowy"
+(repurposing wpisu blogowego: jak-wreczyc-bon-podarunkowy)
+
+Podpis:
+Bon podarunkowy w zwykłej kopercie biurowej ginie w szufladzie.
+W kopercie ozdobnej — staje się prezentem. 3 zasady, żeby wręczenie
+zrobiło wrażenie.
+
+-------------------------------------------------------------------
+
+[ ] POST 3 — Branżowy: SPA / salon kosmetyczny
+
+Podpis:
+Bony na Dzień Matki i święta sprzedają się same, jeśli wyglądają jak
+prezent, zanim ktokolwiek je otworzy. Koperta z logo salonu = pierwsze
+wrażenie klientki, zanim usłyszy "dziękujemy za zakup".
+
+-------------------------------------------------------------------
+
+[ ] POST 4 — Branżowy: restauracja
+
+Podpis:
+Voucher na kolację degustacyjną dla dwojga w bordowej kopercie
+z Waszym logo. Prosta rzecz, która zmienia bon z kartki papieru
+w prezent.
+
+-------------------------------------------------------------------
+
+[ ] POST 5 — FAQ / praktyczny (prosta infografika)
+
+Podpis:
+Ile kartek A4 mieści koperta DL? Przy 80 g/m² — do 5 arkuszy. Przy
+120-135 g/m² — do 3. Zapisz sobie na później.
+
+-------------------------------------------------------------------
+
+[ ] POST 6 — Za kulisami (prawdziwe zdjęcie wzornika)
+
+[prawdziwe zdjęcie próbek kolorów]
+
+Podpis:
+Tak wyglądają nasze 19 kolorów obok siebie. Które połączenie kolor
++ nadruk pasowałoby do Waszej marki?
+
+-------------------------------------------------------------------
+
+Po tych 6 postach + serii kolorów: dodaj wszystko do Highlightu
+"Kolory", żeby nowy odwiedzający miał przeglądalny katalog bez
+scrollowania feedu. Docelowe tempo dalej: 3-4x/tydzień.

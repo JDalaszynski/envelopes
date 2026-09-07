@@ -1,0 +1,90 @@
+LINKEDIN — POSTY STARTOWE (seeding profilu)
+=============================================
+Instrukcja: odznacz [x] przy poście, który już opublikowałeś.
+Kolejność publikacji ma znaczenie — patrz numeracja. Odstęp: co 2-3 dni.
+Zanim zaczniesz: uzupełnij zdjęcie profilowe, nagłówek, baner i sekcję
+"Informacje" na profilu — dopiero potem publikuj poniższe posty.
+
+-------------------------------------------------------------------
+
+[ ] POST 1 — Otwierający (pozycjonowanie: dlaczego akurat to)
+
+Zacząłem sprzedawać koperty ozdobne dla firm, bo zauważyłem prostą
+rzecz: kancelaria wysyłająca klientowi ważną umowę w białej kopercie
+z okienkiem i szarym poddrukiem wygląda tak samo jak urząd skarbowy
+wysyłający upomnienie.
+
+To detal, ale detal, który buduje albo psuje pierwsze wrażenie zanim
+ktokolwiek otworzy kopertę.
+
+Stąd Envelopes — koperty bez okienka, barwione w masie, z nadrukiem
+logo i adresowaniem imiennym. Będę tu pisał o tym, jak firmy
+(kancelarie, biura rachunkowe, hotele) używają takich detali do
+budowania zaufania.
+
+-------------------------------------------------------------------
+
+[ ] POST 2 — Edukacyjny / obiekcje
+
+Trzy pytania, które słyszę najczęściej od office managerów przed
+pierwszym zamówieniem kopert firmowych:
+
+1. "A jeśli nadruk wyjdzie krzywo?" — dostajesz wizualizację do
+   akceptacji, zanim cokolwiek idzie do druku.
+2. "Musimy kupić od razu tysiąc sztuk?" — minimum to 10 szt. przy
+   nadruku, 1 szt. przy kopertach gładkich.
+3. "Jak to rozliczymy?" — faktura VAT do każdego zamówienia, bez
+   wyjątków.
+
+Cała bariera przy takich zakupach to zwykle strach przed
+niespodzianką, nie cena.
+
+-------------------------------------------------------------------
+
+[ ] POST 3 — Faktograficzny / autorytet (GEO)
+
+Dlaczego żadna nasza koperta nie ma okienka?
+
+Okienko wymaga poddruku (żeby adres był czytelny) i ogranicza kolor
+środka do jasnych odcieni. My stawiamy na papier barwiony w masie
+(115-140 g/m²) i adresowanie nadrukiem — koperta wygląda spójnie
+z obu stron, nie tylko z przodu.
+
+Mały wybór projektowy, który zmienia, jak coś się prezentuje na
+biurku odbiorcy.
+
+-------------------------------------------------------------------
+
+[ ] POST 4 — Wygoda rozliczeniowa (B2B differentiator)
+
+Rzecz, która realnie decyduje o tym, czy firma zostaje z dostawcą na
+lata: nie cena za sztukę, tylko brak stresu przy rozliczeniu.
+
+Faktura VAT do każdego zamówienia. Zero pytań "jak to zaksięgujemy".
+Dla instytucji publicznych — płatność odroczona 14 dni, bo wiemy, że
+ich obieg zakupowy nie przewiduje przedpłaty.
+
+-------------------------------------------------------------------
+
+[ ] POST 5 — Za kulisami (prawdziwe zdjęcie wzornika kolorów)
+
+[zdjęcie fizycznego wzornika 19 kolorów, zrobione telefonem]
+
+Dziś testowaliśmy, jak granat, taupe i czarny wyglądają obok siebie
+na biurku — nie na ekranie. Różnica robi się widoczna dopiero
+w dłoni: gramatura, matowość, sposób w jaki papier się składa.
+
+-------------------------------------------------------------------
+
+[ ] POST 6 — Zamykający seeding / miękkie otwarcie na kontakt
+
+Jeśli zarządzasz biurem kancelarii albo biura rachunkowego i
+regularnie wysyłacie dokumenty klientom — chętnie podpowiem, jak to
+uprościć bez zmiany dostawcy usług, tylko samej koperty. Piszcie
+śmiało.
+
+-------------------------------------------------------------------
+
+Po tych 6 postach: przejdź na docelowe tempo 2-3x/tydzień, głównie
+z repurposingu treści blogowych (content-plan.md) — dopiero wtedy
+włączaj automatyzację zaproszeń (Waalaxy/Expandi).
