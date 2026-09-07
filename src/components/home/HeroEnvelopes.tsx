@@ -16,6 +16,8 @@ import { useEffect, useRef } from 'react';
  */
 export function HeroEnvelopes() {
   const stageRef = useRef<HTMLDivElement>(null);
+  const backTiltRef = useRef<HTMLDivElement>(null);
+  const frontTiltRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -50,10 +52,38 @@ export function HeroEnvelopes() {
     };
   }, []);
 
+  /* Nasłuch na całej scenie zamiast per-koperta: `mousemove` dociera tu
+     przez bąbelkowanie niezależnie od tego, która koperta fizycznie
+     „złapała" kursor. Dzięki temu przezroczyste narożniki koperty górnej
+     (wyższy z-index) nie blokują już przechyłu koperty dolnej pod spodem —
+     przechył liczymy osobno dla każdej z ich własnych `getBoundingClientRect`. */
+  const tilt = (ref: React.RefObject<HTMLDivElement | null>, e: { clientX: number; clientY: number }) => {
+    const el = ref.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    el.style.setProperty('--mouse-x', x.toFixed(4));
+    el.style.setProperty('--mouse-y', y.toFixed(4));
+  };
+
+  const resetTilt = (ref: React.RefObject<HTMLDivElement | null>) => {
+    ref.current?.style.setProperty('--mouse-x', '0');
+    ref.current?.style.setProperty('--mouse-y', '0');
+  };
+
   return (
     <div
       className="hero-stage"
       ref={stageRef}
+      onMouseMove={(e) => {
+        tilt(backTiltRef, e);
+        tilt(frontTiltRef, e);
+      }}
+      onMouseLeave={() => {
+        resetTilt(backTiltRef);
+        resetTilt(frontTiltRef);
+      }}
     >
       <span className="hero-stage-glow" aria-hidden="true" />
 
@@ -61,20 +91,7 @@ export function HeroEnvelopes() {
           kadr rezerwuje miejsce przed pobraniem obrazów, więc hero nie generuje
           CLS. Pierwsza koperta ładuje się priorytetowo jako kandydat na LCP. */}
       <figure className="hero-envelope hero-envelope-back">
-        <div 
-          className="hero-envelope-3d"
-          onMouseMove={(e) => {
-            const rect = e.currentTarget.getBoundingClientRect();
-            const x = (e.clientX - rect.left) / rect.width - 0.5;
-            const y = (e.clientY - rect.top) / rect.height - 0.5;
-            e.currentTarget.style.setProperty('--mouse-x', x.toFixed(4));
-            e.currentTarget.style.setProperty('--mouse-y', y.toFixed(4));
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.setProperty('--mouse-x', '0');
-            e.currentTarget.style.setProperty('--mouse-y', '0');
-          }}
-        >
+        <div className="hero-envelope-3d" ref={backTiltRef}>
           <img
             src="/images/koperta-gorna-1127.png"
             srcSet="/images/koperta-gorna-564.png 564w, /images/koperta-gorna-1127.png 1127w"
@@ -89,20 +106,7 @@ export function HeroEnvelopes() {
       </figure>
 
       <figure className="hero-envelope hero-envelope-front">
-        <div 
-          className="hero-envelope-3d"
-          onMouseMove={(e) => {
-            const rect = e.currentTarget.getBoundingClientRect();
-            const x = (e.clientX - rect.left) / rect.width - 0.5;
-            const y = (e.clientY - rect.top) / rect.height - 0.5;
-            e.currentTarget.style.setProperty('--mouse-x', x.toFixed(4));
-            e.currentTarget.style.setProperty('--mouse-y', y.toFixed(4));
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.setProperty('--mouse-x', '0');
-            e.currentTarget.style.setProperty('--mouse-y', '0');
-          }}
-        >
+        <div className="hero-envelope-3d" ref={frontTiltRef}>
           <img
             src="/images/koperta-dolna-1036.png"
             srcSet="/images/koperta-dolna-518.png 518w, /images/koperta-dolna-1036.png 1036w"
