@@ -1,4 +1,4 @@
-import { CONTACT_DETAILS } from './orders';
+import { CONTACT_DETAILS, SOCIAL_PROFILES } from './orders';
 import { DEFAULT_PRICING, DELIVERY_COST, round2 } from './pricing';
 import {
   AVAILABLE_FORMATS,
@@ -110,9 +110,10 @@ const brandRef = { '@id': BRAND_ID, '@type': 'Brand', name: 'Envelopes' };
  * przy pytaniu „gdzie kupić koperty z nadrukiem". Oba typy zostają na węźle,
  * bo pozostałe bloki odwołują się do niego jako do `Organization`.
  *
- * `sameAs` świadomie nieobecne: profili społecznościowych jeszcze nie ma,
- * a pusta tablica jest sygnałem gorszym niż brak pola (content-plan.md,
- * sekcja „Zależności i blokady").
+ * `sameAs` wskazuje profile marki ze stopki (`SOCIAL_PROFILES` w `orders.ts`).
+ * Jedno źródło dla obu miejsc, bo rozjazd adresów rozbiłby encję marki,
+ * którą modele składają z wielu źródeł. Profile potwierdzone przez właściciela
+ * 10 września 2026 (content-plan.md, sekcja „Zależności i blokady").
  */
 export function organizationJsonLd() {
   return {
@@ -122,6 +123,7 @@ export function organizationJsonLd() {
     name: 'Envelopes',
     legalName: CONTACT_DETAILS.company,
     url: SITE_URL,
+    sameAs: SOCIAL_PROFILES.map((profile) => profile.url),
     description:
       'Producent i dystrybutor kopert ozdobnych z nadrukiem firmowym i adresowaniem. Formaty DL, C6, K4 w 19 kolorach.',
     telephone: CONTACT_DETAILS.phoneHref,

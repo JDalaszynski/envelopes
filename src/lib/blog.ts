@@ -1334,6 +1334,8 @@ const POSTS: BlogPost[] = [
     lead: 'Sprawdź, jak dobrać odcień kolorowej koperty ozdobnej do identyfikacji wizualnej firmy. Poznaj paletę 19 kolorów i wybierz najlepsze tło pod nadruk Twojego logo.',
     category: 'Poradniki',
     date: '2026-08-20',
+    /* Odnośnik do poz. 20 w sekcji o odcieniach jasnych */
+    updated: '2026-09-10',
     readingMinutes: 5,
     colorId: 'czarny',
     format: 'DL',
@@ -1384,7 +1386,7 @@ const POSTS: BlogPost[] = [
         paragraphs: [
           'Jeśli logotyp Państwa firmy składa się z kilku kolorów, które muszą zostać precyzyjnie odwzorowane na wydruku, najbezpieczniejszym wyborem są odcienie jasne. [Biały](/koperty/bialy), [Ecru](/koperty/ecru), [Błękitna](/koperty/jasnoniebieska) czy [Biała Perłowa](/koperty/biala-perlowa) przyjmują nadruk w pełnym kolorze bez wpływu na odcień pigmentu.',
           'Papiery pastelowe — takie jak [Różowa](/koperty/rozowa), [Matcha](/koperty/matcha), czy [Jasnozielony](/koperty/jasnozielony) — stanowią kompromis. Dodają do przesyłki unikalny kolor marki, a jednocześnie pozostają na tyle jasne, że czarny lub bardzo ciemny nadruk firmowy jest na nich doskonale czytelny.',
-          'Taka paleta sprawdza się znakomicie w branży medycznej, edukacyjnej, w salonach kosmetycznych oraz przy wysyłce zaproszeń i bonów podarunkowych.',
+          'Taka paleta sprawdza się znakomicie w branży medycznej, edukacyjnej, w salonach kosmetycznych oraz przy wysyłce zaproszeń i bonów podarunkowych. Dobór odcienia pod konkretny bon — do branży i do okazji — rozpisujemy w poradniku [koperta ozdobna na voucher](/blog/koperta-ozdobna-na-voucher-jaki-format-i-kolor).',
         ],
       },
       {
@@ -1423,6 +1425,8 @@ const POSTS: BlogPost[] = [
     lead: 'Brak okienka w kopercie buduje prestiż i chroni poufne dane. Wybierzcie Państwo gładkie koperty DL w 19 kolorach z nadrukiem realizowanym od 10 sztuk.',
     category: 'Poradniki',
     date: '2026-08-21',
+    /* Odnośnik do LP kancelaryjnej (poz. 17) w sekcji o poufności */
+    updated: '2026-09-10',
     readingMinutes: 5,
     colorId: 'biala-perlowa',
     format: 'DL',
@@ -1451,7 +1455,7 @@ const POSTS: BlogPost[] = [
         heading: 'Brak okienka adresowego zapewnia poufność przesyłki',
         paragraphs: [
           'Koperty z okienkiem niosą jedno stałe ryzyko dla bezpieczeństwa: możliwość przesunięcia zawartości w transporcie. Pismo, które w trakcie dostawy osunie się wewnątrz koperty, może odsłonić przez foliowe okienko poufne informacje z treści dokumentu — kwoty z faktury lub warunki umowy handlowej.',
-          'Koperty bez okienka z grubego papieru barwionego w masie likwidują to zagrożenie. Nawet jeśli wkładka swobodnie przesuwa się w środku, z zewnątrz zawsze widać tylko jednolitą płaszczyznę nieprzezroczystego materiału. To kluczowa kwestia przy przesyłaniu aktów notarialnych, umów inwestycyjnych oraz dokumentacji pracowniczej.',
+          'Koperty bez okienka z grubego papieru barwionego w masie likwidują to zagrożenie. Nawet jeśli wkładka swobodnie przesuwa się w środku, z zewnątrz zawsze widać tylko jednolitą płaszczyznę nieprzezroczystego materiału. To kluczowa kwestia przy przesyłaniu aktów notarialnych, umów inwestycyjnych oraz dokumentacji pracowniczej. Pisma, które kancelaria wysyła najczęściej, i dobór koloru koperty do nich rozpisujemy na stronie [koperty dla kancelarii](/koperty-dla-kancelarii).',
         ],
       },
       {
@@ -2109,6 +2113,8 @@ const POSTS: BlogPost[] = [
     lead: 'Sposób wręczenia bonu podarunkowego liczy się bardziej niż sama usługa w środku. Cztery częste błędy przy wydawaniu bonu klientowi — i to, co je zastępuje.',
     category: 'Poradniki',
     date: '2026-09-07',
+    /* Akapit odsyłający do poz. 20 i do LP branżowych poz. 19 i 23 */
+    updated: '2026-09-10',
     readingMinutes: 6,
     colorId: 'biala-perlowa',
     format: 'DL',
@@ -2173,6 +2179,7 @@ const POSTS: BlogPost[] = [
         heading: 'Jak przygotować kopertę, zanim klient przyjdzie po bon',
         paragraphs: [
           'Koperta gładka w kolorze marki wystarczy, jeśli bon wręcza się od razu, w momencie zakupu — perła, metalik i papier eko kosztują tyle samo co biel, więc wybór koloru jest wizerunkowy, nie budżetowy.',
+          'Który odcień wybrać, zależy od branży i okazji — rozpisujemy to w poradniku [koperta ozdobna na voucher](/blog/koperta-ozdobna-na-voucher-jaki-format-i-kolor). Salony SPA i restauracje mają też osobne strony z kolorami dobranymi do ich klientów: [koperty na bony podarunkowe](/koperty-dla-salonow-spa) i [koperty na vouchery do restauracji](/koperty-dla-restauracji).',
           `Nadruk logo albo hasło okolicznościowe zmienia kopertę z opakowania w część prezentu, ale wymaga minimum ${DEFAULT_PRICING.moqWithPrint} sztuk i ${DEFAULT_PRICING.leadDaysStandard} dni roboczych na wizualizację i druk (albo ${DEFAULT_PRICING.leadDaysExpress} dni robocze w trybie ekspresowym) — to trzeba zamówić z wyprzedzeniem, nie na dzień przed sprzedażą pierwszego bonu w sezonie.`,
           'Sam bon powinien wejść do koperty płasko, bez składania. Wydruk na jednej trzeciej arkusza A4 (99 × 210 mm) mieści się w kopercie DL z zapasem po każdej stronie — złożony bon wygląda na dopasowany naprędce, nawet w najlepszej kopercie.',
         ],
@@ -2203,6 +2210,202 @@ const POSTS: BlogPost[] = [
     ],
     cta: 'Skonfigurują Państwo kopertę na bon dokładnie w wariancie, którego potrzebują — gładką na już albo z nadrukiem na kolejną serię.',
     ctaConfigure: { label: 'Wyceń koperty na bony', format: 'DL', print: true },
+    pillar: { href: '/koperty-na-vouchery', anchor: 'koperty na vouchery' },
+  },
+  {
+    /* content-plan.md poz. 20 — wpis doradczy pod filarem F4, cel GEO.
+       Rozgraniczenia (pkt 8 briefu SEO):
+       - wobec F4 `/koperty-na-vouchery`: filar podaje wymiary trzech postaci
+         bonu i jeden fakt o kolorze (kontrast, cena bez różnic) — ten wpis
+         nie powtarza tabeli wymiarów, tylko odsyła do `#wymiar-bonu`,
+         a zajmuje się doborem odcienia do branży i okazji oraz perłą i metalikiem;
+       - wobec LP branżowych (poz. 19, 23): tamte odpowiadają „jaki kolor dla
+         mojej branży" dla jednej branży z kosztem serii i kalendarzem sezonu,
+         ten wpis zestawia wiele branży naraz i do nich linkuje;
+       - wobec poz. 24: tamten wpis mówi, jak bon wręczyć, ten — w czym.
+       Dopasowania odcieni w tabelach pochodzą z sekcji „Dla kogo" stron
+       kolorów (`color-pages.ts`), więc wpis nie poleca koloru, którego jego
+       własna strona nie wiąże z daną branżą. */
+    slug: 'koperta-ozdobna-na-voucher-jaki-format-i-kolor',
+    title: 'Koperta ozdobna na voucher — jaki format i kolor',
+    lead: 'Koperta ozdobna na voucher to prawie zawsze format DL. Trudniejszy jest kolor — jak dobrać odcień do branży i okazji oraz kiedy wybrać perłę lub metalik.',
+    category: 'Poradniki',
+    date: '2026-09-10',
+    readingMinutes: 6,
+    colorId: 'zloty',
+    format: 'DL',
+    /* Kadr vouchera studia tatuażu na złotym papierze metalicznym — dotąd
+       nieużywany w treści blogowej, a pokazuje dokładnie to, o czym jest
+       sekcja o połysku: bon wręczany do ręki, czerń na złocie. */
+    showcaseFile: 'zlota-koperta-dl-nadruk-logo-studia-tatuazu',
+    imageVariant: 'nadruk',
+    ogImageSlug: 'blog-koperta-ozdobna-na-voucher',
+    ogImageAlt:
+      'Złota koperta DL z papieru metalicznego z czarnym nadrukiem logo studia tatuażu, przygotowana na voucher',
+    keywords: [
+      'koperta ozdobna na voucher',
+      'jaka koperta na voucher',
+      'kolor koperty na voucher',
+      'koperta na bon jaki kolor',
+    ],
+    intro: 'Koperta ozdobna na voucher to w praktyce koperta DL: bon wydrukowany na jednej trzeciej arkusza A4 leży w niej płasko, bez zaginania. Format rozstrzyga się więc niemal sam. Decyzją, która naprawdę zmienia odbiór bonu, jest kolor — i jemu poświęcamy większość poradnika: dobór odcienia do branży i do okazji oraz wybór między papierem matowym, perłowym i metalicznym.',
+    sections: [
+      {
+        id: 'format',
+        heading: 'Jaki format koperty na voucher wybrać',
+        paragraphs: [
+          'Na voucher wybiera się kopertę DL. To format zaprojektowany pod arkusz A4 złożony na trzy, więc bon drukowany na jednej trzeciej arkusza A4 wchodzi do niej płasko i z zapasem po każdej stronie. Mieszczą się w niej także bon A6 i karta podarunkowa w rozmiarze karty płatniczej — wymiary wszystkich trzech zestawiamy na stronie [koperty na vouchery](/koperty-na-vouchery#wymiar-bonu).',
+          'Jeśli bon dopiero powstaje, lepiej od razu zaprojektować go w formacie DL niż A6. Bon A6 zmieści się w kopercie DL, ale zostaje wokół niego dużo wolnego miejsca: przesuwa się przy wręczaniu i wygląda na włożony do koperty dobranej przypadkiem.',
+          'Pozostałe formaty z katalogu mają dziś status „dostępne wkrótce", dlatego dobór koloru w dalszej części opisujemy na kopercie DL. Porównanie formatów dla innych wkładek prowadzimy w poradniku [jaki format koperty wybrać do wkładki](/blog/jaki-format-koperty-wybrac-do-wkladki).',
+        ],
+      },
+      {
+        id: 'od-czego-zaczac',
+        heading: 'Od czego zacząć wybór koloru koperty na voucher',
+        paragraphs: [
+          `Wybór koloru zaczyna się od marki, a nie od okazji. Bon sprzedaje się przez cały rok, więc podstawowa seria kopert powinna pasować do logo, wnętrza lokalu i materiałów, które klient już zna. Każdy z ${COLORS.length} odcieni w palecie Envelopes kosztuje tyle samo, więc kolor jest decyzją wizerunkową, a nie budżetową.`,
+          'Drugim kryterium jest kolor nadruku. Na ciemnej kopercie logo drukujemy kolorem jasnym, na jasnej — ciemnym, a na papierze złotym i srebrnym wyłącznie ciemnym. Jasny albo złoty znak marki zawęża więc wybór do papierów, na których zachowa kontrast.',
+          'Trzecim jest sposób wręczenia. Bon podawany do ręki ogląda się z bliska, w świetle lokalu — tu zyskuje papier z połyskiem. Bon wysyłany pocztą obdarowany zobaczy dopiero przy skrzynce, więc ważniejszy jest kolor, który wyróżni się wśród innych listów.',
+        ],
+      },
+      {
+        id: 'kolor-do-branzy',
+        heading: 'Jaki kolor koperty na voucher pasuje do branży',
+        paragraphs: [
+          'Zestawienie niżej łączy branże, które najczęściej sprzedają bony, z odcieniami, które do nich pasują. Pierwszy odcień w wierszu to kierunek najbezpieczniejszy, kolejne — warianty dla marek, które chcą się wyróżnić. Te same dopasowania pokazujemy na stronach poszczególnych kolorów.',
+          'Dwie branże opisaliśmy osobno, razem z kalendarzem sezonu i kosztem serii: salony SPA na stronie [koperty na bony podarunkowe](/koperty-dla-salonow-spa), a lokale gastronomiczne na stronie [koperty na vouchery do restauracji](/koperty-dla-restauracji).',
+        ],
+        table: {
+          caption: 'Dobór koloru koperty na voucher do branży',
+          head: ['Branża', 'Odcienie', 'Dlaczego ten kierunek'],
+          rows: [
+            [
+              'Salon SPA i gabinet masażu',
+              'Szarobrązowy (taupe), Matcha, Biała Perłowa',
+              'Ciepłe, stonowane barwy powtarzają estetykę relaksu i naturalnych materiałów z wnętrza salonu',
+            ],
+            [
+              'Klinika medycyny estetycznej i stomatologia',
+              'Biała Perłowa, Srebrna Perłowa, Błękitna',
+              'Jasne, „czyste" odcienie komunikują higienę i precyzję zabiegu',
+            ],
+            [
+              'Salon fryzjerski i kosmetyczny',
+              'Biała Perłowa, Różowa',
+              'Jasne podłoże, na którym logo zostaje czytelne, a koperta wygląda odświętnie',
+            ],
+            [
+              'Restauracja, winiarnia, fine dining',
+              'Czerwony, Butelkowa Zieleń, Czarny',
+              'Czerwień niesie ciepło kuchni, a głębokie odcienie sprawiają, że voucher wygląda jak zaproszenie',
+            ],
+            [
+              'Studio tatuażu i barbershop',
+              'Czarny, Złoty',
+              'Czerń jest podstawowym kolorem tej branży, a czerń na złocie — jej częstym zestawieniem',
+            ],
+            [
+              'Hotel i obiekt wypoczynkowy',
+              'Złoty, Ecru, Jeansowy',
+              'Voucher pobytowy wręcza się do ręki, więc liczy się to, jak koperta wygląda z bliska',
+            ],
+            [
+              'Kawiarnia, kwiaciarnia, pracownia rzemieślnicza',
+              'Eko, Matcha, Zielony',
+              'Papier kraftowy i zielenie mówią o materiale i naturze, a nie o luksusie',
+            ],
+            [
+              'Teatr, filharmonia, instytucja kultury',
+              'Granatowy, Czerwony',
+              'Karnet w prezencie potrzebuje oprawy uroczystej, ale nie weselnej',
+            ],
+          ],
+        },
+      },
+      {
+        id: 'kolor-do-okazji',
+        heading: 'Jaki kolor koperty na voucher wybrać na święta i inne okazje',
+        paragraphs: [
+          `Na okazję sezonową najlepiej zamówić osobną, krótką serię kopert w jej kolorze, a podstawową serię zostawić w barwach marki. Koperty z nadrukiem realizujemy od ${DEFAULT_PRICING.moqWithPrint} sztuk, więc seria świąteczna nie musi być większa niż liczba bonów, które salon realnie sprzeda w grudniu.`,
+          `Serię sezonową trzeba zamówić z wyprzedzeniem. Koperty z nadrukiem wysyłamy w ${DEFAULT_PRICING.leadDaysStandard} dni roboczych, licząc od późniejszego z dwóch zdarzeń: akceptacji wizualizacji albo zaksięgowania wpłaty. Jak zaplanować ten termin wstecz od daty sprzedaży, pokazujemy w poradniku o [terminach realizacji kopert](/blog/szybka-realizacja-kopert-terminy-i-ekspres).`,
+        ],
+        table: {
+          caption: 'Dobór koloru koperty na voucher do okazji',
+          head: ['Okazja', 'Odcienie', 'Na co zwrócić uwagę'],
+          rows: [
+            [
+              'Boże Narodzenie',
+              'Czerwony, Butelkowa Zieleń, Złoty',
+              'Na złocie drukujemy wyłącznie ciemnym kolorem — złote logo pokażemy na wizualizacji w wersji ciemnej',
+            ],
+            [
+              'Walentynki',
+              'Czerwony, Różowa',
+              'Czerwień przyjmuje czerń, biel i złoto; na Różowej drukujemy kolorem ciemnym',
+            ],
+            [
+              'Dzień Kobiet i Dzień Matki',
+              'Różowa, Biała Perłowa, Złoty',
+              'Biała Perłowa to jedyny papier z połyskiem, który przyjmuje logo wielobarwne',
+            ],
+            [
+              'Sylwester i gala noworoczna',
+              'Srebrna Perłowa, Czarny',
+              'Na srebrze drukujemy tylko ciemnym kolorem, na czerni — jasnym',
+            ],
+            [
+              'Cały rok',
+              'Kolor marki',
+              'Seria podstawowa, do której wraca się przy każdej sprzedaży bonu',
+            ],
+          ],
+        },
+      },
+      {
+        id: 'metalik-i-perla',
+        heading: 'Kiedy wybrać kopertę perłową lub metaliczną na voucher',
+        paragraphs: [
+          'Papier perłowy albo metaliczny warto wybrać, gdy bon wręcza się do ręki i koperta ma zastąpić opakowanie prezentu. Połysk zmienia się razem z kątem padania światła, więc najlepiej pracuje z bliska — przy kontuarze, przy stoliku, w dłoni obdarowanego. W palecie Envelopes połysk mają trzy odcienie: [Złoty](/koperty/zloty), [Srebrna Perłowa](/koperty/srebrna-perlowa) i [Biała Perłowa](/koperty/biala-perlowa).',
+          'Połysk ma sam papier. Złocenia ani srebrzenia folią nie wykonujemy — logo na każdym z tych odcieni jest drukowane, a jego kolor dobieramy do podłoża według tabeli niżej.',
+          'Papier z połyskiem nie sprawdzi się, gdy imię obdarowanego ma być wpisane ręcznie: mokry tusz schnie na nim wolniej i zostawia przerywany ślad. Imię drukujemy wtedy w ramach usługi [personalizowane koperty](/koperty-personalizowane), w tym samym przebiegu co logo.',
+        ],
+        table: {
+          caption: 'Koperty z połyskiem na voucher: charakter odcienia i kolor nadruku logo',
+          head: ['Odcień', 'Charakter', 'Kolor nadruku logo'],
+          rows: [
+            [
+              'Złoty (metaliczny)',
+              'Ciepły i odświętny, ustawia rangę prezentu',
+              'Tylko ciemny: czerń, granat, brąz, butelkowa zieleń',
+            ],
+            [
+              'Srebrna Perłowa',
+              'Chłodny i nowoczesny, czyta się jako metal',
+              'Tylko ciemny: czerń, granat, grafit',
+            ],
+            [
+              'Biała Perłowa',
+              'Jasny i uroczysty, nie narzuca koloru zawartości',
+              'Każdy poza bardzo jasnymi, także logo wielobarwne',
+            ],
+          ],
+        },
+      },
+      {
+        id: 'checklista',
+        heading: 'Pięć pytań przed wyborem koperty na voucher',
+        paragraphs: ['Te pytania porządkują decyzję, zanim otworzą Państwo konfigurator.'],
+        list: [
+          'Czy bon ma format DL i leży w kopercie płasko, bez zaginania?',
+          'Czy kolor podstawowej serii pasuje do logo i wnętrza lokalu?',
+          'Czy logo zachowa kontrast na wybranym papierze — zwłaszcza na złocie i srebrze?',
+          'Czy na najbliższy sezon potrzebna jest osobna, krótka seria w kolorze okazji?',
+          'Czy bon będzie wręczany do ręki, czy wysyłany pocztą z adresem obdarowanego?',
+        ],
+      },
+    ],
+    cta: 'W konfiguratorze wybiorą Państwo odcień i od razu zobaczą cenę serii. Wizualizację z logo przesyłamy do akceptacji przed drukiem.',
+    ctaConfigure: { label: 'Dobierz kolor koperty na voucher', format: 'DL', print: true },
     pillar: { href: '/koperty-na-vouchery', anchor: 'koperty na vouchery' },
   },
 ];

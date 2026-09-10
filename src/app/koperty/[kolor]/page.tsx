@@ -436,6 +436,13 @@ export default async function ColorPage({ params }: { params: Promise<{ kolor: s
               <div className="card" key={item.name}>
                 <h3 style={{ fontSize: 18 }}>{item.name}</h3>
                 <p className="small">{item.text}</p>
+                {/* Strona branżowa rozwijająca ten scenariusz — link przychodzący
+                    z anchorem równym frazie głównej strony docelowej */}
+                {item.link && (
+                  <p className="small" style={{ marginBottom: 0 }}>
+                    <Link href={item.link.href}>{item.link.anchor} →</Link>
+                  </p>
+                )}
               </div>
             ))}
           </div>

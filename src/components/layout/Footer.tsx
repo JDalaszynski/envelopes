@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { CONTACT_DETAILS } from '@/lib/orders';
+import { CONTACT_DETAILS, SOCIAL_PROFILES } from '@/lib/orders';
 import { CookieSettingsLink } from '@/components/layout/CookieBanner';
 import { isCheckoutRoute } from '@/lib/chrome';
 
@@ -80,8 +80,9 @@ export function Footer() {
               <li><CookieSettingsLink /></li>
             </ul>
             <div className="row" style={{ gap: 'var(--space-3)', marginTop: 'var(--space-5)' }}>
-              <a href="https://www.linkedin.com/company/envelopes-koperty/" target="_blank" rel="noopener noreferrer" className="pay-badge" style={{ textDecoration: 'none', color: 'inherit' }}>LinkedIn</a>
-              <a href="https://www.instagram.com/envelopes.pl" target="_blank" rel="noopener noreferrer" className="pay-badge" style={{ textDecoration: 'none', color: 'inherit' }}>Instagram</a>
+              {SOCIAL_PROFILES.map((profile) => (
+                <a key={profile.name} href={profile.url} target="_blank" rel="noopener noreferrer" className="pay-badge" style={{ textDecoration: 'none', color: 'inherit' }}>{profile.name}</a>
+              ))}
             </div>
           </div>
 

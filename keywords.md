@@ -339,7 +339,8 @@ wprost pod cel LTV z bazy wiedzy.
   2026.** Fraza przeniesiona do `/koperty-dla-salonow-spa` (poz. 19 planu) przy jego publikacji;
   filar zostaje wyłącznie przy wariantach voucherowych (`koperty na vouchery`, `koperty do
   voucherów`, `koperty do voucherow`, `koperta do vouchera`, `koperta na bon podarunkowy`).
-- `koperta ozdobna na voucher` należy do poz. 20 (wpis doradczy). Filar podaje **fakt**
+- `koperta ozdobna na voucher` należy do poz. 20 (wpis doradczy) — **opublikowany 10 września
+  2026** pod `/blog/koperta-ozdobna-na-voucher-jaki-format-i-kolor`. Filar podaje **fakt**
   o kolorze — nadruk kosztuje tyle samo na każdym z 19 odcieni, a o czytelności logo decyduje
   kontrast — i pokazuje 6 kolorów ze zdjęciami nadruku. Dobór odcienia do branży i okazji
   oraz kiedy sięgnąć po metalik i perłę zostają dla wpisu.

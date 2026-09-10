@@ -121,7 +121,7 @@ lub `personalized/` — buduj treść wokół zdjęcia, które faktycznie masz.
 | 17 | Koperty dla kancelarii prawnych — `/koperty-dla-kancelarii` | Supporting LP | koperty dla kancelarii | KONWERSJA | Kancelarie, notariusze | F1 | **Wykonane 7 września 2026.** Kolory stonowane (czarny, granat, taupe), pisma i akty. Nie powtarza cennika z poz. 9 — linkuje. Trzecia i ostatnia LP z realnym kadrem aranżacyjnym z trójki wskazanej przy poz. 19/23 — bez presji sezonowej, więc zrobiona jako ostatnia z trzech | [x] |
 | 18 | Koperty dla hoteli — `/koperty-dla-hoteli` | Supporting LP | koperty firmowe dla hotelu | KONWERSJA | Hotele 4–5*, resorty | F4 | Welcome letters i vouchery pobytowe; filar F4, bo dominuje zastosowanie voucherowe. **Rozgraniczenie:** F4 poświęca hotelom jeden akapit w sekcji „Dla kogo", ten LP celuje we frazę branżową i dokłada scenariusz welcome letter, którego filar nie ma | [ ] |
 | 19 | Koperty na bony do salonu SPA — `/koperty-dla-salonow-spa` | Supporting LP | koperty na bony podarunkowe | KONWERSJA | SPA, kosmetyka, masaż | F4 | **Wykonane 5 września 2026.** Fraza `koperty na bony podarunkowe` przeniesiona z `keywords` filara F4 (zostaje przy `koperty na vouchery`, `koperty do voucherów`, `koperta do vouchera`, `koperta na bon podarunkowy`). Wybrana jako pierwsza LP Fazy 2 zamiast poz. 17/18: sezonowe okno („publikować przed IV kw.") jest jedynym twardym terminem w całym planie, a domena potrzebuje 3–6 miesięcy dojrzewania w indeksie (K7, keywords.md) | [x] |
-| 20 | Koperta na voucher — jaki format i kolor wybrać | Supporting article | koperta ozdobna na voucher | GEO | Właściciel salonu | F4 | Doradcza; filar F4 sprzedaje, ten wpis odpowiada na pytanie „jaka". **Granica po publikacji F4:** filar podaje wymiary trzech postaci bonu (DL / A6 / karta ID-1) i jeden fakt o kolorze — nadruk kosztuje tyle samo na każdym odcieniu, a o czytelności decyduje kontrast. Ten wpis dostaje dobór odcienia do branży i okazji oraz kiedy sięgnąć po metalik i perłę | [ ] |
+| 20 | Koperta ozdobna na voucher — jaki format i kolor — `/blog/koperta-ozdobna-na-voucher-jaki-format-i-kolor` | Supporting article | koperta ozdobna na voucher | GEO | Właściciel salonu | F4 | **Wykonane 10 września 2026.** Doradcza; filar F4 sprzedaje, ten wpis odpowiada na pytanie „jaka". **Granica po publikacji F4:** filar podaje wymiary trzech postaci bonu (DL / A6 / karta ID-1) i jeden fakt o kolorze — nadruk kosztuje tyle samo na każdym odcieniu, a o czytelności decyduje kontrast. Ten wpis dostaje dobór odcienia do branży i okazji oraz kiedy sięgnąć po metalik i perłę. Tabeli wymiarów bonu nie powtarza (odsyła do `#wymiar-bonu`); wobec LP poz. 19 i 23 zestawia wiele branż naraz i linkuje do nich zamiast powtarzać ich kosztorys i kalendarz | [x] |
 
 ### Tydzień 6
 
@@ -249,6 +249,54 @@ nie liczą się do kadencji czterech pozycji tygodniowo i nie mają filara.
 ---
 
 ## Dziennik wdrożeń
+
+### 10 września 2026 — poz. 20: `/blog/koperta-ozdobna-na-voucher-jaki-format-i-kolor` · linki do LP branżowych · `sameAs`
+
+**IndexNow dla publikacji z 5–7 września — wykonane.** `npm run indexnow -- --days 14` zgłosił
+9 adresów (`/`, F1, F4, `/koperty-premium`, poz. 19, 23, 17, 39 i wpis z poz. 24): HTTP 200.
+Szersze okno, bo domyślne 7 dni od 13 września gubiłoby stronę SPA.
+
+**Poz. 20.** Wpis doradczy pod F4, fraza `koperta ozdobna na voucher`. Oś: format rozstrzyga się
+sam (DL), więc wpis zajmuje się kolorem — trzy kryteria wyboru (marka, kolor nadruku, sposób
+wręczenia), tabela branż (8 wierszy), tabela okazji (5 wierszy), porównanie trzech papierów
+z połyskiem i checklista. Rozgraniczenia: wymiarów bonu nie powtarza (odsyła do `#wymiar-bonu`
+na F4); wobec poz. 19 i 23 zestawia wiele branż naraz i linkuje do nich zamiast powtarzać
+kosztorys i kalendarz; dopasowania odcieni wzięte z sekcji „Dla kogo" stron kolorów, żeby wpis
+nie polecał koloru, którego jego własna strona nie wiąże z daną branżą. W prozie trzy liczby,
+każda raz i czytana z kodu: liczba odcieni, minimum z nadrukiem, termin standardowy. `title`
+60 znaków z sufiksem, `description` 153. Kadr `zlota-koperta-dl-nadruk-logo-studia-tatuazu`
+(dotąd nieużywany na blogu), karta OG `public/images/og/blog-koperta-ozdobna-na-voucher.jpg`.
+
+Linkowanie w obie strony:
+- **do wpisu:** F4 — trzecia karta w „Poradnikach" (siatka przechodzi na `grid-3`) i odnośnik pod
+  siatką kolorów; poz. 24 — nowy akapit w sekcji o przygotowaniu koperty; poz. 12 — zdanie
+  w sekcji o odcieniach jasnych;
+- **z wpisu:** F4 (`pillar` i `#wymiar-bonu`), poz. 19 i 23, poz. 10, poz. 16, trzy strony
+  kolorów z połyskiem, F2.
+
+**Linki przychodzące do LP branżowych i K8.** Karty „Dla kogo" na stronach kolorów dostały
+opcjonalne pole `link` (`ColorPageAudienceLink` w `color-pages.ts`), renderowane pod tekstem
+karty. Reguła: link tylko tam, gdzie karta mówi o tej samej branży **i** odcień jest na stronie
+docelowej rekomendowany albo pokazany na zdjęciu. Czarny, Granatowy, Szarobrązowy →
+`/koperty-dla-kancelarii`; Szarobrązowy → `/koperty-dla-salonow-spa`; Czerwony →
+`/koperty-dla-restauracji`; Złoty i Biała Perłowa → `/koperty-na-pieniadze`. Świadomie pominięte:
+Złoty → restauracje (LP restauracyjna Złotego nie poleca) i karty klinik → SPA (kliniki dostaną
+własną LP w poz. 22). Poza stronami kolorów: poz. 13 → kancelarie, poz. 24 → SPA i restauracje.
+
+Linki przychodzące z treści (`<main>`, 47 adresów z sitemapy, po zmianie): restauracje 1 → 4,
+kancelarie 2 → 6, SPA 2 → 5, koperty na pieniądze 2 → 4.
+
+**`sameAs`.** Nowa stała `SOCIAL_PROFILES` w `orders.ts` zasila stopkę i `Organization.sameAs`
+— jedno źródło dla obu miejsc. LinkedIn i Instagram odpowiadają HTTP 200; Facebooka w stopce nie
+ma, więc nie ma go też w `sameAs`.
+
+Daty: `PAGE_UPDATED` — sześć stron kolorów, `/koperty-na-vouchery` i `/blog` (dotąd nieaktualne
+26 sierpnia) na 2026-09-10; `updated: 2026-09-10` we wpisach poz. 12, 13 i 24.
+
+Weryfikacja: `npm run typecheck` i `npm run build` bez błędów, sitemapa 47 adresów z nowymi
+datami, wpis w `/blog` i w `llms.txt`. W przeglądarce: jeden `<h1>`, sześć `<h2>`, trzy tabele,
+JSON-LD `Article` + `BreadcrumbList` + `WebPage`, `sameAs` w węźle `OnlineStore`, zero błędów
+konsoli. **Do wykonania po wdrożeniu na produkcję:** `npm run indexnow`.
 
 ### 7 września 2026 — poz. 24: `/blog/jak-wreczyc-bon-podarunkowy-zeby-wygladal-jak-prezent`
 
@@ -2390,7 +2438,7 @@ z konfiguracją „Koperta DL Czarny z nadrukiem", 4,57 zł/szt.
 | Formaty C6 i K4 `disabled` | Klaster ślubny (K9) bez CTA zakupowego; poz. 27 ograniczona do A4 składanego | Właściciel — uruchomienie formatów |
 | ~~Zdjęcia produktowe to PNG po 0,5–0,75 MB~~ | **Odblokowane 15 sierpnia 2026.** `colors/`, `prints/` i `personalized/` przeszły na WebP w trzech szerokościach: **30,8 MB → 2,1 MB**. Strona główna pobiera dziś **197 kB** obrazów zamiast ~9 MB | — |
 | ~~Kadry hero w `public/images/` nadal w PNG~~ | **Odblokowane 18 sierpnia 2026.** `Hero Envelopes Robocze.png` (3,06 MB) okazał się plikiem **używanym** — jako tło hero na `/` i pięciu filarach, przez adres z `%20`. Przeszedł na WebP (`hero-tlo-2015.webp`, 127 kB); `koperta-gorna/dolna.png` i `2.png` były faktycznie nieużywane i zostały usunięte | — |
-| Profile FB / Instagram / LinkedIn | `Organization.sameAs` pusty do czasu utworzenia | Właściciel — po założeniu przekazać adresy |
+| ~~Profile FB / Instagram / LinkedIn~~ | **Odblokowane 10 września 2026** dla LinkedIna i Instagrama — adresy ze stopki trafiły do `Organization.sameAs` przez wspólną stałą `SOCIAL_PROFILES` (`orders.ts`). Facebooka w stopce nie ma, więc nie ma go też w `sameAs` | Właściciel — adres profilu na Facebooku, jeśli powstanie |
 | Konto w Bing Webmaster Tools | Kod po stronie serwisu gotowy (klucz IndexNow, `npm run indexnow`, znacznik `msvalidate.01`). Bez konta nie ma danych o indeksacji w Bing — a to indeks, z którego korzystają ChatGPT Search i Copilot | Właściciel — założenie konta, najprościej importem z Search Console |
 
 ---

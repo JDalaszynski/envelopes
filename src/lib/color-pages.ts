@@ -78,6 +78,21 @@ export interface ColorPageSection {
   paragraphs: string[];
 }
 
+/**
+ * Odnośnik z karty „Dla kogo" do strony branżowej albo filara, który rozwija
+ * ten sam scenariusz (pkt 5.4 briefu SEO — linki przychodzące do nowych stron).
+ * Anchor jest frazą główną strony docelowej.
+ *
+ * Dokładamy go wyłącznie tam, gdzie karta i strona docelowa mówią o tej samej
+ * branży **i** gdzie ten odcień jest na stronie docelowej rekomendowany albo
+ * pokazany na zdjęciu. Link z karty „Hotele i restauracje" na złotej kopercie
+ * do LP restauracyjnej prowadziłby na stronę, która Złotego nie poleca.
+ */
+export interface ColorPageAudienceLink {
+  href: string;
+  anchor: string;
+}
+
 export interface ColorPageContent {
   /** `title` bez marki — szablon z `layout.tsx` dokleja „| Envelopes". Do 60 znaków łącznie. */
   title: string;
@@ -123,7 +138,11 @@ export interface ColorPageContent {
   shotFiles: string[];
   character: ColorPageSection;
   printing: ColorPageSection;
-  audience: { heading: string; intro: string; items: { name: string; text: string }[] };
+  audience: {
+    heading: string;
+    intro: string;
+    items: { name: string; text: string; link?: ColorPageAudienceLink }[];
+  };
   caution: ColorPageSection;
   faq: ColorPageFaqItem[];
   /** Obraz wyróżniający z `public/images/og/`. */
@@ -166,6 +185,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
         {
           name: 'Kancelarie prawne i notarialne',
           text: 'Pisma procesowe, akty i umowy. Czarna koperta z jasnym nadrukiem nazwy kancelarii wyróżnia korespondencję w stosie kopert białych, a barwiona krawędź trzyma poziom przy dokumentach, które klient przechowuje latami.',
+          link: { href: '/koperty-dla-kancelarii', anchor: 'Koperty dla kancelarii' },
         },
         {
           name: 'Studia tatuażu i barbershopy',
@@ -257,6 +277,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
         {
           name: 'Kancelarie prawne i notarialne',
           text: 'Pisma procesowe, akty i umowy. Granat jest w tej branży kolorem konwencjonalnym, więc koperta nie zwraca na siebie uwagi kosztem treści — a nazwa kancelarii w bieli zostaje widoczna w stosie korespondencji.',
+          link: { href: '/koperty-dla-kancelarii', anchor: 'Koperty dla kancelarii' },
         },
         {
           name: 'Instytucje kultury i orkiestry',
@@ -368,6 +389,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
         {
           name: 'Wesela i przyjęcia rodzinne',
           text: 'Koperty na pieniądze i podziękowania dla gości. Format DL mieści banknot najwyższego nominału płasko, bez składania.',
+          link: { href: '/koperty-na-pieniadze', anchor: 'Koperty na pieniądze' },
         },
       ],
     },
@@ -808,6 +830,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
         {
           name: 'Kancelarie prawne i doradcy podatkowi',
           text: 'Umowy, opinie prawne i pisma zarządcze. Gramatura 140 g/m² daje poczucie solidności i bezpieczeństwa ważnych dokumentów.',
+          link: { href: '/koperty-dla-kancelarii', anchor: 'Koperty dla kancelarii' },
         },
         {
           name: 'Agencje nieruchomości premium i deweloperzy',
@@ -816,6 +839,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
         {
           name: 'Salony SPA, kliniki beauty i medycyna estetyczna',
           text: 'Karty podarunkowe i ekskluzywne zaproszenia na zabiegi. Kadr wyżej prezentuje realizację z białym nadrukiem logo salonu wellness.',
+          link: { href: '/koperty-dla-salonow-spa', anchor: 'Koperty na bony podarunkowe' },
         },
         {
           name: 'Studia architektury i projektowania wnętrz',
@@ -1331,6 +1355,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
         {
           name: 'Restauracje fine dining, winiarnie i bistra',
           text: 'Vouchery na kolacje degustacyjne, zaproszenia na wieczory tematyczne i karty podarunkowe. Kadr wyżej ilustruje zastosowanie czarnego logo na tym odcieniu.',
+          link: { href: '/koperty-dla-restauracji', anchor: 'Koperty na vouchery do restauracji' },
         },
         {
           name: 'Kampanie świąteczne i wysyłki bożonarodzeniowe',
@@ -1782,6 +1807,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
         {
           name: 'Uroczystości rodzinne i przyjęcia weselne',
           text: 'Koperta na pieniądze wręczana parze i karta z podziękowaniem dla gościa. Format DL mieści banknot najwyższego nominału płasko, bez składania, a poświata papieru robi z koperty część prezentu.',
+          link: { href: '/koperty-na-pieniadze', anchor: 'Koperty na pieniądze' },
         },
         {
           name: 'Gabinety medycyny estetycznej i kliniki premium',

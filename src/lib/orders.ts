@@ -108,3 +108,13 @@ export const CONTACT_DETAILS = {
    */
   returnAddress: 'ul. Geodetów 41, 64-100 Trzebiny',
 };
+
+/**
+ * Profile marki w serwisach społecznościowych — jedno źródło dla stopki
+ * i dla `Organization.sameAs` w danych strukturalnych (`seo.ts`). Adres
+ * poprawiony w jednym miejscu, a w drugim nie, rozbiłby encję marki na dwie.
+ */
+export const SOCIAL_PROFILES = [
+  { name: 'LinkedIn', url: 'https://www.linkedin.com/company/envelopes-koperty/' },
+  { name: 'Instagram', url: 'https://www.instagram.com/envelopes.pl' },
+] as const;

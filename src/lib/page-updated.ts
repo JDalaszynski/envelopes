@@ -35,25 +35,21 @@ export const PAGE_UPDATED: Record<string, string> = {
   '/koperty-personalizowane': '2026-08-25',
   /* Sekcja „Poradniki" i odnośnik pod tabelą dopasowań — treść wspierająca z poz. 11 planu */
   '/koperty-dl': '2026-08-21',
-  /* Karty SPA i Restauracje w sekcji „Dla kogo" dostały odnośniki do poz. 19 i 23 */
-  '/koperty-na-vouchery': '2026-09-06',
-  /* Doszedł wpis o terminach realizacji i trybie ekspresowym (poz. 16) */
-  '/blog': '2026-08-26',
+  /* Sekcja „Poradniki" urosła do trzech kart (poz. 20, 24 i 7), a pod siatką
+     kolorów doszedł odnośnik do wpisu o doborze odcienia (poz. 20) */
+  '/koperty-na-vouchery': '2026-09-10',
+  /* Doszedł wpis o doborze formatu i koloru koperty na voucher (poz. 20) */
+  '/blog': '2026-09-10',
   /* Odnośnik do strony „O nas" w karcie danych rejestrowych */
   '/kontakt': '2026-08-17',
   /* Publikacja strony „O nas" */
   '/o-nas': '2026-08-17',
-  /* Pierwsza strona koloru — poz. 29 planu */
-  '/koperty/czarny': '2026-08-19',
   /* Poz. 30–32 planu — druga partia stron kolorów */
-  '/koperty/granatowy': '2026-08-17',
-  '/koperty/zloty': '2026-08-17',
   '/koperty/ecru': '2026-08-17',
   /* Poz. 33–36 planu — Faza 3 stron kolorów */
   '/koperty/bialy': '2026-08-19',
   '/koperty/matcha': '2026-08-19',
   '/koperty/blekit-lupkowy': '2026-08-19',
-  '/koperty/taupe': '2026-08-19',
   /* Filar K6 — Eleganckie koperty premium (content-plan.md poz. 37).
      Karty „Kliniki medycyny estetycznej i SPA", „Kancelarie prawne
      i notarialne" i „Uroczystości ślubne i jubileusze VIP" dostały
@@ -66,13 +62,21 @@ export const PAGE_UPDATED: Record<string, string> = {
   /* Piąta partia stron kolorów — przegląd kompletu 19 odcieni z 19 sierpnia */
   '/koperty/ciemnozielony': '2026-08-19',
   '/koperty/jasnozielony': '2026-08-19',
-  '/koperty/czerwony': '2026-08-19',
   /* Szósta partia — domknięcie palety (poz. 36g–36k planu) */
   '/koperty/rozowa': '2026-08-19',
   '/koperty/eko': '2026-08-19',
   '/koperty/zolta': '2026-08-19',
   '/koperty/srebrna-perlowa': '2026-08-19',
-  '/koperty/biala-perlowa': '2026-08-19',
+  /* Karty „Dla kogo" na stronach kolorów dostały odnośniki do stron
+     branżowych i filara K8, które ten odcień rekomendują: Czarny, Granatowy
+     i Szarobrązowy → poz. 17, Szarobrązowy → poz. 19, Czerwony → poz. 23,
+     Złoty i Biała Perłowa → poz. 39 */
+  '/koperty/czarny': '2026-09-10',
+  '/koperty/granatowy': '2026-09-10',
+  '/koperty/taupe': '2026-09-10',
+  '/koperty/czerwony': '2026-09-10',
+  '/koperty/zloty': '2026-09-10',
+  '/koperty/biala-perlowa': '2026-09-10',
   /* Wpisy blogowe wspierające filar K2 — poz. 14 i 15 planu. Poz. 14 dostała
      przy publikacji poz. 15 akapit odsyłający do przygotowania listy. */
   '/blog/jak-zaadresowac-koperte-wysylana-przez-firme-wzor': '2026-08-25',

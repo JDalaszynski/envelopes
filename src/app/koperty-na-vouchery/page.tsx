@@ -220,10 +220,14 @@ export const metadata: Metadata = {
 
 export default function VoucherEnvelopesPage() {
   const filesPost = getPost('jak-przygotowac-pliki-do-druku-na-kopertach');
+  /* Wpis doradczy z content-plan.md poz. 20 — dobór formatu i koloru koperty
+     do branży i okazji. Filar podaje o kolorze jeden fakt (kontrast, cena bez
+     różnic między odcieniami), całe doradztwo należy do wpisu. */
+  const colorPost = getPost('koperta-ozdobna-na-voucher-jaki-format-i-kolor');
   /* Poradnik prezentacyjny z content-plan.md poz. 24 — sposób wręczenia bonu,
-     nie dobór koperty (tamten opisują poz. 19/23 i przyszła poz. 20). */
+     nie dobór koperty (tamten opisują poz. 19/23 i poz. 20). */
   const handoverPost = getPost('jak-wreczyc-bon-podarunkowy-zeby-wygladal-jak-prezent');
-  const relatedPosts = [handoverPost, filesPost].filter(
+  const relatedPosts = [colorPost, handoverPost, filesPost].filter(
     (post): post is BlogPost => post !== undefined
   );
 
@@ -573,7 +577,12 @@ export default function VoucherEnvelopesPage() {
             Pozostałe kolory z palety {COLORS.length} odcieni — w tym Srebrna Perłowa
             i Szarobrązowy o gramaturze {COLOR_MAP['taupe']?.weight?.replace('g', ' g/m²')} —
             również przyjmują nadruk i kosztują tyle samo; wybiorą je Państwo{' '}
-            <Link href="/#kolory">w pełnej palecie kolorów</Link>.
+            <Link href="/#kolory">w pełnej palecie kolorów</Link>. Jak dobrać odcień do branży
+            i okazji — i kiedy sięgnąć po perłę albo metalik — rozpisujemy w poradniku{' '}
+            <Link href="/blog/koperta-ozdobna-na-voucher-jaki-format-i-kolor">
+              koperta ozdobna na voucher
+            </Link>
+            .
           </p>
 
           {/* Cztery branże, które w tym klastrze sprzedają bon najczęściej —
