@@ -111,6 +111,11 @@ const PAGES: { url: string; title: string; note: string }[] = [
     note: 'Medycyna estetyczna i stomatologia: bon na pakiet zabiegowy kupowany przez osobę, która nie zna procedury, dwa rytmy zamówień (bon sezonowy i koperta gabinetowa na plan leczenia), dwie rodziny barw jasnych — Biały i Błękitna kontra Biała Perłowa i Srebrna Perłowa, kalendarz z sezonem ślubnym.',
   },
   {
+    url: '/koperty-dla-biur-rachunkowych',
+    title: 'Koperty dla biur rachunkowych i audytorskich',
+    note: 'Księgowość i audyt: kalendarz roku obrotowego jako podstawa planowania nakładu (PIT-11 w lutym, sprawozdanie w marcu, uchwały o zatwierdzeniu w czerwcu, aneksy cenowe w grudniu), nakład liczony wielkością portfela klientów, dwa odcienie neutralne — Biały i Ecru — pod korespondencję wracającą do tego samego klienta kilka razy w roku.',
+  },
+  {
     url: '/koperty-dla-kancelarii',
     title: 'Koperty dla kancelarii prawnych i notarialnych',
     note: 'Korespondencja prawna: typologia pism (akt notarialny, wezwanie, pismo procesowe), kolory stonowane (Granatowy, Czarny, Taupe), adresowanie wielu klientów w jednym zamówieniu.',

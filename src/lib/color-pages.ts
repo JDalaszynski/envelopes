@@ -479,6 +479,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
         {
           name: 'Biura, które nie chcą bieli',
           text: 'Pisma, umowy i oferty. Ten sam obieg dokumentów co na kopercie białej, tylko koperta nie wygląda na wyjętą z ryzy papieru do drukarki.',
+          link: { href: '/koperty-dla-biur-rachunkowych', anchor: 'Koperty dla biur rachunkowych' },
         },
       ],
     },
@@ -558,6 +559,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
         {
           name: 'Biura rachunkowe i audytorskie',
           text: 'Sprawozdania finansowe, deklaracje i raporty roczne dla zarządów. Format DL mieści arkusz A4 złożony na trzy, a brak okienka zapewnia pełną dyskrecję korespondencji.',
+          link: { href: '/koperty-dla-biur-rachunkowych', anchor: 'Koperty dla biur rachunkowych' },
         },
         {
           name: 'Firmy szkoleniowe i uczelnie',

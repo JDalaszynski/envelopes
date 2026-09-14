@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import type { ReactNode } from 'react';
 import Link from 'next/link';
 
 import { ConfigureLink } from '@/components/home/ConfigureLink';
@@ -154,14 +155,21 @@ const HOW_TO_STEPS = [
  * Każdy akapit niesie **wymiar wkładki**, nie argument wizerunkowy: to jest
  * oś, która odróżnia tę sekcję od branżowych list na F1 i F2.
  */
-const INDUSTRIES: { heading: string; text: string }[] = [
+const INDUSTRIES: { heading: string; text: ReactNode }[] = [
   {
     heading: 'Kancelarie prawne i notarialne',
     text: `Pismo procesowe, opinia i akt notarialny to arkusze A4. Złożone na trzy wchodzą do koperty DL z zapasem ${A4_FIT.clearanceShort} mm na szerokości — dokument nie wymaga drugiego zagięcia, więc po otwarciu leży płasko na biurku.`,
   },
   {
     heading: 'Biura rachunkowe i doradztwo podatkowe',
-    text: `Faktura, deklaracja i sprawozdanie roczne mają format A4. Jedna koperta DL mieści komplet kilku arkuszy złożonych razem na trzy — wymiar wkładki nie zmienia się wraz z liczbą kartek, zmienia się tylko grubość pliku.`,
+    text: (
+      <>
+        Faktura, deklaracja i sprawozdanie roczne mają format A4. Jedna koperta DL mieści komplet
+        kilku arkuszy złożonych razem na trzy — wymiar wkładki nie zmienia się wraz z liczbą
+        kartek, zmienia się tylko grubość pliku. Kalendarz wysyłek w roku obrotowym opisaliśmy na
+        stronie <Link href="/koperty-dla-biur-rachunkowych">koperty dla biur rachunkowych</Link>.
+      </>
+    ),
   },
   {
     heading: 'Hotele, resorty i pensjonaty',

@@ -127,7 +127,7 @@ lub `personalized/` — buduj treść wokół zdjęcia, które faktycznie masz.
 
 | # | Tytuł / URL | Format | Główna fraza | Cel | Persona / Branża | Filar | Uwagi (antykanibalizacja) | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 21 | Koperty dla biur rachunkowych — `/koperty-dla-biur-rachunkowych` | Supporting LP | koperty dla biur rachunkowych | KONWERSJA | Biura rachunkowe, audyt | F1 | **Fraza skorygowana 7 września 2026** — `koperty firmowe z logo` należy do K1 (keywords.md, wspierająca fraza filara F1), a LP branżowa musi celować we frazę branżową, nie frazę filara pod którym stoi. Sprawozdania i korespondencja cykliczna; odróżnia się od poz. 17 sezonowością (zamknięcie roku) | [ ] |
+| 21 | Koperty dla biur rachunkowych — `/koperty-dla-biur-rachunkowych` | Supporting LP | koperty dla biur rachunkowych | KONWERSJA | Biura rachunkowe, audyt | F1 | **Wykonane 14 września 2026.** **Fraza skorygowana 7 września 2026** — `koperty firmowe z logo` należy do K1 (keywords.md, wspierająca fraza filara F1), a LP branżowa musi celować we frazę branżową, nie frazę filara pod którym stoi; strona nie ma jej w `keywords`. **Rozgraniczenie wobec poz. 17 wdrożone na czterech osiach:** częstotliwość (ten sam portfel klientów kilka razy w roku przeciw jednorazowej sprawie), kalendarz roku obrotowego (poz. 17 nie ma sezonowości wcale), jednostka nakładu (tabela liczy partię wielkością portfela, nie liczbą sztuk) i kolor (Biały i Ecru przeciw ciemnej trójce kancelaryjnej). Adresowanie serii zostaje przy poz. 17 — tutaj wyłącznie kolumna tabeli i odnośnik do F2 | [x] |
 | 22 | Koperty dla klinik i gabinetów — `/koperty-dla-klinik` | Supporting LP | koperty na vouchery dla kliniki | KONWERSJA | Med. estetyczna, stomatologia | F4 | **Wykonane 14 września 2026.** Jasne, „czyste" barwy; osobno od poz. 19 — inny cykl zakupowy i inny język. **Rozgraniczenie wdrożone:** cały wybór koloru dzieje się **wewnątrz barw jasnych** (Biały i Błękitna pod stomatologię przeciw perle pod medycynę estetyczną), gdy poz. 19 zestawia jasne z naturalnym Szarobrązowym; dochodzi drugi obieg kopert gabinetowych zużywanych przez cały rok i kalendarz z sezonem ślubnym, którego salon nie ma | [x] |
 | 23 | Koperty dla restauracji — `/koperty-dla-restauracji` | Supporting LP | koperty na vouchery do restauracji | KONWERSJA | Fine dining, winiarnie | F4 | **Wykonane 6 września 2026.** Vouchery na kolacje; wybrana jako druga LP Fazy 2 zaraz po poz. 19 z tego samego powodu — szczyt sprzedażowy w grudniu i przed Walentynkami, domena potrzebuje czasu na dojrzewanie w indeksie. Brak konfliktu frazowego — fraza nie występowała wcześniej w `keywords` żadnej strony | [x] |
 | 24 | Bon podarunkowy — jak go wręczyć, żeby wyglądał jak prezent | Supporting article | ~~koperta do vouchera~~ → `jak wręczyć bon podarunkowy` | RUCH | Właściciel usługi | F4 | **Wykonane 7 września 2026.** Poradnik prezentacyjny; poz. 20 dotyczy doboru koperty, ten — sposobu wręczenia. **Fraza główna przepisana 14 sierpnia 2026:** `koperta do vouchera` to liczba pojedyncza frazy filara `koperty do voucherów` — dwa adresy na tę samą intencję to kanibalizacja z definicji. Fraza zostaje przy F4 (jest w jego `keywords`), wpis celuje w intencję czynnościową. `title` skrócony do 66 znaków z sufiksem marki — pełna wersja z planu dawała 71 | [x] |
@@ -250,6 +250,102 @@ nie liczą się do kadencji czterech pozycji tygodniowo i nie mają filara.
 
 ## Dziennik wdrożeń
 
+### 14 września 2026 — poz. 21: `/koperty-dla-biur-rachunkowych` · szósta LP Fazy 2
+
+**Druga LP branżowa pod filarem F1** — po kancelariach (poz. 17) — i druga pozycja Tygodnia 6.
+Filar poświęca biurom rachunkowym jedną kartę w sekcji „Dla kogo"; ta strona celuje we frazę
+branżową `koperty dla biur rachunkowych` i dokłada sytuację, której filar nie opisuje:
+**korespondencja wraca do tego samego portfela klientów w powtarzalnych oknach kalendarza**.
+Fraza `koperty firmowe z logo` zostaje przy K1 zgodnie z uwagą planu — nie ma jej w `keywords`
+tej strony.
+
+**Rozgraniczenie wobec poz. 17** (`/koperty-dla-kancelarii` — ten sam filar, ten sam szablon
+i ta sama materia: dokumenty na papierze A4). To było jedyne realne ryzyko kanibalizacji w tej
+pozycji, więc rozstrzygnięte zostało na czterech osiach naraz:
+- **Częstotliwość.** Kancelaria wysyła pod pojedynczą sprawę, do zmiennego kręgu adresatów.
+  Biuro rachunkowe wysyła do **tego samego portfela**, kilka razy w roku. Stąd oś całej strony:
+  rozpoznawalność nadawcy wracającego co kwartał, a nie powaga jednego pisma. Trzy karty sekcji
+  „Po co koperta" są wprost o tym — usługa, której klient nie widzi; skrzynka pełna kopert
+  z okienkiem od urzędu, ubezpieczyciela i banku; liczby, które zostają w środku.
+- **Kalendarz** (wprost z uwag planu do poz. 21). Poz. 17 nie ma sezonowości wcale. Tutaj jest
+  ona spinaczem strony: pięć okien roku obrotowego — PIT-11 w styczniu i lutym, sprawozdanie
+  w marcu, rozliczenia roczne w kwietniu, uchwały o zatwierdzeniu w czerwcu, aneksy cenowe
+  i korespondencja świąteczna w listopadzie i grudniu. Terminy zewnętrzne w drugiej kolumnie
+  (informacja PIT-11 dla podatnika do końca lutego, sporządzenie sprawozdania za rok kalendarzowy
+  do końca marca, zatwierdzenie do końca czerwca) zostały sprawdzone przed publikacją i stoją
+  osobno od trzeciej kolumny, która wynika z naszego terminu realizacji. Dwóch rodzajów faktów
+  nie mieszamy w jednej komórce.
+- **Jednostka nakładu.** Poz. 17 nie ma tabeli kosztowej w ogóle (odsyła do F1), a poz. 22 liczy
+  nakład w sztukach. Tutaj tabela liczy partię **wielkością portfela klientów** — 20, 50 i 120 —
+  przy jawnym założeniu jednej koperty na klienta w jednym oknie. To jedyna jednostka, w której
+  biuro rachunkowe planuje wysyłkę.
+- **Kolor.** Poz. 17 jest właścicielem kierunku ciemnego (Granatowy, Czarny, Szarobrązowy).
+  Tutaj wybór dzieje się **wewnątrz barw neutralnych**: Biały jako konwencja obiegu dokumentów
+  przeciw Ecru jako wyjściu ze stosu białych kopert. Granica podana wprost na obu stronach —
+  poz. 17 dostała akapit odsyłający tutaj, ta strona odsyła do poz. 17.
+
+**Adresowania serii nie powtarzamy.** Sekcja „Adresowanie wielu klientów w jednym zamówieniu"
+należy do poz. 17 od 7 września. Tutaj personalizacja występuje wyłącznie jako druga kolumna
+tabeli kosztowej i jedno zdanie odsyłające do F2 — inaczej obie strony miałyby ten sam rozdział
+pod dwoma adresami.
+
+**Bez własnego `FAQPage`**, jak poz. 17, 18, 19, 22 i 23. `PRINT_FAQ_ITEMS` na F1 pokrywa już
+pytania o cenę, minimum nakładu, pliki i terminy. `WebPage.mainEntity` wskazuje na węzeł
+`Product` filara zamiast tworzyć drugi.
+
+**Trzecia LP branżowa bez własnego kadru aranżacyjnego** — po poz. 18 i 22, z tego samego powodu:
+trójkę kadrów branżowych zamknęła poz. 17, a zdjęcia z logo biura rachunkowego w repozytorium
+nie ma. Zamiast podstawiać cudzy kadr strona pokazuje `PLAIN_ENVELOPE_SHOT` **dokładnie tam,
+gdzie jest o nim mowa** — przy akapicie o budowie koperty i jednolitej przedniej ściance.
+Dwa rekomendowane odcienie stoją jako kadry katalogowe **z zaznaczonym polem nadruku**
+(`EnvelopePlaceholder` z `hasPrint`), czyli zdjęcia z `public/images/prints/`, które pokazują
+miejsce na logo i nie obiecują cudzego znaku. Karta OG wygenerowana z kadru Białego przez
+`scripts/og-card.mjs` (`public/images/og/koperty-dla-biur-rachunkowych.jpg`) — inny kadr niż
+karta poz. 22, żeby dwie LP nie dzieliły jednego obrazu w podglądzie odnośnika.
+
+Linkowanie w obie strony:
+- **do LP:** karta „Biura rachunkowe i doradztwo finansowe" na F1, karta „Biura rachunkowe
+  i doradztwo podatkowe" na F3, karta „Zarządy spółek i relacje inwestorskie" na
+  `/koperty-premium`, akapit granicy branżowej w sekcji koloru na `/koperty-dla-kancelarii`,
+  akapit o powierzchni nadruku we wpisie `koperty-bez-okienka-kiedy-je-wybrac` (wymienia tę
+  branżę z nazwy) oraz dwie strony kolorów, które ta LP rekomenduje: Biały i Ecru. Reguła
+  z 10 września utrzymana — karta „Biura rachunkowe i audytorskie" na `/koperty/bialy` nazywa
+  branżę wprost, a karta „Biura, które nie chcą bieli" na `/koperty/ecru` nazywa ją przez
+  sytuację („ten sam obieg dokumentów"); przy `/koperty-premium` decyzja jest osądem, nie
+  dopasowaniem nazwy: karta mówi o raportach rocznych dla zarządów, czyli o przesyłce, którą
+  wysyła właśnie biuro obsługujące spółkę. Stron kolorów Granatowy, Szara i Niebieski **nie
+  linkujemy** — ich karty mówią o doradcach finansowych, biznesowych i instytucjach
+  finansowych, a nie o biurach rachunkowych, i ta LP tych odcieni nie rekomenduje.
+- **z LP:** `/koperty-z-nadrukiem#cena` (rozbicie ceny nadruku), `/koperty-dl` (tabela
+  dopasowań wkładek), `/koperty-personalizowane` (arkusz z listą odbiorców),
+  `/koperty-dla-kancelarii` (granica branżowa w sekcji koloru), `/koperty/bialy`,
+  `/koperty/ecru` oraz pięć wpisów: `ile-kartek-miesci-koperta-dl-i-jak-je-zlozyc`,
+  `koperty-bez-okienka-kiedy-je-wybrac`, `szybka-realizacja-kopert-terminy-i-ekspres`,
+  `cena-kopert-z-nadrukiem-i-koszt-zamowienia`, `dlaczego-koperty-z-nadrukiem-od-10-sztuk`.
+
+`PAGE_UPDATED` podbite dla `/koperty-dla-biur-rachunkowych` i sześciu stron, które dostały
+odnośnik (`/koperty-z-nadrukiem`, `/koperty-dl`, `/koperty-premium`, `/koperty-dla-kancelarii`,
+`/koperty/bialy`, `/koperty/ecru`); wpis blogowy dostał `updated: '2026-09-14'`. `llms.txt`
+i sitemapa (wpis + trzy obrazy) zaktualizowane w tym samym wdrożeniu. **`keywords.md` bez
+zmian** — fraza `koperty dla biur rachunkowych` nie występowała dotąd w `keywords` żadnej
+strony ani w mapie fraz, więc nie ma czego przenosić; nie ma jej też w sekcji „Luki", a wpisanie
+jej tam od razu ze statusem „obsłużona" byłoby szumem. Ta sama sytuacja co przy poz. 17, 18,
+22 i 23.
+
+Weryfikacja: `npm run typecheck` i `npm run build` bez błędów, **79/79 stron statycznie**, strona
+obecna w `sitemap.xml` (z trzema obrazami) i w `/llms.txt`. `title` 56 znaków (z sufiksem marki),
+`description` 153 znaki, jeden `<h1>` z frazą główną w mianowniku, pięć `<h2>` treściowych.
+Komplet siedmiu odnośników zwrotnych potwierdzony w zbudowanym HTML-u wszystkich siedmiu stron;
+wszystkie pięć CTA otwiera konfigurator z `format=DL&kolor=bialy&nadruk=1`. Serwer produkcyjny
+podniesiony lokalnie: trasa, karta OG, oba kadry katalogowe, `sitemap.xml` i `/llms.txt` zwracają
+200. **Czego nie sprawdzono:** wyglądu strony w przeglądarce na desktopie i na 375 px — ta sesja
+nie miała dostępu do przeglądarki, więc renderowanie tabel (trzy kolumny z długim tekstem
+w kolumnie środkowej) i brak przewijania poziomego na wąskim ekranie pozostają do potwierdzenia
+po wdrożeniu.
+
+**Do wykonania po wdrożeniu:** sprawdzenie adresu na `envelopes.pl` (200, `canonical` na domenę
+produkcyjną, komplet odnośników zwrotnych) i `npm run indexnow`.
+
 ### 14 września 2026 — poz. 22: `/koperty-dla-klinik` · piąta LP Fazy 2
 
 **Zamyka klaster voucherowy w Fazie 2** — czwarta LP branżowa pod filarem F4 (po SPA,
@@ -323,8 +419,14 @@ obecna w `sitemap.xml` (z pięcioma obrazami) i w `/llms.txt`. `title` 54 znaki 
 kolorów, tabela kosztu i kalendarz renderują się poprawnie, zero błędów konsoli, kadr zwraca 200,
 brak przewijania poziomego na 375 px, a komplet ośmiu odnośników zwrotnych jest obecny w HTML-u.
 
-**Do wykonania po wdrożeniu na produkcję:** sprawdzić adres na `envelopes.pl` (wniosek z 14
-września — push do `master` nie jest dowodem wdrożenia), a następnie `npm run indexnow`.
+**Wdrożone na produkcję 14 września 2026** (commit `940456d`, jeden commit razem z poz. 46
+i audytem linkowania w dół). Sprawdzone na `envelopes.pl` zgodnie z wnioskiem z tego samego dnia
+— push do `master` nie jest dowodem wdrożenia: strona zwraca 200, `canonical` wskazuje domenę
+produkcyjną, `title` i `<h1>` zgodne z lokalnym buildem, karta OG dostępna, wpis obecny
+w `/llms.txt` i w `sitemap.xml`, a komplet ośmiu odnośników zwrotnych obecny w HTML-u wszystkich
+ośmiu stron. Wpis z poz. 46 również zwraca 200 — zaległość wdrożeniowa z 14 września zamknięta.
+
+**Do wykonania:** `npm run indexnow`.
 
 ### 14 września 2026 — audyt linkowania w dół: `/koperty-premium` i `/koperty-na-pieniadze`
 

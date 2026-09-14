@@ -30,15 +30,18 @@ export const PAGE_UPDATED: Record<string, string> = {
   /* Karta „Hotele, resorty i pensjonaty" w sekcji „Dla kogo" dostała odnośnik
      do poz. 18; czwarta karta w sekcji „Poradniki" i odnośnik pod tabelą
      specyfikacji prowadzą do poz. 46; karta „Kliniki medycyny estetycznej
-     i salony SPA" — do poz. 22 */
+     i salony SPA" — do poz. 22; karta „Biura rachunkowe i doradztwo
+     finansowe" — do poz. 21 */
   '/koperty-z-nadrukiem': '2026-09-14',
   /* Karta „Hotele, resorty i pensjonaty" w sekcji „Dla kogo" dostała odnośnik
      do poz. 18; pod cennikiem doszedł odnośnik do poz. 46 — ten sam próg
      obowiązuje przy adresowaniu; karta „Kliniki, gabinety i salony SPA" —
      odnośnik do poz. 22 */
   '/koperty-personalizowane': '2026-09-14',
-  /* Sekcja „Poradniki" i odnośnik pod tabelą dopasowań — treść wspierająca z poz. 11 planu */
-  '/koperty-dl': '2026-08-21',
+  /* Sekcja „Poradniki" i odnośnik pod tabelą dopasowań — treść wspierająca
+     z poz. 11 planu. 14 września karta „Biura rachunkowe i doradztwo
+     podatkowe" w sekcji „Dla kogo" dostała odnośnik do poz. 21 */
+  '/koperty-dl': '2026-09-14',
   /* Karty „Hotele, resorty i pensjonaty butikowe" oraz „Salony SPA i kliniki
      medycyny estetycznej" w sekcji „Dla kogo" dostały odnośniki do poz. 18
      i poz. 22 */
@@ -50,10 +53,12 @@ export const PAGE_UPDATED: Record<string, string> = {
   /* Publikacja strony „O nas" */
   '/o-nas': '2026-08-17',
   /* Poz. 30–32 planu — druga partia stron kolorów. Karta „Hotele, pensjonaty
-     i domy gościnne" dostała odnośnik do poz. 18 */
+     i domy gościnne" dostała odnośnik do poz. 18, a karta „Biura, które nie
+     chcą bieli" — do poz. 21 */
   '/koperty/ecru': '2026-09-14',
   /* Poz. 33–36 planu — Faza 3 stron kolorów. Karta „Gabinety lekarskie
-     i kliniki" dostała odnośnik do poz. 22 */
+     i kliniki" dostała odnośnik do poz. 22, a karta „Biura rachunkowe
+     i audytorskie" — do poz. 21 */
   '/koperty/bialy': '2026-09-14',
   '/koperty/matcha': '2026-08-19',
   /* Karta „Hotele, resorty i apartamenty nadmorskie" — odnośnik do poz. 18 */
@@ -63,7 +68,8 @@ export const PAGE_UPDATED: Record<string, string> = {
      i notarialne" i „Uroczystości ślubne i jubileusze VIP" dostały
      odnośniki do poz. 19, poz. 17 i poz. 39. 14 września doszło linkowanie
      w dół — sekcja „Poradniki" i trzy odnośniki kontekstowe, a karta
-     kliniczna — drugi odnośnik, do poz. 22. */
+     kliniczna — drugi odnośnik, do poz. 22, a karta „Zarządy spółek
+     i relacje inwestorskie" — odnośnik do poz. 21. */
   '/koperty-premium': '2026-09-14',
   /* Czwarta partia stron kolorów z backlogu klastra K5 */
   '/koperty/szara': '2026-08-19',
@@ -104,8 +110,9 @@ export const PAGE_UPDATED: Record<string, string> = {
   '/koperty-dla-salonow-spa': '2026-09-05',
   /* Poz. 23 planu — druga LP branżowa Fazy 2, filar F4 */
   '/koperty-dla-restauracji': '2026-09-06',
-  /* Poz. 17 planu — trzecia LP branżowa Fazy 2, filar F1 */
-  '/koperty-dla-kancelarii': '2026-09-07',
+  /* Poz. 17 planu — trzecia LP branżowa Fazy 2, filar F1. 14 września sekcja
+     koloru dostała akapit z granicą branżową wobec poz. 21 */
+  '/koperty-dla-kancelarii': '2026-09-14',
   /* Poz. 39 planu — pillar K8, wykonany wyprzedzająco z Fazy 4.
      14 września doszło linkowanie w dół — sekcja „Poradniki" i trzy
      odnośniki kontekstowe do treści wspierających. */
@@ -114,6 +121,8 @@ export const PAGE_UPDATED: Record<string, string> = {
   '/koperty-dla-hoteli': '2026-09-14',
   /* Poz. 22 planu — piąta LP branżowa Fazy 2, filar F4 */
   '/koperty-dla-klinik': '2026-09-14',
+  /* Poz. 21 planu — szósta LP branżowa Fazy 2 i druga pod filarem F1 */
+  '/koperty-dla-biur-rachunkowych': '2026-09-14',
 };
 
 /** Data zmiany treści dla trasy — `undefined`, gdy trasy nie ma w rejestrze. */

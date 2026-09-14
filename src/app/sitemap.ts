@@ -143,6 +143,18 @@ const PAGE_IMAGES: Record<string, string[]> = {
       .filter((color) => color?.images?.DL)
       .map((color) => abs(color.images!.DL!)),
   ],
+  /* Supporting LP poz. 21 — kadr koperty gładkiej przy sekcji o budowie
+     koperty (kadru z logo biura rachunkowego w repozytorium nie ma) plus dwa
+     kadry katalogowe z zaznaczonym polem nadruku: Biały i Ecru. Strona
+     renderuje je przez `EnvelopePlaceholder` z `hasPrint`, więc do sitemapy
+     idą `printImages`, a nie zdjęcia kopert gładkich. */
+  '/koperty-dla-biur-rachunkowych': [
+    ...shotUrls([PLAIN_ENVELOPE_SHOT]),
+    ...['bialy', 'ecru']
+      .map((id) => COLOR_MAP[id])
+      .filter((color) => color?.printImages?.DL)
+      .map((color) => abs(color.printImages!.DL!)),
+  ],
   /* Supporting LP poz. 17 — jedyny realny kadr aranżacyjny dla kancelarii
      (Granatowy) plus próbki katalogowe dwóch odcieni stonowanych. */
   '/koperty-dla-kancelarii': [
@@ -223,6 +235,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     page('/koperty-dla-hoteli', 'monthly', 0.8),
     /* Supporting LP pod F4 — koperty na vouchery dla kliniki (content-plan.md poz. 22) */
     page('/koperty-dla-klinik', 'monthly', 0.8),
+    /* Supporting LP pod F1 — koperty dla biur rachunkowych (content-plan.md poz. 21) */
+    page('/koperty-dla-biur-rachunkowych', 'monthly', 0.8),
     /* Pillar K8 — koperty na pieniądze (content-plan.md poz. 39) */
     page('/koperty-na-pieniadze', 'monthly', 0.9),
     page('/blog', 'weekly', 0.8),

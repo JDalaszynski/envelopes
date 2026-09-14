@@ -134,7 +134,15 @@ const INDUSTRIES: { heading: string; text: ReactNode }[] = [
   },
   {
     heading: 'Biura rachunkowe i doradztwo finansowe',
-    text: 'Sprawozdania roczne i raporty z audytu wychodzą do klientów w powtarzalnych partiach, zwykle w tym samym tygodniu każdego kwartału. Ten sam projekt nadruku zamawia się wtedy raz i wraca do niego przy kolejnej wysyłce.',
+    text: (
+      <>
+        Sprawozdania roczne i raporty z audytu wychodzą do klientów w powtarzalnych partiach,
+        zwykle w tym samym tygodniu każdego kwartału. Ten sam projekt nadruku zamawia się wtedy
+        raz i wraca do niego przy kolejnej wysyłce. Kalendarz roku obrotowego i nakład liczony
+        wielkością portfela klientów rozpisaliśmy na stronie{' '}
+        <Link href="/koperty-dla-biur-rachunkowych">koperty dla biur rachunkowych</Link>.
+      </>
+    ),
   },
   {
     heading: 'Hotele, resorty i pensjonaty',

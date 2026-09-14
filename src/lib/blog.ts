@@ -1429,8 +1429,10 @@ const POSTS: BlogPost[] = [
     lead: 'Brak okienka w kopercie buduje prestiż i chroni poufne dane. Wybierzcie Państwo gładkie koperty DL w 19 kolorach z nadrukiem realizowanym od 10 sztuk.',
     category: 'Poradniki',
     date: '2026-08-21',
-    /* Odnośnik do LP kancelaryjnej (poz. 17) w sekcji o poufności */
-    updated: '2026-09-10',
+    /* Odnośnik do LP kancelaryjnej (poz. 17) w sekcji o poufności,
+       a od 14 września — do LP biur rachunkowych (poz. 21) w sekcji
+       o powierzchni nadruku, która wymienia tę branżę z nazwy */
+    updated: '2026-09-14',
     readingMinutes: 5,
     colorId: 'biala-perlowa',
     format: 'DL',
@@ -1467,7 +1469,7 @@ const POSTS: BlogPost[] = [
         heading: 'Pełna przednia ścianka pod własny nadruk firmowy',
         paragraphs: [
           'Brak wyciętego otworu oznacza, że cała przednia ścianka koperty pozostaje dostępna pod projekt graficzny. W standardowej kopercie z okienkiem, prawy dolny róg jest zablokowany, co wymusza kompromisy przy pozycjonowaniu logotypu i haseł reklamowych.',
-          'Gładka koperta uwalnia proces projektowy — pozwala na umieszczenie logo centralnie, na równym marginesie, a nawet na powiększenie grafiki. Taka przestrzeń jest szczególnie istotna w kreowaniu wizerunku biur rachunkowych i agencji marketingowych, gdzie estetyka przesyłki stanowi przedłużenie identyfikacji wizualnej.',
+          'Gładka koperta uwalnia proces projektowy — pozwala na umieszczenie logo centralnie, na równym marginesie, a nawet na powiększenie grafiki. Taka przestrzeń jest szczególnie istotna w kreowaniu wizerunku biur rachunkowych i agencji marketingowych, gdzie estetyka przesyłki stanowi przedłużenie identyfikacji wizualnej. Kalendarz wysyłek w roku obrotowym i dobór odcienia neutralnego rozpisujemy na stronie [koperty dla biur rachunkowych](/koperty-dla-biur-rachunkowych).',
         ],
       },
       {

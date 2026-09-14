@@ -301,6 +301,13 @@ export default function KancelarieEnvelopesPage() {
             </div>
           </div>
 
+          <p className="small muted" style={{ marginTop: 'var(--space-5)', maxWidth: '68ch' }}>
+            Biura rachunkowe i firmy audytorskie opisaliśmy osobno — tam ta sama koperta wraca do
+            tego samego klienta kilka razy w roku, więc zamiast odcieni stonowanych pracują
+            neutralne:{' '}
+            <Link href="/koperty-dla-biur-rachunkowych">koperty dla biur rachunkowych</Link>.
+          </p>
+
           <div className="row" style={{ marginTop: 'var(--space-6)' }}>
             <ConfigureLink format="DL" print color="granatowy" className="btn">
               Wyceń koperty z logo kancelarii

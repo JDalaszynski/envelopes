@@ -535,7 +535,10 @@ export default function KopertyPremiumPage() {
               <h3 style={{ fontSize: 19 }}>Zarządy spółek i relacje inwestorskie</h3>
               <p className="small" style={{ marginTop: 'var(--space-2)', marginBottom: 0 }}>
                 Raporty roczne, listy gratulacyjne, powołania na stanowiska i korespondencja z kluczowymi
-                akcjonariuszami. Koperta bez okienka zapewnia dyskrecję przed otwarciem.
+                akcjonariuszami. Koperta bez okienka zapewnia dyskrecję przed otwarciem. Sprawozdanie
+                i raport z audytu wysyła zwykle obsługujące spółkę biuro — jego kalendarz wysyłek
+                opisaliśmy na stronie{' '}
+                <Link href="/koperty-dla-biur-rachunkowych">koperty dla biur rachunkowych</Link>.
               </p>
             </div>
 
