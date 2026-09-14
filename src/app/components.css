@@ -744,11 +744,21 @@
 
 /* Przechył sterowany zmiennymi `--mouse-x`/`--mouse-y`, a nie `:hover` —
    nasłuch myszy wisi na całej scenie (patrz komponent), więc licznik
-   działa nawet gdy to SĄSIEDNIA koperta fizycznie „złapała" kursor. */
+   działa nawet gdy to SĄSIEDNIA koperta fizycznie „złapała" kursor.
+
+   UWAGA: żadnego `will-change: transform` na tej warstwie. W połączeniu
+   z transformacją 3D (`perspective()`) i `filter: drop-shadow` na obrazku
+   przeglądarka rasteryzuje całą warstwę RAZ, do tekstury o skali 1x, i
+   dopiero ją rozciąga — na ekranach HiDPI koperta traci połowę
+   rozdzielczości. Najmocniej widać to na kopercie z nadrukiem, bo tylko
+   ona ma drobny detal (szeryfowy napis „Envelopes" i logo), który przy
+   1x robi się rozmyty. Bez `will-change` warstwa rasteryzuje się w skali
+   ekranu i zostaje ostra również w trakcie przechyłu — a że sam przechył
+   to wyłącznie rotacja (bez zmiany skali), nic się po drodze nie
+   przerasteryzowuje i płynność na tym nie traci. */
 .hero-envelope-3d {
   width: 100%;
   height: 100%;
-  will-change: transform;
   transform-style: preserve-3d;
   transition: transform 0.2s ease-out;
   transform: perspective(1000px) rotateX(calc(var(--mouse-y, 0) * 30deg)) rotateY(calc(var(--mouse-x, 0) * -30deg));
