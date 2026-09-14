@@ -338,13 +338,27 @@ obecna w `sitemap.xml` (z trzema obrazami) i w `/llms.txt`. `title` 56 znaków (
 Komplet siedmiu odnośników zwrotnych potwierdzony w zbudowanym HTML-u wszystkich siedmiu stron;
 wszystkie pięć CTA otwiera konfigurator z `format=DL&kolor=bialy&nadruk=1`. Serwer produkcyjny
 podniesiony lokalnie: trasa, karta OG, oba kadry katalogowe, `sitemap.xml` i `/llms.txt` zwracają
-200. **Czego nie sprawdzono:** wyglądu strony w przeglądarce na desktopie i na 375 px — ta sesja
-nie miała dostępu do przeglądarki, więc renderowanie tabel (trzy kolumny z długim tekstem
-w kolumnie środkowej) i brak przewijania poziomego na wąskim ekranie pozostają do potwierdzenia
-po wdrożeniu.
+200.
+
+**Sprawdzone w przeglądarce** (sesja główna, bo sesja agenta przeglądarki nie miała): desktop
+1024 px i 375 px, zero błędów w konsoli, brak przewijania poziomego na wąskim ekranie
+(`scrollWidth` równy `innerWidth`). Obie tabele trzykolumnowe mają szerokość własną 720 px
+i przewijają się poziomo **wewnątrz** `.table-wrap` — to zachowanie tabel `.data` w całym
+serwisie, nie regresja tej strony. Kadr koperty gładkiej i oba kadry katalogowe (`prints/`
+Biały i Ecru) ładują się realnie, alty opisowe i różne dla każdego kadru. `title` 56 znaków,
+`description` 153 znaki, jeden `<h1>`, sześć `<h2>` (pięć treściowych plus finalne CTA).
+
+**Wypchnięte do `master` 14 września 2026, commit `17bc550`** (razem z potwierdzeniem wdrożenia
+poz. 22). **Produkcja tego commita jeszcze nie serwuje** — 17 minut po pushu `envelopes.pl`
+oddaje 404 na tej trasie, a `sitemap.xml` na produkcji nadal nie zawiera adresu; strona główna
+idzie z poprzedniego builda. To **druga** odsłona zaległości wdrożeniowej opisanej 14 września
+przy poz. 18 (produkcja stała wtedy na buildzie z 7 września), więc wniosek z tamtego dnia
+zostaje w mocy i dostaje wzmocnienie: **push do `master` nie jest dowodem wdrożenia i nie da się
+go wymusić z repozytorium** — w projekcie nie ma ani deploy hooka, ani CLI Vercela.
 
 **Do wykonania po wdrożeniu:** sprawdzenie adresu na `envelopes.pl` (200, `canonical` na domenę
-produkcyjną, komplet odnośników zwrotnych) i `npm run indexnow`.
+produkcyjną, komplet odnośników zwrotnych) i `npm run indexnow` — zgłoszenie obejmie wtedy także
+`/koperty-dla-klinik` i pozostałe adresy z okna 7 dni.
 
 ### 14 września 2026 — poz. 22: `/koperty-dla-klinik` · piąta LP Fazy 2
 
