@@ -133,6 +133,16 @@ const PAGE_IMAGES: Record<string, string[]> = {
       .filter((color) => color?.images?.DL)
       .map((color) => abs(color.images!.DL!)),
   ],
+  /* Supporting LP poz. 22 — kadr koperty gładkiej przy sekcji o braku okienka
+     (kadru z logo kliniki w repozytorium nie ma) plus próbki katalogowe
+     czterech odcieni z dwóch rodzin jasnych tej strony. */
+  '/koperty-dla-klinik': [
+    ...shotUrls([PLAIN_ENVELOPE_SHOT]),
+    ...['bialy', 'jasnoniebieska', 'biala-perlowa', 'srebrna-perlowa']
+      .map((id) => COLOR_MAP[id])
+      .filter((color) => color?.images?.DL)
+      .map((color) => abs(color.images!.DL!)),
+  ],
   /* Supporting LP poz. 17 — jedyny realny kadr aranżacyjny dla kancelarii
      (Granatowy) plus próbki katalogowe dwóch odcieni stonowanych. */
   '/koperty-dla-kancelarii': [
@@ -211,6 +221,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     page('/koperty-dla-kancelarii', 'monthly', 0.8),
     /* Supporting LP pod F4 — koperty firmowe dla hotelu (content-plan.md poz. 18) */
     page('/koperty-dla-hoteli', 'monthly', 0.8),
+    /* Supporting LP pod F4 — koperty na vouchery dla kliniki (content-plan.md poz. 22) */
+    page('/koperty-dla-klinik', 'monthly', 0.8),
     /* Pillar K8 — koperty na pieniądze (content-plan.md poz. 39) */
     page('/koperty-na-pieniadze', 'monthly', 0.9),
     page('/blog', 'weekly', 0.8),

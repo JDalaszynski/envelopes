@@ -570,6 +570,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
         {
           name: 'Gabinety lekarskie i kliniki',
           text: 'Wyniki badań, zalecenia lekarskie i oficjalne zaświadczenia. Odcień budzi naturalne skojarzenie z czystością, sterylnością i profesjonalizmem placówki.',
+          link: { href: '/koperty-dla-klinik', anchor: 'Koperty na vouchery dla kliniki' },
         },
       ],
     },
@@ -1096,6 +1097,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
         {
           name: 'Kliniki stomatologiczne, medyczne i laboratoria',
           text: 'Bony na zabiegi, pakiety profilaktyczne i oficjalna korespondencja. Jasny błękit budzi naturalne skojarzenia ze sterylnością, spokojem i profesjonalizmem.',
+          link: { href: '/koperty-dla-klinik', anchor: 'Koperty na vouchery dla kliniki' },
         },
         {
           name: 'Salony kosmetyczne, wellness i gabinety masażu',
@@ -1720,6 +1722,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
         {
           name: 'Kliniki stomatologiczne i medycyny estetycznej',
           text: 'Bony na zabiegi i podziękowania dla pacjentów. Srebro trzyma skojarzenie z czystością gabinetu, nie schodząc przy tym w biurową biel.',
+          link: { href: '/koperty-dla-klinik', anchor: 'Koperty na vouchery dla kliniki' },
         },
         {
           name: 'Salony samochodowe i firmy leasingowe',
@@ -1816,6 +1819,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
         {
           name: 'Gabinety medycyny estetycznej i kliniki premium',
           text: 'Karty podarunkowe i zaproszenia dla stałych pacjentek. Koperta jest wręczana do ręki, więc oglądana z bliska — a właśnie z bliska widać różnicę wobec papieru matowego.',
+          link: { href: '/koperty-dla-klinik', anchor: 'Koperty na vouchery dla kliniki' },
         },
         {
           name: 'Salony fryzjerskie i studia beauty',

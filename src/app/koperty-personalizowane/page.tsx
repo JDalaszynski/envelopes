@@ -97,6 +97,12 @@ const addressGuide = getPost('jak-zaadresowac-koperte-wysylana-przez-firme-wzor'
 const nameListGuide = getPost('koperty-z-imieniem-i-nazwiskiem-jak-przygotowac-liste');
 const GUIDES = [sheetGuide, addressGuide, nameListGuide].filter((post) => post !== undefined);
 
+/* Wpis z klastra K1 (content-plan.md poz. 46) — nie wchodzi do `GUIDES`, bo
+   sekcja poradników należy do K2. Stoi przy wierszu cennika z progiem, bo to
+   ten sam próg: przy personalizacji minimum wynika z tej samej pracy
+   przygotowawczej co przy nadruku logo. */
+const moqGuide = getPost('dlaczego-koperty-z-nadrukiem-od-10-sztuk');
+
 /** Gramatury papieru w podziale na kolory — dane wprost z katalogu. */
 const WEIGHT_GROUPS = Object.entries(
   COLORS.reduce<Record<string, string[]>>((acc, color) => {
@@ -182,7 +188,15 @@ const INDUSTRIES: { heading: string; text: ReactNode }[] = [
   },
   {
     heading: 'Kliniki, gabinety i salony SPA',
-    text: 'Bon z imieniem obdarowanego przestaje być kuponem, a staje się prezentem. Taka koperta nigdzie nie jedzie — wręcza się ją przy ladzie — więc drukujemy na niej samo imię albo dedykację, bez adresu pocztowego. Długość tekstu nie zmienia ceny.',
+    text: (
+      <>
+        Bon z imieniem obdarowanego przestaje być kuponem, a staje się prezentem. Taka koperta
+        nigdzie nie jedzie — wręcza się ją przy ladzie — więc drukujemy na niej samo imię albo
+        dedykację, bez adresu pocztowego. Długość tekstu nie zmienia ceny. Dobór odcienia
+        i kalendarz sprzedaży bonów w gabinecie zabiegowym opisaliśmy na stronie{' '}
+        <Link href="/koperty-dla-klinik">koperty na vouchery dla kliniki</Link>.
+      </>
+    ),
   },
   {
     heading: 'Biura nieruchomości i deweloperzy',
@@ -417,6 +431,17 @@ export default function PersonalizedEnvelopesPage() {
               </tbody>
             </table>
           </div>
+
+          {moqGuide && (
+            <p className="small" style={{ marginTop: 'var(--space-5)', maxWidth: '68ch' }}>
+              Minimum {DEFAULT_PRICING.moqWithPrint} sztuk obowiązuje tak samo przy adresowaniu, jak
+              przy nadruku logo — skąd się bierze, wyjaśniamy w poradniku{' '}
+              <Link href={`/blog/${moqGuide.slug}`}>
+                dlaczego koperty z nadrukiem są od {DEFAULT_PRICING.moqWithPrint} sztuk
+              </Link>
+              .
+            </p>
+          )}
 
           <h3 style={{ marginTop: 'var(--space-7)' }}>
             Przykładowe wartości wysyłki adresowanej

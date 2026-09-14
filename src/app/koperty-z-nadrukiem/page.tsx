@@ -150,7 +150,15 @@ const INDUSTRIES: { heading: string; text: ReactNode }[] = [
   },
   {
     heading: 'Kliniki medycyny estetycznej i salony SPA',
-    text: 'Bon na zabieg jest prezentem, więc wybierane są jasne odcienie — Biała Perłowa, Ecru, Biały. Logo kliniki na kopercie robi różnicę między prezentem a wydrukiem z drukarki biurowej.',
+    text: (
+      <>
+        Bon na zabieg jest prezentem, więc wybierane są jasne odcienie — Biała Perłowa, Ecru,
+        Biały. Logo kliniki na kopercie robi różnicę między prezentem a wydrukiem z drukarki
+        biurowej. Ten sam nadruk obsługuje drugi obieg kopert w gabinecie — plan leczenia
+        i zalecenia pozabiegowe; obie sytuacje opisaliśmy na stronie{' '}
+        <Link href="/koperty-dla-klinik">koperty na vouchery dla kliniki</Link>.
+      </>
+    ),
   },
   {
     heading: 'Agencje eventowe, PR i kreatywne',
@@ -222,7 +230,11 @@ export default function PrintedEnvelopesPage() {
      trwa realizacja, wpis odpowiada na pytanie, od kiedy je liczymy i jak
      policzyć datę wysyłki wstecz od dnia wydarzenia. */
   const deadlinePost = getPost('szybka-realizacja-kopert-terminy-i-ekspres');
-  const relatedPosts = [costPost, deadlinePost, filesPost].filter(
+  /* Wpis o progu z content-plan.md poz. 46 — ta strona podaje minimalną ilość
+     jako parametr oferty, wpis odpowiada na obiekcję, która za tym parametrem
+     stoi: dlaczego próg w ogóle jest i co zrobić, gdy potrzeba mniej kopert. */
+  const moqPost = getPost('dlaczego-koperty-z-nadrukiem-od-10-sztuk');
+  const relatedPosts = [costPost, moqPost, deadlinePost, filesPost].filter(
     (post): post is BlogPost => post !== undefined
   );
 
@@ -592,6 +604,20 @@ export default function PrintedEnvelopesPage() {
               </tbody>
             </table>
           </div>
+
+          {/* Anchor = fraza docelowa wpisu, nie fraza tej strony. Wiersz
+              specyfikacji podaje próg, wpis uzasadnia go i podaje wyjścia dla
+              nakładu mniejszego niż minimum (content-plan.md poz. 46). */}
+          {moqPost && (
+            <p className="small" style={{ marginTop: 'var(--space-5)', maxWidth: '68ch' }}>
+              Skąd bierze się minimalny nakład i co zrobić, gdy potrzebują Państwo mniej kopert —
+              wyjaśniamy w poradniku{' '}
+              <Link href={`/blog/${moqPost.slug}`}>
+                dlaczego koperty z nadrukiem są od {DEFAULT_PRICING.moqWithPrint} sztuk
+              </Link>
+              .
+            </p>
+          )}
         </div>
       </section>
 
@@ -913,9 +939,11 @@ export default function PrintedEnvelopesPage() {
               <span className="eyebrow">Poradniki</span>
               <h2>Zanim zamówią Państwo nadruk</h2>
             </div>
-            {/* Trzy kolumny dopiero od trzeciego wpisu — przy dwóch siatka
-                trzykolumnowa zostawiałaby pustą kolumnę. */}
-            <div className={relatedPosts.length > 2 ? 'grid grid-3' : 'grid grid-2'}>
+            {/* Siatka domyka się tylko wtedy, gdy liczba kart dzieli się przez
+                liczbę kolumn — przy czterech wpisach trzy kolumny zostawiałyby
+                w drugim rzędzie dwa puste miejsca, a dwie kolumny wypełniają
+                oba rzędy. */}
+            <div className={relatedPosts.length % 3 === 0 ? 'grid grid-3' : 'grid grid-2'}>
               {relatedPosts.map((post) => (
                 <article className="post-card" key={post.slug}>
                   <BlogCoverImage

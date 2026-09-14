@@ -40,6 +40,12 @@ klienta z bazy wiedzy (kancelarie, hotele, kliniki, agencje). Intencja niemal wy
 17 sierpnia 2026 (content-plan.md poz. 9), **właściciel frazy `koperty z nadrukiem cena`**.
 Odpowiada na pytanie o **koszt całego zamówienia** (dostawa rozłożona na sztuki, tabela pozycji,
 których nie doliczamy); cena jednostkowa i jej składniki zostają w sekcji `#cena` na filarze.
+**Wsparcie:** wpis `dlaczego-koperty-z-nadrukiem-od-10-sztuk` `[ISTNIEJE]` — opublikowany
+14 września 2026 (content-plan.md poz. 46), **właściciel frazy `koperty z nadrukiem od 10 sztuk`
+w postaci pytania**. Podział z filarem: filar niesie próg jako parametr oferty i wygrywa intencję
+transakcyjną („chcę zamówić krótką serię"), wpis odpowiada na intencję informacyjną („dlaczego
+jest minimum", „czy mogę zamówić mniej"). Tytuł filara zostaje bez zmian — decyzja właściciela
+z 17 sierpnia 2026.
 **Wsparcie:** wpis `jak-przygotowac-pliki-do-druku-na-kopertach` `[ISTNIEJE]` — przepisany
 15 sierpnia 2026 (content-plan.md poz. 7). Oddał filarowi całą warstwę transakcyjną i obsługuje
 wyłącznie intencję procesową „jak przygotować plik do druku": jest właścicielem frazy
@@ -451,7 +457,8 @@ profilu klienta z bazy wiedzy. Do zweryfikowania w kolejnym eksporcie:
 
 1. **Branżowe:** `koperty dla kancelarii`, `koperty dla hotelu`, `koperty firmowe dla kliniki`,
    `koperty na certyfikaty`, `koperty na dyplomy`, `koperty do umów`.
-2. **Procesowe / B2B:** `koperty firmowe faktura vat`, `koperty z nadrukiem od 10 sztuk`,
+2. **Procesowe / B2B:** `koperty firmowe faktura vat`, ~~`koperty z nadrukiem od 10 sztuk`~~
+   (obsłużona od 14 września 2026 wpisem `dlaczego-koperty-z-nadrukiem-od-10-sztuk`),
    `koperty hurtowo z logo`, `koperty z nadrukiem odroczony termin płatności`,
    `koperty z nadrukiem wysyłka kurierem`.
 3. **Generatywne (pytania pełnym zdaniem)** — nie pojawiają się w klasycznych narzędziach

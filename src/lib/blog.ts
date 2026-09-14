@@ -781,8 +781,9 @@ const POSTS: BlogPost[] = [
     lead: 'Sprawdź jak kształtuje się koszt zamówienia kopert z nadrukiem dla Twojej firmy. Poznaj czynniki wpływające na ostateczną wycenę i dokładnie zaplanuj swój budżet marketingowy. Przeczytaj nasz przejrzysty cennik.',
     category: 'Poradniki',
     date: '2026-08-17',
-    /* Doszedł akapit odsyłający do poradnika o terminach (poz. 16) */
-    updated: '2026-08-26',
+    /* Doszły odesłania do poradnika o terminach (poz. 16) i do poradnika
+       o minimalnym nakładzie (poz. 46) */
+    updated: '2026-09-14',
     readingMinutes: 6,
     colorId: 'eko',
     format: 'DL',
@@ -937,7 +938,10 @@ const POSTS: BlogPost[] = [
         heading: 'Jak policzyć koszt własnego nakładu',
         paragraphs: [
           'Koszt dowolnego zamówienia liczy się jednym działaniem: stawka jednostkowa razy liczba kopert, plus jedna dostawa. Stawka jest stała, więc jedyną zmienną w tym rachunku jest nakład.',
-          `Jeden próg trzeba sprawdzić przed liczeniem. Zamówienie z nadrukiem zaczyna się od ${DEFAULT_PRICING.moqWithPrint} sztuk; koperty gładkie, bez nadruku, zamawiają Państwo od ${DEFAULT_PRICING.moqWithoutPrint} sztuki.`,
+          /* Próg pada tu jako fakt do rachunku — uzasadnienie i wyjścia dla
+             mniejszego nakładu należą do poz. 46, więc wpis kosztowy do niej
+             odsyła zamiast powtarzać jej treść. */
+          `Jeden próg trzeba sprawdzić przed liczeniem. Zamówienie z nadrukiem zaczyna się od ${DEFAULT_PRICING.moqWithPrint} sztuk; koperty gładkie, bez nadruku, zamawiają Państwo od ${DEFAULT_PRICING.moqWithoutPrint} sztuki. Skąd bierze się ten próg, tłumaczymy w poradniku [dlaczego koperty z nadrukiem są od ${DEFAULT_PRICING.moqWithPrint} sztuk](/blog/dlaczego-koperty-z-nadrukiem-od-10-sztuk).`,
           'Konfigurator na stronie głównej wykonuje to działanie na bieżąco. Po wpisaniu ilości i włączeniu nadruku podsumowanie pokazuje kwotę brutto, netto oraz koszt dostawy — zanim cokolwiek trafi do koszyka i zanim podadzą Państwo jakiekolwiek dane.',
         ],
       },
@@ -2407,6 +2411,189 @@ const POSTS: BlogPost[] = [
     cta: 'W konfiguratorze wybiorą Państwo odcień i od razu zobaczą cenę serii. Wizualizację z logo przesyłamy do akceptacji przed drukiem.',
     ctaConfigure: { label: 'Dobierz kolor koperty na voucher', format: 'DL', print: true },
     pillar: { href: '/koperty-na-vouchery', anchor: 'koperty na vouchery' },
+  },
+  {
+    /* content-plan.md poz. 46 — treść wspierająca filar F1, cel GEO.
+       Rozgraniczenia (pkt 8 briefu SEO):
+       - wobec F1 `/koperty-z-nadrukiem`: filar podaje próg jako parametr
+         sprzedażowy (tytuł, pasek faktów, wiersz specyfikacji i jedno pytanie
+         w `PRINT_FAQ_ITEMS`), ten wpis odpowiada na obiekcję stojącą za
+         pytaniem — „dlaczego akurat tyle" i „co zrobić, gdy potrzebuję mniej";
+       - wobec poz. 9 (koszt zamówienia): zero kwot i zero tabeli nakładów.
+         Koszt krótkiej serii należy do tamtego wpisu; tutaj pada wyłącznie
+         zdanie o stałej stawce jednostkowej, bez liczby;
+       - wobec poz. 16 (terminy): termin pada raz i bez liczby dni — wpis mówi
+         tylko tyle, że nakład go nie zmienia;
+       - wobec poz. 7 (pliki do druku): zero wymagań plikowych. Sprawdzenie
+         pliku występuje jako etap pracy, nie jako specyfikacja.
+       `FAQPage` zostaje wyłącznie na filarze — wpis nie dostaje własnego,
+       mimo że dwa nagłówki mają formę pytań (zasada z poz. 7, 8 i 9).
+
+       Slug niesie liczbę, bo jest częścią frazy docelowej. Zmiana progu
+       w `DEFAULT_PRICING` przepisze treść i tytuł, ale **nie adres** — URL
+       zostaje stały, a rozjazd trzeba wtedy rozstrzygnąć przekierowaniem. */
+    slug: 'dlaczego-koperty-z-nadrukiem-od-10-sztuk',
+    title: `Dlaczego koperty z nadrukiem są od ${DEFAULT_PRICING.moqWithPrint} sztuk`,
+    lead: `Minimum przy nadruku to ${DEFAULT_PRICING.moqWithPrint} sztuk, bo część pracy wygląda tak samo przy każdym nakładzie. Wyjaśniamy próg i to, co zrobić, gdy potrzebują Państwo mniej.`,
+    category: 'Poradniki',
+    date: '2026-09-14',
+    readingMinutes: 6,
+    colorId: 'biala-perlowa',
+    format: 'DL',
+    /* Kadr małej firmy usługowej — dotąd nieużywany w treści blogowej.
+       Pokazuje dokładnie tego czytelnika, do którego wpis mówi: jedno logo,
+       krótka seria, pierwszy zakup kopert firmowych. */
+    showcaseFile: 'biala-perlowa-koperta-dl-nadruk-logo-auto-detailing',
+    imageVariant: 'nadruk',
+    ogImageSlug: 'blog-nadruk-od-10-sztuk',
+    /* Kadr karty OG przycięty do górnej części zdjęcia — przykładowa nazwa
+       firmy z nadruku zostaje poza kadrem. Karta krąży bez kontekstu strony,
+       a zdanie o przykładowych nadrukach stoi na stronie (zasada z poz. 9). */
+    ogImageAlt:
+      'Zamknięta koperta DL Biała Perłowa leżąca na szczotkowanym metalu, kadr z poradnika o minimalnym nakładzie',
+    keywords: [
+      'koperty z nadrukiem od 10 sztuk',
+      'minimalna ilość kopert z nadrukiem',
+      'koperty z logo małe ilości',
+      'koperty z nadrukiem dla małej firmy',
+    ],
+    intro: `Koperty z nadrukiem realizujemy od ${DEFAULT_PRICING.moqWithPrint} sztuk, bo każde zamówienie z logo przechodzi przez ten sam zestaw czynności niezależnie od nakładu: sprawdzenie pliku, wizualizację do akceptacji, przygotowanie do druku i kontrolę pierwszych kopert. Tej pracy nie fakturujemy osobno — jest wliczona w stawkę za nadruk, a minimalny nakład jest warunkiem, na którym taka konstrukcja ceny się broni. Poniżej rozpisujemy, co składa się na próg, ile to jest ${DEFAULT_PRICING.moqWithPrint} kopert w praktyce i co zrobić, gdy potrzebują Państwo mniej.`,
+    sections: [
+      {
+        id: 'skad-prog',
+        heading: `Skąd bierze się minimum ${DEFAULT_PRICING.moqWithPrint} sztuk przy nadruku`,
+        paragraphs: [
+          'Próg wynika z kosztu przygotowania, a nie z ceny papieru. Zanim ruszy druk, zamówienie przechodzi przez cztery czynności, których nakład nie skraca: weryfikację pliku z logo, wizualizację wysłaną Państwu do akceptacji, ustawienie druku pod format i kolor papieru oraz kontrolę pierwszych kopert z serii. Ta praca wygląda tak samo przy pięciu kopertach i przy pięciuset.',
+          'Taki koszt można rozliczyć na dwa sposoby: doliczyć opłatę przygotowawczą do każdego zamówienia albo ustalić minimalny nakład. Wybraliśmy drugi, bo pierwszy oznacza pozycję na fakturze, której klient przy pierwszym zakupie nie umie przewidzieć. Listę opłat, których nie doliczamy, zestawiliśmy w poradniku [cena kopert z nadrukiem i koszt zamówienia](/blog/cena-kopert-z-nadrukiem-i-koszt-zamowienia#czego-nie-doliczamy).',
+          'To samo minimum obowiązuje przy personalizacji, czyli przy nadruku danych odbiorcy. Kolejność pracy jest tam identyczna: najpierw sprawdzamy plik z listą, potem wysyłamy wizualizację, a dopiero po akceptacji drukujemy. Mechanizm samej usługi opisuje strona [personalizowane koperty](/koperty-personalizowane).',
+        ],
+        table: {
+          caption: 'Praca przy zamówieniu kopert z nadrukiem: co rośnie z nakładem, a co nie',
+          head: ['Etap', 'Na czym polega', 'Czy rośnie z nakładem'],
+          rows: [
+            [
+              'Sprawdzenie pliku z logo',
+              'Grafik ocenia, czy plik nadaje się do druku w docelowym rozmiarze nadruku',
+              'Nie — plik jest jeden, niezależnie od liczby kopert',
+            ],
+            [
+              'Wizualizacja do akceptacji',
+              'Podgląd logo na wybranym kolorze koperty, wysyłany e-mailem razem z poprawkami',
+              'Nie — wizualizację przygotowujemy raz dla całej serii',
+            ],
+            [
+              'Przygotowanie do druku',
+              'Ustawienie pod format DL, kolor papieru i miejsce nadruku na ściance',
+              'Nie',
+            ],
+            [
+              'Kontrola pierwszych kopert',
+              'Porównanie odbitki z wizualizacją zaakceptowaną przez Państwa',
+              'Nie',
+            ],
+            [
+              'Druk serii',
+              'Kolejne koperty z tym samym nadrukiem',
+              'Tak — to jedyny etap, który rośnie razem z nakładem',
+            ],
+            [
+              'Pakowanie i wysyłka',
+              'Jedna przesyłka kurierska na całe zamówienie',
+              'Nie — liczba kopert nie mnoży liczby paczek',
+            ],
+          ],
+        },
+      },
+      {
+        id: 'ile-to-jest',
+        heading: `Ile to jest ${DEFAULT_PRICING.moqWithPrint} kopert w praktyce`,
+        paragraphs: [
+          'Dziesięć kopert to nakład jednej okazji, a nie zapas na rok. Tyle schodzi przy jednej grupie szkoleniowej, przy dokumentach wydawanych klientom w ciągu tygodnia albo przy pierwszej partii bonów w małym salonie.',
+          'Próg ma znaczenie przede wszystkim dla firm, które zamawiają koperty z logo po raz pierwszy. Nadruk sprawdzają Państwo na krótkiej serii i widzą go na realnym papierze, zanim zdecydują o większym nakładzie. Kilkaset kopert leżących w szafie nie jest do tego potrzebne.',
+          'Poniższe sytuacje mieszczą się w minimalnym nakładzie albo niewiele go przekraczają.',
+        ],
+        list: [
+          'Komplet dokumentów wydawany klientowi po zakończonej usłudze — jedna koperta na klienta',
+          'Certyfikaty dla jednej grupy szkoleniowej albo jednej edycji kursu',
+          'Pierwsza partia bonów podarunkowych, zanim wiadomo, ile ich zejdzie',
+          'Zaproszenia na kameralne wydarzenie firmowe albo na spotkanie zarządu',
+          'Korespondencja do kilkunastu kluczowych kontrahentów',
+          'Seria próbna przed większym zamówieniem — ten sam papier i ten sam nadruk',
+        ],
+      },
+      {
+        id: 'minimum-na-pozycje',
+        heading: 'Minimum liczy się dla jednej pozycji, nie dla całego zamówienia',
+        paragraphs: [
+          `Próg dotyczy jednej konfiguracji: jednego koloru koperty z jednym plikiem nadruku. Zamówienie może obejmować kilka takich pozycji — każdą ustawiają Państwo osobno w konfiguratorze i dodają do koszyka jako oddzielną pozycję.`,
+          `Dwa kolory z tym samym logo to więc dwie pozycje po ${DEFAULT_PRICING.moqWithPrint} sztuk, czyli ${2 * DEFAULT_PRICING.moqWithPrint} kopert łącznie. Dostawę naliczamy raz na całe zamówienie, niezależnie od liczby pozycji, więc rozbicie serii na kolory nie mnoży kosztu przesyłki.`,
+          'Inaczej działa łączenie usług. Logo firmowe i dane odbiorcy drukujemy w jednym przebiegu, więc koperta z nadrukiem i z personalizacją to nadal jedna pozycja, a nie dwie — i jedno minimum, a nie dwa.',
+        ],
+      },
+      {
+        id: 'mniej-niz-minimum',
+        heading: `Co zrobić, gdy potrzebują Państwo mniej niż ${DEFAULT_PRICING.moqWithPrint} kopert`,
+        paragraphs: [
+          `Jeżeli koperta ma pójść do jednego odbiorcy, najprostszym rozwiązaniem jest koperta gładka. Zamawiają ją Państwo od ${DEFAULT_PRICING.moqWithoutPrint} sztuki, w tym samym papierze i kolorze co wersja z nadrukiem, a wysyłamy ją szybciej, bo nie przechodzi przez produkcję ani przez akceptację wizualizacji. Ten sam odcień wybiorą Państwo w [palecie kolorów kopert ozdobnych](/#kolory).`,
+          'Drugą drogą jest zamówienie pełnej serii i zostawienie zapasu. Logo firmowe nie zmienia się co miesiąc, więc nadrukowana koperta nie traci ważności — inaczej niż nadruk z datą wydarzenia, który zestarzeje się razem z nim.',
+          'Trzecia droga to połączenie potrzeb. Jeśli w tym samym miesiącu wychodzą pisma do klientów, jedno zaproszenie i komplet dokumentów, to jest to jedna seria kopert z logo, a nie trzy osobne zamówienia.',
+        ],
+        table: {
+          caption: 'Rozwiązania, gdy potrzeba mniej kopert niż wynosi minimalny nakład',
+          head: ['Sytuacja', 'Rozwiązanie', 'Na co zwrócić uwagę'],
+          rows: [
+            [
+              'Jedna koperta do jednego odbiorcy',
+              `Koperta gładka od ${DEFAULT_PRICING.moqWithoutPrint} sztuki, dane nadawcy dopisane odręcznie`,
+              'Na kopercie nie ma wtedy logo — markę niesie zawartość',
+            ],
+            [
+              'Kilka kopert na jedno wydarzenie',
+              'Pełna seria z nadrukiem okolicznościowym',
+              'Nadruk z datą przestanie być użyteczny po wydarzeniu',
+            ],
+            [
+              'Kilka kopert miesięcznie, ale stale',
+              'Jedno zamówienie z logo i zapas na kolejne miesiące',
+              'Logo stałe nie traci ważności, więc zapas się nie marnuje',
+            ],
+            [
+              'Próba przed większym nakładem',
+              'Krótka seria w docelowym kolorze i z docelowym plikiem',
+              'Ten sam papier i ten sam nadruk co w serii właściwej',
+            ],
+          ],
+        },
+      },
+      {
+        id: 'krotka-seria',
+        heading: `Czy przy ${DEFAULT_PRICING.moqWithPrint} sztukach nadruk wychodzi tak samo`,
+        paragraphs: [
+          'Tak. Krótka seria idzie tą samą drogą co duża: ten sam papier, to samo przygotowanie, ta sama kontrola przed pakowaniem. Uproszczonego trybu dla małych zamówień nie mamy — a to on byłby jedynym powodem, dla którego krótka seria mogłaby wypaść gorzej.',
+          'Wizualizację przygotowuje grafik i przesyła ją do akceptacji, niezależnie od tego, ile kopert Państwo zamawiają. Kolejne wersje po Państwa uwagach też nie są dodatkowo płatne. Do druku trafia wyłącznie wersja zatwierdzona.',
+          'Termin realizacji również nie zależy od nakładu — liczymy go od akceptacji wizualizacji oraz od zaksięgowania wpłaty, a nie od liczby kopert. Jak ustawić ten termin wstecz od daty wydarzenia, pokazujemy w poradniku o [szybkiej realizacji kopert](/blog/szybka-realizacja-kopert-terminy-i-ekspres).',
+          'Nie ma też dopłaty za krótką serię. Stawka za jedną kopertę z nadrukiem jest stała, bo rabatów ilościowych nie stosujemy — krótka seria kosztuje za sztukę dokładnie tyle, co seria tysięczna.',
+        ],
+      },
+      {
+        id: 'checklista',
+        heading: 'Zanim zamówią Państwo pierwszą serię z nadrukiem',
+        paragraphs: [
+          'Sześć punktów do sprawdzenia w konfiguratorze, zanim zamówienie trafi do koszyka.',
+        ],
+        list: [
+          `Ilość co najmniej ${DEFAULT_PRICING.moqWithPrint} sztuk w jednej pozycji — kilka kolorów to kilka pozycji i kilka minimów`,
+          'Plik z logo gotowy do druku — konfigurator przyjmie zamówienie dopiero z załączonym plikiem',
+          'Kolor koperty dobrany do logo — na ciemnym papierze drukujemy jasnym kolorem, na jasnym ciemnym',
+          'Uwagi dla grafika wpisane przy pliku, jeśli logo ma stanąć w konkretnym miejscu ścianki',
+          'Adres e-mail, na który ma przyjść wizualizacja do akceptacji',
+          'Zapas policzony na kolejne wysyłki, jeśli logo jest stałe, a korespondencja cykliczna',
+        ],
+      },
+    ],
+    cta: `Konfigurator otworzy się z formatem DL i włączonym nadrukiem. Nakład ustawiają Państwo od ${DEFAULT_PRICING.moqWithPrint} sztuk, a cenę serii widzą od razu.`,
+    ctaConfigure: { label: 'Wyceń krótką serię z nadrukiem', format: 'DL', print: true },
+    pillar: { href: '/koperty-z-nadrukiem', anchor: 'koperty z nadrukiem' },
   },
 ];
 

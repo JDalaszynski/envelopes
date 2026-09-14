@@ -128,7 +128,7 @@ lub `personalized/` — buduj treść wokół zdjęcia, które faktycznie masz.
 | # | Tytuł / URL | Format | Główna fraza | Cel | Persona / Branża | Filar | Uwagi (antykanibalizacja) | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 21 | Koperty dla biur rachunkowych — `/koperty-dla-biur-rachunkowych` | Supporting LP | koperty dla biur rachunkowych | KONWERSJA | Biura rachunkowe, audyt | F1 | **Fraza skorygowana 7 września 2026** — `koperty firmowe z logo` należy do K1 (keywords.md, wspierająca fraza filara F1), a LP branżowa musi celować we frazę branżową, nie frazę filara pod którym stoi. Sprawozdania i korespondencja cykliczna; odróżnia się od poz. 17 sezonowością (zamknięcie roku) | [ ] |
-| 22 | Koperty dla klinik i gabinetów — `/koperty-dla-klinik` | Supporting LP | koperty na vouchery dla kliniki | KONWERSJA | Med. estetyczna, stomatologia | F4 | Jasne, „czyste" barwy; osobno od poz. 19 — inny cykl zakupowy i inny język | [ ] |
+| 22 | Koperty dla klinik i gabinetów — `/koperty-dla-klinik` | Supporting LP | koperty na vouchery dla kliniki | KONWERSJA | Med. estetyczna, stomatologia | F4 | **Wykonane 14 września 2026.** Jasne, „czyste" barwy; osobno od poz. 19 — inny cykl zakupowy i inny język. **Rozgraniczenie wdrożone:** cały wybór koloru dzieje się **wewnątrz barw jasnych** (Biały i Błękitna pod stomatologię przeciw perle pod medycynę estetyczną), gdy poz. 19 zestawia jasne z naturalnym Szarobrązowym; dochodzi drugi obieg kopert gabinetowych zużywanych przez cały rok i kalendarz z sezonem ślubnym, którego salon nie ma | [x] |
 | 23 | Koperty dla restauracji — `/koperty-dla-restauracji` | Supporting LP | koperty na vouchery do restauracji | KONWERSJA | Fine dining, winiarnie | F4 | **Wykonane 6 września 2026.** Vouchery na kolacje; wybrana jako druga LP Fazy 2 zaraz po poz. 19 z tego samego powodu — szczyt sprzedażowy w grudniu i przed Walentynkami, domena potrzebuje czasu na dojrzewanie w indeksie. Brak konfliktu frazowego — fraza nie występowała wcześniej w `keywords` żadnej strony | [x] |
 | 24 | Bon podarunkowy — jak go wręczyć, żeby wyglądał jak prezent | Supporting article | ~~koperta do vouchera~~ → `jak wręczyć bon podarunkowy` | RUCH | Właściciel usługi | F4 | **Wykonane 7 września 2026.** Poradnik prezentacyjny; poz. 20 dotyczy doboru koperty, ten — sposobu wręczenia. **Fraza główna przepisana 14 sierpnia 2026:** `koperta do vouchera` to liczba pojedyncza frazy filara `koperty do voucherów` — dwa adresy na tę samą intencję to kanibalizacja z definicji. Fraza zostaje przy F4 (jest w jego `keywords`), wpis celuje w intencję czynnościową. `title` skrócony do 66 znaków z sufiksem marki — pełna wersja z planu dawała 71 | [x] |
 
@@ -208,9 +208,9 @@ z **preselekcją koloru**.
 
 | # | Tytuł / URL | Format | Główna fraza | Cel | Persona / Branża | Filar | Uwagi (antykanibalizacja) | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 37 | Eleganckie koperty premium — `/koperty-premium` | Pillar (LP) | koperty premium | KONWERSJA | Premium B2B | H `/` | **Wykonane 18 sierpnia 2026.** Kompletny filar K6 z twardymi parametrami poligraficznymi (115–140 g/m², perła i metalik bez dopłaty, barwienie w masie, brak okienka i poddruku, MOQ 10 dla nadruku). | [x] |
+| 37 | Eleganckie koperty premium — `/koperty-premium` | Pillar (LP) | koperty premium | KONWERSJA | Premium B2B | H `/` | **Wykonane 18 sierpnia 2026.** Kompletny filar K6 z twardymi parametrami poligraficznymi (115–140 g/m², perła i metalik bez dopłaty, barwienie w masie, brak okienka i poddruku, MOQ 10 dla nadruku). **14 września 2026 dołożone linkowanie w dół** — do czasu poz. 38 filar linkuje do czterech wpisów istniejących. | [x] |
 | 38 | Gramatura papieru w kopertach — 115, 120 i 140 g | Supporting article | gramatura papieru na koperty | GEO | Zakupowiec, grafik | `/koperty-premium` | **Fraza skorygowana 7 września 2026** — `eleganckie koperty premium` należy do K6 (keywords.md, wspierająca fraza filara `/koperty-premium`); wpis o gramaturze celuje we frazę faktograficzną, zgodną z jego rzeczywistą treścią (tabela gramatur). Materiał wprost pod cytowanie przez modele | [ ] |
-| 39 | Koperty na pieniądze — `/koperty-na-pieniadze` | Pillar (LP) | koperty na pieniądze | KONWERSJA | Detal + firmy (premie, nagrody) | H `/` | **Wykonane 7 września 2026, wyprzedzająco z Fazy 4.** Klaster detaliczny — termin realizacji podany nad CTA (hero, pasek faktów, sekcja kosztowa), inaczej wygeneruje odbicia. Prerekwizyt „dopiero po wdrożeniu K1, K2, K7" spełniony — wszystkie trzy istnieją | [x] |
+| 39 | Koperty na pieniądze — `/koperty-na-pieniadze` | Pillar (LP) | koperty na pieniądze | KONWERSJA | Detal + firmy (premie, nagrody) | H `/` | **Wykonane 7 września 2026, wyprzedzająco z Fazy 4.** Klaster detaliczny — termin realizacji podany nad CTA (hero, pasek faktów, sekcja kosztowa), inaczej wygeneruje odbicia. Prerekwizyt „dopiero po wdrożeniu K1, K2, K7" spełniony — wszystkie trzy istnieją. **14 września 2026 dołożone linkowanie w dół** — do czasu poz. 40 i 44 filar linkuje do czterech wpisów istniejących | [x] |
 | 40 | Personalizowana koperta na pieniądze — kiedy się opłaca | Supporting article | personalizowana koperta na pieniądze | KONWERSJA | Detal, HR (premie imienne) | F2 | Upsell usługi +2,99 zł; poz. 39 sprzedaje kopertę gładką, ta pozycja usługę | [ ] |
 
 ### Tydzień 11 — klaster ślubny w trybie content-first
@@ -230,7 +230,7 @@ z **preselekcją koloru**.
 | # | Tytuł / URL | Format | Główna fraza | Cel | Persona / Branża | Filar | Uwagi (antykanibalizacja) | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 45 | Faktura VAT i odroczony termin przy zamówieniu kopert | Supporting article | koperty firmowe faktura vat | KONWERSJA | Instytucje, jednostki budżetowe | F1 | Rozbraja barierę rozliczeniową — realna przewaga oferty, nieopisana nigdzie indziej | [ ] |
-| 46 | Koperty z nadrukiem od 10 sztuk — dlaczego jest minimum | Supporting article | koperty z nadrukiem od 10 sztuk | GEO | Małe firmy, pierwszy zakup | F1 | Odpowiedź na realną obiekcję; F1 podaje MOQ, ta pozycja je uzasadnia | [ ] |
+| 46 | Dlaczego koperty z nadrukiem są od 10 sztuk — `/blog/dlaczego-koperty-z-nadrukiem-od-10-sztuk` | Supporting article | koperty z nadrukiem od 10 sztuk | GEO | Małe firmy, pierwszy zakup | F1 | **Wykonane 14 września 2026, wyprzedzająco z tygodnia 12.** Odpowiedź na realną obiekcję; F1 podaje próg jako parametr (tytuł, pasek faktów, wiersz specyfikacji, pytanie w `PRINT_FAQ_ITEMS`), wpis uzasadnia go pracą przygotowawczą i podaje wyjścia dla nakładu mniejszego niż minimum. Zero kwot — koszt krótkiej serii należy do poz. 9 | [x] |
 | 47 | ~~Realizacja: 3 000 kopert DL dla kancelarii~~ | Supporting article | koperty dla kancelarii | AUTORYTET | Kancelarie | `/koperty-dla-kancelarii` | **Wstrzymane 15 sierpnia 2026 — brak realizacji do opisania.** Wpis startowy opisywał klienta, jego problem z poprzednim dostawcą i efekt wdrożenia; właściciel potwierdził, że przykład był wymyślony, więc został usunięty. Pozycja wraca do planu **dopiero wtedy, gdy powstanie realne zamówienie**, na które właściciel da zgodę i zdjęcia. Do tego czasu autorytet w klastrze kancelaryjnym buduje wyłącznie LP z poz. 17 | [—] |
 | 48 | Przegląd kwartalny: audyt kanibalizacji i aktualizacja map | Aktualizacja | — | — | — | — | Przegląd `keywords.md` i `content-plan.md`, weryfikacja pozycji, kwalifikacja treści do przepisania lub scalenia | [ ] |
 
@@ -249,6 +249,222 @@ nie liczą się do kadencji czterech pozycji tygodniowo i nie mają filara.
 ---
 
 ## Dziennik wdrożeń
+
+### 14 września 2026 — poz. 22: `/koperty-dla-klinik` · piąta LP Fazy 2
+
+**Zamyka klaster voucherowy w Fazie 2** — czwarta LP branżowa pod filarem F4 (po SPA,
+restauracjach i hotelach) i pierwsza pozycja Tygodnia 6. Filar poświęca klinikom pół akapitu
+w karcie „Salony SPA i kliniki medycyny estetycznej"; ta strona celuje we frazę branżową
+`koperty na vouchery dla kliniki` i dokłada sytuację zakupową, której filar nie opisuje:
+**kupujący nie zna procedury**. Bon kupuje partner albo rodzina osoby, która przyjdzie na
+zabieg, wybierając kwotę lub pakiet — pierwszą wizytą i tak jest konsultacja, więc koperta jest
+jedyną częścią prezentu oglądaną w chwili zakupu.
+
+**Rozgraniczenie wobec poz. 19** (SPA — ten sam filar, ten sam szablon i **ten sam punkt 5 bazy
+wiedzy**, który łączy kliniki z salonami). To było jedyne realne ryzyko kanibalizacji w tej
+pozycji, więc rozstrzygnięte zostało na trzech osiach naraz:
+- **Kolor.** Poz. 19 zestawia kierunek naturalny (Szarobrązowy, realny kadr) z jasnym. Tutaj
+  cały wybór dzieje się **wewnątrz barw jasnych** i dzieli je na dwie rodziny: chłodna biel
+  i pastelowy błękit pod stomatologię (Biały, Błękitna) przeciw perle pod medycynę estetyczną
+  (Biała Perłowa, Srebrna Perłowa). Wspólne z poz. 19 zostają dwa odcienie z czterech, ale oś
+  argumentu jest inna — nie „jasne kontra ziemiste", tylko „chłód gabinetu kontra papier
+  oglądany z bliska".
+- **Cykl zakupowy** (wprost z uwag planu). Osobna sekcja „Klinika zamawia koperty w dwóch
+  rytmach": bon sezonowy zamawiany partią pod jedną akcję i **koperta gabinetowa** — plan
+  leczenia z kosztorysem, zalecenia pozabiegowe, karta pacjenta stałego, zaproszenie na dzień
+  otwarty — zużywana równo przez cały rok. Salon i restauracja mają tylko pierwszy z tych
+  rytmów. To ta sama konstrukcja co „drugi obieg kopert" na poz. 18, ale treść jest inna:
+  tam koperta wraca do gościa, tutaj nie opuszcza recepcji.
+- **Kalendarz.** Zamiast trzeciej okazji prezentowej wchodzi **sezon ślubny i wakacyjny**
+  (maj–sierpień, zamówienie w kwietniu): zabiegi wykonuje się w serii rozłożonej na tygodnie,
+  więc bon pod konkretny termin kupuje się z wyprzedzeniem. Dzień Kobiet zostaje przy poz. 19,
+  tu jego miejsce zajmuje Dzień Matki.
+
+**Bez własnego `FAQPage`**, jak poz. 19, 23 i 18. `VOUCHER_FAQ_ITEMS` na F4 pokrywa już pytania
+o nadruk, o imię obdarowanego i o kilka kolorów w jednym zamówieniu. `WebPage.mainEntity`
+wskazuje na węzeł `Product` filara zamiast tworzyć drugi.
+
+**Druga LP branżowa bez własnego kadru aranżacyjnego** — po poz. 18 i z tego samego powodu:
+trójkę kadrów branżowych zamknęła poz. 17, a zdjęcia z logo kliniki w repozytorium nie ma.
+Zamiast podstawiać cudzy kadr strona pokazuje `PLAIN_ENVELOPE_SHOT` (Biała Perłowa, przód
+i klapka) **dokładnie tam, gdzie jest o nim mowa** — przy zdaniu o jednolitej przedniej ściance
+bez okienka, czyli w sekcji o dyskrecji dokumentu gabinetowego. Cztery rekomendowane odcienie
+stoją jako kadry katalogowe. Karta OG wygenerowana z tego samego kadru przez `scripts/og-card.mjs`
+(`public/images/og/koperty-dla-klinik.jpg`).
+
+**Bez CTA z `zakres=imiona`.** Personalizację imienną na bonie strona wymienia i odsyła po nią
+do F2, ale nie otwiera konfiguratora z tym parametrem — ten odnośnik zostaje wyłączny dla poz. 18
+i F2, zgodnie z zapisem z 14 września. Pozostałe CTA otwierają konfigurator z formatem DL
+i nadrukiem.
+
+Linkowanie w obie strony:
+- **do LP:** karty kliniczne w sekcjach „Dla kogo" na F4, F1, F2 i `/koperty-premium` (na F4
+  i `/koperty-premium` jako **drugi** odnośnik w karcie, obok istniejącego do poz. 19 — karta
+  mówi o obu branżach naraz) oraz na czterech stronach kolorów, które ta LP rekomenduje: Biały,
+  Błękitna, Biała Perłowa, Srebrna Perłowa. Reguła z 10 września utrzymana — link z karty
+  kolorowej idzie tylko tam, gdzie karta „Dla kogo" mówi o klinikach **i** strona docelowa ten
+  odcień poleca (Ecru poleca kliniki, ale ta LP go nie rekomenduje — linku nie dokładamy).
+- **z LP:** `/koperty-na-vouchery` (pełna tabela konfiguracji bonu, pozostałe branże),
+  `/koperty-z-nadrukiem#cena` (rozbicie ceny nadruku), `/koperty-personalizowane` (imię
+  obdarowanego), `/koperty-dla-salonow-spa` (rozgraniczenie branżowe podane wprost w sekcji
+  koloru), `/koperty/bialy`, `/koperty/jasnoniebieska`, `/koperty/biala-perlowa`,
+  `/koperty/srebrna-perlowa`.
+
+`PAGE_UPDATED` podbite dla `/koperty-dla-klinik` i ośmiu stron, które dostały odnośnik. `llms.txt`
+i sitemapa (wpis + obrazy: kadr koperty gładkiej i cztery kadry katalogowe) zaktualizowane w tym
+samym wdrożeniu. `keywords.md` bez zmian — fraza `koperty na vouchery dla kliniki` nie występowała
+dotąd w `keywords` żadnej strony, a pokrewne `koperty firmowe dla kliniki` stoi w bazie w sekcji
+„Luki" jako zapytanie branżowe (ta sama sytuacja co przy poz. 23 i 18).
+
+Weryfikacja: `npm run typecheck` i `npm run build` bez błędów, **78/78 stron statycznie**, strona
+obecna w `sitemap.xml` (z pięcioma obrazami) i w `/llms.txt`. `title` 54 znaki (z sufiksem marki),
+`description` 149 znaków, jeden `<h1>` z frazą główną w mianowniku. Sprawdzone w przeglądarce
+(desktop i 375 px): hero, trzy karty „po co koperta", sekcja dwóch rytmów z kadrem, dwie rodziny
+kolorów, tabela kosztu i kalendarz renderują się poprawnie, zero błędów konsoli, kadr zwraca 200,
+brak przewijania poziomego na 375 px, a komplet ośmiu odnośników zwrotnych jest obecny w HTML-u.
+
+**Do wykonania po wdrożeniu na produkcję:** sprawdzić adres na `envelopes.pl` (wniosek z 14
+września — push do `master` nie jest dowodem wdrożenia), a następnie `npm run indexnow`.
+
+### 14 września 2026 — audyt linkowania w dół: `/koperty-premium` i `/koperty-na-pieniadze`
+
+**Naruszenie zasady z legendy tego dokumentu, wykryte w audycie.** Zasada mówi: „filar linkuje
+w dół do 3–6 treści wspierających". Dwa filary miały **zero** takich odnośników.
+`/koperty-premium` (poz. 37, K6) i `/koperty-na-pieniadze` (poz. 39, K8) linkowały wyłącznie
+w bok — do stron kolorów, LP branżowych i pozostałych filarów — oraz do `/`. Żaden wpis blogowy
+nie ma też któregokolwiek z nich w polu `pillar`, więc oba klastry nie miały warstwy wspierającej
+w **żadnym** kierunku.
+
+**Przyczyna: wpisy dedykowane tym klastrom nie istnieją.** Poz. 38 (gramatura papieru → K6),
+poz. 40 (personalizowana koperta na pieniądze) i poz. 44 (koperty na pieniądze na ślub) mają
+status `[ ]`. Filary czekały na własne wpisy zamiast linkować do treści, które **już** odpowiadają
+na pytania zadawane na ich stronach.
+
+**Decyzja: linkujemy do wpisów istniejących, bez czekania na poz. 38/40/44.** Wpis wspierający
+nadal linkuje w górę do **jednego** filara (pole `pillar` nietknięte), ale filar może linkować
+w dół do treści, która w górę linkuje gdzie indziej. Precedens stoi na F4 od 7 września:
+`filesPost` (`jak-przygotowac-pliki-do-druku-na-kopertach`, `pillar` = F1). Kryterium doboru:
+wpis odpowiada na pytanie, które **ta strona** stawia i zostawia bez odpowiedzi.
+
+`/koperty-premium` — cztery wpisy:
+- `koperty-bez-okienka-kiedy-je-wybrac` — wiersz „Przednia ścianka" w tabeli porównawczej mówi
+  tylko, że okienka nie ma; pierwsza sekcja wpisu („Koperty bez okienka to standard
+  w korespondencji premium") jest wprost o tej stronie. Odnośnik kontekstowy pod tabelą;
+- `paleta-19-kolorow-jak-wybrac-odcien` — sekcja palety pokazuje 8 z 19 odcieni i nie mówi,
+  jak wybierać. Odnośnik pod siatką kolorów;
+- `jak-przygotowac-pliki-do-druku-na-kopertach` — sekcja o kontraście na papierach szlachetnych
+  urywa się przed plikiem. Hak wzięty wprost z wpisu i tutejszy: JPG niesie tło, więc na
+  Granatowym czy Ecru wychodzi biały prostokąt wokół logo. Specyfikacja zostaje na F1
+  (rozgraniczenie 2 w nagłówku pliku) — odsyłamy, nie powtarzamy;
+- `szybka-realizacja-kopert-terminy-i-ekspres` — korespondencja premium ma zwykle twardą datę
+  (gala, jubileusz). Tylko w siatce „Poradników", bez odnośnika kontekstowego.
+
+`/koperty-na-pieniadze` — cztery wpisy:
+- `paleta-19-kolorow-jak-wybrac-odcien` — sekcja koloru podaje trzy odcienie i nie tłumaczy
+  różnicy między perłą a barwieniem w masie;
+- `dlaczego-koperty-z-nadrukiem-od-10-sztuk` (poz. 46, opublikowana tego samego dnia) —
+  najostrzejsze tarcie tej strony: filar sprzedaje kopertę **od 1 sztuki**, a obie usługi
+  dodatkowe zaczynają się od 10. `MONEY_FAQ_ITEMS` próg stwierdza („bo tyle wynosi minimalny
+  nakład"), ale nie tłumaczy, skąd się bierze. Odnośnik w karcie „Nadruk okolicznościowy";
+- `koperty-z-imieniem-i-nazwiskiem-jak-przygotowac-liste` — karta personalizacji mówi o nagrodach
+  i kopertach dla całej rodziny; przygotowanie samej listy imion należy do wpisu;
+- `szybka-realizacja-kopert-terminy-i-ekspres` — sekcja kosztowa ostrzega „prosimy liczyć czas
+  z zapasem", a wpis pokazuje, jak policzyć datę wysyłki wstecz od dnia uroczystości.
+
+**Świadomie pominięte na K8:** `jak-wreczyc-bon-podarunkowy-zeby-wygladal-jak-prezent`
+i `koperta-ozdobna-na-voucher-jaki-format-i-kolor`. Oba opisują wydanie bonu przez firmę usługową,
+czyli intencję K7 — wciągnięcie ich rozmyłoby granicę między prezentem pieniężnym a voucherem,
+którą ten filar trzyma od publikacji (ostrzeżenie przy `USE_CASE_SHOTS`).
+
+Wzorzec sekcji „Poradniki" wzięty z F2 i F3 (karta `card card-lg` bez kadru, siatka od drugiego
+wpisu), nie z F4 (`BlogCoverImage`) — dzięki temu do sitemapy nie wchodzą obrazy, których te
+strony wcześniej nie zgłaszały. Oba filary dostały siatkę 2 × 2.
+
+Odnośniki w dół z treści (`<main>`): `/koperty-premium` 0 → 4 wpisy (7 odnośników łącznie),
+`/koperty-na-pieniadze` 0 → 4 wpisy (8 odnośników). `PAGE_UPDATED` podbite dla obu tras
+(`/koperty-na-pieniadze` 2026-09-07 → 2026-09-14).
+
+Weryfikacja: `npm run typecheck` i `npm run build` bez błędów, **77/77 stron statycznie**.
+Sprawdzone w przeglądarce (1000 px i 375 px): odnośniki kontekstowe stoją w sekcjach
+`#porownanie`, `#kolory`, `#nadruk` i `#cena-i-terminy`, siatki „Poradników" renderują się bez
+pustych kolumn, brak przewijania poziomego na 375 px, zero błędów konsoli.
+**Do wykonania po wdrożeniu na produkcję:** `npm run indexnow`.
+
+**Pozostaje otwarte.** To jest łata, nie domknięcie klastrów. K6 i K8 nadal nie mają **ani jednego**
+wpisu linkującego w górę do nich — poz. 38, 40 i 44 zostają w kolejce i dopiero one dadzą tym
+filarom własną warstwę wspierającą. Po ich publikacji listy `GUIDES` na obu stronach trzeba
+przejrzeć ponownie i wypchnąć z nich wpisy najsłabiej związane z tematem.
+
+### 14 września 2026 — poz. 46: `/blog/dlaczego-koperty-z-nadrukiem-od-10-sztuk`
+
+**Wyprzedzenie kolejki planu** — pozycja z tygodnia 12 (procesy B2B). Powód: to jedyna treść
+w klastrze K1, która odpowiada na obiekcję **przed** pierwszym zakupem, a domena potrzebuje
+3–6 miesięcy na dojrzenie w indeksie. Fraza `koperty z nadrukiem od 10 sztuk` stoi w `keywords.md`
+na liście luk (grupa procesowa) i nie miała dotąd właściciela.
+
+**Oś wpisu to uzasadnienie progu, nie sam próg.** Filar F1 podaje minimum w czterech miejscach
+jako parametr oferty (tytuł, pasek faktów, wiersz specyfikacji, pytanie w `PRINT_FAQ_ITEMS`).
+Wpis odpowiada na to, czego filar nie tłumaczy: **dlaczego akurat tyle**. Odpowiedź jest jedna
+i pada w leadzie — cztery czynności przed drukiem (weryfikacja pliku, wizualizacja do akceptacji,
+przygotowanie druku, kontrola pierwszych kopert) wyglądają tak samo przy pięciu i przy pięciuset
+kopertach, a ich kosztu nie fakturujemy osobno. Minimalny nakład jest warunkiem, na którym taka
+konstrukcja ceny się broni — to spina wpis z tabelą „czego nie doliczamy" z poz. 9, zamiast ją
+powtarzać.
+
+**Druga rzecz, której nie ma nigdzie indziej: wyjścia dla nakładu poniżej progu.** Tabela czterech
+sytuacji (jedna koperta do jednego odbiorcy, kilka na jedno wydarzenie, kilka miesięcznie stale,
+seria próbna) z rozwiązaniem i z ostrzeżeniem w każdym wierszu. Do tego rozstrzygnięcie, którego
+nie było w treści, a jest w konfiguratorze: **próg dotyczy pojedynczej pozycji**, więc dwa kolory
+z tym samym logo to dwa minima, a nadruk razem z personalizacją — jedno, bo idą w jednym przebiegu.
+
+Rozgraniczenia:
+- **wobec F1 `/koperty-z-nadrukiem`:** żaden H2 nie powtarza nagłówka filara. Wpis nie ma sekcji
+  „Dla kogo", cennika ani tabeli nakładów; fraza filara pada wyłącznie jako anchor w bloku
+  „Strona oferty".
+- **wobec poz. 9 (koszt zamówienia):** zero kwot w całym wpisie. Koszt krótkiej serii razem
+  z rozłożoną dostawą zostaje tam, gdzie był; tutaj pada jedno zdanie o stałej stawce jednostkowej,
+  bez liczby, jako odpowiedź na pytanie „czy mała seria jest droższa za sztukę".
+- **wobec poz. 16 (terminy):** termin pada raz, bez liczby dni — wpis mówi tylko tyle, że nakład
+  go nie zmienia, i odsyła po resztę.
+- **wobec poz. 7 (pliki do druku):** zero wymagań plikowych. Sprawdzenie pliku występuje jako etap
+  pracy, nie jako specyfikacja.
+- **`FAQPage` zostaje na filarze** — wpis nie dostaje własnych danych, mimo że dwa nagłówki mają
+  formę pytań (zasada z poz. 7, 8 i 9).
+
+**Kalibracja tonu.** W prozie żadna sekcja nie ma więcej niż dwa parametry oferty; próg pada
+w nagłówkach, w tabelach i w liście kontrolnej, czyli tam, gdzie modele go ekstrahują. Wszystkie
+wystąpienia liczą się z `DEFAULT_PRICING.moqWithPrint` i `moqWithoutPrint` — zmiana progu przepisze
+tytuł, cztery nagłówki, obie tabele i listę kontrolną razem z konfiguratorem. Slug zostaje stały,
+bo adres nie może się zmieniać; zapisano to w komentarzu przy wpisie.
+
+Linkowanie w obie strony:
+- **do wpisu:** F1 ×2 — akapit pod tabelą specyfikacji (przy wierszu „Minimalna ilość") i czwarta
+  karta w sekcji „Poradniki"; F2 `/koperty-personalizowane` — akapit pod cennikiem, bo przy
+  adresowaniu obowiązuje ten sam próg; poz. 9 — zdanie w sekcji „Jak policzyć koszt własnego
+  nakładu" (`updated: 2026-09-14`); `/` i `/blog` — siatki wpisów, automatycznie; `/llms.txt` —
+  mapa dla modeli.
+- **z wpisu:** blok „Strona oferty" (pole `pillar`, anchor `koperty z nadrukiem`), poz. 9
+  (kotwica `#czego-nie-doliczamy`), poz. 16, F2 i paleta kolorów na `/`.
+- Sekcja „Poradniki" na F1 przełącza się przy czterech kartach na `grid grid-2` — trzy kolumny
+  zostawiałyby w drugim rzędzie dwa puste miejsca. Warunek liczy teraz podzielność przez trzy,
+  a nie próg „więcej niż dwa".
+
+**Karta OG z kadru przyciętego u źródła.** `public/images/og/blog-nadruk-od-10-sztuk.jpg`
+(1200 × 630, 36 kB) powstała z kadru `biala-perlowa-koperta-dl-nadruk-logo-auto-detailing`
+obciętego do górnych 540 px, więc **przykładowa nazwa firmy z nadruku nie wchodzi w kadr** — ta
+sama zasada, co przy karcie poz. 9. Zdjęcie nagłówkowe wpisu pokazuje pełny kadr z nadrukiem;
+kadr był dotąd nieużywany w treści blogowej i pokazuje dokładnie tego czytelnika, do którego wpis
+mówi: mała firma usługowa, jedno logo, krótka seria.
+
+Weryfikacja: `npm run typecheck` i `npm run build` bez błędów, wpis prerenderowany statycznie
+(`● /blog/dlaczego-koperty-z-nadrukiem-od-10-sztuk`), obecny w `sitemap.xml` z dwoma obrazami,
+w `/blog`, na `/` i w `/llms.txt`. `title` 55 znaków z sufiksem marki, `description` 151, jeden
+`<h1>`, sześć `<h2>`, dwie tabele, dwie listy, spis treści na sześć pozycji, JSON-LD `Article` +
+`BreadcrumbList` + `WebPage` (**bez `FAQPage`**), CTA prowadzi do `/?format=DL&nadruk=1#konfigurator`.
+W przeglądarce sprawdzone też oba filary i wpis poz. 9 — odnośniki obecne w HTML-u, zero błędów
+konsoli, na szerokości 375 px tabele przechodzą w karty bez przewijania w poziomie.
+`PAGE_UPDATED` podbite dla `/koperty-z-nadrukiem`, `/koperty-personalizowane` i `/blog`.
+**Do wykonania po wdrożeniu na produkcję:** `npm run indexnow`.
 
 ### 14 września 2026 — poz. 18: `/koperty-dla-hoteli` · czwarta LP Fazy 2
 

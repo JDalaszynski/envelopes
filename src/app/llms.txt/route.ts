@@ -106,6 +106,11 @@ const PAGES: { url: string; title: string; note: string }[] = [
     note: 'Obiekty noclegowe: karta powitalna z nazwiskiem gościa drukowana bez adresu (lista z systemu rezerwacji), voucher pobytowy, zaproszenie na kolację sylwestrową, kolory pod pokój, salę galową i resort w naturze, kalendarz z sezonem wysokim.',
   },
   {
+    url: '/koperty-dla-klinik',
+    title: 'Koperty na vouchery dla kliniki i gabinetu',
+    note: 'Medycyna estetyczna i stomatologia: bon na pakiet zabiegowy kupowany przez osobę, która nie zna procedury, dwa rytmy zamówień (bon sezonowy i koperta gabinetowa na plan leczenia), dwie rodziny barw jasnych — Biały i Błękitna kontra Biała Perłowa i Srebrna Perłowa, kalendarz z sezonem ślubnym.',
+  },
+  {
     url: '/koperty-dla-kancelarii',
     title: 'Koperty dla kancelarii prawnych i notarialnych',
     note: 'Korespondencja prawna: typologia pism (akt notarialny, wezwanie, pismo procesowe), kolory stonowane (Granatowy, Czarny, Taupe), adresowanie wielu klientów w jednym zamówieniu.',

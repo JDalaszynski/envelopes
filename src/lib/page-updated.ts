@@ -28,18 +28,23 @@ export const PAGE_UPDATED: Record<string, string> = {
      „Do czego używa się kopert ozdobnych" */
   '/': '2026-09-07',
   /* Karta „Hotele, resorty i pensjonaty" w sekcji „Dla kogo" dostała odnośnik
-     do poz. 18 — wcześniej karta kancelaryjna dostała odnośnik do poz. 17 */
+     do poz. 18; czwarta karta w sekcji „Poradniki" i odnośnik pod tabelą
+     specyfikacji prowadzą do poz. 46; karta „Kliniki medycyny estetycznej
+     i salony SPA" — do poz. 22 */
   '/koperty-z-nadrukiem': '2026-09-14',
   /* Karta „Hotele, resorty i pensjonaty" w sekcji „Dla kogo" dostała odnośnik
-     do poz. 18 — karta powitalna jest scenariuszem personalizacji imiennej */
+     do poz. 18; pod cennikiem doszedł odnośnik do poz. 46 — ten sam próg
+     obowiązuje przy adresowaniu; karta „Kliniki, gabinety i salony SPA" —
+     odnośnik do poz. 22 */
   '/koperty-personalizowane': '2026-09-14',
   /* Sekcja „Poradniki" i odnośnik pod tabelą dopasowań — treść wspierająca z poz. 11 planu */
   '/koperty-dl': '2026-08-21',
-  /* Karta „Hotele, resorty i pensjonaty butikowe" w sekcji „Dla kogo" dostała
-     odnośnik do poz. 18 */
+  /* Karty „Hotele, resorty i pensjonaty butikowe" oraz „Salony SPA i kliniki
+     medycyny estetycznej" w sekcji „Dla kogo" dostały odnośniki do poz. 18
+     i poz. 22 */
   '/koperty-na-vouchery': '2026-09-14',
-  /* Doszedł wpis o doborze formatu i koloru koperty na voucher (poz. 20) */
-  '/blog': '2026-09-10',
+  /* Doszedł wpis o minimalnym nakładzie przy nadruku (poz. 46) */
+  '/blog': '2026-09-14',
   /* Odnośnik do strony „O nas" w karcie danych rejestrowych */
   '/kontakt': '2026-08-17',
   /* Publikacja strony „O nas" */
@@ -47,20 +52,24 @@ export const PAGE_UPDATED: Record<string, string> = {
   /* Poz. 30–32 planu — druga partia stron kolorów. Karta „Hotele, pensjonaty
      i domy gościnne" dostała odnośnik do poz. 18 */
   '/koperty/ecru': '2026-09-14',
-  /* Poz. 33–36 planu — Faza 3 stron kolorów */
-  '/koperty/bialy': '2026-08-19',
+  /* Poz. 33–36 planu — Faza 3 stron kolorów. Karta „Gabinety lekarskie
+     i kliniki" dostała odnośnik do poz. 22 */
+  '/koperty/bialy': '2026-09-14',
   '/koperty/matcha': '2026-08-19',
   /* Karta „Hotele, resorty i apartamenty nadmorskie" — odnośnik do poz. 18 */
   '/koperty/blekit-lupkowy': '2026-09-14',
   /* Filar K6 — Eleganckie koperty premium (content-plan.md poz. 37).
      Karty „Kliniki medycyny estetycznej i SPA", „Kancelarie prawne
      i notarialne" i „Uroczystości ślubne i jubileusze VIP" dostały
-     odnośniki do poz. 19, poz. 17 i poz. 39. */
+     odnośniki do poz. 19, poz. 17 i poz. 39. 14 września doszło linkowanie
+     w dół — sekcja „Poradniki" i trzy odnośniki kontekstowe, a karta
+     kliniczna — drugi odnośnik, do poz. 22. */
   '/koperty-premium': '2026-09-14',
   /* Czwarta partia stron kolorów z backlogu klastra K5 */
   '/koperty/szara': '2026-08-19',
   '/koperty/niebieski': '2026-08-19',
-  '/koperty/jasnoniebieska': '2026-08-19',
+  /* Karta „Kliniki stomatologiczne, medyczne i laboratoria" — odnośnik do poz. 22 */
+  '/koperty/jasnoniebieska': '2026-09-14',
   /* Piąta partia stron kolorów — przegląd kompletu 19 odcieni z 19 sierpnia.
      Karta „Hotele i resorty w otoczeniu natury" dostała odnośnik do poz. 18 */
   '/koperty/ciemnozielony': '2026-09-14',
@@ -69,7 +78,8 @@ export const PAGE_UPDATED: Record<string, string> = {
   '/koperty/rozowa': '2026-08-19',
   '/koperty/eko': '2026-08-19',
   '/koperty/zolta': '2026-08-19',
-  '/koperty/srebrna-perlowa': '2026-08-19',
+  /* Karta „Kliniki stomatologiczne i medycyny estetycznej" — odnośnik do poz. 22 */
+  '/koperty/srebrna-perlowa': '2026-09-14',
   /* Karty „Dla kogo" na stronach kolorów dostały odnośniki do stron
      branżowych i filara K8, które ten odcień rekomendują: Czarny, Granatowy
      i Szarobrązowy → poz. 17, Szarobrązowy → poz. 19, Czerwony → poz. 23,
@@ -80,7 +90,8 @@ export const PAGE_UPDATED: Record<string, string> = {
   '/koperty/czerwony': '2026-09-10',
   /* Karta „Hotele i restauracje" dostała odnośnik do poz. 18 */
   '/koperty/zloty': '2026-09-14',
-  '/koperty/biala-perlowa': '2026-09-10',
+  /* Karta „Gabinety medycyny estetycznej i kliniki premium" — odnośnik do poz. 22 */
+  '/koperty/biala-perlowa': '2026-09-14',
   /* Wpisy blogowe wspierające filar K2 — poz. 14 i 15 planu. Poz. 14 dostała
      przy publikacji poz. 15 akapit odsyłający do przygotowania listy. */
   '/blog/jak-zaadresowac-koperte-wysylana-przez-firme-wzor': '2026-08-25',
@@ -95,10 +106,14 @@ export const PAGE_UPDATED: Record<string, string> = {
   '/koperty-dla-restauracji': '2026-09-06',
   /* Poz. 17 planu — trzecia LP branżowa Fazy 2, filar F1 */
   '/koperty-dla-kancelarii': '2026-09-07',
-  /* Poz. 39 planu — pillar K8, wykonany wyprzedzająco z Fazy 4 */
-  '/koperty-na-pieniadze': '2026-09-07',
+  /* Poz. 39 planu — pillar K8, wykonany wyprzedzająco z Fazy 4.
+     14 września doszło linkowanie w dół — sekcja „Poradniki" i trzy
+     odnośniki kontekstowe do treści wspierających. */
+  '/koperty-na-pieniadze': '2026-09-14',
   /* Poz. 18 planu — czwarta LP branżowa Fazy 2, filar F4 */
   '/koperty-dla-hoteli': '2026-09-14',
+  /* Poz. 22 planu — piąta LP branżowa Fazy 2, filar F4 */
+  '/koperty-dla-klinik': '2026-09-14',
 };
 
 /** Data zmiany treści dla trasy — `undefined`, gdy trasy nie ma w rejestrze. */

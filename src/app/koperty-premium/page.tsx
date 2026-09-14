@@ -7,6 +7,7 @@ import { ParallaxBackground } from '@/components/ui/ParallaxBackground';
 import { ShowcaseGrid } from '@/components/ui/ShowcaseGrid';
 import { StickyCta } from '@/components/ui/StickyCta';
 import { JsonLd } from '@/components/seo/JsonLd';
+import { getPost } from '@/lib/blog';
 import {
   BULK_QUOTE_THRESHOLD,
   COLORS,
@@ -94,6 +95,30 @@ const PREMIUM_SHOT_FILES = [
 ];
 
 const PREMIUM_SHOTS = PREMIUM_SHOT_FILES.map(shotByFile);
+
+/**
+ * Treści wspierające filar K6 — zasada z content-plan.md: „filar linkuje
+ * w dół do 3–6 treści wspierających". Do 14 września 2026 ta strona nie
+ * linkowała w dół do żadnej, bo wpis dedykowany klastrowi (poz. 38 —
+ * gramatura papieru) jeszcze nie powstał. Filar nie może jednak czekać
+ * na własny wpis: linkujemy do treści, które odpowiadają na pytania
+ * zadawane **na tej stronie**, nawet jeśli w górę linkują do innego filara
+ * (ten sam wzorzec co `filesPost` na F4):
+ * - brak okienka → wiersz „Przednia ścianka" w tabeli porównawczej i USP hero,
+ * - dobór odcienia → sekcja palety, która pokazuje 8 z 19 kolorów,
+ * - plik do druku → sekcja kontrastu na podłożach perłowych i metalicznych,
+ * - termin realizacji → korespondencja premium ma zwykle twardą datę.
+ *
+ * `filter` zostawia listę pustą, gdyby wpis zniknął z bazy — nagłówek nie
+ * renderuje się wtedy nad pustą siatką.
+ */
+const noWindowGuide = getPost('koperty-bez-okienka-kiedy-je-wybrac');
+const paletteGuide = getPost('paleta-19-kolorow-jak-wybrac-odcien');
+const printFilesGuide = getPost('jak-przygotowac-pliki-do-druku-na-kopertach');
+const leadTimeGuide = getPost('szybka-realizacja-kopert-terminy-i-ekspres');
+const GUIDES = [noWindowGuide, paletteGuide, printFilesGuide, leadTimeGuide].filter(
+  (post) => post !== undefined
+);
 
 export const metadata: Metadata = {
   title: 'Eleganckie koperty premium DL z nadrukiem logo',
@@ -280,6 +305,21 @@ export default function KopertyPremiumPage() {
               </tbody>
             </table>
           </div>
+
+          {/* Link w dół do treści wspierającej. Wiersz „Przednia ścianka"
+              stwierdza sam fakt — że okienka nie ma. Pytanie „czy brak okienka
+              mi nie przeszkodzi" jest pytaniem o obieg korespondencji, więc
+              odpowiedź należy do poradnika, nie do tabeli specyfikacji. */}
+          {noWindowGuide && (
+            <p className="small muted" style={{ marginTop: 'var(--space-4)', maxWidth: '68ch' }}>
+              Wiersz „Przednia ścianka" jest jedyną pozycją w tej tabeli, w której standardowa
+              koperta ma nad premium przewagę praktyczną: okienko adresowe oszczędza pracę przy
+              masowej wysyłce. Kiedy brak okienka jest atutem, a kiedy realnym utrudnieniem,
+              rozstrzygamy w poradniku{' '}
+              <Link href={`/blog/${noWindowGuide.slug}`}>koperty bez okienka — kiedy je wybrać</Link>
+              .
+            </p>
+          )}
         </div>
       </section>
 
@@ -451,6 +491,20 @@ export default function KopertyPremiumPage() {
             W ofercie posiadamy łącznie {COLORS.length} kolorów.{' '}
             <Link href="/#kolory">Zobacz pełną paletę na stronie głównej</Link>.
           </p>
+
+          {/* Link w dół: ta sekcja pokazuje, które odcienie wybierane są
+              najczęściej. Metoda doboru — podział palety, kontrast pod nadruk,
+              perła a barwienie w masie — należy do poradnika. */}
+          {paletteGuide && (
+            <p className="small muted" style={{ marginTop: 'var(--space-3)', textAlign: 'center' }}>
+              Jeżeli odcień ma wynikać z identyfikacji wizualnej marki, a nie z upodobania, cały
+              podział palety i dobór tła pod logo opisaliśmy w poradniku{' '}
+              <Link href={`/blog/${paletteGuide.slug}`}>
+                paleta 19 kolorów — jak wybrać odcień
+              </Link>
+              .
+            </p>
+          )}
         </div>
       </section>
 
@@ -501,7 +555,9 @@ export default function KopertyPremiumPage() {
                 Bony podarunkowe na zabiegi i zaproszenia na konsultacje. Koperta staje się
                 integralną częścią prezentu wręczanego bliskiej osobie. Dobór koloru i kalendarz
                 sezonowy sprzedaży bonów opisaliśmy na stronie{' '}
-                <Link href="/koperty-dla-salonow-spa">koperty dla salonów SPA</Link>.
+                <Link href="/koperty-dla-salonow-spa">koperty dla salonów SPA</Link>, a wybór
+                między bielą a perłą w gabinecie zabiegowym — na stronie{' '}
+                <Link href="/koperty-dla-klinik">koperty na vouchery dla kliniki</Link>.
               </p>
             </div>
 
@@ -582,6 +638,25 @@ export default function KopertyPremiumPage() {
               </p>
             </div>
           </div>
+
+          {/* Link w dół. Specyfikacja pliku i proces akceptacji zostają na F1
+              (rozgraniczenie 2 w nagłówku pliku) — poradnik jest treścią
+              wspierającą, więc odsyłamy do niego, a nie powtarzamy wymagań.
+              Hak jest tutejszy: na papierze barwionym w masie JPG z białym
+              tłem daje widoczny prostokąt wokół logo. */}
+          {printFilesGuide && (
+            <p className="small muted" style={{ marginTop: 'var(--space-5)', maxWidth: '68ch' }}>
+              Kontrast zaczyna się od pliku. Logo w JPG zawsze niesie tło, najczęściej białe —
+              na papierze Granatowym czy Ecru wokół znaku wyjdzie wtedy widoczny prostokąt. Znak
+              wektorowy albo PNG z przezroczystym tłem tego nie robi, a na ciemnych odcieniach
+              najczystszy efekt daje jednokolorowa wersja logo w bieli. Komplet wymagań, włącznie
+              z marginesem {PRINT_SAFE_MARGIN_MM} mm od krawędzi, zebraliśmy w poradniku{' '}
+              <Link href={`/blog/${printFilesGuide.slug}`}>
+                jak przygotować pliki do druku na kopertach
+              </Link>
+              .
+            </p>
+          )}
         </div>
       </section>
 
@@ -626,6 +701,47 @@ export default function KopertyPremiumPage() {
           ))}
         </div>
       </section>
+
+      {/* ── 10b. Treści wspierające filar ────────────────────────────────
+          Filar linkuje w dół do 3–6 poradników (zasada z content-plan.md).
+          Przy jednym wpisie renderujemy pojedynczą kartę zamiast siatki,
+          żeby nie zostawiać pustych kolumn — ten sam wybór co na F2 i F3. */}
+      {GUIDES.length > 0 && (
+        <section className="section" id="poradniki">
+          <div className="container">
+            <div className="section-head">
+              <span className="eyebrow">Poradniki</span>
+              <h2>Zanim zamówią Państwo koperty premium</h2>
+              <p>
+                Ta strona odpowiada na pytanie, czym koperta premium różni się od biurowej.
+                Poniższe poradniki prowadzą przez decyzje, które podejmują Państwo przed
+                otwarciem konfiguratora: brak okienka, odcień papieru, plik z logo i termin
+                liczony wstecz od dnia wydarzenia.
+              </p>
+            </div>
+
+            <div
+              className={GUIDES.length > 1 ? 'grid grid-2' : undefined}
+              style={{ gap: 'var(--space-5)' }}
+            >
+              {GUIDES.map((post) => (
+                <article className="card card-lg" key={post.slug}>
+                  <span className="badge">{post.category}</span>
+                  <h3 style={{ fontSize: 21, marginTop: 'var(--space-3)' }}>
+                    <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+                  </h3>
+                  <p className="small" style={{ marginTop: 'var(--space-2)' }}>
+                    {post.lead}
+                  </p>
+                  <p className="small muted" style={{ marginBottom: 0 }}>
+                    {post.readingMinutes} min czytania
+                  </p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ── 11. Podsumowanie i linkowanie ────────────────────────────────── */}
       <section className="section">

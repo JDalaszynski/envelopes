@@ -144,7 +144,9 @@ const INDUSTRIES: { heading: string; text: ReactNode }[] = [
         Bon na zabieg kosztuje kilkaset złotych, więc opakowanie jest częścią tego, za co klient
         płaci. Sprawdzają się odcienie jasne — Biała Perłowa, Ecru, Biały — bo ciemne logo wychodzi
         na nich najczytelniej. Wybór koloru i kalendarz sezonowy sprzedaży bonów opisaliśmy na
-        stronie <Link href="/koperty-dla-salonow-spa">koperty dla salonów SPA</Link>.
+        stronie <Link href="/koperty-dla-salonow-spa">koperty dla salonów SPA</Link>. Gabinet
+        zabiegowy ma inny cykl zamówień niż salon — opisaliśmy go na stronie{' '}
+        <Link href="/koperty-dla-klinik">koperty na vouchery dla kliniki</Link>.
       </>
     ),
   },

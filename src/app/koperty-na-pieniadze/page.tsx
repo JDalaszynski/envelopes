@@ -7,6 +7,7 @@ import { ParallaxBackground } from '@/components/ui/ParallaxBackground';
 import { ShowcaseGrid } from '@/components/ui/ShowcaseGrid';
 import { StickyCta } from '@/components/ui/StickyCta';
 import { JsonLd } from '@/components/seo/JsonLd';
+import { getPost } from '@/lib/blog';
 import { colorPagePath, hasColorPage } from '@/lib/color-pages';
 import { COLOR_MAP, FORMAT_MAP, maxInsertSize } from '@/lib/catalog';
 import { MONEY_FAQ_ITEMS } from '@/lib/faq';
@@ -109,6 +110,36 @@ const OCCASIONS: { name: string; text: string }[] = [
     text: 'Jedyne zastosowanie B2B w tym klastrze: nagroda w konkursie pracowniczym albo premia wręczana do ręki, w kopercie z logo firmy zamiast zwykłej wypłaty na konto.',
   },
 ];
+
+/**
+ * Treści wspierające filar K8 — zasada z content-plan.md: „filar linkuje
+ * w dół do 3–6 treści wspierających". Do 14 września 2026 ta strona nie
+ * linkowała w dół do żadnej: wpisy dedykowane klastrowi (poz. 40 —
+ * personalizowana koperta na pieniądze, poz. 44 — koperty na pieniądze
+ * na ślub) są jeszcze niewykonane. Filar nie czeka na własne wpisy —
+ * linkuje do tych, które odpowiadają na pytania zadawane **na tej stronie**,
+ * choć w górę linkują do innych filarów (ten sam wzorzec co `filesPost`
+ * na F4):
+ * - dobór odcienia → sekcja koloru pokazuje 3 z 19 odcieni,
+ * - próg 10 sztuk → najostrzejsze tarcie tej strony: filar sprzedaje kopertę
+ *   od 1 sztuki, a obie usługi dodatkowe zaczynają się od 10 (pytanie stoi już
+ *   w `MONEY_FAQ_ITEMS`, ale odpowiedź „bo tyle wynosi minimalny nakład" nie
+ *   tłumaczy, skąd ten nakład się bierze),
+ * - lista imion → karta personalizacji przy nagrodach i kopertach dla rodziny,
+ * - termin realizacji → uroczystość ma datę, a licznik rusza po wpłacie.
+ *
+ * Świadomie **pominięte**: `jak-wreczyc-bon-podarunkowy...` i
+ * `koperta-ozdobna-na-voucher...`. Oba opisują wydanie bonu przez firmę
+ * usługową, czyli intencję klastra K7 — wciągnięcie ich tutaj rozmyłoby
+ * granicę między prezentem pieniężnym a voucherem.
+ */
+const paletteGuide = getPost('paleta-19-kolorow-jak-wybrac-odcien');
+const moqGuide = getPost('dlaczego-koperty-z-nadrukiem-od-10-sztuk');
+const nameListGuide = getPost('koperty-z-imieniem-i-nazwiskiem-jak-przygotowac-liste');
+const leadTimeGuide = getPost('szybka-realizacja-kopert-terminy-i-ekspres');
+const GUIDES = [paletteGuide, moqGuide, nameListGuide, leadTimeGuide].filter(
+  (post) => post !== undefined
+);
 
 const moneyTitle = 'Koperty na pieniądze — ozdobne, od 1 sztuki';
 const moneyDescription = `Ozdobna koperta na pieniądze na wesele, komunię lub chrzciny — banknot wchodzi płasko, od 1 sztuki za ${formatPrice(plain.unitTotal)} brutto. Wysyłka w ${DEFAULT_PRICING.leadDaysPlain} dni robocze.`;
@@ -374,6 +405,20 @@ export default function MoneyEnvelopesPage() {
           <p className="small muted" style={{ marginTop: 'var(--space-5)', maxWidth: '68ch' }}>
             Pozostałe kolory z palety 19 odcieni wybiorą Państwo{' '}
             <Link href="/#kolory">w pełnej palecie na stronie głównej</Link>.
+            {/* Link w dół do treści wspierającej. Ta sekcja podaje trzy odcienie
+                najczęstsze przy prezencie pieniężnym; różnica między perłą
+                a barwieniem w masie i cały podział palety należą do poradnika. */}
+            {paletteGuide && (
+              <>
+                {' '}
+                Czym połysk perłowy różni się od matowego barwienia w masie i jak dobrać odcień do
+                charakteru uroczystości, wyjaśniamy w poradniku{' '}
+                <Link href={`/blog/${paletteGuide.slug}`}>
+                  paleta 19 kolorów — jak wybrać odcień
+                </Link>
+                .
+              </>
+            )}
           </p>
 
           <div className="row" style={{ marginTop: 'var(--space-6)' }}>
@@ -409,6 +454,19 @@ export default function MoneyEnvelopesPage() {
                 Pełną specyfikację i proces akceptacji opisaliśmy na stronie{' '}
                 <Link href="/koperty-z-nadrukiem">koperty z nadrukiem</Link>.
               </p>
+              {/* Link w dół do najostrzejszego tarcia tej strony: filar sprzedaje
+                  kopertę od 1 sztuki, a obie usługi dodatkowe zaczynają się od 10.
+                  `MONEY_FAQ_ITEMS` stwierdza próg, wpis tłumaczy, skąd się bierze. */}
+              {moqGuide && (
+                <p className="small muted" style={{ marginBottom: 0 }}>
+                  Skąd bierze się próg {DEFAULT_PRICING.moqWithPrint} sztuk przy obu usługach
+                  i co zrobić, gdy potrzebują Państwo mniej, wyjaśniamy w poradniku{' '}
+                  <Link href={`/blog/${moqGuide.slug}`}>
+                    dlaczego koperty z nadrukiem są od {DEFAULT_PRICING.moqWithPrint} sztuk
+                  </Link>
+                  .
+                </p>
+              )}
             </div>
 
             <div className="card">
@@ -423,6 +481,19 @@ export default function MoneyEnvelopesPage() {
                 opisaliśmy na stronie{' '}
                 <Link href="/koperty-personalizowane">personalizowane koperty</Link>.
               </p>
+              {/* Link w dół: filar F2 opisuje mechanizm wgrania listy, poradnik —
+                  co zrobić z samymi danymi (zapis nazwisk, duplikaty, polskie
+                  znaki), czyli pracę wykonywaną przed wejściem do konfiguratora. */}
+              {nameListGuide && (
+                <p className="small muted" style={{ marginBottom: 0 }}>
+                  Samą listę imion — zapis nazwisk, duplikaty i polskie znaki po eksporcie
+                  z arkusza — przygotują Państwo według poradnika{' '}
+                  <Link href={`/blog/${nameListGuide.slug}`}>
+                    koperty z imieniem i nazwiskiem — lista do nadruku
+                  </Link>
+                  .
+                </p>
+              )}
             </div>
           </div>
         </div>
@@ -486,6 +557,21 @@ export default function MoneyEnvelopesPage() {
             dostępność kuriera w Państwa okolicy przed złożeniem zamówienia.
           </p>
 
+          {/* Link w dół do treści wspierającej. Tabela podaje liczbę dni;
+              poradnik odpowiada na pytanie, od kiedy je liczyć i kiedy dopłata
+              za ekspres faktycznie skraca oczekiwanie. */}
+          {leadTimeGuide && (
+            <p className="small muted" style={{ marginTop: 'var(--space-3)', maxWidth: '68ch' }}>
+              Przy wariancie z nadrukiem lub personalizacją licznik rusza po późniejszym z dwóch
+              zdarzeń — wpłacie i akceptacji wizualizacji. Jak policzyć datę wysyłki wstecz od dnia
+              uroczystości i kiedy dopłata za ekspres coś realnie kupuje, pokazujemy w poradniku{' '}
+              <Link href={`/blog/${leadTimeGuide.slug}`}>
+                szybka realizacja kopert — terminy i ekspres
+              </Link>
+              .
+            </p>
+          )}
+
           <div className="row" style={{ marginTop: 'var(--space-6)' }}>
             <ConfigureLink format="DL" color="biala-perlowa" className="btn btn-lg">
               Wybierz kopertę na pieniądze
@@ -517,6 +603,45 @@ export default function MoneyEnvelopesPage() {
           </p>
         </div>
       </section>
+
+      {/* ── Treści wspierające filar ──────────────────────────────────────
+          Filar linkuje w dół do 3–6 poradników (zasada z content-plan.md).
+          Przy jednym wpisie pojedyncza karta zamiast siatki — ten sam wybór
+          co na F2 i F3. */}
+      {GUIDES.length > 0 && (
+        <section className="section section-surface" id="poradniki">
+          <div className="container">
+            <div className="section-head">
+              <span className="eyebrow">Poradniki</span>
+              <h2>Zanim zamówią Państwo kopertę na prezent pieniężny</h2>
+              <p>
+                Przy jednej kopercie gładkiej wystarczy wybrać kolor. Poniższe poradniki
+                przydają się wtedy, gdy kopert jest więcej albo gdy uroczystość ma twardą datę.
+              </p>
+            </div>
+
+            <div
+              className={GUIDES.length > 1 ? 'grid grid-2' : undefined}
+              style={{ gap: 'var(--space-5)' }}
+            >
+              {GUIDES.map((post) => (
+                <article className="card card-lg" key={post.slug}>
+                  <span className="badge">{post.category}</span>
+                  <h3 style={{ fontSize: 21, marginTop: 'var(--space-3)' }}>
+                    <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+                  </h3>
+                  <p className="small" style={{ marginTop: 'var(--space-2)' }}>
+                    {post.lead}
+                  </p>
+                  <p className="small muted" style={{ marginBottom: 0 }}>
+                    {post.readingMinutes} min czytania
+                  </p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ── Finalne CTA ── */}
       <section className="section-tight">
