@@ -310,7 +310,20 @@ obecna w `sitemap.xml` i w `/llms.txt`. `title` 56 znaków (z sufiksem marki), `
 151 znaków, jeden `<h1>` z frazą główną w mianowniku. Sprawdzone w przeglądarce (desktop i 375 px):
 hero, 6 kart zastosowań, sekcja karty powitalnej z kadrem, trzy kierunki kolorów, tabela kosztu
 i kalendarz renderują się poprawnie, zero błędów konsoli, odnośniki zwrotne obecne w HTML-u na
-wszystkich ośmiu stronach. **Do wykonania po wdrożeniu na produkcję:** `npm run indexnow`.
+wszystkich ośmiu stronach.
+
+**Wdrożone na produkcję 14 września 2026** (commit `b4f91e7`). Sprawdzone na `envelopes.pl`:
+strona zwraca 200, `canonical` wskazuje domenę produkcyjną, karta OG jest dostępna, komplet
+ośmiu odnośników zwrotnych i wpis w `/llms.txt` obecne w HTML-u.
+
+**Zaległość wdrożeniowa wykryta przy tej publikacji.** Do momentu tego deployu produkcja
+serwowała build z 7 września — poz. 20 (commit `9df4d80` z 10 września) **nie była na produkcji**,
+mimo statusu `[x]` w planie. Wniosek na przyszłość: po odhaczeniu pozycji sprawdzamy adres na
+`envelopes.pl`, a nie tylko lokalny build; sam push do `master` nie jest dowodem wdrożenia.
+
+**IndexNow — wykonane.** `npm run indexnow` zgłosił 19 adresów z okna 7 dni (poz. 18, poz. 20,
+cztery filary i dziewięć stron, które dostały odnośniki): **HTTP 200 — przyjęte**. Plik klucza
+dostępny pod `https://envelopes.pl/ec2f0cba42b2f14bd410a15d19813a6d.txt`.
 
 ### 10 września 2026 — poz. 20: `/blog/koperta-ozdobna-na-voucher-jaki-format-i-kolor` · linki do LP branżowych · `sameAs`
 
