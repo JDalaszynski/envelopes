@@ -119,7 +119,7 @@ lub `personalized/` — buduj treść wokół zdjęcia, które faktycznie masz.
 | # | Tytuł / URL | Format | Główna fraza | Cel | Persona / Branża | Filar | Uwagi (antykanibalizacja) | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 17 | Koperty dla kancelarii prawnych — `/koperty-dla-kancelarii` | Supporting LP | koperty dla kancelarii | KONWERSJA | Kancelarie, notariusze | F1 | **Wykonane 7 września 2026.** Kolory stonowane (czarny, granat, taupe), pisma i akty. Nie powtarza cennika z poz. 9 — linkuje. Trzecia i ostatnia LP z realnym kadrem aranżacyjnym z trójki wskazanej przy poz. 19/23 — bez presji sezonowej, więc zrobiona jako ostatnia z trzech | [x] |
-| 18 | Koperty dla hoteli — `/koperty-dla-hoteli` | Supporting LP | koperty firmowe dla hotelu | KONWERSJA | Hotele 4–5*, resorty | F4 | Welcome letters i vouchery pobytowe; filar F4, bo dominuje zastosowanie voucherowe. **Rozgraniczenie:** F4 poświęca hotelom jeden akapit w sekcji „Dla kogo", ten LP celuje we frazę branżową i dokłada scenariusz welcome letter, którego filar nie ma | [ ] |
+| 18 | Koperty firmowe dla hotelu — `/koperty-dla-hoteli` | Supporting LP | koperty firmowe dla hotelu | KONWERSJA | Hotele 4–5*, resorty | F4 | **Wykonane 14 września 2026.** Welcome letters i vouchery pobytowe; filar F4, bo dominuje zastosowanie voucherowe. **Rozgraniczenie:** F4 poświęca hotelom jeden akapit w sekcji „Dla kogo", ten LP celuje we frazę branżową i dokłada scenariusz welcome letter, którego filar nie ma — personalizacja imienna w zakresie `imiona` (nazwisko gościa bez adresu, lista z systemu rezerwacji). Pierwsza LP branżowa **bez** własnego kadru aranżacyjnego: trójkę kadrów branżowych zamknęła poz. 17, więc przy karcie powitalnej stoi realny kadr personalizacji odręcznej, a kolory rekomendowane pokazują kadry katalogowe | [x] |
 | 19 | Koperty na bony do salonu SPA — `/koperty-dla-salonow-spa` | Supporting LP | koperty na bony podarunkowe | KONWERSJA | SPA, kosmetyka, masaż | F4 | **Wykonane 5 września 2026.** Fraza `koperty na bony podarunkowe` przeniesiona z `keywords` filara F4 (zostaje przy `koperty na vouchery`, `koperty do voucherów`, `koperta do vouchera`, `koperta na bon podarunkowy`). Wybrana jako pierwsza LP Fazy 2 zamiast poz. 17/18: sezonowe okno („publikować przed IV kw.") jest jedynym twardym terminem w całym planie, a domena potrzebuje 3–6 miesięcy dojrzewania w indeksie (K7, keywords.md) | [x] |
 | 20 | Koperta ozdobna na voucher — jaki format i kolor — `/blog/koperta-ozdobna-na-voucher-jaki-format-i-kolor` | Supporting article | koperta ozdobna na voucher | GEO | Właściciel salonu | F4 | **Wykonane 10 września 2026.** Doradcza; filar F4 sprzedaje, ten wpis odpowiada na pytanie „jaka". **Granica po publikacji F4:** filar podaje wymiary trzech postaci bonu (DL / A6 / karta ID-1) i jeden fakt o kolorze — nadruk kosztuje tyle samo na każdym odcieniu, a o czytelności decyduje kontrast. Ten wpis dostaje dobór odcienia do branży i okazji oraz kiedy sięgnąć po metalik i perłę. Tabeli wymiarów bonu nie powtarza (odsyła do `#wymiar-bonu`); wobec LP poz. 19 i 23 zestawia wiele branż naraz i linkuje do nich zamiast powtarzać ich kosztorys i kalendarz | [x] |
 
@@ -249,6 +249,68 @@ nie liczą się do kadencji czterech pozycji tygodniowo i nie mają filara.
 ---
 
 ## Dziennik wdrożeń
+
+### 14 września 2026 — poz. 18: `/koperty-dla-hoteli` · czwarta LP Fazy 2
+
+**Zamyka tydzień 5 planu** i czwartą LP branżową Fazy 2. Filar F4 poświęca hotelom jeden akapit
+w sekcji „Dla kogo" (voucher pobytowy i bon na kolację sylwestrową, sprzedawane na miejscu
+i wysyłkowo). Ta strona celuje we frazę branżową `koperty firmowe dla hotelu` i dokłada obieg,
+którego filar nie ma wcale: **kartę powitalną z nazwiskiem gościa** — personalizację imienną
+w zakresie `imiona`, bez kolumn adresowych, z listy eksportowanej z systemu rezerwacji. Filar
+mówi wyłącznie o bonie kupowanym w prezencie; hotel zamawia obok niego drugą partię kopert,
+która nigdy nie trafia na pocztę.
+
+**Rozgraniczenie wobec poz. 19 i 23** (SPA, restauracje — ten sam filar i szablon). Tamte
+odpowiadają na pytanie „jaki kolor pod bon i kiedy zamówić przed sezonem prezentowym". Ta
+zaczyna od typologii sytuacji w obiekcie (pokój, recepcja, sala bankietowa, biuro sprzedaży —
+6 kart), ma **trzy** kierunki kolorystyczne zamiast dwóch i kalendarz, w którym obok szczytów
+prezentowych stoi **start sezonu wysokiego** — zdarzenie, którego salon i restauracja nie mają.
+Tabela kosztu została na osi wspólnej z F4, ale z nakładami w skali obiektu (10 / 50 / 150)
+i z trzecią kolumną opisującą kartę powitalną, nie bon z imieniem obdarowanego.
+
+**Rozgraniczenie wobec F2 `/koperty-personalizowane`.** Mechanizm arkusza (kolumny, walidacja,
+formaty pliku) zostaje na filarze personalizacji — tutaj wchodzi wyłącznie to, co z niego
+w hotelu wynika. Sekcja linkuje do F2 zamiast powtarzać specyfikację.
+
+**Bez własnego `FAQPage`**, jak poz. 19 i 23. Pytania hotelarza pokrywają już dwa zestawy:
+`VOUCHER_FAQ_ITEMS` na F4 i `PERSONALIZATION_FAQ_ITEMS` na F2, gdzie odpowiedź na „Czy mogę
+zamówić koperty z samym imieniem, bez adresu?" wprost wymienia hotele. `WebPage.mainEntity`
+wskazuje na węzeł `Product` filara.
+
+**Pierwsza LP branżowa bez własnego kadru aranżacyjnego.** Trójkę kadrów branżowych (kancelaria,
+SPA, restauracja) zamknęła poz. 17, a zdjęcia z logo hotelu w repozytorium nie ma. Zamiast
+podstawiać cudzy kadr strona pokazuje realny kadr personalizacji odręcznej
+(`niebieska-koperta-dl-personalizacja-odreczna`) **dokładnie tam, gdzie jest o niej mowa** —
+przy karcie powitalnej — a pięć rekomendowanych odcieni jako kadry katalogowe. Karta OG
+wygenerowana z tego samego kadru przez `scripts/og-card.mjs`
+(`public/images/og/koperty-dla-hoteli.jpg`).
+
+**Ciągłość intencji.** CTA sekcji „Karta powitalna" wchodzi do konfiguratora z nadrukiem,
+personalizacją i `zakres=imiona` — jedyny taki odnośnik w serwisie poza F2. Pozostałe CTA
+otwierają konfigurator z formatem DL i nadrukiem.
+
+Linkowanie w obie strony:
+- **do LP:** karty hotelowe w sekcjach „Dla kogo" na F4, F1, F2 i `/koperty-premium` oraz na
+  czterech stronach kolorów, które ta LP rekomenduje — Ecru, Złoty, Butelkowa Zieleń, Jeansowy.
+  Reguła z 10 września utrzymana: link z karty kolorowej idzie tylko tam, gdzie strona docelowa
+  ten odcień poleca (Biała Perłowa jest na LP polecana, ale jej karta „Dla kogo" nie mówi
+  o hotelach — linku nie dokładamy).
+- **z LP:** `/koperty-na-vouchery` (pełna tabela konfiguracji bonu, pozostałe branże),
+  `/koperty-z-nadrukiem#cena` (rozbicie ceny nadruku), `/koperty-personalizowane` (arkusz),
+  `/koperty/ecru`, `/koperty/biala-perlowa`, `/koperty/zloty`, `/koperty/ciemnozielony`,
+  `/koperty/blekit-lupkowy`.
+
+`PAGE_UPDATED` podbite dla `/koperty-dla-hoteli` i ośmiu stron, które dostały odnośnik. `llms.txt`
+i sitemapa (wpis + obrazy: kadr personalizacji i pięć kadrów katalogowych) zaktualizowane w tym
+samym wdrożeniu. `keywords.md` bez zmian — fraza `koperty firmowe dla hotelu` nie występowała
+dotąd w `keywords` żadnej strony, a w bazie stoi w sekcji „Luki" jako zapytanie branżowe.
+
+Weryfikacja: `npm run typecheck` i `npm run build` bez błędów, **76/76 stron statycznie**, strona
+obecna w `sitemap.xml` i w `/llms.txt`. `title` 56 znaków (z sufiksem marki), `description`
+151 znaków, jeden `<h1>` z frazą główną w mianowniku. Sprawdzone w przeglądarce (desktop i 375 px):
+hero, 6 kart zastosowań, sekcja karty powitalnej z kadrem, trzy kierunki kolorów, tabela kosztu
+i kalendarz renderują się poprawnie, zero błędów konsoli, odnośniki zwrotne obecne w HTML-u na
+wszystkich ośmiu stronach. **Do wykonania po wdrożeniu na produkcję:** `npm run indexnow`.
 
 ### 10 września 2026 — poz. 20: `/blog/koperta-ozdobna-na-voucher-jaki-format-i-kolor` · linki do LP branżowych · `sameAs`
 

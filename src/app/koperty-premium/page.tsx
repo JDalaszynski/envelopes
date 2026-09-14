@@ -489,7 +489,9 @@ export default function KopertyPremiumPage() {
               <h3 style={{ fontSize: 19 }}>Hotele boutique i resorty 5*</h3>
               <p className="small" style={{ marginTop: 'var(--space-2)', marginBottom: 0 }}>
                 Karty powitalne dla gości VIP, vouchery pobytowe i rachunki w eleganckiej oprawie.
-                Wykończenia Złote i Perłowe doskonale harmonizują z luksusowymi wnętrzami.
+                Wykończenia Złote i Perłowe doskonale harmonizują z luksusowymi wnętrzami. Dobór
+                odcienia do pokoju, sali galowej i obiektu w naturze opisaliśmy na stronie{' '}
+                <Link href="/koperty-dla-hoteli">koperty firmowe dla hotelu</Link>.
               </p>
             </div>
 

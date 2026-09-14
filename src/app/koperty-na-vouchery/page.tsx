@@ -169,7 +169,15 @@ const INDUSTRIES: { heading: string; text: ReactNode }[] = [
   },
   {
     heading: 'Hotele, resorty i pensjonaty butikowe',
-    text: 'Voucher pobytowy i bon na kolację sylwestrową sprzedają się i na miejscu, i wysyłkowo. Koperta obsługuje oba scenariusze: zaadresowana drukiem jedzie pocztą, gładka czeka w recepcji na gościa, który przyjdzie po nią sam.',
+    text: (
+      <>
+        Voucher pobytowy i bon na kolację sylwestrową sprzedają się i na miejscu, i wysyłkowo.
+        Koperta obsługuje oba scenariusze: zaadresowana drukiem jedzie pocztą, gładka czeka
+        w recepcji na gościa, który przyjdzie po nią sam. Drugi obieg kopert w obiekcie — kartę
+        powitalną z nazwiskiem gościa — opisaliśmy na stronie{' '}
+        <Link href="/koperty-dla-hoteli">koperty firmowe dla hotelu</Link>.
+      </>
+    ),
   },
   {
     heading: 'Salony tatuażu i studia piercingu',

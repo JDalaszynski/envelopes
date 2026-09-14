@@ -123,6 +123,16 @@ const PAGE_IMAGES: Record<string, string[]> = {
       .filter((color) => color?.images?.DL)
       .map((color) => abs(color.images!.DL!)),
   ],
+  /* Supporting LP poz. 18 — kadr personalizacji imiennej przy karcie powitalnej
+     (kadru z logo hotelu w repozytorium nie ma) plus próbki katalogowe pięciu
+     odcieni z trzech kierunków kolorystycznych tej strony. */
+  '/koperty-dla-hoteli': [
+    ...shotUrls([shotByFile('niebieska-koperta-dl-personalizacja-odreczna')]),
+    ...['ecru', 'biala-perlowa', 'zloty', 'ciemnozielony', 'blekit-lupkowy']
+      .map((id) => COLOR_MAP[id])
+      .filter((color) => color?.images?.DL)
+      .map((color) => abs(color.images!.DL!)),
+  ],
   /* Supporting LP poz. 17 — jedyny realny kadr aranżacyjny dla kancelarii
      (Granatowy) plus próbki katalogowe dwóch odcieni stonowanych. */
   '/koperty-dla-kancelarii': [
@@ -199,6 +209,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     page('/koperty-dla-restauracji', 'monthly', 0.8),
     /* Supporting LP pod F1 — koperty dla kancelarii (content-plan.md poz. 17) */
     page('/koperty-dla-kancelarii', 'monthly', 0.8),
+    /* Supporting LP pod F4 — koperty firmowe dla hotelu (content-plan.md poz. 18) */
+    page('/koperty-dla-hoteli', 'monthly', 0.8),
     /* Pillar K8 — koperty na pieniądze (content-plan.md poz. 39) */
     page('/koperty-na-pieniadze', 'monthly', 0.9),
     page('/blog', 'weekly', 0.8),

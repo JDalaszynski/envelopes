@@ -101,6 +101,11 @@ const PAGES: { url: string; title: string; note: string }[] = [
     note: 'Voucher na kolację w kopercie: dyskrecja bez okienka adresowego, wybór między odcieniem Czerwonym a stonowanym Ciemnozielonym lub Czarnym, dwa szczyty sprzedażowe (Walentynki, sezon świąteczny).',
   },
   {
+    url: '/koperty-dla-hoteli',
+    title: 'Koperty firmowe dla hotelu — karty powitalne i vouchery pobytowe',
+    note: 'Obiekty noclegowe: karta powitalna z nazwiskiem gościa drukowana bez adresu (lista z systemu rezerwacji), voucher pobytowy, zaproszenie na kolację sylwestrową, kolory pod pokój, salę galową i resort w naturze, kalendarz z sezonem wysokim.',
+  },
+  {
     url: '/koperty-dla-kancelarii',
     title: 'Koperty dla kancelarii prawnych i notarialnych',
     note: 'Korespondencja prawna: typologia pism (akt notarialny, wezwanie, pismo procesowe), kolory stonowane (Granatowy, Czarny, Taupe), adresowanie wielu klientów w jednym zamówieniu.',

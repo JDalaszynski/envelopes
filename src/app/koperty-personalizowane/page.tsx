@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import type { ReactNode } from 'react';
 import Link from 'next/link';
 
 import { ConfigureLink } from '@/components/home/ConfigureLink';
@@ -146,7 +147,7 @@ const HOW_TO_STEPS = [
  * Linki w dół dokładamy dopiero wtedy, gdy powstanie LP branżowe;
  * dziś żadne z nich nie istnieje, więc akapity zostają bez odnośników.
  */
-const INDUSTRIES: { heading: string; text: string }[] = [
+const INDUSTRIES: { heading: string; text: ReactNode }[] = [
   {
     heading: 'Sekretariaty i biura zarządu',
     text: 'Pismo zaadresowane imiennie do członka zarządu nie ląduje na stosie korespondencji masowej. Adres drukujemy wprost na kopercie, więc nie ma naklejki, która się odkleja, ani odręcznego pisma, którego czytelność zależy od tego, kto akurat wypisywał.',
@@ -157,7 +158,15 @@ const INDUSTRIES: { heading: string; text: string }[] = [
   },
   {
     heading: 'Hotele, resorty i pensjonaty',
-    text: 'Karta powitalna z nazwiskiem gościa leży w pokoju, zanim gość przyjedzie — to pierwszy przedmiot, który bierze do ręki. Tu wystarczy samo nazwisko, bez adresu; listę z systemu rezerwacji wgrywają Państwo arkuszem. Sprawdzają się jasne odcienie: Ecru, Biała Perłowa i Biały.',
+    text: (
+      <>
+        Karta powitalna z nazwiskiem gościa leży w pokoju, zanim gość przyjedzie — to pierwszy
+        przedmiot, który bierze do ręki. Tu wystarczy samo nazwisko, bez adresu; listę z systemu
+        rezerwacji wgrywają Państwo arkuszem. Sprawdzają się jasne odcienie: Ecru, Biała Perłowa
+        i Biały. Pozostałe sytuacje, w których obiekt zamawia koperty, opisaliśmy na stronie{' '}
+        <Link href="/koperty-dla-hoteli">koperty firmowe dla hotelu</Link>.
+      </>
+    ),
   },
   {
     heading: 'Uczelnie, szkoły i firmy szkoleniowe',

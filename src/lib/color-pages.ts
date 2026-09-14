@@ -377,6 +377,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
         {
           name: 'Hotele i restauracje',
           text: 'Karty powitalne, bony na kolację i vouchery pobytowe. Koperta wręczana do ręki działa inaczej niż wysyłana pocztą: gość ogląda ją z bliska, w świetle sali.',
+          link: { href: '/koperty-dla-hoteli', anchor: 'Koperty firmowe dla hotelu' },
         },
         {
           name: 'Salony kosmetyczne i kliniki medycyny estetycznej',
@@ -465,6 +466,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
         {
           name: 'Hotele, pensjonaty i domy gościnne',
           text: 'Karty powitalne zostawiane w pokoju, rachunki i vouchery pobytowe. Ecru pasuje do wnętrz z drewnem i lnem, w których ten segment się urządza.',
+          link: { href: '/koperty-dla-hoteli', anchor: 'Koperty firmowe dla hotelu' },
         },
         {
           name: 'Kliniki, gabinety i pracownie zdrowia',
@@ -743,6 +745,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
         {
           name: 'Hotele, resorty i apartamenty nadmorskie',
           text: 'Vouchery pobytowe, karty powitalne i materiały informacyjne dla gości. Kolor harmonizuje z motywami marynistycznymi bez popadania w dosłowność.',
+          link: { href: '/koperty-dla-hoteli', anchor: 'Koperty firmowe dla hotelu' },
         },
         {
           name: 'Agencje doradcze i firmy technologiczne',
@@ -1189,6 +1192,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
         {
           name: 'Hotele i resorty w otoczeniu natury',
           text: 'Listy powitalne w pokoju, zaproszenia na pobyty degustacyjne i pakiety wypoczynkowe w obiektach spa położonych w górach lub w lasach.',
+          link: { href: '/koperty-dla-hoteli', anchor: 'Koperty firmowe dla hotelu' },
         },
         {
           name: 'Winnice, destylarnie i marki kraftowe',

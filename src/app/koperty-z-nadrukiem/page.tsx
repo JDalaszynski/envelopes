@@ -138,7 +138,15 @@ const INDUSTRIES: { heading: string; text: ReactNode }[] = [
   },
   {
     heading: 'Hotele, resorty i pensjonaty',
-    text: 'Kartę powitalną i voucher pobytowy wręcza się gościowi do ręki, więc koperta jest częścią pobytu, a nie opakowaniem transportowym. Zmieści się w niej zarówno bon, jak i list na papierze firmowym złożony na trzy.',
+    text: (
+      <>
+        Kartę powitalną i voucher pobytowy wręcza się gościowi do ręki, więc koperta jest częścią
+        pobytu, a nie opakowaniem transportowym. Zmieści się w niej zarówno bon, jak i list na
+        papierze firmowym złożony na trzy. Sytuacje w obiekcie, dobór koloru i kalendarz sezonu
+        opisaliśmy na stronie{' '}
+        <Link href="/koperty-dla-hoteli">koperty firmowe dla hotelu</Link>.
+      </>
+    ),
   },
   {
     heading: 'Kliniki medycyny estetycznej i salony SPA',
