@@ -576,7 +576,10 @@ export default function KopertyPremiumPage() {
               <h3 style={{ fontSize: 19 }}>Agencje eventowe i PR</h3>
               <p className="small" style={{ marginTop: 'var(--space-2)', marginBottom: 0 }}>
                 Zaproszenia na premiery marek, gale jubileuszowe i pokazy mody. Możliwość wykonania
-                personalizacji imiennej sprawia, że każde zaproszenie zyskuje indywidualny charakter.
+                personalizacji imiennej sprawia, że każde zaproszenie zyskuje indywidualny
+                charakter. Kalendarz kampanii zapraszającej i nakład liczony listą gości stoją na
+                stronie{' '}
+                <Link href="/koperty-dla-agencji-eventowych">koperty na zaproszenia firmowe</Link>.
               </p>
             </div>
 

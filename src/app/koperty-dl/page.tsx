@@ -197,7 +197,16 @@ const INDUSTRIES: { heading: string; text: ReactNode }[] = [
   },
   {
     heading: 'Agencje eventowe, PR i kreatywne',
-    text: `Program wydarzenia i zaproszenie składane do wymiaru DL mieszczą się w kopercie ${DL.dimensions}. Zaproszenie kwadratowe 150 × 150 mm wymaga formatu K4 ${FORMAT_MAP.K4.dimensions}, który ma dziś w katalogu status „Dostępne wkrótce" — tego wariantu nie da się jeszcze zamówić.`,
+    text: (
+      <>
+        Program wydarzenia i zaproszenie składane do wymiaru DL mieszczą się w kopercie{' '}
+        {DL.dimensions}. Zaproszenie kwadratowe 150 × 150 mm wymaga formatu K4{' '}
+        {FORMAT_MAP.K4.dimensions}, który ma dziś w katalogu status „Dostępne wkrótce" — tego
+        wariantu nie da się jeszcze zamówić. Komplet materiałów eventowych i ich dopasowanie do
+        koperty zebraliśmy na stronie{' '}
+        <Link href="/koperty-dla-agencji-eventowych">koperty na zaproszenia firmowe</Link>.
+      </>
+    ),
   },
   {
     heading: 'Butiki, jubilerzy i marki premium',

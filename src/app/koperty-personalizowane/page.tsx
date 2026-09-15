@@ -180,7 +180,16 @@ const INDUSTRIES: { heading: string; text: ReactNode }[] = [
   },
   {
     heading: 'Agencje eventowe, PR i kreatywne',
-    text: 'Zaproszenie na galę adresowane imiennie działa inaczej niż zaproszenie „do firmy" — zobowiązuje konkretną osobę. Kiedy data wydarzenia goni, zamówienie da się puścić trybem ekspresowym, a kolory spoza standardu, jak Matcha czy Jeansowy, nie kosztują więcej niż biel.',
+    text: (
+      <>
+        Zaproszenie na galę adresowane imiennie działa inaczej niż zaproszenie „do firmy" —
+        zobowiązuje konkretną osobę. Kiedy data wydarzenia goni, zamówienie da się puścić trybem
+        ekspresowym, a kolory spoza standardu, jak Matcha czy Jeansowy, nie kosztują więcej niż
+        biel. Kiedy na kopercie staje pełny adres, a kiedy samo nazwisko wręczane przy
+        rejestracji, rozstrzyga strona{' '}
+        <Link href="/koperty-dla-agencji-eventowych">koperty na zaproszenia firmowe</Link>.
+      </>
+    ),
   },
   {
     heading: 'Kancelarie prawne i notarialne',

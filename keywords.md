@@ -419,6 +419,12 @@ to zapis na powiadomienie o dostępności formatów, nie wejście do konfigurato
   wyprzedza ofertę o 3–6 miesięcy, bo tyle trwa dojrzewanie strony w indeksie.
 - **B2B w tym klastrze jest dostępne już dziś:** wedding plannerzy i agencje eventowe kupują
   koperty DL na vouchery prezentowe i korespondencję z parami. To pomost K9 → K7.
+- **Wariant firmowy wyszedł z K9 do K1 (15 września 2026).** Fraza `koperty na zaproszenia
+  firmowe` ma od tego dnia właściciela: LP `/koperty-dla-agencji-eventowych` (poz. 25 planu).
+  Strona stoi pod filarem F1, prowadzi wyłącznie do formatu DL (zaproszenie składane, program,
+  karta wstępu) i mówi wprost, że zaproszenie kwadratowe wymaga formatu K4 ze statusem
+  „Dostępne wkrótce". **Frazy `koperty na zaproszenia` nie ma w jej `keywords`** — zostaje przy
+  poz. 41 razem z całą intencją „którą kopertę dobrać do tego zaproszenia".
 - Nie dodawać fraz ślubnych do `keywords` istniejących wpisów blogowych „na zapas" — to sygnał
   niedopasowania, a nie przewagi.
 
@@ -462,8 +468,9 @@ profilu klienta z bazy wiedzy. Do zweryfikowania w kolejnym eksporcie:
    `koperty hurtowo z logo`, `koperty z nadrukiem odroczony termin płatności`,
    `koperty z nadrukiem wysyłka kurierem`.
 3. **Generatywne (pytania pełnym zdaniem)** — nie pojawiają się w klasycznych narzędziach
-   keywordowych, bo są zadawane modelom, nie wyszukiwarkom: „jakie koperty na zaproszenia
-   firmowe", „ile kosztuje nadruk logo na kopertach", „jaka koperta na voucher", „czym różni
+   keywordowych, bo są zadawane modelom, nie wyszukiwarkom: ~~„jakie koperty na zaproszenia
+   firmowe"~~ (obsłużona od 15 września 2026 przez `/koperty-dla-agencji-eventowych`),
+   „ile kosztuje nadruk logo na kopertach", „jaka koperta na voucher", „czym różni
    się koperta DL od C6", „ile trwa druk kopert z logo". To materiał na sekcje FAQ i akapity
    odpowiedzi — patrz agent `seo-geo-strategist`.
 

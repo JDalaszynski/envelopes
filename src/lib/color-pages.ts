@@ -198,6 +198,10 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
         {
           name: 'Agencje kreatywne i eventowe',
           text: 'Zaproszenia na premiery, gale i pokazy. Jedno jasne słowo na czerni działa tu tak samo jak pełne logo — kadr z takim nadrukiem pokazujemy wyżej.',
+          link: {
+            href: '/koperty-dla-agencji-eventowych',
+            anchor: 'Koperty na zaproszenia firmowe',
+          },
         },
         {
           name: 'Gabinety i kliniki z ofertą premium',
@@ -282,6 +286,10 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
         {
           name: 'Instytucje kultury i orkiestry',
           text: 'Zaproszenia na koncert, karnety abonamentowe i pisma do mecenasów. Kadr wyżej pokazuje taki nadruk: jeden znak i nazwa zespołu, bez dodatków.',
+          link: {
+            href: '/koperty-dla-agencji-eventowych',
+            anchor: 'Koperty na zaproszenia firmowe',
+          },
         },
         {
           name: 'Uczelnie i szkoły wyższe',
@@ -369,6 +377,10 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
         {
           name: 'Organizatorzy gal i eventów',
           text: 'Zaproszenia na bal, galę i jubileusz firmy. Złota koperta ustawia rangę wydarzenia, zanim adresat wyjmie z niej kartę.',
+          link: {
+            href: '/koperty-dla-agencji-eventowych',
+            anchor: 'Koperty na zaproszenia firmowe',
+          },
         },
         {
           name: 'Studia tatuażu i barbershopy',

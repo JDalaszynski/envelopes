@@ -24,24 +24,29 @@
  * i `updated`, więc nie ma czego tu powielać.
  */
 export const PAGE_UPDATED: Record<string, string> = {
-  /* Odnośnik do nowego pillara „koperty na pieniądze" (poz. 39) w sekcji
-     „Do czego używa się kopert ozdobnych" */
-  '/': '2026-09-07',
+  /* 15 września 2026: nowy rozdział 09 „Dla kogo pracujemy" — rejestr siedmiu
+     stron branżowych pod paletą kolorów. Do tego dnia strona główna nie
+     linkowała do żadnej LP branżowej. Wcześniej: odnośnik do pillara
+     „koperty na pieniądze" (poz. 39) w sekcji zastosowań */
+  '/': '2026-09-15',
   /* Karta „Hotele, resorty i pensjonaty" w sekcji „Dla kogo" dostała odnośnik
      do poz. 18; czwarta karta w sekcji „Poradniki" i odnośnik pod tabelą
      specyfikacji prowadzą do poz. 46; karta „Kliniki medycyny estetycznej
      i salony SPA" — do poz. 22; karta „Biura rachunkowe i doradztwo
-     finansowe" — do poz. 21 */
-  '/koperty-z-nadrukiem': '2026-09-14',
+     finansowe" — do poz. 21. 15 września karta „Agencje eventowe, PR
+     i kreatywne" dostała odnośnik do poz. 25 */
+  '/koperty-z-nadrukiem': '2026-09-15',
   /* Karta „Hotele, resorty i pensjonaty" w sekcji „Dla kogo" dostała odnośnik
      do poz. 18; pod cennikiem doszedł odnośnik do poz. 46 — ten sam próg
      obowiązuje przy adresowaniu; karta „Kliniki, gabinety i salony SPA" —
-     odnośnik do poz. 22 */
-  '/koperty-personalizowane': '2026-09-14',
+     odnośnik do poz. 22. 15 września karta „Agencje eventowe, PR i kreatywne"
+     dostała odnośnik do poz. 25 */
+  '/koperty-personalizowane': '2026-09-15',
   /* Sekcja „Poradniki" i odnośnik pod tabelą dopasowań — treść wspierająca
      z poz. 11 planu. 14 września karta „Biura rachunkowe i doradztwo
-     podatkowe" w sekcji „Dla kogo" dostała odnośnik do poz. 21 */
-  '/koperty-dl': '2026-09-14',
+     podatkowe" w sekcji „Dla kogo" dostała odnośnik do poz. 21. 15 września
+     karta „Agencje eventowe, PR i kreatywne" — odnośnik do poz. 25 */
+  '/koperty-dl': '2026-09-15',
   /* Karty „Hotele, resorty i pensjonaty butikowe" oraz „Salony SPA i kliniki
      medycyny estetycznej" w sekcji „Dla kogo" dostały odnośniki do poz. 18
      i poz. 22 */
@@ -69,8 +74,9 @@ export const PAGE_UPDATED: Record<string, string> = {
      odnośniki do poz. 19, poz. 17 i poz. 39. 14 września doszło linkowanie
      w dół — sekcja „Poradniki" i trzy odnośniki kontekstowe, a karta
      kliniczna — drugi odnośnik, do poz. 22, a karta „Zarządy spółek
-     i relacje inwestorskie" — odnośnik do poz. 21. */
-  '/koperty-premium': '2026-09-14',
+     i relacje inwestorskie" — odnośnik do poz. 21. 15 września karta
+     „Agencje eventowe i PR" — odnośnik do poz. 25. */
+  '/koperty-premium': '2026-09-15',
   /* Czwarta partia stron kolorów z backlogu klastra K5 */
   '/koperty/szara': '2026-08-19',
   '/koperty/niebieski': '2026-08-19',
@@ -89,13 +95,15 @@ export const PAGE_UPDATED: Record<string, string> = {
   /* Karty „Dla kogo" na stronach kolorów dostały odnośniki do stron
      branżowych i filara K8, które ten odcień rekomendują: Czarny, Granatowy
      i Szarobrązowy → poz. 17, Szarobrązowy → poz. 19, Czerwony → poz. 23,
-     Złoty i Biała Perłowa → poz. 39 */
-  '/koperty/czarny': '2026-09-10',
-  '/koperty/granatowy': '2026-09-10',
+     Złoty i Biała Perłowa → poz. 39. 15 września trzy karty dostały odnośnik
+     do poz. 25: „Agencje kreatywne i eventowe" (Czarny), „Instytucje kultury
+     i orkiestry" (Granatowy) i „Organizatorzy gal i eventów" (Złoty) */
+  '/koperty/czarny': '2026-09-15',
+  '/koperty/granatowy': '2026-09-15',
   '/koperty/taupe': '2026-09-10',
   '/koperty/czerwony': '2026-09-10',
   /* Karta „Hotele i restauracje" dostała odnośnik do poz. 18 */
-  '/koperty/zloty': '2026-09-14',
+  '/koperty/zloty': '2026-09-15',
   /* Karta „Gabinety medycyny estetycznej i kliniki premium" — odnośnik do poz. 22 */
   '/koperty/biala-perlowa': '2026-09-14',
   /* Wpisy blogowe wspierające filar K2 — poz. 14 i 15 planu. Poz. 14 dostała
@@ -123,6 +131,8 @@ export const PAGE_UPDATED: Record<string, string> = {
   '/koperty-dla-klinik': '2026-09-14',
   /* Poz. 21 planu — szósta LP branżowa Fazy 2 i druga pod filarem F1 */
   '/koperty-dla-biur-rachunkowych': '2026-09-14',
+  /* Poz. 25 planu — siódma LP branżowa Fazy 2 i trzecia pod filarem F1 */
+  '/koperty-dla-agencji-eventowych': '2026-09-15',
 };
 
 /** Data zmiany treści dla trasy — `undefined`, gdy trasy nie ma w rejestrze. */

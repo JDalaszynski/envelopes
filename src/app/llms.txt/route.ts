@@ -116,6 +116,11 @@ const PAGES: { url: string; title: string; note: string }[] = [
     note: 'Księgowość i audyt: kalendarz roku obrotowego jako podstawa planowania nakładu (PIT-11 w lutym, sprawozdanie w marcu, uchwały o zatwierdzeniu w czerwcu, aneksy cenowe w grudniu), nakład liczony wielkością portfela klientów, dwa odcienie neutralne — Biały i Ecru — pod korespondencję wracającą do tego samego klienta kilka razy w roku.',
   },
   {
+    url: '/koperty-dla-agencji-eventowych',
+    title: 'Koperty na zaproszenia firmowe z nadrukiem',
+    note: 'Agencje eventowe, PR i działy marketingu: zaproszenie składane, program i karta wstępu w jednej kopercie DL; tabela dopasowania materiałów eventowych (zaproszenie kwadratowe 150 × 150 mm wymaga formatu K4 ze statusem „Dostępne wkrótce" i nie da się go dziś zamówić), fale kampanii zapraszającej z odstępem od daty wydarzenia, nakład liczony listą gości z zapasem, kolory pod charakter wydarzenia — Czarny, Granatowy, Złoty.',
+  },
+  {
     url: '/koperty-dla-kancelarii',
     title: 'Koperty dla kancelarii prawnych i notarialnych',
     note: 'Korespondencja prawna: typologia pism (akt notarialny, wezwanie, pismo procesowe), kolory stonowane (Granatowy, Czarny, Taupe), adresowanie wielu klientów w jednym zamówieniu.',

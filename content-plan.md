@@ -136,7 +136,7 @@ lub `personalized/` — buduj treść wokół zdjęcia, które faktycznie masz.
 
 | # | Tytuł / URL | Format | Główna fraza | Cel | Persona / Branża | Filar | Uwagi (antykanibalizacja) | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 25 | Koperty dla agencji eventowych — `/koperty-dla-agencji-eventowych` | Supporting LP | koperty na zaproszenia firmowe | KONWERSJA | Agencje eventowe, PR | F1 | **Uwaga:** zaproszenia sugerują C6/K4 — treść prowadzi do DL (zaproszenia składane, programy), reszta jako „wkrótce" | [ ] |
+| 25 | Koperty dla agencji eventowych — `/koperty-dla-agencji-eventowych` | Supporting LP | koperty na zaproszenia firmowe | KONWERSJA | Agencje eventowe, PR | F1 | **Wykonane 15 września 2026.** Warunek brzegowy spełniony: żaden przycisk na stronie nie prowadzi do C6/K4, a zaproszenie kwadratowe ma w tabeli status policzony z katalogu przez `fitsInFormat()`. **Rozgraniczenie wobec poz. 41 i 42 przebiega po pytaniu, nie po temacie:** ta LP odpowiada „jak poprowadzić wysyłkę zaproszeń na wydarzenie firmowe" (lista gości, fale kampanii, nakład z zapasem), poz. 41 odpowie „którą kopertę dobrać do tego zaproszenia" (wkładka → format), poz. 42 weźmie personę ślubną. Frazy `koperty na zaproszenia` **nie ma** w `keywords` tej strony | [x] |
 | 26 | Koperty dla biur nieruchomości — `/koperty-dla-nieruchomosci` | Supporting LP | koperty na dokumenty firmowe | KONWERSJA | Nieruchomości premium, deweloperzy | F1 | Akty i umowy; format DL naturalnie pasuje do dokumentów składanych | [ ] |
 | 27 | Koperty na certyfikaty i dyplomy — `/koperty-na-certyfikaty` | Supporting LP | koperty na certyfikaty | RUCH | Uczelnie, firmy szkoleniowe | F1 | **Ostrożnie:** dyplom A4 płaski wymaga K4 (niedostępny). Treść mówi wprost o A4 składanym na trzy i kieruje resztę na listę powiadomień | [ ] |
 | 28 | Realizacja: koperty z nadrukiem dla hotelu | Supporting article | realizacja kopert z nadrukiem dla hotelu | AUTORYTET | Hotele | F4 | **Fraza skorygowana 7 września 2026** — `koperty z nadrukiem firmowym` należy do K1 (keywords.md, wspierająca fraza filara F1); studium przypadku celuje we frazę dowodową, nie transakcyjną, i nie koliduje też z `koperty firmowe dla hotelu` (poz. 18). Dowód wykonania na realnym zdjęciu; uzupełnia poz. 18 o warstwę E-E-A-T. **Warunek wejścia dopisany 15 sierpnia 2026:** wpis powstaje wyłącznie na realnym zamówieniu, potwierdzonym przez właściciela — samo zdjęcie nadruku z `public/images/prints/` nie wystarczy, bo studium przypadku niesie też klienta, skalę i efekt. **Warunek niespełniony na 7 września 2026** — status wraca do `[—]`, jak poz. 47 | [—] |
@@ -220,8 +220,8 @@ z **preselekcją koloru**.
 
 | # | Tytuł / URL | Format | Główna fraza | Cel | Persona / Branża | Filar | Uwagi (antykanibalizacja) | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 41 | Jak dobrać kopertę do zaproszeń | Supporting article | koperty na zaproszenia | RUCH | Eventy, ślub | F3 | **Format zmieniony z `Aktualizacja` na `Supporting article` 15 sierpnia 2026** — wpis startowy usunięty, fraza `koperty na zaproszenia` jest dziś **bez właściciela**, więc treść powstaje od zera z linkiem w górę do F3. Bez CTA zakupowego na C6/K4, konwersją jest zapis na powiadomienie. **Tabeli dopasowań nie dublować** — stoi na F3; wpis zostaje przy doborze koperty do zaproszenia | [ ] |
-| 42 | Koperty na zaproszenia ślubne — poradnik doboru | Supporting article | koperty na zaproszenia ślubne | RUCH | Para młoda, wedding planner | poz. 41 | Inna persona i inny słownik niż poz. 41 (firmowe/eventowe) — to jedyne, co uzasadnia osobny URL | [ ] |
+| 41 | Jak dobrać kopertę do zaproszeń | Supporting article | koperty na zaproszenia | RUCH | Eventy, ślub | F3 | **Format zmieniony z `Aktualizacja` na `Supporting article` 15 sierpnia 2026** — wpis startowy usunięty, fraza `koperty na zaproszenia` jest dziś **bez właściciela**, więc treść powstaje od zera z linkiem w górę do F3. Bez CTA zakupowego na C6/K4, konwersją jest zapis na powiadomienie. **Tabeli dopasowań nie dublować** — stoi na F3; wpis zostaje przy doborze koperty do zaproszenia. **Uwaga dopisana 15 września 2026, po publikacji poz. 25:** wpis zaczyna się od **wkładki**, nie od nadawcy — „mam zaproszenie o takim wymiarze, jakiej koperty potrzebuję". Cztery rzeczy należą już do poz. 25 i tu nie wracają: fale kampanii zapraszającej, nakład liczony listą gości, dobór odcienia do charakteru wydarzenia i tabela materiałów eventowych. Fraza `koperty na zaproszenia firmowe` ma właściciela w poz. 25 i nie wchodzi do `keywords` tego wpisu | [ ] |
+| 42 | Koperty na zaproszenia ślubne — poradnik doboru | Supporting article | koperty na zaproszenia ślubne | RUCH | Para młoda, wedding planner | poz. 41 | Inna persona i inny słownik niż poz. 41 — to jedyne, co uzasadnia osobny URL. **Uwaga przepisana 15 września 2026:** rozgraniczenie „firmowe kontra ślubne" nie przebiega już między poz. 41 a 42, bo wariant firmowy wyszedł do poz. 25. Poz. 41 jest dziś stroną **doboru koperty do wkładki**, niezależną od okazji; poz. 42 bierze wyłącznie personę ślubną (para młoda, wedding planner) i jej słownik. Zero treści B2B i zero odwołań do kampanii eventowej — te należą do poz. 25 | [ ] |
 | 43 | Personalizowane koperty ślubne — adresowanie drukiem | Supporting article | personalizowane koperty slubne | KONWERSJA | Para młoda, wedding planner | F2 | **Jedyna pozycja ślubna z realnym CTA** — personalizacja działa dziś na DL | [ ] |
 | 44 | Koperty na pieniądze na ślub — format i kolor | Supporting article | koperty na pieniadze na slub | RUCH | Gość weselny, detal | `/koperty-na-pieniadze` | Wąska intencja okazjonalna; poz. 39 obsługuje ogólną | [ ] |
 
@@ -249,6 +249,177 @@ nie liczą się do kadencji czterech pozycji tygodniowo i nie mają filara.
 ---
 
 ## Dziennik wdrożeń
+
+### 15 września 2026 — poz. 25: `/koperty-dla-agencji-eventowych` · siódma LP Fazy 2
+
+**Trzecia LP branżowa pod filarem F1** — po kancelariach (poz. 17) i biurach rachunkowych
+(poz. 21) — i otwarcie Tygodnia 7. Filar poświęca agencjom eventowym jedną kartę w sekcji
+„Dla kogo"; ta strona celuje we frazę branżową `koperty na zaproszenia firmowe` i dokłada
+sytuację, której filar nie opisuje: **wysyłka prowadzona wstecz od daty wydarzenia i listy
+gości**.
+
+**Warunek brzegowy z planu (C6/K4) spełniony bez wyjątków.** Zaproszenia ciągną rynek w stronę
+formatów, których nie ma w sprzedaży, więc cała strona prowadzi do DL, a ograniczenie jest
+powiedziane wprost w dwóch miejscach: w tabeli `#format` i w akapicie pod nią. Wszystkie pięć
+CTA otwiera konfigurator z `format=DL`. Status w tabeli **nie jest wpisany ręcznie** — liczy go
+`fitsInFormat()` z wymiarów katalogowych, osobno dla DL i dla K4, więc uruchomienie formatu
+w `catalog.ts` przepisze tabelę zamiast ją unieważnić. Zaproszenie kwadratowe dostaje wtedy
+komunikat „potrzebny format K4 155 × 155 mm, dziś ze statusem »Dostępne wkrótce«", a program A5
+— „za szeroka o 38 mm, do wysyłki trzeba ją złożyć". Mikrokonwersji „zapis na powiadomienie
+o dostępności formatów" **nie użyliśmy, bo w kodzie jej nie ma** (brief pkt 7 wymienia ją wśród
+trzech dostępnych; w repozytorium nie istnieje ani formularz, ani lista). Zamiast obiecywać
+mechanizm, którego nie ma, akapit odsyła do formularza kontaktowego i mówi wprost, że nie
+proponujemy zamiennika na siłę.
+
+**Rozgraniczenie wobec poz. 41 i 42, które czekają w planie.** Fraza `koperty na zaproszenia`
+należy do poz. 41, `koperty na zaproszenia ślubne` do poz. 42 — żadnej z nich nie ma
+w `keywords` tej strony. Granicę poprowadziliśmy po **pytaniu, na które treść odpowiada**, a nie
+po temacie, bo po temacie wszystkie trzy pozycje są o zaproszeniach:
+- **Poz. 25 (ta LP):** „jak poprowadzić wysyłkę zaproszeń na wydarzenie firmowe". Kupującym jest
+  agencja albo dział marketingu, czyli podmiot robiący to cyklicznie. Stąd fale kampanii, lista
+  gości jako jednostka nakładu, zapas na dopisanych w ostatnim tygodniu i rozróżnienie dwóch
+  zakresów personalizacji (pełny adres przy wysyłce pocztą, samo nazwisko przy rejestracji).
+- **Poz. 41:** „którą kopertę dobrać do tego konkretnego zaproszenia" — odwrotne mapowanie
+  wkładka → format, bez agencji, bez kalendarza kampanii, bez listy gości.
+- **Poz. 42:** persona ślubna i jej słownik.
+Uwagi do poz. 41 i 42 zostały w tabeli planu przepisane, bo dotychczasowe rozgraniczenie
+(„41 firmowe kontra 42 ślubne") przestało być prawdziwe w chwili publikacji tej LP.
+
+**Rozgraniczenie wobec poz. 16** (`szybka-realizacja-kopert-terminy-i-ekspres`) — to było drugie
+realne ryzyko kanibalizacji, bo wpis ma sekcję „Jak policzyć termin wstecz od daty wydarzenia".
+Rozstrzygnięte przez rozdzielenie dwóch kalendarzy, które w tej branży istnieją naprawdę obok
+siebie: tabela `#kalendarz` na LP liczy **odstęp od wysyłki do wydarzenia** (konwencja branżowa,
+widełki, zero parametrów oferty), a wpis liczy **odstęp od zamówienia do nadania przesyłki**
+(nasza produkcja, kurier, akceptacja wizualizacji). Obie strony mówią to o sobie wprost,
+wzajemnym odnośnikiem.
+
+**Jednostka nakładu — trzecia różna w trzech LP pod F1.** Poz. 17 nie ma tabeli kosztowej wcale,
+poz. 21 liczy partię wielkością portfela klientów, tutaj liczy się **listą gości**: 30 osób
+(kolacja branżowa, śniadanie prasowe), 120 (konferencja, premiera), 300 (gala jubileuszowa).
+Do tego akapit o zapasie, którego żadna z sąsiednich stron nie ma — dodruk to osobne zamówienie
+i osobny termin, więc zapas jest tańszy niż druga produkcja.
+
+**Trzeci w serwisie odnośnik z `zakres=imiona` — świadome odejście od zapisu z 14 września.**
+Przy poz. 22 zanotowaliśmy, że ten parametr „zostaje wyłączny dla poz. 18 i F2". Ta LP go używa,
+bo warunek, który stał za tamtą decyzją, jest tutaj spełniony: CTA stoi pod akapitem, który mówi
+dokładnie o zakresie imiennym (nazwisko gościa bez adresu, wręczanie przy rejestracji), a nie
+obok wzmianki o personalizacji w ogóle. Reguła obowiązuje więc dalej w brzmieniu właściwym —
+`zakres=imiona` wchodzi tam, gdzie sekcja jest o samym nazwisku; przy poz. 22 nie była, bo bon
+kupuje osoba, która wpisuje cudze imię na dokumencie, a nie na kopercie. Pozostałe cztery CTA
+tej strony otwierają konfigurator z formatem DL i nadrukiem.
+
+**Bez własnego `FAQPage`**, jak poz. 17, 18, 19, 21, 22 i 23. Pytanie „Czy nadruk jest dostępny
+na formatach C6 i K4?" ma właściciela w `PRINT_FAQ_ITEMS` na F1, a „Czym różni się koperta DL
+od C6?" w `DL_FAQ_ITEMS` na F3. `WebPage.mainEntity` wskazuje na węzeł `Product` filara.
+
+**Pierwsza LP branżowa Fazy 2 z trzema realnymi kadrami, mimo braku kadru branżowego.** Zdjęcia
+z logo agencji eventowej w repozytorium nie ma i nie podstawiamy pod branżę cudzego znaku — ta
+sama reguła co przy poz. 18, 21 i 22. Okazało się jednak, że biblioteka ma trzy kadry
+pokazujące dokładnie to, o czym mówi tekst: nadruk słowa „Zaproszenie" na czerni
+(`czarna-koperta-dl-nadruk-zaproszenie`), zaproszenie instytucji kultury na granacie
+(`granatowa-koperta-dl-nadruk-logo-orkiestry`) i adresowanie imienne krojem odręcznym
+(`niebieska-koperta-dl-personalizacja-odreczna`). Podpis pod galerią mówi wprost, że nadruki są
+projektami przykładowymi. Trzy odcienie z sekcji koloru stoją jako kadry katalogowe
+z zaznaczonym polem nadruku. Karta OG wygenerowana `scripts/og-card.mjs` z kadru czarnej koperty
+(`public/images/og/koperty-dla-agencji-eventowych.jpg`) — kadr niewykorzystany dotąd przez żadną
+kartę OG, więc dwie strony nie dzielą jednego obrazu w podglądzie odnośnika.
+
+Linkowanie w obie strony:
+- **do LP (10 odnośników):** nowy rozdział „Dla kogo pracujemy" na `/`, karta „Agencje eventowe,
+  PR i kreatywne" na F1, F2 i F3, karta „Agencje eventowe i PR" na `/koperty-premium`, trzy karty
+  „Dla kogo" na stronach kolorów, które ta LP rekomenduje — „Agencje kreatywne i eventowe"
+  (Czarny), „Instytucje kultury i orkiestry" (Granatowy), „Organizatorzy gal i eventów" (Złoty) —
+  oraz dwa wpisy: `szybka-realizacja-kopert-terminy-i-ekspres` (akapit rozgraniczający dwa
+  kalendarze) i `dlaczego-koperty-z-nadrukiem-od-10-sztuk` (akapit o wydarzeniach kameralnych).
+  Stron kolorów Matcha i Jeansowy **nie linkujemy**, mimo że filar wymienia je przy tej branży:
+  ta LP ich nie rekomenduje, a odnośnik do odcienia, którego strona nie proponuje, jest
+  odnośnikiem bez pokrycia.
+- **z LP:** `/koperty-z-nadrukiem#cena`, `/koperty-dl`, `/koperty-personalizowane`,
+  `/koperty-premium`, `/#kolory`, `/kontakt`, `/kontakt#wycena`, `/koperty/czarny`,
+  `/koperty/granatowy`, `/koperty/zloty` oraz cztery wpisy:
+  `ile-kartek-miesci-koperta-dl-i-jak-je-zlozyc`, `szybka-realizacja-kopert-terminy-i-ekspres`,
+  `cena-kopert-z-nadrukiem-i-koszt-zamowienia`, `dlaczego-koperty-z-nadrukiem-od-10-sztuk`.
+
+`PAGE_UPDATED` ustawione dla nowej trasy na 15 września i podbite dla siedmiu stron, które
+dostały odnośnik (`/`, `/koperty-z-nadrukiem`, `/koperty-dl`, `/koperty-personalizowane`,
+`/koperty-premium`, `/koperty/czarny`, `/koperty/granatowy`, `/koperty/zloty`); oba wpisy
+blogowe dostały `updated: '2026-09-15'`. `llms.txt` i sitemapa (wpis + sześć obrazów)
+zaktualizowane w tym samym wdrożeniu. **`keywords.md` zmieniony** — inaczej niż przy poz. 17,
+18, 21, 22 i 23, bo tym razem fraza sąsiaduje z klastrem, który ma już przypisanego właściciela:
+notatki K9 dostały punkt o wyjściu wariantu firmowego do K1, a pytanie generatywne „jakie koperty
+na zaproszenia firmowe" w sekcji „Luki" jest odhaczone jako obsłużone.
+
+Weryfikacja: `npm run typecheck` i `npm run build` bez błędów, **80/80 stron statycznie**
+(było 79). Strona obecna w `sitemap.xml` z sześcioma obrazami — dokładnie tymi, które renderuje
+HTML — i w `/llms.txt`. `title` 54 znaki z sufiksem marki, `description` 143 znaki, jeden `<h1>`
+z frazą główną w mianowniku, pięć `<h2>` treściowych plus finalne CTA. Komplet dziesięciu
+odnośników zwrotnych potwierdzony w zbudowanym HTML-u wszystkich dziesięciu stron. Budżet
+parametrów (pkt 10.1 briefu) policzony w prozie poza tabelami: żadna sekcja nie przekracza
+jednego wystąpienia ceny ani wymiaru. Serwer produkcyjny podniesiony lokalnie: trasa, karta OG,
+`sitemap.xml` i `/llms.txt` zwracają 200.
+
+**Czego nie sprawdziliśmy:** wyglądu w przeglądarce — ani nowej LP, ani strony głównej, na
+desktopie i na 375 px. Weryfikację wizualną prowadzi sesja główna, tak jak przy poz. 21.
+Nie sprawdziliśmy też, czy tabela `#format` i tabela nakładu mieszczą się bez przewijania
+poziomego na wąskim ekranie — obie są trzykolumnowe, więc zachowają się jak tabele `.data`
+w całym serwisie (własna szerokość 720 px, przewijanie wewnątrz `.table-wrap`).
+
+**Bez commita i bez `npm run indexnow`** — część gitową i zgłoszenie prowadzi sesja główna.
+Zgłoszenie ma sens dopiero po wdrożeniu: na 15 września produkcja nadal nie serwuje poz. 21
+z 14 września (`envelopes.pl/koperty-dla-biur-rachunkowych` zwraca 404), więc zaległość
+wdrożeniowa opisana przy poz. 18 i 21 trwa trzeci dzień. Po wdrożeniu jedno `npm run indexnow`
+obejmie oknem siedmiu dni wszystkie trzy zaległe adresy naraz.
+
+### 15 września 2026 — rozdział 09 „Dla kogo pracujemy" na stronie głównej
+
+**Strona główna do dziś nie linkowała do żadnej LP branżowej.** Sześć stron branżowych zbierało
+odnośniki wyłącznie z filarów, stron kolorów i wpisów, czyli z podstron słabszych od `/`.
+Najmocniejsza strona w serwisie nie przekazywała im nic.
+
+**Decyzja o formie: osobny rozdział, nie rozbudowa `#zastosowania` ani `chapter-note`.**
+Trzy warianty ważone celem, nie objętością strony:
+- **Rozbudowa `#zastosowania` odpada z powodu technicznego i treściowego naraz.** Każda z sześciu
+  kart jest w całości `ConfigureLink` — wejściem do konfiguratora z preselekcją koloru i usługi.
+  Wstawienie do karty drugiego odnośnika rozbija cel kliknięcia (zagnieżdżony link jest też
+  nieprawidłowy w HTML). Treściowo spis odpowiada na pytanie „do czego", a rejestr branż na
+  pytanie „kto to zamawia" — łączenie ich zatarłoby obie intencje.
+- **`chapter-note` w istniejącym rozdziale** byłby najtańszy, ale siedem odnośników w jednym
+  akapicie to ściana linków: żaden anchor nie zostaje zauważony, a użytkownik nie znajdzie w niej
+  swojej branży wzrokiem.
+- **Osobny rozdział wygrywa**, bo jako jedyny daje każdej branży własny wiersz z anchorem równym
+  frazie głównej strony docelowej i zdaniem mówiącym, co ta strona rozstrzyga.
+
+**Umiejscowienie: pod paletą kolorów, przed „Dla firm".** To rozstrzyga warunek z zadania —
+konfigurator i paleta nie schodzą przez nowy rozdział ani o piksel, bo oba stoją wyżej.
+Umiejscowienie ma też uzasadnienie czytelnicze: czytelnik, który właśnie obejrzał 19 odcieni,
+ma naturalne pytanie „a który do mojej pracy", a rejestr branż odpowiada nazwą branży zamiast
+kolejną tabelą papieru. Numeracja rozdziałów jest licznikiem CSS, więc dalsze rozdziały
+przenumerowały się same; komentarze w `page.tsx` i nagłówki sekcji w `home.css` zostały
+doprowadzone do zgodności ręcznie.
+
+**Lista mieszka w `src/lib/industry-pages.ts`** — kolejna LP branżowa to dopisanie jednego wpisu
+(`path`, `branch`, `anchor`, `text`), a nie kopiowanie znaczników. Poz. 25 weszła do rejestru
+w tym samym wdrożeniu, więc rozdział startuje z siedmioma pozycjami. Kolejność jest tematyczna:
+najpierw korespondencja dokumentowa (F1), potem wysyłka zaproszeń, na końcu koperty wręczane
+do ręki razem z bonem (F4).
+
+**Zero dublowania treści z `#zastosowania`:** opis każdej pozycji mówi, co dana strona
+**rozstrzyga** (typologia pism, kalendarz roku obrotowego, fale kampanii, karta powitalna),
+a nie do czego służy koperta. Zgodnie z pkt 10.1 briefu karty branżowe nie niosą żadnego
+parametru oferty — ani ceny, ani gramatury, ani minimum nakładu. Zamykający `chapter-note`
+kieruje branże spoza rejestru do dwóch stron ogólnych (F1 i F4), więc rozdział przekazuje sygnał
+także w górę, a nie tylko w dół.
+
+Forma: spis dwukolumnowy oddzielony kreskami (`.branch-index` w `home.css`), a nie siatka kart.
+Siedem kart w ramkach wyglądałoby jak siedem produktów do porównania i dołożyłoby wysokości
+rozdziałowi, który stoi między paletą a warunkami handlowymi. Poniżej 720 px spis schodzi
+do jednej kolumny.
+
+Weryfikacja: `npm run typecheck` i `npm run build` bez błędów. Kolejność sekcji na `/`
+potwierdzona w zbudowanym HTML-u: `kolory` → `branze` → `dla-firm`, czyli konfigurator i paleta
+bez zmiany pozycji. Siedem odnośników branżowych plus dwa do filarów obecne w HTML.
+`PAGE_UPDATED['/']` podbite na 15 września. **Wyglądu rozdziału w przeglądarce nie
+sprawdziliśmy** — ani dwóch kolumn na desktopie, ani zejścia do jednej kolumny na 375 px.
 
 ### 14 września 2026 — poz. 21: `/koperty-dla-biur-rachunkowych` · szósta LP Fazy 2
 

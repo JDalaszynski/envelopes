@@ -170,7 +170,16 @@ const INDUSTRIES: { heading: string; text: ReactNode }[] = [
   },
   {
     heading: 'Agencje eventowe, PR i kreatywne',
-    text: 'Wysyłki VIP i zaproszenia na premiery potrzebują koloru, którego nie ma konkurencja: Matcha, Jeansowy albo Złoty z metalicznym połyskiem. Kiedy data wydarzenia jest bliżej, niż byśmy chcieli, zamówienie da się puścić trybem ekspresowym.',
+    text: (
+      <>
+        Wysyłki VIP i zaproszenia na premiery potrzebują koloru, którego nie ma konkurencja:
+        Matcha, Jeansowy albo Złoty z metalicznym połyskiem. Kiedy data wydarzenia jest bliżej,
+        niż byśmy chcieli, zamówienie da się puścić trybem ekspresowym. Fale kampanii
+        zapraszającej, dopasowanie materiałów eventowych do koperty i nakład liczony listą gości
+        opisaliśmy na stronie{' '}
+        <Link href="/koperty-dla-agencji-eventowych">koperty na zaproszenia firmowe</Link>.
+      </>
+    ),
   },
   {
     heading: 'Biura nieruchomości i deweloperzy',

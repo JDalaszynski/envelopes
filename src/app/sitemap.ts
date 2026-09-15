@@ -155,6 +155,22 @@ const PAGE_IMAGES: Record<string, string[]> = {
       .filter((color) => color?.printImages?.DL)
       .map((color) => abs(color.printImages!.DL!)),
   ],
+  /* Supporting LP poz. 25 — trzy kadry aranżacyjne, które ta strona faktycznie
+     renderuje: nadruk słowa „Zaproszenie" na czerni, zaproszenie instytucji
+     kultury na granacie i adresowanie imienne krojem odręcznym. Do tego trzy
+     kadry katalogowe z zaznaczonym polem nadruku (`EnvelopePlaceholder`
+     z `hasPrint`), więc idą `printImages`, a nie zdjęcia kopert gładkich. */
+  '/koperty-dla-agencji-eventowych': [
+    ...shotUrls([
+      shotByFile('czarna-koperta-dl-nadruk-zaproszenie'),
+      shotByFile('granatowa-koperta-dl-nadruk-logo-orkiestry'),
+      shotByFile('niebieska-koperta-dl-personalizacja-odreczna'),
+    ]),
+    ...['czarny', 'granatowy', 'zloty']
+      .map((id) => COLOR_MAP[id])
+      .filter((color) => color?.printImages?.DL)
+      .map((color) => abs(color.printImages!.DL!)),
+  ],
   /* Supporting LP poz. 17 — jedyny realny kadr aranżacyjny dla kancelarii
      (Granatowy) plus próbki katalogowe dwóch odcieni stonowanych. */
   '/koperty-dla-kancelarii': [
@@ -237,6 +253,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     page('/koperty-dla-klinik', 'monthly', 0.8),
     /* Supporting LP pod F1 — koperty dla biur rachunkowych (content-plan.md poz. 21) */
     page('/koperty-dla-biur-rachunkowych', 'monthly', 0.8),
+    /* Supporting LP pod F1 — koperty na zaproszenia firmowe (content-plan.md poz. 25) */
+    page('/koperty-dla-agencji-eventowych', 'monthly', 0.8),
     /* Pillar K8 — koperty na pieniądze (content-plan.md poz. 39) */
     page('/koperty-na-pieniadze', 'monthly', 0.9),
     page('/blog', 'weekly', 0.8),

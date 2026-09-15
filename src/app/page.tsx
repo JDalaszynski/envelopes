@@ -23,6 +23,7 @@ import {
 } from '@/lib/catalog';
 import { colorPagePath, hasColorPage } from '@/lib/color-pages';
 import { FAQ_ITEMS } from '@/lib/faq';
+import { INDUSTRY_PAGES } from '@/lib/industry-pages';
 import { getAllPosts, getPost } from '@/lib/blog';
 import {
   DEFAULT_PRICING,
@@ -450,7 +451,7 @@ export default function HomePage() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════════════
-          Dokument pod konfiguratorem — dwanaście numerowanych rozdziałów.
+          Dokument pod konfiguratorem — trzynaście numerowanych rozdziałów.
 
           Konfigurator kończy część transakcyjną strony. Wszystko poniżej
           jest materiałem do czytania, a materiał do czytania rządzi się
@@ -915,7 +916,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ── 06 Zastosowania — celowo zastosowania, nie branże (branże trzyma filar K1) ──
+        {/* ── 06 Zastosowania — sytuacje, nie branże (branże ma rozdział 09) ──
             Sześć kart w pudełkach zamienia się w spis pozycji: kreska, numer,
             nagłówek, zdanie. To nie jest sześć produktów do porównania, tylko
             sześć sytuacji do przejrzenia wzrokiem — ramki tylko by je od
@@ -1168,7 +1169,63 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ── 09 Dla firm — bariera rozliczeniowa, nie produktowa ──
+        {/* ── 09 Branże — rejestr stron branżowych (lista w `industry-pages.ts`) ──
+            Rozdział stoi **pod paletą**, a nie obok spisu zastosowań, i to jest
+            decyzja, nie przypadek. Trzy powody:
+
+            1. Konfigurator i paleta nie schodzą przez niego ani o piksel —
+               oba stoją wyżej, więc rejestr nic nie odsuwa.
+            2. Spis zastosowań (`#zastosowania`) odpowiada na pytanie „do czego";
+               ten rozdział na pytanie „kto to zamawia i czym się wtedy kieruje".
+               Dwie różne intencje, więc treść się nie dubluje.
+            3. Czytelnik, który właśnie obejrzał 19 odcieni, ma naturalne pytanie
+               „a który z nich do mojej pracy" — rejestr branż odpowiada na nie
+               nazwą branży, a nie kolejną tabelą papieru.
+
+            Karty spisu zastosowań są w całości `ConfigureLink`, więc odnośnika
+            do strony branżowej nie da się w nie włożyć bez rozbicia celu
+            kliknięcia. Rejestr prowadzi świadomie poza konfigurator: CTA
+            z preselekcją właściwą dla branży stoją na samych LP. */}
+        <section className="section chapter" id="branze">
+          <div className="container chapter-inner">
+            <div className="chapter-rail">
+              <span className="chapter-index" aria-hidden="true" />
+              <span className="eyebrow">Branże</span>
+            </div>
+
+            <div className="chapter-main">
+              <div className="chapter-head">
+                <h2>Dla kogo pracujemy</h2>
+                <p className="chapter-lead">
+                  Spis wyżej mówi, do czego służy koperta ozdobna. Ten rejestr mówi, kto po nią
+                  sięga i czym się wtedy kieruje — każda branża ma własną stronę, ze swoim
+                  kalendarzem zamówień, słownikiem i doborem odcienia.
+                </p>
+              </div>
+
+              <ul className="branch-index">
+                {INDUSTRY_PAGES.map((industry) => (
+                  <li key={industry.path}>
+                    <Link href={industry.path} title={industry.anchor}>
+                      {industry.branch}
+                    </Link>
+                    <p>{industry.text}</p>
+                  </li>
+                ))}
+              </ul>
+
+              <p className="chapter-note">
+                Branży, której tu nie ma, dotyczy zwykle jedna z dwóch stron ogólnych. Nadruk logo
+                opisuje strona <Link href="/koperty-z-nadrukiem">koperty z nadrukiem</Link>, wspólna
+                dla każdej firmy niezależnie od tego, czym się zajmuje. Pakowanie bonu — strona{' '}
+                <Link href="/koperty-na-vouchery">koperty na vouchery</Link>, niezależnie od tego,
+                czego bon dotyczy.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* ── 10 Dla firm — bariera rozliczeniowa, nie produktowa ──
             Pięć warunków handlowych ustawionych jak pozycje na fakturze:
             kreska rozdziela je tak samo, jak rozdziela wiersze dokumentu
             księgowego. Ten rozdział czytają osoby, które muszą sprawdzić,
@@ -1226,7 +1283,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ── 10 FAQ — zasila FAQPage (JSON-LD wyżej) ── */}
+        {/* ── 11 FAQ — zasila FAQPage (JSON-LD wyżej) ── */}
         <section className="section section-surface chapter chapter-narrow" id="faq">
           <div className="container chapter-inner">
             <div className="chapter-rail">
@@ -1253,7 +1310,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ── 11 Blog ── */}
+        {/* ── 12 Blog ── */}
         <section className="section chapter" id="blog">
           <div className="container chapter-inner">
             <div className="chapter-rail">
@@ -1298,7 +1355,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ── 12 SEO Section — przechowuje pierwotne, rozbudowane opisy SEO przeniesione z Hero ──
+        {/* ── 13 SEO Section — przechowuje pierwotne, rozbudowane opisy SEO przeniesione z Hero ──
             Kolofon: dwie kolumny drobnego pisma rozdzielone kreską. Rozdział
             zamyka dokument, więc celowo nie walczy o uwagę z wezwaniem, które
             stoi zaraz pod nim. */}

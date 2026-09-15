@@ -931,7 +931,64 @@
 }
 
 
-/* ═══ 11. Panel dla firm (09 Dla firm) ═════════════════════════ */
+/* ═══ 11. Rejestr branż (09 Branże) ════════════════════════════
+   Spis, nie karty. Siedem pozycji w pudełkach wyglądałoby jak siedem
+   produktów do porównania, a to jest wykaz odnośników — kreska
+   rozdziela je taniej niż ramka i nie dokłada wysokości rozdziałowi,
+   który stoi między paletą a warunkami handlowymi. */
+
+.home-doc .branch-index {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 var(--space-7);
+  margin: var(--space-5) 0 0;
+  padding: 0;
+  border-top: 1px solid var(--color-line);
+}
+
+.home-doc .branch-index li {
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.home-doc .branch-index a {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: 18px;
+  line-height: 1.25;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--color-ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-line);
+  transition: color var(--duration-fast) var(--ease-standard),
+    border-color var(--duration-fast) var(--ease-standard);
+}
+
+.home-doc .branch-index a:hover,
+.home-doc .branch-index a:focus-visible {
+  color: var(--color-seal);
+  border-color: var(--color-seal);
+}
+
+.home-doc .branch-index p {
+  margin: var(--space-2) 0 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--color-ink-soft);
+  max-width: none;
+}
+
+/* Poniżej 720 px dwie kolumny zostawiają na opis 4–5 znaków w wierszu —
+   rejestr schodzi wtedy do jednej kolumny. */
+@media (max-width: 720px) {
+  .home-doc .branch-index {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+}
+
+/* ═══ 12. Panel dla firm (10 Dla firm) ═════════════════════════ */
 
 .home-doc .ledger {
   display: grid;
@@ -977,7 +1034,7 @@
   line-height: 1.5;
 }
 
-/* ═══ 12. Pytania (10 FAQ) ═════════════════════════════════════ */
+/* ═══ 13. Pytania (11 FAQ) ════════════════════════════════════ */
 
 .home-doc .faq-list {
   border-top: 1px solid var(--color-line);
@@ -1028,7 +1085,7 @@
   padding: 0 var(--space-3) var(--space-5);
 }
 
-/* ═══ 13. Poradniki (11 Blog) ══════════════════════════════════ */
+/* ═══ 14. Poradniki (12 Blog) ═════════════════════════════════ */
 
 .home-doc .journal-head {
   display: flex;
@@ -1064,7 +1121,7 @@
   font-size: 12px;
 }
 
-/* ═══ 14. Kolofon (12 Szczegóły produktu) ══════════════════════
+/* ═══ 15. Kolofon (13 Szczegóły produktu) ═════════════════════
    Zamknięcie dokumentu: dwie kolumny drobnego pisma rozdzielone
    kreską, bez kart i bez akcentu. Ten rozdział ma być ostatnim, co
    czyta się przed wezwaniem do działania, a nie kolejnym pasem
@@ -1088,7 +1145,7 @@
   max-width: 52ch;
 }
 
-/* ═══ 15. Wezwanie zamykające ══════════════════════════════════
+/* ═══ 16. Wezwanie zamykające ═════════════════════════════════
    Jedyny ciemny element w tym paśmie i jedyne miejsce, w którym
    pojawia się ziarno — to samo, którym pokryte są hero i strefa
    konfiguratora. Zamknięcie odsyła wzrokowo do początku strony. */
@@ -1129,7 +1186,7 @@
   color: var(--color-ink);
 }
 
-/* ═══ 16. Zejście na średnie ekrany ════════════════════════════
+/* ═══ 17. Zejście na średnie ekrany ═══════════════════════════
    Zakres 721–1080 px to tablet i wąskie okno na laptopie: marginalia
    są już nad treścią (blok 1), więc zostają siatki wielokolumnowe. */
 

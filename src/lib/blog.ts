@@ -1882,6 +1882,8 @@ const POSTS: BlogPost[] = [
     lead: `Szybka realizacja kopert zaczyna się nie w dniu zamówienia, tylko po zaksięgowaniu wpłaty i akceptacji wizualizacji. Kiedy ekspres w ${DEFAULT_PRICING.leadDaysExpress} dni się zwraca.`,
     category: 'Poradniki',
     date: '2026-08-26',
+    /* Akapit rozgraniczający dwa kalendarze — odsyła do LP poz. 25 */
+    updated: '2026-09-15',
     readingMinutes: 7,
     colorId: 'granatowy',
     format: 'DL',
@@ -1987,6 +1989,7 @@ const POSTS: BlogPost[] = [
         paragraphs: [
           `Tryb ekspresowy skraca produkcję o ${EXPRESS_SAVED_DAYS_LABEL}: zamiast ${DEFAULT_PRICING.leadDaysStandard} dni roboczych zamówienie idzie do wysyłki po ${DEFAULT_PRICING.leadDaysExpress}. Dopłata nalicza się od łącznej liczby sztuk w zamówieniu, więc jej wysokość zależy od nakładu, ale to, co kupuje, jest stałe — tyle samo dni przy dziesięciu kopertach, co przy pięciuset.`,
           'Ekspres ma sens wtedy, gdy te dni faktycznie rozstrzygają — data gali jest ustalona, zaproszenia mają wyjść razem z programem wydarzenia, a wysyłka nie ma drugiego terminu. Kiedy w kalendarzu jest zapas, tryb standardowy daje dokładnie ten sam produkt: tę samą kopertę, ten sam nadruk, ten sam papier.',
+          'Ile przed wydarzeniem zaproszenie ma w ogóle być u gościa — i po której fali kampanii zamawia się koperty — rozpisaliśmy na stronie [koperty na zaproszenia firmowe](/koperty-dla-agencji-eventowych). Te dwa kalendarze są od siebie niezależne: tamten liczy odstęp od wysyłki do wydarzenia, ten — od zamówienia do nadania przesyłki.',
           'Tryb wybiera się w koszyku, a nie w konfiguratorze, i dotyczy całego zamówienia — z jednego zamówienia wychodzi jedna przesyłka. Podsumowanie koszyka pokazuje wtedy dopłatę osobną pozycją, przeliczoną przez liczbę sztuk, zanim potwierdzą Państwo zakup.',
         ],
         table: {
@@ -2439,6 +2442,8 @@ const POSTS: BlogPost[] = [
     lead: `Minimum przy nadruku to ${DEFAULT_PRICING.moqWithPrint} sztuk, bo część pracy wygląda tak samo przy każdym nakładzie. Wyjaśniamy próg i to, co zrobić, gdy potrzebują Państwo mniej.`,
     category: 'Poradniki',
     date: '2026-09-14',
+    /* Akapit o wydarzeniach kameralnych — odsyła do LP poz. 25 */
+    updated: '2026-09-15',
     readingMinutes: 6,
     colorId: 'biala-perlowa',
     format: 'DL',
@@ -2539,6 +2544,7 @@ const POSTS: BlogPost[] = [
           `Jeżeli koperta ma pójść do jednego odbiorcy, najprostszym rozwiązaniem jest koperta gładka. Zamawiają ją Państwo od ${DEFAULT_PRICING.moqWithoutPrint} sztuki, w tym samym papierze i kolorze co wersja z nadrukiem, a wysyłamy ją szybciej, bo nie przechodzi przez produkcję ani przez akceptację wizualizacji. Ten sam odcień wybiorą Państwo w [palecie kolorów kopert ozdobnych](/#kolory).`,
           'Drugą drogą jest zamówienie pełnej serii i zostawienie zapasu. Logo firmowe nie zmienia się co miesiąc, więc nadrukowana koperta nie traci ważności — inaczej niż nadruk z datą wydarzenia, który zestarzeje się razem z nim.',
           'Trzecia droga to połączenie potrzeb. Jeśli w tym samym miesiącu wychodzą pisma do klientów, jedno zaproszenie i komplet dokumentów, to jest to jedna seria kopert z logo, a nie trzy osobne zamówienia.',
+          'Wydarzenia kameralne mieszczą się w minimum najczęściej: kolacja branżowa, śniadanie prasowe i spotkanie zarządu mają listy gości krótsze niż nakłady przyjęte w drukarniach. Jak planuje się taką wysyłkę, pokazuje strona [koperty na zaproszenia firmowe](/koperty-dla-agencji-eventowych).',
         ],
         table: {
           caption: 'Rozwiązania, gdy potrzeba mniej kopert niż wynosi minimalny nakład',
