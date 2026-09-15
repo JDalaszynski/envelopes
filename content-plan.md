@@ -347,10 +347,17 @@ tabela pięciu etapów przewija się wewnątrz `.table-wrap` jak pozostałe tabe
 wyłącznie błędy gniazda HMR serwera deweloperskiego — zero błędów strony. Rejestr branż na `/`
 renderuje osiem pozycji w kolejności tematycznej, z nową LP na trzecim miejscu.
 
-**Do wykonania po stronie właściciela.** Push buduje wyłącznie deployment Preview (wpis z tego
-samego dnia), więc kolejność jest taka: **promocja deploymentu na produkcję w panelu Vercela**,
-sprawdzenie, że `envelopes.pl/koperty-dla-nieruchomosci` zwraca 200, i dopiero potem
-`npm run indexnow`. Zgłoszenie przed promocją prowadziłoby crawlera na 404.
+**Wdrożone na produkcję 15 września 2026** — commit `6e80d9d`, deployment produkcyjny utworzony
+o 09:56 po promocji w panelu (Preview powstał o 09:08, czyli 48 minut wcześniej; kolejność
+z wpisu o zaległości wdrożeniowej potwierdzona po raz drugi tego dnia). Sprawdzone na
+`envelopes.pl`: strona zwraca 200, `canonical` wskazuje domenę produkcyjną, `title` i `<h1>`
+zgodne z lokalnym buildem, karta OG dostępna, wpis obecny w `/llms.txt` i w `sitemap.xml`,
+a komplet dziesięciu odnośników zwrotnych obecny w HTML-u wszystkich dziesięciu stron —
+z rejestrem ośmiu branż na `/` włącznie.
+
+**IndexNow — wykonane.** `npm run indexnow` zgłosił **33 adresy** z okna siedmiu dni, z nową
+trasą na liście. Odpowiedź protokołu: **HTTP 200 — przyjęte**. Tydzień 7 ma tym samym dwie
+pozycje opublikowane, wdrożone i zgłoszone (poz. 25 i 26).
 
 ### 15 września 2026 — przyczyna zaległości wdrożeniowej ustalona: build idzie do Preview, nie na produkcję
 
