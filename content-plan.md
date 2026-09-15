@@ -279,6 +279,13 @@ Vercela albo włączenie automatycznego wdrażania gałęzi produkcyjnej. Dopier
 `npm run indexnow` obejmie oknem siedmiu dni komplet zaległości: poz. 21, poz. 25, rozdział 09
 na `/` i wszystkie strony, które w tych dwóch wdrożeniach dostały odnośniki zwrotne.
 
+**Zamknięte tego samego dnia.** Właściciel wykonał promocję w panelu: deployment produkcyjny
+commita `842f762` powstał 15 września o 08:41 i objął komplet trzydniowej zaległości naraz.
+Zgłoszenie IndexNow wykonane po weryfikacji — szczegóły przy poz. 21 i 25. **Przyczyna nie
+zniknęła:** automatycznego wdrażania gałęzi nadal nie ma, więc każda kolejna publikacja kończy
+się na Preview i czeka na promocję. Do czasu zmiany tego ustawienia każdy wpis w tym dzienniku
+zamyka się dopiero sprawdzeniem adresu na `envelopes.pl`, nigdy pushem.
+
 ### 15 września 2026 — poz. 25: `/koperty-dla-agencji-eventowych` · siódma LP Fazy 2
 
 **Trzecia LP branżowa pod filarem F1** — po kancelariach (poz. 17) i biurach rachunkowych
@@ -393,11 +400,15 @@ Nie sprawdziliśmy też, czy tabela `#format` i tabela nakładu mieszczą się b
 poziomego na wąskim ekranie — obie są trzykolumnowe, więc zachowają się jak tabele `.data`
 w całym serwisie (własna szerokość 720 px, przewijanie wewnątrz `.table-wrap`).
 
-**Bez commita i bez `npm run indexnow`** — część gitową i zgłoszenie prowadzi sesja główna.
-Zgłoszenie ma sens dopiero po wdrożeniu: na 15 września produkcja nadal nie serwuje poz. 21
-z 14 września (`envelopes.pl/koperty-dla-biur-rachunkowych` zwraca 404), więc zaległość
-wdrożeniowa opisana przy poz. 18 i 21 trwa trzeci dzień. Po wdrożeniu jedno `npm run indexnow`
-obejmie oknem siedmiu dni wszystkie trzy zaległe adresy naraz.
+**Wdrożone na produkcję 15 września 2026** (commit `719f9c3`, deployment produkcyjny `842f762`).
+Sprawdzone na `envelopes.pl`: 200, `canonical` na domenie produkcyjnej, `title` 54 znaki i `<h1>`
+zgodne z lokalnym buildem, karta OG dostępna, wpis w `/llms.txt` i w `sitemap.xml`, komplet
+siedmiu odnośników branżowych obecny w HTML-u strony głównej. **IndexNow wykonane** —
+zgłoszenie zbiorcze 32 adresów, HTTP 200 (szczegóły przy poz. 21).
+
+Weryfikacja wizualna wykonana w sesji głównej po publikacji: desktop i 375 px, zero błędów
+konsoli, brak przewijania poziomego, obie tabele trzykolumnowe przewijają się wewnątrz
+`.table-wrap` — tak jak zakładał akapit wyżej.
 
 ### 15 września 2026 — rozdział 09 „Dla kogo pracujemy" na stronie głównej
 
@@ -447,8 +458,15 @@ do jednej kolumny.
 Weryfikacja: `npm run typecheck` i `npm run build` bez błędów. Kolejność sekcji na `/`
 potwierdzona w zbudowanym HTML-u: `kolory` → `branze` → `dla-firm`, czyli konfigurator i paleta
 bez zmiany pozycji. Siedem odnośników branżowych plus dwa do filarów obecne w HTML.
-`PAGE_UPDATED['/']` podbite na 15 września. **Wyglądu rozdziału w przeglądarce nie
-sprawdziliśmy** — ani dwóch kolumn na desktopie, ani zejścia do jednej kolumny na 375 px.
+`PAGE_UPDATED['/']` podbite na 15 września. **Sprawdzone w przeglądarce** (sesja główna):
+dwie kolumny na 1024 px, jedna kolumna na 375 px, zero błędów konsoli, `scrollWidth` równy
+szerokości okna na wąskim ekranie. Przy okazji wyszło, że strona główna ma poziome przepełnienie
+41 px na desktopie — **nie z tego rozdziału**: winne są ukryte `span.tooltip-content`, a ten sam
+pomiar daje produkcja serwująca starszy build. Zgłoszone jako osobne zadanie.
+
+**Wdrożone na produkcję 15 września 2026** (deployment produkcyjny `842f762`); siedem odnośników
+branżowych potwierdzonych w HTML-u `envelopes.pl`. Adres `/` objęty zbiorczym zgłoszeniem
+IndexNow (szczegóły przy poz. 21).
 
 ### 14 września 2026 — poz. 21: `/koperty-dla-biur-rachunkowych` · szósta LP Fazy 2
 
@@ -556,9 +574,17 @@ przy poz. 18 (produkcja stała wtedy na buildzie z 7 września), więc wniosek z
 zostaje w mocy i dostaje wzmocnienie: **push do `master` nie jest dowodem wdrożenia i nie da się
 go wymusić z repozytorium** — w projekcie nie ma ani deploy hooka, ani CLI Vercela.
 
-**Do wykonania po wdrożeniu:** sprawdzenie adresu na `envelopes.pl` (200, `canonical` na domenę
-produkcyjną, komplet odnośników zwrotnych) i `npm run indexnow` — zgłoszenie obejmie wtedy także
-`/koperty-dla-klinik` i pozostałe adresy z okna 7 dni.
+**Wdrożone na produkcję 15 września 2026** — deployment produkcyjny commita `842f762`
+(promocja w panelu Vercela, przyczyna opóźnienia opisana w osobnym wpisie z tego dnia).
+Sprawdzone na `envelopes.pl`: strona zwraca 200, `canonical` wskazuje domenę produkcyjną,
+`title` i `<h1>` zgodne z lokalnym buildem, karta OG dostępna, wpis obecny w `/llms.txt`
+i w `sitemap.xml`.
+
+**IndexNow — wykonane.** `npm run indexnow` zgłosił **32 adresy** z okna siedmiu dni: poz. 21,
+poz. 25, `/` z nowym rozdziałem, pięć pozostałych LP branżowych, cztery filary, dwanaście stron
+kolorów i siedem wpisów, które w tych wdrożeniach dostały odnośniki. Odpowiedź protokołu:
+**HTTP 200 — przyjęte**. Zaległość zgłoszeniowa z 14 września (poz. 22) zamknięta tym samym
+poleceniem.
 
 ### 14 września 2026 — poz. 22: `/koperty-dla-klinik` · piąta LP Fazy 2
 
@@ -640,7 +666,8 @@ produkcyjną, `title` i `<h1>` zgodne z lokalnym buildem, karta OG dostępna, wp
 w `/llms.txt` i w `sitemap.xml`, a komplet ośmiu odnośników zwrotnych obecny w HTML-u wszystkich
 ośmiu stron. Wpis z poz. 46 również zwraca 200 — zaległość wdrożeniowa z 14 września zamknięta.
 
-**Do wykonania:** `npm run indexnow`.
+**IndexNow — wykonane 15 września 2026** (zgłoszenie zbiorcze razem z poz. 21 i 25, patrz
+wpis przy poz. 21).
 
 ### 14 września 2026 — audyt linkowania w dół: `/koperty-premium` i `/koperty-na-pieniadze`
 
