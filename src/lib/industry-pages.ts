@@ -54,6 +54,12 @@ export const INDUSTRY_PAGES: IndustryPage[] = [
     text: 'Kalendarz roku obrotowego: kiedy do klientów wychodzą informacje podatkowe, sprawozdania i uchwały.',
   },
   {
+    path: '/koperty-dla-nieruchomosci',
+    branch: 'Biura nieruchomości i deweloperzy',
+    anchor: 'koperty dla biur nieruchomości',
+    text: 'Pięć etapów transakcji, na których komplet dokumentów przechodzi z rąk do rąk — od prezentacji lokalu po wydanie kluczy.',
+  },
+  {
     path: '/koperty-dla-agencji-eventowych',
     branch: 'Agencje eventowe, PR i działy marketingu',
     anchor: 'koperty na zaproszenia firmowe',

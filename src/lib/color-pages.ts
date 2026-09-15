@@ -302,6 +302,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
         {
           name: 'Biura nieruchomości i doradcy finansowi',
           text: 'Umowy, teczki ofertowe i korespondencja do klienta prywatnego. Granat jest w tych branżach kolorem oczekiwanym — koperta nie wnosi do rozmowy niczego, czego klient by się nie spodziewał.',
+          link: { href: '/koperty-dla-nieruchomosci', anchor: 'Koperty dla biur nieruchomości' },
         },
       ],
     },
@@ -853,6 +854,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
         {
           name: 'Agencje nieruchomości premium i deweloperzy',
           text: 'Prezentacje luksusowych inwestycji, akty notarialne i vouchery dla nabywców. Ziemisty odcień doskonale współgra ze współczesną architekturą.',
+          link: { href: '/koperty-dla-nieruchomosci', anchor: 'Koperty dla biur nieruchomości' },
         },
         {
           name: 'Salony SPA, kliniki beauty i medycyna estetyczna',
@@ -935,8 +937,9 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
         'Szarość wybierają marki i instytucje poszukujące nowoczesnego minimalizmu, powagi oraz eleganckiej alternatywy dla standardowej bieli.',
       items: [
         {
-          name: 'Pracownie architektoniczne i biura projektowe',
-          text: 'Koncepcje architektoniczne, umowy i dokumentacja dla inwestorów. Popielaty odcień nawiązuje do estetyki betonu, stali i rysunku technicznego.',
+          name: 'Pracownie architektoniczne i biura sprzedaży inwestycji',
+          text: 'Koncepcje architektoniczne, umowy i dokumentacja dla inwestorów, a po stronie dewelopera — komplet wręczany nabywcy przy odbiorze lokalu. Popielaty odcień nawiązuje do estetyki betonu, stali i rysunku technicznego.',
+          link: { href: '/koperty-dla-nieruchomosci', anchor: 'Koperty dla biur nieruchomości' },
         },
         {
           name: 'Firmy technologiczne i startupy',

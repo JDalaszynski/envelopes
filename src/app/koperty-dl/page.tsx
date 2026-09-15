@@ -193,7 +193,15 @@ const INDUSTRIES: { heading: string; text: ReactNode }[] = [
   },
   {
     heading: 'Biura nieruchomości i deweloperzy',
-    text: `Umowa deweloperska i protokół odbioru to wielostronicowe dokumenty A4. Złożone na trzy trafiają do jednej koperty DL, a komplet dla jednego nabywcy jedzie w jednej przesyłce zamiast w kilku mniejszych.`,
+    text: (
+      <>
+        Umowa deweloperska i protokół odbioru to wielostronicowe dokumenty A4. Złożone na trzy
+        trafiają do jednej koperty DL, a komplet dla jednego nabywcy jedzie w jednej przesyłce
+        zamiast w kilku mniejszych. Co z takiego kompletu wchodzi do koperty, a co wymaga teczki,
+        rozstrzyga strona{' '}
+        <Link href="/koperty-dla-nieruchomosci">koperty dla biur nieruchomości</Link>.
+      </>
+    ),
   },
   {
     heading: 'Agencje eventowe, PR i kreatywne',

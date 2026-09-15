@@ -121,6 +121,11 @@ const PAGES: { url: string; title: string; note: string }[] = [
     note: 'Agencje eventowe, PR i działy marketingu: zaproszenie składane, program i karta wstępu w jednej kopercie DL; tabela dopasowania materiałów eventowych (zaproszenie kwadratowe 150 × 150 mm wymaga formatu K4 ze statusem „Dostępne wkrótce" i nie da się go dziś zamówić), fale kampanii zapraszającej z odstępem od daty wydarzenia, nakład liczony listą gości z zapasem, kolory pod charakter wydarzenia — Czarny, Granatowy, Złoty.',
   },
   {
+    url: '/koperty-dla-nieruchomosci',
+    title: 'Koperty dla biur nieruchomości i deweloperów',
+    note: 'Obrót nieruchomościami: koperta wręczana do ręki, a nie wysyłana — ścieżka pięciu etapów transakcji (prezentacja lokalu, umowa rezerwacyjna, formalności kredytowe, akt notarialny, wydanie kluczy), nakład liczony liczbą transakcji z mnożnikiem etapów, trzy odcienie materiałowe — Szarobrązowy 140 g/m², Szara i Jeansowy, nazwisko nabywcy drukowane bez adresu przy przekazaniu osobistym.',
+  },
+  {
     url: '/koperty-dla-kancelarii',
     title: 'Koperty dla kancelarii prawnych i notarialnych',
     note: 'Korespondencja prawna: typologia pism (akt notarialny, wezwanie, pismo procesowe), kolory stonowane (Granatowy, Czarny, Taupe), adresowanie wielu klientów w jednym zamówieniu.',

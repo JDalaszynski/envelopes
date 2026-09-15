@@ -171,6 +171,18 @@ const PAGE_IMAGES: Record<string, string[]> = {
       .filter((color) => color?.printImages?.DL)
       .map((color) => abs(color.printImages!.DL!)),
   ],
+  /* Supporting LP poz. 26 — kadr personalizacji imiennej przy sekcji
+     o nazwisku nabywcy (kadru z logo biura nieruchomości w repozytorium nie ma)
+     plus trzy kadry katalogowe z zaznaczonym polem nadruku. Strona renderuje je
+     przez `EnvelopePlaceholder` z `hasPrint`, więc do sitemapy idą `printImages`,
+     a nie zdjęcia kopert gładkich. */
+  '/koperty-dla-nieruchomosci': [
+    ...shotUrls([shotByFile('czarna-koperta-dl-personalizacja-imienna')]),
+    ...['taupe', 'szara', 'blekit-lupkowy']
+      .map((id) => COLOR_MAP[id])
+      .filter((color) => color?.printImages?.DL)
+      .map((color) => abs(color.printImages!.DL!)),
+  ],
   /* Supporting LP poz. 17 — jedyny realny kadr aranżacyjny dla kancelarii
      (Granatowy) plus próbki katalogowe dwóch odcieni stonowanych. */
   '/koperty-dla-kancelarii': [
@@ -255,6 +267,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     page('/koperty-dla-biur-rachunkowych', 'monthly', 0.8),
     /* Supporting LP pod F1 — koperty na zaproszenia firmowe (content-plan.md poz. 25) */
     page('/koperty-dla-agencji-eventowych', 'monthly', 0.8),
+    /* Supporting LP pod F1 — koperty dla biur nieruchomości (content-plan.md poz. 26) */
+    page('/koperty-dla-nieruchomosci', 'monthly', 0.8),
     /* Pillar K8 — koperty na pieniądze (content-plan.md poz. 39) */
     page('/koperty-na-pieniadze', 'monthly', 0.9),
     page('/blog', 'weekly', 0.8),

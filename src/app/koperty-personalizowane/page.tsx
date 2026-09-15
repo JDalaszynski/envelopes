@@ -209,7 +209,14 @@ const INDUSTRIES: { heading: string; text: ReactNode }[] = [
   },
   {
     heading: 'Biura nieruchomości i deweloperzy',
-    text: 'Akt notarialny i umowa deweloperska trafiają do nabywcy z imienia i nazwiska — to dokument, który zostaje w domu na lata. Nadrukowany adres porządkuje przekazanie kompletu po odbiorze lokalu.',
+    text: (
+      <>
+        Akt notarialny i umowa deweloperska trafiają do nabywcy z imienia i nazwiska — to dokument,
+        który zostaje w domu na lata. Kiedy na kopercie staje pełny adres pocztowy, a kiedy samo
+        nazwisko wręczane przy stole, rozstrzyga strona{' '}
+        <Link href="/koperty-dla-nieruchomosci">koperty dla biur nieruchomości</Link>.
+      </>
+    ),
   },
   {
     heading: 'Butiki, jubilerzy i marki premium',

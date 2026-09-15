@@ -183,7 +183,15 @@ const INDUSTRIES: { heading: string; text: ReactNode }[] = [
   },
   {
     heading: 'Biura nieruchomości i deweloperzy',
-    text: 'Umowa deweloperska i akt notarialny to ostatnia rzecz, jaką klient zabiera ze sobą po transakcji. Koperta z logo biura sprawia, że komplet dokumentów wygląda jak domknięcie sprawy, a nie jak plik kartek.',
+    text: (
+      <>
+        Umowa deweloperska i akt notarialny to ostatnia rzecz, jaką klient zabiera ze sobą po
+        transakcji. Koperta z logo biura sprawia, że komplet dokumentów wygląda jak domknięcie
+        sprawy, a nie jak plik kartek. Na których etapach transakcji koperta przechodzi z rąk do
+        rąk i ile sztuk schodzi na jedną sprzedaż, rozpisaliśmy na stronie{' '}
+        <Link href="/koperty-dla-nieruchomosci">koperty dla biur nieruchomości</Link>.
+      </>
+    ),
   },
   {
     heading: 'Salony samochodowe',

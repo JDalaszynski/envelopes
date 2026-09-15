@@ -133,6 +133,8 @@ export const PAGE_UPDATED: Record<string, string> = {
   '/koperty-dla-biur-rachunkowych': '2026-09-14',
   /* Poz. 25 planu — siódma LP branżowa Fazy 2 i trzecia pod filarem F1 */
   '/koperty-dla-agencji-eventowych': '2026-09-15',
+  /* Poz. 26 planu — ósma LP branżowa Fazy 2 i czwarta pod filarem F1 */
+  '/koperty-dla-nieruchomosci': '2026-09-15',
 };
 
 /** Data zmiany treści dla trasy — `undefined`, gdy trasy nie ma w rejestrze. */

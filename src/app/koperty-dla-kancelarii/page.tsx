@@ -305,7 +305,10 @@ export default function KancelarieEnvelopesPage() {
             Biura rachunkowe i firmy audytorskie opisaliśmy osobno — tam ta sama koperta wraca do
             tego samego klienta kilka razy w roku, więc zamiast odcieni stonowanych pracują
             neutralne:{' '}
-            <Link href="/koperty-dla-biur-rachunkowych">koperty dla biur rachunkowych</Link>.
+            <Link href="/koperty-dla-biur-rachunkowych">koperty dla biur rachunkowych</Link>. Biura
+            nieruchomości dobierają odcień jeszcze inaczej — do palety inwestycji, a nie do rangi
+            pisma, i najczęściej wręczają kopertę do ręki zamiast ją wysyłać:{' '}
+            <Link href="/koperty-dla-nieruchomosci">koperty dla biur nieruchomości</Link>.
           </p>
 
           <div className="row" style={{ marginTop: 'var(--space-6)' }}>

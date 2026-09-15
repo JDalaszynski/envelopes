@@ -137,7 +137,7 @@ lub `personalized/` — buduj treść wokół zdjęcia, które faktycznie masz.
 | # | Tytuł / URL | Format | Główna fraza | Cel | Persona / Branża | Filar | Uwagi (antykanibalizacja) | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 25 | Koperty dla agencji eventowych — `/koperty-dla-agencji-eventowych` | Supporting LP | koperty na zaproszenia firmowe | KONWERSJA | Agencje eventowe, PR | F1 | **Wykonane 15 września 2026.** Warunek brzegowy spełniony: żaden przycisk na stronie nie prowadzi do C6/K4, a zaproszenie kwadratowe ma w tabeli status policzony z katalogu przez `fitsInFormat()`. **Rozgraniczenie wobec poz. 41 i 42 przebiega po pytaniu, nie po temacie:** ta LP odpowiada „jak poprowadzić wysyłkę zaproszeń na wydarzenie firmowe" (lista gości, fale kampanii, nakład z zapasem), poz. 41 odpowie „którą kopertę dobrać do tego zaproszenia" (wkładka → format), poz. 42 weźmie personę ślubną. Frazy `koperty na zaproszenia` **nie ma** w `keywords` tej strony | [x] |
-| 26 | Koperty dla biur nieruchomości — `/koperty-dla-nieruchomosci` | Supporting LP | koperty na dokumenty firmowe | KONWERSJA | Nieruchomości premium, deweloperzy | F1 | Akty i umowy; format DL naturalnie pasuje do dokumentów składanych | [ ] |
+| 26 | Koperty dla biur nieruchomości — `/koperty-dla-nieruchomosci` | Supporting LP | ~~koperty na dokumenty firmowe~~ → `koperty dla biur nieruchomości` | KONWERSJA | Nieruchomości premium, deweloperzy | F1 | **Wykonane 15 września 2026.** **Fraza skorygowana tego samego dnia:** `koperty na dokumenty firmowe` nie ma właściciela w `keywords.md`, ale jej intencja („koperty, w których firma wysyła dokumenty") jest intencją filara F1 i strony `/koperty-dl` — a pod F1 stoją już dwie LP dokumentowe (poz. 17 i 21). LP branżowa celuje we frazę branżową, jak przy korektach poz. 21, 24 i 28; fraza rodzajowa zostaje przy filarze i nie wchodzi do `keywords` tej strony. **Rozgraniczenie wobec poz. 17 i 21 na czterech osiach:** pytanie strony (jakie pismo / kiedy w roku / **na jakim etapie transakcji**), tryb przekazania (wysyłka pocztowa i partiami przeciw **wręczaniu do ręki** na czterech z pięciu etapów), jednostka nakładu (sprawa / portfel klientów / **transakcja z mnożnikiem etapów**) i kolor (ciemne stonowane / neutralne / **materiałowe** — Szarobrązowy, Szara, Jeansowy) | [x] |
 | 27 | Koperty na certyfikaty i dyplomy — `/koperty-na-certyfikaty` | Supporting LP | koperty na certyfikaty | RUCH | Uczelnie, firmy szkoleniowe | F1 | **Ostrożnie:** dyplom A4 płaski wymaga K4 (niedostępny). Treść mówi wprost o A4 składanym na trzy i kieruje resztę na listę powiadomień | [ ] |
 | 28 | Realizacja: koperty z nadrukiem dla hotelu | Supporting article | realizacja kopert z nadrukiem dla hotelu | AUTORYTET | Hotele | F4 | **Fraza skorygowana 7 września 2026** — `koperty z nadrukiem firmowym` należy do K1 (keywords.md, wspierająca fraza filara F1); studium przypadku celuje we frazę dowodową, nie transakcyjną, i nie koliduje też z `koperty firmowe dla hotelu` (poz. 18). Dowód wykonania na realnym zdjęciu; uzupełnia poz. 18 o warstwę E-E-A-T. **Warunek wejścia dopisany 15 sierpnia 2026:** wpis powstaje wyłącznie na realnym zamówieniu, potwierdzonym przez właściciela — samo zdjęcie nadruku z `public/images/prints/` nie wystarczy, bo studium przypadku niesie też klienta, skalę i efekt. **Warunek niespełniony na 7 września 2026** — status wraca do `[—]`, jak poz. 47 | [—] |
 
@@ -249,6 +249,108 @@ nie liczą się do kadencji czterech pozycji tygodniowo i nie mają filara.
 ---
 
 ## Dziennik wdrożeń
+
+### 15 września 2026 — poz. 26: `/koperty-dla-nieruchomosci` · ósma LP Fazy 2
+
+**Czwarta LP branżowa pod filarem F1** — po kancelariach (poz. 17), biurach rachunkowych
+(poz. 21) i agencjach eventowych (poz. 25) — i druga pozycja Tygodnia 7. Filar poświęca tej
+branży jedną kartę w sekcji „Dla kogo"; strona dokłada to, czego nie ma żadna z sąsiednich:
+**ścieżkę transakcji**, czyli pięć etapów, na których komplet dokumentów przechodzi z rąk do rąk.
+
+**Fraza główna zmieniona przed napisaniem strony.** Plan zakładał `koperty na dokumenty firmowe`.
+Fraza nie występuje w `keywords.md` przy żadnej stronie, więc formalnie była wolna — ale jest
+**rodzajowa**, a jej intencja („koperty, w których firma wysyła dokumenty") należy do filara F1
+i do `/koperty-dl`. Pod F1 stały już dwie LP o korespondencji dokumentowej, więc trzecia z frazą
+rodzajową stałaby się czwartym quasi-filarem i konkurowała z własnym filarem. Strona celuje
+w `koperty dla biur nieruchomości`, dokładnie jak przy korektach poz. 21, 24 i 28. Fraza rodzajowa
+**nie weszła** do `keywords` tej strony; `koperty do umów` z listy luk w `keywords.md` zostaje
+świadomie bez właściciela, bo równie dobrze pasuje do poz. 17.
+
+**Rozgraniczenie wobec poz. 17 i 21 — cztery osie, bo to było jedyne realne ryzyko pozycji.**
+Trzy strony pod jednym filarem mówią o arkuszach A4 w kopercie DL, więc granica musiała być
+mocniejsza niż przy poprzednich LP, a nie słabsza:
+- **Pytanie strony.** Poz. 17 — „jakie pismo i jaka jego ranga". Poz. 21 — „kiedy w roku i ile
+  sztuk na portfel klientów". Poz. 26 — „na jakim etapie transakcji koperta jest potrzebna
+  i komu trafia do rąk".
+- **Tryb przekazania.** Kancelaria wysyła (data stempla, doręczenie), biuro rachunkowe wysyła
+  partiami, biuro nieruchomości **wręcza** — na czterech z pięciu etapów tabeli. Trzecia kolumna
+  `#etapy` mówi właśnie o tym, a nie o terminie.
+- **Jednostka nakładu — czwarta różna w czterech LP pod F1.** Sprawa (poz. 17 nie ma tabeli
+  kosztowej wcale), portfel klientów (poz. 21), lista gości (poz. 25), tutaj **transakcja
+  z mnożnikiem**: jedna sprzedaż zużywa tyle kopert, ile etapów dostaje nadruk. Tabela ma dlatego
+  inną budowę niż u sąsiadów — kolumny to warianty mnożnika (1 albo 3 koperty na transakcję),
+  a nie zakresy usługi. Cena za sztukę wyszła z wiersza tabeli do noty pod nią, bo w obu
+  kolumnach jest identyczna.
+- **Kolor.** Poz. 17 trzyma kierunek ciemny i stonowany, poz. 21 — neutralny, tutaj wybór dzieje
+  się wewnątrz **odcieni materiałowych**: Szarobrązowy (140 g/m²), Szara i Jeansowy. Szarobrązowy
+  występuje w obu zestawach, więc granica jest powiedziana wprost w akapicie zamykającym sekcję:
+  kancelaria bierze go za gramaturę i powagę pisma, biuro nieruchomości — za zgodność z paletą
+  materiałową inwestycji.
+
+**Kalendarza nie ma i to jest celowe.** Poz. 21 i poz. 25 są spięte kalendarzem (rok obrotowy,
+fale kampanii). Transakcja nieruchomościowa nie ma sezonu — u każdego klienta ten sam etap wypada
+w innym miesiącu — więc miejsce kalendarza zajmuje ścieżka etapów. To także jedyny sposób, żeby
+tabela tej strony nie wyglądała jak trzecia wersja tej samej tabeli.
+
+**Granica limitu powiedziana wprost.** Umowa deweloperska liczona w dziesiątkach stron nie jest
+dokumentem na kopertę DL — strona mówi to w sekcji `#etapy` zamiast obiecywać, że „wszystko się
+zmieści", i odsyła do poradnika o liczbie arkuszy oraz do tabeli dopasowań na F3. Granicą jest
+grubość pliku, nie wymiar.
+
+**Bez własnego `FAQPage`**, jak poz. 17, 18, 19, 21, 22, 23 i 25. `PRINT_FAQ_ITEMS` na F1 pokrywa
+pytania o cenę, minimum nakładu, pliki i terminy; `WebPage.mainEntity` wskazuje na węzeł `Product`
+filara.
+
+**Czwarty w serwisie odnośnik z `zakres=imiona`** — po F2, poz. 18 i poz. 25. Warunek z 15 września
+jest spełniony: CTA stoi pod akapitem, który mówi dokładnie o samym nazwisku nabywcy na kopercie
+wręczanej przy stole, a nie o personalizacji w ogóle. Pozostałe pięć CTA otwiera konfigurator
+z formatem DL, odcieniem Szarobrązowym i nadrukiem — Szarobrązowy nie był dotąd preselekcją
+żadnej strony.
+
+**Zdjęcia.** Kadru z logo biura nieruchomości w repozytorium nie ma i nie podstawiamy pod branżę
+cudzego znaku (reguła od poz. 18). Trzy rekomendowane odcienie stoją jako kadry katalogowe
+z zaznaczonym polem nadruku, a przy sekcji o nazwisku nabywcy — realny kadr personalizacji
+imiennej (`czarna-koperta-dl-personalizacja-imienna`), czyli zdjęcie **usługi**, nie branży;
+podpis mówi to wprost. Karta OG wygenerowana `scripts/og-card.mjs` z kadru Szarobrązowego
+(`public/images/og/koperty-dla-nieruchomosci.jpg`) — kadr niewykorzystany dotąd przez żadną kartę
+OG, bo `koperty-taupe.jpg` powstała z kadru aranżacyjnego z logo salonu SPA (sprawdzone
+w pliku).
+
+Linkowanie w obie strony:
+- **do LP (10 odnośników):** rejestr `INDUSTRY_PAGES` renderowany w rozdziale „Dla kogo pracujemy"
+  na `/` (pozycja wstawiona po biurach rachunkowych, w części dokumentowej), karta „Biura
+  nieruchomości i deweloperzy" na F1, F2 i F3, karta „Pracownie architektoniczne i deweloperzy"
+  na `/koperty-premium`, akapit granicy branżowej w sekcji koloru na `/koperty-dla-kancelarii`,
+  trzy karty „Dla kogo" na stronach kolorów (Szarobrązowy, Granatowy, Szara) oraz nowy akapit
+  w sekcji o poufności we wpisie `koperty-bez-okienka-kiedy-je-wybrac`.
+- **z LP:** F1 (ścieżka nawigacji, `#cena`), F2, F3, `/koperty/taupe`, `/koperty/szara`,
+  `/koperty/blekit-lupkowy`, `/koperty/granatowy`, `/koperty-dla-kancelarii`,
+  `/koperty-dla-biur-rachunkowych`, `/kontakt#wycena` i trzy wpisy blogowe: o liczbie arkuszy,
+  o koszcie zamówienia i o progu dziesięciu sztuk.
+
+Trzy karty kolorów na stronach `/koperty/szara`, `/koperty/taupe` i `/koperty/granatowy` dostały
+odnośnik zwrotny; przy Szarej rozszerzyliśmy też nazwę i treść karty o biura sprzedaży inwestycji,
+bo dotychczas mówiła wyłącznie o pracowniach architektonicznych. Wpis o kopertach bez okienka
+dostał trzeci akapit w sekcji `#poufność` i podbitą datę `updated`.
+
+**Weryfikacja:** `npm run typecheck` i `npm run build` bez błędów, trasa prerenderowana statycznie
+(`○ /koperty-dla-nieruchomosci`), obecna w `sitemap.xml` z czterema obrazami i `lastmod`
+2026-09-15 oraz w `/llms.txt`. W zbudowanym HTML-u potwierdzone: `title` 56 znaków ze
+szablonem marki, `description` 148 znaków, `canonical`, komplet OG, `ItemPage` z `mainEntity`
+filara, `BreadcrumbList`, pięć CTA z `format=DL&kolor=taupe&nadruk=1`, jedno z `zakres=imiona`
+oraz odnośniki zwrotne na wszystkich dziesięciu stronach. **Czego nie sprawdziłem:** zachowania
+produkcji, bo wdrożenia jeszcze nie było.
+
+**Sprawdzone w przeglądarce** (sesja główna, jak przy poz. 21 i 25): desktop i 375 px, jeden
+`<h1>`, cztery `<h2>` treściowe plus finalne CTA, brak przewijania poziomego na wąskim ekranie,
+tabela pięciu etapów przewija się wewnątrz `.table-wrap` jak pozostałe tabele `.data`. W konsoli
+wyłącznie błędy gniazda HMR serwera deweloperskiego — zero błędów strony. Rejestr branż na `/`
+renderuje osiem pozycji w kolejności tematycznej, z nową LP na trzecim miejscu.
+
+**Do wykonania po stronie właściciela.** Push buduje wyłącznie deployment Preview (wpis z tego
+samego dnia), więc kolejność jest taka: **promocja deploymentu na produkcję w panelu Vercela**,
+sprawdzenie, że `envelopes.pl/koperty-dla-nieruchomosci` zwraca 200, i dopiero potem
+`npm run indexnow`. Zgłoszenie przed promocją prowadziłoby crawlera na 404.
 
 ### 15 września 2026 — przyczyna zaległości wdrożeniowej ustalona: build idzie do Preview, nie na produkcję
 

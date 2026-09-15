@@ -587,7 +587,9 @@ export default function KopertyPremiumPage() {
               <h3 style={{ fontSize: 19 }}>Pracownie architektoniczne i deweloperzy</h3>
               <p className="small" style={{ marginTop: 'var(--space-2)', marginBottom: 0 }}>
                 Koncepcje projektowe, umowy rezerwacyjne apartamentów i zaproszenia na odbiory lokali.
-                Minimalistyczna Szarość i Błękit Łupkowy oddają nowoczesną stylistykę designu.
+                Minimalistyczna Szarość i Błękit Łupkowy oddają nowoczesną stylistykę designu. Ścieżkę
+                transakcji i dobór odcienia do palety inwestycji opisaliśmy na stronie{' '}
+                <Link href="/koperty-dla-nieruchomosci">koperty dla biur nieruchomości</Link>.
               </p>
             </div>
 

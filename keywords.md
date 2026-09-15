@@ -46,6 +46,13 @@ w postaci pytania**. Podział z filarem: filar niesie próg jako parametr oferty
 transakcyjną („chcę zamówić krótką serię"), wpis odpowiada na intencję informacyjną („dlaczego
 jest minimum", „czy mogę zamówić mniej"). Tytuł filara zostaje bez zmian — decyzja właściciela
 z 17 sierpnia 2026.
+**Wsparcie:** LP branżowa `/koperty-dla-nieruchomosci` `[ISTNIEJE]` — opublikowana 15 września
+2026 (content-plan.md poz. 26), **właścicielka frazy branżowej `koperty dla biur nieruchomości`**.
+Plan zakładał dla niej frazę `koperty na dokumenty firmowe`; fraza jest **rodzajowa** i nie weszła
+do `keywords` tej strony — jej intencja („koperty, w których firma wysyła dokumenty") należy do
+filara i do `/koperty-dl`, a pod filarem stoją już trzy LP dokumentowe. Podział pracy: filar
+wygrywa intencję usługową, LP branżowa — etap transakcji nieruchomościowej, na którym koperta
+przechodzi z rąk do rąk.
 **Wsparcie:** wpis `jak-przygotowac-pliki-do-druku-na-kopertach` `[ISTNIEJE]` — przepisany
 15 sierpnia 2026 (content-plan.md poz. 7). Oddał filarowi całą warstwę transakcyjną i obsługuje
 wyłącznie intencję procesową „jak przygotować plik do druku": jest właścicielem frazy
@@ -463,6 +470,10 @@ profilu klienta z bazy wiedzy. Do zweryfikowania w kolejnym eksporcie:
 
 1. **Branżowe:** `koperty dla kancelarii`, `koperty dla hotelu`, `koperty firmowe dla kliniki`,
    `koperty na certyfikaty`, `koperty na dyplomy`, `koperty do umów`.
+   `koperty do umów` **zostaje bez właściciela świadomie** (15 września 2026): pasuje jednocześnie
+   do poz. 17 (umowa do podpisu w typologii pism) i do poz. 26 (umowa rezerwacyjna
+   i deweloperska), a przypisanie jej którejkolwiek z nich ustawiłoby dwie strony pod jedną
+   intencją. Do rozstrzygnięcia przy przeglądzie kwartalnym, na danych z Search Console.
 2. **Procesowe / B2B:** `koperty firmowe faktura vat`, ~~`koperty z nadrukiem od 10 sztuk`~~
    (obsłużona od 14 września 2026 wpisem `dlaczego-koperty-z-nadrukiem-od-10-sztuk`),
    `koperty hurtowo z logo`, `koperty z nadrukiem odroczony termin płatności`,

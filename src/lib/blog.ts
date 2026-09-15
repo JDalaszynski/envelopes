@@ -1432,7 +1432,7 @@ const POSTS: BlogPost[] = [
     /* Odnośnik do LP kancelaryjnej (poz. 17) w sekcji o poufności,
        a od 14 września — do LP biur rachunkowych (poz. 21) w sekcji
        o powierzchni nadruku, która wymienia tę branżę z nazwy */
-    updated: '2026-09-14',
+    updated: '2026-09-15',
     readingMinutes: 5,
     colorId: 'biala-perlowa',
     format: 'DL',
@@ -1462,6 +1462,7 @@ const POSTS: BlogPost[] = [
         paragraphs: [
           'Koperty z okienkiem niosą jedno stałe ryzyko dla bezpieczeństwa: możliwość przesunięcia zawartości w transporcie. Pismo, które w trakcie dostawy osunie się wewnątrz koperty, może odsłonić przez foliowe okienko poufne informacje z treści dokumentu — kwoty z faktury lub warunki umowy handlowej.',
           'Koperty bez okienka z grubego papieru barwionego w masie likwidują to zagrożenie. Nawet jeśli wkładka swobodnie przesuwa się w środku, z zewnątrz zawsze widać tylko jednolitą płaszczyznę nieprzezroczystego materiału. To kluczowa kwestia przy przesyłaniu aktów notarialnych, umów inwestycyjnych oraz dokumentacji pracowniczej. Pisma, które kancelaria wysyła najczęściej, i dobór koloru koperty do nich rozpisujemy na stronie [koperty dla kancelarii](/koperty-dla-kancelarii).',
+          'W obrocie nieruchomościami ta sama ścianka osłania cenę transakcji, numer księgi wieczystej i dane nabywcy — w komplecie, który zwykle nie jedzie pocztą, tylko przechodzi z rąk do rąk przy podpisaniu umowy albo po wyjściu od notariusza. Etapy, na których koperta jest w tej branży potrzebna, zebraliśmy na stronie [koperty dla biur nieruchomości](/koperty-dla-nieruchomosci).',
         ],
       },
       {
