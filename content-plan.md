@@ -250,6 +250,35 @@ nie liczą się do kadencji czterech pozycji tygodniowo i nie mają filara.
 
 ## Dziennik wdrożeń
 
+### 15 września 2026 — przyczyna zaległości wdrożeniowej ustalona: build idzie do Preview, nie na produkcję
+
+**Trzeci dzień z rzędu produkcja nie serwowała świeżych publikacji** (poz. 21 z 14 września
+i poz. 25 z 15 września zwracały 404, mimo zielonego builda lokalnie i pushu do `master`).
+Wniosek zapisany przy poz. 18 — „push do `master` nie jest dowodem wdrożenia" — dostaje wreszcie
+przyczynę, odczytaną z API GitHuba (`/repos/:owner/:repo/deployments` i status commita):
+
+| Commit | Preview | Production |
+| --- | --- | --- |
+| `940456d` (poz. 22) | 14 IX 20:20 | 14 IX 20:21 |
+| `17bc550` (poz. 21) | 14 IX 20:54 | **brak** |
+| `a3af00c` (dziennik) | 14 IX 21:10 | **brak** |
+| `719f9c3` (poz. 25 i rozdział 09) | 15 IX 07:38 | **brak** |
+
+**Build nie jest zepsuty.** Vercel buduje każdy push i kończy sukcesem („Deployment has
+completed", stan `success`) — tworzy jednak wyłącznie deployment **Preview**. Wdrożenie
+produkcyjne jest osobnym zdarzeniem i od `17bc550` nie zaszło ani razu. Historia pokazuje, że
+zdarza się ono nieregularnie: przy `940456d` minutę po Preview, przy `0c0f0ca` ponad trzy
+godziny później — czyli tak, jak wygląda ręczna promocja deploymentu w panelu, a nie
+automatyczne wdrożenie z gałęzi.
+
+**Co to znaczy dla kadencji.** Odhaczona pozycja w planie i zielony build nie kończą publikacji:
+dopóki deployment nie zostanie promowany na produkcję, adresu nie ma w indeksie, nie da się go
+zgłosić przez IndexNow (skrypt czyta sitemapę z działającego serwisu) i nie liczy się on do
+żadnego celu. **Domknięcie po stronie właściciela:** promocja ostatniego deploymentu w panelu
+Vercela albo włączenie automatycznego wdrażania gałęzi produkcyjnej. Dopiero po tym jedno
+`npm run indexnow` obejmie oknem siedmiu dni komplet zaległości: poz. 21, poz. 25, rozdział 09
+na `/` i wszystkie strony, które w tych dwóch wdrożeniach dostały odnośniki zwrotne.
+
 ### 15 września 2026 — poz. 25: `/koperty-dla-agencji-eventowych` · siódma LP Fazy 2
 
 **Trzecia LP branżowa pod filarem F1** — po kancelariach (poz. 17) i biurach rachunkowych
