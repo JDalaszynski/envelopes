@@ -120,8 +120,7 @@ export function AddColorToCart({
           </>
         ) : (
           <span className="muted">
-            Koperty gładkie zamawiają Państwo od {minimum} sztuki. Faktura VAT do każdego
-            zamówienia.
+            Koperty gładkie zamawiają Państwo od {minimum} sztuki.
           </span>
         )}
       </p>

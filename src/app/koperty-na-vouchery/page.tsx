@@ -704,8 +704,7 @@ export default function VoucherEnvelopesPage() {
               Zamów koperty na bony
             </ConfigureLink>
             <span className="small muted">
-              Minimum {DEFAULT_PRICING.moqWithPrint} sztuk z nadrukiem. Faktura VAT do każdego
-              zamówienia.
+              Minimum {DEFAULT_PRICING.moqWithPrint} sztuk z nadrukiem. Akceptacja wizualizacji przed drukiem.
             </span>
           </div>
         </div>
@@ -761,9 +760,9 @@ export default function VoucherEnvelopesPage() {
             </div>
 
             <div className="card">
-              <h3 style={{ fontSize: 20 }}>Faktura VAT i odroczony termin</h3>
+              <h3 style={{ fontSize: 20 }}>Rozliczenie i odroczony termin</h3>
               <ul className="small" style={{ paddingLeft: 'var(--space-5)', lineHeight: 1.8 }}>
-                <li>Fakturę VAT wystawiamy do każdego zamówienia, także bez numeru NIP.</li>
+                <li>Wygodne płatności online (BLIK, karta, przelew) z automatyczną fakturą do zamówienia.</li>
                 <li>
                   Faktura z odroczonym terminem płatności 14 dni jest dostępna dla instytucji
                   publicznych i urzędów i nie wstrzymuje produkcji.

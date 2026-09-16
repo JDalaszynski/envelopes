@@ -229,7 +229,7 @@ z **preselekcją koloru**.
 
 | # | Tytuł / URL | Format | Główna fraza | Cel | Persona / Branża | Filar | Uwagi (antykanibalizacja) | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 45 | Faktura VAT i odroczony termin przy zamówieniu kopert | Supporting article | koperty firmowe faktura vat | KONWERSJA | Instytucje, jednostki budżetowe | F1 | Rozbraja barierę rozliczeniową — realna przewaga oferty, nieopisana nigdzie indziej | [ ] |
+| 45 | Odroczony termin płatności przy zamówieniu kopert | Supporting article | koperty odroczony termin płatności | KONWERSJA | Instytucje, jednostki budżetowe | F1 | Rozbraja barierę rozliczeniową jednostek budżetowych (odroczony termin 14 dni bez przedpłaty) | [ ] |
 | 46 | Dlaczego koperty z nadrukiem są od 10 sztuk — `/blog/dlaczego-koperty-z-nadrukiem-od-10-sztuk` | Supporting article | koperty z nadrukiem od 10 sztuk | GEO | Małe firmy, pierwszy zakup | F1 | **Wykonane 14 września 2026, wyprzedzająco z tygodnia 12.** Odpowiedź na realną obiekcję; F1 podaje próg jako parametr (tytuł, pasek faktów, wiersz specyfikacji, pytanie w `PRINT_FAQ_ITEMS`), wpis uzasadnia go pracą przygotowawczą i podaje wyjścia dla nakładu mniejszego niż minimum. Zero kwot — koszt krótkiej serii należy do poz. 9 | [x] |
 | 47 | ~~Realizacja: 3 000 kopert DL dla kancelarii~~ | Supporting article | koperty dla kancelarii | AUTORYTET | Kancelarie | `/koperty-dla-kancelarii` | **Wstrzymane 15 sierpnia 2026 — brak realizacji do opisania.** Wpis startowy opisywał klienta, jego problem z poprzednim dostawcą i efekt wdrożenia; właściciel potwierdził, że przykład był wymyślony, więc został usunięty. Pozycja wraca do planu **dopiero wtedy, gdy powstanie realne zamówienie**, na które właściciel da zgodę i zdjęcia. Do tego czasu autorytet w klastrze kancelaryjnym buduje wyłącznie LP z poz. 17 | [—] |
 | 48 | Przegląd kwartalny: audyt kanibalizacji i aktualizacja map | Aktualizacja | — | — | — | — | Przegląd `keywords.md` i `content-plan.md`, weryfikacja pozycji, kwalifikacja treści do przepisania lub scalenia | [ ] |
@@ -2254,8 +2254,8 @@ Antykanibalizacja:
   materiałem poz. 46.
 - **wobec poz. 16 (ekspres):** dopłata stoi w jednym wierszu tabeli opcji, bez liczby dni, bez
   momentu, od którego termin biegnie, i bez akapitu „kiedy się opłaca".
-- **wobec poz. 45 (faktura i odroczony termin):** dwa zdania faktu — faktura VAT do każdego
-  zamówienia, odroczony termin 14 dni wyłącznie dla instytucji publicznych i urzędów.
+- **wobec poz. 45 (odroczony termin):** dwa zdania faktu — standardowe rozliczenie transakcji
+  oraz odroczony termin 14 dni wyłącznie dla instytucji publicznych i urzędów.
 - **wobec poz. 7 (pliki do druku):** zero wymagań plikowych; wizualizacja występuje wyłącznie
   jako pozycja kosztowa, której nie ma.
 - **`FAQPage` zostaje wyłącznie na filarze** — wpis nie dostaje własnych danych, mimo że dwie

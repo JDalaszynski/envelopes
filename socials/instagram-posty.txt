@@ -8,7 +8,7 @@ nie publikuj wszystkiego w bloku.
 
 -------------------------------------------------------------------
 
-[ ] POST 1 — Otwierający "Poznaj markę" (karuzela, 4-5 slajdów)
+[x] POST 1 — Otwierający "Poznaj markę" (karuzela, 4-5 slajdów)
 
 Wizualnie: logo/nazwa na tle jednego z kolorów katalogowych, kolejne
 slajdy z krótkimi hasłami.
@@ -20,7 +20,7 @@ w drodze 🔜
 
 -------------------------------------------------------------------
 
-[ ] POST 2 — Karuzela "Jak zapakować bon podarunkowy"
+[x] POST 2 — Karuzela "Jak zapakować bon podarunkowy"
 (repurposing wpisu blogowego: jak-wreczyc-bon-podarunkowy)
 
 Podpis:
@@ -58,7 +58,7 @@ Przy 120-135 g/m² — do 3. Zapisz sobie na później 🔖
 
 [ ] POST 6 — Za kulisami (prawdziwe zdjęcie wzornika)
 
-[prawdziwe zdjęcie próbek kolorów]
+📸 [prawdziwe zdjęcie próbek kolorów]
 
 Podpis:
 🎨 Tak wyglądają nasze 19 kolorów obok siebie. Które połączenie kolor
@@ -66,6 +66,399 @@ Podpis:
 
 -------------------------------------------------------------------
 
-Po tych 6 postach + serii kolorów: dodaj wszystko do Highlightu
-"Kolory", żeby nowy odwiedzający miał przeglądalny katalog bez
-scrollowania feedu. Docelowe tempo dalej: 3-4x/tydzień.
+===================================================================
+SERIA II: PRAWDZIWE ZASTOSOWANIA I BRANŻE (ZDJĘCIA Z ZASTOSOWAŃ)
+===================================================================
+Koncepcja: Każdy post prezentuje realne wdrożenie koperty DL
+w konkretnej branży lub przy określonej okazji, opierając się
+na zdjęciach z folderu: public/images/zastosowania/
+Publikuj w rytmie 3-4 posty na tydzień, przeplatając z serią kolorów.
+
+-------------------------------------------------------------------
+
+[ ] POST 7 — Studio Tatuażu / Vouchery na prezent
+📸 Zdjęcie: public/images/zastosowania/zlota-koperta-dl-nadruk-logo-studia-tatuazu-1024.webp
+
+Podpis:
+Voucher na tatuaż za kilkaset złotych w zwykłej kopercie z marketu? 🖋️
+
+Sztuka na skórze wymaga oprawy, która od progu budzi respekt. Złota koperta DL z metalicznym połyskiem i Waszym logo zamienia kartonik z voucherem w luksusowy prezent. ✨
+
+Idealna oprawa na:
+🏆 Bony urodzinowe i świąteczne
+🖤 Vouchery na pierwszą lub kolejną dziarę
+🎨 Zaproszenia na sesje guest spotów
+
+Zamówienia z nadrukiem realizujemy już od 10 sztuk — bez blokowania budżetu w tysiącach egzemplarzy. ✉️ 🔵
+
+Konfigurator i szybka wycena: link w bio.
+
+#studiotatuazu #tatuazpolska #voucherprezentowy #bonpodarunkowy #kopertaozdobna #kopertyozdobne #zlota #dlkoperta #dziara #prezentidealny #envelopes
+
+-------------------------------------------------------------------
+
+[ ] POST 8 — Palarnia Kawy & Rzemiosło (Kraft / Eko)
+📸 Zdjęcie: public/images/zastosowania/eko-koperta-dl-nadruk-logo-palarni-kawy-1024.webp
+
+Podpis:
+Zapach świeżo palonych ziaren i surowy, naturalny papier kraft. ☕📦
+
+Kiedy liczy się autentyczność, nie ma miejsca na kompromisy. Nasze koperty Eko DL powstają z papieru kraftowego barwionego w masie — naturalnego, z wyczuwalną strukturą i charakterem. 🌿
+
+Z Waszym logo to idealne opakowanie na:
+☕ Vouchery na warsztaty cuppingu i parzenia kawy
+📦 Karty stałego klienta kawiarni specialty
+✉️ Podziękowania dołączane do paczek z ziarnami
+
+Naturalnie, spójnie, z dbałością o każdy detal rzemiosła. ✉️ 🔵
+
+Sprawdź w konfiguratorze na envelopes.pl (link w bio).
+
+#palarniakawy #specialtycoffee #kawazkawiarni #ekokoperta #kraftpaper #kopertyeko #slowfashionpolska #rzemioslo #warsztatykawowe #envelopes
+
+-------------------------------------------------------------------
+
+[ ] POST 9 — Kancelaria Prawna / Notariusz / Zaufanie B2B
+📸 Zdjęcie: public/images/zastosowania/granatowa-koperta-dl-nadruk-logo-kancelarii-1024.webp
+
+Podpis:
+Czy Twoja korespondencja buduje autorytet, zanim klient wyjmie dokumenty? ⚖️
+
+Klient powierza Wam sprawę życia albo wielomilionowy kontrakt. A potem otrzymuje umowę w białej kopercie z foliowym okienkiem, która wygląda jak monit z urzędu skarbowego. 🏛️
+
+Głęboki granat, wysoka gramatura, papier barwiony w masie i precyzyjny nadruk logo kancelarii:
+✉️ Bez okienka — pełna poufność i profesjonalizm
+✉️ Nadruk cyfrowy od 10 sztuk
+✉️ Akceptacja wizualizacji przed drukiem
+
+Zadbaj o detal, który tworzy przewagę wizerunkową na biurku klienta. 🔵
+
+Skonfiguruj swoje koperty firmowe: link w bio.
+
+#kancelaria #kancelariaprawna #adwokat #radcaprawny #notariusz #papeteriabiznesowa #identyfikacjawizualna #kopertafirmowa #biznespremium #envelopes
+
+-------------------------------------------------------------------
+
+[ ] POST 10 — Auto Detailing & Car Spa
+📸 Zdjęcie: public/images/zastosowania/biala-perlowa-koperta-dl-nadruk-logo-auto-detailing-1024.webp
+
+Podpis:
+Voucher na powłokę ceramiczną lub korektę lakieru za 2 500 zł w zwykłym papierze? 🏎️✨
+
+W auto detailingu każdy centymetr karoserii doprowadzacie do perfekcji. Dlaczego voucher podarunkowy miałby wyglądać gorzej? 🧼🚗
+
+Biała perłowa koperta DL mieni się w świetle dokładnie tak, jak świeżo zabezpieczony lakier. Nadruk Waszego logo nadaje całości prestiż, na jaki zasługuje usługa premium.
+
+Klient kupujący bon na prezent dla pasjonata motoryzacji od razu wie, że wręcza coś wyjątkowego. 🎁
+
+Zamów małą partię (już od 10 szt.) na envelopes.pl ✉️ 🔵
+
+#autodetailingpolska #detailingpolska #carspa #kosmetykasamochodowa #voucherprezentowy #kopertyozdobne #prezentdlamezczyzny #motoryzacjapremium #envelopes
+
+-------------------------------------------------------------------
+
+[ ] POST 11 — Salon Fryzjerski & Metamorfozy
+📸 Zdjęcie: public/images/zastosowania/biala-perlowa-koperta-dl-nadruk-logo-salonu-fryzjerskiego-1024.webp
+
+Podpis:
+Podaruj komuś nowy look w oprawie, która zapiera dech. ✂️✨
+
+Bony na metamorfozę, koloryzację czy profesjonalną pielęgnację włosów to jeden z najczęstszych prezentów w branży beauty. 💇‍♀️
+
+Ale prezent zaczyna się w dłoniach, a nie na fotelu fryzjerskim.
+
+Biała perłowa koperta DL z logo Waszego salonu sprawia, że bon wygląda jak ekskluzywny bilet do świata relaksu i piękna.
+
+✨ 19 kolorów do wyboru pod identyfikację Twojego salonu
+✨ Szybka realizacja z darmową wizualizacją do akceptacji
+✨ Realizacja od 10 sztuk z nadrukiem
+
+Link do zamówień w bio! ✉️ 🔵
+
+#salonfryzjerski #fryzjerwarszawa #stylizacjawlosow #metamorfozafryzury #voucherbeauty #salonbeauty #kopertaperlowa #bonpodarunkowy #envelopes
+
+-------------------------------------------------------------------
+
+[ ] POST 12 — Podziękowania dla Klienta & Unboxing (Matcha)
+📸 Zdjęcie: public/images/zastosowania/matcha-koperta-dl-nadruk-podziekowania-1024.webp
+
+Podpis:
+Słowo "Dziękujemy" waży więcej, gdy ma odpowiednią oprawę. 🌿✉️
+
+W e-commerce i markach premium lojalność buduje się po transakcji.
+
+Odręcznie podpisana karta z podziękowaniem w szałwiowej kopercie Matcha DL zamienia zwykłe rozpakowanie paczki w zapamiętywalne doświadczenie (unboxing experience). 🍵
+
+Koperta Matcha:
+🌿 Papier barwiony w masie 120 g/m²
+🌿 Spokojny, naturalny, modny odcień szałwii
+🌿 Elegancki nadruk "Dziękujemy" lub z logo Twojej marki
+
+Mały gest, który sprawia, że klienci wracają i chętniej polecają Cię dalej. 🔵
+
+Sprawdź format DL w kolorze Matcha na envelopes.pl ✉️
+
+#unboxingexperience #relacjezklientem #thankyounote #podziekowania #matcha #kopertamatcha #slowfashionpolska #skleponline #pakowanieprezentow #envelopes
+
+-------------------------------------------------------------------
+
+[ ] POST 13 — Employee Recognition / HR / Wyrazy Uznania
+📸 Zdjęcie: public/images/zastosowania/matcha-koperta-dl-nadruk-wyrazy-uznania-1024.webp
+
+Podpis:
+Premia kwartalna, awans czy jubileusz pracy? Nie wręczaj tego w byle czym. 🏆
+
+Nic nie odbiera powagi chwili bardziej niż oficjalny list gratulacyjny wyjęty ze zwykłej koperty biurowej z okienkiem. 🏢
+
+Matcha DL z nadrukiem "Wyrazy uznania" nadaje docenieniu pracownika rangę prawdziwego wydarzenia:
+✉️ Na premie roczne i nagrody uznaniowe
+✉️ Na listy gratulacyjne po zamknięciu kluczowego projektu
+✉️ Na podziękowania za lata wspólnej pracy
+
+Buduj kulturę szacunku i doceniania w zespole. Zamówienia firmowe od 10 sztuk z ekspresową dostawą. ✉️ 🔵
+
+Sprawdź ofertę na envelopes.pl (link w bio).
+
+#hrpolska #employerbranding #docenianie #nagrodyfirmowe #kulturafirmy #zespol #wyrazyuznania #kopertyozdobne #prezentyfirmowe #envelopes
+
+-------------------------------------------------------------------
+
+[ ] POST 14 — Gale Biznesowe / Eventy VIP / Zaproszenie
+📸 Zdjęcie: public/images/zastosowania/czarna-koperta-dl-nadruk-zaproszenie-1024.webp
+
+Podpis:
+Ekskluzywne wydarzenie zaczyna się w momencie wręczenia zaproszenia. 🖤✨
+
+Czerń to uniwersalny symbol elegancji, prestiżu i wieczorowej klasy. 🏛️
+
+Czarna koperta DL z minimalistycznym nadrukiem "Zaproszenie" od razu komunikuje gościom: "To wydarzenie, na którym po prostu musisz być".
+
+Idealna na:
+🍸 Wieczorne gale i bankiety biznesowe
+🥂 Premiery produktów i wernisaże sztuki
+💎 Zamknięte spotkania VIP Clubu
+
+Papier barwiony w masie 120 g/m² — bez białych krawędzi, głęboki mat z eleganckim kontrastowym nadrukiem. ✉️ 🔵
+
+Skonfiguruj swoje zaproszenia na envelopes.pl.
+
+#zaproszenienagale #eventvip #bankiet #gala #eventmarketing #czarnakoperta #czerniezloto #luksusowapapeteria #zaproszeniabiznesowe #envelopes
+
+-------------------------------------------------------------------
+
+[ ] POST 15 — Personalizacja Imienna / Direct Mail VIP
+📸 Zdjęcie: public/images/zastosowania/czarna-koperta-dl-personalizacja-imienna-1024.webp
+
+Podpis:
+Nikt nie wyrzuci do kosza koperty z własnym nazwiskiem. 🎯
+
+Psychologia korespondencji bezpośredniej jest bezlitosna: masowa przesyłka trafia do niszczarki w 3 sekundy.
+
+Ale gdy na czarnej kopercie premium odbiorca widzi swoje imię i nazwisko wydrukowane elegancką czcionką — wskaźnik otwarć wynosi 100%. 🖤
+
+W Envelopes oferujemy pełną personalizację imienną:
+✉️ Każda koperta z innym nazwiskiem z Twojej listy Excel
+✉️ Bez żmudnego wypisywania ręcznego
+✉️ Profesjonalny nadruk cyfrowy wysokiej rozdzielczości
+
+Dla kogo? Dla zarządów, kluczowych kontrahentów, gości honorowych i sponsorów. 🔵
+
+Sprawdź opcję personalizacji w konfiguratorze na envelopes.pl.
+
+#personalizacja #directmail #marketingb2b #vipclub #korespondencjafirmowa #kopertyzlogo #klientpremium #czarnakoperta #envelopes
+
+-------------------------------------------------------------------
+
+[ ] POST 16 — Restauracja Fine Dining / Kolacja Degustacyjna
+📸 Zdjęcie: public/images/zastosowania/czerwona-koperta-dl-nadruk-logo-restauracji-1024.webp
+
+Podpis:
+Voucher na kolację degustacyjną dla dwojga w karminowej czerwieni. 🍷🍽️
+
+Zaproszenie na wyjątkową kolację to obietnica zmysłowego wieczoru. Karminowo-bordowa koperta DL z logo Waszej restauracji idealnie buduje ten nastrój jeszcze przed pierwszym daniem. 🕯️
+
+Niezastąpiona na:
+❤️ Walentynki i rocznice ślubu
+🎁 Bony podarunkowe dla smakoszy
+🥂 Zaproszenia na degustacje win i pairingi
+
+Papier barwiony w masie, który nie traci koloru na zgięciach. Stała cena, zamówienia już od 10 sztuk z nadrukiem. ✉️ 🔵
+
+Podnieś prestiż swoich voucherów: link w bio.
+
+#restauracjapolska #finediningpl #vouchernakolacje #kolacjadladwojga #degustacja #gastronomiapolska #czerwonakoperta #prezentnarocznice #envelopes
+
+-------------------------------------------------------------------
+
+[ ] POST 17 — Salon SPA / Rytuały Wellness (Gramatura 140g Taupe)
+📸 Zdjęcie: public/images/zastosowania/taupe-koperta-dl-nadruk-logo-salonu-spa-1024.webp
+
+Podpis:
+Dotyk relaksu, zanim rozpocznie się masaż. 🧖‍♀️🌿
+
+Nasza koperta Taupe DL to najgrubszy papier w całej ofercie — aż 140 g/m²! 🤎
+
+Ziemisty, ciepły, kojący odcień szarobrązu i wyczuwalny ciężar w dłoni natychmiast kojarzą się z luksusowym gabinetem SPA, olejkami eterycznymi i regeneracją.
+
+Jeśli sprzedajesz pakiety Day Spa, masaże czy rytuały pielęgnacyjne, zadbaj o opakowanie, które harmonizuje z filozofią Twojego miejsca.
+
+Dodaj logo swojego SPA i zamów partię testową od 10 sztuk. Link w bio! ✉️ 🔵
+
+#dayspa #salonspa #masazrelaksacyjny #gabinetkosmetyczny #wellnesspolska #taupe #papiereko #bonyspa #rytualyspa #envelopes
+
+-------------------------------------------------------------------
+
+[ ] POST 18 — Chrzest Święty & Pamiątka Uroczystości
+📸 Zdjęcie: public/images/zastosowania/blekit-lupkowy-koperta-dl-nadruk-na-chrzest-1024.webp
+
+Podpis:
+Pamiątka Chrztu Świętego, która nie zginie w szufladzie. 🕊️✨
+
+Zamiast jaskrawych, brokatowych kartek z marketu — szlachetna prostota i klasa.
+
+Błękit łupkowy DL to wyjątkowy, stalowo-przygaszony odcień, który idealnie pasuje do uroczystości Chrztu Świętego czy Pierwszej Komunii. 🌊
+
+Z subtelnym nadrukiem pamiątkowym staje się bezpiecznym i dostojnym miejscem na:
+✉️ List od Chrzestnych z życzeniami na całe życie
+🎁 Elegancko wręczony podarunek pieniężny
+📜 Pamiątkowy certyfikat
+
+Piękny detal na wielki dzień. Dostępne od 1 sztuki (gładkie) lub z nadrukiem od 10 sztuk. 🔵
+
+Sprawdź kolor błękit łupkowy na envelopes.pl ✉️
+
+#chrzestswiety #chrzestchlopca #pamiatkachrztu #chrzest #komuniaswieta #blekitlupkowy #kopertyozdobne #papeteriaokolicznosciowa #eleganckiprezent #envelopes
+
+-------------------------------------------------------------------
+
+[ ] POST 19 — Ślub & Wesele / Prezent z Klasą ("W Dniu Ślubu")
+📸 Zdjęcie: public/images/zastosowania/biala-perlowa-koperta-dl-nadruk-w-dniu-slubu-1024.webp
+
+Podpis:
+Jak wręczyć prezent ślubny z klasą, bez kiczowatej kartki? 💍👰‍♀️
+
+Wybierasz się na wesele i zastanawiasz się, w czym wręczyć życzenia oraz podarunek?
+
+Biała perłowa koperta DL z delikatnym nadrukiem "W Dniu Ślubu" to synonim elegancji. ✨
+
+Połyskująca perłowa faktura idealnie współgra ze ślubną bielą, welonem i kwiatami. Bez problemu mieści złożone życzenia, voucher podarunkowy lub prezent pieniężny bez niepotrzebnego zaginania.
+
+Pokaż Parze Młodej, że pomyślałeś o każdym szczególe. 🎁 ✉️ 🔵
+
+Dostępna od ręki na envelopes.pl (link w bio).
+
+#slub2026 #slubnaglowie #pannamloda #wdniuslubu #prezentslubny #papeteriaslubna #kopertaslubna #bialaperla #weselemarzen #envelopes
+
+-------------------------------------------------------------------
+
+[ ] POST 20 — Quiet Luxury & Butelkowa Zieleń (Miejsce na Logo)
+📸 Zdjęcie: public/images/zastosowania/ciemnozielona-koperta-dl-miejsce-na-logo-1024.webp
+
+Podpis:
+Ciemna butelkowa zieleń — oficjalny kolor dyskretnego luksusu. 🌲💎
+
+Niektóre marki nie muszą krzyczeć, by zostać zauważone. Butelkowa zieleń to odcień kojarzony z brytyjską elegancją, tradycją jubilerską i ekskluzywnymi hotelami. 🏛️
+
+Koperta Ciemnozielona DL barwiona w masie (120 g/m²) z miejscem na centralne logo to idealna oprawa na:
+💎 Certyfikaty kamieni szlachetnych i biżuterii
+🔑 Karty powitalne w butikowych pensjonatach i apartamentach
+📜 Ekskluzywne certyfikaty autentyczności i umowy VIP
+
+Wyślij nam swoje logo — przygotujemy bezpłatną cyfrową wizualizację! ✉️ 🔵
+
+Link do konfiguratora w bio.
+
+#quietluxury #butelkowazielen #ciemnazielen #jubiler #bizuteriapremium #hotelbutikowy #luksusowamarka #kopertyzlogo #envelopes
+
+-------------------------------------------------------------------
+
+[ ] POST 21 — Filharmonia / Kultura / Mecenat Sztuki
+📸 Zdjęcie: public/images/zastosowania/granatowa-koperta-dl-nadruk-logo-orkiestry-1024.webp
+
+Podpis:
+Zaproszenie na koncert orkiestry w oprawie godnej filharmonii. 🎻🎼
+
+Muzyka klasyczna, opera i teatr wymagają oprawy, która od pierwszego kontaktu z widzem budzi zachwyt. 🎭
+
+Granatowa koperta DL z logo orkiestry to wybór instytucji kultury, które dbają o relacje ze swoimi mecenasami, sponsorami i melomanami:
+✉️ Oficjalne zaproszenia na premiery sezonu
+✉️ Listy intencyjne i podziękowania dla sponsorów
+✉️ Pakiety premierowe dla gości honorowych
+
+Dostojny granat i precyzyjny nadruk cyfrowy nadają korespondencji rangę prawdziwego wydarzenia kulturalnego. 🔵
+
+Sprawdź naszą ofertę dla instytucji kultury na envelopes.pl ✉️
+
+#filharmonia #teatr #muzykapowazna #orkiestra #mecenatsztuki #kulturapolska #zaproszenienakoncert #granatowakoperta #kopertyoficjalne #envelopes
+
+-------------------------------------------------------------------
+
+[ ] POST 22 — Kaligrafia & Pismo Odręczne (Personal Touch)
+📸 Zdjęcie: public/images/zastosowania/niebieska-koperta-dl-personalizacja-odreczna-1024.webp
+
+Podpis:
+W erze e-maili odręcznie napisany list to najcenniejszy prezent. ✍️💙
+
+Kiedy ostatnio otrzymałeś list zaadresowany ręcznie piórem wiecznym?
+
+Nasz głęboki niebieski/kobaltowy papier o gramaturze 120 g/m² przyjmuje tusz i atrament bez rozmazywania i przebijania na drugą stronę. 🖋️
+
+Niezastąpiona dla:
+💌 Kaligrafów i twórców papeterii artystycznej
+👔 Prezesów i liderów piszących osobiste listy do partnerów strategicznych
+✨ Podziękowań, które mają zapaść w pamięć na lata
+
+Wyróżnij się w świecie cyfrowego szumu. Zamawiaj od 1 sztuki na envelopes.pl ✉️ 🔵
+
+#kaligrafia #pismoodreczne #list #piorowieczne #niebieskakoperta #papeteria #personaltouch #slowlife #sztukapisania #envelopes
+
+-------------------------------------------------------------------
+
+[ ] POST 23 — Bezpośrednie Adresowanie Odbiorcy B2B (Biała Perła)
+📸 Zdjęcie: public/images/zastosowania/biala-perlowa-koperta-dl-adresowanie-odbiorcy-1024.webp
+
+Podpis:
+Adresowanie nadrukiem zamiast naklejanych etykiet. Różnica, którą widać od razu. 🏷️❌ ✉️✅
+
+Naklejana etykieta z biurowej drukarki potrafi popsuć wygląd nawet najładniejszej koperty.
+
+W Envelopes oferujemy usługę bezpośredniego nadruku danych odbiorcy prosto na kopertę. 🖨️✨
+
+Biała perłowa DL z elegancką typografią adresu:
+✔️ Wygląda jak przygotowana w ekskluzywnej pracowni poligraficznej
+✔️ Oszczędza dziesiątki godzin żmudnej pracy Twojego zespołu
+✔️ Gwarantuje nieskazitelną czystość i 100% czytelności
+
+Prześlij nam plik z adresami — my zajmiemy się resztą. 🔵
+
+Sprawdź usługę adresowania w konfiguratorze: link w bio.
+
+#adresowanie #directmarketing #korespondencjab2b #officemanager #sekretariat #automatyzacjapracy #kopertyzlogo #kopertaperlowa #envelopes
+
+-------------------------------------------------------------------
+
+[ ] POST 24 — Detale Wykonania: Dlaczego Koperty Bez Okienka?
+📸 Zdjęcie: public/images/zastosowania/biala-perlowa-koperta-dl-gladka-przod-i-tyl-1024.webp
+
+Podpis:
+Dlaczego w Envelopes nigdy nie znajdziesz plastikowego okienka? 🔍🚫
+
+Zwykła koperta z okienkiem powstała w jednym celu: masowa, tania wysyłka rachunków i wezwań do zapłaty.
+
+Nasze koperty ozdobne powstały po to, by budzić zachwyt. 🪞✨
+
+Co wyróżnia konstrukcję Envelopes DL?
+1. Papier barwiony w masie (115-140 g/m²) — jednolity, głęboki kolor z przodu, z tyłu i wewnątrz.
+2. Trójkątne, eleganckie zamknięcie z trwałym paskiem samoprzylepnym HK (zdejmujesz pasek i zamykasz).
+3. Brak szarego poddruku i brak folii — pełna elegancja z każdej strony.
+
+Zobacz wszystkie 19 kolorów i zamów próbki na envelopes.pl ✉️ 🔵
+
+#detale #jakoscwykonania #kopertybezokienka #designpapierniczy #papierozdobny #bialaperla #producentkopert #envelopes
+
+-------------------------------------------------------------------
+
+Podsumowanie publikacji:
+- Przeplataj posty branżowe/zastosowań (POST 7-24) z serią kolorów (19 kolorów) i postami edukacyjnymi.
+- Do każdego posta dodaj odpowiednie zdjęcie z folderu public/images/zastosowania/.
+- Publikacje możesz również wrzucać na Stories z naklejką linku bezpośrednio do konfiguratora danego koloru.

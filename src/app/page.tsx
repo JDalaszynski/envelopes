@@ -1242,16 +1242,15 @@ export default function HomePage() {
                 <div>
                   <h2>Rozliczenie dopasowane do obiegu dokumentów</h2>
                   <p className="small">
-                    Fakturę VAT wystawiamy do każdego zamówienia, także przy zakupie bez numeru
-                    NIP. Faktura z odroczonym terminem płatności 14 dni jest dostępna dla
-                    instytucji publicznych i urzędów, których obieg zakupowy nie przewiduje
-                    przedpłaty. Taka faktura nie wstrzymuje realizacji — zamówienie rusza bez
-                    oczekiwania na wpłatę. Pozostali klienci płacą z góry: BLIK-iem, kartą lub
-                    przelewem.
+                    Rozliczenia realizujemy zgodnie z obiegiem księgowym Twojej organizacji.
+                    Faktura z odroczonym terminem płatności 14 dni jest dostępna dla instytucji
+                    publicznych i urzędów, których obieg zakupowy nie przewiduje przedpłaty. Taka
+                    płatność nie wstrzymuje realizacji — zamówienie rusza bez oczekiwania na wpłatę.
+                    Pozostali klienci płacą z góry: BLIK-iem, kartą lub przelewem.
                   </p>
                   <ul className="ledger-list">
-                    <li>Faktura VAT do każdego zamówienia, także przy zakupie bez NIP.</li>
-                    <li>Odroczony termin płatności 14 dni, bez wstrzymywania realizacji.</li>
+                    <li>Wygodne metody płatności: BLIK, szybki przelew lub karta.</li>
+                    <li>Odroczony termin płatności 14 dni dla jednostek publicznych.</li>
                     <li>
                       Stała cena jednostkowa — {formatPrice(plain.unitTotal)} brutto za kopertę DL
                       niezależnie od wielkości zamówienia.

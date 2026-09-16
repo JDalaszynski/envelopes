@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     template: '%s | Envelopes',
   },
   description:
-    'Koperty ozdobne DL 110 × 220 mm w 19 kolorach. Nadruk logo firmowego i adresowanie, realizacja od 2 dni roboczych, faktura VAT do każdego zamówienia.',
+    'Koperty ozdobne DL 110 × 220 mm w 19 kolorach. Nadruk logo firmowego i adresowanie, realizacja od 2 dni roboczych, nakład już od 10 sztuk.',
   applicationName: 'Envelopes',
   authors: [{ name: CONTACT_DETAILS.company }],
   /* Domyślny obraz wyróżniający dla każdej trasy, która nie poda własnego.

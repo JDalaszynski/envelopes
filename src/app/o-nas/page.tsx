@@ -66,7 +66,7 @@ const BENEFITS: { heading: string; text: string }[] = [
   },
   {
     heading: 'Zakup przygotowany pod firmę',
-    text: 'Faktura VAT do każdego zamówienia, płatność online lub przelewem, wysyłka kurierem na terenie całej Polski. Instytucje publiczne, które nie mogą płacić z góry, rozliczamy z odroczonym terminem.',
+    text: 'Wygodne płatności online lub przelewem, szybka wysyłka kurierem w całej Polsce. Instytucje publiczne, które nie mogą płacić z góry, rozliczamy z odroczonym terminem 14 dni.',
   },
   {
     heading: 'Jeden rozmówca od pytania do paczki',
@@ -180,8 +180,8 @@ export default function AboutPage() {
                   note: 'Kurier pod wskazany adres, sprzedaż wyłącznie wysyłkowa',
                 },
                 {
-                  title: 'Faktura VAT',
-                  note: 'Do każdego zamówienia, także dla instytucji publicznych',
+                  title: 'Nadruk od 10 sztuk',
+                  note: 'Personalizacja logo bez konieczności zamawiania wielkich nakładów',
                 },
               ].map((usp) => (
                 <div className="usp" key={usp.title}>

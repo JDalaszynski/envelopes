@@ -7,73 +7,77 @@ Zanim zaczniesz: uzupełnij zdjęcie profilowe, nagłówek, baner i sekcję
 
 -------------------------------------------------------------------
 
-[ ] POST 1 — Otwierający (pozycjonowanie: dlaczego akurat to)
+[x] POST 1 — Otwierający (pozycjonowanie: dlaczego akurat to)
 
 Zacząłem sprzedawać koperty ozdobne dla firm, bo zauważyłem prostą
 rzecz: kancelaria wysyłająca klientowi ważną umowę w białej kopercie
 z okienkiem i szarym poddrukiem wygląda tak samo jak urząd skarbowy
-wysyłający upomnienie.
+wysyłający upomnienie. ⚖️
 
 To detal, ale detal, który buduje albo psuje pierwsze wrażenie zanim
-ktokolwiek otworzy kopertę.
+ktokolwiek otworzy kopertę. ✉️
 
-Stąd Envelopes ✉️ — koperty bez okienka, barwione w masie, z nadrukiem
+Stąd Envelopes 🔵✉️ — koperty bez okienka, barwione w masie, z nadrukiem
 logo i adresowaniem imiennym. Będę tu pisał o tym, jak firmy
 (kancelarie, biura rachunkowe, hotele) używają takich detali do
-budowania zaufania.
+budowania zaufania. 🤝
 
 -------------------------------------------------------------------
 
-[ ] POST 2 — Edukacyjny / obiekcje
+[x] POST 2 — Edukacyjny / obiekcje
 
 Trzy pytania, które słyszę najczęściej od office managerów przed
-pierwszym zamówieniem kopert firmowych ✉️:
+pierwszym zamówieniem kopert firmowych: ✉️
 
-1. "A jeśli nadruk wyjdzie krzywo?" — dostajesz wizualizację do
+1. 🔵 "A jeśli nadruk wyjdzie krzywo?" — dostajesz wizualizację do
    akceptacji, zanim cokolwiek idzie do druku.
-2. "Musimy kupić od razu tysiąc sztuk?" — minimum to 10 szt. przy
+2. 🔵 "Musimy kupić od razu tysiąc sztuk?" — minimum to 10 szt. przy
    nadruku, 1 szt. przy kopertach gładkich.
-3. "Jak to rozliczymy?" — faktura VAT do każdego zamówienia, bez
-   wyjątków.
+3. 🔵 "A jeśli potrzebujemy ich na już?" — gładkie wysyłamy w 2 dni
+   robocze, a z nadrukiem w 5 dni (lub 2 dni w opcji ekspres).
 
 Cała bariera przy takich zakupach to zwykle strach przed
-niespodzianką, nie cena.
+niespodzianką, nie cena. 💡
 
 -------------------------------------------------------------------
 
-[ ] POST 3 — Faktograficzny / autorytet (GEO)
+[x] POST 3 — Faktograficzny / autorytet (GEO)
 
-Dlaczego żadna nasza koperta nie ma okienka? 🔵
+Dlaczego żadna nasza koperta nie ma okienka? ✉️
 
 Okienko wymaga poddruku (żeby adres był czytelny) i ogranicza kolor
 środka do jasnych odcieni. My stawiamy na papier barwiony w masie
 (115-140 g/m²) i adresowanie nadrukiem — koperta wygląda spójnie
-z obu stron, nie tylko z przodu.
+z obu stron, nie tylko z przodu. 🔵
 
-Mały wybór projektowy, który zmienia, jak coś się prezentuje na
-biurku odbiorcy.
+Z pozoru drobny detal, który całkowicie zmienia to, jak Twoja korespondencja prezentuje się na biurku klienta. ✨
 
 -------------------------------------------------------------------
 
-[ ] POST 4 — Wygoda rozliczeniowa (B2B differentiator)
+[x] POST 4 — Wygoda zamawiania B2B (proces bez zbędnego tarcia)
 
 Rzecz, która realnie decyduje o tym, czy firma zostaje z dostawcą na
-lata: nie cena za sztukę, tylko brak stresu przy rozliczeniu.
+lata: nie cena za sztukę, tylko brak stresu przy zamówieniu. 🤝
 
-Faktura VAT do każdego zamówienia ✅. Zero pytań "jak to
-zaksięgujemy".
-Dla instytucji publicznych — płatność odroczona 14 dni, bo wiemy, że
-ich obieg zakupowy nie przewiduje przedpłaty.
+Większość tradycyjnych drukarni wymaga wysyłania zapytań, czekania na
+ofertę od handlowca i ręcznego uzgadniania plików.
+
+U nas cały proces jest maksymalnie uproszczony:
+🔵 Natychmiastowa wycena online w konfiguratorze — bez czekania na kosztorys
+🔵 Zawsze ten sam papier barwiony w masie (brak różnic między partiami)
+🔵 Akceptacja wizualizacji przed drukiem
+🔵 Dla instytucji publicznych i urzędów — płatność odroczona 14 dni,
+   bo wiemy, że ich obieg zakupowy nie przewiduje przedpłaty. 🏛️ ✉️ 🔵
 
 -------------------------------------------------------------------
 
 [ ] POST 5 — Za kulisami (prawdziwe zdjęcie wzornika kolorów)
 
-[zdjęcie fizycznego wzornika 19 kolorów, zrobione telefonem]
+📸 [zdjęcie fizycznego wzornika 19 kolorów, zrobione telefonem]
 
 Dziś testowaliśmy, jak granat, taupe i czarny wyglądają obok siebie
 na biurku — nie na ekranie. Różnica robi się widoczna dopiero
-w dłoni: gramatura, matowość, sposób w jaki papier się składa.
+w dłoni: gramatura, matowość, sposób w jaki papier się składa. ✉️ 🔵
 
 -------------------------------------------------------------------
 
@@ -82,7 +86,7 @@ w dłoni: gramatura, matowość, sposób w jaki papier się składa.
 Jeśli zarządzasz biurem kancelarii albo biura rachunkowego i
 regularnie wysyłacie dokumenty klientom — chętnie podpowiem, jak to
 uprościć bez zmiany dostawcy usług, tylko samej koperty. Piszcie
-śmiało ✉️
+śmiało. 📩 🔵
 
 -------------------------------------------------------------------
 

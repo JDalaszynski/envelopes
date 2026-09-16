@@ -70,7 +70,11 @@ Architektura obecnego systemu została świetnie zaplanowana pod wysoki współc
 *   **Kompaktowy Konfigurator:** Brak rozpraszaczy. Cały proces (od wyboru formatu, przez kolor, pliki do nadruku, po czas realizacji) dzieje się wizualnie "na jednym ekranie".
 *   **Natychmiastowa Kalkulacja:** Sticky panel podsumowujący daje pełną przejrzystość ceny na każdym etapie.
 *   **Rozbicie Bariery Ryzyka:** System wysyła wizualizację *po złożeniu zamówienia*, przed ostatecznym skierowaniem do druku. To uspokaja klienta, że nie kupuje w ciemno, a grafik dba o plik.
-*   **Funkcje B2B:** Faktura VAT do każdego zamówienia. Faktura z **odroczonym terminem płatności 14 dni jest zarezerwowana dla instytucji publicznych i urzędów** (decyzja właściciela z 14 sierpnia 2026) — dla nich to "Game Changer", bo ich obieg zakupowy nie przewiduje przedpłaty. Firmy komercyjne i klienci detaliczni płacą z góry.
+*   **Funkcje B2B i zasady komunikacji:**
+    *   **Faktury VAT to standard, nie hasło reklamowe:** Wystawianie faktury VAT do transakcji jest oczywistością prawną i rynkową w e-commerce B2B. **Zasada:** Nie eksponujemy hasła „faktura VAT do każdego zamówienia” na wierzchu strony, na grafikach, w postach social media ani jako głównego argumentu sprzedażowego (brzmi to amatorsko i nienaturalnie). Faktura to formalność realizowana automatycznie w tle.
+    *   **Realne wyróżniki procesowe B2B:**
+        1. **Faktura z odroczonym terminem płatności 14 dni jest zarezerwowana dla instytucji publicznych i urzędów** (decyzja właściciela z 14 sierpnia 2026) — dla nich to realne ułatwienie („Game Changer”), bo ich obieg zakupowy nie przewiduje przedpłaty. Firmy komercyjne i klienci detaliczni płacą z góry.
+        2. **Brak tarcia w zamówieniach:** Natychmiastowa wycena online w konfiguratorze, brak konieczności czekania na kosztorys z drukarni, niski nakład minimalny (od 10 sztuk z nadrukiem) oraz cyfrowa akceptacja wizualizacji przed drukiem.
 
 ---
 

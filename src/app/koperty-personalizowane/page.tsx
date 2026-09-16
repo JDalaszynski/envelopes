@@ -851,8 +851,8 @@ export default function PersonalizedEnvelopesPage() {
                 <tr>
                   <th scope="row">Rozliczenie</th>
                   <td>
-                    Faktura VAT do każdego zamówienia; odroczony termin płatności 14 dni dla
-                    instytucji publicznych i urzędów
+                    Płatność online lub odroczony termin 14 dni dla instytucji publicznych
+                    i urzędów
                   </td>
                 </tr>
                 <tr>
@@ -1030,9 +1030,9 @@ export default function PersonalizedEnvelopesPage() {
             </div>
 
             <div className="card">
-              <h3 style={{ fontSize: 20 }}>Faktura VAT i odroczony termin</h3>
+              <h3 style={{ fontSize: 20 }}>Rozliczenie i odroczony termin</h3>
               <ul className="small" style={{ paddingLeft: 'var(--space-5)', lineHeight: 1.8 }}>
-                <li>Fakturę VAT wystawiamy do każdego zamówienia, także bez numeru NIP.</li>
+                <li>Płatność online (BLIK, karta, szybki przelew) z automatyczną fakturą do zamówienia.</li>
                 <li>
                   Faktura z odroczonym terminem płatności 14 dni jest dostępna dla instytucji
                   publicznych i urzędów, których obieg zakupowy nie przewiduje przedpłaty.

@@ -89,10 +89,12 @@ przelewów. **Nie wpisuj tych danych ręcznie w treściach — zawsze odwołuj s
 - **Terminy:** gładkie 2 dni robocze; z nadrukiem 5 dni (standard) lub 2 dni (ekspres).
 - **Dostawa:** 19,99 zł, kurier. **Faktura z odroczonym terminem 14 dni wyłącznie dla instytucji
   publicznych i urzędów** — decyzja właściciela z 14 sierpnia 2026. Pozostali klienci, także firmy
-  komercyjne, płacą z góry (BLIK, karta, przelew). Fakturę VAT wystawiamy do każdego zamówienia
-  i to jest argument uniwersalny; odroczony termin **nie jest** — nigdy nie pisz „przy każdym
-  zamówieniu", „bez warunków" ani „dla firm". Przy treściach kierowanych do sektora publicznego
-  odroczony termin jest mocnym argumentem i tam go używaj.
+  komercyjne, płacą z góry (BLIK, karta, przelew). Wystawianie faktury VAT to rynkowy i prawny
+  standard, oczywistość w relacjach B2B — **nie eksponuj tego jako zalety ani argumentu marketingowego**
+  (hasła w stylu „faktura VAT do każdego zamówienia” brzmią nienaturalnie i nie mogą być na wierzchu).
+  Faktura to formalność w tle. Realnym wyróżnikiem operacyjnym (dla sektora publicznego) jest
+  odroczony termin płatności 14 dni — i tylko w tym kontekście go akcentuj (nigdy nie pisz „dla firm”
+  czy „dla każdego”).
 - **Powyżej 2 000 szt.** — formularz wyceny indywidualnej (`BULK_QUOTE_THRESHOLD`).
 - **Oferta obejmuje wyłącznie koperty.** Bez papeterii, wkładek, naklejek i wzornika. Nie
   projektuj treści ani cross-sellu wokół produktów, których nie ma.
@@ -358,7 +360,8 @@ Ruch bez konwersji nie liczy się do celu. W każdej treści egzekwuj:
   odpowiada tematowi strony („Wyceń koperty z nadrukiem" ≠ „Zamów").
 - **Rozbrajanie ryzyka w miejscu decyzji.** Największą barierą jest strach, że nadruk wyjdzie źle
   albo koperty nie zdążą (`knowledge-base.md`, pkt 2). Przy każdym CTA powtarzaj mikro-argument:
-  wizualizacja do akceptacji przed drukiem, faktura VAT, konkretny termin wysyłki. Odroczony
+  wizualizacja do akceptacji przed drukiem, konkretny termin wysyłki, niski próg (od 10 sztuk).
+  Faktura VAT to naturalny standard, nie eksponuj jej jako zalety na wierzchu. Odroczony
   termin dokładaj **tylko** w treściach dla instytucji publicznych i urzędów (pkt 3.2).
 - **Mikrokonwersje dla ruchu TOFU** (klastry K4, K9, część K8) — do dyspozycji masz **trzy**:
   zapis do newslettera, formularz wyceny B2B (powyżej 2 000 szt.) i zapis na powiadomienie
