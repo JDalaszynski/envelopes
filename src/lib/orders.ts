@@ -38,6 +38,17 @@ export const PAYMENT_METHOD_LABEL: Record<PaymentMethod, string> = {
   faktura_odroczona: 'Faktura z odroczonym terminem płatności',
 };
 
+/**
+ * Metody chwilowo wyłączone w zamówieniu. BLIK idzie przez to samo konto
+ * Przelewy24, więc oba czekają na osobne subkonto bramki dla envelopes.pl.
+ * Po jego uruchomieniu wystarczy opróżnić listę.
+ */
+export const UNAVAILABLE_PAYMENT_METHODS: readonly PaymentMethod[] = ['p24', 'blik'];
+
+export function isPaymentMethodAvailable(method: PaymentMethod): boolean {
+  return !UNAVAILABLE_PAYMENT_METHODS.includes(method);
+}
+
 /** Metody rozliczane natychmiast przez bramkę (pkt 1.12 ścieżka A) */
 export function isGatewayPayment(method: PaymentMethod): boolean {
   return method === 'p24' || method === 'blik';

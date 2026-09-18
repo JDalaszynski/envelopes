@@ -2388,6 +2388,12 @@
   border-color: var(--color-ink-soft);
 }
 
+.option-card:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  border-color: var(--color-line);
+}
+
 .option-card[aria-pressed='true'],
 .option-card[aria-checked='true'],
 .option-card[data-selected='true'] {
