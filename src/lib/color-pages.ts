@@ -294,6 +294,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
         {
           name: 'Uczelnie i szkoły wyższe',
           text: 'Listy gratulacyjne, korespondencja rektoratu i zaproszenia na inaugurację. Granat mieści się w większości identyfikacji akademickich, więc koperta nie kłóci się z papierem firmowym.',
+          link: { href: '/koperty-na-certyfikaty', anchor: 'Koperty na certyfikaty' },
         },
         {
           name: 'Korporacje i działy HR',
@@ -577,6 +578,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
         {
           name: 'Firmy szkoleniowe i uczelnie',
           text: 'Certyfikaty ukończenia kursów, zaświadczenia i listy gratulacyjne. Na białym tle wielobarwne herby i logotypy patronów drukujemy w oryginalnych barwach, bez sprowadzania znaku do jednej.',
+          link: { href: '/koperty-na-certyfikaty', anchor: 'Koperty na certyfikaty' },
         },
         {
           name: 'Agencje marketingowe i PR',
@@ -666,6 +668,7 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
         {
           name: 'Marki ekologiczne i kosmetyki naturalne',
           text: 'Podziękowania za zakupy, karty ze składem produktów i certyfikaty autentyczności. Szałwiowa zieleń naturalnie współgra z filozofią eko i minimalistycznym brandingiem.',
+          link: { href: '/koperty-na-certyfikaty', anchor: 'Koperty na certyfikaty' },
         },
         {
           name: 'Salony wellness, SPA i gabinety masażu',

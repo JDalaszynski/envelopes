@@ -138,7 +138,7 @@ lub `personalized/` — buduj treść wokół zdjęcia, które faktycznie masz.
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 25 | Koperty dla agencji eventowych — `/koperty-dla-agencji-eventowych` | Supporting LP | koperty na zaproszenia firmowe | KONWERSJA | Agencje eventowe, PR | F1 | **Wykonane 15 września 2026.** Warunek brzegowy spełniony: żaden przycisk na stronie nie prowadzi do C6/K4, a zaproszenie kwadratowe ma w tabeli status policzony z katalogu przez `fitsInFormat()`. **Rozgraniczenie wobec poz. 41 i 42 przebiega po pytaniu, nie po temacie:** ta LP odpowiada „jak poprowadzić wysyłkę zaproszeń na wydarzenie firmowe" (lista gości, fale kampanii, nakład z zapasem), poz. 41 odpowie „którą kopertę dobrać do tego zaproszenia" (wkładka → format), poz. 42 weźmie personę ślubną. Frazy `koperty na zaproszenia` **nie ma** w `keywords` tej strony | [x] |
 | 26 | Koperty dla biur nieruchomości — `/koperty-dla-nieruchomosci` | Supporting LP | ~~koperty na dokumenty firmowe~~ → `koperty dla biur nieruchomości` | KONWERSJA | Nieruchomości premium, deweloperzy | F1 | **Wykonane 15 września 2026.** **Fraza skorygowana tego samego dnia:** `koperty na dokumenty firmowe` nie ma właściciela w `keywords.md`, ale jej intencja („koperty, w których firma wysyła dokumenty") jest intencją filara F1 i strony `/koperty-dl` — a pod F1 stoją już dwie LP dokumentowe (poz. 17 i 21). LP branżowa celuje we frazę branżową, jak przy korektach poz. 21, 24 i 28; fraza rodzajowa zostaje przy filarze i nie wchodzi do `keywords` tej strony. **Rozgraniczenie wobec poz. 17 i 21 na czterech osiach:** pytanie strony (jakie pismo / kiedy w roku / **na jakim etapie transakcji**), tryb przekazania (wysyłka pocztowa i partiami przeciw **wręczaniu do ręki** na czterech z pięciu etapów), jednostka nakładu (sprawa / portfel klientów / **transakcja z mnożnikiem etapów**) i kolor (ciemne stonowane / neutralne / **materiałowe** — Szarobrązowy, Szara, Jeansowy) | [x] |
-| 27 | Koperty na certyfikaty i dyplomy — `/koperty-na-certyfikaty` | Supporting LP | koperty na certyfikaty | RUCH | Uczelnie, firmy szkoleniowe | F1 | **Ostrożnie:** dyplom A4 płaski wymaga K4 (niedostępny). Treść mówi wprost o A4 składanym na trzy i kieruje resztę na listę powiadomień | [ ] |
+| 27 | Koperty na certyfikaty i dyplomy — `/koperty-na-certyfikaty` | Supporting LP | koperty na certyfikaty | RUCH | Uczelnie, firmy szkoleniowe | F1 | **Wykonane 16 września 2026.** Warunek brzegowy formatu A4 obsłużony wprost: treść precyzyjnie rozróżnia arkusze A4 składane na trzy (oraz wkładki podłużne 1/3 A4 w kopercie DL) od sztywnych dyplomów A4 na płasko, które wymagają formatu C4 (spoza oferty); brak formatu komunikowany uczciwie z odesłaniem do kontaktu. Własnego `FAQPage` brak (pytania procesowe należą do F1 i F3, `mainEntityId` wskazuje na węzeł `Product` filara). Trzy kadry aranżacyjne (`matcha-koperta-dl-nadruk-wyrazy-uznania`, `granatowa-koperta-dl-nadruk-logo-orkiestry`, `czarna-koperta-dl-personalizacja-imienna`) i 3 próbki katalogowe. Karta OG wygenerowana dedykowanym skryptem | [x] |
 | 28 | Realizacja: koperty z nadrukiem dla hotelu | Supporting article | realizacja kopert z nadrukiem dla hotelu | AUTORYTET | Hotele | F4 | **Fraza skorygowana 7 września 2026** — `koperty z nadrukiem firmowym` należy do K1 (keywords.md, wspierająca fraza filara F1); studium przypadku celuje we frazę dowodową, nie transakcyjną, i nie koliduje też z `koperty firmowe dla hotelu` (poz. 18). Dowód wykonania na realnym zdjęciu; uzupełnia poz. 18 o warstwę E-E-A-T. **Warunek wejścia dopisany 15 sierpnia 2026:** wpis powstaje wyłącznie na realnym zamówieniu, potwierdzonym przez właściciela — samo zdjęcie nadruku z `public/images/prints/` nie wystarczy, bo studium przypadku niesie też klienta, skalę i efekt. **Warunek niespełniony na 7 września 2026** — status wraca do `[—]`, jak poz. 47 | [—] |
 
 ---
@@ -249,6 +249,32 @@ nie liczą się do kadencji czterech pozycji tygodniowo i nie mają filara.
 ---
 
 ## Dziennik wdrożeń
+
+### 16 września 2026 — poz. 27: `/koperty-na-certyfikaty` · dziewiąta LP Fazy 2
+
+**Piąta LP branżowa pod filarem F1** — po kancelariach (poz. 17), biurach rachunkowych (poz. 21),
+agencjach eventowych (poz. 25) i biurach nieruchomości (poz. 26) — oraz trzecia pozycja Tygodnia 7.
+Celuje we frazę główną **`koperty na certyfikaty`** (oraz wspierającą `koperty na dyplomy`),
+pokrywając lukę branżową zidentyfikowaną w `keywords.md`.
+
+**Warunek brzegowy formatu A4 obsłużony bez kompromisów.** Plan ostrzegał przed problemem dyplomów A4 na płasko:
+- Format DL (110 × 220 mm) idealnie mieści **certyfikat / dyplom A4 złożony na trzy** (99 × 210 mm, zapas 5 mm) — standard zaświadczeń MEN, certyfikatów ISO, szkoleń IT i programów modułowych — a także gotowe sztywne karty certyfikacyjne w formacie podłużnym DL oraz zaświadczenia A6.
+- Sztywny kartonowy dyplom A4 bez składania (210 × 297 mm) wymaga koperty C4 (229 × 324 mm). Strona **mówi o tym wprost** w sekcji `#format` oraz w dedykowanym wyróżnieniu: w naszym katalogu nie ma kopert mieszczących A4 na płasko, a formaty C6 i K4 mają status „Dostępne wkrótce”. Zamiast obiecywać niemożliwe lub oferować zamiennik na siłę, akapit uczciwie wyjaśnia ograniczenie i odsyła do kontaktu.
+
+**Rozgraniczenie wobec sąsiednich LP pod F1 na czterech osiach:**
+- **Pytanie strony:** Poz. 17 — „jakie pismo i ranga”, poz. 21 — „kiedy w roku obrotowym”, poz. 25 — „jak zaplanować fale kampanii przed galą”, poz. 26 — „na jakim etapie transakcji wręcza się dokument”, poz. 27 — **„jak oprawić zwieńczenie kursu, certyfikacji lub semestru”**.
+- **Tryb przekazania:** Uczelnie i firmy szkoleniowe działają w trybie hybrydowym: wręczanie do rąk własnych na gali / zakończeniu szkolenia (koperta z nadrukowanym imieniem i nazwiskiem absolwenta) ALBO wysyłka pocztowa / kurierska po egzaminie zewnętrznym (z pełnym adresem).
+- **Jednostka nakładu:** Sprawa (poz. 17), portfel klientów (poz. 21), lista gości (poz. 25), transakcja z mnożnikiem (poz. 26) — tutaj **wielkość grupy szkoleniowej / rocznika**: małe warsztaty (15 osób), edycja kursu (60 osób), rocznik akademicki (250 osób). Próg od 10 sztuk z nadrukiem pozwala zamawiać partię dokładnie pod jedną edycję kursu, bez zalegania kopert w archiwum.
+- **Kolorystyka:** Barwy akademickie i edukacyjne — Granatowy (uniwersytecka tradycja i powaga), Matcha (szkolenia coachingowe, wellbeing, eko, z białym nadrukiem „Z wyrazami uznania”) oraz Złoty metaliczny (dyplomy z wyróżnieniem, certyfikaty mistrzowskie).
+
+**Zdjęcia i karta OG:**
+- Trzy kadry aranżacyjne: `matcha-koperta-dl-nadruk-wyrazy-uznania` (kadr z `USE_CASE_SHOTS` dedykowany certyfikatom i dyplomom), `granatowa-koperta-dl-nadruk-logo-orkiestry` oraz `czarna-koperta-dl-personalizacja-imienna` (kaskada kopert z nazwiskami).
+- Trzy próbki katalogowe odcieni akademickich z zaznaczonym polem nadruku.
+- Karta OG wygenerowana skryptem `scripts/og-card.mjs` z kadru `matcha-koperta-dl-nadruk-wyrazy-uznania` (`public/images/og/koperty-na-certyfikaty.jpg`).
+
+**Linkowanie w obie strony:**
+- **do LP:** rejestr `INDUSTRY_PAGES` (automatycznie na `/` w sekcji „Dla kogo pracujemy”), karty branżowe na filarach F1 (`/koperty-z-nadrukiem`), F2 (`/koperty-personalizowane`) i F3 (`/koperty-dl`), strony kolorów Granatowy, Biały i Matcha oraz dwa wpisy blogowe: `jaki-format-koperty-wybrac-do-wkladki` i `dlaczego-koperty-z-nadrukiem-od-10-sztuk`.
+- **z LP:** filary F1, F2, F3, strony kolorów Granatowy, Matcha i Złoty, formularz kontaktowy, poradnik o formatach, wpis o progu 10 sztuk, wpis o adresowaniu z Excela oraz wpis o terminach ekspresowych.
 
 ### 15 września 2026 — poz. 26: `/koperty-dla-nieruchomosci` · ósma LP Fazy 2
 

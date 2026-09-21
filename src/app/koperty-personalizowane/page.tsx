@@ -192,6 +192,17 @@ const INDUSTRIES: { heading: string; text: ReactNode }[] = [
     ),
   },
   {
+    heading: 'Uczelnie, akademie i firmy szkoleniowe',
+    text: (
+      <>
+        Certyfikaty ukończenia kursów i zaświadczenia z imieniem i nazwiskiem absolwenta na
+        kopercie — bez ręcznego wypisywania i bez pomyłek przed uroczystym wręczeniem. Jak
+        przygotować listę absolwentów i dobrać format, opisaliśmy na stronie{' '}
+        <Link href="/koperty-na-certyfikaty">koperty na certyfikaty</Link>.
+      </>
+    ),
+  },
+  {
     heading: 'Kancelarie prawne i notarialne',
     text: 'Pismo procesowe adresowane jest do strony postępowania, nie do instytucji. Nadrukowany adres zdejmuje ryzyko pomyłki przy przepisywaniu z akt ręką. Do korespondencji formalnej wybierane są kolory stonowane: czerń, granat i szarobrązowy.',
   },

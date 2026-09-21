@@ -126,6 +126,11 @@ const PAGES: { url: string; title: string; note: string }[] = [
     note: 'Obrót nieruchomościami: koperta wręczana do ręki, a nie wysyłana — ścieżka pięciu etapów transakcji (prezentacja lokalu, umowa rezerwacyjna, formalności kredytowe, akt notarialny, wydanie kluczy), nakład liczony liczbą transakcji z mnożnikiem etapów, trzy odcienie materiałowe — Szarobrązowy 140 g/m², Szara i Jeansowy, nazwisko nabywcy drukowane bez adresu przy przekazaniu osobistym.',
   },
   {
+    url: '/koperty-na-certyfikaty',
+    title: 'Koperty na certyfikaty i dyplomy — z nadrukiem',
+    note: 'Uczelnie wyższe, akademie i firmy szkoleniowe: koperty DL pod certyfikaty i dyplomy A4 składane na trzy lub karty w formacie 1/3 A4 (uwaga: sztywny dyplom A4 płasko bez zginania wymaga koperty C4 spoza oferty Envelopes), nakład dopasowany do grup szkoleniowych (od 10 sztuk z logo), personalizacja imienna absolwentów z pliku, kolory akademickie — Granatowy, Matcha i Złoty.',
+  },
+  {
     url: '/koperty-dla-kancelarii',
     title: 'Koperty dla kancelarii prawnych i notarialnych',
     note: 'Korespondencja prawna: typologia pism (akt notarialny, wezwanie, pismo procesowe), kolory stonowane (Granatowy, Czarny, Taupe), adresowanie wielu klientów w jednym zamówieniu.',

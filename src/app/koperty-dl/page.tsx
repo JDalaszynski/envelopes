@@ -189,7 +189,15 @@ const INDUSTRIES: { heading: string; text: ReactNode }[] = [
   },
   {
     heading: 'Uczelnie, szkoły i firmy szkoleniowe',
-    text: `Certyfikat i zaświadczenie o ukończeniu kursu wysyłane są jako A4 złożone na trzy. Uwaga na dyplomy: arkusz A4 płasko ma 210 × 297 mm i nie mieści się w żadnym formacie z naszego katalogu — dyplom, który nie może być zginany, wymaga koperty spoza tej oferty.`,
+    text: (
+      <>
+        Certyfikat i zaświadczenie o ukończeniu kursu wysyłane są jako A4 złożone na trzy. Uwaga na
+        dyplomy: arkusz A4 płasko ma 210 × 297 mm i nie mieści się w żadnym formacie z naszego
+        katalogu — dyplom, który nie może być zginany, wymaga koperty spoza tej oferty. Zasady
+        doboru formatu i nakładu zebraliśmy na stronie{' '}
+        <Link href="/koperty-na-certyfikaty">koperty na certyfikaty</Link>.
+      </>
+    ),
   },
   {
     heading: 'Biura nieruchomości i deweloperzy',

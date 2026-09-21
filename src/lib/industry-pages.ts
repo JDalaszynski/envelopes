@@ -66,6 +66,12 @@ export const INDUSTRY_PAGES: IndustryPage[] = [
     text: 'Zaproszenie, program i karta wstępu w jednej wysyłce, planowane wstecz od daty wydarzenia i listy gości.',
   },
   {
+    path: '/koperty-na-certyfikaty',
+    branch: 'Uczelnie, akademie i firmy szkoleniowe',
+    anchor: 'koperty na certyfikaty',
+    text: 'Certyfikaty i dyplomy A4 składane na trzy, zaświadczenia o ukończeniu kursu i listy gratulacyjne wręczane w kopercie DL z nadrukiem.',
+  },
+  {
     path: '/koperty-dla-hoteli',
     branch: 'Hotele, resorty i pensjonaty',
     anchor: 'koperty firmowe dla hotelu',

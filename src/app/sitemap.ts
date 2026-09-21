@@ -183,6 +183,20 @@ const PAGE_IMAGES: Record<string, string[]> = {
       .filter((color) => color?.printImages?.DL)
       .map((color) => abs(color.printImages!.DL!)),
   ],
+  /* Supporting LP poz. 27 — trzy kadry aranżacyjne (Matcha „Z wyrazami uznania",
+     logo orkiestry i personalizacja imienna) plus trzy kadry katalogowe
+     z zaznaczonym polem nadruku (Granatowy, Matcha, Złoty). */
+  '/koperty-na-certyfikaty': [
+    ...shotUrls([
+      shotByFile('matcha-koperta-dl-nadruk-wyrazy-uznania'),
+      shotByFile('granatowa-koperta-dl-nadruk-logo-orkiestry'),
+      shotByFile('czarna-koperta-dl-personalizacja-imienna'),
+    ]),
+    ...['granatowy', 'matcha', 'zloty']
+      .map((id) => COLOR_MAP[id])
+      .filter((color) => color?.printImages?.DL)
+      .map((color) => abs(color.printImages!.DL!)),
+  ],
   /* Supporting LP poz. 17 — jedyny realny kadr aranżacyjny dla kancelarii
      (Granatowy) plus próbki katalogowe dwóch odcieni stonowanych. */
   '/koperty-dla-kancelarii': [
@@ -269,6 +283,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     page('/koperty-dla-agencji-eventowych', 'monthly', 0.8),
     /* Supporting LP pod F1 — koperty dla biur nieruchomości (content-plan.md poz. 26) */
     page('/koperty-dla-nieruchomosci', 'monthly', 0.8),
+    /* Supporting LP pod F1 — koperty na certyfikaty (content-plan.md poz. 27) */
+    page('/koperty-na-certyfikaty', 'monthly', 0.8),
     /* Pillar K8 — koperty na pieniądze (content-plan.md poz. 39) */
     page('/koperty-na-pieniadze', 'monthly', 0.9),
     page('/blog', 'weekly', 0.8),

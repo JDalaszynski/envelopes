@@ -639,6 +639,8 @@ const POSTS: BlogPost[] = [
     lead: 'Sprawdź jaki format koperty wybrać dla różnych dokumentów. Poznaj zasady określające jaka koperta do wkładki będzie optymalna i uniknij pomyłek przy zamówieniach. Przejdź do naszego przewodnika po formatach.',
     category: 'Poradniki',
     date: '2026-08-17',
+    /* Akapit o dyplomach i certyfikatach — odsyła do LP poz. 27 */
+    updated: '2026-09-16',
     readingMinutes: 6,
     colorId: 'taupe',
     format: 'DL',
@@ -703,7 +705,7 @@ const POSTS: BlogPost[] = [
         paragraphs: [
           `Ten sam arkusz A4 wymaga dwóch różnych kopert, zależnie od tego, jak go Państwo złożą. Złożony na trzy ma ${insertMm(A4_THIRDS)} i wchodzi do koperty DL. Złożony na pół ma ${insertMm(A4_HALF)} — jego krótszy bok przekracza wtedy dopuszczalną szerokość wkładki dla koperty DL o ${A4_HALF_OVERHANG} mm i żadne dosuwanie tego nie zmieni.`,
           'Stąd pierwsze pytanie przy wkładce, która się nie mieści: czy wolno ją złożyć inaczej. Pismo, umowa, faktura, zaświadczenie i większość certyfikatów znoszą złożenie na trzy bez straty dla dokumentu. To jest złożenie, pod które format DL został zaprojektowany.',
-          'Są wkładki, których nie składa się wcale. Dyplom wręczany na uroczystości, odbitka fotograficzna i karta plastikowa mają zostać płaskie — przy nich sposób złożenia nie jest zmienną i format musi wynikać wprost z wymiaru.',
+          'Są wkładki, których nie składa się wcale. Dyplom wręczany na uroczystości, odbitka fotograficzna i karta plastikowa mają zostać płaskie — przy nich sposób złożenia nie jest zmienną i format musi wynikać wprost z wymiaru. Dla instytucji edukacyjnych i firm szkoleniowych zasady doboru koperty do dokumentów zebraliśmy na stronie [koperty na certyfikaty](/koperty-na-certyfikaty).',
           'Liczba kartek nie zmienia wymiaru wkładki. Trzy arkusze złożone razem na trzy mają ten sam obrys co jeden: rośnie grubość pliku, a nie jego szerokość ani wysokość.',
         ],
       },
@@ -2443,8 +2445,8 @@ const POSTS: BlogPost[] = [
     lead: `Minimum przy nadruku to ${DEFAULT_PRICING.moqWithPrint} sztuk, bo część pracy wygląda tak samo przy każdym nakładzie. Wyjaśniamy próg i to, co zrobić, gdy potrzebują Państwo mniej.`,
     category: 'Poradniki',
     date: '2026-09-14',
-    /* Akapit o wydarzeniach kameralnych — odsyła do LP poz. 25 */
-    updated: '2026-09-15',
+    /* Akapit o wydarzeniach kameralnych (poz. 25) i grupach szkoleniowych (poz. 27) */
+    updated: '2026-09-16',
     readingMinutes: 6,
     colorId: 'biala-perlowa',
     format: 'DL',
@@ -2545,7 +2547,7 @@ const POSTS: BlogPost[] = [
           `Jeżeli koperta ma pójść do jednego odbiorcy, najprostszym rozwiązaniem jest koperta gładka. Zamawiają ją Państwo od ${DEFAULT_PRICING.moqWithoutPrint} sztuki, w tym samym papierze i kolorze co wersja z nadrukiem, a wysyłamy ją szybciej, bo nie przechodzi przez produkcję ani przez akceptację wizualizacji. Ten sam odcień wybiorą Państwo w [palecie kolorów kopert ozdobnych](/#kolory).`,
           'Drugą drogą jest zamówienie pełnej serii i zostawienie zapasu. Logo firmowe nie zmienia się co miesiąc, więc nadrukowana koperta nie traci ważności — inaczej niż nadruk z datą wydarzenia, który zestarzeje się razem z nim.',
           'Trzecia droga to połączenie potrzeb. Jeśli w tym samym miesiącu wychodzą pisma do klientów, jedno zaproszenie i komplet dokumentów, to jest to jedna seria kopert z logo, a nie trzy osobne zamówienia.',
-          'Wydarzenia kameralne mieszczą się w minimum najczęściej: kolacja branżowa, śniadanie prasowe i spotkanie zarządu mają listy gości krótsze niż nakłady przyjęte w drukarniach. Jak planuje się taką wysyłkę, pokazuje strona [koperty na zaproszenia firmowe](/koperty-dla-agencji-eventowych).',
+          'Wydarzenia kameralne mieszczą się w minimum najczęściej: kolacja branżowa, śniadanie prasowe i spotkanie zarządu mają listy gości krótsze niż nakłady przyjęte w drukarniach. Jak planuje się taką wysyłkę, pokazuje strona [koperty na zaproszenia firmowe](/koperty-dla-agencji-eventowych). Podobnie edycje kursów i szkoleń liczą często kilkunastu absolwentów — zasady zamawiania krótkich partii pod poszczególne grupy zebraliśmy na stronie [koperty na certyfikaty](/koperty-na-certyfikaty).',
         ],
         table: {
           caption: 'Rozwiązania, gdy potrzeba mniej kopert niż wynosi minimalny nakład',

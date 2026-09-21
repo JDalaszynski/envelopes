@@ -53,6 +53,11 @@ do `keywords` tej strony — jej intencja („koperty, w których firma wysyła 
 filara i do `/koperty-dl`, a pod filarem stoją już trzy LP dokumentowe. Podział pracy: filar
 wygrywa intencję usługową, LP branżowa — etap transakcji nieruchomościowej, na którym koperta
 przechodzi z rąk do rąk.
+**Wsparcie:** LP branżowa `/koperty-na-certyfikaty` `[ISTNIEJE]` — opublikowana 16 września
+2026 (content-plan.md poz. 27), **właścicielka fraz `koperty na certyfikaty` i `koperty na dyplomy`**.
+Obsługuje sektor edukacji i szkoleń (uczelnie, akademie, firmy szkoleniowe). Precyzyjnie rozstrzyga
+granicę formatową: arkusze A4 składane na trzy oraz formaty podłużne 1/3 A4 w kopercie DL, z rzetelnym
+wskazaniem, że sztywny dyplom A4 na płasko wymaga koperty C4 spoza oferty Envelopes.
 **Wsparcie:** wpis `jak-przygotowac-pliki-do-druku-na-kopertach` `[ISTNIEJE]` — przepisany
 15 sierpnia 2026 (content-plan.md poz. 7). Oddał filarowi całą warstwę transakcyjną i obsługuje
 wyłącznie intencję procesową „jak przygotować plik do druku": jest właścicielem frazy
@@ -469,7 +474,8 @@ Eksport Semstorm pokrywa popyt ogólny, ale pomija trzy grupy zapytań, które s
 profilu klienta z bazy wiedzy. Do zweryfikowania w kolejnym eksporcie:
 
 1. **Branżowe:** `koperty dla kancelarii`, `koperty dla hotelu`, `koperty firmowe dla kliniki`,
-   `koperty na certyfikaty`, `koperty na dyplomy`, `koperty do umów`.
+   ~~`koperty na certyfikaty`~~, ~~`koperty na dyplomy`~~ (obsłużone od 16 września 2026
+   przez `/koperty-na-certyfikaty`), `koperty do umów`.
    `koperty do umów` **zostaje bez właściciela świadomie** (15 września 2026): pasuje jednocześnie
    do poz. 17 (umowa do podpisu w typologii pism) i do poz. 26 (umowa rezerwacyjna
    i deweloperska), a przypisanie jej którejkolwiek z nich ustawiłoby dwie strony pod jedną

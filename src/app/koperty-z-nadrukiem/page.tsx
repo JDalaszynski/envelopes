@@ -199,7 +199,14 @@ const INDUSTRIES: { heading: string; text: ReactNode }[] = [
   },
   {
     heading: 'Uczelnie, szkoły i firmy szkoleniowe',
-    text: 'Certyfikaty i podziękowania dla sponsorów idą w seriach — czasem kilkuset, czasem kilkunastu. Dyplomy dla jednej grupy szkoleniowej też da się zamówić z logo uczelni, bez czekania, aż uzbiera się cały rocznik.',
+    text: (
+      <>
+        Certyfikaty i podziękowania dla sponsorów idą w seriach — czasem kilkuset, czasem kilkunastu.
+        Dyplomy dla jednej grupy szkoleniowej też da się zamówić z logo uczelni, bez czekania, aż
+        uzbiera się cały rocznik. Zasady przygotowania nakładu i doboru formatu opisaliśmy na
+        stronie <Link href="/koperty-na-certyfikaty">koperty na certyfikaty</Link>.
+      </>
+    ),
   },
   {
     heading: 'Restauracje fine dining i winiarnie',
