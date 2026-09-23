@@ -382,6 +382,15 @@ main {
   box-shadow: none;
 }
 
+/* Akcja nieodwracalna (np. usunięcie zamówienia) */
+.btn-danger {
+  background: var(--color-error);
+}
+.btn-danger:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--color-error) 80%, #000);
+  color: #fff;
+}
+
 .btn-sm {
   min-height: 36px;
   font-size: 14px;

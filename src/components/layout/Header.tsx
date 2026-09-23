@@ -91,6 +91,11 @@ export function Header() {
               {item.label}
             </Link>
           ))}
+          {user?.role === 'admin' && (
+            <Link href="/admin/zamowienia" className="nav-admin">
+              Panel admina
+            </Link>
+          )}
         </nav>
 
         <div className="header-actions">
@@ -153,6 +158,7 @@ export function Header() {
             <Link href="/zamowienia">Złożone zamówienia</Link>
             {user ? (
               <>
+                {user.role === 'admin' && <Link href="/admin/zamowienia">Panel admina</Link>}
                 <Link href="/profil">Państwa konto</Link>
                 <button
                   type="button"

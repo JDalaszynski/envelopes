@@ -226,6 +226,26 @@ export async function updateOrder(
   return updated;
 }
 
+/**
+ * Trwale usuwa zamówienie. Zwraca `false`, gdy zamówienie nie istnieje.
+ * Pliki klienta w Storage i wpisy rejestru `uploads` zostają — usuwamy
+ * wyłącznie dokument zamówienia.
+ */
+export async function deleteOrder(number: string): Promise<boolean> {
+  if (usingFirestore()) {
+    const ref = getDb()!.collection('orders').doc(number);
+    const snap = await ref.get();
+    if (!snap.exists) return false;
+    await ref.delete();
+    return true;
+  }
+  const db = await readLocal();
+  if (!db.orders[number]) return false;
+  delete db.orders[number];
+  await writeLocal(db);
+  return true;
+}
+
 /* ── Użytkownicy ────────────────────────────────────────────── */
 
 export async function getUserProfile(uid: string): Promise<UserProfile | null> {

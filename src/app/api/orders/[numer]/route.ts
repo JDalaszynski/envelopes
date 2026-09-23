@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 import { verifyRequest } from '@/lib/firebase/admin';
-import { getOrder, updateOrder } from '@/lib/store';
+import { deleteOrder, getOrder, updateOrder } from '@/lib/store';
 import { paymentConfirmedEmail, sendEmail } from '@/lib/brevo';
 import type { Order } from '@/lib/types';
 
@@ -99,4 +99,26 @@ export async function PATCH(
 
   const updated = await updateOrder(numer, { ...patch, history });
   return NextResponse.json({ order: updated });
+}
+
+/** DELETE — trwałe usunięcie zamówienia, wyłącznie dla roli admin. */
+export async function DELETE(
+  request: Request,
+  { params }: { params: Promise<{ numer: string }> }
+) {
+  const { numer } = await params;
+  const user = await verifyRequest(request);
+
+  if (!user || user.role !== 'admin') {
+    return NextResponse.json({ error: 'Wymagane uprawnienia administratora.' }, { status: 403 });
+  }
+
+  const deleted = await deleteOrder(numer);
+  if (!deleted) {
+    return NextResponse.json({ error: 'Nie znaleziono zamówienia.' }, { status: 404 });
+  }
+
+  // Zamówienie znika bez śladu w bazie, więc kto i co usunął zostaje w logu serwera.
+  console.info(`[Zamówienie ${numer}] Usunięte przez ${user.email ?? user.uid}`);
+  return NextResponse.json({ ok: true });
 }

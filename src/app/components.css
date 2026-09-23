@@ -137,6 +137,23 @@
   padding: 0 var(--space-4);
 }
 
+/* Wejście do panelu — widoczne tylko dla zalogowanego admina */
+.nav a.nav-admin {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--color-seal);
+  border-radius: var(--radius-sm);
+  color: var(--color-seal);
+  font-weight: 600;
+}
+
+.nav a.nav-admin:hover {
+  background: var(--color-seal-wash);
+  border-color: var(--color-seal);
+}
+
 .header-actions {
   margin-left: auto;
   display: flex;
@@ -3075,6 +3092,255 @@ table.data.legal-table {
 
 .admin-bar a:hover {
   color: #fff;
+}
+
+/* ── Panel admina: lista zamówień ── */
+.admin-page-head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-bottom: var(--space-5);
+}
+
+.admin-page-head h1 {
+  margin: 0;
+}
+
+.admin-filters {
+  margin-bottom: var(--space-5);
+}
+
+.admin-filters-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.admin-filters-clear {
+  margin-top: var(--space-3);
+}
+
+/* Pasek akcji zbiorczych — pojawia się dopiero po zaznaczeniu wierszy */
+.admin-bulk-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-seal);
+  border-radius: var(--radius-md);
+  background: var(--color-seal-wash);
+  font-size: 14px;
+}
+
+/* Stałe szerokości kolumn + `table-layout: fixed` pozwalają przycinać
+   długie nazwy produktów i adresy e-mail zamiast rozpychać wiersz. */
+table.data.admin-orders {
+  table-layout: fixed;
+  min-width: 980px;
+}
+
+table.data.admin-orders th,
+table.data.admin-orders td {
+  padding: var(--space-4);
+}
+
+table.data.admin-orders td {
+  vertical-align: middle;
+}
+
+table.data.admin-orders tbody tr {
+  cursor: pointer;
+}
+
+table.data.admin-orders tbody tr.is-selected {
+  background: var(--color-seal-wash);
+}
+
+table.data.admin-orders.is-busy tbody {
+  opacity: 0.5;
+  transition: opacity var(--duration-fast) var(--ease-standard);
+}
+
+table.data.admin-orders th:nth-child(1) { width: 52px; }
+table.data.admin-orders th:nth-child(2) { width: 170px; }
+table.data.admin-orders th:nth-child(3) { width: 24%; }
+table.data.admin-orders th:nth-child(5) { width: 140px; }
+table.data.admin-orders th:nth-child(6) { width: 180px; }
+table.data.admin-orders th:nth-child(7) { width: 68px; }
+
+table.data.admin-orders input[type='checkbox'] {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: var(--color-seal);
+  cursor: pointer;
+}
+
+table.data.admin-orders .col-check {
+  padding-right: 0;
+}
+
+table.data.admin-orders .col-amount {
+  text-align: right;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+table.data.admin-orders .col-actions {
+  text-align: right;
+  padding-left: 0;
+}
+
+table.data.admin-orders .cell-main {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+table.data.admin-orders .cell-sub {
+  display: block;
+  margin-top: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+  color: var(--color-ink-soft);
+}
+
+table.data.admin-orders .cell-payment .cell-sub {
+  margin-top: var(--space-2);
+}
+
+table.data.admin-orders .order-link {
+  display: block;
+  font-weight: 600;
+  color: var(--color-seal);
+  text-decoration: none;
+}
+
+table.data.admin-orders .order-link:hover {
+  text-decoration: underline;
+}
+
+.icon-btn-danger:hover {
+  background: rgba(156, 66, 33, 0.08);
+  color: var(--color-error);
+}
+
+/* Poniżej szerokości, przy której 7 kolumn się nie mieści, wiersze stają się kartami */
+@media (max-width: 960px) {
+  .admin-filters-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .admin-orders-wrap {
+    overflow: visible;
+    border: none;
+    background: transparent;
+  }
+
+  table.data.admin-orders {
+    display: block;
+    min-width: 0;
+  }
+
+  table.data.admin-orders thead {
+    display: none;
+  }
+
+  table.data.admin-orders tbody {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  table.data.admin-orders tbody tr,
+  table.data.admin-orders tbody tr:hover {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      'check order actions'
+      'check customer customer'
+      'check items items'
+      'check payment amount';
+    column-gap: var(--space-3);
+    row-gap: var(--space-2);
+    align-items: center;
+    padding: var(--space-4);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+  }
+
+  table.data.admin-orders tbody tr.is-selected {
+    border-color: var(--color-seal);
+    background: var(--color-seal-wash);
+  }
+
+  table.data.admin-orders td,
+  table.data.admin-orders td:last-child {
+    display: block;
+    padding: 0;
+    border: none;
+    min-width: 0;
+  }
+
+  table.data.admin-orders .col-check { grid-area: check; align-self: start; padding-top: 2px; }
+  table.data.admin-orders .cell-order { grid-area: order; }
+  table.data.admin-orders .cell-customer { grid-area: customer; }
+  table.data.admin-orders .cell-items { grid-area: items; }
+  table.data.admin-orders .cell-payment { grid-area: payment; }
+  table.data.admin-orders .col-amount { grid-area: amount; font-size: 16px; }
+  table.data.admin-orders .col-actions { grid-area: actions; }
+
+  table.data.admin-orders .cell-payment,
+  table.data.admin-orders .col-amount {
+    padding-top: var(--space-2);
+  }
+}
+
+@media (max-width: 560px) {
+  .admin-filters-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ── Okno potwierdzenia (natywny <dialog>) ── */
+.confirm-dialog {
+  width: min(480px, calc(100vw - 32px));
+  padding: var(--space-5);
+  border: none;
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  box-shadow: var(--shadow-lg);
+}
+
+.confirm-dialog::backdrop {
+  background: rgba(31, 36, 48, 0.45);
+}
+
+.confirm-list {
+  margin: 0 0 var(--space-3);
+  padding-left: var(--space-4);
+}
+
+.confirm-actions {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+@media (max-width: 560px) {
+  .confirm-actions .btn {
+    flex: 1 1 100%;
+  }
 }
 
 /* ── Toast ── */

@@ -78,6 +78,11 @@ export function ProfileView() {
           </p>
         </div>
         <div className="row">
+          {user.role === 'admin' && (
+            <Link href="/admin/zamowienia" className="btn btn-secondary">
+              Panel admina
+            </Link>
+          )}
           <button type="button" className="btn btn-ghost" onClick={() => void logout().then(() => router.push('/'))}>
             Wyloguj się
           </button>
