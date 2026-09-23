@@ -132,7 +132,7 @@ const UPCOMING_LABEL_SHORT = UPCOMING_FORMATS.map((f) => f.id).join(' i ');
 const HOW_TO_STEPS = [
   {
     name: 'Wybór koperty w konfiguratorze',
-    text: `Wybierają Państwo kolor i ilość, a jeśli koperta ma nieść logo albo dane odbiorcy — także jedną z dwóch usług. Przy nadruku i personalizacji zamówienie zaczyna się od ${DEFAULT_PRICING.moqWithPrint} sztuk. Cena przelicza się przy każdej zmianie, więc nic nie wyjaśnia się dopiero w koszyku.`,
+    text: `Wybierają Państwo kolor i ilość, a jeśli koperta ma nieść logo albo dane odbiorcy — także nadruk (na przodzie, na zamknięciu albo na obu stronach) lub personalizację. Przy nadruku i personalizacji zamówienie zaczyna się od ${DEFAULT_PRICING.moqWithPrint} sztuk. Cena przelicza się przy każdej zmianie, więc nic nie wyjaśnia się dopiero w koszyku.`,
   },
   {
     name: 'Płatność',
@@ -714,8 +714,9 @@ export default function HomePage() {
               <div className="chapter-head">
                 <h2>Nadruk logo i personalizacja kopert</h2>
                 <p className="chapter-lead">
-                  Do gładkiej koperty można dołożyć dwie rzeczy: logo firmy albo dane odbiorcy
-                  drukowane wprost na kopercie. Obie usługi kończą się wizualizacją — do druku
+                  Do gładkiej koperty można dołożyć dwie rzeczy: logo firmy — na przodzie, na
+                  zamknięciu albo na obu stronach — i dane odbiorcy drukowane wprost na kopercie.
+                  Obie usługi kończą się wizualizacją — do druku
                   idzie wyłącznie to, co Państwo zaakceptują, więc niespodzianek po otwarciu paczki
                   nie ma.
                 </p>
@@ -767,8 +768,9 @@ export default function HomePage() {
                   </dl>
 
                   <p className="service-copy">
-                    Drukujemy logo, dane kontaktowe albo całą grafikę na przedniej ściance koperty.
-                    Odcień papieru nie zmienia ceny nadruku — na czarnej kopercie kosztuje tyle
+                    Drukujemy logo, dane kontaktowe albo całą grafikę na przedniej ściance koperty,
+                    na zamknięciu, czyli klapce z tyłu, albo na obu stronach — każda strona to
+                    osobna dopłata w tej samej wysokości. Odcień papieru nie zmienia ceny nadruku — na czarnej kopercie kosztuje tyle
                     samo, co na białej. Cennik, listę przyjmowanych plików i proces krok po kroku
                     opisaliśmy na stronie <Link href="/koperty-z-nadrukiem">koperty z nadrukiem</Link>.
                   </p>

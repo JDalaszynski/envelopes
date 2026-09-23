@@ -15,7 +15,8 @@ Sklep charakteryzuje się precyzyjną, zwartą i wysoce przewidywalną ofertą. 
     *   **Brak rabatów ilościowych** – cena jednostkowa jest stała. To odważny i dobry ruch dla rentowności, który można utrzymać dzięki silnemu nastawieniu na klienta premium.
 *   **Bogactwo wyboru:** 19 ustandaryzowanych kolorów. 
 *   **Usługi dodane:** 
-    *   Nadruk (+1,99 zł/szt.)
+    *   Nadruk na przodzie koperty (+1,99 zł/szt.)
+    *   Nadruk na zamknięciu, czyli na klapce z tyłu koperty (+1,99 zł/szt.) — od 23 września 2026. Liczony osobno, łączy się z nadrukiem na przodzie i z personalizacją; grafikę na zamknięcie klient wgrywa osobnym plikiem. Typowy układ: adres odbiorcy na przodzie, logo na zamknięciu.
     *   Personalizacja/adresowanie (+2,99 zł/szt.)
 *   **Zasady minimalnego zamówienia (MOQ):**
     *   Od 10 sztuk dla kopert z nadrukiem/personalizacją (optymalizacja kosztów przygotowania).

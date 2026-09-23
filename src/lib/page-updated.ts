@@ -27,8 +27,9 @@ export const PAGE_UPDATED: Record<string, string> = {
   /* 15 września 2026: nowy rozdział 09 „Dla kogo pracujemy" — rejestr siedmiu
      stron branżowych pod paletą kolorów. Do tego dnia strona główna nie
      linkowała do żadnej LP branżowej. Wcześniej: odnośnik do pillara
-     „koperty na pieniądze" (poz. 39) w sekcji zastosowań */
-  '/': '2026-09-15',
+     „koperty na pieniądze" (poz. 39) w sekcji zastosowań. 23 września:
+     nadruk na zamknięciu w sekcji usług i w kroku 1 procesu (także `HowTo`) */
+  '/': '2026-09-23',
   /* Karta „Hotele, resorty i pensjonaty" w sekcji „Dla kogo" dostała odnośnik
      do poz. 18; czwarta karta w sekcji „Poradniki" i odnośnik pod tabelą
      specyfikacji prowadzą do poz. 46; karta „Kliniki medycyny estetycznej
@@ -42,8 +43,9 @@ export const PAGE_UPDATED: Record<string, string> = {
      do poz. 18; pod cennikiem doszedł odnośnik do poz. 46 — ten sam próg
      obowiązuje przy adresowaniu; karta „Kliniki, gabinety i salony SPA" —
      odnośnik do poz. 22. 15 września karta „Agencje eventowe, PR i kreatywne"
-     dostała odnośnik do poz. 25 */
-  '/koperty-personalizowane': '2026-09-15',
+     dostała odnośnik do poz. 25. 23 września: logo na zamknięciu obok adresu
+     w cenniku i w FAQ (także `FAQPage`) */
+  '/koperty-personalizowane': '2026-09-23',
   /* Sekcja „Poradniki" i odnośnik pod tabelą dopasowań — treść wspierająca
      z poz. 11 planu. 14 września karta „Biura rachunkowe i doradztwo
      podatkowe" w sekcji „Dla kogo" dostała odnośnik do poz. 21. 15 września

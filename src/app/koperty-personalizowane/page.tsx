@@ -434,7 +434,8 @@ export default function PersonalizedEnvelopesPage() {
                   <td className="mono-sm">+{formatPrice(DEFAULT_PRICING.print)}</td>
                   <td className="mono-sm">+{formatPrice(net(DEFAULT_PRICING.print))}</td>
                   <td>
-                    Koperta z logo i adresem: {formatPrice(printedPersonalized.unitTotal)} brutto —
+                    Koperta z logo i adresem: {formatPrice(printedPersonalized.unitTotal)} brutto.
+                    Logo stoi obok adresu na przodzie albo na zamknięciu z tyłu koperty —
                     szczegóły na stronie{' '}
                     <Link href="/koperty-z-nadrukiem">koperty z nadrukiem</Link>
                   </td>

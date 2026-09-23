@@ -277,7 +277,7 @@ export const PERSONALIZATION_FAQ_ITEMS: FaqItem[] = [
   },
   {
     question: 'Czym różni się personalizacja od nadruku logo?',
-    answer: `Nadruk logo powtarza ten sam projekt na całym nakładzie i kosztuje ${formatPrice(DEFAULT_PRICING.print)} brutto za sztukę. Personalizacja drukuje na każdej kopercie inne dane — imię i nazwisko, adres odbiorcy albo dedykację — i kosztuje ${formatPrice(DEFAULT_PRICING.personalization)} brutto za sztukę. Obie usługi można połączyć w jednym zamówieniu: koperta DL z logo firmowym i adresem odbiorcy kosztuje ${formatPrice(PRINTED_PERSONALIZED_DL.unitTotal)} brutto za sztukę.`,
+    answer: `Nadruk logo powtarza ten sam projekt na całym nakładzie i kosztuje ${formatPrice(DEFAULT_PRICING.print)} brutto za sztukę na każdej zadrukowanej stronie — przodzie albo zamknięciu. Personalizacja drukuje na każdej kopercie inne dane — imię i nazwisko, adres odbiorcy albo dedykację — i kosztuje ${formatPrice(DEFAULT_PRICING.personalization)} brutto za sztukę. Obie usługi można połączyć w jednym zamówieniu: koperta DL z logo firmowym i adresem odbiorcy kosztuje ${formatPrice(PRINTED_PERSONALIZED_DL.unitTotal)} brutto za sztukę. Częsty układ to adres odbiorcy na przodzie i logo na zamknięciu koperty — cena jest ta sama.`,
   },
   {
     question: 'Ile kopert z personalizacją trzeba zamówić minimalnie?',

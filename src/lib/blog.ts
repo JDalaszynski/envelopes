@@ -221,6 +221,13 @@ const PRINT_ORDER_BASE = {
 /** Rachunek dla jednej koperty DL z nadrukiem — stawka jednostkowa. */
 const PRINTED_UNIT = calculatePrice({ ...PRINT_ORDER_BASE, quantity: 1 });
 
+/** Koperta DL z nadrukiem na przodzie i na zamknięciu — jedna sztuka. */
+const PRINTED_BOTH_SIDES_UNIT = calculatePrice({
+  ...PRINT_ORDER_BASE,
+  backPrint: true,
+  quantity: 1,
+});
+
 /**
  * Nakłady w tabeli kosztu zamówienia. Świadomie inne niż na filarze
  * (`/koperty-z-nadrukiem` pokazuje 10 / 100 / 500 / 1 000): tam osią jest
@@ -784,8 +791,9 @@ const POSTS: BlogPost[] = [
     category: 'Poradniki',
     date: '2026-08-17',
     /* Doszły odesłania do poradnika o terminach (poz. 16) i do poradnika
-       o minimalnym nakładzie (poz. 46) */
-    updated: '2026-09-14',
+       o minimalnym nakładzie (poz. 46). 23 września: dopłata za nadruk
+       na zamknięciu w pierwszej sekcji */
+    updated: '2026-09-23',
     readingMinutes: 6,
     colorId: 'eko',
     format: 'DL',
@@ -808,6 +816,7 @@ const POSTS: BlogPost[] = [
         heading: 'Ile kosztuje zamówienie kopert z nadrukiem',
         paragraphs: [
           `Zamówienie kopert z nadrukiem kosztuje tyle, ile wynosi stawka jednostkowa razy liczba kopert, plus jedna przesyłka kurierska. Koperta DL z nadrukiem logo to ${formatPrice(PRINTED_UNIT.unitTotal)} brutto za sztukę — składają się na to sama koperta (${formatPrice(DEFAULT_PRICING.base.DL)}) i nadruk (${formatPrice(DEFAULT_PRICING.print)}). Kuriera liczymy raz, niezależnie od liczby kopert w paczce.`,
+          `Nadruk na zamknięciu, czyli na klapce z tyłu koperty, to osobna dopłata w tej samej wysokości — ${formatPrice(DEFAULT_PRICING.backPrint)} brutto za sztukę. Koperta DL z nadrukiem na przodzie i na zamknięciu kosztuje ${formatPrice(PRINTED_BOTH_SIDES_UNIT.unitTotal)} brutto za sztukę. Tabela poniżej liczy wariant z nadrukiem na jednej stronie.`,
           'Stawka za sztukę nie zależy od nakładu. Sto kopert i tysiąc kopert rozliczamy tą samą kwotą jednostkową, bo rabatów ilościowych nie stosujemy. Zmienia się wyłącznie to, jak jednorazowy koszt dostawy rozkłada się na sztuki.',
           'Tabela poniżej pokazuje tę zależność. Ostatnie dwie kolumny wchodzą wprost do pozycji budżetowej: koszt jednej wysłanej koperty i część tej kwoty, która przypada na kuriera.',
         ],
@@ -1206,7 +1215,8 @@ const POSTS: BlogPost[] = [
     lead: 'Zobacz jak powinno wyglądać poprawne przygotowanie logo do druku, aby uniknąć opóźnień. Sprawdź jakie pliki do druku na kopertach przyjmujemy oraz dlaczego polecamy plik wektorowy do nadruku. Przygotuj materiały.',
     category: 'Poradniki',
     date: '2026-06-28',
-    updated: '2026-08-15',
+    /* 23 września: akapit o grafice na zamknięcie w sekcji o marginesach */
+    updated: '2026-09-23',
     readingMinutes: 6,
     colorId: 'bialy',
     format: 'DL',
@@ -1276,6 +1286,7 @@ const POSTS: BlogPost[] = [
         paragraphs: [
           `Nadruk zachowuje minimum ${PRINT_SAFE_MARGIN_MM} mm odstępu od każdej krawędzi koperty. Omijamy też dwa miejsca: linię klejenia i zagięcie klapki. Papier jest tam podwójny albo załamany, więc element przechodzący przez zagięcie deformuje się przy zamykaniu koperty.`,
           'Cała przednia ścianka jest dostępna pod nadruk, bo koperty Envelopes nie mają okienka adresowego. Jeżeli koperta ma być później zaadresowana, prosimy zostawić wolne pole na dane odbiorcy i napisać o tym w uwagach dla grafika.',
+          'Logo można też umieścić na zamknięciu, czyli na klapce z tyłu koperty — wtedy przód zostaje w całości na adres. Grafikę na zamknięcie wgrywa się w konfiguratorze osobnym plikiem, z własnymi uwagami dla grafika, a układ obu stron widać na jednej wizualizacji przed drukiem.',
           'Warto sprawdzić, czy plik nie ma własnego marginesu. Logo wyeksportowane z prezentacji albo z dokumentu bywa otoczone pustym obszarem, który liczy się do wymiaru pliku — nadruk wychodzi wtedy mniejszy, niż wynikałoby z podanej szerokości.',
         ],
       },

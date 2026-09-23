@@ -85,6 +85,19 @@ przelewów. **Nie wpisuj tych danych ręcznie w treściach — zawsze odwołuj s
   `disabled: true` — „Dostępne wkrótce". **To najważniejsze ograniczenie strategiczne w projekcie.**
 - **19 kolorów w identycznej cenie** — bez dopłat za perłę i metalik, bez rabatów ilościowych.
 - **Usługi:** nadruk +1,99 zł/szt., personalizacja/adresowanie +2,99 zł/szt., ekspres +1,50 zł/szt.
+- **Nadruk ma dwa miejsca: przód koperty i zamknięcie (klapkę z tyłu)** — od 23 września 2026.
+  Każda strona to osobna dopłata w tej samej wysokości (`DEFAULT_PRICING.print` za przód,
+  `DEFAULT_PRICING.backPrint` za zamknięcie), obie strony łączą się ze sobą i z personalizacją.
+  Koperta DL z nadrukiem na przodzie i na zamknięciu: 6,56 zł brutto/szt.; z adresowaniem
+  dodatkowo: 9,55 zł. Grafikę na zamknięcie klient wgrywa **osobnym plikiem** (z własnymi uwagami
+  dla grafika) — nie ma opcji wpisania tekstu ani „tej samej grafiki co z przodu", więc nie
+  obiecuj ich w treściach. Minimum (10 szt.), terminy i wizualizacja są takie same jak przy
+  nadruku na przodzie. **Nie podajemy wymiarów pola nadruku na klapce** — decyzja właściciela;
+  pisz, że układ obu stron klient widzi na wizualizacji przed drukiem. Najmocniejszy argument
+  sprzedażowy: **adres odbiorcy na przodzie, logo na zamknięciu** — przód zostaje w całości na
+  dane, a marka jest widoczna przy otwieraniu. Nazwa produktu: sam przód zostaje „z nadrukiem",
+  zamknięcie dopisujemy („z nadrukiem na zamknięciu", „z nadrukiem na przodzie i zamknięciu").
+  Link z preselekcją: `?zamkniecie=1` (obok `?nadruk=1`).
 - **MOQ:** 1 szt. dla kopert gładkich, 10 szt. przy nadruku lub personalizacji. **(UWAGA: Wydruk z własnym logo już od 10 szt. to gigantyczna przewaga konkurencyjna na rynku poligraficznym! Drukarnie startują zazwyczaj od 100-500 szt. Zawsze podkreślaj to w treściach jako kluczową korzyść dla małych firm i organizatorów eventów: "Koperty z własnym nadrukiem już od 10 sztuk").**
 - **Terminy:** gładkie 2 dni robocze; z nadrukiem 5 dni (standard) lub 2 dni (ekspres).
 - **Dostawa:** 19,99 zł, kurier. **Faktura z odroczonym terminem 14 dni wyłącznie dla instytucji
@@ -103,7 +116,9 @@ przelewów. **Nie wpisuj tych danych ręcznie w treściach — zawsze odwołuj s
 
 ### 3.3 Zasoby wizualne
 W `public/images/` są **realne zdjęcia produktowe**: koperty DL w kolorach (`colors/`),
-z nadrukiem (`prints/`) i z personalizacją (`personalized/`) — w tym **zdjęcia nadruków
+z nadrukiem na przodzie (`prints/`), z nadrukiem na zamknięciu (`prints-flap/` — kadr koperty
+gładkiej z polem nadruku zaznaczonym na klapce, 19 kolorów) i z personalizacją (`personalized/`) —
+w tym **zdjęcia nadruków
 przygotowanych dla konkretnych branż**. To najmocniejszy zasób projektu pod strony branżowe
 i realizacje: pozwala zbudować LP dla kancelarii, hotelu czy salonu SPA na dowodzie, a nie na
 deklaracji. Przed napisaniem LP branżowego **sprawdź, jakie zdjęcie faktycznie istnieje** —
@@ -247,7 +262,7 @@ przechodzisz **całą** poniższą ścieżkę, bez pytania o zgodę na kolejne k
    białego tła i porównaj ją ze zdjęciami z `public/images/colors/`. Dopiero ta nazwa
    (`catalog.ts`) wchodzi do altu, podpisu i nazwy pliku.
 3. **Nazwij plik opisowo i sfrazowanie:** `<kolor>-koperta-<format>-<co-widać>.webp`, małe
-   litery, bez polskich znaków, myślniki. Konwencja jak w `colors/`, `prints/`, `personalized/`;
+   litery, bez polskich znaków, myślniki. Konwencja jak w `colors/`, `prints/`, `prints-flap/`, `personalized/`;
    kadry detaliczne trafiają do `details/`.
 4. **Zoptymalizuj.** WebP, jakość 78–82, dwie szerokości do `srcSet` (512 i 1024 px dla kadru
    w gridzie). Budżet: ≤120 kB dla 1024 px, ≤30 kB dla 512 px. Master zostaje poza katalogiem

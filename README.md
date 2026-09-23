@@ -105,12 +105,14 @@ src/
 Ten sam numer jest identyfikatorem `sessionId` w Przelewy24, tytułem przelewu, kluczem wyszukiwania
 w panelu Admina i numerem na fakturze.
 
-**Nazwa produktu** — `Koperta [Format] [Kolor] [z nadrukiem] [z personalizacją]`, budowana
+**Nazwa produktu** — `Koperta [Format] [Kolor] [z nadrukiem …] [z personalizacją]`, budowana
 w jednym miejscu (`buildProductName`) i używana wszędzie. Nazwa opisuje sam produkt; czas
 realizacji dotyczy całej przesyłki, więc jest osobnym atrybutem zamówienia, nie częścią nazwy.
+Nadruk na samym przodzie to „z nadrukiem"; zamknięcie dopisujemy: „z nadrukiem na zamknięciu"
+albo „z nadrukiem na przodzie i zamknięciu".
 
-**Cennik** — DL 2,58 zł, C6 2,12 zł, K4 2,15 zł brutto za sztukę; nadruk +1,99 zł,
-personalizacja +2,99 zł, ekspres +1,50 zł. Cena zależy wyłącznie od formatu — wszystkie 19 kolorów
+**Cennik** — DL 2,58 zł, C6 2,12 zł, K4 2,15 zł brutto za sztukę; nadruk na przodzie +1,99 zł,
+nadruk na zamknięciu (klapka z tyłu) +1,99 zł, personalizacja +2,99 zł, ekspres +1,50 zł. Cena zależy wyłącznie od formatu — wszystkie 19 kolorów
 kosztuje tyle samo, bez rabatów ilościowych.
 
 **Klient płaci tyle, ile zobaczył** — `DEFAULT_PRICING` w `src/lib/pricing.ts` jest jedynym

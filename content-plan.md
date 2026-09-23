@@ -268,9 +268,30 @@ sam jak panel przodu (plik i uwagi dla grafika).
 z frazami filaru F1 i z historią raportów GA4. Miejsce dopisujemy tylko wtedy, gdy w grę wchodzi
 zamknięcie: „z nadrukiem na zamknięciu" albo „z nadrukiem na przodzie i zamknięciu".
 
-**Do rozważenia przy kolejnych pozycjach planu:** fraza „nadruk na klapce koperty" / „logo na
-zamknięciu koperty" nie ma dziś właściciela w mapie fraz. Kandydatem jest sekcja na F1, nie
-osobny adres — to wariant tej samej usługi, więc osobna strona kanibalizowałaby filar.
+**Właściciel fraz:** „nadruk na klapce koperty" / „logo na zamknięciu koperty" przypisane do
+filara F1 (`keywords.md`, klaster K1) — to wariant tej samej usługi, więc osobna strona
+kanibalizowałaby filar.
+
+**Wdrożone na produkcję 23 września 2026** — commit `036a2d8`, deployment produkcyjny o 18:21
+po promocji w panelu. **IndexNow — wykonane:** `npm run indexnow` zgłosił 1 adres
+(`/koperty-z-nadrukiem`), HTTP 200 — przyjęte.
+
+**Druga fala treści tego samego dnia** — nadruk na zamknięciu opisany wszędzie, gdzie treść
+ograniczała nadruk do przodu albo pomijała jego cenę:
+- `/` — krok 1 procesu (również `HowTo`), lead sekcji usług i opis panelu nadruku (wcześniej
+  „na przedniej ściance koperty"). `PAGE_UPDATED` podbite.
+- `/koperty-personalizowane` — w cenniku i w FAQ „Czym różni się personalizacja od nadruku logo"
+  (również `FAQPage`) układ „adres na przodzie, logo na zamknięciu". `PAGE_UPDATED` podbite.
+- `/koperty-z-nadrukiem` — opis `Product` w danych strukturalnych.
+- Wpisy `cena-kopert-z-nadrukiem-i-koszt-zamowienia` (dopłata za zamknięcie) i
+  `jak-przygotowac-pliki-do-druku-na-kopertach` (grafika na zamknięcie osobnym plikiem) —
+  `updated` podbite.
+- Źródła faktów: `.claude/agents/seo-geo-strategist.md` (pkt 3.2 i 3.3), `knowledge-base.md`,
+  `keywords.md` (K1 i luki), `README.md`.
+
+Strony branżowe i strony kolorów zostały bez zmian — nie ograniczają nadruku do przodu, a „obie
+usługi" oznacza tam nadruk i personalizację, co nadal jest prawdą. Po wdrożeniu drugiej fali:
+`npm run indexnow` obejmie `/`, `/koperty-personalizowane` i oba wpisy.
 
 ### 16 września 2026 — poz. 27: `/koperty-na-certyfikaty` · dziewiąta LP Fazy 2
 

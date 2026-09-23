@@ -32,8 +32,15 @@ Naruszenie tej zasady = kanibalizacja.
 
 ## K1 — Koperty z nadrukiem / logo firmowe (rdzeń B2B) · P0
 
-Najsilniejszy komercyjnie klaster. Pokrywa się 1:1 z płatną usługą (+1,99 zł/szt.) i z profilem
-klienta z bazy wiedzy (kancelarie, hotele, kliniki, agencje). Intencja niemal wyłącznie firmowa.
+Najsilniejszy komercyjnie klaster. Pokrywa się 1:1 z płatną usługą (+1,99 zł/szt. za każdą
+zadrukowaną stronę — przód albo zamknięcie) i z profilem klienta z bazy wiedzy (kancelarie,
+hotele, kliniki, agencje). Intencja niemal wyłącznie firmowa.
+
+**Nadruk na zamknięciu (od 23 września 2026)** należy do tego klastra, nie tworzy własnego —
+to wariant tej samej usługi. Frazy typu `nadruk na klapce koperty`, `logo na zamknięciu
+koperty`, `koperty z nadrukiem na klapce` obsługuje filar `/koperty-z-nadrukiem` (wiersz
+w cenniku, specyfikacja „Miejsce nadruku", pytanie w FAQ). Osobna podstrona kanibalizowałaby
+filar.
 
 **URL docelowy:** `/koperty-z-nadrukiem` `[ISTNIEJE]` — opublikowany 13 sierpnia 2026.
 **Wsparcie:** wpis `cena-kopert-z-nadrukiem-i-koszt-zamowienia` `[ISTNIEJE]` — opublikowany
@@ -488,7 +495,8 @@ profilu klienta z bazy wiedzy. Do zweryfikowania w kolejnym eksporcie:
    keywordowych, bo są zadawane modelom, nie wyszukiwarkom: ~~„jakie koperty na zaproszenia
    firmowe"~~ (obsłużona od 15 września 2026 przez `/koperty-dla-agencji-eventowych`),
    „ile kosztuje nadruk logo na kopertach", „jaka koperta na voucher", „czym różni
-   się koperta DL od C6", „ile trwa druk kopert z logo". To materiał na sekcje FAQ i akapity
+   się koperta DL od C6", „ile trwa druk kopert z logo", „czy można nadrukować logo na
+   zamknięciu koperty" (obsłużona od 23 września 2026 w FAQ filara K1). To materiał na sekcje FAQ i akapity
    odpowiedzi — patrz agent `seo-geo-strategist`.
 
 ---

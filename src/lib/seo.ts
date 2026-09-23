@@ -434,7 +434,7 @@ export function printedEnvelopeProductJsonLd() {
     '@type': 'Product',
     '@id': `${url}#product`,
     name: 'Koperty DL z nadrukiem logo firmowego',
-    description: `Koperta DL ${FORMAT_MAP.DL.dimensions} z nadrukiem logo firmowego, w 19 kolorach papieru ozdobnego. Minimalna ilość ${DEFAULT_PRICING.moqWithPrint} sztuk, realizacja ${DEFAULT_PRICING.leadDaysStandard} dni roboczych lub ${DEFAULT_PRICING.leadDaysExpress} dni w trybie ekspresowym.`,
+    description: `Koperta DL ${FORMAT_MAP.DL.dimensions} z nadrukiem logo firmowego, w 19 kolorach papieru ozdobnego. Nadruk na przodzie, na zamknięciu (klapce z tyłu) albo na obu stronach — każda strona w tej samej cenie. Minimalna ilość ${DEFAULT_PRICING.moqWithPrint} sztuk, realizacja ${DEFAULT_PRICING.leadDaysStandard} dni roboczych lub ${DEFAULT_PRICING.leadDaysExpress} dni w trybie ekspresowym.`,
     brand: brandRef,
     sku: SKU.print,
     category: 'Koperty firmowe z nadrukiem',
