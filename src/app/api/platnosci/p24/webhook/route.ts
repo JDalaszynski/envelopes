@@ -73,7 +73,7 @@ export async function POST(request: Request) {
           action: result.sent
             ? 'Wysłano e-mail z potwierdzeniem zamówienia do klienta'
             : 'Błąd wysyłki e-maila z potwierdzeniem zamówienia do klienta',
-          detail: result.reason,
+          ...(result.reason ? { detail: result.reason } : {}),
         },
       ],
     });

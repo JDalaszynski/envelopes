@@ -31,9 +31,28 @@ function ensureApp(): App | null {
   return adminApp;
 }
 
+let firestore: Firestore | null = null;
+
 export function getDb(): Firestore | null {
   const instance = ensureApp();
-  return instance ? getFirestore(instance) : null;
+  if (!instance) return null;
+  if (!firestore) {
+    firestore = getFirestore(instance);
+    /* Firestore odrzuca CAŁY dokument, gdy choć jedno pole ma wartość
+       `undefined` — a pola opcjonalne (np. powód błędu przy udanej wysyłce
+       e-maila) naturalnie bywają puste. Bez tego ustawienia zapis zamówienia
+       kończy się wyjątkiem i pustą pięćsetką po stronie klienta.
+
+       `settings()` wolno wywołać tylko raz i tylko przed pierwszym użyciem
+       instancji. Przy hot-reloadzie w dev instancja bywa już używana, więc
+       wyjątek pochłaniamy — inaczej przewrócilibyśmy każde zapytanie do bazy. */
+    try {
+      firestore.settings({ ignoreUndefinedProperties: true });
+    } catch {
+      /* instancja już zainicjalizowana — zostaje przy swoich ustawieniach */
+    }
+  }
+  return firestore;
 }
 
 export function getAdminAuth(): Auth | null {

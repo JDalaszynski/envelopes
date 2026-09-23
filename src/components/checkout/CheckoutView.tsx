@@ -248,8 +248,15 @@ export function CheckoutView() {
           paymentMethod: payment,
         }),
       });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json.error ?? 'Nie udało się złożyć zamówienia.');
+      // Serwer może odpowiedzieć pustym ciałem (np. 500 z runtime'u), więc
+      // parsowanie nie może wywrócić się surowym błędem JSON-a pokazywanym
+      // potem klientowi w miejscu komunikatu sklepu.
+      const json = await res.json().catch(() => null);
+      if (!res.ok || !json) {
+        throw new Error(
+          json?.error ?? `Nie udało się złożyć zamówienia (błąd serwera ${res.status}).`
+        );
+      }
 
       clear();
 

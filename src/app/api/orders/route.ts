@@ -65,8 +65,32 @@ interface CreateOrderBody {
   marketingConsent?: boolean;
 }
 
-/** POST — złożenie zamówienia. */
+/**
+ * POST — złożenie zamówienia.
+ *
+ * Całość biegnie w `try`, bo nieobsłużony wyjątek w trasie kończy się
+ * odpowiedzią 500 z pustym ciałem, a przeglądarka pokazuje wtedy klientowi
+ * surowy błąd parsowania JSON zamiast komunikatu sklepu. Przyczynę zapisujemy
+ * w logu serwera pod sygnaturą, którą dostaje też klient.
+ */
 export async function POST(request: Request) {
+  try {
+    return await createOrder(request);
+  } catch (error) {
+    const reference = `ERR-${Date.now().toString(36).toUpperCase()}`;
+    console.error(`[Zamówienie ${reference}] Nieobsłużony błąd trasy:`, error);
+    return NextResponse.json(
+      {
+        error:
+          'Nie udało się zapisać zamówienia. Prosimy spróbować ponownie lub skontaktować się ze sklepem.',
+        reference,
+      },
+      { status: 500 }
+    );
+  }
+}
+
+async function createOrder(request: Request) {
   const user = await verifyRequest(request);
   const body = (await request.json()) as CreateOrderBody;
 
@@ -205,7 +229,7 @@ export async function POST(request: Request) {
     action: adminEmailResult.sent
       ? 'Wysłano powiadomienie e-mail do sklepu'
       : 'Błąd wysyłki powiadomienia e-mail do sklepu',
-    detail: adminEmailResult.reason,
+    ...(adminEmailResult.reason ? { detail: adminEmailResult.reason } : {}),
   });
 
   // E-mail potwierdzający — treść zależna od metody płatności (pkt 1.12).
@@ -218,7 +242,7 @@ export async function POST(request: Request) {
       action: confirmationResult.sent
         ? 'Wysłano e-mail z potwierdzeniem zamówienia do klienta'
         : 'Błąd wysyłki e-maila z potwierdzeniem zamówienia do klienta',
-      detail: confirmationResult.reason,
+      ...(confirmationResult.reason ? { detail: confirmationResult.reason } : {}),
     });
   }
 
