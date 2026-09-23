@@ -8,7 +8,7 @@ import { EnvelopePlaceholder } from '@/components/ui/EnvelopePlaceholder';
 import { useCart } from '@/components/providers/CartProvider';
 import { useAuth } from '@/components/providers/AuthProvider';
 import { DEFAULT_PRICING, DELIVERY_COST, formatPrice, round2 } from '@/lib/pricing';
-import { PAYMENT_METHOD_LABEL, isPaymentMethodAvailable } from '@/lib/orders';
+import { PAYMENT_METHOD_LABEL } from '@/lib/orders';
 import type { CustomerData, PaymentMethod } from '@/lib/types';
 
 const EMPTY_CUSTOMER: CustomerData = {
@@ -58,9 +58,7 @@ export function CheckoutView() {
   const { user, loading, login, register, loginWithGoogle, getToken } = useAuth();
 
   const [customer, setCustomer] = useState<CustomerData>(EMPTY_CUSTOMER);
-  const [payment, setPayment] = useState<PaymentMethod>(
-    isPaymentMethodAvailable('p24') ? 'p24' : 'przelew'
-  );
+  const [payment, setPayment] = useState<PaymentMethod>('p24');
 
   const [showLogin, setShowLogin] = useState(false);
   const [loginPassword, setLoginPassword] = useState('');
@@ -632,40 +630,36 @@ export function CheckoutView() {
             </header>
 
             <div className="stack" style={{ gap: 'var(--space-3)' }}>
-              {paymentOptions.map((option) => {
-                const available = isPaymentMethodAvailable(option.id);
-                return (
-                  <button
-                    key={option.id}
-                    type="button"
-                    className="option-card"
-                    aria-pressed={payment === option.id}
-                    disabled={!available}
-                    onClick={() => setPayment(option.id)}
-                  >
-                    <span className="payment-mark" aria-hidden="true">
-                      {option.logo ? (
-                        <img
-                          src={option.logo.src}
-                          alt=""
-                          width={option.logo.width}
-                          height={option.logo.height}
-                          loading="lazy"
-                          decoding="async"
-                        />
-                      ) : option.icon === 'transfer' ? (
-                        <TransferIcon />
-                      ) : (
-                        <InvoiceIcon />
-                      )}
-                    </span>
-                    <span>
-                      <strong>{PAYMENT_METHOD_LABEL[option.id]}</strong>
-                      <small>{available ? option.note : 'Tymczasowo niedostępne.'}</small>
-                    </span>
-                  </button>
-                );
-              })}
+              {paymentOptions.map((option) => (
+                <button
+                  key={option.id}
+                  type="button"
+                  className="option-card"
+                  aria-pressed={payment === option.id}
+                  onClick={() => setPayment(option.id)}
+                >
+                  <span className="payment-mark" aria-hidden="true">
+                    {option.logo ? (
+                      <img
+                        src={option.logo.src}
+                        alt=""
+                        width={option.logo.width}
+                        height={option.logo.height}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    ) : option.icon === 'transfer' ? (
+                      <TransferIcon />
+                    ) : (
+                      <InvoiceIcon />
+                    )}
+                  </span>
+                  <span>
+                    <strong>{PAYMENT_METHOD_LABEL[option.id]}</strong>
+                    <small>{option.note}</small>
+                  </span>
+                </button>
+              ))}
             </div>
 
             {payment === 'przelew' && (
@@ -823,20 +817,18 @@ export function CheckoutView() {
 
           {/* Logotypy banków i kart obsługiwanych przez bramkę — dowód, że
               płatność da się dokończyć znaną klientowi metodą. */}
-          {isPaymentMethodAvailable('p24') && (
-            <img
-              className="payment-methods-strip"
-              src="/images/metody-platnosci-przelewy24.webp"
-              alt="Metody płatności obsługiwane przez Przelewy24: Apple Pay, Google Pay, BLIK, Visa, Mastercard oraz przelewy z banków mBank, Idea, Crédit Agricole, iPKO, Millennium, Alior Bank, Santander, Bank Pekao, ING, BNP Paribas i T-Mobile Usługi Bankowe."
-              width={780}
-              height={180}
-              loading="lazy"
-              decoding="async"
-            />
-          )}
+          <img
+            className="payment-methods-strip"
+            src="/images/metody-platnosci-przelewy24.webp"
+            alt="Metody płatności obsługiwane przez Przelewy24: Apple Pay, Google Pay, BLIK, Visa, Mastercard oraz przelewy z banków mBank, Idea, Crédit Agricole, iPKO, Millennium, Alior Bank, Santander, Bank Pekao, ING, BNP Paribas i T-Mobile Usługi Bankowe."
+            width={780}
+            height={180}
+            loading="lazy"
+            decoding="async"
+          />
 
           <ul className="checkout-trust">
-            {isPaymentMethodAvailable('p24') && <li>Płatność szyfrowana — Przelewy24</li>}
+            <li>Płatność szyfrowana — Przelewy24</li>
             <li>Faktura VAT do każdego zamówienia</li>
             <li>Kontrola jakości przed wysyłką</li>
           </ul>

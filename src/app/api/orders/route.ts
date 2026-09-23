@@ -8,7 +8,6 @@ import {
   generateApprovalToken,
   isDeferredInvoice,
   isGatewayPayment,
-  isPaymentMethodAvailable,
   requiresVisualization,
 } from '@/lib/orders';
 import { adminNewOrderEmail, orderConfirmationEmail, sendEmail } from '@/lib/brevo';
@@ -76,15 +75,6 @@ export async function POST(request: Request) {
   }
   if (!body.customer?.email) {
     return NextResponse.json({ error: 'Brak adresu e-mail zamawiającego.' }, { status: 400 });
-  }
-  if (!isPaymentMethodAvailable(body.paymentMethod)) {
-    return NextResponse.json(
-      {
-        error:
-          'Wybrana metoda płatności jest tymczasowo niedostępna. Wybierz przelew tradycyjny lub fakturę z odroczonym terminem.',
-      },
-      { status: 400 }
-    );
   }
 
   const pricing = await getPricing();
