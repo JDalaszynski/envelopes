@@ -73,7 +73,10 @@ export async function registerTransaction(
     sessionId,
     amount,
     currency: 'PLN',
-    description: `Zamówienie ${order.number} — Envelopes`,
+    // Myślnik zamiast pauzy: dokumentacja P24 dopuszcza w polach tekstowych
+    // wyłącznie [a-zA-Z0-9 ęółśążźćń ĘÓŁŚĄŻŹĆŃ . / \ : -], a pauzy nie ma
+    // też w ISO-8859-2, na które bramka potrafi przepisać opis.
+    description: `Zamówienie ${order.number} - Envelopes`,
     email: order.customer.email,
     country: 'PL',
     language: 'pl',
@@ -89,7 +92,7 @@ export async function registerTransaction(
   try {
     const res = await fetch(`${API_BASE}/transaction/register`, {
       method: 'POST',
-      headers: { authorization: authHeader(), 'content-type': 'application/json' },
+      headers: { authorization: authHeader(), 'content-type': 'application/json; charset=utf-8' },
       body: JSON.stringify(body),
     });
     const json = (await res.json()) as { data?: { token?: string }; error?: string };
@@ -143,7 +146,7 @@ export async function verifyTransaction(n: P24Notification): Promise<boolean> {
   try {
     const res = await fetch(`${API_BASE}/transaction/verify`, {
       method: 'POST',
-      headers: { authorization: authHeader(), 'content-type': 'application/json' },
+      headers: { authorization: authHeader(), 'content-type': 'application/json; charset=utf-8' },
       body: JSON.stringify({
         merchantId: n.merchantId,
         posId: n.posId,
