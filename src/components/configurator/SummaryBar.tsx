@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { Fragment } from 'react';
 
 import { formatPrice } from '@/lib/pricing';
 import { buildProductName } from '@/lib/product-name';
@@ -43,6 +44,15 @@ export function SummaryBar({
   const format = FORMAT_MAP[config.format];
   const color = COLOR_MAP[config.color];
 
+  /* Każda usługa ma własny kadr — nadruk i adres na przodzie, nadruk na
+     klapce z tyłu — więc przy kilku usługach pokazujemy kilka miniatur,
+     a nie jedną, która przemilczałaby resztę. */
+  const views = [
+    config.print && 'nadruk',
+    config.personalization && 'personalizacja',
+    config.backPrint && 'zamkniecie',
+  ].filter(Boolean) as ('nadruk' | 'personalizacja' | 'zamkniecie')[];
+
   return (
     <aside className="summary-bar" aria-label="Podsumowanie konfiguracji">
       {problem && (
@@ -54,20 +64,39 @@ export function SummaryBar({
       <div className="summary-bar-inner">
         <div className="summary-bar-product" style={{ display: 'flex', gap: 'var(--space-3)', alignItems: 'center' }}>
           {config.format && config.color && (
-            <div style={{ display: 'flex', gap: 'var(--space-2)', flexShrink: 0, alignItems: 'center' }}>
-              {config.print && config.personalization ? (
-                <>
-                  <div style={{ width: 72 }}>
-                    <EnvelopePlaceholder format={config.format} colorId={config.color} ratio="photo" size="md" hasPrint={true} />
-                  </div>
-                  <span style={{ color: 'var(--color-ink-soft)', fontWeight: 600, fontSize: 16 }}>+</span>
-                  <div style={{ width: 72 }}>
-                    <EnvelopePlaceholder format={config.format} colorId={config.color} ratio="photo" size="md" hasPersonalization={true} />
-                  </div>
-                </>
+            <div className="summary-bar-thumbs" data-count={views.length}>
+              {views.length > 1 ? (
+                views.map((view, index) => (
+                  <Fragment key={view}>
+                    {index > 0 && (
+                      <span className="summary-bar-plus" aria-hidden="true">
+                        +
+                      </span>
+                    )}
+                    <div className="summary-bar-thumb">
+                      <EnvelopePlaceholder
+                        format={config.format}
+                        colorId={config.color}
+                        ratio="photo"
+                        size="md"
+                        hasPrint={view === 'nadruk'}
+                        hasPersonalization={view === 'personalizacja'}
+                        hasFlapPrint={view === 'zamkniecie'}
+                      />
+                    </div>
+                  </Fragment>
+                ))
               ) : (
-                <div style={{ width: 120 }}>
-                  <EnvelopePlaceholder format={config.format} colorId={config.color} ratio="photo" size="lg" hasPrint={config.print} hasPersonalization={config.personalization} />
+                <div className="summary-bar-thumb">
+                  <EnvelopePlaceholder
+                    format={config.format}
+                    colorId={config.color}
+                    ratio="photo"
+                    size="lg"
+                    hasPrint={config.print}
+                    hasPersonalization={config.personalization}
+                    hasFlapPrint={config.backPrint}
+                  />
                 </div>
               )}
             </div>

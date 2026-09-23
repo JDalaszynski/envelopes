@@ -4,7 +4,12 @@ import type { EnvelopeConfig } from './types';
 /**
  * Ustandaryzowana nazwa produktu (pkt 1.9).
  *
- *   Koperta [Format] [Kolor] [z nadrukiem] [z personalizacją]
+ *   Koperta [Format] [Kolor] [z nadrukiem …] [z personalizacją]
+ *
+ * Nadruk na samym przodzie zostaje „z nadrukiem" — tak brzmiała nazwa przed
+ * wprowadzeniem nadruku na zamknięciu i tak nazywają go strony ofertowe.
+ * Miejsce dopisujemy dopiero wtedy, gdy nadruk jest na zamknięciu, bo tylko
+ * wtedy sama nazwa przestaje mówić, co zamówiono.
  *
  * Nazwa opisuje wyłącznie sam produkt. Czas realizacji dotyczy całej
  * przesyłki, a nie pojedynczej pozycji, więc nie wchodzi do nazwy —
@@ -16,7 +21,9 @@ import type { EnvelopeConfig } from './types';
 export function buildProductName(config: EnvelopeConfig): string {
   const color = COLOR_MAP[config.color]?.name ?? config.color;
   const parts = ['Koperta', config.format, color];
-  if (config.print) parts.push('z nadrukiem');
+  if (config.print && config.backPrint) parts.push('z nadrukiem na przodzie i zamknięciu');
+  else if (config.print) parts.push('z nadrukiem');
+  else if (config.backPrint) parts.push('z nadrukiem na zamknięciu');
   if (config.personalization) parts.push('z personalizacją');
   return parts.join(' ');
 }
@@ -38,7 +45,7 @@ export function buildProductName(config: EnvelopeConfig): string {
 export function buildImageAlt(
   format: string,
   colorId: string,
-  variant?: 'nadruk' | 'personalizacja'
+  variant?: 'nadruk' | 'personalizacja' | 'zamkniecie'
 ): string {
   const color = COLOR_MAP[colorId];
   const name = color?.name ?? colorId;
@@ -68,7 +75,9 @@ export function buildImageAlt(
       ? `Dwie koperty ozdobne ${format} na białym tle, na przedniej zaznaczone pole nadruku logo`
       : variant === 'personalizacja'
         ? `Dwie koperty ozdobne ${format} na białym tle, na przedniej nadrukowany przykładowy adres odbiorcy`
-        : `Dwie koperty ozdobne ${format} na białym tle, widok klapki i tylnej ścianki`;
+        : variant === 'zamkniecie'
+          ? `Dwie koperty ozdobne ${format} na białym tle, na klapce zamknięcia zaznaczone pole nadruku logo`
+          : `Dwie koperty ozdobne ${format} na białym tle, widok klapki i tylnej ścianki`;
 
   return `${scene}. ${spec}.`;
 }

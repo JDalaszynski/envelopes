@@ -80,8 +80,11 @@ function configItem(
   price: PriceBreakdown,
   name: string
 ): Record<string, unknown> {
+  /* `nadruk` oznacza przód — tak jak przed wprowadzeniem nadruku na
+     zamknięciu — żeby raporty sprzed i po zmianie dało się zestawić. */
   const services = [
     config.print ? 'nadruk' : null,
+    config.backPrint ? 'nadruk na zamknięciu' : null,
     config.personalization ? 'personalizacja' : null,
   ].filter(Boolean);
 

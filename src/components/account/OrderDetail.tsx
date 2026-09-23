@@ -5,10 +5,10 @@ import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 
 import { EnvelopePlaceholder } from '@/components/ui/EnvelopePlaceholder';
+import { PrintSidesDetail } from '@/components/ui/PrintSidesDetail';
 import { PaymentPill } from '@/components/ui/StatusPill';
 import { useAuth } from '@/components/providers/AuthProvider';
 import { useCart } from '@/components/providers/CartProvider';
-import { formatBytes } from '@/components/ui/FileDropzone';
 import { personalizationScope } from '@/lib/catalog';
 import {
   BANK_TRANSFER_DETAILS,
@@ -150,6 +150,8 @@ export function OrderDetail({ number }: { number: string }) {
                     size="sm"
                     hideCaption
                     hasPrint={item.config.print}
+                    hasPersonalization={item.config.personalization}
+                    hasFlapPrint={item.config.backPrint}
                   />
                 </div>
                 <div style={{ flex: 1, minWidth: 180 }}>
@@ -161,34 +163,10 @@ export function OrderDetail({ number }: { number: string }) {
                   <p className="small muted" style={{ margin: '0 0 var(--space-2) 0' }}>
                     <strong>Czas realizacji:</strong> {item.config.shippingSpeed === 'ekspres' ? 'Tryb ekspresowy' : 'Tryb standardowy'}
                   </p>
-                  {item.config.printNotes && (
-                    <p className="small muted" style={{ margin: 0 }}>
-                      Uwagi dla grafika: {item.config.printNotes}
-                    </p>
-                  )}
                 </div>
               </div>
 
-              {item.config.printFiles.length > 0 && (
-                <div className="stack" style={{ gap: 'var(--space-2)', marginTop: 'var(--space-3)' }}>
-                  {item.config.printFiles.map((file) => (
-                    <div className="file-card" key={file.id}>
-                      <span className="file-icon" aria-hidden="true">
-                        {file.ext}
-                      </span>
-                      <span className="file-meta">
-                        <span className="file-name">{file.name}</span>
-                        <span className="mono-sm muted">{formatBytes(file.size)}</span>
-                      </span>
-                      {file.url && (
-                        <a className="btn btn-secondary btn-sm" href={file.url} target="_blank" rel="noreferrer">
-                          Podgląd
-                        </a>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
+              <PrintSidesDetail config={item.config} fileActionLabel="Podgląd" />
 
               {item.config.personalization && (
                 <p className="small muted" style={{ marginTop: 'var(--space-3)' }}>

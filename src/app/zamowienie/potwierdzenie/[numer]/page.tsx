@@ -130,6 +130,8 @@ export default async function ConfirmationPage({
                   size="sm"
                   hideCaption
                   hasPrint={item.config.print}
+                  hasPersonalization={item.config.personalization}
+                  hasFlapPrint={item.config.backPrint}
                 />
               </div>
               <div style={{ flex: 1, minWidth: 200 }}>

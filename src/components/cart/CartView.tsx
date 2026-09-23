@@ -9,6 +9,7 @@ import { useCart, EDIT_KEY } from '@/components/providers/CartProvider';
 import { trackBeginCheckout } from '@/lib/analytics';
 import { COLOR_MAP, FORMAT_MAP, personalizationScope } from '@/lib/catalog';
 import { DEFAULT_PRICING, DELIVERY_COST, formatPrice, leadTimeDays, round2 } from '@/lib/pricing';
+import { printSides } from '@/lib/print-sides';
 import type { EnvelopeConfig, ShippingSpeed } from '@/lib/types';
 
 export function CartView() {
@@ -135,6 +136,8 @@ function CartInner() {
                       size="md"
                       hideCaption
                       hasPrint={item.config.print}
+                      hasPersonalization={item.config.personalization}
+                      hasFlapPrint={item.config.backPrint}
                       sizes="(max-width: 620px) 240px, 220px"
                     />
                   </div>
@@ -148,18 +151,11 @@ function CartInner() {
 
                     <ul className="small muted" style={{ paddingLeft: 'var(--space-5)', margin: '0 0 var(--space-3)' }}>
                       <li>Ilość: {item.price.quantity} szt.</li>
-                      {item.config.print && (
-                        <li>
-                          Nadruk: {item.config.printFiles.length}{' '}
-                          {item.config.printFiles.length === 1 ? 'plik' : 'plików'}
-                          {item.config.printFiles.length > 0 && (
-                            <span className="mono-sm">
-                              {' '}
-                              ({item.config.printFiles.map((f) => f.name).join(', ')})
-                            </span>
-                          )}
+                      {printSides(item.config).map((spec) => (
+                        <li key={spec.side}>
+                          {spec.label}: {spec.summary}
                         </li>
-                      )}
+                      ))}
                       {item.config.personalization && (
                         <li>
                           Personalizacja —{' '}

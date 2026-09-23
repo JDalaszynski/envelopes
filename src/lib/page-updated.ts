@@ -34,8 +34,10 @@ export const PAGE_UPDATED: Record<string, string> = {
      specyfikacji prowadzą do poz. 46; karta „Kliniki medycyny estetycznej
      i salony SPA" — do poz. 22; karta „Biura rachunkowe i doradztwo
      finansowe" — do poz. 21. 15 września karta „Agencje eventowe, PR
-     i kreatywne" dostała odnośnik do poz. 25 */
-  '/koperty-z-nadrukiem': '2026-09-15',
+     i kreatywne" dostała odnośnik do poz. 25. 23 września: nadruk na
+     zamknięciu — wiersz w cenniku, wiersz „Miejsce nadruku" w specyfikacji
+     i pytanie w FAQ (także w `FAQPage`) */
+  '/koperty-z-nadrukiem': '2026-09-23',
   /* Karta „Hotele, resorty i pensjonaty" w sekcji „Dla kogo" dostała odnośnik
      do poz. 18; pod cennikiem doszedł odnośnik do poz. 46 — ten sam próg
      obowiązuje przy adresowaniu; karta „Kliniki, gabinety i salony SPA" —

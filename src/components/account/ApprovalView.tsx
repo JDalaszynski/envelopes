@@ -141,6 +141,8 @@ function ApprovalInner({ token }: { token: string }) {
               colorId={order.items[0]?.config.color ?? 'ecru'}
               ratio="wide"
               hasPrint={order.items[0]?.config.print}
+              hasPersonalization={order.items[0]?.config.personalization}
+              hasFlapPrint={order.items[0]?.config.backPrint}
             />
             <p className="mono-sm muted" style={{ marginTop: 'var(--space-3)' }}>
               {latest.file.name} · {formatBytes(latest.file.size)}

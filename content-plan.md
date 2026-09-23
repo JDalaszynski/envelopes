@@ -250,6 +250,28 @@ nie liczą się do kadencji czterech pozycji tygodniowo i nie mają filara.
 
 ## Dziennik wdrożeń
 
+### 23 września 2026 — nowa usługa: nadruk na zamknięciu (klapce z tyłu koperty)
+
+**Oferta dostała trzecią usługę druku.** Nadruk na zamknięciu kosztuje tyle samo co nadruk na
+przodzie (`DEFAULT_PRICING.backPrint`), liczy się osobno i łączy się dowolnie z nadrukiem na
+przodzie i z personalizacją. Minimum nakładu i terminy są te same, co przy każdym nadruku.
+Grafikę na klapkę klient wgrywa osobnym plikiem — panel zamknięcia w konfiguratorze jest taki
+sam jak panel przodu (plik i uwagi dla grafika).
+
+**Treści zaktualizowane w tym samym wdrożeniu:**
+- `/koperty-z-nadrukiem` — wiersz „Nadruk na zamknięciu" w cenniku `#cena`, wiersz „Miejsce
+  nadruku" w specyfikacji oraz nowe pytanie w `PRINT_FAQ_ITEMS` (również w `FAQPage`);
+  odpowiedź cenowa w FAQ dostała jedno zdanie o dopłacie za zamknięcie. `PAGE_UPDATED` podbite.
+- `/llms.txt` — pozycja w cenniku i doprecyzowany próg minimalnej ilości.
+
+**Nazewnictwo:** nazwa produktu dla samego przodu zostaje bez zmian („z nadrukiem") — zgodna
+z frazami filaru F1 i z historią raportów GA4. Miejsce dopisujemy tylko wtedy, gdy w grę wchodzi
+zamknięcie: „z nadrukiem na zamknięciu" albo „z nadrukiem na przodzie i zamknięciu".
+
+**Do rozważenia przy kolejnych pozycjach planu:** fraza „nadruk na klapce koperty" / „logo na
+zamknięciu koperty" nie ma dziś właściciela w mapie fraz. Kandydatem jest sekcja na F1, nie
+osobny adres — to wariant tej samej usługi, więc osobna strona kanibalizowałaby filar.
+
 ### 16 września 2026 — poz. 27: `/koperty-na-certyfikaty` · dziewiąta LP Fazy 2
 
 **Piąta LP branżowa pod filarem F1** — po kancelariach (poz. 17), biurach rachunkowych (poz. 21),

@@ -15,7 +15,7 @@ import { StepPrint } from '@/components/configurator/steps/StepPrint';
 import { StepPersonalization } from '@/components/configurator/steps/StepPersonalization';
 import { useCart, EDIT_KEY } from '@/components/providers/CartProvider';
 
-import { calculatePrice, minimumQuantity } from '@/lib/pricing';
+import { calculatePrice, minimumQuantity, needsProduction } from '@/lib/pricing';
 import {
   COLOR_MAP,
   DEFAULT_PERSONALIZATION_SCOPE,
@@ -32,6 +32,9 @@ const DEFAULT_CONFIG: EnvelopeConfig = {
   print: false,
   printFiles: [],
   printNotes: '',
+  backPrint: false,
+  backPrintFiles: [],
+  backPrintNotes: '',
   personalization: false,
   personalizationScope: DEFAULT_PERSONALIZATION_SCOPE,
   personalizationMethod: undefined,
@@ -51,6 +54,8 @@ interface Preselect {
   color?: string;
   step?: number;
   print?: boolean;
+  /** Nadruk na zamknięciu — `?zamkniecie=1` */
+  backPrint?: boolean;
   personalization?: boolean;
   personalizationScope?: PersonalizationScope;
 }
@@ -116,7 +121,9 @@ export function Configurator() {
         ? detail.personalizationScope
         : undefined;
 
-      if (!format && !color && !detail.print && !detail.personalization) return;
+      if (!format && !color && !detail.print && !detail.backPrint && !detail.personalization) {
+        return;
+      }
 
       /* Wejście z preselekcją — z wpisu blogowego albo ze strony koloru — jest
          rozpoczęciem konfiguracji tak samo jak kliknięcie w krok. To zresztą
@@ -129,6 +136,7 @@ export function Configurator() {
         ...(format ? { format } : {}),
         ...(color ? { color } : {}),
         ...(detail.print ? { print: true } : {}),
+        ...(detail.backPrint ? { backPrint: true } : {}),
         ...(detail.personalization ? { personalization: true } : {}),
         ...(detail.personalization && scope ? { personalizationScope: scope } : {}),
       }));
@@ -174,6 +182,7 @@ export function Configurator() {
       format: (params.get('format') as FormatId | null) ?? undefined,
       color: params.get('kolor') ?? undefined,
       print: params.get('nadruk') === '1',
+      backPrint: params.get('zamkniecie') === '1',
       personalization: params.get('personalizacja') === '1',
       personalizationScope: (params.get('zakres') as PersonalizationScope | null) ?? undefined,
     });
@@ -182,7 +191,7 @@ export function Configurator() {
   }, [applyPreselect]);
 
   const price = useMemo(() => calculatePrice(config), [config]);
-  const minimum = minimumQuantity(config.print || config.personalization);
+  const minimum = minimumQuantity(needsProduction(config));
 
   const problem = useMemo<Problem | null>(() => {
     if (!config.quantity || config.quantity < 1) {
@@ -197,7 +206,18 @@ export function Configurator() {
     if (config.print && config.printFiles.filter((f) => f.status === 'przeslano').length === 0) {
       return {
         ref: printRef,
-        message: 'Do nadruku potrzebujemy pliku z grafiką. Prosimy dodać go w sekcji Nadruk.',
+        message:
+          'Do nadruku na przodzie potrzebujemy pliku z grafiką. Prosimy dodać go w sekcji Nadruk.',
+      };
+    }
+    if (
+      config.backPrint &&
+      (config.backPrintFiles ?? []).filter((f) => f.status === 'przeslano').length === 0
+    ) {
+      return {
+        ref: printRef,
+        message:
+          'Do nadruku na zamknięciu potrzebujemy pliku z grafiką. Prosimy dodać go w sekcji Nadruk.',
       };
     }
     if (config.personalization && !config.personalizationMethod) {
@@ -334,26 +354,12 @@ export function Configurator() {
                 <span className="eyebrow">Krok 3 z 3 · opcjonalnie</span>
                 <h3>Nadruk i personalizacja</h3>
                 <p className="muted" style={{ marginTop: 'var(--space-2)' }}>
-                  Obie opcje można włączyć razem albo pominąć — koperta bez zadruku jest gotowa do
-                  wysyłki od ręki.
+                  Nadruk z przodu, nadruk na zamknięciu i personalizację można łączyć dowolnie albo
+                  pominąć — koperta bez zadruku jest gotowa do wysyłki od ręki.
                 </p>
               </div>
 
-              <StepPrint
-                enabled={config.print}
-                files={config.printFiles}
-                notes={config.printNotes ?? ''}
-                quantity={config.quantity}
-                minimum={minimumQuantity(true)}
-                onToggle={(print) =>
-                  patch({ print, ...(print ? {} : { printFiles: [], printNotes: '' }) })
-                }
-                onFilesChange={(printFiles) => patch({ printFiles })}
-                onNotesChange={(printNotes) => patch({ printNotes })}
-                onFixQuantity={() => patch({ quantity: minimumQuantity(true) })}
-                format={config.format}
-                colorId={config.color}
-              />
+              <StepPrint config={config} minimum={minimumQuantity(true)} onChange={patch} />
 
               <hr />
 

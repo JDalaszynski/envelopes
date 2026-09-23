@@ -33,9 +33,20 @@ export interface EnvelopeConfig {
   /** id koloru z COLORS */
   color: string;
   quantity: number;
+  /** Nadruk na przodzie koperty — nazwa pola sprzed nadruku na zamknięciu */
   print: boolean;
   printFiles: UploadedFile[];
   printNotes?: string;
+  /**
+   * Nadruk na zamknięciu, czyli na klapce z tyłu koperty. Niezależny od
+   * nadruku na przodzie i od personalizacji — wszystkie trzy się łączą.
+   *
+   * Pola są opcjonalne, bo koszyki zapisane w przeglądarce i zamówienia
+   * w bazie sprzed wprowadzenia opcji ich nie mają. Brak = opcja wyłączona.
+   */
+  backPrint?: boolean;
+  backPrintFiles?: UploadedFile[];
+  backPrintNotes?: string;
   personalization: boolean;
   /** Co drukujemy — pełny adres pocztowy czy samo imię i nazwisko */
   personalizationScope?: PersonalizationScope;
@@ -53,6 +64,8 @@ export interface EnvelopeConfig {
 export interface PriceBreakdown {
   unitBase: number;
   unitPrint: number;
+  /** Brak w zamówieniach zapisanych przed wprowadzeniem nadruku na zamknięciu */
+  unitBackPrint?: number;
   unitPersonalization: number;
   unitExpress: number;
   unitTotal: number;

@@ -1,3 +1,4 @@
+import { needsProduction } from './pricing';
 import type { PaymentMethod, PaymentStatus, CartItem } from './types';
 
 /* ── Numer zamówienia (pkt 1.8) ─────────────────────────────── */
@@ -50,7 +51,7 @@ export function isDeferredInvoice(method: PaymentMethod): boolean {
 
 /** Czy zamówienie w ogóle przechodzi przez krok akceptacji wizualizacji (pkt 1.11) */
 export function requiresVisualization(items: CartItem[]): boolean {
-  return items.some((item) => item.config.print || item.config.personalization);
+  return items.some((item) => needsProduction(item.config));
 }
 
 /** Token do akceptacji wizualizacji z poziomu e-maila, bez logowania (pkt 1.11) */

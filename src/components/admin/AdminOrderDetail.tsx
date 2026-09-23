@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { EnvelopePlaceholder } from '@/components/ui/EnvelopePlaceholder';
+import { PrintSidesDetail } from '@/components/ui/PrintSidesDetail';
 import { PaymentPill } from '@/components/ui/StatusPill';
 import { formatBytes } from '@/components/ui/FileDropzone';
 import { useAuth } from '@/components/providers/AuthProvider';
@@ -316,6 +317,8 @@ export function AdminOrderDetail({ number }: { number: string }) {
                       size="sm"
                       hideCaption
                       hasPrint={item.config.print}
+                      hasPersonalization={item.config.personalization}
+                      hasFlapPrint={item.config.backPrint}
                     />
                   </div>
                   <div style={{ flex: 1, minWidth: 160 }}>
@@ -326,15 +329,12 @@ export function AdminOrderDetail({ number }: { number: string }) {
                     <p className="small muted" style={{ margin: 'var(--space-1) 0 0' }}>
                       Czas realizacji: {item.config.shippingSpeed === 'ekspres' ? 'Tryb ekspresowy' : 'Tryb standardowy'}
                     </p>
-                    {item.config.printNotes && (
-                      <p className="small" style={{ margin: 'var(--space-2) 0 0' }}>
-                        Uwagi: {item.config.printNotes}
-                      </p>
-                    )}
                   </div>
                 </div>
 
-                {[...item.config.printFiles, ...(item.config.personalizationFile ? [item.config.personalizationFile] : [])].map(
+                <PrintSidesDetail config={item.config} fileActionLabel="Pobierz" />
+
+                {(item.config.personalizationFile ? [item.config.personalizationFile] : []).map(
                   (file) => (
                     <div className="file-card" key={file.id} style={{ marginTop: 'var(--space-2)' }}>
                       <span className="file-icon" aria-hidden="true">

@@ -99,6 +99,30 @@ const PRINTED_DL = calculatePrice({
   shippingSpeed: 'standard',
 });
 
+/** Koperta DL z nadrukiem na przodzie i na zamknięciu — jedna sztuka. */
+const PRINTED_BOTH_SIDES_DL = calculatePrice({
+  format: 'DL',
+  color: '',
+  quantity: 1,
+  print: true,
+  printFiles: [],
+  backPrint: true,
+  personalization: false,
+  shippingSpeed: 'standard',
+});
+
+/** Jak wyżej, z adresowaniem odbiorcy — wszystkie trzy usługi naraz. */
+const PRINTED_BOTH_SIDES_PERSONALIZED_DL = calculatePrice({
+  format: 'DL',
+  color: '',
+  quantity: 1,
+  print: true,
+  printFiles: [],
+  backPrint: true,
+  personalization: true,
+  shippingSpeed: 'standard',
+});
+
 const PRINT_FILE_MAX_MB = Math.round(PRINT_FILE_MAX_BYTES / (1024 * 1024));
 
 /**
@@ -113,7 +137,11 @@ const PRINT_FILE_MAX_MB = Math.round(PRINT_FILE_MAX_BYTES / (1024 * 1024));
 export const PRINT_FAQ_ITEMS: FaqItem[] = [
   {
     question: 'Ile kosztuje nadruk logo na kopertach?',
-    answer: `Nadruk logo kosztuje ${formatPrice(DEFAULT_PRICING.print)} brutto za sztukę i doliczamy go do ceny koperty. Koperta DL ${FORMAT_MAP.DL.dimensions} kosztuje ${formatPrice(DEFAULT_PRICING.base.DL)} brutto, więc koperta DL z nadrukiem to ${formatPrice(PRINTED_DL.unitTotal)} brutto (${formatPrice(PRINTED_DL.net)} netto) za sztukę. Cena jest identyczna we wszystkich 19 kolorach — nadruk na czarnej kopercie kosztuje tyle samo, co na białej.`,
+    answer: `Nadruk logo kosztuje ${formatPrice(DEFAULT_PRICING.print)} brutto za sztukę i doliczamy go do ceny koperty. Koperta DL ${FORMAT_MAP.DL.dimensions} kosztuje ${formatPrice(DEFAULT_PRICING.base.DL)} brutto, więc koperta DL z nadrukiem to ${formatPrice(PRINTED_DL.unitTotal)} brutto (${formatPrice(PRINTED_DL.net)} netto) za sztukę. Cena jest identyczna we wszystkich 19 kolorach — nadruk na czarnej kopercie kosztuje tyle samo, co na białej. Taką samą dopłatę liczymy osobno za nadruk na zamknięciu, czyli na klapce z tyłu koperty.`,
+  },
+  {
+    question: 'Czy można nadrukować logo na zamknięciu koperty?',
+    answer: `Tak. Nadruk na zamknięciu, czyli na klapce z tyłu koperty, kosztuje ${formatPrice(DEFAULT_PRICING.backPrint)} brutto za sztukę — tyle samo, co nadruk na przodzie — i wybiera się go w konfiguratorze niezależnie od przodu. Koperta DL z nadrukiem na przodzie i na zamknięciu kosztuje ${formatPrice(PRINTED_BOTH_SIDES_DL.unitTotal)} brutto za sztukę, a z dodatkowym adresowaniem odbiorcy ${formatPrice(PRINTED_BOTH_SIDES_PERSONALIZED_DL.unitTotal)}. Grafikę na klapkę — logo, sygnet, monogram albo adres zwrotny — przesyłają Państwo w konfiguratorze osobnym plikiem, tak samo jak grafikę na przód. Minimalna ilość to ${DEFAULT_PRICING.moqWithPrint} sztuk, a projekt obu stron zatwierdzają Państwo na jednej wizualizacji przed drukiem.`,
   },
   {
     question: 'Ile kopert z nadrukiem trzeba zamówić minimalnie?',

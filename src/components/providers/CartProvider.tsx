@@ -10,7 +10,7 @@ import {
   type ReactNode,
 } from 'react';
 
-import { calculatePrice, DEFAULT_PRICING, round2 } from '@/lib/pricing';
+import { calculatePrice, DEFAULT_PRICING, needsProduction, round2 } from '@/lib/pricing';
 import { buildProductName } from '@/lib/product-name';
 import type { CartItem, EnvelopeConfig, ShippingSpeed } from '@/lib/types';
 
@@ -152,7 +152,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   );
 
   const requiresProduction = useMemo(
-    () => items.some((item) => item.config.print || item.config.personalization),
+    () => items.some((item) => needsProduction(item.config)),
     [items]
   );
 

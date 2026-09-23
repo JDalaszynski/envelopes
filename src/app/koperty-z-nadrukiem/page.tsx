@@ -67,6 +67,7 @@ const plain = calculatePrice({ ...BASE_CONFIG });
 const printed = calculatePrice({ ...BASE_CONFIG, print: true });
 const printedPersonalized = calculatePrice({ ...BASE_CONFIG, print: true, personalization: true });
 const printedExpress = calculatePrice({ ...BASE_CONFIG, print: true, shippingSpeed: 'ekspres' });
+const printedBothSides = calculatePrice({ ...BASE_CONFIG, print: true, backPrint: true });
 
 /** Cena netto pojedynczego składnika — ten sam VAT co w kalkulatorze. */
 function net(gross: number): number {
@@ -422,6 +423,16 @@ export default function PrintedEnvelopesPage() {
                   <td>Cena jednostkowa zamówienia z nadrukiem</td>
                 </tr>
                 <tr>
+                  <td>Nadruk na zamknięciu (klapka z tyłu) — opcjonalnie</td>
+                  <td className="mono-sm">+{formatPrice(DEFAULT_PRICING.backPrint)}</td>
+                  <td className="mono-sm">+{formatPrice(net(DEFAULT_PRICING.backPrint))}</td>
+                  <td>
+                    Logo, sygnet albo adres zwrotny na klapce, z osobnego pliku; koperta z nadrukiem
+                    na obu stronach:{' '}
+                    {formatPrice(printedBothSides.unitTotal)} brutto
+                  </td>
+                </tr>
+                <tr>
                   <td>Personalizacja (adresowanie) — opcjonalnie</td>
                   <td className="mono-sm">+{formatPrice(DEFAULT_PRICING.personalization)}</td>
                   <td className="mono-sm">+{formatPrice(net(DEFAULT_PRICING.personalization))}</td>
@@ -589,6 +600,13 @@ export default function PrintedEnvelopesPage() {
                 <tr>
                   <th scope="row">Okienko adresowe</th>
                   <td>Brak — wszystkie koperty są pełne</td>
+                </tr>
+                <tr>
+                  <th scope="row">Miejsce nadruku</th>
+                  <td>
+                    Przód koperty, zamknięcie (klapka z tyłu) albo obie strony — każda strona{' '}
+                    {formatPrice(DEFAULT_PRICING.print)} brutto/szt.
+                  </td>
                 </tr>
                 <tr>
                   <th scope="row">Minimalna ilość</th>

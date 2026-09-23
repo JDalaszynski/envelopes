@@ -49,6 +49,7 @@ const PLAIN = DEFAULT_PRICING.base.DL;
 const PRINTED = round2(PLAIN + DEFAULT_PRICING.print);
 const PERSONALIZED = round2(PLAIN + DEFAULT_PRICING.personalization);
 const FULL = round2(PLAIN + DEFAULT_PRICING.print + DEFAULT_PRICING.personalization);
+const BOTH_SIDES = round2(PLAIN + DEFAULT_PRICING.print + DEFAULT_PRICING.backPrint);
 
 /** Lista wykończeń bez dopłaty — czytana z katalogu, nie wpisana. */
 const FINISHES = Array.from(
@@ -178,6 +179,7 @@ Kontakt: ${CONTACT_DETAILS.email}, tel. ${CONTACT_DETAILS.phone} (${CONTACT_DETA
 
 - Koperta gładka DL: ${formatPrice(PLAIN)} (${net(PLAIN)} netto).
 - Nadruk logo firmowego: dopłata ${formatPrice(DEFAULT_PRICING.print)} za sztukę, razem ${formatPrice(PRINTED)} (${net(PRINTED)} netto).
+- Nadruk na zamknięciu (klapce z tyłu koperty): dopłata ${formatPrice(DEFAULT_PRICING.backPrint)} za sztukę, niezależna od nadruku na przodzie. Grafikę na klapkę (np. logo, sygnet albo adres zwrotny) klient przesyła osobnym plikiem. Nadruk na przodzie i na zamknięciu razem: ${formatPrice(BOTH_SIDES)} (${net(BOTH_SIDES)} netto).
 - Personalizacja, czyli nadruk danych odbiorcy: dopłata ${formatPrice(DEFAULT_PRICING.personalization)} za sztukę, razem ${formatPrice(PERSONALIZED)} (${net(PERSONALIZED)} netto).
 - Nadruk logo i personalizacja jednocześnie: ${formatPrice(FULL)} (${net(FULL)} netto).
 - Tryb ekspresowy: dopłata ${formatPrice(DEFAULT_PRICING.express)} za sztukę.
@@ -188,7 +190,7 @@ Kontakt: ${CONTACT_DETAILS.email}, tel. ${CONTACT_DETAILS.phone} (${CONTACT_DETA
 ## Minimalna ilość zamówienia
 
 - Koperty gładkie, bez nadruku i bez personalizacji: od ${DEFAULT_PRICING.moqWithoutPrint} sztuki.
-- Koperty z nadrukiem logo lub z personalizacją: od ${DEFAULT_PRICING.moqWithPrint} sztuk.
+- Koperty z nadrukiem (na przodzie lub na zamknięciu) albo z personalizacją: od ${DEFAULT_PRICING.moqWithPrint} sztuk.
 - Powyżej ${BULK_QUOTE_THRESHOLD.toLocaleString('pl-PL')} sztuk warunki ustalane są indywidualnie przez formularz wyceny.
 
 ## Terminy realizacji (dni robocze)

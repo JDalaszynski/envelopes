@@ -17,7 +17,10 @@ import type { EnvelopeConfig, PriceBreakdown, DeliveryMethod } from './types';
  */
 export interface PricingConfig {
   base: Record<FormatId, number>;
+  /** Nadruk na przodzie koperty */
   print: number;
+  /** Nadruk na zamknięciu (klapka z tyłu) — liczony niezależnie od przodu */
+  backPrint: number;
   personalization: number;
   express: number;
   /** Stawka jest identyczna dla obu przewoźników — patrz DEFAULT_PRICING */
@@ -39,6 +42,7 @@ export const DEFAULT_PRICING: PricingConfig = {
   // Cena zależy wyłącznie od formatu — wszystkie 19 kolorów kosztuje tyle samo
   base: { DL: 2.58, C6: 2.12, K4: 2.15 },
   print: 1.99,
+  backPrint: 1.99,
   personalization: 2.99,
   express: 1.5,
   // Koszt dostawy jest stały niezależnie od przewoźnika i wartości zamówienia.
@@ -133,9 +137,12 @@ export function calculatePrice(
 ): PriceBreakdown {
   const unitBase = pricing.base[config.format] ?? 0;
   const unitPrint = config.print ? pricing.print : 0;
+  const unitBackPrint = config.backPrint ? pricing.backPrint : 0;
   const unitPersonalization = config.personalization ? pricing.personalization : 0;
   const unitExpress = config.shippingSpeed === 'ekspres' ? pricing.express : 0;
-  const unitTotal = round2(unitBase + unitPrint + unitPersonalization + unitExpress);
+  const unitTotal = round2(
+    unitBase + unitPrint + unitBackPrint + unitPersonalization + unitExpress
+  );
   const quantity = Math.max(0, Math.floor(config.quantity || 0));
   const gross = round2(unitTotal * quantity);
   const net = round2(gross / (1 + pricing.vatRate));
@@ -143,6 +150,7 @@ export function calculatePrice(
   return {
     unitBase,
     unitPrint,
+    unitBackPrint,
     unitPersonalization,
     unitExpress,
     unitTotal,
@@ -151,6 +159,19 @@ export function calculatePrice(
     net,
     vat: round2(gross - net),
   };
+}
+
+/**
+ * Czy pozycja przechodzi przez produkcję — nadruk (z przodu lub na
+ * zamknięciu) albo personalizacja. Od tego zależą minimalna ilość, akceptacja
+ * wizualizacji, czas realizacji i dostępność ekspresu. Warunek stał wcześniej
+ * w kilku miejscach jako `print || personalization`; jedna funkcja nie
+ * pozwala, żeby kolejna usługa znów objęła tylko część z nich.
+ */
+export function needsProduction(
+  config: Pick<EnvelopeConfig, 'print' | 'backPrint' | 'personalization'>
+): boolean {
+  return Boolean(config.print || config.backPrint || config.personalization);
 }
 
 /** Minimalna ilość dla danej konfiguracji (pkt 1.2 — MOQ). */

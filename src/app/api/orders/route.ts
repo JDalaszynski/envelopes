@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 
 import { verifyRequest } from '@/lib/firebase/admin';
 import { getPricing, listOrders, nextOrderNumber, saveOrder } from '@/lib/store';
-import { calculatePrice, estimatedDeliveryDate, round2 } from '@/lib/pricing';
+import { calculatePrice, estimatedDeliveryDate, needsProduction, round2 } from '@/lib/pricing';
 import { buildProductName } from '@/lib/product-name';
 import {
   generateApprovalToken,
@@ -107,11 +107,9 @@ async function createOrder(request: Request) {
      — ekspres dotyczy całej przesyłki, więc obejmuje wszystkie pozycje albo żadnej,
      — zamówienie bez nadruku i personalizacji nie przechodzi przez produkcję,
        więc nie ma czego przyspieszać: dopłaty ekspresowej nie naliczamy. */
-  const needsProduction = body.items.some(
-    (entry) => entry.config.print || entry.config.personalization
-  );
+  const orderNeedsProduction = body.items.some((entry) => needsProduction(entry.config));
   const orderSpeed =
-    needsProduction && body.items.some((entry) => entry.config.shippingSpeed === 'ekspres')
+    orderNeedsProduction && body.items.some((entry) => entry.config.shippingSpeed === 'ekspres')
       ? 'ekspres'
       : 'standard';
 
@@ -129,12 +127,18 @@ async function createOrder(request: Request) {
     };
   });
 
+  /* Próg obejmuje każdą pozycję, która idzie do produkcji — także samą
+     personalizację i sam nadruk na zamknięciu. Wcześniej sprawdzaliśmy tylko
+     nadruk z przodu, więc ominięcie konfiguratora pozwalało zamówić
+     pojedynczą kopertę z adresem. */
   const minimumViolation = items.find(
-    (item) => item.config.print && item.price.quantity < pricing.moqWithPrint
+    (item) => needsProduction(item.config) && item.price.quantity < pricing.moqWithPrint
   );
   if (minimumViolation) {
     return NextResponse.json(
-      { error: `Minimalna ilość dla koperty z nadrukiem to ${pricing.moqWithPrint} szt.` },
+      {
+        error: `Minimalna ilość dla koperty z nadrukiem lub personalizacją to ${pricing.moqWithPrint} szt.`,
+      },
       { status: 400 }
     );
   }

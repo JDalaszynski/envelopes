@@ -2,6 +2,7 @@ import 'server-only';
 
 import { personalizationScope } from './catalog';
 import { formatPrice, formatDate } from './pricing';
+import { printSides } from './print-sides';
 import {
   BANK_TRANSFER_DETAILS,
   CONTACT_DETAILS,
@@ -255,6 +256,18 @@ ${data.quantity ? `<strong>Szacowana ilość:</strong> ${data.quantity} szt.<br>
   };
 }
 
+/** Treść wpisana przez klienta trafia do HTML-a e-maila — bez tego `<` w adresie łamie układ. */
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+/** Część nazwy załącznika dla strony nadruku — grafik od razu widzi, gdzie idzie plik. */
+const PRINT_SIDE_FILE_TAG = { przod: 'Nadruk_przod', zamkniecie: 'Nadruk_zamkniecie' } as const;
+
 /** Powiadomienie do obsługi sklepu o nowym zamówieniu. */
 export async function adminNewOrderEmail(order: Order): Promise<EmailPayload> {
   const isPaid = order.paymentStatus === 'oplacone';
@@ -271,9 +284,15 @@ export async function adminNewOrderEmail(order: Order): Promise<EmailPayload> {
     let hasFiles = false;
     let itemHtml = `<h4 style="margin: 16px 0 8px;">Pozycja ${posNum}: ${item.name}</h4><ul style="margin:0 0 16px;padding-left:20px;">`;
 
-    for (const [fIdx, file] of item.config.printFiles.entries()) {
-      if (file.url) {
-        const name = `Pozycja_${posNum}_Nadruk_${fIdx + 1}_${safeName}${file.ext}`;
+    /* Przód i zamknięcie opisujemy osobno, a nazwa załącznika niesie stronę:
+       grafik od razu widzi, który plik idzie na klapkę. */
+    for (const spec of printSides(item.config)) {
+      itemHtml += `<li><strong>${spec.label}:</strong>`;
+      let sideHtml = '';
+
+      for (const [fIdx, file] of spec.files.entries()) {
+        if (!file.url) continue;
+        const name = `Pozycja_${posNum}_${PRINT_SIDE_FILE_TAG[spec.side]}_${fIdx + 1}_${safeName}.${file.ext}`;
         const absoluteUrl = file.url.startsWith('/') ? `${siteUrl}${file.url}` : file.url;
         if (absoluteUrl.startsWith('https://')) {
           attachment.push({ url: absoluteUrl, name });
@@ -283,14 +302,20 @@ export async function adminNewOrderEmail(order: Order): Promise<EmailPayload> {
             attachment.push({ content: buffer.toString('base64'), name });
           }
         }
-        itemHtml += `<li><a href="${absoluteUrl}">Nadruk ${fIdx + 1} (${name})</a></li>`;
-        hasFiles = true;
+        sideHtml += `<li><a href="${absoluteUrl}">Plik ${fIdx + 1} (${name})</a></li>`;
       }
+
+      if (spec.notes) {
+        sideHtml += `<li>Uwagi dla grafika: ${escapeHtml(spec.notes)}</li>`;
+      }
+      if (sideHtml) itemHtml += `<ul style="margin:4px 0 0;padding-left:20px;">${sideHtml}</ul>`;
+      itemHtml += `</li>`;
+      hasFiles = true;
     }
 
     const pFile = item.config.personalizationFile;
     if (pFile && pFile.url) {
-      const name = `Pozycja_${posNum}_Personalizacja_${safeName}${pFile.ext}`;
+      const name = `Pozycja_${posNum}_Personalizacja_${safeName}.${pFile.ext}`;
       const absoluteUrl = pFile.url.startsWith('/') ? `${siteUrl}${pFile.url}` : pFile.url;
       if (absoluteUrl.startsWith('https://')) {
         attachment.push({ url: absoluteUrl, name });
@@ -312,12 +337,9 @@ export async function adminNewOrderEmail(order: Order): Promise<EmailPayload> {
     }
 
     if (item.config.personalizationText) {
-      itemHtml += `<li><strong>Tekst personalizacji:</strong> ${item.config.personalizationText}</li>`;
-      hasFiles = true;
-    }
-
-    if (item.config.printNotes) {
-      itemHtml += `<li><strong>Uwagi do druku:</strong> ${item.config.printNotes}</li>`;
+      itemHtml += `<li><strong>Tekst personalizacji:</strong> ${escapeHtml(
+        item.config.personalizationText
+      )}</li>`;
       hasFiles = true;
     }
 

@@ -24,6 +24,24 @@ interface Props {
   /** Czy pokazywać zdjęcie z podglądem personalizacji */
   hasPersonalization?: boolean;
   /**
+   * Czy pokazywać zdjęcie z polem nadruku na zamknięciu (klapce). Ma
+   * najniższy priorytet: przód koperty z nadrukiem albo z adresem mówi
+   * o konfiguracji więcej, więc kadr klapki pokazujemy dopiero wtedy, gdy
+   * zamknięcie jest jedyną zadrukowaną stroną.
+   */
+  hasFlapPrint?: boolean;
+  /**
+   * Dopasowanie zdjęcia do ramki. `cover` przycina puste białe tło wokół
+   * kopert — przydaje się w szerokich kafelkach, gdzie `contain`
+   * zmniejszałby koperty do paska na środku kadru.
+   */
+  fit?: 'contain' | 'cover';
+  /**
+   * Znacznik ramki. `span` pozwala umieścić kadr wewnątrz `<label>` albo
+   * `<button>`, które przyjmują wyłącznie treść frazową.
+   */
+  as?: 'figure' | 'span';
+  /**
    * Realna szerokość kadru w układzie. Domyślna wartość opisuje kartę
    * w siatce czterokolumnowej — najczęstsze użycie komponentu. Podgląd
    * w konfiguratorze jest szerszy i podaje własną wartość.
@@ -54,6 +72,9 @@ export function EnvelopePlaceholder({
   size = 'md',
   hasPrint = false,
   hasPersonalization = false,
+  hasFlapPrint = false,
+  fit = 'contain',
+  as: Frame = 'figure',
   sizes = DEFAULT_SIZES,
   eager = false,
 }: Props) {
@@ -70,20 +91,32 @@ export function EnvelopePlaceholder({
   const printUrl = hasPrint
     ? color?.printImages?.[format as keyof typeof color.printImages]
     : undefined;
+  const flapPrintUrl = hasFlapPrint
+    ? color?.flapPrintImages?.[format as keyof typeof color.flapPrintImages]
+    : undefined;
   const imageUrl =
-    personalizedUrl || printUrl || color?.images?.[format as keyof typeof color.images];
+    personalizedUrl ||
+    printUrl ||
+    flapPrintUrl ||
+    color?.images?.[format as keyof typeof color.images];
 
   /* Alt opisuje to, co faktycznie widać na kadrze — nadruk i personalizacja
      mają własne zdjęcia, więc muszą mieć własny opis (pkt 8.3). */
   const alt = buildImageAlt(
     format,
     colorId,
-    personalizedUrl ? 'personalizacja' : printUrl ? 'nadruk' : undefined
+    personalizedUrl
+      ? 'personalizacja'
+      : printUrl
+        ? 'nadruk'
+        : flapPrintUrl
+          ? 'zamkniecie'
+          : undefined
   );
 
   if (imageUrl) {
     return (
-      <figure
+      <Frame
         className="placeholder"
         style={{
           aspectRatio: RATIOS[ratio],
@@ -108,14 +141,14 @@ export function EnvelopePlaceholder({
           loading={eager ? 'eager' : 'lazy'}
           fetchPriority={eager ? 'high' : undefined}
           decoding="async"
-          style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+          style={{ width: '100%', height: '100%', objectFit: fit }}
         />
-      </figure>
+      </Frame>
     );
   }
 
   return (
-    <figure
+    <Frame
       className="placeholder"
       role="img"
       aria-label={alt}
@@ -156,11 +189,11 @@ export function EnvelopePlaceholder({
         <circle cx="60" cy="52" r="7" fill="var(--color-seal)" opacity="0.9" />
         <circle cx="60" cy="52" r="4" fill="none" stroke="rgba(255,255,255,.4)" strokeWidth="1" />
       </svg>
-      {!hideCaption && (
+      {!hideCaption && Frame === 'figure' && (
         <figcaption className="mono-sm placeholder-caption" style={{ fontSize: captionSize }}>
           {caption}
         </figcaption>
       )}
-    </figure>
+    </Frame>
   );
 }

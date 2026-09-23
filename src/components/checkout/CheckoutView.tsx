@@ -7,7 +7,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { EnvelopePlaceholder } from '@/components/ui/EnvelopePlaceholder';
 import { useCart } from '@/components/providers/CartProvider';
 import { useAuth } from '@/components/providers/AuthProvider';
-import { DEFAULT_PRICING, DELIVERY_COST, formatPrice, round2 } from '@/lib/pricing';
+import { DEFAULT_PRICING, DELIVERY_COST, formatPrice, needsProduction, round2 } from '@/lib/pricing';
 import { PAYMENT_METHOD_LABEL } from '@/lib/orders';
 import type { CustomerData, PaymentMethod } from '@/lib/types';
 
@@ -186,7 +186,7 @@ export function CheckoutView() {
 
   const gross = round2(itemsGross + DELIVERY_COST);
   const net = round2(gross / (1 + DEFAULT_PRICING.vatRate));
-  const requiresApproval = items.some((i) => i.config.print || i.config.personalization);
+  const requiresApproval = items.some((i) => needsProduction(i.config));
 
   if (ready && items.length === 0) {
     return (
@@ -712,6 +712,8 @@ export function CheckoutView() {
                     size="sm"
                     hideCaption
                     hasPrint={item.config.print}
+                    hasPersonalization={item.config.personalization}
+                    hasFlapPrint={item.config.backPrint}
                   />
                 </div>
                 <div style={{ minWidth: 0 }}>

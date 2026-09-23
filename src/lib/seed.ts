@@ -128,7 +128,18 @@ export function seedOrders(): Order[] {
             status: 'przeslano',
           },
         ],
-        printNotes: 'Logo wyśrodkowane na klapce, tłoczenie bez laminatu.',
+        printNotes: 'Logo wyśrodkowane, tłoczenie bez laminatu.',
+        backPrint: true,
+        backPrintFiles: [
+          {
+            id: 'f1b',
+            name: 'adres-zwrotny-kancelaria.pdf',
+            size: 184320,
+            ext: 'pdf',
+            status: 'przeslano',
+          },
+        ],
+        backPrintNotes: 'Krój szeryfowy, jak w logo.',
         personalization: true,
         personalizationMethod: 'szablon',
         personalizationFile: {
@@ -261,6 +272,9 @@ export function seedOrders(): Order[] {
         print: true,
         printFiles: [{ id: 'f4', name: 'monogram.svg', size: 128400, ext: 'svg', status: 'weryfikacja' }],
         printNotes: 'Monogram w kolorze złotym, prawy dolny róg.',
+        backPrint: true,
+        backPrintFiles: [{ id: 'f4b', name: 'monogram-klapka.svg', size: 64200, ext: 'svg', status: 'weryfikacja' }],
+        backPrintNotes: 'Monogram mniejszy, przy szpicu klapki.',
         shippingSpeed: 'ekspres',
       })
     ),
