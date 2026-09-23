@@ -1845,7 +1845,16 @@
   font-size: 16px;
 }
 
+.summary-bar-name[data-compact='true'] {
+  font-size: 15px;
+  line-height: 1.35;
+}
+
 @media (max-width: 820px) {
+  .summary-bar-product .summary-bar-name[data-compact='true'] {
+    font-size: 13px;
+  }
+
   .summary-bar-thumbs[data-count='2'] .summary-bar-thumb {
     width: 56px;
   }
@@ -2750,6 +2759,18 @@
   font-size: 16px;
   font-weight: 600;
   color: var(--color-ink);
+}
+
+/* Kadr personalizacji — w konwencji kart nadruku, ale mniejszy od nich */
+.pers-head-media {
+  width: 280px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 620px) {
+  .pers-head-media {
+    width: 144px;
+  }
 }
 
 /* ── Dwa kafle wyboru ── */

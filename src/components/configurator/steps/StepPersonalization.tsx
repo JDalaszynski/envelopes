@@ -149,9 +149,20 @@ export function StepPersonalization({
             }
           }}
         >
-          <div style={{ width: 144, flexShrink: 0 }}>
+          {/* Kadr w tej samej konwencji co karty nadruku — przycięty do kopert,
+              a nie wpisany w kwadrat z białym tłem — ale mniejszy od nich:
+              personalizacja to jedna opcja, nie wybór między dwoma miejscami. */}
+          <div className="pers-head-media">
             {format && colorId ? (
-              <EnvelopePlaceholder format={format} colorId={colorId} ratio="square" size="lg" hideCaption hasPersonalization />
+              <EnvelopePlaceholder
+                format={format}
+                colorId={colorId}
+                ratio="wide"
+                fit="cover"
+                hideCaption
+                hasPersonalization
+                sizes="(max-width: 620px) 144px, 280px"
+              />
             ) : (
               <svg width="144" height="144" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--color-ink-soft)', background: 'var(--color-paper)', padding: 12, borderRadius: 'var(--radius-sm)', border: '1px solid var(--color-line)', flexShrink: 0 }}>
                 <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>

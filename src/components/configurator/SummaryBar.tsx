@@ -102,7 +102,9 @@ export function SummaryBar({
             </div>
           )}
 
-          <p className="label" style={{ margin: 0 }}>
+          {/* Przy trzech usługach nazwa ma kilkanaście słów — mniejszy stopień
+              mieści ją w pasku bez obcinania. */}
+          <p className="label summary-bar-name" data-compact={views.length >= 3} style={{ margin: 0 }}>
             {name}
           </p>
 
