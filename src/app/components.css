@@ -1174,6 +1174,45 @@
   transform: scale(1.05) translateZ(0);
 }
 
+/* Odcień chwilowo niedostępny — zostaje w palecie, ale nie da się go wybrać.
+   Wygaszenie jak przy `.format-card:disabled`, tylko na samym zdjęciu,
+   żeby plakietka i nazwa koloru zostały czytelne. */
+.swatch:disabled {
+  cursor: not-allowed;
+}
+
+.swatch:disabled:hover {
+  border-color: var(--color-line);
+}
+
+.swatch:disabled .swatch-shape img,
+.swatch:disabled .swatch-shape svg {
+  opacity: 0.45;
+  filter: grayscale(0.5);
+  transform: none;
+}
+
+/* Plakietka braku — język wizualny `.card-badge` z kroku 1, ale w obrębie
+   kafelka, bo swatch ma 96–210 px szerokości i tekst musi się zawijać. */
+.swatch-stock {
+  position: absolute;
+  top: 50%;
+  left: 6px;
+  right: 6px;
+  z-index: 2;
+  transform: translateY(-50%);
+  padding: 4px 6px;
+  background: var(--color-seal);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+}
+
 .tooltip-wrap {
   position: absolute;
   bottom: 35px;

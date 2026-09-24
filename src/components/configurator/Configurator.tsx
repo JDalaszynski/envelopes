@@ -21,6 +21,7 @@ import {
   DEFAULT_PERSONALIZATION_SCOPE,
   FORMAT_MAP,
   PERSONALIZATION_SCOPES,
+  isColorOutOfStock,
 } from '@/lib/catalog';
 import type { FormatId, PersonalizationScope } from '@/lib/catalog';
 import type { EnvelopeConfig } from '@/lib/types';
@@ -116,7 +117,14 @@ export function Configurator() {
     (detail: Preselect) => {
       const format =
         detail.format && !FORMAT_MAP[detail.format]?.disabled ? detail.format : undefined;
-      const color = detail.color && COLOR_MAP[detail.color] ? detail.color : undefined;
+      /* Odcienia bez stanu magazynowego nie zaznaczamy — wejście ze strony
+         złotego koloru kończy się w kroku 2, gdzie widać plakietkę braku. */
+      const color =
+        detail.color &&
+        COLOR_MAP[detail.color] &&
+        !isColorOutOfStock(detail.color, format ?? configRef.current.format)
+          ? detail.color
+          : undefined;
       const scope = PERSONALIZATION_SCOPES.some((option) => option.id === detail.personalizationScope)
         ? detail.personalizationScope
         : undefined;
@@ -194,6 +202,14 @@ export function Configurator() {
   const minimum = minimumQuantity(needsProduction(config));
 
   const problem = useMemo<Problem | null>(() => {
+    /* Pozycja wczytana z koszyka do edycji może nieść kolor, który od tamtej
+       pory zniknął z magazynu — preselekcja go odrzuca, edycja już nie. */
+    if (isColorOutOfStock(config.color, config.format)) {
+      return {
+        ref: colorRef,
+        message: `Kolor ${COLOR_MAP[config.color].name} jest chwilowo niedostępny. Prosimy wybrać inny kolor.`,
+      };
+    }
     if (!config.quantity || config.quantity < 1) {
       return { ref: colorRef, message: 'Prosimy podać liczbę kopert.' };
     }

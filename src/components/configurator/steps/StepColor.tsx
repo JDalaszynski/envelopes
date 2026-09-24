@@ -1,6 +1,6 @@
 'use client';
 
-import { COLORS, colorImageSrcSet } from '@/lib/catalog';
+import { COLORS, OUT_OF_STOCK_LABEL, colorImageSrcSet, isColorOutOfStock } from '@/lib/catalog';
 import { EnvelopeShape } from '@/components/ui/EnvelopeShape';
 
 /** Krok 2 — Kolor. Siatka 19 swatchy w kształcie koperty. */
@@ -26,12 +26,17 @@ export function StepColor({
       <div className="swatch-grid" role="group" aria-label="Kolor koperty">
         {COLORS.map((color) => {
           const selected = value === color.id;
+          /* Odcień bez stanu magazynowego zostaje w palecie, tak jak format
+             „Dostępne wkrótce" zostaje w kroku 1 — klient widzi, że kolor
+             istnieje i wróci, zamiast szukać go na próżno. */
+          const outOfStock = isColorOutOfStock(color.id, format);
           return (
             <button
               key={color.id}
               type="button"
               className="swatch"
               aria-pressed={selected}
+              disabled={outOfStock}
               onClick={() => {
                 if (selected) {
                   onChange('');
@@ -63,6 +68,7 @@ export function StepColor({
                 ) : (
                   <EnvelopeShape colorId={color.id} />
                 )}
+                {outOfStock && <span className="swatch-stock">{OUT_OF_STOCK_LABEL}</span>}
               </span>
               <span className="swatch-name">{color.name}</span>
               {selected && (

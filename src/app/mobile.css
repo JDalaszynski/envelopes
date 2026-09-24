@@ -149,7 +149,7 @@
   }
 
   /* Odpowiedź na dotknięcie — jedyny stan, który na dotyku niesie sens. */
-  .swatch:active,
+  .swatch:not(:disabled):active,
   .format-card:not(:disabled):active,
   .option-card:active {
     transform: scale(0.97);

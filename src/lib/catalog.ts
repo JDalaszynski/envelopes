@@ -249,6 +249,13 @@ export interface EnvelopeColor {
   personalizedImages?: Partial<Record<FormatId, string>>;
   /** Gramatura papieru, np. "115g" */
   weight?: string;
+  /**
+   * Formaty, w których odcienia chwilowo nie ma w magazynie. Kolor zostaje
+   * w palecie konfiguratora z plakietką `OUT_OF_STOCK_LABEL`, ale nie da się
+   * go wybrać — w przeciwieństwie do usunięcia z `COLORS`, które zmieniłoby
+   * liczbę kolorów podawaną w treściach i zerwało adres strony koloru.
+   */
+  outOfStock?: FormatId[];
 }
 
 /**
@@ -281,7 +288,7 @@ export const COLORS: EnvelopeColor[] = [
   { id: 'zolta', name: 'Żółta', hex: '#E8CE7E', weight: '115g', images: { DL: '/images/colors/zolte-koperty-ozdobne-dl-1200.webp' }, printImages: { DL: '/images/prints/zolte-koperty-z-nadrukiem-dl-1200.webp' }, flapPrintImages: { DL: '/images/prints-flap/zolte-koperty-z-nadrukiem-na-zamknieciu-dl-1200.webp' }, personalizedImages: { DL: '/images/personalized/zolte-koperty-personalizowane-dl-1200.webp' } },
   
   // Perłowe / Metaliczne
-  { id: 'zloty', name: 'Złoty', hex: '#C09A4E', finish: 'metaliczne', bestseller: true, weight: '115g', images: { DL: '/images/colors/zlote-koperty-ozdobne-dl-1200.webp' }, printImages: { DL: '/images/prints/zlote-koperty-z-nadrukiem-dl-1200.webp' }, flapPrintImages: { DL: '/images/prints-flap/zlote-koperty-z-nadrukiem-na-zamknieciu-dl-1200.webp' }, personalizedImages: { DL: '/images/personalized/zlote-koperty-personalizowane-dl-1200.webp' } },
+  { id: 'zloty', name: 'Złoty', hex: '#C09A4E', finish: 'metaliczne', bestseller: true, weight: '115g', outOfStock: ['DL'], images: { DL: '/images/colors/zlote-koperty-ozdobne-dl-1200.webp' }, printImages: { DL: '/images/prints/zlote-koperty-z-nadrukiem-dl-1200.webp' }, flapPrintImages: { DL: '/images/prints-flap/zlote-koperty-z-nadrukiem-na-zamknieciu-dl-1200.webp' }, personalizedImages: { DL: '/images/personalized/zlote-koperty-personalizowane-dl-1200.webp' } },
   { id: 'srebrna-perlowa', name: 'Srebrna Perłowa', hex: '#C9C7C2', finish: 'perłowe', weight: '115g', images: { DL: '/images/colors/srebrne-perlowe-koperty-ozdobne-dl-1200.webp' }, printImages: { DL: '/images/prints/srebrne-perlowe-koperty-z-nadrukiem-dl-1200.webp' }, flapPrintImages: { DL: '/images/prints-flap/srebrne-perlowe-koperty-z-nadrukiem-na-zamknieciu-dl-1200.webp' }, personalizedImages: { DL: '/images/personalized/srebrne-perlowe-koperty-personalizowane-dl-1200.webp' } },
   { id: 'biala-perlowa', name: 'Biała Perłowa', hex: '#F2EDE4', finish: 'perłowe', weight: '115g', images: { DL: '/images/colors/biale-perlowe-koperty-ozdobne-dl-1200.webp' }, printImages: { DL: '/images/prints/biale-perlowe-koperty-z-nadrukiem-dl-1200.webp' }, flapPrintImages: { DL: '/images/prints-flap/biale-perlowe-koperty-z-nadrukiem-na-zamknieciu-dl-1200.webp' }, personalizedImages: { DL: '/images/personalized/biale-perlowe-koperty-personalizowane-dl-1200.webp' } },
   
@@ -318,6 +325,14 @@ export const COLOR_MAP: Record<string, EnvelopeColor> = COLORS.reduce(
   (acc, c) => ({ ...acc, [c.id]: c }),
   {} as Record<string, EnvelopeColor>
 );
+
+/** Plakietka odcienia, którego chwilowo nie ma w magazynie. */
+export const OUT_OF_STOCK_LABEL = 'Tymczasowy brak w magazynie';
+
+/** Czy odcienia nie da się dziś zamówić w danym formacie — patrz `outOfStock`. */
+export function isColorOutOfStock(colorId: string, format: string): boolean {
+  return COLOR_MAP[colorId]?.outOfStock?.includes(format as FormatId) ?? false;
+}
 
 export function getColorByName(name: string): EnvelopeColor | undefined {
   return COLORS.find((c) => c.name.toLowerCase() === name.toLowerCase());
