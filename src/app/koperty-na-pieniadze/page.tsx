@@ -114,19 +114,24 @@ const OCCASIONS: { name: string; text: string }[] = [
 /**
  * Treści wspierające filar K8 — zasada z content-plan.md: „filar linkuje
  * w dół do 3–6 treści wspierających". Do 14 września 2026 ta strona nie
- * linkowała w dół do żadnej: wpisy dedykowane klastrowi (poz. 40 —
- * personalizowana koperta na pieniądze, poz. 44 — koperty na pieniądze
- * na ślub) są jeszcze niewykonane. Filar nie czeka na własne wpisy —
- * linkuje do tych, które odpowiadają na pytania zadawane **na tej stronie**,
- * choć w górę linkują do innych filarów (ten sam wzorzec co `filesPost`
- * na F4):
+ * linkowała w dół do żadnej, bo wpisy dedykowane klastrowi nie istniały.
+ * Filar nie czeka na własne wpisy — linkuje do tych, które odpowiadają na
+ * pytania zadawane **na tej stronie**, choć w górę linkują do innych filarów
+ * (ten sam wzorzec co `filesPost` na F4):
  * - dobór odcienia → sekcja koloru pokazuje 3 z 19 odcieni,
  * - próg 10 sztuk → najostrzejsze tarcie tej strony: filar sprzedaje kopertę
  *   od 1 sztuki, a obie usługi dodatkowe zaczynają się od 10 (pytanie stoi już
  *   w `MONEY_FAQ_ITEMS`, ale odpowiedź „bo tyle wynosi minimalny nakład" nie
  *   tłumaczy, skąd ten nakład się bierze),
- * - lista imion → karta personalizacji przy nagrodach i kopertach dla rodziny,
+ * - imię na kopercie → karta personalizacji; od 24 września 2026 prowadzi do
+ *   wpisu z poz. 40, który rozstrzyga, kiedy ta usługa się opłaca,
  * - termin realizacji → uroczystość ma datę, a licznik rusza po wpłacie.
+ *
+ * Poz. 40 wypchnęła z listy poradnik o liście imion
+ * (`koperty-z-imieniem-i-nazwiskiem-jak-przygotowac-liste`) — przegląd
+ * zapowiedziany 14 września. Przygotowanie danych jest krokiem po decyzji,
+ * o której mówi ta strona, a wpis z poz. 40 sam do tego poradnika odsyła.
+ * Siatka zostaje 2 × 2. Poz. 44 (koperty na pieniądze na ślub) nadal czeka.
  *
  * Świadomie **pominięte**: `jak-wreczyc-bon-podarunkowy...` i
  * `koperta-ozdobna-na-voucher...`. Oba opisują wydanie bonu przez firmę
@@ -135,9 +140,9 @@ const OCCASIONS: { name: string; text: string }[] = [
  */
 const paletteGuide = getPost('paleta-19-kolorow-jak-wybrac-odcien');
 const moqGuide = getPost('dlaczego-koperty-z-nadrukiem-od-10-sztuk');
-const nameListGuide = getPost('koperty-z-imieniem-i-nazwiskiem-jak-przygotowac-liste');
+const namedEnvelopeGuide = getPost('personalizowana-koperta-na-pieniadze-kiedy-warto');
 const leadTimeGuide = getPost('szybka-realizacja-kopert-terminy-i-ekspres');
-const GUIDES = [paletteGuide, moqGuide, nameListGuide, leadTimeGuide].filter(
+const GUIDES = [namedEnvelopeGuide, paletteGuide, moqGuide, leadTimeGuide].filter(
   (post) => post !== undefined
 );
 
@@ -152,7 +157,10 @@ export const metadata: Metadata = {
     'ozdobna koperta na pieniądze',
     'koperta ozdobna na pieniądze',
     'kolorowe koperty na pieniądze',
-    'personalizowana koperta na pieniądze',
+    /* `personalizowana koperta na pieniądze` przeszła 24 września 2026 do
+       wpisu z poz. 40 — jedna fraza ma jednego właściciela w serwisie.
+       Strona nadal opisuje usługę w karcie personalizacji i linkuje stamtąd
+       do wpisu; zmiana dotyczy wyłącznie rejestru fraz. */
   ],
   alternates: { canonical: '/koperty-na-pieniadze' },
   openGraph: {
@@ -481,15 +489,15 @@ export default function MoneyEnvelopesPage() {
                 opisaliśmy na stronie{' '}
                 <Link href="/koperty-personalizowane">personalizowane koperty</Link>.
               </p>
-              {/* Link w dół: filar F2 opisuje mechanizm wgrania listy, poradnik —
-                  co zrobić z samymi danymi (zapis nazwisk, duplikaty, polskie
-                  znaki), czyli pracę wykonywaną przed wejściem do konfiguratora. */}
-              {nameListGuide && (
+              {/* Link w dół do wpisu z poz. 40. Karta mówi, że usługa ma sens
+                  przy wielu obdarowanych; wpis liczy dopłatę dla całej serii
+                  i pokazuje, co zrobić, gdy osób jest mniej niż minimum. */}
+              {namedEnvelopeGuide && (
                 <p className="small muted" style={{ marginBottom: 0 }}>
-                  Samą listę imion — zapis nazwisk, duplikaty i polskie znaki po eksporcie
-                  z arkusza — przygotują Państwo według poradnika{' '}
-                  <Link href={`/blog/${nameListGuide.slug}`}>
-                    koperty z imieniem i nazwiskiem — lista do nadruku
+                  Kiedy imię na kopercie się opłaca, ile kosztuje dla całej serii i co zrobić przy
+                  kilku obdarowanych, liczymy w poradniku{' '}
+                  <Link href={`/blog/${namedEnvelopeGuide.slug}`}>
+                    personalizowana koperta na pieniądze
                   </Link>
                   .
                 </p>

@@ -412,6 +412,75 @@ const EXPRESS_SURCHARGE_ROWS = [DEFAULT_PRICING.moqWithPrint, 100, 500].map((qua
   perDay: round2((DEFAULT_PRICING.express * quantity) / EXPRESS_SAVED_DAYS),
 }));
 
+/* ── Wartości wyliczane dla wpisu o personalizowanej kopercie na pieniądze ─ */
+
+/**
+ * Wpis z content-plan.md poz. 40 odpowiada na pytanie „czy imię na kopercie
+ * się opłaca", więc liczy dopłatę dla **całej serii**, a nie rozbicie ceny
+ * jednostkowej — to należy do filara F2 (`#cena`). Żadna kwota nie jest
+ * wpisana ręcznie: zmiana cennika przepisze obie tabele razem z konfiguratorem.
+ */
+const MONEY_BASE = {
+  format: 'DL' as FormatId,
+  color: '',
+  print: false,
+  printFiles: [],
+  personalization: false,
+  shippingSpeed: 'standard' as const,
+};
+
+/** Koperta z imieniem w czterech układach — kolumna cenowa tabeli „co stoi na kopercie". */
+const MONEY_NAMED = calculatePrice({ ...MONEY_BASE, personalization: true, quantity: 1 });
+const MONEY_NAMED_FRONT_PRINT = calculatePrice({
+  ...MONEY_BASE,
+  personalization: true,
+  print: true,
+  quantity: 1,
+});
+const MONEY_NAMED_FLAP_PRINT = calculatePrice({
+  ...MONEY_BASE,
+  personalization: true,
+  backPrint: true,
+  quantity: 1,
+});
+const MONEY_NAMED_BOTH_PRINTS = calculatePrice({
+  ...MONEY_BASE,
+  personalization: true,
+  print: true,
+  backPrint: true,
+  quantity: 1,
+});
+
+/**
+ * Serie w tabeli dopłaty: minimum oraz dwie typowe listy — zespół albo
+ * rodzina z kopertami na dwie okazje (20) i cały dział czy rocznik (50).
+ * Świadomie bez dostawy: ta jest stała dla zamówienia i nie zmienia różnicy
+ * między wariantem gładkim a imiennym, o którą w tabeli chodzi.
+ */
+const MONEY_SERIES_ROWS = [DEFAULT_PRICING.moqWithPrint, 20, 50].map((quantity) => {
+  const plain = calculatePrice({ ...MONEY_BASE, quantity });
+  const named = calculatePrice({ ...MONEY_BASE, personalization: true, quantity });
+  return {
+    quantity,
+    plain: plain.gross,
+    named: named.gross,
+    surcharge: round2(named.gross - plain.gross),
+  };
+});
+
+/**
+ * Kolumna szablonu imiennego na tekst inny dla każdej koperty — dedykację
+ * przy nagrodzie. Czytana z katalogu, żeby przemianowanie kolumny
+ * przepisało też poradnik.
+ */
+const DEDICATION_COLUMN_LABEL =
+  PERSONALIZATION_NAME_COLUMNS.find((column) => column.match.includes('dedykacj'))?.label ??
+  'Dodatkowa linia (opcjonalnie)';
+
+function workingDaysLabel(days: number): string {
+  return `${days} ${plural(days, 'dzień roboczy', 'dni robocze', 'dni roboczych')}`;
+}
+
 const POSTS: BlogPost[] = [
   {
     /* content-plan.md poz. 11 — treść wspierająca filar K4 (`/koperty-dl`),
@@ -2616,6 +2685,221 @@ const POSTS: BlogPost[] = [
     cta: `Konfigurator otworzy się z formatem DL i włączonym nadrukiem. Nakład ustawiają Państwo od ${DEFAULT_PRICING.moqWithPrint} sztuk, a cenę serii widzą od razu.`,
     ctaConfigure: { label: 'Wyceń krótką serię z nadrukiem', format: 'DL', print: true },
     pillar: { href: '/koperty-z-nadrukiem', anchor: 'koperty z nadrukiem' },
+  },
+  {
+    /* content-plan.md poz. 40 — treść wspierająca filar F2
+       (`/koperty-personalizowane`), cel KONWERSJA. Fraza główna
+       `personalizowana koperta na pieniądze` przechodzi z `keywords` pillara
+       K8 do tego wpisu — jedna fraza, jeden właściciel w serwisie.
+
+       Rozgraniczenia (pkt 8 briefu SEO):
+       - wobec pillara K8 `/koperty-na-pieniadze` (poz. 39): pillar sprzedaje
+         kopertę gładką od 1 sztuki — kolory, banknoty, cenę sztuki. Wpis
+         sprzedaje usługę i odpowiada na jedno pytanie: czy imię na kopercie
+         ma sens. Link kontekstowy do pillara stoi w pierwszej sekcji;
+       - wobec filara F2: filar rozkłada cenę personalizacji na składniki
+         i opisuje tryby przekazania danych; wpis liczy dopłatę dla całej
+         serii i rozstrzyga, kiedy się zwraca;
+       - wobec poz. 15 (lista imion): zero higieny danych — odmiana imienia
+         w dedykacji pada w jednym akapicie z odesłaniem;
+       - wobec poz. 16 (terminy): liczba dni pada raz, arytmetyka kalendarza
+         zostaje w tamtym wpisie;
+       - wobec poz. 44 (pieniądze na ślub) i klastra K7: gość weselny
+         z jedną kopertą dostaje jeden akapit bez doboru koloru, bony
+         i vouchery nie występują.
+       `FAQPage` zostaje na filarach — wpis nie dostaje własnego. */
+    slug: 'personalizowana-koperta-na-pieniadze-kiedy-warto',
+    /* Tytuł z planu („…kiedy się opłaca") dawał 67 znaków z sufiksem marki;
+       „kiedy warto" mieści się w 62, tak jak poz. 15. Wariant „się opłaca"
+       niesie nagłówek pierwszej sekcji. */
+    title: 'Personalizowana koperta na pieniądze — kiedy warto',
+    /* Lead zasila `description`. Jeden konkret — próg, od którego usługa
+       w ogóle wchodzi w grę — i jedna odpowiedź dla pojedynczego prezentu. */
+    lead: `Personalizowana koperta na pieniądze opłaca się od ${DEFAULT_PRICING.moqWithPrint} kopert z różnymi imionami: premie, nagrody, prezenty rodzinne. Do jednego prezentu wystarczy gładka.`,
+    category: 'Poradniki',
+    date: '2026-09-24',
+    readingMinutes: 6,
+    colorId: 'matcha',
+    format: 'DL',
+    /* Kadr „Z wyrazami uznania" — kontekst nagrody i premii, czyli persony,
+       dla której personalizacja realnie się zwraca. Dotąd nieużywany w treści
+       blogowej. Trzy kadry z personalizacją imienną są okładkami poz. 8, 14
+       i 15, a te wpisy pokazują najnowsze wpisy w „Powiązanych" — powtórzony
+       kadr stanąłby tam obok własnej okładki. Akapit o wspólnej formule
+       w sekcji `premie-i-nagrody` mówi, co widać na zdjęciu. */
+    showcaseFile: 'matcha-koperta-dl-nadruk-wyrazy-uznania',
+    imageVariant: 'nadruk',
+    ogImageSlug: 'blog-personalizowana-koperta-na-pieniadze',
+    /* Karta z dolnej części kadru (`scripts/og-card.mjs` na wycinku) — inna
+       kompozycja niż karta `/koperty-na-certyfikaty` z tego samego zdjęcia. */
+    ogImageAlt:
+      'Koperta DL w kolorze Matcha odwrócona klapką do góry na jasnym drewnie, za nią róg drugiej koperty z białym nadrukiem „Z wyrazami uznania”',
+    keywords: [
+      'personalizowana koperta na pieniądze',
+      'koperta na pieniądze z imieniem',
+      'koperty na premie z imieniem',
+      'koperty na nagrody pieniężne',
+    ],
+    intro:
+      'Personalizowana koperta na pieniądze to koperta z imieniem obdarowanego wydrukowanym na przedniej ściance — innym na każdej sztuce z serii. Opłaca się wtedy, gdy wręczają Państwo naraz wiele kopert różnym osobom: premie, nagrody albo prezenty dla całej rodziny. Przy pojedynczym prezencie szybciej i taniej wychodzi koperta gładka podpisana odręcznie. Poniżej liczymy dopłatę dla typowych serii i pokazujemy, co zrobić, gdy obdarowanych jest mniej.',
+    sections: [
+      {
+        id: 'kiedy-sie-oplaca',
+        heading: 'Kiedy personalizowana koperta na pieniądze się opłaca',
+        paragraphs: [
+          `Personalizowana koperta na pieniądze opłaca się, gdy spełnione są trzy warunki naraz: kopert jest co najmniej ${DEFAULT_PRICING.moqWithPrint}, każda trafia do innej osoby, a do dnia wręczenia zostało dość czasu na produkcję. Jeśli brakuje któregokolwiek z nich, lepszym wyborem jest koperta gładka — podpisana odręcznie albo bez napisu.`,
+          'Personalizacja oznacza, że każda koperta z serii dostaje własny tekst: imię obdarowanego, imię z krótką dedykacją albo nazwę roli, np. „Dla Zespołu”. Wspólny napis na wszystkich kopertach to inna usługa — nadruk okolicznościowy. Wychodzi taniej za sztukę, ale wymaga pliku z grafiką napisu.',
+          'Kopertę gładką — kolory, banknoty i cenę pojedynczej sztuki — opisujemy na stronie [koperty na pieniądze](/koperty-na-pieniadze). Ten poradnik rozstrzyga tylko jedną sprawę: czy na kopercie ma stanąć imię.',
+        ],
+        table: {
+          caption: 'Kiedy wybrać personalizację, a kiedy kopertę gładką na prezent pieniężny',
+          head: ['Sytuacja', 'Co wybrać', 'Dlaczego'],
+          rows: [
+            [
+              'Jeden prezent dla jednej osoby',
+              'Koperta gładka, imię dopisane odręcznie',
+              'Personalizację drukujemy od minimalnego nakładu, więc reszta serii zostałaby bez zastosowania',
+            ],
+            [
+              'Kilka osób, ta sama okazja',
+              'Koperty gładkie albo seria dopełniona do minimum',
+              'Dopełnienie ma sens, gdy te same osoby dostaną koperty także przy kolejnej okazji',
+            ],
+            [
+              `${DEFAULT_PRICING.moqWithPrint} i więcej osób naraz`,
+              'Personalizacja — imię na każdej kopercie',
+              'Koperty nie mylą się przy wręczaniu i nikt nie wypisuje ich ręcznie',
+            ],
+            [
+              'Ten sam napis dla wszystkich',
+              'Nadruk okolicznościowy',
+              'Jeden projekt dla całej serii, bez listy imion',
+            ],
+            [
+              'Premie i nagrody w firmie',
+              'Personalizacja i logo firmy na zamknięciu',
+              'Imię pracownika na przodzie, marka widoczna przy otwieraniu',
+            ],
+            [
+              'Wręczenie za kilka dni',
+              'Ekspres albo koperta gładka',
+              'Koperta gładka nie czeka na akceptację wizualizacji, więc to najkrótsza droga',
+            ],
+          ],
+        },
+      },
+      {
+        id: 'koszt-serii',
+        heading: 'Ile kosztuje imię na każdej kopercie w serii',
+        paragraphs: [
+          `Personalizacja dolicza do każdej koperty stałą kwotę ${formatPrice(DEFAULT_PRICING.personalization)} brutto, niezależnie od długości tekstu i od nakładu. Imię z dedykacją kosztuje więc tyle samo co samo imię, a dopłata za serię rośnie dokładnie proporcjonalnie do liczby kopert — rabatów ilościowych nie stosujemy.`,
+          'Przy prezencie pieniężnym ta dopłata jest zwykle niewielką częścią kwoty, którą koperta niesie. O opłacalności rozstrzygają więc minimalny nakład i termin, a nie cena — dlatego tym dwóm sprawom poświęcamy kolejne sekcje.',
+          'Tabela porównuje całą serię w dwóch wariantach: gładkim i z imieniem na każdej kopercie. Dostawy w niej nie ma — naliczamy ją raz na zamówienie, więc nie zmienia różnicy między wariantami. Rozbicie ceny jednej koperty na składniki podaje cennik na stronie [personalizowane koperty](/koperty-personalizowane#cena).',
+        ],
+        table: {
+          caption:
+            'Koszt serii kopert DL na pieniądze: gładkich i z imieniem na każdej kopercie, kwoty brutto bez dostawy',
+          head: ['Liczba kopert', 'Koperty gładkie', 'Z imieniem na każdej', 'Dopłata za imiona'],
+          rows: MONEY_SERIES_ROWS.map((row) => [
+            `${row.quantity} szt.`,
+            formatPrice(row.plain),
+            formatPrice(row.named),
+            formatPrice(row.surcharge),
+          ]),
+        },
+      },
+      {
+        id: 'mniej-niz-minimum',
+        heading: `Co zrobić, gdy obdarowanych jest mniej niż ${DEFAULT_PRICING.moqWithPrint}`,
+        paragraphs: [
+          `Przy kilku obdarowanych najprostsza jest koperta gładka z imieniem dopisanym odręcznie. Zamawiają ją Państwo od ${DEFAULT_PRICING.moqWithoutPrint} sztuki i wysyłamy ją szybciej, bo nie przechodzi przez produkcję ani akceptację wizualizacji. Do podpisu lepiej nadają się papiery matowe: na perłowym i metalicznym tusz schnie wolniej i łatwo go rozmazać.`,
+          'Drugą drogą jest dopełnienie serii kopertami na kolejną okazję. Koperta z samym imieniem nie ma daty, więc ta sama osoba może dostać dwie — jedną na święta, drugą na urodziny. Na liście wystarczy wpisać to imię dwa razy, bo jeden wiersz to zawsze jedna koperta.',
+          `Progu nie da się obejść dopłatą. Wynika z pracy wykonywanej przed drukiem — sprawdzenia listy i wizualizacji do akceptacji — która wygląda tak samo przy pięciu i przy pięćdziesięciu kopertach. Uzasadnienie rozpisujemy w poradniku [dlaczego koperty z nadrukiem są od ${DEFAULT_PRICING.moqWithPrint} sztuk](/blog/dlaczego-koperty-z-nadrukiem-od-10-sztuk).`,
+        ],
+      },
+      {
+        id: 'premie-i-nagrody',
+        heading: 'Premie i nagrody pieniężne w kopercie z imieniem',
+        paragraphs: [
+          'W firmie personalizacja rozwiązuje problem, którego koperta gładka nie rozwiązuje: przy kilkunastu kopertach z różnymi kwotami każda musi trafić do właściwej osoby. Imię wydrukowane na przodzie zastępuje karteczki i dopiski ołówkiem, a koperty da się ułożyć w kolejności wręczania bez zaglądania do środka.',
+          'Kwota nie powinna stać na kopercie i nie jest nam potrzebna w pliku. Wystarczy imię i nazwisko, a w drugim wierszu — jeśli trzeba — dział albo stanowisko. Kolumnę z kwotami prosimy usunąć z arkusza przed wgraniem.',
+          `Na tekst inny dla każdej osoby szablon imienny ma osobną kolumnę „${DEDICATION_COLUMN_LABEL}”. Wchodzi do niej np. „za 15 lat pracy” przy nagrodzie jubileuszowej albo nazwa konkursu. Wspólną formułę dla całej serii — jak „Z wyrazami uznania” na zdjęciu otwierającym ten poradnik — drukujemy jako nadruk z pliku graficznego, w tym samym przebiegu co imiona.`,
+          'Logo firmy najlepiej przenieść na zamknięcie koperty. Przód zostaje wtedy w całości dla imienia, a marka pokazuje się w chwili otwierania. Nadruk na zamknięciu opisujemy na stronie [koperty z nadrukiem](/koperty-z-nadrukiem).',
+          'Tak samo działa to w szkołach, klubach sportowych i fundacjach, które wręczają nagrody pieniężne albo stypendia na scenie. Imię na kopercie pozwala wywoływać laureatów po kolei, bez sprawdzania zawartości przed każdym wręczeniem.',
+        ],
+        table: {
+          caption: 'Co może stać na kopercie z premią lub nagrodą i ile kosztuje jedna koperta DL',
+          head: ['Na kopercie', 'Usługi', 'Cena brutto/szt.'],
+          rows: [
+            ['Samo imię i nazwisko', 'Personalizacja', formatPrice(MONEY_NAMED.unitTotal)],
+            [
+              'Imię i dedykacja inna dla każdej osoby',
+              'Personalizacja — dedykacja w arkuszu',
+              formatPrice(MONEY_NAMED.unitTotal),
+            ],
+            [
+              'Imię i wspólna formuła na przodzie',
+              'Personalizacja i nadruk na przodzie',
+              formatPrice(MONEY_NAMED_FRONT_PRINT.unitTotal),
+            ],
+            [
+              'Imię na przodzie, logo firmy na zamknięciu',
+              'Personalizacja i nadruk na zamknięciu',
+              formatPrice(MONEY_NAMED_FLAP_PRINT.unitTotal),
+            ],
+            [
+              'Imię i formuła na przodzie, logo na zamknięciu',
+              'Personalizacja i nadruk po obu stronach',
+              formatPrice(MONEY_NAMED_BOTH_PRINTS.unitTotal),
+            ],
+          ],
+        },
+      },
+      {
+        id: 'prezenty-rodzinne',
+        heading: 'Imię na kopercie w prezentach rodzinnych',
+        paragraphs: [
+          'W prezentach rodzinnych personalizacja ma sens po stronie osoby, która wręcza wiele kopert naraz — nie po stronie gościa z jednym prezentem. Typowe przypadki to dziadkowie z kopertami dla wszystkich wnuków na święta albo para młoda, która po weselu rozlicza się z usługodawcami.',
+          'Wiersz listy nie musi być imieniem. Para młoda może wpisać role: „Dla Zespołu”, „Dla Pani Fotograf”, „Dla Obsługi Sali”. Drukujemy dokładnie to, co stoi w wierszu, więc zapis warto przejrzeć, zanim zaakceptują Państwo wizualizację.',
+          'Dedykacja zaczynająca się od „Dla” wymaga dopełniacza: „Dla Zosi”, a nie „Dla Zosia”. Samo imię i nazwisko zostaje w mianowniku. Zasady zapisu imion i nazwisk zebraliśmy w poradniku [koperty z imieniem i nazwiskiem — lista do nadruku](/blog/koperty-z-imieniem-i-nazwiskiem-jak-przygotowac-liste).',
+          'Gość weselny z jedną kopertą personalizacji nie potrzebuje. Koperta gładka w odcieniu dobranym do uroczystości wystarczy, a imiona pary młodej można dopisać odręcznie albo zostawić kopertę bez napisu.',
+        ],
+      },
+      {
+        id: 'termin',
+        heading: 'Ile wcześniej zamówić koperty na pieniądze z imionami',
+        paragraphs: [
+          `Koperty z imionami wysyłamy w ${workingDaysLabel(DEFAULT_PRICING.leadDaysStandard)}, a w trybie ekspresowym — w ${workingDaysLabel(DEFAULT_PRICING.leadDaysExpress)}. Termin liczymy od późniejszego z dwóch zdarzeń: zaksięgowania wpłaty i akceptacji wizualizacji. Czas dostawy kurierem dochodzi do niego osobno, więc przy uroczystości z ustaloną datą najbezpieczniej liczyć wstecz od dnia wręczenia.`,
+          'Jeśli do wręczenia zostały dni, a nie tygodnie, zostają dwie drogi. Ekspres skraca produkcję za dopłatą od każdej koperty, ale nadal czeka na akceptację wizualizacji. Koperta gładka nie czeka na nic poza wpłatą — to najkrótsza droga w naszej ofercie.',
+          'Jak policzyć datę zamówienia wstecz od dnia uroczystości i kiedy dopłata za ekspres faktycznie coś zmienia, pokazujemy w poradniku [szybka realizacja kopert — terminy i ekspres](/blog/szybka-realizacja-kopert-terminy-i-ekspres).',
+        ],
+      },
+      {
+        id: 'checklista',
+        heading: 'Zanim zamówią Państwo koperty na pieniądze z imionami',
+        paragraphs: ['Sześć punktów do sprawdzenia, zanim lista trafi do konfiguratora.'],
+        list: [
+          `Kopert z różnymi imionami jest co najmniej ${DEFAULT_PRICING.moqWithPrint} — jeśli mniej, wystarczy koperta gładka albo seria dopełniona o kolejną okazję`,
+          'Do dnia wręczenia zostało dość dni roboczych na akceptację wizualizacji, produkcję i dostawę',
+          'Jeden wiersz listy to jedna koperta — imię wpisane dwa razy da dwie koperty',
+          'Imiona w dedykacji są odmienione („Dla Zosi”), a samo imię i nazwisko zostaje w mianowniku',
+          'Na liście nie ma kwot ani danych, które nie mają stanąć na kopercie',
+          'Wspólna formuła albo logo firmy są gotowe jako plik graficzny, jeśli mają się znaleźć na kopercie',
+        ],
+      },
+    ],
+    /* Termin nad przyciskiem — warunek klastra K8 z keywords.md: klient
+       detaliczny szuka koperty „na już", więc liczba dni stoi przed CTA. */
+    cta: `Konfigurator otworzy się z personalizacją imienną. Koperty z imionami wysyłamy w ${workingDaysLabel(DEFAULT_PRICING.leadDaysStandard)} od wpłaty i akceptacji wizualizacji, a w ekspresie — w ${workingDaysLabel(DEFAULT_PRICING.leadDaysExpress)}.`,
+    ctaConfigure: {
+      label: 'Wyceń koperty na pieniądze z imionami',
+      format: 'DL',
+      personalization: true,
+      /* Wariant „samo imię i nazwisko" — koperta z prezentem pieniężnym
+         jest wręczana do ręki, więc szablon adresowy byłby do cofnięcia. */
+      personalizationScope: 'imiona',
+    },
+    pillar: { href: '/koperty-personalizowane', anchor: 'personalizowane koperty' },
   },
 ];
 

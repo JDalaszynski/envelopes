@@ -44,8 +44,9 @@ export const PAGE_UPDATED: Record<string, string> = {
      obowiązuje przy adresowaniu; karta „Kliniki, gabinety i salony SPA" —
      odnośnik do poz. 22. 15 września karta „Agencje eventowe, PR i kreatywne"
      dostała odnośnik do poz. 25. 23 września: logo na zamknięciu obok adresu
-     w cenniku i w FAQ (także `FAQPage`) */
-  '/koperty-personalizowane': '2026-09-23',
+     w cenniku i w FAQ (także `FAQPage`). 24 września: czwarta karta w sekcji
+     „Poradniki" (nowy nagłówek) i odnośnik w karcie „Działy HR" — poz. 40 */
+  '/koperty-personalizowane': '2026-09-24',
   /* Sekcja „Poradniki" i odnośnik pod tabelą dopasowań — treść wspierająca
      z poz. 11 planu. 14 września karta „Biura rachunkowe i doradztwo
      podatkowe" w sekcji „Dla kogo" dostała odnośnik do poz. 21. 15 września
@@ -55,8 +56,8 @@ export const PAGE_UPDATED: Record<string, string> = {
      medycyny estetycznej" w sekcji „Dla kogo" dostały odnośniki do poz. 18
      i poz. 22 */
   '/koperty-na-vouchery': '2026-09-14',
-  /* Doszedł wpis o minimalnym nakładzie przy nadruku (poz. 46) */
-  '/blog': '2026-09-14',
+  /* Doszedł wpis o personalizowanej kopercie na pieniądze (poz. 40) */
+  '/blog': '2026-09-24',
   /* Odnośnik do strony „O nas" w karcie danych rejestrowych */
   '/kontakt': '2026-08-17',
   /* Publikacja strony „O nas" */
@@ -127,8 +128,9 @@ export const PAGE_UPDATED: Record<string, string> = {
   '/koperty-dla-kancelarii': '2026-09-14',
   /* Poz. 39 planu — pillar K8, wykonany wyprzedzająco z Fazy 4.
      14 września doszło linkowanie w dół — sekcja „Poradniki" i trzy
-     odnośniki kontekstowe do treści wspierających. */
-  '/koperty-na-pieniadze': '2026-09-14',
+     odnośniki kontekstowe do treści wspierających. 24 września karta
+     personalizacji i „Poradniki" prowadzą do poz. 40 zamiast do poz. 15. */
+  '/koperty-na-pieniadze': '2026-09-24',
   /* Poz. 18 planu — czwarta LP branżowa Fazy 2, filar F4 */
   '/koperty-dla-hoteli': '2026-09-14',
   /* Poz. 22 planu — piąta LP branżowa Fazy 2, filar F4 */

@@ -88,14 +88,18 @@ const EXAMPLE_QUANTITIES = [DEFAULT_PRICING.moqWithPrint, 100, 300, 1000];
 const PERSONALIZED_COLORS = COLORS.filter((color) => color.personalizedImages?.DL);
 
 /**
- * Treści wspierające filar K2. Lista rośnie razem z planem (poz. 8, 14, 15) —
- * `getPost` zwraca `undefined` dla wpisu, który jeszcze nie powstał, więc
- * dopisanie slugu z wyprzedzeniem niczego nie psuje.
+ * Treści wspierające filar K2. Lista rośnie razem z planem (poz. 8, 14, 15,
+ * 40) — `getPost` zwraca `undefined` dla wpisu, który jeszcze nie powstał,
+ * więc dopisanie slugu z wyprzedzeniem niczego nie psuje. Poz. 40 stoi na
+ * końcu, żeby trzy poradniki o przygotowaniu danych szły po kolei.
  */
 const sheetGuide = getPost('adresowanie-kopert-z-arkusza-czy-recznie');
 const addressGuide = getPost('jak-zaadresowac-koperte-wysylana-przez-firme-wzor');
 const nameListGuide = getPost('koperty-z-imieniem-i-nazwiskiem-jak-przygotowac-liste');
-const GUIDES = [sheetGuide, addressGuide, nameListGuide].filter((post) => post !== undefined);
+const moneyGuide = getPost('personalizowana-koperta-na-pieniadze-kiedy-warto');
+const GUIDES = [sheetGuide, addressGuide, nameListGuide, moneyGuide].filter(
+  (post) => post !== undefined
+);
 
 /* Wpis z klastra K1 (content-plan.md poz. 46) — nie wchodzi do `GUIDES`, bo
    sekcja poradników należy do K2. Stoi przy wierszu cennika z progiem, bo to
@@ -160,7 +164,20 @@ const INDUSTRIES: { heading: string; text: ReactNode }[] = [
   },
   {
     heading: 'Działy HR i employer branding',
-    text: 'Oferta pracy, gratulacje po awansie i decyzja o premii trafiają do jednej osoby, nie do działu. Koperty imienne da się zamówić pod jedną rekrutację albo jedną turę podwyżek — bez kupowania zapasu na cały rok.',
+    text: (
+      <>
+        Oferta pracy, gratulacje po awansie i decyzja o premii trafiają do jednej osoby, nie do
+        działu. Koperty imienne da się zamówić pod jedną rekrutację albo jedną turę podwyżek — bez
+        kupowania zapasu na cały rok.
+        {moneyGuide && (
+          <>
+            {' '}
+            Kiedy imię na kopercie z premią lub nagrodą pieniężną ma sens, liczymy w poradniku{' '}
+            <Link href={`/blog/${moneyGuide.slug}`}>personalizowana koperta na pieniądze</Link>.
+          </>
+        )}
+      </>
+    ),
   },
   {
     heading: 'Hotele, resorty i pensjonaty',
@@ -1084,7 +1101,7 @@ export default function PersonalizedEnvelopesPage() {
         </div>
       </section>
 
-      {/* ── Poradniki — treści wspierające filar (poz. 8, 14 i 15 planu) ──
+      {/* ── Poradniki — treści wspierające filar (poz. 8, 14, 15 i 40 planu) ──
           Sekcja wróciła po czystce wpisów startowych z 15 sierpnia 2026.
           Przy jednym wpisie renderujemy pojedynczą kartę zamiast siatki,
           żeby nie zostawiać pustych kolumn; siatka włącza się od drugiego. */}
@@ -1093,11 +1110,12 @@ export default function PersonalizedEnvelopesPage() {
           <div className="container">
             <div className="section-head">
               <span className="eyebrow">Poradniki</span>
-              <h2>Jak przygotować dane do adresowania kopert</h2>
+              <h2>Zanim zamówią Państwo personalizowane koperty</h2>
               <p>
                 Personalizacja zaczyna się po Państwa stronie — od listy odbiorców. Poniższe
-                poradniki prowadzą przez decyzje, które podejmują Państwo, zanim otworzą
-                konfigurator.
+                poradniki prowadzą przez decyzje, które zapadają przed otwarciem konfiguratora: od
+                przygotowania danych po pytanie, czy przy prezencie pieniężnym imię na kopercie
+                się opłaca.
               </p>
             </div>
 

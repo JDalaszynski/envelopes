@@ -211,7 +211,7 @@ z **preselekcją koloru**.
 | 37 | Eleganckie koperty premium — `/koperty-premium` | Pillar (LP) | koperty premium | KONWERSJA | Premium B2B | H `/` | **Wykonane 18 sierpnia 2026.** Kompletny filar K6 z twardymi parametrami poligraficznymi (115–140 g/m², perła i metalik bez dopłaty, barwienie w masie, brak okienka i poddruku, MOQ 10 dla nadruku). **14 września 2026 dołożone linkowanie w dół** — do czasu poz. 38 filar linkuje do czterech wpisów istniejących. | [x] |
 | 38 | Gramatura papieru w kopertach — 115, 120 i 140 g | Supporting article | gramatura papieru na koperty | GEO | Zakupowiec, grafik | `/koperty-premium` | **Fraza skorygowana 7 września 2026** — `eleganckie koperty premium` należy do K6 (keywords.md, wspierająca fraza filara `/koperty-premium`); wpis o gramaturze celuje we frazę faktograficzną, zgodną z jego rzeczywistą treścią (tabela gramatur). Materiał wprost pod cytowanie przez modele | [ ] |
 | 39 | Koperty na pieniądze — `/koperty-na-pieniadze` | Pillar (LP) | koperty na pieniądze | KONWERSJA | Detal + firmy (premie, nagrody) | H `/` | **Wykonane 7 września 2026, wyprzedzająco z Fazy 4.** Klaster detaliczny — termin realizacji podany nad CTA (hero, pasek faktów, sekcja kosztowa), inaczej wygeneruje odbicia. Prerekwizyt „dopiero po wdrożeniu K1, K2, K7" spełniony — wszystkie trzy istnieją. **14 września 2026 dołożone linkowanie w dół** — do czasu poz. 40 i 44 filar linkuje do czterech wpisów istniejących | [x] |
-| 40 | Personalizowana koperta na pieniądze — kiedy się opłaca | Supporting article | personalizowana koperta na pieniądze | KONWERSJA | Detal, HR (premie imienne) | F2 | Upsell usługi +2,99 zł; poz. 39 sprzedaje kopertę gładką, ta pozycja usługę | [ ] |
+| 40 | Personalizowana koperta na pieniądze — kiedy warto — `/blog/personalizowana-koperta-na-pieniadze-kiedy-warto` | Supporting article | personalizowana koperta na pieniądze | KONWERSJA | Detal, HR (premie imienne) | F2 | Upsell usługi +2,99 zł; poz. 39 sprzedaje kopertę gładką, ta pozycja usługę. **Wykonane 24 września 2026.** Oś wpisu: **kiedy imię na kopercie się zwraca** — trzy warunki (minimum nakładu, różni odbiorcy, termin), dopłata liczona dla całej serii, wyjścia dla mniej niż 10 osób. Fraza przeszła z `keywords` pillara K8 do wpisu. Link w górę do F2, odnośniki w obie strony z `/koperty-na-pieniadze`. Tytuł skrócony z „kiedy się opłaca" (67 znaków z sufiksem) do „kiedy warto" (62) | [x] |
 
 ### Tydzień 11 — klaster ślubny w trybie content-first
 
@@ -249,6 +249,75 @@ nie liczą się do kadencji czterech pozycji tygodniowo i nie mają filara.
 ---
 
 ## Dziennik wdrożeń
+
+### 24 września 2026 — poz. 40: `/blog/personalizowana-koperta-na-pieniadze-kiedy-warto`
+
+**Pierwszy wpis wspierający klastra K8.** Pillar `/koperty-na-pieniadze` (poz. 39) od 7 września
+sprzedaje kopertę gładką od 1 sztuki, a usługę personalizacji zbywał jednym pytaniem w
+`MONEY_FAQ_ITEMS`. Wpis przejmuje frazę `personalizowana koperta na pieniądze` — w `keywords.md`
+oznaczoną jako najcenniejszą w klastrze — i odpowiada na pytanie, którego pillar nie rozstrzyga:
+**kiedy imię na kopercie się opłaca**. Link w górę prowadzi do filara F2 (pole `pillar`, anchor
+`personalizowane koperty`), zgodnie z kolumną „Filar" planu; z pillarem K8 wpis łączą odnośniki
+w obie strony.
+
+**Odpowiedź wpisu.** Trzy warunki naraz: co najmniej 10 kopert, każda do innej osoby, czas na
+produkcję. Przy prezencie pieniężnym dopłata jest drobną częścią kwoty w kopercie, więc
+o opłacalności rozstrzyga minimum nakładu i termin, nie cena. Treść prowadzi przez to w siedmiu
+sekcjach: tabela decyzji (sytuacja → co wybrać → dlaczego), koszt serii 10 / 20 / 50 kopert
+w wariancie gładkim i imiennym (bez dostawy, bo nie zmienia różnicy), wyjścia przy mniej niż
+10 osobach (podpis odręczny na papierze matowym, dopełnienie serii kopertami na kolejną okazję —
+koperta z samym imieniem nie ma daty), premie i nagrody (kwota poza kopertą i poza plikiem,
+kolumna dedykacji w szablonie imiennym, logo firmy na zamknięciu), prezenty rodzinne (wiersz
+listy może być rolą: „Dla Zespołu"), termin i lista kontrolna. Wszystkie kwoty i terminy liczy
+`calculatePrice` z `DEFAULT_PRICING`; nazwa kolumny dedykacji pochodzi z
+`PERSONALIZATION_NAME_COLUMNS`.
+
+**Rozgraniczenia.** Wobec pillara K8 — zero kolorów, banknotów i ceny pojedynczej koperty
+gładkiej (odesłanie w pierwszej sekcji). Wobec F2 — seria zamiast rozbicia ceny jednostkowej
+(odesłanie do `#cena`). Wobec poz. 15 — odmiana imienia w dedykacji w jednym akapicie
+z odesłaniem, zero higieny danych. Wobec poz. 16 — liczba dni raz, arytmetyka kalendarza
+w tamtym wpisie. Wobec poz. 44 i K7 — gość weselny z jedną kopertą dostaje jeden akapit bez
+doboru koloru, bony nie występują. `FAQPage` zostaje na filarach.
+
+**Tytuł skrócony.** Wersja z planu („…kiedy się opłaca") dawała 67 znaków z sufiksem marki —
+więcej niż maksimum w bazie (66). „Kiedy warto" daje 62, tyle co poz. 15; wariant „się opłaca"
+niesie nagłówek pierwszej sekcji. `description` 154 znaki.
+
+**Kadr i karta OG.** Okładka: `matcha-koperta-dl-nadruk-wyrazy-uznania` — kontekst nagrody,
+czyli persony, dla której usługa realnie się zwraca, i dotąd nieużywany w treści blogowej.
+Trzy kadry z personalizacją imienną są okładkami poz. 8, 14 i 15, a te wpisy pokazują
+w „Powiązanych" najnowsze wpisy — powtórzony kadr stanąłby tam obok własnej okładki. Akapit
+o wspólnej formule w sekcji o premiach mówi, co widać na zdjęciu. Karta
+`public/images/og/blog-personalizowana-koperta-na-pieniadze.jpg` (1200 × 630, 60 kB, bez kwot)
+z dolnej części kadru — inna kompozycja niż karta `/koperty-na-certyfikaty` z tego samego zdjęcia.
+
+**Linkowanie w obie strony:**
+- **do wpisu:** `/koperty-na-pieniadze` — karta „Personalizacja imienia obdarowanego" i pierwsza
+  pozycja w „Poradnikach". Zapowiedziany 14 września przegląd listy `GUIDES` wypchnął z niej
+  poradnik o liście imion (poz. 15): przygotowanie danych to krok po decyzji, o której mówi
+  pillar, a nowy wpis sam do niego odsyła. Siatka zostaje 2 × 2. `/koperty-personalizowane` —
+  czwarta karta „Poradników" (nagłówek sekcji zmieniony z „Jak przygotować dane do adresowania
+  kopert" na „Zanim zamówią Państwo personalizowane koperty", bo nowy wpis nie jest o danych)
+  i odnośnik w karcie „Działy HR i employer branding". `/`, `/blog` i `/llms.txt` — automatycznie.
+- **z wpisu:** blok „Strona oferty" (F2), `/koperty-na-pieniadze` (anchor `koperty na
+  pieniądze`), `/koperty-personalizowane#cena`, `/koperty-z-nadrukiem` (nadruk na zamknięciu),
+  poz. 46, poz. 15 i poz. 16.
+
+**Rejestr fraz.** `personalizowana koperta na pieniądze` usunięta z `keywords` pillara K8
+(komentarz w kodzie) i przypisana wpisowi w `keywords.md`. Przy okazji K8 w `keywords.md`
+dostał status `[ISTNIEJE]` — rejestr nadal podawał pillar jako propozycję.
+
+`PAGE_UPDATED` podbite dla `/blog`, `/koperty-na-pieniadze` i `/koperty-personalizowane`.
+
+Weryfikacja: `npm run typecheck` i `npm run build` bez błędów, **83/83 stron statycznie**, wpis
+prerenderowany jako SSG. `title` 62 znaki z sufiksem, jeden `<h1>`, siedem sekcji `<h2>`, trzy
+tabele, JSON-LD `Article` + `BreadcrumbList` + `WebPage` (bez `FAQPage`), CTA prowadzi do
+`/?format=DL&personalizacja=1&zakres=imiona#konfigurator`. W przeglądarce (desktop i 375 px):
+kadr się ładuje, tabele przechodzą w widok kartowy, brak przewijania poziomego, zero błędów
+konsoli; na obu filarach odnośniki do wpisu obecne w sekcjach `#nadruk`, `#dla-kogo`
+i `#poradniki`.
+**Do wykonania po wdrożeniu na produkcję** (promocja deploymentu w panelu Vercela):
+`npm run indexnow` — obejmie wpis, `/blog` i oba filary.
 
 ### 23 września 2026 — nowa usługa: nadruk na zamknięciu (klapce z tyłu koperty)
 

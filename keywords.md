@@ -389,7 +389,12 @@ Klaster o wysokim wolumenie, ale **mieszanej wartości**: dominuje w nim klient 
 Wartość realna: MOQ 1 szt. dla kopert gładkich pozwala go obsłużyć bez wyjątków w procesie,
 a ruch buduje autorytet tematyczny domeny.
 
-**URL docelowy:** `/koperty-na-pieniadze` `[PROPOZYCJA]` — **dopiero po** wdrożeniu K1, K2, K7.
+**URL docelowy:** `/koperty-na-pieniadze` `[ISTNIEJE]` — opublikowany 7 września 2026 (poz. 39
+planu), po wdrożeniu K1, K2 i K7.
+**Wsparcie:** `/blog/personalizowana-koperta-na-pieniadze-kiedy-warto` `[ISTNIEJE]` — opublikowany
+24 września 2026 (poz. 40 planu), właściciel frazy `personalizowana koperta na pieniądze`. Wpis
+linkuje w górę do filara K2 (`/koperty-personalizowane`), bo sprzedaje usługę personalizacji;
+z pillarem K8 łączą go odnośniki w obie strony.
 
 | Fraza | Rola | Intencja | Lejek | Wol. | P |
 | --- | --- | --- | --- | --- | --- |
@@ -397,7 +402,7 @@ a ruch buduje autorytet tematyczny domeny.
 | ozdobna koperta na pieniądze | wspierająca | TRANS | BOFU | — | P1 |
 | koperta ozdobna na pieniądze | wariant szyku | TRANS | BOFU | — | P1 |
 | kolorowe koperty na pieniądze | wspierająca | TRANS | BOFU | — | P2 |
-| personalizowana koperta na pieniądze | wspierająca (upsell) | TRANS | BOFU | — | P1 |
+| personalizowana koperta na pieniądze | wspierająca (upsell) → poz. 40 | TRANS | BOFU | — | P1 |
 | koperty na pieniadze na slub | pomost do K9 | TRANS | BOFU | — | P2 |
 
 **Notatki wdrożeniowe:** `personalizowana koperta na pieniądze` to najcenniejsza fraza klastra —
@@ -405,6 +410,12 @@ a ruch buduje autorytet tematyczny domeny.
 oczekiwań: klient detaliczny szuka koperty „na już", a realizacja z personalizacją to 5 dni
 roboczych (2 dni ekspres). Termin musi być podany wprost nad CTA, inaczej klaster wygeneruje
 odbicia i reklamacje.
+
+**Podział pracy z poz. 40 (24 września 2026).** Pillar sprzedaje kopertę gładką od 1 sztuki
+(kolory, banknoty, cena sztuki), wpis — usługę: kiedy imię na kopercie się opłaca, ile kosztuje
+dla całej serii i co zrobić, gdy obdarowanych jest mniej niż minimum. Fraza
+`personalizowana koperta na pieniądze` wyszła z `keywords` pillara; pillar używa jej w treści
+jako anchoru do wpisu.
 
 ---
 
@@ -470,7 +481,7 @@ to zapis na powiadomienie o dostępności formatów, nie wejście do konfigurato
 > w górę wprost do `/` i celują w `[kolor] koperty dl`, czyli w intencję wariantową, której
 > strona główna nie obsługuje.
 | K6 Premium | `/koperty-premium` | do zbudowania | P1 | Zgodność z pozycjonowaniem, ale niski wolumen |
-| K8 Na pieniądze | `/koperty-na-pieniadze` | do zbudowania | P1 | Duży wolumen, niższa wartość klienta |
+| K8 Na pieniądze | `/koperty-na-pieniadze` | **istnieje** (7 września 2026) | P1 | Duży wolumen, niższa wartość klienta |
 | K9 Ślub | blog + lista powiadomień | content-first | P2 | Treść wyprzedza ofertę; **bez CTA zakupowego do czasu startu C6/K4** |
 
 ---
