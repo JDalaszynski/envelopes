@@ -74,10 +74,12 @@ export const FORMAT_MAP: Record<FormatId, EnvelopeFormat> = FORMATS.reduce(
 /**
  * Zalecany zapas między wkładką a kopertą, w każdym wymiarze.
  *
- * Wartość 5 mm jest środkiem przedziału 4–6 mm, który podajemy we wpisie
- * o doborze koperty do zaproszeń. Trzymamy ją w jednym miejscu, bo z niej
- * liczy się zarówno tabela dopasowań na `/koperty-dl`, jak i deklarowana
- * największa wkładka — dwie liczby, które nie mogą się rozjechać.
+ * Wartość 5 mm jest środkiem przedziału 4–6 mm z wpisu startowego
+ * o zaproszeniach, usuniętego 15 sierpnia 2026; obecny wpis o kopertach na
+ * zaproszenia (poz. 41) liczy luz z tej stałej. Trzymamy ją w jednym
+ * miejscu, bo z niej liczy się zarówno tabela dopasowań na `/koperty-dl`,
+ * jak i deklarowana największa wkładka — dwie liczby, które nie mogą się
+ * rozjechać.
  */
 export const INSERT_CLEARANCE_MM = 5;
 

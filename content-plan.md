@@ -220,9 +220,9 @@ z **preselekcją koloru**.
 
 | # | Tytuł / URL | Format | Główna fraza | Cel | Persona / Branża | Filar | Uwagi (antykanibalizacja) | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 41 | Jak dobrać kopertę do zaproszeń | Supporting article | koperty na zaproszenia | RUCH | Eventy, ślub | F3 | **Format zmieniony z `Aktualizacja` na `Supporting article` 15 sierpnia 2026** — wpis startowy usunięty, fraza `koperty na zaproszenia` jest dziś **bez właściciela**, więc treść powstaje od zera z linkiem w górę do F3. Bez CTA zakupowego na C6/K4, konwersją jest zapis na powiadomienie. **Tabeli dopasowań nie dublować** — stoi na F3; wpis zostaje przy doborze koperty do zaproszenia. **Uwaga dopisana 15 września 2026, po publikacji poz. 25:** wpis zaczyna się od **wkładki**, nie od nadawcy — „mam zaproszenie o takim wymiarze, jakiej koperty potrzebuję". Cztery rzeczy należą już do poz. 25 i tu nie wracają: fale kampanii zapraszającej, nakład liczony listą gości, dobór odcienia do charakteru wydarzenia i tabela materiałów eventowych. Fraza `koperty na zaproszenia firmowe` ma właściciela w poz. 25 i nie wchodzi do `keywords` tego wpisu | [ ] |
+| 41 | Koperty na zaproszenia — jak dobrać kopertę DL — `/blog/koperty-na-zaproszenia-jak-dobrac-koperte-dl` | Supporting article | koperty na zaproszenia | RUCH | Eventy, ślub | F3 | **Format zmieniony z `Aktualizacja` na `Supporting article` 15 sierpnia 2026** — wpis startowy usunięty, fraza `koperty na zaproszenia` jest dziś **bez właściciela**, więc treść powstaje od zera z linkiem w górę do F3. Bez CTA zakupowego na C6/K4, konwersją jest zapis na powiadomienie. **Tabeli dopasowań nie dublować** — stoi na F3; wpis zostaje przy doborze koperty do zaproszenia. **Uwaga dopisana 15 września 2026, po publikacji poz. 25:** wpis zaczyna się od **wkładki**, nie od nadawcy — „mam zaproszenie o takim wymiarze, jakiej koperty potrzebuję". Cztery rzeczy należą już do poz. 25 i tu nie wracają: fale kampanii zapraszającej, nakład liczony listą gości, dobór odcienia do charakteru wydarzenia i tabela materiałów eventowych. Fraza `koperty na zaproszenia firmowe` ma właściciela w poz. 25 i nie wchodzi do `keywords` tego wpisu **Wykonane 24 września 2026.** Oś wpisu: **jak zaproszenie o danym wymiarze leży w kopercie DL** — wymiar graniczny 105 × 215 mm, pułapka nazwy „DL” (karta 10 × 21 cm kontra koperta), tabela siedmiu wymiarów z cenników drukarni z kolumną luzu (wypełnia kopertę / przesuwa się / nie wejdzie), karta A6, kwadrat i A5, pomiar zaproszenia z ozdobami, wymiar do zamówienia w drukarni i sposób wkładania. Zapisu na powiadomienie nadal nie ma w kodzie — właściciel zaproszenia kwadratowego dostaje formularz kontaktowy, jak w poz. 25. CTA prowadzi wyłącznie do DL. Tytuł z planu zaczynał się od „Jak dobrać” — przepisany tak, żeby otwierała go fraza główna | [x] |
 | 42 | Koperty na zaproszenia ślubne — poradnik doboru | Supporting article | koperty na zaproszenia ślubne | RUCH | Para młoda, wedding planner | poz. 41 | Inna persona i inny słownik niż poz. 41 — to jedyne, co uzasadnia osobny URL. **Uwaga przepisana 15 września 2026:** rozgraniczenie „firmowe kontra ślubne" nie przebiega już między poz. 41 a 42, bo wariant firmowy wyszedł do poz. 25. Poz. 41 jest dziś stroną **doboru koperty do wkładki**, niezależną od okazji; poz. 42 bierze wyłącznie personę ślubną (para młoda, wedding planner) i jej słownik. Zero treści B2B i zero odwołań do kampanii eventowej — te należą do poz. 25 | [ ] |
-| 43 | Personalizowane koperty ślubne — adresowanie drukiem | Supporting article | personalizowane koperty slubne | KONWERSJA | Para młoda, wedding planner | F2 | **Jedyna pozycja ślubna z realnym CTA** — personalizacja działa dziś na DL | [ ] |
+| 43 | Personalizowane koperty ślubne — adresy gości — `/blog/personalizowane-koperty-slubne-adresy-gosci` | Supporting article | personalizowane koperty slubne | KONWERSJA | Para młoda, wedding planner | F2 | **Jedyna pozycja ślubna z realnym CTA** — personalizacja działa dziś na DL. **Wykonane 24 września 2026.** Oś wpisu: **korzyść z adresowania zaproszeń drukiem** — co para młoda zyskuje, gdy adresy gości są drukowane z listy, a nie wypisywane ręką (czas, jednolite pismo, jeden zapis nazwisk, korekta przed drukiem, praca zespołowa z plannerem). Tytuł z planu („— adresowanie drukiem”) powtarzał H1 filara niemal słowo w słowo, więc przepisany. Dopasowanie karty do koperty zostaje przy poz. 41, dobór koperty do zaproszenia ślubnego przy poz. 42 — fraza `koperty na zaproszenia ślubne` nie wchodzi do `keywords` ani do nagłówków | [x] |
 | 44 | Koperty na pieniądze na ślub — format i kolor | Supporting article | koperty na pieniadze na slub | RUCH | Gość weselny, detal | `/koperty-na-pieniadze` | Wąska intencja okazjonalna; poz. 39 obsługuje ogólną | [ ] |
 
 ### Tydzień 12 — procesy B2B i przegląd
@@ -249,6 +249,176 @@ nie liczą się do kadencji czterech pozycji tygodniowo i nie mają filara.
 ---
 
 ## Dziennik wdrożeń
+
+### 24 września 2026 — poz. 43: `/blog/personalizowane-koperty-slubne-adresy-gosci`
+
+**Drugi wpis K9 i jedyny z realnym CTA.** Fraza `personalizowane koperty slubne` (wraz z dwoma
+wariantami szyku z `keywords.md`) dostała właściciela. Wpis stoi pod filarem F2 (pole `pillar`,
+anchor `personalizowane koperty`) i odpowiada na pytanie „co para młoda zyskuje, gdy adresy gości
+są drukowane, a nie wypisywane ręką". Oś to **korzyść z adresowania drukiem**, nie instrukcja
+wypełniania arkusza (poz. 8 i 15) i nie dobór koperty do zaproszenia (poz. 41 i 42).
+
+**Sekcje:** co daje adresowanie drukiem (tabela: wypisywanie ręką kontra druk z listy według
+pięciu spraw) → zaproszenia w formacie DL (jedyny sprzedawany format; C6 i K4 ze statusem
+z katalogu, bez odnośnika, właściciel innego wymiaru dostaje formularz kontaktowy) → pełny adres
+czy samo nazwisko (poczta kontra wręczanie osobiste; lista mieszana jako dwie pozycje zamówienia,
+każda z własnym minimum) → zapis gości na liście (tabela pięciu zapisów: osoba, małżeństwo, para
+o różnych nazwiskach, rodzina, gość z osobą towarzyszącą; liczba mnoga nazwisk jako jedyna
+pułapka specyficzna dla zaproszeń) → monogram pary na zamknięciu, adres gościa na przodzie →
+koszt całej listy (cztery przykładowe serie, trzy układy, liczone przez `calculatePrice`) → kiedy
+wystarczy koperta gładka → termin liczony wstecz od dnia wysyłki zaproszeń → lista kontrolna.
+
+**Rozgraniczenia.** Wobec F2 — zero cennika jednej koperty, zero tabeli trybów i kolumn
+szablonu; wpis dokłada koszt serii, układ „adres z przodu, znak z tyłu" i słownik ślubny.
+Wobec poz. 8 — wybór trybu przekazania danych to jedno zdanie z odesłaniem. Wobec poz. 15 —
+higiena danych po eksporcie zostaje tam, tu tylko liczba mnoga i zapis pary. Wobec poz. 41 —
+dopasowanie karty do koperty jednym zdaniem z odesłaniem. Wobec poz. 40 i 44 — koperty na
+pieniądze nie występują. Wobec poz. 16 — liczba dni pada raz, arytmetyka kalendarza zostaje tam.
+Wobec poz. 42 — **nagłówki nie zawierają frazy `koperty na zaproszenia ślubne`**; dwa nagłówki,
+które ją miały, przepisano na „z adresami gości".
+
+**Czego wpis świadomie nie obiecuje.** Wyboru kroju pisma — w kodzie ani w konfiguratorze nie ma
+opcji krojów, a strony `/koperty-dla-hoteli` i `/koperty-na-certyfikaty` opisują krój jako część
+nadruku. Zdjęcie otwierające ma napis „W dniu Ślubu" pismem odręcznym, więc akapit pod nim mówi
+wprost, że napis jest wspólny dla serii, a adresy z listy są różne. Wpis nie podaje też liczby
+miesięcy wyprzedzenia, z jakim rozsyła się zaproszenia — poradniki ślubne podają od 3 do 6
+(zależnie od sezonu i gości spoza kraju), więc mówi „w miesiącach" i liczy termin wstecz od dnia
+wysyłki, nie od dnia ślubu. Bez statystyk w rodzaju „typowe wesele ma X gości": serie w tabeli
+kosztów (30, 60, 100 i 150 kopert) są przykładami do przeliczenia, a tekst mówi, że liczy się
+koperta, nie gość.
+
+**Konwersja.** CTA otwiera konfigurator z `format=DL` i personalizacją w wariancie adresowym
+(`/?format=DL&personalizacja=1#konfigurator`); kolor zostaje do wyboru, bo jego dobór do wesela
+należy do poz. 42. Notka nad przyciskiem podaje wizualizację przed drukiem i minimum zamówienia.
+Tabela kosztów pokazuje układ z monogramem na zamknięciu obok samego adresu.
+
+**Tytuł i metadane.** „Personalizowane koperty ślubne — adresy gości": 45 znaków, 57 z sufiksem.
+`description` 151 znaków, jeden konkret (minimum zamówienia) i wprost nazwana korzyść.
+
+**Kadr i karta OG.** Okładka: `biala-perlowa-koperta-dl-nadruk-w-dniu-slubu` — jedyny ślubny kadr
+w katalogu, dotąd nieużywany w treści blogowej. Kadr z imieniem i nazwiskiem odręcznym
+(`niebieska-koperta-dl-personalizacja-odreczna`) pasowałby treściowo lepiej, ale jest okładką
+poz. 14, a wpisy nie mają powtarzać okładek (`Powiązane` pokazują je obok siebie). Karta
+`public/images/og/blog-personalizowane-koperty-slubne.jpg` (1200 × 630, 50 kB, bez kwot) z wycinka
+samej klapki, bez napisu.
+
+**Linkowanie w obie strony:**
+- **do wpisu:** `/koperty-personalizowane` — piąta karta w „Poradnikach" (siatka przechodzi na
+  trzy kolumny, układ 3 + 2), zdanie w opisie sekcji i odnośnik w karcie „Wedding plannerzy
+  i pary młode"; wpis `koperty-na-zaproszenia-jak-dobrac-koperte-dl` (poz. 41) — jedno zdanie
+  w sekcji `jak-wlozyc`, komentarz rozgraniczający uzupełniony. `/`, `/blog` i `/llms.txt` —
+  automatycznie.
+- **z wpisu:** blok „Strona oferty" (F2), poz. 41, poz. 8, poz. 15, poz. 16,
+  `/koperty-z-nadrukiem`, `/kontakt`, `/koperty-personalizowane#cena`.
+
+**Rejestr fraz.** `keywords.md`, K9: trzy frazy przypisane do poz. 43, format docelowy zmieniony
+z „C6 / K4" na DL; dopisana notatka wdrożeniowa i wpis wsparcia w K2. Nowa fraza długiego ogona
+`adresowanie zaproszeń ślubnych` sprawdzona `grep`-em — bez właściciela w serwisie.
+
+`PAGE_UPDATED` — `/blog` i `/koperty-personalizowane` miały już datę 24 września z poz. 40 i 41;
+dopisane komentarze.
+
+Weryfikacja: `npm run typecheck` i `npm run build` bez błędów, wpis prerenderowany jako SSG,
+obecny w `sitemap.xml` (z okładką i kartą OG, `lastmod` 2026-09-24) i w `/llms.txt`. Metadane
+z przeglądarki: `title` 57 znaków z sufiksem, `description` 151, jeden `<h1>`, dziewięć `<h2>`,
+cztery tabele, ok. 1350 słów; JSON-LD `Article` + `BreadcrumbList` + `WebPage` (bez `FAQPage`);
+CTA prowadzi do `/?format=DL&personalizacja=1#konfigurator`. Wszystkie siedem odnośników
+w treści zwraca 200, kotwica `#cena` istnieje. Kwoty w tabeli kosztów zgodne z `DEFAULT_PRICING`
+(np. 100 kopert z adresami: 557,00 zł, z monogramem: 756,00 zł). Odnośniki zwrotne potwierdzone
+w zbudowanym HTML-u `/koperty-personalizowane` (karta w „Poradnikach", karta „Wedding plannerzy",
+plus istniejące), poz. 41, `/blog` i `/`. W przeglądarce (desktop i 375 px): okładka się ładuje,
+brak przewijania poziomego, tabele przechodzą w widok kartowy; na F2 pięć kart poradników w układzie 3 + 2.
+**Czego nie sprawdzono:** wyboru kroju pisma w konfiguratorze (nie istnieje w kodzie, więc wpis go
+nie obiecuje) i liczby miesięcy wyprzedzenia zaproszeń (źródła zewnętrzne się różnią).
+**Do wykonania po wdrożeniu na produkcję** (promocja deploymentu w panelu Vercela):
+`npm run indexnow` — obejmie wpis, `/blog` i `/koperty-personalizowane`, razem z adresami
+z poz. 41 i 40, jeśli nie były jeszcze zgłoszone.
+
+### 24 września 2026 — poz. 41: `/blog/koperty-na-zaproszenia-jak-dobrac-koperte-dl`
+
+**Fraza `koperty na zaproszenia` dostała właściciela.** Od 15 sierpnia, kiedy zniknął wpis
+startowy, nie obsługiwała jej żadna strona; poz. 25 świadomie trzymała ją poza swoimi `keywords`.
+Wpis stoi pod filarem F3 (pole `pillar`, anchor `wymiary koperty DL`) i odpowiada na pytanie
+„mam zaproszenie o takim wymiarze — jak leży w kopercie DL". Zaczyna od karty, nie od nadawcy
+i nie od okazji: chrzest, urodziny, jubileusz i wydarzenie firmowe padają w jednym zdaniu jako
+przypadki tej samej zasady.
+
+**Oś, której nie ma nigdzie indziej: luz wokół karty.** Filar F3 mówi binarnie „mieści się / nie
+mieści się" dla dziesięciu wkładek każdego rodzaju, poz. 10 mapuje wkładkę na format. Tabela
+wpisu bierze wyłącznie wymiary zaproszeń z cenników drukarni (w centymetrach, bo w tej jednostce
+klient zna swoje zaproszenie) plus dwa wymiary graniczne i dokłada kolumnę „Jak leży":
+wypełnia kopertę, wchodzi na granicy zapasu, przesuwa się wzdłuż koperty albo nie wejdzie. Próg
+„przesuwa się" nie jest wpisany ręcznie — to luz na długości, jaki zostawia arkusz A4 złożony na
+trzy, czyli wkładka, pod którą format powstał. Wszystkie werdykty liczy `fitsInFormat()`.
+Siedem wierszy: zaproszenie DL 10 × 21 cm, największe zaproszenie 10,5 × 21,5 cm, zaproszenie
+w wymiarze samej koperty (pułapka nazwy „DL" — nie wejdzie), A6, pocztówkowe 10 × 15 cm,
+kwadrat 14 × 14 cm i A5. Typowe wymiary sprawdzone w polskich poradnikach poligraficznych
+(DL 10 × 21, A5, A6 i kwadrat 14 × 14 cm); konwencja „wierzchem" przy wkładaniu i zwyczaj
+niezaklejania zaproszeń wręczanych osobiście — tak samo.
+
+**Sekcje:** jakie zaproszenie zmieści koperta DL (z tabelą) → czy wejdzie A6 (wejdzie, ale
+przesuwa się o 72 mm; kopertą projektowaną pod A6 jest C6 ze statusem z katalogu) → kwadrat i A5
+(za szerokie o 30 i 38 mm; K4 ze statusem, formularz kontaktowy) → pomiar zaproszenia z ozdobami
+(kokarda, zawieszka, opaska, pieczęć lakowa, karty dołączane; przymiarka na kopercie gładkiej od
+1 sztuki) → wymiar do zamówienia w drukarni (netto 10 × 21 cm, składanka 20 × 21 cm) → jak
+włożyć zaproszenie (wierzchem, klapka na dłuższym boku, znak na zamknięciu) → lista kontrolna.
+
+**Rozgraniczenia.** Wobec F3 — zero tabeli wkładek ogólnych i zero pytań z `DL_FAQ_ITEMS`. Wobec
+poz. 10 — metoda pomiaru i trzy drogi wyjścia zostają tam (odesłanie w pierwszej sekcji), tu
+pomiar dotyczy wyłącznie ozdób i kart dołączanych do zaproszenia. Wobec poz. 11 — grubość
+kompletu na kartonie jednym zdaniem z odesłaniem. Wobec poz. 25 — zero fal kampanii, nakładu
+liczonego listą gości, doboru odcienia i tabeli materiałów eventowych; `koperty na zaproszenia
+firmowe` nie weszła do `keywords`. Wobec poz. 42 i 43 — bez słownika ślubnego i bez kadru
+ślubnego; personalizacja danych gości to jedno zdanie z odnośnikiem do F2. `FAQPage` zostaje na
+filarze. Formaty C6 i K4 występują wyłącznie ze statusem czytanym z katalogu — bez odnośnika
+i bez przycisku.
+
+**Konwersja.** Plan zakładał zapis na powiadomienie o dostępności C6/K4 — mechanizmu nadal nie
+ma w kodzie, więc wpis robi to samo co poz. 25: odsyła właściciela zaproszenia kwadratowego do
+formularza kontaktowego. Właściwą konwersją jest DL: CTA otwiera konfigurator z `format=DL`
+(bez usługi — wpis rozstrzyga dopasowanie karty, nie to, co stanie na kopercie), a notka nad
+przyciskiem podaje dwa progi i wizualizację przed drukiem. Sekcja o wymiarze do zamówienia
+w drukarni przekierowuje decyzję „A6 czy DL" na format, który da się kupić dziś.
+
+**Tytuł przepisany.** Wersja z planu („Jak dobrać kopertę do zaproszeń") nie zaczynała się od
+frazy głównej. „Koperty na zaproszenia — jak dobrać kopertę DL" ma 46 znaków, 58 z sufiksem.
+`description` 150 znaków, z jednym konkretem — wymiarem granicznym w centymetrach.
+
+**Kadr i karta OG.** Okładka: `blekit-lupkowy-koperta-dl-nadruk-na-chrzest` — uroczystość, która
+nie jest ani wydarzeniem firmowym (poz. 25), ani ślubem (kadr „W dniu Ślubu" zostaje dla poz. 42
+i 43); dotąd nieużywany w treści blogowej. Tylna koperta leży klapką do góry, więc zdjęcie
+pokazuje to, o czym mówi sekcja o wkładaniu. Kadr 16:9 na stronie wpisu ucina napis z przodu
+koperty, dlatego akapit mówi tylko o klapce. Karta
+`public/images/og/blog-koperty-na-zaproszenia.jpg` (1200 × 630, 48 kB, bez kwot) z górnej
+części kadru — inna kompozycja niż karta `/koperty/blekit-lupkowy` z tego samego zdjęcia.
+
+**Linkowanie w obie strony:**
+- **do wpisu:** `/koperty-dl` — trzecia karta w „Poradnikach" (siatka przechodzi na trzy kolumny,
+  nagłówek sekcji przepisany z liczby pojedynczej) i zdanie pod tabelą dopasowań;
+  `/koperty-dla-agencji-eventowych` — zdanie pod tabelą `#format`; wpis
+  `jaki-format-koperty-wybrac-do-wkladki` — sekcja `poza-formatem` (`updated: '2026-09-24'`).
+  Wszystkie cztery anchorem `koperty na zaproszenia`. `/`, `/blog` i `/llms.txt` — automatycznie.
+- **z wpisu:** blok „Strona oferty" (F3), poz. 10, poz. 11, `/kontakt`, `/#kolory`,
+  `/koperty-z-nadrukiem` (nadruk na zamknięciu), `/koperty-personalizowane`.
+
+**Rejestr fraz.** `keywords.md`, K9: fraza `koperty na zaproszenia` przypisana wpisowi, format
+docelowy zmieniony z „C6 / K4" na „DL (C6 / K4 po uruchomieniu)". K4: klaster domyka się
+na poz. 41. Przy okazji poprawiony komentarz `INSERT_CLEARANCE_MM` w `catalog.ts` — wskazywał
+na usunięty wpis startowy jako źródło przedziału 4–6 mm.
+
+`PAGE_UPDATED` podbite dla `/koperty-dl` i `/koperty-dla-agencji-eventowych`; `/blog` miał już
+datę 24 września z poz. 40 — dopisany komentarz.
+
+Weryfikacja: `npm run typecheck` i `npm run build` bez błędów, wpis prerenderowany jako SSG,
+obecny w `sitemap.xml` i `/llms.txt`. `title` 58 znaków z sufiksem, jeden `<h1>`, siedem sekcji
+`<h2>`, jedna tabela, JSON-LD `Article` + `BreadcrumbList` + `WebPage` (bez `FAQPage`), CTA
+prowadzi do `/?format=DL#konfigurator`. Odnośniki zwrotne potwierdzone w zbudowanym HTML-u
+czterech stron. W przeglądarce (desktop i 375 px): kadr się ładuje, tabela przechodzi w widok
+kartowy, brak przewijania poziomego, zero błędów konsoli; na F3 trzy karty poradników w jednym
+rzędzie.
+**Do wykonania po wdrożeniu na produkcję** (promocja deploymentu w panelu Vercela):
+`npm run indexnow` — obejmie wpis, `/blog`, `/koperty-dl` i `/koperty-dla-agencji-eventowych`
+razem z adresami poz. 40.
 
 ### 24 września 2026 — poz. 40: `/blog/personalizowana-koperta-na-pieniadze-kiedy-warto`
 

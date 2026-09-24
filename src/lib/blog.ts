@@ -27,6 +27,7 @@ import {
   fitsInFormat,
   formatMm,
   maxInsertSize,
+  personalizationScope,
 } from './catalog';
 import type {
   EnvelopeFormat,
@@ -481,6 +482,142 @@ function workingDaysLabel(days: number): string {
   return `${days} ${plural(days, 'dzień roboczy', 'dni robocze', 'dni roboczych')}`;
 }
 
+/* ── Wartości wyliczane dla wpisu o kopertach na zaproszenia (poz. 41) ─── */
+
+/**
+ * Wpis z content-plan.md poz. 41 zaczyna od zaproszenia, które klient ma
+ * w ręku albo w projekcie, i odpowiada na pytanie, jak ta karta leży
+ * w kopercie DL. Tabela nie powtarza ani dopasowań z filara (wkładki
+ * wszelkiego rodzaju ze `STANDARD_INSERTS`), ani materiałów eventowych
+ * z poz. 25: wiersze to wymiary, w jakich zaproszenia zamawia się
+ * w drukarniach — w centymetrach, jak w cennikach — a kolumna luzu pokazuje
+ * to, czego tamte tabele nie mówią: czy karta wypełnia kopertę, czy się
+ * w niej przesuwa. Każdy werdykt liczy `fitsInFormat()` z wymiarów
+ * katalogowych, więc tabela nie rozjedzie się z konfiguratorem.
+ */
+
+/** Zaproszenie w formacie DL z cenników drukarni — 10 × 21 cm. */
+const INVITE_DL = { width: 100, height: 210 };
+/** Składanka, która po złożeniu na pół daje zaproszenie w formacie DL. */
+const INVITE_DL_OPEN = { width: INVITE_DL.width * 2, height: INVITE_DL.height };
+const INVITE_POSTCARD = { width: 100, height: 150 };
+const INVITE_SQUARE = { width: 140, height: 140 };
+
+/** Wymiar zaproszenia w centymetrach — tak, jak podają go drukarnie. */
+function insertCm(insert: { width: number; height: number }): string {
+  return `${formatMm(insert.width / 10)} × ${formatMm(insert.height / 10)} cm`;
+}
+
+const DL_MAX_INSERT_CM = insertCm({ width: DL_MAX_INSERT.short, height: DL_MAX_INSERT.long });
+const INVITE_DL_FIT = fitsInFormat(INVITE_DL, DL_FORMAT);
+const A6_IN_DL = fitsInFormat(A6_SHEET, DL_FORMAT);
+/** O ile karta jest szersza od koperty DL — liczone od krawędzi koperty, jak na poz. 25. */
+const SQUARE_OVERHANG = -fitsInFormat(INVITE_SQUARE, DL_FORMAT).clearanceShort;
+const A5_OVERHANG = -fitsInFormat(A4_HALF, DL_FORMAT).clearanceShort;
+
+/**
+ * Luz na długości, jaki zostawia w kopercie DL arkusz A4 złożony na trzy —
+ * wkładka, pod którą format powstał. Zaproszenie z większym luzem nie
+ * wypełnia koperty, tylko się w niej przesuwa. Progu nie wpisujemy ręcznie,
+ * bo wynika z geometrii formatu.
+ */
+const DL_LETTER_LONG_SLACK = fitsInFormat(A4_THIRDS, DL_FORMAT).clearanceLong;
+
+interface InvitationSize {
+  label: string;
+  width: number;
+  height: number;
+}
+
+const INVITATION_SIZES: InvitationSize[] = [
+  { label: 'Zaproszenie w formacie DL', ...INVITE_DL },
+  {
+    label: 'Największe zaproszenie do koperty DL',
+    width: DL_MAX_INSERT.short,
+    height: DL_MAX_INSERT.long,
+  },
+  { label: 'Zaproszenie w wymiarze samej koperty', width: DL_FORMAT.width, height: DL_FORMAT.height },
+  { label: 'Zaproszenie A6', width: A6_SHEET.width, height: A6_SHEET.height },
+  { label: 'Zaproszenie pocztówkowe', ...INVITE_POSTCARD },
+  { label: 'Zaproszenie kwadratowe', ...INVITE_SQUARE },
+  { label: 'Zaproszenie A5', width: A4_HALF.width, height: A4_HALF.height },
+];
+
+/** Luz wokół karty zapisany zdaniem — jedna funkcja dla tabeli i dla prozy. */
+function slackLabel(fit: { clearanceShort: number; clearanceLong: number }): string {
+  return fit.clearanceShort === fit.clearanceLong
+    ? `po ${formatMm(fit.clearanceShort)} mm na szerokości i długości`
+    : `${formatMm(fit.clearanceShort)} mm na szerokości, ${formatMm(fit.clearanceLong)} mm na długości`;
+}
+
+/**
+ * Jak zaproszenie leży w kopercie DL. Kolejność warunków jest ważna:
+ * karta A6 wchodzi na granicy zapasu na szerokości, ale dla klienta
+ * rozstrzyga to, że przesuwa się na długości.
+ */
+function invitationVerdict(size: InvitationSize): string {
+  const fit = fitsInFormat(size, DL_FORMAT);
+  if (!fit.fits) {
+    return fit.clearanceShort < 0
+      ? `Nie wejdzie — jest o ${formatMm(-fit.clearanceShort)} mm szersze niż koperta`
+      : 'Nie wejdzie — nie zostaje zapas na wsunięcie';
+  }
+  if (fit.clearanceLong > DL_LETTER_LONG_SLACK) return 'Wejdzie, ale przesuwa się wzdłuż koperty';
+  if (fit.clearanceShort === INSERT_CLEARANCE_MM || fit.clearanceLong === INSERT_CLEARANCE_MM) {
+    return 'Wypełnia kopertę, wchodzi na granicy zapasu';
+  }
+  return 'Wypełnia kopertę jak list złożony na trzy';
+}
+
+/* ── Wartości wyliczane dla wpisu o personalizowanych kopertach ślubnych (poz. 43) ─ */
+
+/**
+ * Wpis z content-plan.md poz. 43 odpowiada na pytanie „co para młoda zyskuje,
+ * gdy adresy gości są drukowane, a nie wypisywane", więc liczy koszt dla
+ * **całej listy zaproszeń** w dwóch układach — sam adres i adres z monogramem
+ * na zamknięciu. Rozbicie ceny jednej koperty należy do filara F2 (`#cena`),
+ * a próg opłacalności do poz. 40. Żadna kwota nie jest wpisana ręcznie.
+ */
+const WEDDING_BASE = {
+  format: 'DL' as FormatId,
+  color: '',
+  print: false,
+  printFiles: [],
+  personalization: false,
+  shippingSpeed: 'standard' as const,
+};
+
+/**
+ * Cztery przykładowe listy — liczba **kopert**, nie gości: para albo rodzina
+ * dostaje jedno zaproszenie. Bez wartości w rodzaju „typowe wesele ma X
+ * osób", której nie potwierdza żadne źródło w repozytorium; wiersze są
+ * przykładami do przeliczenia, a nie statystyką.
+ */
+const WEDDING_SERIES_ROWS = [30, 60, 100, 150].map((quantity) => {
+  const plain = calculatePrice({ ...WEDDING_BASE, quantity });
+  const addressed = calculatePrice({ ...WEDDING_BASE, personalization: true, quantity });
+  const withMonogram = calculatePrice({
+    ...WEDDING_BASE,
+    personalization: true,
+    backPrint: true,
+    quantity,
+  });
+  return {
+    quantity,
+    plain: plain.gross,
+    addressed: addressed.gross,
+    withMonogram: withMonogram.gross,
+  };
+});
+
+/** Etykiety wariantów szablonu — czytane z katalogu, jak nagłówki kolumn. */
+const WEDDING_SCOPE_ADDRESS = personalizationScope('adres');
+const WEDDING_SCOPE_NAMES = personalizationScope('imiona');
+
+/** Formaty zapowiedziane samymi symbolami i wspólny status: „C6 i K4", „Dostępne wkrótce". */
+const UPCOMING_IDS_LABEL = UPCOMING_FORMATS.map((format) => format.id).join(' i ');
+const UPCOMING_BADGE = UPCOMING_FORMATS[0]?.badge ?? 'Dostępne wkrótce';
+
 const POSTS: BlogPost[] = [
   {
     /* content-plan.md poz. 11 — treść wspierająca filar K4 (`/koperty-dl`),
@@ -702,7 +839,8 @@ const POSTS: BlogPost[] = [
        Świadomie nieobecne: pytanie „Czym różni się koperta DL od C6" (należy
        do `DL_FAQ_ITEMS` na filarze i **nie może** tu wrócić), grubość wkładu
        i sposób równego składania A4 (poz. 11), decyzja o braku okienka
-       (poz. 13), dobór koperty do zaproszeń (poz. 41). Zero kwot, zero MOQ,
+       (poz. 13), dobór koperty do zaproszeń (poz. 41 — od 24 września
+       odesłanie w sekcji `poza-formatem`). Zero kwot, zero MOQ,
        zero terminów — należą do `/`, F1 i poz. 9. Wpis nie ma własnego
        `FAQPage`: dane strukturalne pytań zostają na filarze (zasada z poz. 7).
 
@@ -715,8 +853,9 @@ const POSTS: BlogPost[] = [
     lead: 'Sprawdź jaki format koperty wybrać dla różnych dokumentów. Poznaj zasady określające jaka koperta do wkładki będzie optymalna i uniknij pomyłek przy zamówieniach. Przejdź do naszego przewodnika po formatach.',
     category: 'Poradniki',
     date: '2026-08-17',
-    /* Akapit o dyplomach i certyfikatach — odsyła do LP poz. 27 */
-    updated: '2026-09-16',
+    /* Akapit o dyplomach i certyfikatach — odsyła do LP poz. 27.
+       24 września: odesłanie do wpisu o kopertach na zaproszenia (poz. 41). */
+    updated: '2026-09-24',
     readingMinutes: 6,
     colorId: 'taupe',
     format: 'DL',
@@ -810,7 +949,7 @@ const POSTS: BlogPost[] = [
         paragraphs: [
           `Dwie wkładki z tabeli nie wchodzą dziś do żadnej koperty, którą da się u nas zamówić: arkusz A4 złożony na pół ${insertMm(A4_HALF)} i arkusz A4 bez składania ${insertMm(A4_FLAT)}. Drogi wyjścia są trzy i warto je rozważyć w tej kolejności.`,
           'Pierwsza to inne złożenie. Arkusz złożony na trzy zamiast na pół rozwiązuje sprawę w większości korespondencji firmowej, nie wymaga zmiany po naszej stronie i nie przesuwa terminu wysyłki.',
-          `Druga to poczekanie na format. Koperty ${UPCOMING_FORMATS_LABEL} mają w katalogu status „Dostępne wkrótce" — nie da się ich zamówić ani gładkich, ani z nadrukiem, i żaden odnośnik w tym wpisie do nich nie prowadzi. Zaproszenie kwadratowe jest właśnie tym przypadkiem: przyjmie je format K4, którego dziś nie sprzedajemy.`,
+          `Druga to poczekanie na format. Koperty ${UPCOMING_FORMATS_LABEL} mają w katalogu status „Dostępne wkrótce" — nie da się ich zamówić ani gładkich, ani z nadrukiem, i żaden odnośnik w tym wpisie do nich nie prowadzi. Zaproszenie kwadratowe jest właśnie tym przypadkiem: przyjmie je format K4, którego dziś nie sprzedajemy. Jak w kopercie DL leżą zaproszenia o innych wymiarach — i które z nich się w niej przesuwają — pokazujemy w poradniku [koperty na zaproszenia](/blog/koperty-na-zaproszenia-jak-dobrac-koperte-dl).`,
           'Trzecia to koperta spoza naszej oferty. Dyplomu A4, który nie może być zginany, nie zmieści żaden format z tego katalogu i mówimy to wprost, zamiast proponować złożenie, które zniszczy dokument.',
         ],
       },
@@ -2899,6 +3038,433 @@ const POSTS: BlogPost[] = [
          jest wręczana do ręki, więc szablon adresowy byłby do cofnięcia. */
       personalizationScope: 'imiona',
     },
+    pillar: { href: '/koperty-personalizowane', anchor: 'personalizowane koperty' },
+  },
+  {
+    /* content-plan.md poz. 41 — treść wspierająca filar K4 (`/koperty-dl`),
+       cel RUCH. Fraza główna: `koperty na zaproszenia` — do dziś bez
+       właściciela w serwisie.
+
+       Pytanie wpisu: „mam zaproszenie o takim wymiarze — jak leży w kopercie
+       DL?". Wpis zaczyna od karty, nie od nadawcy i nie od okazji.
+
+       Rozgraniczenia (pkt 8 briefu SEO):
+       - wobec filara F3: filar podaje wymiary i binarne „mieści się" dla
+         dziesięciu wkładek każdego rodzaju. Wpis bierze wyłącznie wymiary
+         zaproszeń z cenników drukarni i dokłada oś, której filar nie ma:
+         luz wokół karty, czyli czy zaproszenie wypełnia kopertę, czy się
+         w niej przesuwa;
+       - wobec poz. 10: metoda pomiaru dla dowolnej wkładki, zapas i trzy
+         drogi wyjścia zostają tam (odesłanie w pierwszej sekcji). Tutaj
+         pomiar dotyczy tego, co ma tylko zaproszenie: kokardy, zawieszki,
+         opaski, pieczęci i kart dołączanych;
+       - wobec poz. 11: grubość kompletu na kartonie — jedno zdanie
+         z odesłaniem, bez tabeli gramatur;
+       - wobec poz. 25: zero fal kampanii, zero nakładu liczonego listą
+         gości, zero doboru odcienia do charakteru wydarzenia i zero tabeli
+         materiałów eventowych. Wydarzenie firmowe pada raz, jako okazja,
+         z odnośnikiem;
+       - wobec poz. 42 i 43: bez słownika ślubnego i bez personalizacji
+         danych gości poza jednym zdaniem z odnośnikiem do F2 i — od
+         publikacji poz. 43 — jednym odsyłaczem do tego wpisu (sekcja
+         `jak-wlozyc`).
+
+       Formaty C6 i K4 występują wyłącznie ze statusem z katalogu — żaden
+       odnośnik ani przycisk do nich nie prowadzi (brief pkt 4.2). Zapisu na
+       powiadomienie o dostępności nadal nie ma w kodzie, więc wpis — jak
+       poz. 25 — odsyła właściciela zaproszenia kwadratowego do formularza
+       kontaktowego. `FAQPage` zostaje na filarze. */
+    slug: 'koperty-na-zaproszenia-jak-dobrac-koperte-dl',
+    /* Tytuł z planu („Jak dobrać kopertę do zaproszeń") nie zaczynał się
+       od frazy głównej. 46 znaków, 58 z sufiksem marki. */
+    title: 'Koperty na zaproszenia — jak dobrać kopertę DL',
+    /* Lead zasila `description`. Jeden konkret — wymiar graniczny
+       w centymetrach, czyli w jednostce, w której klient zna swoje
+       zaproszenie — i trzy pytania, na które wpis odpowiada. */
+    lead: `Zaproszenie do ${DL_MAX_INSERT_CM} zmieści się w kopercie DL. Pokazujemy, jak leży w niej karta A6, co z kwadratem lub A5 i jaki wymiar zamówić w drukarni.`,
+    category: 'Poradniki',
+    date: '2026-09-24',
+    readingMinutes: 6,
+    colorId: 'blekit-lupkowy',
+    format: 'DL',
+    /* Kadr „Chrzest Święty" — zaproszenie na uroczystość, która nie jest ani
+       wydarzeniem firmowym (poz. 25), ani ślubem (poz. 42 i 43). Tylna
+       koperta leży klapką do góry, więc zdjęcie pokazuje to, o czym mówi
+       sekcja `jak-wlozyc`: klapkę biegnącą wzdłuż dłuższego boku. Dotąd
+       nieużywany w treści blogowej. */
+    showcaseFile: 'blekit-lupkowy-koperta-dl-nadruk-na-chrzest',
+    imageVariant: 'nadruk',
+    ogImageSlug: 'blog-koperty-na-zaproszenia',
+    /* Karta z górnej części kadru (`scripts/og-card.mjs` na wycinku) — inna
+       kompozycja niż karta strony koloru z tego samego zdjęcia. */
+    ogImageAlt:
+      'Koperta DL w kolorze Jeansowym leżąca klapką do góry na białych deskach, przed nią górna krawędź drugiej koperty tego samego formatu',
+    keywords: [
+      'koperty na zaproszenia',
+      'koperta na zaproszenie',
+      'koperta dl na zaproszenie',
+      'jaka koperta do zaproszenia',
+      'zaproszenie a6 w kopercie dl',
+    ],
+    /* Wstęp bez wymiaru granicznego — ten otwiera pierwszą sekcję, a dwa
+       sąsiednie akapity z tą samą liczbą to szum (brief pkt 10.1). */
+    intro: `Koperty na zaproszenia dobiera się do wymiaru zaproszenia — po złożeniu i razem ze wszystkimi dodatkami. W kopercie DL ${DL_FORMAT.dimensions} najlepiej leży karta w formacie DL, zaprojektowana właśnie pod nią. Karta A6 też wejdzie, ale będzie się przesuwać, a zaproszenie kwadratowe i A5 są na kopertę DL za szerokie. Poniżej pokazujemy, gdzie przebiega granica, jak leżą w kopercie typowe wymiary zaproszeń, jak zmierzyć zaproszenie z ozdobami i jaki wymiar zamówić w drukarni.`,
+    sections: [
+      {
+        id: 'jakie-zaproszenie-zmiesci-koperta-dl',
+        heading: 'Jakie zaproszenie zmieści koperta DL',
+        paragraphs: [
+          `Koperta DL zmieści zaproszenie o wymiarach do ${DL_MAX_INSERT.short} × ${DL_MAX_INSERT.long} mm, czyli ${DL_MAX_INSERT_CM}. To koperta pomniejszona o ${INSERT_CLEARANCE_MM} mm na szerokości i na długości — tyle zapasu potrzeba, żeby karta weszła jednym ruchem i nie zagięła się na rogu. Zaproszenie szersze od tej granicy nie wejdzie, nawet jeśli jest krótsze od koperty.`,
+          `Nazwa „DL" oznacza dwie różne rzeczy. Zaproszenie w formacie DL ma ${insertCm(INVITE_DL)} i jest projektowane pod kopertę, a koperta DL jest od niego nieco większa. Jeśli projekt zaproszenia ustawiono na wymiar samej koperty, karta nie wejdzie do środka — zapasu nie ma wcale.`,
+          'Zasady są te same dla zaproszenia na chrzest, komunię, urodziny, jubileusz i wydarzenie firmowe: o kopercie decyduje wymiar karty, a nie okazja. Tabela poniżej zestawia typowe wymiary zaproszeń z cenników drukarni oraz dwa wymiary graniczne i pokazuje, ile luzu zostaje wokół karty w kopercie DL. Metodę pomiaru dla wkładek innych niż zaproszenia opisujemy w poradniku [jaki format koperty wybrać do wkładki](/blog/jaki-format-koperty-wybrac-do-wkladki).',
+        ],
+        table: {
+          caption:
+            'Typowe wymiary zaproszeń i to, jak leżą w kopercie DL — luz liczony z wymiarów katalogowych koperty',
+          head: ['Zaproszenie', 'Wymiar netto', 'Luz w kopercie DL', 'Jak leży'],
+          rows: INVITATION_SIZES.map((size) => {
+            const fit = fitsInFormat(size, DL_FORMAT);
+            return [
+              `${size.label}, ${insertCm(size)}`,
+              insertMm(size),
+              fit.fits ? slackLabel(fit) : '—',
+              invitationVerdict(size),
+            ];
+          }),
+        },
+      },
+      {
+        id: 'zaproszenie-a6',
+        heading: 'Czy zaproszenie A6 zmieści się w kopercie DL',
+        paragraphs: [
+          `Tak, zaproszenie A6 wejdzie do koperty DL, ale nie będzie w niej leżeć stabilnie. Na szerokości zostaje ${formatMm(A6_IN_DL.clearanceShort)} mm, a na długości aż ${formatMm(A6_IN_DL.clearanceLong)} mm wolnego miejsca. Karta zsuwa się do jednego końca koperty, a reszta zostaje pusta.`,
+          'Pusta część koperty nie ma w środku nic sztywnego, więc zgina się łatwiej niż ta, w której leży karta. Zaproszeń wręczanych osobiście zwyczajowo się nie zakleja, a z niezaklejonej koperty przesuwająca się karta potrafi wysunąć się przy wręczaniu.',
+          `Kopertą projektowaną pod kartę A6 jest format C6 ${FORMAT_MAP.C6.dimensions}. W katalogu Envelopes ma dziś status „${FORMAT_MAP.C6.badge}" i nie da się go zamówić. W kopercie DL kartę A6 stabilizuje drugi element o długości koperty: jeśli do zaproszenia dołączają Państwo program albo mapkę dojazdu w formacie DL, położone za zaproszeniem wypełnią resztę miejsca. Gdy zaproszenia nie są jeszcze wydrukowane, prostszy jest wymiar DL — piszemy o nim w dalszej części.`,
+        ],
+      },
+      {
+        id: 'kwadrat-i-a5',
+        heading: 'Czy zaproszenie kwadratowe lub A5 zmieści się w kopercie DL',
+        paragraphs: [
+          `Nie. Zaproszenie kwadratowe ${insertCm(INVITE_SQUARE)} jest o ${formatMm(SQUARE_OVERHANG)} mm szersze niż koperta DL, a karta A5 — o ${formatMm(A5_OVERHANG)} mm. W obu przypadkach przeszkodą jest szerokość, a tej nie nadrobi ani długość koperty, ani inne ułożenie karty.`,
+          `Zaproszenie kwadratowe wymaga koperty kwadratowej. W katalogu Envelopes jest nią format K4, który — tak jak C6 — ma dziś status „${FORMAT_MAP.K4.badge}". Jeśli zaproszenia są już wydrukowane w kwadracie, prosimy o wiadomość przez [formularz kontaktowy](/kontakt): odpowiemy, na jakim etapie jest uruchomienie tego formatu.`,
+          'Płaska karta A5 wymaga koperty C5, której w naszym katalogu nie ma. Jeśli zaproszenie A5 jest składane na pół, po złożeniu ma wymiar A6 i wchodzi do koperty DL tak, jak opisaliśmy wyżej — z tym samym luzem na długości.',
+        ],
+      },
+      {
+        id: 'jak-zmierzyc-zaproszenie',
+        heading: 'Jak zmierzyć zaproszenie z ozdobami i dodatkami',
+        paragraphs: [
+          'Zaproszenie mierzy się w postaci, w jakiej trafi do koperty: złożone, przewiązane, z opaską i ze wszystkimi kartami, które jadą razem z nim. O dopasowaniu decyduje najszerszy i najdłuższy punkt całego kompletu, a nie wymiar karty z zamówienia w drukarni. Przy zaokrąglonych narożnikach albo wycinanym brzegu mierzy się prostokąt, w który cały kształt się wpisuje.',
+          'Ozdoby zmieniają wymiar na dwa sposoby. Kokarda zawiązana przy krawędzi i zawieszka na sznurku wystają poza obrys karty, więc to one wyznaczają szerokość. Pieczęć lakowa, zasuszony kwiat albo aplikacja pogrubiają zaproszenie w jednym punkcie — i właśnie tam klapka koperty zamyka się z największym oporem.',
+          'Karta z prośbą o potwierdzenie przybycia, mapka dojazdu i program muszą zmieścić się w obrysie zaproszenia. Razem pogrubiają komplet, a sztywny karton zaproszeniowy znosi w kopercie mniej warstw niż papier biurowy. Ile ich wejdzie bez naprężenia klapki, rozpisujemy w poradniku [ile kartek mieści koperta DL](/blog/ile-kartek-miesci-koperta-dl-i-jak-je-zlozyc).',
+          `Przy zaproszeniach z ozdobami najpewniejsza jest przymiarka na gotowym egzemplarzu. Koperty gładkie zamawiają Państwo od ${DEFAULT_PRICING.moqWithoutPrint} sztuki, więc komplet da się sprawdzić w kopercie, zanim zamówią Państwo całą serię z nadrukiem.`,
+        ],
+      },
+      {
+        id: 'wymiar-w-drukarni',
+        heading: 'Jaki wymiar zaproszenia zamówić pod kopertę DL',
+        paragraphs: [
+          `Pod kopertę DL najlepiej zamówić zaproszenie o wymiarze netto ${insertCm(INVITE_DL)} — po przycięciu, bez spadów. Taka karta zostawia w kopercie luz ${slackLabel(INVITE_DL_FIT)}, więc wchodzi jednym ruchem i nie przesuwa się w środku.`,
+          `Zaproszenie składane zamawia się w formacie otwartym dwa razy szerszym — ${insertCm(INVITE_DL_OPEN)} — który po złożeniu na pół daje ten sam wymiar. Tak samo działa arkusz A4 złożony na trzy. W obu przypadkach o kopercie decyduje wymiar po złożeniu i to on powinien stać w zamówieniu jako docelowy.`,
+          'Orientacja projektu nie wpływa na dopasowanie. Zaproszenie pionowe i poziome o tym samym wymiarze wchodzą do koperty DL tak samo, bo kartę zawsze wsuwa się dłuższą krawędzią.',
+          'Jeśli projekt jest jeszcze otwarty, a do wyboru są karta A6 i format DL, wymiar DL od razu rozstrzyga sprawę koperty. Taką kopertę zamówią Państwo dziś — gładką albo z nadrukiem, w każdym kolorze z [palety na stronie głównej](/#kolory).',
+        ],
+      },
+      {
+        id: 'jak-wlozyc',
+        heading: 'Jak włożyć zaproszenie do koperty DL',
+        paragraphs: [
+          'Zaproszenie wkłada się do koperty wierzchem, czyli tak, żeby gość po otwarciu klapki i wyjęciu karty od razu widział jej przód, bez obracania. Gdy w kopercie jest kilka kart, wszystkie leżą przodem w tę samą stronę, a zaproszenie najbliżej klapki, żeby gość zobaczył je jako pierwsze.',
+          'W kopercie DL klapka biegnie wzdłuż dłuższego boku. Widać to na zdjęciu otwierającym ten poradnik: tylna koperta leży klapką do góry, przednia — przodem. Kartę wsuwa się więc dłuższą krawędzią do dna koperty, a po otwarciu klapki gość ma ją przed sobą na całej długości.',
+          'Klapkę gość ogląda w chwili otwierania, więc to dobre miejsce na znak. Drukujemy na niej grafikę z osobnego pliku — monogram, znak wydarzenia albo logo — a przód koperty zostaje wtedy wolny na imię i nazwisko gościa albo adres. Nadruk na zamknięciu opisujemy na stronie [koperty z nadrukiem](/koperty-z-nadrukiem), a nadruk danych gości — na stronie [personalizowane koperty](/koperty-personalizowane). Co daje taki nadruk przy zaproszeniach ślubnych, opisujemy w poradniku [personalizowane koperty ślubne](/blog/personalizowane-koperty-slubne-adresy-gosci).',
+        ],
+      },
+      {
+        id: 'lista-kontrolna',
+        heading: 'Zanim zamówią Państwo koperty na zaproszenia',
+        paragraphs: [
+          'Sześć punktów do sprawdzenia na gotowym zaproszeniu, zanim wybiorą Państwo kopertę.',
+        ],
+        list: [
+          `Zaproszenie po złożeniu i przycięciu nie przekracza ${DL_MAX_INSERT.short} × ${DL_MAX_INSERT.long} mm`,
+          'Najszerszy punkt zmierzony razem z kokardą, zawieszką i opaską',
+          'Karty dołączane do zaproszenia mieszczą się w jego obrysie, a cały komplet nie napina klapki',
+          'Karta A6 ma w kopercie drugi element w formacie DL albo akceptują Państwo, że będzie się przesuwać',
+          'Zaproszenie kwadratowe i płaskie A5 czekają na inny format — do koperty DL nie wejdą',
+          `Nowy projekt zaproszenia ma wymiar netto ${insertCm(INVITE_DL)}`,
+        ],
+      },
+    ],
+    /* Mikroargument przy CTA (brief pkt 7): niski próg i wizualizacja przed
+       drukiem. Bez ceny — ta stoi w konfiguratorze i na filarze. */
+    cta: `Koperty DL na zaproszenia: gładkie od ${DEFAULT_PRICING.moqWithoutPrint} sztuki, z nadrukiem od ${DEFAULT_PRICING.moqWithPrint} — z wizualizacją do akceptacji przed drukiem.`,
+    /* Sam format, bez usługi: wpis rozstrzyga dopasowanie karty, a nie to,
+       co stanie na kopercie. Kolor zostaje do wyboru — dobór odcienia do
+       wydarzenia należy do poz. 25. */
+    ctaConfigure: { label: 'Wybierz kopertę DL na zaproszenia', format: 'DL' },
+    pillar: { href: '/koperty-dl', anchor: 'wymiary koperty DL' },
+  },
+  {
+    /* content-plan.md poz. 43 — treść wspierająca filar K2
+       (`/koperty-personalizowane`), cel KONWERSJA. Fraza główna:
+       `personalizowane koperty ślubne` (klaster K9). Jedyna pozycja ślubna
+       z realnym CTA — personalizacja działa dziś na formacie DL.
+
+       Pytanie wpisu: „co para młoda zyskuje, gdy adresy gości są drukowane,
+       a nie wypisywane ręką". Oś to **korzyść z adresowania drukiem**, nie
+       dobór koperty do zaproszenia i nie instrukcja wypełniania arkusza.
+
+       Rozgraniczenia (pkt 8 briefu SEO):
+       - wobec filara F2: filar podaje cennik jednej koperty, tabelę trybów
+         i kolumny szablonu. Wpis nie powtarza żadnej z nich — dokłada koszt
+         całej listy zaproszeń, układ „adres na przodzie, monogram na
+         zamknięciu" i zapis gości w słowniku ślubnym (para, rodzina, osoba
+         towarzysząca);
+       - wobec poz. 8: wybór trybu przekazania danych (arkusz czy ręcznie)
+         to jedno zdanie z odesłaniem;
+       - wobec poz. 15: higiena danych po eksporcie (wersaliki, polskie znaki,
+         duplikaty) zostaje tam. Tutaj wyłącznie to, co specyficzne dla
+         zaproszeń: liczba mnoga nazwisk i zapis pary;
+       - wobec poz. 41: dopasowanie karty do koperty zostaje tam — jedno
+         zdanie z odesłaniem;
+       - wobec poz. 40 i 44: koperty na pieniądze dla usługodawców i gości
+         weselnych nie występują;
+       - wobec poz. 42: dobór koperty do zaproszenia ślubnego (kolor, format,
+         słownik doboru) nie należy do tego wpisu. Fraza `koperty na
+         zaproszenia ślubne` nie wchodzi do `keywords`.
+
+       Zapis na powiadomienie o C6 i K4 nadal nie istnieje w kodzie, więc
+       właściciel zaproszeń w tych formatach dostaje odsyłacz do formularza
+       kontaktowego — jak w poz. 25 i 41. Żaden odnośnik ani przycisk nie
+       prowadzi do formatu spoza oferty (brief pkt 4.2). `FAQPage` zostaje
+       na filarze. */
+    slug: 'personalizowane-koperty-slubne-adresy-gosci',
+    /* 45 znaków, 57 z sufiksem marki. Wariant z planu („— adresowanie
+       drukiem") powtarzał H1 filara `/koperty-personalizowane` niemal
+       słowo w słowo, co jest sygnałem kanibalizacji. */
+    title: 'Personalizowane koperty ślubne — adresy gości',
+    /* Lead zasila `description`. Jeden konkret — próg zamówienia — i wprost
+       nazwana korzyść: brak wypisywania ręką. */
+    lead: `Personalizowane koperty ślubne to adresy gości drukowane z listy na kopertach DL, bez wypisywania ręką. Pokazujemy korzyści i koszt listy, od ${DEFAULT_PRICING.moqWithPrint} sztuk.`,
+    category: 'Poradniki',
+    date: '2026-09-24',
+    readingMinutes: 7,
+    colorId: 'biala-perlowa',
+    format: 'DL',
+    /* Kadr „W dniu Ślubu" — jedyny ślubny kadr w katalogu (`showcase.ts`),
+       dotąd nieużywany w treści blogowej, a wpisy z tego klastra mają własne
+       okładki, bo „Powiązane" pokazują je obok siebie. Kadr pokazuje kopertę
+       DL z hasłem wspólnym dla serii, nie z danymi gościa, więc sekcja
+       `co-daje-druk-adresow` mówi wprost, co widać na zdjęciu, i że każdy
+       adres z listy jest inny. Ostrzeżenie z `showcase.ts` (kadr nie może
+       obiecywać formatu spoza oferty) jest spełnione: to koperta DL,
+       a wpis nie prowadzi do C6 ani K4. Kadr z imieniem i nazwiskiem
+       (`niebieska-koperta-dl-personalizacja-odreczna`) jest okładką poz. 14
+       i wpis, który stałby obok niej w „Powiązanych", dublowałby zdjęcie. */
+    showcaseFile: 'biala-perlowa-koperta-dl-nadruk-w-dniu-slubu',
+    imageVariant: 'nadruk',
+    ogImageSlug: 'blog-personalizowane-koperty-slubne',
+    /* Karta z wycinka kadru (`scripts/og-card.mjs`) — sama klapka, bez napisu,
+       więc inna kompozycja niż karty stron z tego samego zdjęcia. */
+    ogImageAlt:
+      'Klapka koperty DL w kolorze Biała Perłowa z perłowym połyskiem, leżącej na białych deskach',
+    keywords: [
+      'personalizowane koperty ślubne',
+      'personalizowana koperta na ślub',
+      'koperta personalizowana na ślub',
+      'adresowanie zaproszeń ślubnych',
+    ],
+    intro:
+      'Personalizowane koperty ślubne to koperty z zaproszeniami, na których adres albo nazwisko każdego gościa jest wydrukowane, a nie wypisane ręką. Państwo przekazują listę gości, a my drukujemy z niej dane na kopertach DL — każda koperta dla innego gościa, wszystkie tym samym pismem. Największą korzyść daje lista, której ręczne wypisywanie zajęłoby dużo czasu: znika przepisywanie, koperty wyglądają jednakowo, a każde nazwisko da się sprawdzić przed drukiem. Poniżej opisujemy, co dokładnie zyskuje para młoda, jak zapisać gości na liście, ile kosztuje cała lista i kiedy lepiej zostać przy kopercie gładkiej.',
+    sections: [
+      {
+        id: 'co-daje-druk-adresow',
+        heading: 'Co daje adresowanie zaproszeń ślubnych drukiem',
+        paragraphs: [
+          'Druk adresów daje parze młodej trzy rzeczy: oszczędza czas wypisywania, wyrównuje pismo na wszystkich kopertach i pozwala sprawdzić każde nazwisko, zanim koperta zostanie wydrukowana. Dane przechodzą z listy na kopertę automatycznie, bez przepisywania. Sprawdzenie zostaje po Państwa stronie: nazwiska odtwarzamy dokładnie w takiej postaci, w jakiej stoją w wierszu listy.',
+          'Listę gości para młoda zwykle ma już w arkuszu — służy do planu stołów i do potwierdzeń przybycia. Po przeniesieniu do szablonu ta sama lista staje się wsadem do druku, więc adresów nie pisze się drugi raz.',
+          'Tabela zestawia wypisywanie ręką z drukiem z listy według pięciu spraw, które para młoda liczy przy zaproszeniach. Zdjęcie otwierające ten poradnik pokazuje przykładowy nadruk pismem odręcznym na kopercie DL — napis „W dniu Ślubu” jest wspólny dla całej serii, a na kopertach z listy gości każdy adres jest inny.',
+        ],
+        table: {
+          caption: 'Adresowanie zaproszeń ślubnych: wypisywanie ręką i druk z listy gości',
+          head: ['Sprawa', 'Wypisywanie ręką', 'Druk z listy gości'],
+          rows: [
+            [
+              'Czas',
+              'Każda koperta powstaje osobno, więc praca rośnie razem z listą gości',
+              'Listę przekazują Państwo raz, a termin realizacji nie zależy od liczby kopert',
+            ],
+            [
+              'Wygląd',
+              'Pismo zmienia się od koperty do koperty i ze zmęczeniem piszącego',
+              'Wszystkie koperty wychodzą tym samym pismem',
+            ],
+            [
+              'Zapis nazwisk',
+              'Zwrot i odmianę trzeba wybrać od nowa przy każdej kopercie',
+              'Zapis wybierają Państwo raz, w liście — drukujemy go bez zmian',
+            ],
+            [
+              'Pomyłki',
+              'Błąd wychodzi dopiero na gotowej kopercie, którą trzeba wypisać od nowa',
+              'Literówka z listy trafia na wydruk, dlatego wizualizację sprawdzają Państwo przed drukiem',
+            ],
+            [
+              'Praca zespołowa',
+              'Kopertę wypisuje jedna osoba naraz',
+              'Listę przygotowuje jedna osoba, a zatwierdza druga — para młoda albo wedding planner',
+            ],
+          ],
+        },
+      },
+      {
+        id: 'zaproszenia-w-formacie-dl',
+        heading: 'Adresowanie zaproszeń ślubnych w formacie DL',
+        paragraphs: [
+          `Adresowanie drukiem wykonujemy dziś wyłącznie na kopertach DL, więc opisane korzyści dotyczą zaproszeń, które po złożeniu mieszczą się w tym formacie. Zaproszenie w formacie DL ma ${insertCm(INVITE_DL)} i wypełnia kopertę tak samo jak list złożony na trzy. Jak leżą zaproszenia o innych wymiarach, pokazujemy w poradniku [koperty na zaproszenia](/blog/koperty-na-zaproszenia-jak-dobrac-koperte-dl).`,
+          `Formaty ${UPCOMING_IDS_LABEL}, w których często zamawia się zaproszenia ślubne, mają w katalogu status „${UPCOMING_BADGE}” — adresowanie drukiem ich nie obejmuje, a żaden odnośnik w tym poradniku do nich nie prowadzi. Jeśli zaproszenia są już wydrukowane w takim wymiarze, prosimy o wiadomość przez [formularz kontaktowy](/kontakt).`,
+          'Gdy projekt zaproszeń jest jeszcze otwarty, wymiar DL od razu rozstrzyga sprawę koperty: taką kopertę z adresami gości zamówią Państwo już dziś.',
+        ],
+      },
+      {
+        id: 'adres-czy-nazwisko',
+        heading: 'Pełny adres czy samo nazwisko gościa na kopercie',
+        paragraphs: [
+          'Pełny adres drukujemy na zaproszeniach wysyłanych pocztą albo kurierem, a samo imię i nazwisko — na zaproszeniach wręczanych gościom osobiście. Wybór zapada w konfiguratorze, zaraz po włączeniu personalizacji, i ustawia kolumny szablonu.',
+          `Często obie sytuacje występują naraz: bliscy dostają zaproszenie do ręki, goście z daleka — pocztą. Jedna pozycja zamówienia ma jeden wariant, więc taką listę składają Państwo jako dwie pozycje, a każda z nich ma minimum ${DEFAULT_PRICING.moqWithPrint} kopert. Grupa mniejsza niż to minimum zostaje przy kopercie gładkiej z nazwiskiem dopisanym odręcznie.`,
+          'Sposób przekazania danych — wpisanie w konfiguratorze albo arkusz — rozstrzyga poradnik [adresowanie kopert z arkusza czy ręcznie](/blog/adresowanie-kopert-z-arkusza-czy-recznie). Lista gości zwykle istnieje już w pliku, a wtedy ten poradnik wskazuje arkusz.',
+        ],
+        table: {
+          caption: 'Jak zaproszenie trafia do gościa i który wariant szablonu wybrać',
+          head: ['Jak zaproszenie trafia do gościa', 'Wariant', 'Co jest wymagane w wierszu'],
+          rows: [
+            [
+              'Poczta lub kurier',
+              WEDDING_SCOPE_ADDRESS.label,
+              `${NAME_COLUMN_LABEL}, ${REQUIRED_ADDRESS_FIELDS}`,
+            ],
+            [
+              'Wręczane osobiście',
+              WEDDING_SCOPE_NAMES.label,
+              `Wyłącznie ${NAME_COLUMN_LABEL.toLowerCase()} — pól adresowych w tym szablonie nie ma`,
+            ],
+            [
+              'Część gości pocztą, część do ręki',
+              'Dwie pozycje zamówienia: adresowa i imienna',
+              'Każda pozycja ma własne minimum kopert',
+            ],
+          ],
+        },
+      },
+      {
+        id: 'zapis-gosci',
+        heading: 'Jak zapisać gości na liście do druku',
+        paragraphs: [
+          'Na kopercie drukujemy dokładnie to, co stoi w wierszu listy, więc zwrot, odmianę i kolejność imion wybierają Państwo w arkuszu. Jeden wiersz to jedna koperta: para albo rodzina, która dostaje jedno zaproszenie, zajmuje jeden wiersz.',
+          'Największą pułapką jest liczba mnoga. Lista gości ma zwykle nazwiska w liczbie pojedynczej, a na kopercie dla małżeństwa potrzebna jest forma „Kowalscy” albo „Nowakowie”. Odmiany nie poprawiamy — ani nazwisk, ani wielkich liter, ani skrótów — więc wiersz dla pary trzeba zapisać w gotowej postaci.',
+          'Zwyczajowe zwroty różnią się między rodzinami i regionami, dlatego tabela podaje przykłady zapisu, a nie regułę. Wersaliki, polskie znaki i duplikaty w eksporcie z arkusza omawiamy w poradniku [koperty z imieniem i nazwiskiem](/blog/koperty-z-imieniem-i-nazwiskiem-jak-przygotowac-liste).',
+        ],
+        table: {
+          caption: 'Przykłady zapisu wiersza dla różnych gości zaproszenia ślubnego',
+          head: ['Kogo Państwo zapraszają', 'Przykład wiersza', 'Na co uważać'],
+          rows: [
+            [
+              'Jedną osobę',
+              'Anna Kowalska',
+              'Imię i nazwisko w mianowniku, tak jak w liście gości',
+            ],
+            [
+              'Małżeństwo',
+              'Państwo Anna i Jan Kowalscy',
+              'Nazwisko w liczbie mnogiej, zapisane w gotowej postaci',
+            ],
+            [
+              'Parę o różnych nazwiskach',
+              'Anna Nowak i Jan Kowalski',
+              'Oba nazwiska w jednym wierszu, bo jeden wiersz to jedna koperta',
+            ],
+            [
+              'Rodzinę',
+              'Rodzina Nowaków',
+              'Forma zbiorcza — kolejność i zwrot ustalają Państwo w wierszu',
+            ],
+            [
+              'Gościa z osobą towarzyszącą',
+              'Anna Kowalska z osobą towarzyszącą',
+              'Dopisek stoi w tym samym wierszu co nazwisko',
+            ],
+          ],
+        },
+      },
+      {
+        id: 'monogram-na-zamknieciu',
+        heading: 'Monogram pary młodej na zamknięciu koperty',
+        paragraphs: [
+          'Najlepszy układ to adres gościa na przodzie koperty i monogram albo znak pary młodej na zamknięciu. Przód zostaje wtedy w całości dla gościa, a znak pary pojawia się w chwili otwierania koperty.',
+          'Nadruk na zamknięciu jest osobną usługą i łączy się z adresowaniem. Grafikę znaku przesyłają Państwo osobnym plikiem, razem z uwagami dla grafika, a układ obu stron koperty widzą Państwo na wizualizacji przed drukiem. Wymagania dotyczące plików opisujemy na stronie [koperty z nadrukiem](/koperty-z-nadrukiem).',
+          'Jeśli zamknięcie ma zostać czyste, wystarczy sam adres. Koszt obu układów zestawiamy w następnej sekcji.',
+        ],
+      },
+      {
+        id: 'koszt-listy-gosci',
+        heading: 'Ile kosztuje zaadresowanie zaproszeń dla całej listy gości',
+        paragraphs: [
+          'Dopłata za adresowanie jest taka sama dla każdej koperty, niezależnie od długości zapisu, więc „Państwo Anna i Jan Kowalscy” kosztuje tyle samo co samo nazwisko. Rabatów ilościowych nie stosujemy, a koszt rośnie proporcjonalnie do liczby kopert.',
+          'Liczy się koperta, nie gość: para albo rodzina dostaje jedną kopertę, więc sto osób zaproszonych parami to pięćdziesiąt kopert. Tabela pokazuje cztery przykładowe listy w dwóch układach — z samym adresem gościa i z monogramem na zamknięciu.',
+          'Kwoty są brutto i bez dostawy, którą naliczamy raz na zamówienie. Rozbicie ceny jednej koperty na składniki podaje cennik na stronie [personalizowane koperty](/koperty-personalizowane#cena).',
+        ],
+        table: {
+          caption:
+            'Koszt przykładowych list zaproszeń w kopertach DL: gładkie, z adresami gości i z monogramem na zamknięciu, kwoty brutto bez dostawy',
+          head: ['Liczba kopert', 'Koperty gładkie', 'Z adresami gości', 'Z adresami i monogramem'],
+          rows: WEDDING_SERIES_ROWS.map((row) => [
+            `${row.quantity} szt.`,
+            formatPrice(row.plain),
+            formatPrice(row.addressed),
+            formatPrice(row.withMonogram),
+          ]),
+        },
+      },
+      {
+        id: 'kiedy-koperta-gladka',
+        heading: 'Kiedy wystarczy koperta gładka i podpis odręczny',
+        paragraphs: [
+          `Koperta gładka z podpisem odręcznym wystarcza, gdy zaproszeń jest mniej niż minimum dla personalizacji, gdy lista dopiero się zmienia albo gdy zaproszenie ma wyglądać jak list od bliskiej osoby. Zamawiają ją Państwo od ${DEFAULT_PRICING.moqWithoutPrint} sztuki, a wysyłamy w ${workingDaysLabel(DEFAULT_PRICING.leadDaysPlain)}, bo nie przechodzi przez produkcję ani akceptację wizualizacji.`,
+          'Kopertą gładką najłatwiej też domknąć listę. Pojedynczy gość dopisany po złożeniu zamówienia nie uzasadnia osobnej serii z personalizacją, bo obowiązuje jej minimum — jego kopertę podpisują Państwo sami.',
+        ],
+      },
+      {
+        id: 'termin',
+        heading: 'Kiedy zamówić koperty z adresami gości',
+        paragraphs: [
+          `Koperty z adresami gości wysyłamy w ${workingDaysLabel(DEFAULT_PRICING.leadDaysStandard)}, a w trybie ekspresowym — w ${workingDaysLabel(DEFAULT_PRICING.leadDaysExpress)}. Termin liczymy od późniejszego z dwóch zdarzeń: zaksięgowania wpłaty i akceptacji wizualizacji. Liczba kopert go nie zmienia.`,
+          'Zaproszenia ślubne rozsyła się z wyprzedzeniem liczonym w miesiącach, więc na kopertę zwykle jest czas. Termin trzeba jednak liczyć wstecz od dnia, w którym zaproszenia mają wyjść z domu, a nie od dnia ślubu: koperty muszą dotrzeć wcześniej, bo zaproszenia trzeba do nich jeszcze włożyć. Do tego dochodzi dostawa kurierem.',
+          'Zamówienie warto złożyć dopiero wtedy, gdy lista jest zamknięta i przejrzana, bo każda kolejna wersja wizualizacji przesuwa datę wysyłki. Jak policzyć datę zamówienia wstecz i kiedy dopłata za ekspres coś zmienia, pokazujemy w poradniku [szybka realizacja kopert — terminy i ekspres](/blog/szybka-realizacja-kopert-terminy-i-ekspres).',
+        ],
+      },
+      {
+        id: 'lista-kontrolna',
+        heading: 'Zanim zamówią Państwo koperty z adresami gości',
+        paragraphs: ['Sześć punktów do sprawdzenia, zanim lista trafi do konfiguratora.'],
+        list: [
+          `Zaproszenie po złożeniu mieści się w kopercie DL — najlepiej ma wymiar ${insertCm(INVITE_DL)}`,
+          'Jeden wiersz listy to jedna koperta: para albo rodzina zajmuje jeden wiersz',
+          'Nazwiska pary i rodziny są zapisane w liczbie mnogiej i w gotowej postaci — drukujemy je bez zmian',
+          `Goście z pocztą i goście z zaproszeniem do ręki są na dwóch listach, a każda ma co najmniej ${DEFAULT_PRICING.moqWithPrint} kopert`,
+          'Listę przejrzała druga osoba, zanim trafiła do zamówienia',
+          'Termin zamówienia jest policzony wstecz od dnia wysyłki zaproszeń, a monogram na zamknięciu jest gotowy jako osobny plik',
+        ],
+      },
+    ],
+    /* Mikroargument przy CTA (brief pkt 7): wizualizacja przed drukiem
+       i niski próg. Bez ceny — ta stoi w tabeli kosztu i w konfiguratorze. */
+    cta: `Konfigurator otworzy się z włączoną personalizacją. Wizualizację koperty z danymi gości akceptują Państwo przed drukiem, a zamówienie zaczyna się od ${DEFAULT_PRICING.moqWithPrint} kopert.`,
+    /* Wariant adresowy jest domyślny, więc `personalizationScope` zostaje
+       pominięte, jak w poz. 8: wpis mówi o adresowaniu zaproszeń, a lista
+       samych nazwisk to drugi, świadomie opisany wariant. Kolor zostaje do
+       wyboru — dobór odcienia do wesela należy do poz. 42. */
+    ctaConfigure: { label: 'Wyceń koperty z adresami gości', format: 'DL', personalization: true },
     pillar: { href: '/koperty-personalizowane', anchor: 'personalizowane koperty' },
   },
 ];

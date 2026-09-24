@@ -472,6 +472,11 @@ export default function EventAgencyEnvelopesPage() {
             <Link href="/blog/ile-kartek-miesci-koperta-dl-i-jak-je-zlozyc">
               ile kartek mieści koperta DL
             </Link>
+            . Jeśli zaproszenie ma wymiar spoza tej tabeli albo ozdoby, które zmieniają jego
+            obrys, dobór koperty krok po kroku opisuje poradnik{' '}
+            <Link href="/blog/koperty-na-zaproszenia-jak-dobrac-koperte-dl">
+              koperty na zaproszenia
+            </Link>
             .
           </p>
         </div>

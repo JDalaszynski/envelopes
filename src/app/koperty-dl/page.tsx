@@ -116,14 +116,16 @@ const WEIGHT_SUMMARY = WEIGHT_GROUPS.map(([weight, names]) => {
 const BESTSELLERS = COLORS.filter((color) => color.bestseller);
 
 /**
- * Treści wspierające filar (content-plan.md poz. 10, 11 i 13). Sekcja została
+ * Treści wspierające filar (content-plan.md poz. 10, 11 i 41). Sekcja została
  * usunięta 16 sierpnia razem z wpisami startowymi i wraca wraz z pierwszym
  * wpisem klastra. `filter` zostawia listę pustą, dopóki wpisu nie ma —
- * nagłówek nie renderuje się nad pustą siatką.
+ * nagłówek nie renderuje się nad pustą siatką. Poz. 41 (koperty na
+ * zaproszenia) doszła 24 września jako trzecia karta.
  */
 const GUIDES = [
   getPost('jaki-format-koperty-wybrac-do-wkladki'),
   getPost('ile-kartek-miesci-koperta-dl-i-jak-je-zlozyc'),
+  getPost('koperty-na-zaproszenia-jak-dobrac-koperte-dl'),
 ].filter((post) => post !== undefined);
 
 /** Formaty zapowiedziane, wypisane zdaniem: „C6 114 × 162 mm i K4 155 × 155 mm". */
@@ -607,6 +609,11 @@ export default function DlEnvelopesPage() {
               <Link href="/blog/ile-kartek-miesci-koperta-dl-i-jak-je-zlozyc">
                 ile kartek mieści koperta DL i jak je złożyć
               </Link>
+              . Jak w kopercie DL leży zaproszenie o konkretnym wymiarze — od karty w formacie
+              DL po kartę A6, która się w niej przesuwa — pokazuje poradnik{' '}
+              <Link href="/blog/koperty-na-zaproszenia-jak-dobrac-koperte-dl">
+                koperty na zaproszenia
+              </Link>
               .
             </p>
           )}
@@ -984,9 +991,10 @@ export default function DlEnvelopesPage() {
         </div>
       </section>
 
-      {/* ── Poradniki — treści wspierające filar (poz. 10, 11 i 13 planu) ──
+      {/* ── Poradniki — treści wspierające filar (poz. 10, 11 i 41 planu) ──
           Przy jednym wpisie renderujemy pojedynczą kartę zamiast siatki,
-          żeby nie zostawiać pustych kolumn; siatka włącza się od drugiego. */}
+          żeby nie zostawiać pustych kolumn; siatka włącza się od drugiego,
+          a trzy kolumny od trzeciego. */}
       {GUIDES.length > 0 && (
         <section className="section section-surface" id="poradniki">
           <div className="container">
@@ -995,13 +1003,15 @@ export default function DlEnvelopesPage() {
               <h2>Zanim wybiorą Państwo format</h2>
               <p>
                 Tabele powyżej odpowiadają na pytanie, czy dana wkładka mieści się w kopercie DL.
-                Poniższy poradnik odwraca kierunek: prowadzi od tego, co mają Państwo w ręku, do
-                formatu, który to przyjmie.
+                Poradniki poniżej odwracają kierunek: prowadzą od tego, co mają Państwo w ręku —
+                wkładki, pliku kartek albo zaproszenia — do koperty, która to przyjmie.
               </p>
             </div>
 
             <div
-              className={GUIDES.length > 1 ? 'grid grid-2' : undefined}
+              className={
+                GUIDES.length > 2 ? 'grid grid-3' : GUIDES.length > 1 ? 'grid grid-2' : undefined
+              }
               style={{ gap: 'var(--space-5)' }}
             >
               {GUIDES.map((post) => (

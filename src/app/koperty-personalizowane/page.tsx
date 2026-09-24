@@ -89,15 +89,18 @@ const PERSONALIZED_COLORS = COLORS.filter((color) => color.personalizedImages?.D
 
 /**
  * Treści wspierające filar K2. Lista rośnie razem z planem (poz. 8, 14, 15,
- * 40) — `getPost` zwraca `undefined` dla wpisu, który jeszcze nie powstał,
- * więc dopisanie slugu z wyprzedzeniem niczego nie psuje. Poz. 40 stoi na
- * końcu, żeby trzy poradniki o przygotowaniu danych szły po kolei.
+ * 40, 43) — `getPost` zwraca `undefined` dla wpisu, który jeszcze nie
+ * powstał, więc dopisanie slugu z wyprzedzeniem niczego nie psuje. Poz. 40
+ * i 43 stoją na końcu, żeby trzy poradniki o przygotowaniu danych szły po
+ * kolei, a dwa poradniki okazjonalne (prezent pieniężny i zaproszenia
+ * ślubne) — po nich.
  */
 const sheetGuide = getPost('adresowanie-kopert-z-arkusza-czy-recznie');
 const addressGuide = getPost('jak-zaadresowac-koperte-wysylana-przez-firme-wzor');
 const nameListGuide = getPost('koperty-z-imieniem-i-nazwiskiem-jak-przygotowac-liste');
 const moneyGuide = getPost('personalizowana-koperta-na-pieniadze-kiedy-warto');
-const GUIDES = [sheetGuide, addressGuide, nameListGuide, moneyGuide].filter(
+const weddingGuide = getPost('personalizowane-koperty-slubne-adresy-gosci');
+const GUIDES = [sheetGuide, addressGuide, nameListGuide, moneyGuide, weddingGuide].filter(
   (post) => post !== undefined
 );
 
@@ -252,7 +255,21 @@ const INDUSTRIES: { heading: string; text: ReactNode }[] = [
   },
   {
     heading: 'Wedding plannerzy i pary młode',
-    text: 'Zaproszenia adresowane drukiem wychodzą jednolicie, niezależnie od tego, ile osób wypisywało listę gości. Personalizację wykonujemy dziś na kopertach DL — formaty C6 i K4 mają status „Dostępne wkrótce" i nie można ich jeszcze zamówić.',
+    text: (
+      <>
+        Zaproszenia adresowane drukiem wychodzą jednolicie, niezależnie od tego, ile osób
+        wypisywało listę gości. Personalizację wykonujemy dziś na kopertach DL — formaty C6 i K4
+        mają status „Dostępne wkrótce" i nie można ich jeszcze zamówić.
+        {weddingGuide && (
+          <>
+            {' '}
+            Co zyskuje para młoda, gdy adresy gości są drukowane, a nie wypisywane, opisaliśmy
+            w poradniku{' '}
+            <Link href={`/blog/${weddingGuide.slug}`}>personalizowane koperty ślubne</Link>.
+          </>
+        )}
+      </>
+    ),
   },
 ];
 
@@ -1101,10 +1118,12 @@ export default function PersonalizedEnvelopesPage() {
         </div>
       </section>
 
-      {/* ── Poradniki — treści wspierające filar (poz. 8, 14, 15 i 40 planu) ──
+      {/* ── Poradniki — treści wspierające filar (poz. 8, 14, 15, 40 i 43 planu) ──
           Sekcja wróciła po czystce wpisów startowych z 15 sierpnia 2026.
           Przy jednym wpisie renderujemy pojedynczą kartę zamiast siatki,
-          żeby nie zostawiać pustych kolumn; siatka włącza się od drugiego. */}
+          żeby nie zostawiać pustych kolumn; siatka włącza się od drugiego.
+          Od piątego wpisu siatka przechodzi na trzy kolumny (3 + 2), bo przy
+          dwóch kolumnach ostatnia karta stałaby sama w trzecim rzędzie. */}
       {GUIDES.length > 0 && (
         <section className="section section-surface" id="poradniki">
           <div className="container">
@@ -1115,12 +1134,14 @@ export default function PersonalizedEnvelopesPage() {
                 Personalizacja zaczyna się po Państwa stronie — od listy odbiorców. Poniższe
                 poradniki prowadzą przez decyzje, które zapadają przed otwarciem konfiguratora: od
                 przygotowania danych po pytanie, czy przy prezencie pieniężnym imię na kopercie
-                się opłaca.
+                się opłaca, i to, co daje adresowanie zaproszeń ślubnych drukiem.
               </p>
             </div>
 
             <div
-              className={GUIDES.length > 1 ? 'grid grid-2' : undefined}
+              className={
+                GUIDES.length > 4 ? 'grid grid-3' : GUIDES.length > 1 ? 'grid grid-2' : undefined
+              }
               style={{ gap: 'var(--space-5)' }}
             >
               {GUIDES.map((post) => (

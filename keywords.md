@@ -135,6 +135,10 @@ właściciel frazy `adresowanie koperty od firmy`.
 **Wsparcie:** `/blog/koperty-z-imieniem-i-nazwiskiem-jak-przygotowac-liste` `[ISTNIEJE]` —
 opublikowany 25 sierpnia 2026 (poz. 15 planu), właściciel fraz `koperty z imieniem
 i nazwiskiem`, `koperty imienne` i `nazwiska na kopertach`.
+**Wsparcie:** `/blog/personalizowane-koperty-slubne-adresy-gosci` `[ISTNIEJE]` — opublikowany
+24 września 2026 (poz. 43 planu), właściciel fraz ślubnych z K9 (`personalizowane koperty
+slubne` i dwa warianty szyku). Linkuje w górę do tego filara, ale frazy K2 (`personalizowane
+koperty`, `adresowanie kopert`) zostają przy filarze.
 
 | Fraza | Rola | Intencja | Lejek | Wol. | P |
 | --- | --- | --- | --- | --- | --- |
@@ -231,7 +235,9 @@ więc ścieżka do konwersji jest krótka.
 Strona jest **specyfikacyjna, nie usługowa**: nie ma nagłówka cenowego, nie powtarza palety
 19 kolorów i nie rozkłada na czynniki cen nadruku ani personalizacji. Pierwszą treścią
 wspierającą jest wpis `jaki-format-koperty-wybrac-do-wkladki` (poz. 10, 17 sierpnia 2026) —
-odwrotne mapowanie wkładka → format. Klaster domykają poz. 11, 13 i 41 planu.
+odwrotne mapowanie wkładka → format. Klaster domykają poz. 11, 13 i 41 planu — wszystkie
+opublikowane; poz. 41 (24 września 2026) niesie frazę `koperty na zaproszenia` z K9, bo
+odpowiada na nią dziś wyłącznie formatem DL.
 
 | Fraza | Rola | Intencja | Lejek | Wol. | P |
 | --- | --- | --- | --- | --- | --- |
@@ -434,19 +440,30 @@ to zapis na powiadomienie o dostępności formatów, nie wejście do konfigurato
 
 | Fraza | Rola | Format docelowy | Intencja | Wol. | P |
 | --- | --- | --- | --- | --- | --- |
-| koperty na zaproszenia | główna klastra | C6 / K4 | KOM | — | P2 |
+| koperty na zaproszenia | główna klastra → poz. 41 | DL (C6 / K4 po uruchomieniu) | KOM | — | P2 |
 | koperty na zaproszenia ślubne | wspierająca | C6 / K4 | TRANS | — | P2 |
 | koperty na slub | wspierająca | C6 / K4 | TRANS | — | P2 |
 | koperty weselne | wspierająca | C6 / K4 | TRANS | — | P2 |
-| personalizowane koperty slubne | wspierająca | C6 / K4 + personalizacja | TRANS | — | P2 |
-| koperta personalizowana na slub | wariant | C6 / K4 | TRANS | — | P2 |
-| personalizowana koperta na slub | wariant szyku | C6 / K4 | TRANS | — | P2 |
+| personalizowane koperty slubne | wspierająca → poz. 43 | DL + personalizacja (C6 / K4 po uruchomieniu) | TRANS | — | P2 |
+| koperta personalizowana na slub | wariant → poz. 43 | DL (C6 / K4 po uruchomieniu) | TRANS | — | P2 |
+| personalizowana koperta na slub | wariant szyku → poz. 43 | DL (C6 / K4 po uruchomieniu) | TRANS | — | P2 |
 
 **Notatki wdrożeniowe:**
-- Frazę `koperty na zaproszenia` obsługuje poz. 41 planu `[DO NAPISANIA]`. Wpis
-  `jak-dobrac-koperte-do-zaproszen-firmowych` opisywał C6 i K4, ale został usunięty
-  15 sierpnia 2026 razem z treściami startowymi. Kolejność zostaje bez zmian: treść
-  wyprzedza ofertę o 3–6 miesięcy, bo tyle trwa dojrzewanie strony w indeksie.
+- Frazę `koperty na zaproszenia` obsługuje wpis
+  `/blog/koperty-na-zaproszenia-jak-dobrac-koperte-dl` `[ISTNIEJE]` — opublikowany 24 września
+  2026 (poz. 41 planu), link w górę do filara K4 (`/koperty-dl`). Wpis odpowiada na pytanie
+  „jak zaproszenie o danym wymiarze leży w kopercie DL" i prowadzi wyłącznie do formatu DL;
+  C6 i K4 pokazuje ze statusem z katalogu, bez odnośnika. Poprzedni wpis
+  `jak-dobrac-koperte-do-zaproszen-firmowych` opisywał C6 i K4 i został usunięty 15 sierpnia
+  2026 razem z treściami startowymi. Po uruchomieniu C6 i K4 wpis wymaga przeglądu: sekcje
+  o karcie A6 i o kwadracie zmienią się z „poczekać" na „zamówić".
+- Frazę `personalizowane koperty slubne` i jej dwa warianty obsługuje wpis
+  `/blog/personalizowane-koperty-slubne-adresy-gosci` `[ISTNIEJE]` — opublikowany 24 września
+  2026 (poz. 43 planu), link w górę do filara K2 (`/koperty-personalizowane`). Jedyna pozycja
+  klastra z realnym CTA, bo personalizacja działa dziś na formacie DL. Wpis odpowiada na
+  pytanie „co para młoda zyskuje, gdy adresy gości są drukowane, a nie wypisywane" i ma
+  własną frazę długiego ogona `adresowanie zaproszeń ślubnych`. **Fraza `koperty na zaproszenia
+  ślubne` nie wchodzi do jego `keywords` ani do nagłówków** — zostaje przy poz. 42.
 - **B2B w tym klastrze jest dostępne już dziś:** wedding plannerzy i agencje eventowe kupują
   koperty DL na vouchery prezentowe i korespondencję z parami. To pomost K9 → K7.
 - **Wariant firmowy wyszedł z K9 do K1 (15 września 2026).** Fraza `koperty na zaproszenia

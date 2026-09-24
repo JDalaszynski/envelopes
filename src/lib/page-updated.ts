@@ -45,18 +45,24 @@ export const PAGE_UPDATED: Record<string, string> = {
      odnośnik do poz. 22. 15 września karta „Agencje eventowe, PR i kreatywne"
      dostała odnośnik do poz. 25. 23 września: logo na zamknięciu obok adresu
      w cenniku i w FAQ (także `FAQPage`). 24 września: czwarta karta w sekcji
-     „Poradniki" (nowy nagłówek) i odnośnik w karcie „Działy HR" — poz. 40 */
+     „Poradniki" (nowy nagłówek) i odnośnik w karcie „Działy HR" — poz. 40;
+     piąta karta w „Poradnikach" (siatka na trzy kolumny), zdanie w opisie
+     sekcji i odnośnik w karcie „Wedding plannerzy i pary młode" — poz. 43 */
   '/koperty-personalizowane': '2026-09-24',
   /* Sekcja „Poradniki" i odnośnik pod tabelą dopasowań — treść wspierająca
      z poz. 11 planu. 14 września karta „Biura rachunkowe i doradztwo
      podatkowe" w sekcji „Dla kogo" dostała odnośnik do poz. 21. 15 września
-     karta „Agencje eventowe, PR i kreatywne" — odnośnik do poz. 25 */
-  '/koperty-dl': '2026-09-15',
+     karta „Agencje eventowe, PR i kreatywne" — odnośnik do poz. 25.
+     24 września: trzecia karta w „Poradnikach" i odnośnik pod tabelą
+     dopasowań — poz. 41 */
+  '/koperty-dl': '2026-09-24',
   /* Karty „Hotele, resorty i pensjonaty butikowe" oraz „Salony SPA i kliniki
      medycyny estetycznej" w sekcji „Dla kogo" dostały odnośniki do poz. 18
      i poz. 22 */
   '/koperty-na-vouchery': '2026-09-14',
-  /* Doszedł wpis o personalizowanej kopercie na pieniądze (poz. 40) */
+  /* Doszły wpisy o personalizowanej kopercie na pieniądze (poz. 40),
+     o kopertach na zaproszenia (poz. 41) i o personalizowanych kopertach
+     ślubnych (poz. 43) */
   '/blog': '2026-09-24',
   /* Odnośnik do strony „O nas" w karcie danych rejestrowych */
   '/kontakt': '2026-08-17',
@@ -137,8 +143,9 @@ export const PAGE_UPDATED: Record<string, string> = {
   '/koperty-dla-klinik': '2026-09-14',
   /* Poz. 21 planu — szósta LP branżowa Fazy 2 i druga pod filarem F1 */
   '/koperty-dla-biur-rachunkowych': '2026-09-14',
-  /* Poz. 25 planu — siódma LP branżowa Fazy 2 i trzecia pod filarem F1 */
-  '/koperty-dla-agencji-eventowych': '2026-09-15',
+  /* Poz. 25 planu — siódma LP branżowa Fazy 2 i trzecia pod filarem F1.
+     24 września: odnośnik do poz. 41 pod tabelą `#format` */
+  '/koperty-dla-agencji-eventowych': '2026-09-24',
   /* Poz. 26 planu — ósma LP branżowa Fazy 2 i czwarta pod filarem F1 */
   '/koperty-dla-nieruchomosci': '2026-09-15',
   /* Poz. 27 planu — dziewiąta LP Fazy 2 i piąta pod filarem F1 */
