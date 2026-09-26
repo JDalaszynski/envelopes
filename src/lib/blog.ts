@@ -12,8 +12,10 @@ import {
   AVAILABLE_FORMATS,
   BULK_QUOTE_THRESHOLD,
   COLORS,
+  COLOR_MAP,
   FORMAT_MAP,
   INSERT_CLEARANCE_MM,
+  OUT_OF_STOCK_LABEL,
   PERSONALIZATION_NAME_COLUMNS,
   PERSONALIZATION_REQUIRED_COLUMNS,
   PERSONALIZATION_SHEET_EXTENSIONS_LABEL,
@@ -26,10 +28,14 @@ import {
   UPCOMING_FORMATS,
   fitsInFormat,
   formatMm,
+  hasSurfaceFinish,
+  isColorOutOfStock,
   maxInsertSize,
   personalizationScope,
+  weightLabel,
 } from './catalog';
 import type {
+  EnvelopeColor,
   EnvelopeFormat,
   FormatId,
   PersonalizationScope,
@@ -613,6 +619,145 @@ const WEDDING_SERIES_ROWS = [30, 60, 100, 150].map((quantity) => {
 /** Etykiety wariantów szablonu — czytane z katalogu, jak nagłówki kolumn. */
 const WEDDING_SCOPE_ADDRESS = personalizationScope('adres');
 const WEDDING_SCOPE_NAMES = personalizationScope('imiona');
+
+/* ── Wartości wyliczane dla wpisu o gramaturze papieru (poz. 38) ───────── */
+
+/**
+ * Wpis z content-plan.md poz. 38 odpowiada na pytanie „którą gramaturę
+ * wybrać i co ona zmienia", więc podział palety nie jest w nim wpisany
+ * ręcznie: grupujemy `COLORS` po polu `weight`, a liczby odcieni, nazwy,
+ * różnice procentowe i wnioski o wykończeniu powstają z tego grupowania.
+ * Zmiana gramatury odcienia w `catalog.ts` przepisuje więc tytuł, lead,
+ * tabele i listę kontrolną razem z konfiguratorem.
+ *
+ * Tabela na `/` podaje ten sam podział skrótem („115 g/m² — 16 kolorów"),
+ * a `PREMIUM_FAQ_ITEMS` odpowiada na pytanie o najwyższą gramaturę. Wpis
+ * dokłada to, czego tamte miejsca nie mówią: nazwy odcieni w każdej
+ * gramaturze, różnicę w ilości papieru, wniosek dla wybierającego i to, czego
+ * gramatura nie zmienia.
+ *
+ * Proza jest pisana dla trzech gramatur z tytułu (`WEIGHT_BASE`, `WEIGHT_MID`,
+ * `WEIGHT_TOP`). Czwarta gramatura w katalogu trafi do tabel sama, ale zdania
+ * o niej trzeba będzie dopisać — i o to chodzi, bo wpis wymaga wtedy
+ * przeglądu.
+ */
+
+interface WeightGroup {
+  /** Gramatura w g/m² jako liczba — do arytmetyki */
+  grams: number;
+  /** Etykieta z jednostką: `115 g/m²` */
+  label: string;
+  colors: EnvelopeColor[];
+}
+
+const WEIGHT_GROUPS: WeightGroup[] = Object.values(
+  COLORS.reduce<Record<number, WeightGroup>>((groups, color) => {
+    if (!color.weight) return groups;
+    const grams = parseInt(color.weight, 10);
+    groups[grams] ??= { grams, label: weightLabel(color.weight), colors: [] };
+    groups[grams].colors.push(color);
+    return groups;
+  }, {})
+).sort((a, b) => a.grams - b.grams);
+
+const WEIGHT_BASE = WEIGHT_GROUPS[0];
+const WEIGHT_MID = WEIGHT_GROUPS[1];
+const WEIGHT_TOP = WEIGHT_GROUPS[WEIGHT_GROUPS.length - 1];
+
+/** „115, 120 i 140" — do tytułu i leadu. */
+function listLabel(items: string[]): string {
+  return items.length > 1
+    ? `${items.slice(0, -1).join(', ')} i ${items[items.length - 1]}`
+    : (items[0] ?? '');
+}
+
+/** Ta sama lista ze spójnikiem „lub" — do zdań o wyborze. */
+function alternativeLabel(items: string[]): string {
+  return items.length > 1
+    ? `${items.slice(0, -1).join(', ')} lub ${items[items.length - 1]}`
+    : (items[0] ?? '');
+}
+
+const WEIGHT_NUMBERS_LABEL = listLabel(WEIGHT_GROUPS.map((group) => String(group.grams)));
+
+/**
+ * Nazwa odcienia ze statusem z katalogu. Format DL jest jedynym sprzedawanym,
+ * więc to on rozstrzyga o dostępności; wpis nie obiecuje odcienia, którego
+ * chwilowo nie ma w magazynie.
+ */
+function weightColorLabel(color: EnvelopeColor): string {
+  return isColorOutOfStock(color.id, 'DL')
+    ? `${color.name} (${OUT_OF_STOCK_LABEL.toLowerCase()})`
+    : color.name;
+}
+
+const weightNames = (group: WeightGroup) => group.colors.map((color) => color.name);
+const WEIGHT_MID_NAMES = listLabel(weightNames(WEIGHT_MID));
+const WEIGHT_MID_NAMES_ALT = alternativeLabel(weightNames(WEIGHT_MID));
+const WEIGHT_TOP_NAMES = listLabel(weightNames(WEIGHT_TOP));
+const WEIGHT_HIGHER_COUNT = WEIGHT_MID.colors.length + WEIGHT_TOP.colors.length;
+const WEIGHT_HIGHER_COUNT_LABEL = `${WEIGHT_HIGHER_COUNT} ${plural(
+  WEIGHT_HIGHER_COUNT,
+  'odcień',
+  'odcienie',
+  'odcieni'
+)}`;
+
+/**
+ * Odcienie z połyskiem — perłowe i metaliczne. Warunek czyta
+ * `hasSurfaceFinish()`, a nie samo `finish`: papier eko ma wpisane
+ * wykończenie, ale jest barwiony w masie, jak odcienie matowe.
+ */
+const WEIGHT_GLOSS_COLORS = COLORS.filter((color) => hasSurfaceFinish(color.finish));
+const WEIGHT_GLOSS_NAMES = listLabel(WEIGHT_GLOSS_COLORS.map((color) => color.name));
+const WEIGHT_GLOSS_LABELS = [
+  ...new Set(WEIGHT_GLOSS_COLORS.map((color) => weightLabel(color.weight ?? ''))),
+];
+const WEIGHT_GLOSS_LABEL = listLabel(WEIGHT_GLOSS_LABELS);
+/** Czy połysk występuje wyłącznie w najniższej gramaturze — warunek jednego zdania. */
+const WEIGHT_GLOSS_ONLY_BASE =
+  WEIGHT_GLOSS_LABELS.length === 1 && WEIGHT_GLOSS_LABELS[0] === WEIGHT_BASE.label;
+/** Odcienie matowe i eko w najniższej gramaturze, czyli barwione w masie. */
+const WEIGHT_BASE_DYED_COUNT = WEIGHT_BASE.colors.filter(
+  (color) => !hasSurfaceFinish(color.finish)
+).length;
+
+/** Zdanie o statusie z katalogu — tylko wtedy, gdy któryś odcień go ma. */
+const WEIGHT_STOCK_NOTE = COLORS.some((color) => isColorOutOfStock(color.id, 'DL'))
+  ? 'Przy odcieniu, którego chwilowo nie ma w magazynie, tabela podaje status z katalogu.'
+  : '';
+
+/** Odcień z zdjęcia otwierającego wpis — gramatura czytana z katalogu. */
+const WEIGHT_COVER_WEIGHT = weightLabel(COLOR_MAP['matcha']?.weight ?? '');
+
+/**
+ * Ścieżka strony koloru — ta sama konwencja co `colorPagePath()`, ale bez
+ * importu `color-pages.ts`: `blog.ts` trafia do bundla klienckiego przez
+ * `BlogList`, a lista stron kolorów to kilkaset linii treści, których lista
+ * wpisów nie potrzebuje.
+ */
+const colorPath = (colorId: string) => `/koperty/${colorId}`;
+
+const percentMore = (grams: number, base: number) => Math.round(((grams - base) / base) * 100);
+
+/**
+ * Koperta biurowa do porównania — przedział z tabeli na `/koperty-premium`
+ * i z `PREMIUM_FAQ_ITEMS`. To jedyna liczba w tym wpisie, której nie czyta się
+ * z katalogu: katalog opisuje wyłącznie nasze koperty.
+ */
+const OFFICE_ENVELOPE_GSM = { min: 75, max: 80 };
+
+/** Jedna koperta gładka w odcieniu z każdej gramatury, w jednym zamówieniu. */
+const WEIGHT_TRIAL = calculatePrice({
+  format: 'DL' as FormatId,
+  color: '',
+  print: false,
+  printFiles: [],
+  personalization: false,
+  shippingSpeed: 'standard' as const,
+  quantity: WEIGHT_GROUPS.length,
+});
+const WEIGHT_TRIAL_WITH_DELIVERY = round2(WEIGHT_TRIAL.gross + DELIVERY_COST);
 
 /** Formaty zapowiedziane samymi symbolami i wspólny status: „C6 i K4", „Dostępne wkrótce". */
 const UPCOMING_IDS_LABEL = UPCOMING_FORMATS.map((format) => format.id).join(' i ');
@@ -3467,7 +3612,435 @@ const POSTS: BlogPost[] = [
     ctaConfigure: { label: 'Wyceń koperty z adresami gości', format: 'DL', personalization: true },
     pillar: { href: '/koperty-personalizowane', anchor: 'personalizowane koperty' },
   },
+  {
+    /* content-plan.md poz. 38 — treść wspierająca filar K6
+       (`/koperty-premium`), cel GEO. Fraza główna: `gramatura papieru na
+       koperty` (klaster K6, fraza faktograficzna — `eleganckie koperty
+       premium` zostaje przy filarze).
+
+       Pytanie wpisu: „którą gramaturę koperty wybrać i co ona zmienia".
+       Oś to **wybór i skutek**, a nie samo zestawienie „jaki odcień ma jaką
+       gramaturę" — to zestawienie stoi już w skrócie na `/` i na `/koperty-dl`.
+
+       Rozgraniczenia (pkt 8 briefu SEO):
+       - wobec filara K6: filar podaje przedział gramatur w pasku faktów, w
+         tabeli „premium kontra biurowa" i w karcie Taupe, a jego FAQ — pytanie
+         o najwyższą gramaturę. Wpis nie powtarza tej tabeli ani żadnego pytania
+         z `PREMIUM_FAQ_ITEMS`; dokłada nazwy odcieni w każdej gramaturze,
+         arytmetykę różnic, wniosek dla wybierającego i listę tego, czego
+         gramatura nie zmienia;
+       - wobec poz. 11: gramatura **wkładu** (80–350 g/m², liczba arkuszy)
+         należy do niej. Tu wyłącznie gramatura **koperty**; pojemność jest
+         jednym zdaniem z odesłaniem;
+       - wobec poz. 7: wymagania wobec pliku zostają tam, wpis mówi tylko, że
+         są jednakowe we wszystkich odcieniach;
+       - wobec poz. 10 (wybór formatu) i stron kolorów: dobór odcienia do
+         marki to poz. `paleta-19-kolorow`, opis pojedynczego odcienia —
+         strona koloru. Wpis linkuje do trzech stron kolorów o wyższych
+         gramaturach, bo to one odpowiadają na pytanie „czy ten odcień jest
+         gruby".
+
+       Nie obiecuje grubości arkusza w milimetrach ani wagi koperty: katalog
+       ich nie zna, a gramatura nie jest grubością — wpis mówi to wprost.
+       Nie mówi też, kto zamawia którą gramaturę (brak realnych zamówień do
+       powołania się, pkt 4.1 briefu). `FAQPage` zostaje na filarze. */
+    slug: 'gramatura-papieru-na-koperty',
+    /* 50 znaków, 62 z sufiksem marki — tyle co poz. 40. Tytuł z planu
+       („Gramatura papieru w kopertach — 115, 120 i 140 g") nie zaczynał się
+       od frazy głównej `gramatura papieru na koperty`. Liczby czytane z
+       `COLORS`. */
+    title: `Gramatura papieru na koperty — ${WEIGHT_NUMBERS_LABEL} g/m²`,
+    /* Lead zasila `description` i karty w „Poradnikach" na filarze. Bez ceny;
+       jeden konkret — same gramatury. */
+    lead: `Koperty ozdobne DL mają gramatury ${WEIGHT_NUMBERS_LABEL} g/m². Pokazujemy, który odcień ma którą, ile więcej papieru to daje i co gramatura zmienia.`,
+    category: 'Poradniki',
+    date: '2026-09-25',
+    readingMinutes: 6,
+    colorId: 'matcha',
+    format: 'DL',
+    /* Kadr „Dziękujemy" — dwie koperty Matcha (120 g/m²) na drewnie. Jedyny
+       kadr aranżacyjny, którego nie ma w treści blogowej, a który pokazuje
+       odcień o wyższej gramaturze; kadr Taupe jest okładką poz. 10, a „Powiązane"
+       pokazują okładki obok siebie. Akapit w pierwszej sekcji mówi wprost, co
+       widać na zdjęciu. */
+    showcaseFile: 'matcha-koperta-dl-nadruk-podziekowania',
+    imageVariant: 'nadruk',
+    ogImageSlug: 'blog-gramatura-papieru-na-koperty',
+    /* Karta ze zbliżenia na papier (`public/images/details/`, kadr ze strony
+       głównej) — nie z okładki wpisu, więc pokazuje fakturę zamiast nadruku. */
+    ogImageAlt:
+      'Zbliżenie na klapkę i krawędź papieru dwóch kopert DL w kolorze Matcha, na białym tle',
+    keywords: [
+      'gramatura papieru na koperty',
+      'gramatura koperty',
+      'jaka gramatura koperty',
+      'koperty ozdobne gramatura',
+    ],
+    intro: `Gramatura papieru na koperty to masa jednego metra kwadratowego papieru, wyrażona w gramach. Koperty ozdobne Envelopes mają gramatury ${WEIGHT_NUMBERS_LABEL} g/m², a każdy odcień tylko jedną z nich, więc gramaturę wybiera się razem z kolorem. Ceny, wymiaru koperty ani terminu wysyłki ona nie zmienia — zmienia sztywność papieru i wrażenie w dłoni. Poniżej pokazujemy, który odcień ma którą gramaturę, ile więcej papieru dają wyższe gramatury, którą wybrać do jakiej korespondencji i jak sprawdzić ją w dłoni przed zamówieniem serii.`,
+    sections: [
+      {
+        id: 'jaka-gramatura-maja-koperty',
+        heading: 'Jaką gramaturę mają koperty ozdobne Envelopes',
+        paragraphs: [
+          `Najczęstszą gramaturą w palecie jest ${WEIGHT_BASE.label} — ma ją ${WEIGHT_BASE.colors.length} z ${COLORS.length} odcieni. Wyższe gramatury mają tylko ${WEIGHT_HIGHER_COUNT_LABEL}: ${WEIGHT_MID_NAMES} — ${WEIGHT_MID.label}, oraz ${WEIGHT_TOP_NAMES} — ${WEIGHT_TOP.label}, czyli najwyższą gramaturę w ofercie.`,
+          'Gramatura mówi, ile waży metr kwadratowy papieru, a nie jak gruby jest arkusz. O grubości decyduje też gęstość włókien, więc dwa papiery o tej samej gramaturze mogą różnić się w dotyku. W katalogu gramatura jest podana przy każdym odcieniu, bo nie jest jednakowa dla całej palety.',
+          [
+            'Tabela zestawia gramatury z odcieniami w kolejności, w jakiej odcienie stoją w konfiguratorze.',
+            WEIGHT_STOCK_NOTE,
+            `Zdjęcie otwierające ten poradnik przedstawia dwie koperty Matcha o gramaturze ${WEIGHT_COVER_WEIGHT}, a napis „Dziękujemy” jest przykładowym nadrukiem.`,
+          ]
+            .filter(Boolean)
+            .join(' '),
+        ],
+        table: {
+          caption: `Gramatury papieru kopert ozdobnych DL i odcienie, które je mają — podział ${COLORS.length} odcieni z katalogu Envelopes`,
+          head: ['Gramatura', 'Liczba odcieni', 'Odcienie'],
+          rows: WEIGHT_GROUPS.map((group) => [
+            group.label,
+            String(group.colors.length),
+            group.colors.map(weightColorLabel).join(', '),
+          ]),
+        },
+      },
+      {
+        id: 'gramatura-a-kolor',
+        heading: 'Czy gramaturę koperty można wybrać niezależnie od koloru',
+        paragraphs: [
+          `Nie. Każdy odcień w katalogu ma jedną gramaturę, więc wybór odcienia jest jednocześnie wyborem papieru. Kopertę o gramaturze ${WEIGHT_TOP.label} zamówią Państwo tylko w odcieniu ${listLabel(WEIGHT_TOP.colors.map((color) => `[${color.name}](${colorPath(color.id)})`))}, a o gramaturze ${WEIGHT_MID.label} — w odcieniu ${alternativeLabel(WEIGHT_MID.colors.map((color) => `[${color.name}](${colorPath(color.id)})`))}. Pozostałe odcienie mają gramaturę ${WEIGHT_BASE.label}.`,
+          `Ten sam odcień nie występuje w dwóch gramaturach — na przykład ${WEIGHT_TOP.colors[0].name} jest dostępny wyłącznie w gramaturze ${WEIGHT_TOP.label}, a ${WEIGHT_BASE.colors[0].name} wyłącznie w gramaturze ${WEIGHT_BASE.label}.`,
+          `Pytanie o gramaturę zaczyna się więc od odcienia. Jeśli koperta ma być możliwie sztywna, wybór ogranicza się do odcienia ${WEIGHT_TOP_NAMES}, a jeśli kolor wynika z identyfikacji marki, gramatura przychodzi razem z nim. Dobór odcienia do logo opisujemy w poradniku [jak wybrać odcień koperty](/blog/paleta-19-kolorow-jak-wybrac-odcien).`,
+          `Odcienie z połyskiem — ${WEIGHT_GLOSS_NAMES} — mają gramaturę ${WEIGHT_GLOSS_LABEL}.${
+            WEIGHT_GLOSS_ONLY_BASE
+              ? ` Papieru perłowego ani metalicznego w wyższej gramaturze w katalogu nie ma, więc kto potrzebuje połysku, wybiera gramaturę ${WEIGHT_BASE.label}.`
+              : ''
+          }`,
+        ],
+      },
+      {
+        id: 'ile-wiecej-papieru',
+        heading: 'Ile więcej papieru mają koperty o wyższej gramaturze',
+        paragraphs: [
+          `Papier ${WEIGHT_MID.label} ma o ${WEIGHT_MID.grams - WEIGHT_BASE.grams} g/m² więcej niż ${WEIGHT_BASE.label}, czyli o około ${percentMore(WEIGHT_MID.grams, WEIGHT_BASE.grams)}%, a papier ${WEIGHT_TOP.label} — o ${WEIGHT_TOP.grams - WEIGHT_BASE.grams} g/m² więcej, czyli o około ${percentMore(WEIGHT_TOP.grams, WEIGHT_BASE.grams)}%. Krok od ${WEIGHT_BASE.label} do ${WEIGHT_MID.label} jest więc niewielki, a ${WEIGHT_TOP.label} to wyraźnie cięższy arkusz.`,
+          `Każda gramatura z naszej oferty ma też wyraźnie więcej papieru niż koperta biurowa, dla której przyjmujemy ${OFFICE_ENVELOPE_GSM.min}–${OFFICE_ENVELOPE_GSM.max} g/m². Pełne porównanie koperty ozdobnej z biurową, także pod względem okienka i barwienia, stoi w tabeli na stronie [koperty premium](/koperty-premium#porownanie).`,
+        ],
+        table: {
+          caption: `Ile więcej papieru na metr kwadratowy mają koperty ozdobne w porównaniu z gramaturą ${WEIGHT_BASE.label} i z kopertą biurową`,
+          head: [
+            'Gramatura',
+            `Względem ${WEIGHT_BASE.label}`,
+            `Względem koperty biurowej (${OFFICE_ENVELOPE_GSM.min}–${OFFICE_ENVELOPE_GSM.max} g/m²)`,
+          ],
+          rows: WEIGHT_GROUPS.map((group) => [
+            group.label,
+            group === WEIGHT_BASE
+              ? 'Punkt odniesienia'
+              : `o ${group.grams - WEIGHT_BASE.grams} g/m² więcej (+${percentMore(group.grams, WEIGHT_BASE.grams)}%)`,
+            `o ${percentMore(group.grams, OFFICE_ENVELOPE_GSM.max)}–${percentMore(group.grams, OFFICE_ENVELOPE_GSM.min)}% więcej`,
+          ]),
+        },
+      },
+      {
+        id: 'co-zmienia-gramatura',
+        heading: 'Co zmienia gramatura koperty, a co zostaje bez zmian',
+        paragraphs: [
+          'Gramatura zmienia sztywność koperty i to, jak przesyłka leży w dłoni. Nie zmienia ceny, wymiaru koperty, terminu wysyłki ani wymagań wobec pliku z nadrukiem — wszystkie cztery są takie same we wszystkich odcieniach.',
+          'Wyższa gramatura daje sztywniejszy arkusz, który lepiej trzyma kształt w przesyłce zbiorczej i jest wyczuwalny w dłoni. To jedyna różnica wynikająca z samej gramatury: wybór dotyczy więc wrażenia, a nie budżetu ani parametrów zamówienia.',
+          'Ile arkuszy zmieści koperta, zależy od grubości wkładu — tę granicę opisujemy w poradniku [ile kartek mieści koperta DL i jak je złożyć](/blog/ile-kartek-miesci-koperta-dl-i-jak-je-zlozyc). Wymagania wobec pliku z logo zebraliśmy w poradniku [jak przygotować pliki do druku na kopertach](/blog/jak-przygotowac-pliki-do-druku-na-kopertach).',
+        ],
+        table: {
+          caption: 'Parametry zamówienia koperty ozdobnej i to, czy zależą od gramatury papieru',
+          head: ['Parametr', 'Czy zależy od gramatury', 'Od czego zależy'],
+          rows: [
+            [
+              'Sztywność i wrażenie w dłoni',
+              'Tak',
+              'Od gramatury: im wyższa, tym sztywniejszy arkusz',
+            ],
+            [
+              'Cena koperty gładkiej',
+              'Nie',
+              `Od formatu: ${formatPrice(DEFAULT_PRICING.base.DL)} brutto za sztukę w formacie DL, w każdym odcieniu`,
+            ],
+            [
+              'Wymiar koperty',
+              'Nie',
+              `Od formatu: koperta DL ma ${DL_FORMAT.dimensions} we wszystkich odcieniach`,
+            ],
+            [
+              'Termin wysyłki',
+              'Nie',
+              `Od usługi: koperty gładkie wysyłamy w ${workingDaysLabel(DEFAULT_PRICING.leadDaysPlain)}, koperty z nadrukiem lub personalizacją w ${workingDaysLabel(DEFAULT_PRICING.leadDaysStandard)}`,
+            ],
+            [
+              'Wymagania wobec pliku z nadrukiem',
+              'Nie',
+              'Jednakowe we wszystkich odcieniach; o kontraście decyduje odcień i wykończenie papieru, a nie gramatura',
+            ],
+          ],
+        },
+      },
+      {
+        id: 'ktora-gramature-wybrac',
+        heading: 'Którą gramaturę wybrać do jakiej korespondencji',
+        paragraphs: [
+          `Gramaturę ${WEIGHT_BASE.label} wybierają Państwo wtedy, gdy o wyglądzie przesyłki decyduje odcień albo połysk papieru, gramaturę ${WEIGHT_MID.label} — gdy wybierają Państwo odcień ${WEIGHT_MID_NAMES_ALT}, a ${WEIGHT_TOP.label} — gdy koperta ma być wyczuwalna w dłoni jako dokument.`,
+          'Gramatura nie rozstrzyga sama o powadze pisma. Do korespondencji formalnej sprawdzają się wszystkie gramatury z oferty, więc wybór dotyczy wrażenia w dłoni, a nie tego, czy pismo zostanie uznane za poważne.',
+        ],
+        table: {
+          caption: 'Dobór gramatury koperty ozdobnej do rodzaju korespondencji i odcienie, które ją mają',
+          head: ['Rodzaj korespondencji', 'Gramatura', 'Odcienie'],
+          rows: [
+            [
+              'Przesyłka, w której o wyglądzie decyduje odcień',
+              WEIGHT_BASE.label,
+              `${WEIGHT_BASE_DYED_COUNT} odcieni barwionych w masie`,
+            ],
+            [
+              'Przesyłka z połyskiem perłowym lub metalicznym',
+              WEIGHT_GLOSS_LABEL,
+              WEIGHT_GLOSS_COLORS.map(weightColorLabel).join(', '),
+            ],
+            [
+              'Odcień wyróżniający się w wyższej gramaturze',
+              WEIGHT_MID.label,
+              WEIGHT_MID.colors.map(weightColorLabel).join(', '),
+            ],
+            [
+              'Pismo zarządcze, opinia prawna, dokument wręczany osobiście',
+              WEIGHT_TOP.label,
+              WEIGHT_TOP.colors.map(weightColorLabel).join(', '),
+            ],
+          ],
+        },
+      },
+      {
+        id: 'jak-sprawdzic-gramature',
+        heading: 'Jak sprawdzić gramaturę w dłoni przed zamówieniem serii',
+        paragraphs: [
+          `Najpewniej przez zamówienie pojedynczych kopert gładkich: bez nadruku i personalizacji koperty zamawiają Państwo już od ${DEFAULT_PRICING.moqWithoutPrint} sztuki.`,
+          `Dostawę naliczamy raz na zamówienie, więc porównanie gramatur najtaniej wychodzi w jednym koszyku. ${WEIGHT_GROUPS.length} ${plural(WEIGHT_GROUPS.length, 'koperta', 'koperty', 'kopert')} — po jednej w odcieniu z każdej gramatury — kosztują razem ${formatPrice(WEIGHT_TRIAL_WITH_DELIVERY)} brutto z dostawą.`,
+          'Sprawdzenie ma sens przede wszystkim wtedy, gdy seria jedzie do ważnych adresatów albo gdy o odbiorze przesyłki decyduje jej wygląd w dłoni. Przy typowej korespondencji wystarczy wybrać odcień, bo gramatura idzie razem z nim.',
+        ],
+      },
+      {
+        id: 'lista-kontrolna',
+        heading: 'Zanim wybiorą Państwo gramaturę koperty',
+        paragraphs: ['Pięć punktów do sprawdzenia przed otwarciem konfiguratora.'],
+        list: [
+          `Wiedzą Państwo, czy koperta ma być wyczuwalna w dłoni jako dokument — najwyższą gramaturę, ${WEIGHT_TOP.label}, ma odcień ${WEIGHT_TOP_NAMES}`,
+          'Odcień pasuje do identyfikacji marki i do koloru logo, bo gramatura idzie razem z nim',
+          `Jeśli potrzebny jest połysk perłowy lub metaliczny, gramatura wynosi ${WEIGHT_GLOSS_LABEL}`,
+          'Wkład o większej grubości został sprawdzony w poradniku o liczbie kartek w kopercie DL',
+          'Przy serii do ważnych adresatów zamówiona jest pojedyncza koperta do porównania w dłoni',
+        ],
+      },
+    ],
+    /* Mikroargument przy CTA (brief pkt 7): niski próg i wizualizacja przed
+       drukiem. Bez ceny — ta stoi w tabeli i w konfiguratorze. */
+    cta: `Odcień, a razem z nim gramaturę, wybierają Państwo w konfiguratorze. Koperty gładkie zamawiają Państwo od ${DEFAULT_PRICING.moqWithoutPrint} sztuki, a przy nadruku wizualizację akceptują Państwo przed drukiem.`,
+    /* Sam format — wpis nie rozstrzyga odcienia, więc konfigurator otwiera się
+       na kroku koloru bez preselekcji. */
+    ctaConfigure: { label: 'Wybierz odcień koperty DL', format: 'DL' },
+    pillar: { href: '/koperty-premium', anchor: 'koperty premium' },
+  },
+  {
+    /* content-plan.md poz. 45 — treść wspierająca filar F1
+       (`/koperty-z-nadrukiem`), cel KONWERSJA.
+       Fraza główna `koperty odroczony termin płatności` oraz fraza wspierająca
+       z keywords.md (luki w bazie) `koperty z nadrukiem odroczony termin płatności`.
+       Persona: instytucje publiczne, urzędy gmin i miast, szkoły, przedszkola,
+       uczelnie wyższe, jednostki budżetowe sektora finansów publicznych.
+
+       Rozgraniczenia (pkt 8 briefu SEO):
+       - wobec filara F1 `/koperty-z-nadrukiem`: filar podaje sam fakt odroczonego
+         terminu w jednym punkcie procesu i FAQ; ten wpis prowadzi przez
+         całą procedurę zamówienia, wymogi ustawy o finansach publicznych,
+         rozbicie Nabywca/Odbiorca i zniesienie warunku przedpłaty;
+       - brak eksponowania faktury VAT jako zalety: faktura VAT to formalny
+         standard prawny w B2B, a nie hasło reklamowe (knowledge-base.md pkt 3);
+         oś wpisu to odroczony termin 14 dni bez przedpłaty;
+       - zgodność z UNAVAILABLE_PAYMENT_METHODS: opis metod płatności w sklepie
+         precyzuje metody aktywne (faktura odroczona dla jednostek budżetowych,
+         BLIK, Przelewy24 i przelew tradycyjny proforma dla firm komercyjnych)
+         oraz metody niedostępne (brak pobrania / COD i brak gotówki);
+       - wobec poz. 16 (terminy i ekspres): wpis o szybkiej realizacji tłumaczy
+         ogólną arytmetykę kalendarza; ten wpis wyjaśnia specyfikę trybu
+         odroczonego — termin biegnie wyłącznie od akceptacji wizualizacji,
+         bo warunek zaksięgowania środków odpada przed produkcją. */
+    slug: 'odroczony-termin-platnosci-przy-zamowieniu-kopert',
+    title: 'Odroczony termin płatności przy zamówieniu kopert',
+    lead: 'Instytucje publiczne i jednostki budżetowe zamawiają koperty z odroczonym terminem płatności 14 dni. Produkcja rusza bez przedpłaty, a rozliczenie następuje przelewem po dostawie.',
+    category: 'Poradniki',
+    date: '2026-09-26',
+    readingMinutes: 6,
+    colorId: 'granatowy',
+    format: 'DL',
+    showcaseFile: 'granatowa-koperta-dl-nadruk-logo-orkiestry',
+    imageVariant: 'nadruk',
+    ogImageSlug: 'blog-odroczony-termin-platnosci',
+    ogImageAlt:
+      'Granatowa koperta DL z białym nadrukiem logo na jasnym drewnie, kadr z poradnika o odroczonym terminie płatności',
+    keywords: [
+      'koperty odroczony termin płatności',
+      'koperty z nadrukiem odroczony termin płatności',
+      'koperty dla instytucji publicznych',
+      'koperty dla urzędów termin płatności',
+      'faktura z odroczonym terminem płatności koperty',
+    ],
+    intro:
+      'W sektorze finansów publicznych i w urzędach procedury zakupowe reguluje ustawa o finansach publicznych oraz wewnętrzne regulaminy kontroli wydatków. Wymóg przedpłaty przed wykonaniem usługi lub dostarczeniem towaru rodzi tam komplikacje formalne, a często całkowicie blokuje realizację zamówienia. W Envelopes wszystkie instytucje publiczne, urzędy gmin i miast, szkoły, przedszkola oraz jednostki budżetowe zamawiają koperty z odroczonym terminem płatności 14 dni. Co kluczowe: produkcja i przygotowanie druku ruszają od razu po akceptacji wizualizacji, bez czekania na zaksięgowanie środków na naszym koncie. Poniżej opisujemy, jak wygląda procedura zamówienia, jak obsłużyć podział na Nabywcę i Odbiorcę oraz jak działają pozostałe płatności w sklepie.',
+    sections: [
+      {
+        id: 'dla-kogo-odroczony-termin',
+        heading: 'Dla jakich podmiotów dostępny jest 14-dniowy odroczony termin płatności',
+        paragraphs: [
+          'Płatność fakturą z odroczonym terminem 14 dni jest zarezerwowana dla jednostek sektora finansów publicznych, podmiotów administracji rządowej i samorządowej oraz państwowych i komunalnych osób prawnych. Dla tych instytucji tradycyjny obieg zakupowy nie przewiduje przedpłat, a płatność następuje przelewem po zweryfikowaniu zrealizowanego zamówienia.',
+          'Z odroczonego terminu 14 dni bez konieczności przedpłaty korzystają m.in.: urzędy miast, gmin i starostwa powiatowe, urzędy marszałkowskie i wojewódzkie, przedszkola, szkoły podstawowe i ponadpodstawowe, uczelnie publiczne, instytuty Polskiej Akademii Nauk, biblioteki, teatry, muzea, filharmonie, domy kultury, szpitale publiczne i SPZOZ, sanepidy oraz sądy i prokuratury.',
+          'Wszystkie te podmioty zamawiają w Envelopes koperty ozdobne DL — gładkie lub z nadrukiem urzędowego logo, herbu gminy, godła czy sygnetu uczelni — z pełnym zachowaniem swoich wewnętrznych procedur budżetowych.',
+        ],
+        table: {
+          caption:
+            'Kategorie jednostek publicznych uprawnionych do odroczonego terminu 14 dni i typowe zastosowania kopert DL',
+          head: ['Kategoria jednostki', 'Przykładowe podmioty', 'Zastosowanie kopert DL'],
+          rows: [
+            [
+              'Administracja samorządowa i rządowa',
+              'Urzędy miast, gmin, starostwa powiatowe, urzędy wojewódzkie',
+              'Oficjalna korespondencja reprezentacyjna, akty nadania, zaproszenia na sesje i obchody, listy gratulacyjne',
+            ],
+            [
+              'Oświata i szkolnictwo wyższe',
+              'Szkoły podstawowe i średnie, przedszkola, uniwersytety, politechniki',
+              'Dyplomy ukończenia, certyfikaty, podziękowania dla kadry i mecenasów, zaproszenia na uroczyste inauguracje',
+            ],
+            [
+              'Instytucje kultury i sztuki',
+              'Biblioteki publiczne, muzea, teatry, domy kultury, filharmonie',
+              'Karnety okolicznościowe, zaproszenia na wernisaże i premiery, listy do darczyńców i patronów',
+            ],
+            [
+              'Ochrona zdrowia i wymiar sprawiedliwości',
+              'Szpitale publiczne, SPZOZ, sanepidy, sądy rejonowe i okręgowe',
+              'Uroczyste pisma urzędowe, podziękowania, zawiadomienia reprezentacyjne kierownictwa jednostki',
+            ],
+          ],
+        },
+      },
+      {
+        id: 'dlaczego-odroczony-termin',
+        heading: 'Dlaczego odroczony termin płatności rozwiązuje barierę zakupową',
+        paragraphs: [
+          'Zasady dyscypliny finansów publicznych nakazują dokonywanie wydatków po należytym wykonaniu usługi lub odbiorze dostawy. Żądanie 100% przedpłaty przez dostawcę zmusza pracowników administracji do uruchamiania wyjątkowych procedur zaliczkowych, uzyskiwania dodatkowych kontrasygnat skarbnika lub rezygnacji z zakupu.',
+          'W Envelopes odroczony termin 14 dni usuwa to tarcie w całości: jednostka składa zamówienie przez konfigurator, zatwierdza bezpłatną wizualizację, a my natychmiast kierujemy koperty do druku i wysyłamy kurierem. Dopiero po dostarczeniu paczki faktura z 14-dniowym terminem trafia do obiegu księgowego i zostaje opłacona przelewem bankowym.',
+          'Warto przy tym jasno rozdzielić pojęcia: w Envelopes nie przedstawiamy wystawienia faktury VAT jako zalety czy wyróżnika oferty. W transakcjach B2B i w relacjach z sektorem publicznym faktura VAT jest elementarnym obowiązkiem prawnym i standardem e-commerce, a nie korzyścią marketingową. Realną wartością i ułatwieniem dla jednostki jest sam **odroczony termin płatności 14 dni bez wstrzymywania produkcji**.',
+        ],
+      },
+      {
+        id: 'jak-zamowic-krok-po-kroku',
+        heading: 'Procedura zamówienia z odroczonym terminem krok po kroku',
+        paragraphs: [
+          'Zamówienie dla instytucji publicznej składają Państwo bezpośrednio przez stronę sklepu. Nie wymagamy podpisywania papierowych umów dostawy, przesyłania skanów wniosków ani wielodniowej weryfikacji handlowej.',
+          'Cała ścieżka zamyka się w pięciu prostych krokach:',
+        ],
+        list: [
+          `Wybór parametrów w konfiguratorze: format DL (110 × 220 mm), jeden z 19 kolorów papieru barwionego w masie oraz nakład — koperty gładkie zamawiają Państwo od ${DEFAULT_PRICING.moqWithoutPrint} sztuki, a z nadrukiem logo od ${DEFAULT_PRICING.moqWithPrint} sztuk`,
+          'Wgranie pliku z herbem, godłem lub logo: konfigurator przyjmuje pliki wektorowe (PDF, AI, EPS, SVG) oraz rastrowe o wysokiej rozdzielczości',
+          'Uzupełnienie danych w checkout: wpisanie oficjalnego numeru NIP jednostki oraz adresu fakturowego',
+          'Wybór metody płatności: zaznaczenie opcji „Faktura z odroczonym terminem płatności (14 dni)” w sekcji płatności',
+          'Akceptacja wizualizacji i wysyłka: grafik przygotowuje cyfrowy projekt koperty i przesyła go e-mailem; po Państwa akceptacji rozpoczynamy produkcję, a fakturę z 14-dniowym terminem opłacają Państwo przelewem po dostawie',
+        ],
+      },
+      {
+        id: 'nabywca-i-odbiorca',
+        heading: 'Obsługa relacji Nabywca i Odbiorca na fakturze',
+        paragraphs: [
+          'W samorządowych jednostkach budżetowych (szkołach, przedszkolach, ośrodkach pomocy społecznej czy zakładach komunalnych) obowiązuje ustawowa centralizacja rozliczeń podatku VAT. Oznacza to, że dane na fakturze muszą precyzyjnie rozróżniać Nabywcę oraz Odbiorcę towaru.',
+          'Nabywcą w takim układzie jest zawsze jednostka samorządu terytorialnego posiadająca osobowość prawną i NIP (np. Gmina lub Miasto), natomiast Odbiorcą (płatnikiem) — konkretna placówka oświatowa lub jednostka organizacyjna, do której trafia przesyłka.',
+          'W naszym formularzu zamówienia obsłużą Państwo tę zależność bez trudu: w polach firmy i NIP wpisują Państwo dane Nabywcy (Gminy/Miasta), a po zaznaczeniu opcji „Wysyłka na inny adres niż na fakturze” podają Państwo nazwę i adres jednostki odbierającej (szkoły lub urzędu). Faktura oraz list przewozowy zostaną wystawione ściśle według tych wytycznych.',
+        ],
+      },
+      {
+        id: 'metody-platnosci-w-sklepie',
+        heading: 'Metody płatności w Envelopes — jednostki publiczne a pozostali klienci',
+        paragraphs: [
+          'Układ płatności w naszym sklepie opiera się na jednoznacznym podziale: odroczony termin 14 dni dedykowany jest jednostkom sektora publicznego, natomiast podmioty komercyjne, kancelarie prawne i klienci indywidualni opłacają zamówienia z góry.',
+          'Dla pozostałych klientów udostępniamy trzy standardowe metody płatności:',
+          'BLIK — szybka płatność kodem z aplikacji mobilnej banku, z natychmiastowym potwierdzeniem wpłaty. Przelewy24 — płatność kartą płatniczą (Visa, Mastercard) lub szybkim e-przelewem z większości polskich banków. Przelew tradycyjny (proforma) — dla firm preferujących przelew na podstawie faktury proforma; w tym wariancie produkcja lub wysyłka kopert startuje po zaksięgowaniu środków na naszym rachunku.',
+          'Metody niedostępne w Envelopes: sklep nie prowadzi wysyłek za pobraniem (płatność gotówką lub kartą u kuriera) ani sprzedaży z odbiorem osobistym. Koperty z nadrukiem i personalizacją są produktem wykonywanym na indywidualne zamówienie klienta, a dystrybucja prowadzona jest wyłącznie wysyłkowo na terenie całego kraju.',
+        ],
+        table: {
+          caption:
+            'Metody płatności w Envelopes: dostępność, moment zapłaty i warunek rozpoczęcia produkcji',
+          head: ['Metoda płatności', 'Dla kogo przeznaczona', 'Moment zapłaty', 'Wpływ na rozpoczęcie produkcji'],
+          rows: [
+            [
+              'Faktura z odroczonym terminem 14 dni',
+              'Instytucje publiczne, urzędy, jednostki budżetowe',
+              'Do 14 dni po dostawie (przelew bankowy)',
+              'Druk rusza od razu po akceptacji wizualizacji (bez przedpłaty)',
+            ],
+            [
+              'BLIK',
+              'Firmy komercyjne, kancelarie, klienci indywidualni',
+              'W trakcie składania zamówienia (kod BLIK)',
+              'Druk rusza po akceptacji wizualizacji (wpłata księguje się od razu)',
+            ],
+            [
+              'Przelewy24 (karta lub e-przelew)',
+              'Firmy komercyjne, kancelarie, klienci indywidualni',
+              'W trakcie składania zamówienia (bramka płatnicza)',
+              'Druk rusza po akceptacji wizualizacji (wpłata księguje się od razu)',
+            ],
+            [
+              'Przelew tradycyjny (proforma)',
+              'Firmy komercyjne rozliczające się tradycyjnym przelewem',
+              'Przed realizacją (na podstawie faktury proforma)',
+              'Druk rusza po zaksięgowaniu wpłaty na koncie i akceptacji wizualizacji',
+            ],
+            [
+              'Płatność za pobraniem (COD)',
+              'Niedostępna w całym sklepie',
+              '—',
+              'Brak opcji pobrania (zamówienia spersonalizowane i produkcja na miarę)',
+            ],
+            [
+              'Gotówka / odbiór osobisty',
+              'Niedostępna (sklep wyłącznie wysyłkowy)',
+              '—',
+              'Brak odbioru osobistego — wszystkie zamówienia doręcza kurier',
+            ],
+          ],
+        },
+      },
+      {
+        id: 'termin-i-harmonogram',
+        heading: 'Jak odroczony termin wpływa na czas realizacji zamówienia',
+        paragraphs: [
+          'Przy standardowym zamówieniu komercyjnym czas realizacji liczy się od spełnienia dwóch warunków łącznie: zaksięgowania wpłaty oraz akceptacji wizualizacji projektu przez klienta (początek biegu terminu wyznacza zdarzenie późniejsze).',
+          'W przypadku jednostek publicznych korzystających z odroczonego terminu 14 dni warunek finansowy nie opóźnia prac. Termin realizacji liczymy **wyłącznie od momentu zatwierdzenia wizualizacji przez Państwa**. Zamówienie nie czeka w kolejce na przelew z księgowości ani na wieloetapowe autoryzacje w systemach bankowości samorządowej.',
+          `Same terminy realizacji są zgodne ze standardowym cennikiem Envelopes: koperty gładkie wysyłamy w ${workingDaysLabel(DEFAULT_PRICING.leadDaysPlain)}, koperty z nadrukiem w ${workingDaysLabel(DEFAULT_PRICING.leadDaysStandard)} w trybie standardowym, a w trybie ekspresowym — w ${workingDaysLabel(DEFAULT_PRICING.leadDaysExpress)} za dopłatą ${formatPrice(DEFAULT_PRICING.express)} brutto do sztuki. Pełną arytmetykę kalendarza opisujemy w poradniku [szybka realizacja kopert — terminy i ekspres](/blog/szybka-realizacja-kopert-terminy-i-ekspres).`,
+        ],
+      },
+      {
+        id: 'lista-kontrolna',
+        heading: 'Zanim złożą Państwo zamówienie urzędowe',
+        paragraphs: ['Sześć punktów do sprawdzenia przed zatwierdzeniem zamówienia z odroczonym terminem.'],
+        list: [
+          'Kompletne dane do faktury: NIP jednostki nadrzędnej (Nabywca) oraz ewentualna nazwa placówki podległej (Odbiorca)',
+          'Plik z herbem, godłem lub logo urzędu przygotowany w wektorach (PDF, AI, EPS, SVG) — szczegóły w poradniku jak przygotować pliki do druku na kopertach',
+          'Odcień papieru DL dobrany do charakteru pisma — urzędy najczęściej wybierają Granatowy, Ciemnozielony, Szary, Ecru i Biały',
+          `Nakład zgodny z zapotrzebowaniem: od ${DEFAULT_PRICING.moqWithPrint} sztuk przy nadruku logo lub od ${DEFAULT_PRICING.moqWithoutPrint} sztuki dla kopert gładkich`,
+          'Wskazany bezpośredni adres e-mail pracownika upoważnionego do akceptacji cyfrowej wizualizacji',
+          'Zaznaczona opcja „Faktura z odroczonym terminem płatności (14 dni)” w kroku wyboru płatności',
+        ],
+      },
+    ],
+    cta: `Wybierz format DL i kolor kopert w konfiguratorze. Jako jednostka publiczna zaznacz w zamówieniu odroczony termin 14 dni — produkcja ruszy bez czekania na przedpłatę.`,
+    ctaConfigure: { label: 'Skonfiguruj koperty dla instytucji', format: 'DL', print: true },
+    pillar: { href: '/koperty-z-nadrukiem', anchor: 'koperty z nadrukiem' },
+  },
 ];
+
 
 export function getAllPosts(): BlogPost[] {
   return [...POSTS].sort((a, b) => (a.date < b.date ? 1 : -1));

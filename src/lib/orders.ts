@@ -39,6 +39,16 @@ export const PAYMENT_METHOD_LABEL: Record<PaymentMethod, string> = {
   faktura_odroczona: 'Faktura z odroczonym terminem płatności',
 };
 
+/**
+ * Metody chwilowo wyłączone w zamówieniu. Pusta lista oznacza, że wszystkie
+ * metody z PAYMENT_METHOD_LABEL są aktywne.
+ */
+export const UNAVAILABLE_PAYMENT_METHODS: readonly PaymentMethod[] = [];
+
+export function isPaymentMethodAvailable(method: PaymentMethod): boolean {
+  return !UNAVAILABLE_PAYMENT_METHODS.includes(method);
+}
+
 /** Metody rozliczane natychmiast przez bramkę (pkt 1.12 ścieżka A) */
 export function isGatewayPayment(method: PaymentMethod): boolean {
   return method === 'p24' || method === 'blik';

@@ -128,6 +128,14 @@ const GUIDES = [
   getPost('koperty-na-zaproszenia-jak-dobrac-koperte-dl'),
 ].filter((post) => post !== undefined);
 
+/**
+ * Poz. 38 (gramatura papieru na koperty) należy do filara K6, więc nie wchodzi
+ * do `GUIDES`. Ta strona podaje rozkład gramatur w jednym zdaniu i odsyła do
+ * wpisu w tym zdaniu — tam, gdzie czytelnik zada pytanie „a co to zmienia".
+ * Doszła 25 września 2026.
+ */
+const weightGuide = getPost('gramatura-papieru-na-koperty');
+
 /** Formaty zapowiedziane, wypisane zdaniem: „C6 114 × 162 mm i K4 155 × 155 mm". */
 const UPCOMING_LABEL = UPCOMING_FORMATS.map((f) => `${f.id} ${f.dimensions}`).join(' i ');
 
@@ -811,8 +819,15 @@ export default function DlEnvelopesPage() {
             Gramatura papieru rozkłada się następująco: {WEIGHT_SUMMARY}. Wymiar koperty jest ten
             sam we wszystkich odcieniach — grubszy papier nie zmienia formatu, zmienia sztywność.
             Szlachetne wykończenia i podwyższone gramatury opisaliśmy na stronie{' '}
-            <Link href="/koperty-premium">koperty premium</Link>, a wszystkie {COLORS.length} odcieni
-            obejrzą Państwo w <Link href="/#kolory">palecie kolorów kopert ozdobnych</Link>.
+            <Link href="/koperty-premium">koperty premium</Link>
+            {weightGuide && (
+              <>
+                , a to, co gramatura zmienia i którą wybrać — w poradniku{' '}
+                <Link href={`/blog/${weightGuide.slug}`}>gramatura papieru na koperty</Link>
+              </>
+            )}
+            . Wszystkie {COLORS.length} odcieni obejrzą Państwo w{' '}
+            <Link href="/#kolory">palecie kolorów kopert ozdobnych</Link>.
           </p>
 
           {/* Odcienie z własną kartą — lista rośnie razem z `color-pages.ts`,

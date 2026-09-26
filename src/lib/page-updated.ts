@@ -37,8 +37,9 @@ export const PAGE_UPDATED: Record<string, string> = {
      finansowe" — do poz. 21. 15 września karta „Agencje eventowe, PR
      i kreatywne" dostała odnośnik do poz. 25. 23 września: nadruk na
      zamknięciu — wiersz w cenniku, wiersz „Miejsce nadruku" w specyfikacji
-     i pytanie w FAQ (także w `FAQPage`) */
-  '/koperty-z-nadrukiem': '2026-09-23',
+     i pytanie w FAQ (także w `FAQPage`). 26 września: piąta karta w sekcji
+     „Poradniki” (siatka 3 + 2) oraz odnośnik w sekcji rozliczenia — poz. 45 */
+  '/koperty-z-nadrukiem': '2026-09-26',
   /* Karta „Hotele, resorty i pensjonaty" w sekcji „Dla kogo" dostała odnośnik
      do poz. 18; pod cennikiem doszedł odnośnik do poz. 46 — ten sam próg
      obowiązuje przy adresowaniu; karta „Kliniki, gabinety i salony SPA" —
@@ -54,16 +55,18 @@ export const PAGE_UPDATED: Record<string, string> = {
      podatkowe" w sekcji „Dla kogo" dostała odnośnik do poz. 21. 15 września
      karta „Agencje eventowe, PR i kreatywne" — odnośnik do poz. 25.
      24 września: trzecia karta w „Poradnikach" i odnośnik pod tabelą
-     dopasowań — poz. 41 */
-  '/koperty-dl': '2026-09-24',
+     dopasowań — poz. 41. 25 września: odnośnik do poz. 38 w zdaniu
+     o rozkładzie gramatur */
+  '/koperty-dl': '2026-09-25',
   /* Karty „Hotele, resorty i pensjonaty butikowe" oraz „Salony SPA i kliniki
      medycyny estetycznej" w sekcji „Dla kogo" dostały odnośniki do poz. 18
      i poz. 22 */
   '/koperty-na-vouchery': '2026-09-14',
   /* Doszły wpisy o personalizowanej kopercie na pieniądze (poz. 40),
      o kopertach na zaproszenia (poz. 41) i o personalizowanych kopertach
-     ślubnych (poz. 43) */
-  '/blog': '2026-09-24',
+     ślubnych (poz. 43). 25 września: wpis o gramaturze papieru na koperty
+     (poz. 38). 26 września: wpis o odroczonym terminie płatności 14 dni (poz. 45) */
+  '/blog': '2026-09-26',
   /* Odnośnik do strony „O nas" w karcie danych rejestrowych */
   '/kontakt': '2026-08-17',
   /* Publikacja strony „O nas" */
@@ -86,8 +89,11 @@ export const PAGE_UPDATED: Record<string, string> = {
      w dół — sekcja „Poradniki" i trzy odnośniki kontekstowe, a karta
      kliniczna — drugi odnośnik, do poz. 22, a karta „Zarządy spółek
      i relacje inwestorskie" — odnośnik do poz. 21. 15 września karta
-     „Agencje eventowe i PR" — odnośnik do poz. 25. */
-  '/koperty-premium': '2026-09-15',
+     „Agencje eventowe i PR" — odnośnik do poz. 25. 25 września: wpis
+     dedykowany klastrowi (poz. 38) — pierwsza karta w „Poradnikach"
+     (siatka na trzy kolumny), odnośnik pod tabelą porównawczą i w karcie
+     Taupe. */
+  '/koperty-premium': '2026-09-25',
   /* Czwarta partia stron kolorów z backlogu klastra K5 */
   '/koperty/szara': '2026-08-19',
   '/koperty/niebieski': '2026-08-19',

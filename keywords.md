@@ -326,18 +326,29 @@ wchodzącym do konfiguratora z **preselekcją koloru**).
 Klaster wizerunkowy, idealnie zgodny z pozycjonowaniem cenowym z bazy wiedzy („nie walczymy ceną").
 Niski wolumen, ale bardzo wysoka jakość ruchu — trafia tu klient, który nie porównuje groszy.
 
-**URL docelowy:** `/koperty-premium` `[PROPOZYCJA]` lub sekcja na `/` — decyzja zależy od
-wolumenu z Semstorm; przy wolumenie < 50/mc nie budować osobnego URL-a.
+**URL docelowy:** `/koperty-premium` `[ISTNIEJE]` — opublikowany 18 sierpnia 2026 (poz. 37 planu).
+**Wsparcie:** `/blog/gramatura-papieru-na-koperty` `[ISTNIEJE]` — opublikowany 25 września 2026
+(poz. 38 planu), właściciel fraz o gramaturze koperty. Linkuje w górę do tego filara, ale frazy
+`koperty premium` zostają przy filarze. Wpis odpowiada na pytanie „którą gramaturę wybrać i co ona
+zmienia" (podział palety na 115, 120 i 140 g/m², różnice w ilości papieru, czego gramatura nie
+zmienia) i **nie dubluje gramatury wkładu** — ta należy do poz. 11 w K4.
 
 | Fraza | Rola | Intencja | Lejek | Wol. | P |
 | --- | --- | --- | --- | --- | --- |
 | koperty premium | **główna** | KOM | MOFU | — | P1 |
 | koperta premium | wariant lp. | KOM | MOFU | — | P1 |
 | eleganckie koperty premium | wspierająca | KOM | MOFU | — | P1 |
+| gramatura papieru na koperty | wspierająca → poz. 38 | INFO | TOFU | — | P1 |
+| gramatura koperty | wariant → poz. 38 | INFO | TOFU | — | P1 |
+| jaka gramatura koperty | wariant → poz. 38 | INFO | TOFU | — | P1 |
+| koperty ozdobne gramatura | wariant → poz. 38 | INFO | TOFU | — | P1 |
 
 **Notatki wdrożeniowe:** „premium" trzeba **udowodnić parametrem**, nie przymiotnikiem —
 gramatura 115–140 g, wykończenia perłowe i metaliczne bez dopłaty, 19 odcieni w jednej cenie.
 Sama deklaracja luksusu nie rankuje i nie jest cytowana przez modele.
+Frazy gramaturowe (poz. 38) są faktograficzne, nie wizerunkowe — dlatego mają własny wpis,
+a nie miejsce w `keywords` filara: intencja „którą gramaturę wybrać" jest inna niż
+„czym koperta premium różni się od biurowej", którą obsługuje filar.
 
 ---
 
@@ -497,7 +508,7 @@ to zapis na powiadomienie o dostępności formatów, nie wejście do konfigurato
 > zostają przy `/`.** Strony `/koperty/[kolor]` z K5 powstają bez huba pośredniego: linkują
 > w górę wprost do `/` i celują w `[kolor] koperty dl`, czyli w intencję wariantową, której
 > strona główna nie obsługuje.
-| K6 Premium | `/koperty-premium` | do zbudowania | P1 | Zgodność z pozycjonowaniem, ale niski wolumen |
+| K6 Premium | `/koperty-premium` | **istnieje** (18 sierpnia 2026) | P1 | Zgodność z pozycjonowaniem, ale niski wolumen |
 | K8 Na pieniądze | `/koperty-na-pieniadze` | **istnieje** (7 września 2026) | P1 | Duży wolumen, niższa wartość klienta |
 | K9 Ślub | blog + lista powiadomień | content-first | P2 | Treść wyprzedza ofertę; **bez CTA zakupowego do czasu startu C6/K4** |
 
@@ -517,7 +528,8 @@ profilu klienta z bazy wiedzy. Do zweryfikowania w kolejnym eksporcie:
    intencją. Do rozstrzygnięcia przy przeglądzie kwartalnym, na danych z Search Console.
 2. **Procesowe / B2B:** `koperty firmowe faktura vat`, ~~`koperty z nadrukiem od 10 sztuk`~~
    (obsłużona od 14 września 2026 wpisem `dlaczego-koperty-z-nadrukiem-od-10-sztuk`),
-   `koperty hurtowo z logo`, `koperty z nadrukiem odroczony termin płatności`,
+   `koperty hurtowo z logo`, ~~`koperty z nadrukiem odroczony termin płatności`~~
+   (obsłużona od 26 września 2026 wpisem `odroczony-termin-platnosci-przy-zamowieniu-kopert`),
    `koperty z nadrukiem wysyłka kurierem`.
 3. **Generatywne (pytania pełnym zdaniem)** — nie pojawiają się w klasycznych narzędziach
    keywordowych, bo są zadawane modelom, nie wyszukiwarkom: ~~„jakie koperty na zaproszenia

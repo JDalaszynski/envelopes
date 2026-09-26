@@ -267,7 +267,11 @@ export default function PrintedEnvelopesPage() {
      jako parametr oferty, wpis odpowiada na obiekcję, która za tym parametrem
      stoi: dlaczego próg w ogóle jest i co zrobić, gdy potrzeba mniej kopert. */
   const moqPost = getPost('dlaczego-koperty-z-nadrukiem-od-10-sztuk');
-  const relatedPosts = [costPost, moqPost, deadlinePost, filesPost].filter(
+  /* Wpis o odroczonym terminie płatności z content-plan.md poz. 45 — ta strona
+     podaje sam fakt odroczonego terminu 14 dni, wpis prowadzi przez całą procedurę
+     zamówienia urzędowego, rozbicie Nabywca/Odbiorca i zniesienie warunku przedpłaty. */
+  const deferredPaymentPost = getPost('odroczony-termin-platnosci-przy-zamowieniu-kopert');
+  const relatedPosts = [costPost, moqPost, deferredPaymentPost, deadlinePost, filesPost].filter(
     (post): post is BlogPost => post !== undefined
   );
 
@@ -944,7 +948,11 @@ export default function PrintedEnvelopesPage() {
                 <li>Płatność online (BLIK, karta, szybki przelew) z automatyczną fakturą do zamówienia.</li>
                 <li>
                   Faktura z odroczonym terminem płatności 14 dni jest dostępna dla instytucji
-                  publicznych i urzędów, których obieg zakupowy nie przewiduje przedpłaty.
+                  publicznych i urzędów, których obieg zakupowy nie przewiduje przedpłaty — procedurę
+                  i rozliczenie Nabywca/Odbiorca opisujemy w poradniku{' '}
+                  <Link href="/blog/odroczony-termin-platnosci-przy-zamowieniu-kopert">
+                    odroczony termin płatności przy zamówieniu kopert
+                  </Link>.
                 </li>
                 <li>
                   Powyżej {BULK_QUOTE_THRESHOLD.toLocaleString('pl-PL')} sztuk ustalamy harmonogram
@@ -989,11 +997,10 @@ export default function PrintedEnvelopesPage() {
               <span className="eyebrow">Poradniki</span>
               <h2>Zanim zamówią Państwo nadruk</h2>
             </div>
-            {/* Siatka domyka się tylko wtedy, gdy liczba kart dzieli się przez
-                liczbę kolumn — przy czterech wpisach trzy kolumny zostawiałyby
-                w drugim rzędzie dwa puste miejsca, a dwie kolumny wypełniają
-                oba rzędy. */}
-            <div className={relatedPosts.length % 3 === 0 ? 'grid grid-3' : 'grid grid-2'}>
+            {/* Od pięciu wpisów siatka przechodzi na trzy kolumny (układ 3 + 2,
+                jak na F2 i w klastrze premium), a w dwie kolumny przy mniejszej
+                liczbie kart. */}
+            <div className={relatedPosts.length > 4 ? 'grid grid-3' : 'grid grid-2'}>
               {relatedPosts.map((post) => (
                 <article className="post-card" key={post.slug}>
                   <BlogCoverImage

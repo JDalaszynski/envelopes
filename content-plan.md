@@ -208,8 +208,8 @@ z **preselekcją koloru**.
 
 | # | Tytuł / URL | Format | Główna fraza | Cel | Persona / Branża | Filar | Uwagi (antykanibalizacja) | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 37 | Eleganckie koperty premium — `/koperty-premium` | Pillar (LP) | koperty premium | KONWERSJA | Premium B2B | H `/` | **Wykonane 18 sierpnia 2026.** Kompletny filar K6 z twardymi parametrami poligraficznymi (115–140 g/m², perła i metalik bez dopłaty, barwienie w masie, brak okienka i poddruku, MOQ 10 dla nadruku). **14 września 2026 dołożone linkowanie w dół** — do czasu poz. 38 filar linkuje do czterech wpisów istniejących. | [x] |
-| 38 | Gramatura papieru w kopertach — 115, 120 i 140 g | Supporting article | gramatura papieru na koperty | GEO | Zakupowiec, grafik | `/koperty-premium` | **Fraza skorygowana 7 września 2026** — `eleganckie koperty premium` należy do K6 (keywords.md, wspierająca fraza filara `/koperty-premium`); wpis o gramaturze celuje we frazę faktograficzną, zgodną z jego rzeczywistą treścią (tabela gramatur). Materiał wprost pod cytowanie przez modele | [ ] |
+| 37 | Eleganckie koperty premium — `/koperty-premium` | Pillar (LP) | koperty premium | KONWERSJA | Premium B2B | H `/` | **Wykonane 18 sierpnia 2026.** Kompletny filar K6 z twardymi parametrami poligraficznymi (115–140 g/m², perła i metalik bez dopłaty, barwienie w masie, brak okienka i poddruku, MOQ 10 dla nadruku). **14 września 2026 dołożone linkowanie w dół** — do czasu poz. 38 filar linkuje do czterech wpisów istniejących. **25 września 2026 poz. 38 doszła jako pierwsza karta w „Poradnikach” (siatka 3 + 2) i dwa odnośniki kontekstowe — filar linkuje do pięciu wpisów** | [x] |
+| 38 | Gramatura papieru na koperty — 115, 120 i 140 g/m² — `/blog/gramatura-papieru-na-koperty` | Supporting article | gramatura papieru na koperty | GEO | Zakupowiec, grafik | `/koperty-premium` | **Fraza skorygowana 7 września 2026** — `eleganckie koperty premium` należy do K6 (keywords.md, wspierająca fraza filara `/koperty-premium`); wpis o gramaturze celuje we frazę faktograficzną, zgodną z jego rzeczywistą treścią (tabela gramatur). Materiał wprost pod cytowanie przez modele. **Wykonane 25 września 2026.** Oś wpisu: **którą gramaturę wybrać i co ona zmienia** — podział palety na gramatury z nazwami odcieni (tabela liczona z `COLORS`), arytmetyka różnic, lista tego, czego gramatura nie zmienia (cena, wymiar, termin, wymagania wobec pliku) i sposób sprawdzenia jej w dłoni przed zamówieniem serii. Gramaturę wybiera się razem z kolorem — każdy odcień ma jedną, więc pytanie zaczyna się od odcienia. Tytuł z planu („w kopercie — … g”) nie zaczynał się od frazy głównej i nie miał jednostki, więc przepisany. Zestawienie „jaki odcień ma jaką gramaturę” stoi na `/` i na `/koperty-dl` tylko w skrócie — wpis dokłada nazwy, różnice i wniosek, a nie kolejną kopię tabeli | [x] |
 | 39 | Koperty na pieniądze — `/koperty-na-pieniadze` | Pillar (LP) | koperty na pieniądze | KONWERSJA | Detal + firmy (premie, nagrody) | H `/` | **Wykonane 7 września 2026, wyprzedzająco z Fazy 4.** Klaster detaliczny — termin realizacji podany nad CTA (hero, pasek faktów, sekcja kosztowa), inaczej wygeneruje odbicia. Prerekwizyt „dopiero po wdrożeniu K1, K2, K7" spełniony — wszystkie trzy istnieją. **14 września 2026 dołożone linkowanie w dół** — do czasu poz. 40 i 44 filar linkuje do czterech wpisów istniejących | [x] |
 | 40 | Personalizowana koperta na pieniądze — kiedy warto — `/blog/personalizowana-koperta-na-pieniadze-kiedy-warto` | Supporting article | personalizowana koperta na pieniądze | KONWERSJA | Detal, HR (premie imienne) | F2 | Upsell usługi +2,99 zł; poz. 39 sprzedaje kopertę gładką, ta pozycja usługę. **Wykonane 24 września 2026.** Oś wpisu: **kiedy imię na kopercie się zwraca** — trzy warunki (minimum nakładu, różni odbiorcy, termin), dopłata liczona dla całej serii, wyjścia dla mniej niż 10 osób. Fraza przeszła z `keywords` pillara K8 do wpisu. Link w górę do F2, odnośniki w obie strony z `/koperty-na-pieniadze`. Tytuł skrócony z „kiedy się opłaca" (67 znaków z sufiksem) do „kiedy warto" (62) | [x] |
 
@@ -228,8 +228,7 @@ z **preselekcją koloru**.
 ### Tydzień 12 — procesy B2B i przegląd
 
 | # | Tytuł / URL | Format | Główna fraza | Cel | Persona / Branża | Filar | Uwagi (antykanibalizacja) | Status |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 45 | Odroczony termin płatności przy zamówieniu kopert | Supporting article | koperty odroczony termin płatności | KONWERSJA | Instytucje, jednostki budżetowe | F1 | Rozbraja barierę rozliczeniową jednostek budżetowych (odroczony termin 14 dni bez przedpłaty) | [ ] |
+| 45 | Odroczony termin płatności przy zamówieniu kopert — `/blog/odroczony-termin-platnosci-przy-zamowieniu-kopert` | Supporting article | koperty odroczony termin płatności | KONWERSJA | Instytucje, jednostki budżetowe | F1 | **Wykonane 26 września 2026.** Rozbraja barierę rozliczeniową jednostek budżetowych (odroczony termin 14 dni bez przedpłaty). Bez eksponowania faktury VAT jako zalety (standard B2B, a nie hasło reklamowe); treść o pozostałych płatnościach w pełni spójna z konfiguracją bramki i brakiem pobrania. Piąta karta w „Poradnikach” filara F1 `/koperty-z-nadrukiem` i odnośnik w sekcji rozliczenia | [x] |
 | 46 | Dlaczego koperty z nadrukiem są od 10 sztuk — `/blog/dlaczego-koperty-z-nadrukiem-od-10-sztuk` | Supporting article | koperty z nadrukiem od 10 sztuk | GEO | Małe firmy, pierwszy zakup | F1 | **Wykonane 14 września 2026, wyprzedzająco z tygodnia 12.** Odpowiedź na realną obiekcję; F1 podaje próg jako parametr (tytuł, pasek faktów, wiersz specyfikacji, pytanie w `PRINT_FAQ_ITEMS`), wpis uzasadnia go pracą przygotowawczą i podaje wyjścia dla nakładu mniejszego niż minimum. Zero kwot — koszt krótkiej serii należy do poz. 9 | [x] |
 | 47 | ~~Realizacja: 3 000 kopert DL dla kancelarii~~ | Supporting article | koperty dla kancelarii | AUTORYTET | Kancelarie | `/koperty-dla-kancelarii` | **Wstrzymane 15 sierpnia 2026 — brak realizacji do opisania.** Wpis startowy opisywał klienta, jego problem z poprzednim dostawcą i efekt wdrożenia; właściciel potwierdził, że przykład był wymyślony, więc został usunięty. Pozycja wraca do planu **dopiero wtedy, gdy powstanie realne zamówienie**, na które właściciel da zgodę i zdjęcia. Do tego czasu autorytet w klastrze kancelaryjnym buduje wyłącznie LP z poz. 17 | [—] |
 | 48 | Przegląd kwartalny: audyt kanibalizacji i aktualizacja map | Aktualizacja | — | — | — | — | Przegląd `keywords.md` i `content-plan.md`, weryfikacja pozycji, kwalifikacja treści do przepisania lub scalenia | [ ] |
@@ -249,6 +248,131 @@ nie liczą się do kadencji czterech pozycji tygodniowo i nie mają filara.
 ---
 
 ## Dziennik wdrożeń
+
+### 26 września 2026 — poz. 45: `/blog/odroczony-termin-platnosci-przy-zamowieniu-kopert`
+
+**Piąty wpis wspierający filar F1 (`/koperty-z-nadrukiem`) i bezpośrednie rozbicie bariery rozliczeniowej jednostek sektora finansów publicznych.** Filar linkuje w dół do wpisu jako piąta karta w sekcji „Poradniki” (siatka 3 + 2, analogicznie do F2) oraz odnośnikiem kontekstowym w sekcji „Rozliczenie i odroczony termin” pod tabelą cennika. Wpis linkuje w górę do filara F1 anchorem `koperty z nadrukiem`.
+
+**Oś wpisu: procedura, finanse publiczne i zniesienie warunku przedpłaty.** Artykuł odpowiada na specyficzne uwarunkowania prawne urzędów miast, gmin, starostw, placówek oświatowych (szkoły, przedszkola, uczelnie), instytucji kultury (biblioteki, muzea, teatry) i ochrony zdrowia (SPZOZ, szpitale publiczne). Zgodnie z ustawą o finansach publicznych wydatki są rozliczane po wykonaniu świadczenia. Standardowe wymaganie przedpłaty w e-commerce blokuje takie zakupy — odroczony termin 14 dni umożliwia realizację zamówienia i wysyłkę, a płatność następuje przelewem po doręczeniu.
+
+**Bez eksponowania faktury VAT jako zalety.** Zgodnie z wytycznymi strategii B2B (`knowledge-base.md`), wystawienie faktury VAT jest elementarnym standardem prawnym i podatkowym, a nie wyróżnikiem reklamowym. Wpis nie operuje hasłami o „fakturze VAT jako bonusie”, lecz skupia się na realnej korzyści proceduralnej: 14 dniach na przelew i braku blokady produkcji.
+
+**Zgodność z metodami płatności i UNAVAILABLE_PAYMENT_METHODS.** Zestawienie metod płatności precyzyjnie rozgranicza:
+- dla instytucji publicznych i urzędów: faktura z odroczonym terminem 14 dni (przelew po dostawie, produkcja rusza bez przedpłaty),
+- dla firm komercyjnych i klientów prywatnych: płatności z góry w trakcie zamówienia (BLIK, szybkie płatności i karty przez Przelewy24) lub przelew tradycyjny proforma (produkcja po zaksięgowaniu),
+- metody niedostępne: brak wysyłek za pobraniem (COD) z uwagi na spersonalizowany charakter druku oraz brak gotówki / odbioru osobistego (sklep wyłącznie wysyłkowy).
+
+**Sekcje:** dla kogo dostępny jest odroczony termin 14 dni (tabela podmiotów i typowych zastosowań kopert DL) → dlaczego odroczony termin rozwiązuje barierę zakupową (ustawa o finansach publicznych, brak przedpłaty, faktura jako standard) → procedura zamówienia krok po kroku (5 kroków w konfiguratorze) → obsługa relacji Nabywca i Odbiorca na fakturze (centralizacja VAT w samorządzie) → metody płatności w Envelopes (tabela: instytucje vs komercja vs metody niedostępne) → jak odroczony termin wpływa na czas realizacji (start terminu od akceptacji wizualizacji, a nie od wpłaty) → lista kontrolna (6 punktów).
+
+### 25 września 2026 — poz. 38: `/blog/gramatura-papieru-na-koperty`
+
+**Pierwszy wpis wspierający klastra K6 i jedyny, który linkuje w górę do filara
+`/koperty-premium`.** Do tej pory filar linkował w dół do czterech wpisów z innych klastrów,
+bo treść dedykowana K6 nie istniała (dziennik z 14 września). Wpis stoi pod filarem (pole
+`pillar`, anchor `koperty premium`) i odpowiada na pytanie „którą gramaturę koperty wybrać
+i co ona zmienia". Fraza `gramatura papieru na koperty` — faktograficzna, nie wizerunkowa —
+dostała właściciela; filar zachował `koperty premium` i pytanie o najwyższą gramaturę w FAQ.
+
+**Oś, której nie ma nigdzie indziej: wybór i skutek.** Zestawienie „jaki odcień ma jaką
+gramaturę" stoi na `/` (h3 „Gramatura i wykończenie 19 kolorów kopert DL") i na `/koperty-dl`
+(zdanie z `WEIGHT_SUMMARY`) tylko w skrócie („115 g/m² — 16 kolorów"). Wpis nie jest trzecią
+kopią tej tabeli: dokłada nazwy odcieni w każdej gramaturze, arytmetykę różnic i wniosek dla
+wybierającego. Najważniejszy fakt, którego strony nie mówiły wprost: **gramatura jest przypisana
+do odcienia, więc nie wybiera się jej osobno** — kopertę 140 g/m² zamówi się wyłącznie
+w odcieniu Szarobrązowy, a papier z połyskiem (Złoty, obie Perłowe) nie występuje w wyższej
+gramaturze.
+
+**Sekcje:** jaką gramaturę mają koperty ozdobne (tabela: gramatura → liczba odcieni → nazwy) →
+czy gramaturę można wybrać niezależnie od koloru (nie; linki do stron trzech odcieni
+o wyższych gramaturach) → ile więcej papieru mają wyższe gramatury (tabela: względem 115 g/m²
+i względem koperty biurowej) → co zmienia gramatura, a co zostaje bez zmian (tabela: sztywność
+tak; cena, wymiar, termin i wymagania wobec pliku nie) → którą gramaturę wybrać do jakiej
+korespondencji (tabela) → jak sprawdzić gramaturę w dłoni (pojedyncze koperty gładkie, trzy
+odcienie w jednym koszyku) → lista kontrolna (pięć punktów).
+
+**Liczone z `COLORS`.** Tytuł, lead, obie tabele z gramaturami, różnice procentowe, nazwy
+odcieni w prozie i lista kontrolna powstają z grupowania `COLORS` po polu `weight` (moduł
+wartości wyliczanych w `blog.ts`, „Wartości wyliczane dla wpisu o gramaturze papieru"). Zmiana
+gramatury odcienia przepisuje wpis razem z konfiguratorem. Przy odcieniu z `outOfStock`
+(dziś Złoty w DL) tabele podają status z katalogu — `OUT_OF_STOCK_LABEL` — a zdanie o tym
+statusie pojawia się w prozie tylko wtedy, gdy któryś odcień go ma. Zdanie „papieru perłowego
+ani metalicznego w wyższej gramaturze nie ma" jest warunkowe: znika, gdy połysk wystąpi
+w więcej niż jednej gramaturze. Jedyna liczba spoza katalogu to przedział 75–80 g/m² koperty
+biurowej — ten sam, który stoi w tabeli na filarze i w `PREMIUM_FAQ_ITEMS`. Kwota próbnego
+zamówienia (27,73 zł: trzy koperty gładkie i jedna dostawa) liczona przez `calculatePrice`
+i `DELIVERY_COST`. `blog.ts` trafia do bundla klienckiego przez `BlogList`, więc wpis **nie
+importuje `color-pages.ts`** — ścieżki stron kolorów składa lokalny odpowiednik
+`colorPagePath()`.
+
+**Rozgraniczenia.** Wobec filara K6 — zero tabeli „premium kontra biurowa" (odesłanie do
+`#porownanie`) i zero pytań z `PREMIUM_FAQ_ITEMS`. Wobec poz. 11 — gramatura **wkładu**
+(80–350 g/m², liczba arkuszy) zostaje tam; pojemność koperty to jedno zdanie z odesłaniem.
+Wobec poz. 7 — wymagania wobec pliku zostają tam, wpis mówi tylko, że są jednakowe we
+wszystkich odcieniach. Wobec `paleta-19-kolorow-jak-wybrac-odcien` — dobór odcienia do logo
+to odesłanie, nie sekcja. Wobec stron kolorów — trzy odnośniki w jednym akapicie, bez
+powtarzania ich treści. `FAQPage` zostaje na filarze.
+
+**Czego wpis świadomie nie obiecuje.** Grubości arkusza w milimetrach ani wagi koperty —
+katalog ich nie zna, a wpis mówi wprost, że gramatura nie jest grubością. Tego, kto zamawia
+którą gramaturę — nie ma realnych zamówień do powołania się (brief pkt 4.1). Wzornika ani
+darmowej próbki — sekcja o sprawdzaniu w dłoni proponuje zwykłe zamówienie pojedynczych
+kopert gładkich, od 1 sztuki, z dostawą naliczaną raz na zamówienie (`llms.txt`).
+
+**Konwersja.** CTA otwiera konfigurator z `format=DL`, bez koloru: wpis nie rozstrzyga odcienia,
+tylko tłumaczy, że gramatura idzie razem z nim. Notka nad przyciskiem podaje minimum kopert
+gładkich i wizualizację przed drukiem. Wpis domyka też lukę na telefonie: dymek gramatury
+w konfiguratorze nie otwiera się na dotyku (`mobile.css`), więc kto wybiera kolor w koszyku
+mobilnym, nie widzi gramatury odcienia — pełny podział znajdzie teraz w jednym miejscu.
+
+**Tytuł i metadane.** „Gramatura papieru na koperty — 115, 120 i 140 g/m²": 50 znaków, 62
+z sufiksem — tyle co poz. 40. `description` (lead) 140 znaków, jeden konkret (same gramatury),
+bez kwot.
+
+**Kadr i karta OG.** Okładka: `matcha-koperta-dl-nadruk-podziekowania` — dwie koperty Matcha
+(120 g/m²) na drewnie; jedyny kadr aranżacyjny bez zastosowania w treści blogowej, który
+pokazuje odcień o wyższej gramaturze (kadr Taupe jest okładką poz. 10). Akapit w pierwszej
+sekcji mówi, co widać na zdjęciu. Karta `public/images/og/blog-gramatura-papieru-na-koperty.jpg`
+(1200 × 630, 36 kB, bez kwot) ze zbliżenia na papier z `public/images/details/`
+(`matcha-koperta-dl-zielona-zblizenie`, kadr ze strony głównej) — fakturę zamiast nadruku.
+
+**Linkowanie w obie strony:**
+- **do wpisu:** `/koperty-premium` — pierwsza karta w „Poradnikach" (siatka przechodzi na trzy
+  kolumny, układ 3 + 2, nagłówek sekcji wymienia gramaturę), akapit pod tabelą porównawczą
+  i zdanie w karcie „Gramatura 140 g/m²"; `/koperty-dl` — zdanie o rozkładzie gramatur.
+  `/`, `/blog` i `/llms.txt` — automatycznie.
+- **z wpisu:** blok „Strona oferty" (filar K6, `/koperty-premium`), `/koperty-premium#porownanie`,
+  poz. 11, poz. 7, `paleta-19-kolorow-jak-wybrac-odcien`, trzy strony kolorów
+  (`/koperty/taupe`, `/koperty/matcha`, `/koperty/blekit-lupkowy`).
+
+**Rejestr fraz.** `keywords.md`, K6: cztery frazy gramaturowe przypisane do poz. 38, dopisana
+notatka wdrożeniowa, K6 dostał status `[ISTNIEJE]` (rejestr nadal podawał filar jako
+propozycję, mimo publikacji 18 sierpnia) — jak wcześniej K8. Frazy sprawdzone `grep`-em
+w `src/` i w planie: bez właściciela poza pytaniem o najwyższą gramaturę w `PREMIUM_FAQ_ITEMS`.
+
+`PAGE_UPDATED` podbite dla `/blog`, `/koperty-premium` i `/koperty-dl` (25 września 2026).
+Komentarz w `koperty-premium/page.tsx` o braku wpisu dedykowanego klastrowi (ostatnio
+odnotowany 14 września) zaktualizowany.
+
+Weryfikacja: `npm run typecheck` i `npm run build` bez błędów, **86/86 stron statycznie**,
+wpis prerenderowany jako SSG, obecny w `sitemap.xml` (z okładką i kartą OG, `lastmod`
+2026-09-25) i w `/llms.txt`. Metadane ze zbudowanego HTML-u: `title` 62 znaki z sufiksem,
+`description` 140, jeden `<h1>`, siedem sekcji `<h2>`, cztery tabele, ok. 1250 słów; JSON-LD
+`Article` + `BreadcrumbList` + `WebPage` (bez `FAQPage`). Wszystkie odnośniki z wpisu zwracają
+200, kotwica `#porownanie` istnieje. Wartości z tabel zgodne z katalogiem (16 / 2 / 1 odcień,
++4% i +22% względem 115 g/m², 44–53% / 50–60% / 75–87% względem koperty biurowej, próba
+27,73 zł). W przeglądarce (desktop i 375 px): okładka się ładuje, tabele przechodzą w widok
+kartowy, brak przewijania poziomego w treści wpisu, zero błędów konsoli; na filarze pięć kart
+poradników w układzie 3 + 2, z wpisem na pierwszym miejscu.
+**Czego nie sprawdzono:** grubości ani wagi koperty (katalog ich nie zna, więc wpisu w nich nie
+ma) i brzmienia wpisu w odpowiedziach modeli (audyt cytowań jest cykliczny, nie jednorazowy).
+**Zauważone poza zakresem (nie ruszane):** dymek gramatury w konfiguratorze (`StepColor.tsx`)
+wyświetla surową wartość z katalogu — „Gramatura 115g" — zamiast „115 g/m²", którą pokazuje
+reszta serwisu przez `weightLabel()`. Nagłówki wierszy w tabelach blogowych są wersalikami
+(styl `table.data th`), więc pierwsza kolumna tabel gramatur wygląda na desktopie jak
+„115 G/M²"; w HTML-u i w widoku mobilnym tekst zostaje „115 g/m²".
+**Do wykonania po wdrożeniu na produkcję** (promocja deploymentu w panelu Vercela):
+`npm run indexnow` — obejmie wpis, `/blog`, `/koperty-premium` i `/koperty-dl`, razem z adresami
+z poz. 40, 41 i 43, jeśli nie były jeszcze zgłoszone.
 
 ### 24 września 2026 — poz. 43: `/blog/personalizowane-koperty-slubne-adresy-gosci`
 

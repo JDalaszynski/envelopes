@@ -99,24 +99,29 @@ const PREMIUM_SHOTS = PREMIUM_SHOT_FILES.map(shotByFile);
 /**
  * Treści wspierające filar K6 — zasada z content-plan.md: „filar linkuje
  * w dół do 3–6 treści wspierających". Do 14 września 2026 ta strona nie
- * linkowała w dół do żadnej, bo wpis dedykowany klastrowi (poz. 38 —
- * gramatura papieru) jeszcze nie powstał. Filar nie może jednak czekać
- * na własny wpis: linkujemy do treści, które odpowiadają na pytania
- * zadawane **na tej stronie**, nawet jeśli w górę linkują do innego filara
- * (ten sam wzorzec co `filesPost` na F4):
+ * linkowała w dół do żadnej, bo wpis dedykowany klastrowi jeszcze nie
+ * powstał, a filar nie mógł na niego czekać: linkował do treści, które
+ * odpowiadają na pytania zadawane **na tej stronie**, nawet jeśli w górę
+ * linkują do innego filara (ten sam wzorzec co `filesPost` na F4):
  * - brak okienka → wiersz „Przednia ścianka" w tabeli porównawczej i USP hero,
  * - dobór odcienia → sekcja palety, która pokazuje 8 z 19 kolorów,
  * - plik do druku → sekcja kontrastu na podłożach perłowych i metalicznych,
  * - termin realizacji → korespondencja premium ma zwykle twardą datę.
  *
+ * 25 września 2026 doszedł wpis dedykowany klastrowi — poz. 38, gramatura
+ * papieru — jedyny z tej listy, który linkuje w górę właśnie do tej strony.
+ * Odpowiada na pytania z wiersza „Gramatura arkusza" w tabeli porównawczej
+ * i z karty Taupe, więc stoi pierwszy i ma dwa odnośniki kontekstowe.
+ *
  * `filter` zostawia listę pustą, gdyby wpis zniknął z bazy — nagłówek nie
  * renderuje się wtedy nad pustą siatką.
  */
+const weightGuide = getPost('gramatura-papieru-na-koperty');
 const noWindowGuide = getPost('koperty-bez-okienka-kiedy-je-wybrac');
 const paletteGuide = getPost('paleta-19-kolorow-jak-wybrac-odcien');
 const printFilesGuide = getPost('jak-przygotowac-pliki-do-druku-na-kopertach');
 const leadTimeGuide = getPost('szybka-realizacja-kopert-terminy-i-ekspres');
-const GUIDES = [noWindowGuide, paletteGuide, printFilesGuide, leadTimeGuide].filter(
+const GUIDES = [weightGuide, noWindowGuide, paletteGuide, printFilesGuide, leadTimeGuide].filter(
   (post) => post !== undefined
 );
 
@@ -320,6 +325,18 @@ export default function KopertyPremiumPage() {
               .
             </p>
           )}
+
+          {/* Link w dół do treści wspierającej K6. Wiersz „Gramatura arkusza"
+              podaje sam przedział; to, który odcień ma którą gramaturę i co
+              ona zmienia, jest pytaniem o wybór, więc odpowiedź stoi we wpisie. */}
+          {weightGuide && (
+            <p className="small muted" style={{ marginTop: 'var(--space-3)', maxWidth: '68ch' }}>
+              Wiersz „Gramatura arkusza" podaje przedział. Który odcień ma którą gramaturę, ile
+              więcej papieru daje każda z nich i czego gramatura nie zmienia, wyjaśniamy w
+              poradniku{' '}
+              <Link href={`/blog/${weightGuide.slug}`}>gramatura papieru na koperty</Link>.
+            </p>
+          )}
         </div>
       </section>
 
@@ -378,6 +395,13 @@ export default function KopertyPremiumPage() {
                 Najgrubszy i najsztywniejszy papier w całym katalogu. Ziemisty, szarobrązowy
                 odcień w połączeniu z gramaturą 140 g/m² tworzy bezkompromisowy standard dla
                 pism zarządczych, aktów notarialnych oraz ofert deweloperskich.
+                {weightGuide && (
+                  <>
+                    {' '}
+                    Podział wszystkich odcieni na gramatury opisujemy w poradniku{' '}
+                    <Link href={`/blog/${weightGuide.slug}`}>gramatura papieru na koperty</Link>.
+                  </>
+                )}
               </p>
               <div className="row" style={{ marginTop: 'var(--space-4)' }}>
                 <Link href="/koperty/taupe" className="small" style={{ fontWeight: 600 }}>
@@ -723,13 +747,15 @@ export default function KopertyPremiumPage() {
               <p>
                 Ta strona odpowiada na pytanie, czym koperta premium różni się od biurowej.
                 Poniższe poradniki prowadzą przez decyzje, które podejmują Państwo przed
-                otwarciem konfiguratora: brak okienka, odcień papieru, plik z logo i termin
-                liczony wstecz od dnia wydarzenia.
+                otwarciem konfiguratora: gramatura papieru, brak okienka, odcień papieru, plik
+                z logo i termin liczony wstecz od dnia wydarzenia.
               </p>
             </div>
 
             <div
-              className={GUIDES.length > 1 ? 'grid grid-2' : undefined}
+              className={
+                GUIDES.length > 4 ? 'grid grid-3' : GUIDES.length > 1 ? 'grid grid-2' : undefined
+              }
               style={{ gap: 'var(--space-5)' }}
             >
               {GUIDES.map((post) => (
