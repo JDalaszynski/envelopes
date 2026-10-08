@@ -71,7 +71,7 @@ export function OrdersList() {
             <input
               id="szukaj"
               className="input"
-              placeholder="ENV-20260805-0147"
+              placeholder="ENV-20261008-GD4W"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />

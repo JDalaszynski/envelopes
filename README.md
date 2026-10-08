@@ -32,7 +32,7 @@ Bez uzupełnionych zmiennych środowiskowych aplikacja pozostaje w pełni przeje
 
 | Usługa | Produkcja | Bez konfiguracji |
 | --- | --- | --- |
-| Firestore | kolekcje `orders`, `users`, `pricing`, `counters` | plik `.data/db.json` (ta sama warstwa `src/lib/store.ts`) |
+| Firestore | kolekcje `orders`, `users`, `pricing`, `orderNumbers` | plik `.data/db.json` (ta sama warstwa `src/lib/store.ts`) |
 | Firebase Storage | bucket projektu, podpisane URL-e | katalog `.data/uploads`, serwowany przez `/api/uploads/[...]` |
 | Firebase Auth | e-mail+hasło oraz Google OAuth, rola jako custom claim | sesja demonstracyjna w `localStorage`; adres zaczynający się od `admin@` dostaje rolę administratora |
 | Brevo | API `/smtp/email` i `/contacts` | pełna treść wiadomości trafia do logu serwera |
@@ -101,8 +101,11 @@ src/
 
 ## Kluczowe reguły biznesowe
 
-**Numer zamówienia** — `ENV-RRRRMMDD-XXXX`, licznik dzienny inkrementowany transakcyjnie.
-Ten sam numer jest identyfikatorem `sessionId` w Przelewy24, tytułem przelewu, kluczem wyszukiwania
+**Numer zamówienia** — `ENV-RRRRMMDD-XXXX`, np. `ENV-20261008-GD4W`. `XXXX` to cztery losowe
+znaki (wielkie litery i cyfry bez `0`, `O`, `1`, `I`, które łatwo pomylić na przelewie), losowane
+w `generateOrderCode()`. Unikalność pilnuje rezerwacja w kolekcji `orderNumbers` (Firestore,
+transakcja) — przy kolizji kod jest losowany ponownie. Zamówienia sprzed 8.10.2026 mają w końcówce
+cztery cyfry (kolejny numer z dnia) i zostają bez zmian. Ten sam numer jest identyfikatorem `sessionId` w Przelewy24, tytułem przelewu, kluczem wyszukiwania
 w panelu Admina i numerem na fakturze.
 
 **Nazwa produktu** — `Koperta [Format] [Kolor] [z nadrukiem …] [z personalizacją]`, budowana

@@ -5,14 +5,14 @@ import path from 'node:path';
 
 import { getDb, isAdminConfigured } from './firebase/admin';
 import { resolvePricing, type PricingConfig } from './pricing';
-import { buildOrderNumber } from './orders';
+import { buildOrderNumber, generateOrderCode } from './orders';
 import type { Order, UserProfile } from './types';
 import { seedOrders } from './seed';
 
 /**
  * Warstwa dostępu do danych.
  *
- * Produkcyjnie: Firestore (kolekcje `orders`, `users`, `pricing`, `counters`)
+ * Produkcyjnie: Firestore (kolekcje `orders`, `users`, `pricing`, `orderNumbers`)
  * przez Admin SDK — pkt 8.1.
  *
  * Gdy zmienne środowiskowe Firebase nie są ustawione, ta sama warstwa
@@ -27,7 +27,6 @@ const DATA_FILE = path.join(DATA_DIR, 'db.json');
 interface LocalDb {
   orders: Record<string, Order>;
   users: Record<string, UserProfile>;
-  counters: Record<string, number>;
   /**
    * Nadpisania cennika. Pole zostaje w kształcie danych, ale **żadna wartość
    * nie jest dziś stosowana** — `resolvePricing()` odrzuca rozjazd, bo ceny
@@ -52,14 +51,6 @@ async function readLocal(): Promise<LocalDb> {
         return acc;
       }, {}),
       users: {},
-      // Liczniki dzienne startują od najwyższego numeru użytego w danych
-      // demonstracyjnych, żeby pierwsze prawdziwe zamówienie nie dostało
-      // numeru już zajętego.
-      counters: orders.reduce<Record<string, number>>((acc, o) => {
-        const [, day, sequence] = o.number.split('-');
-        acc[day] = Math.max(acc[day] ?? 0, Number(sequence));
-        return acc;
-      }, {}),
       pricing: {},
     };
     await writeLocal(localCache);
@@ -94,34 +85,49 @@ export async function getPricing(): Promise<PricingConfig> {
 
 /* ── Numeracja zamówień (pkt 1.8) ───────────────────────────── */
 
-/**
- * Transakcyjnie zwiększa dzienny licznik i zwraca kolejny numer.
- * W Firestore licznik żyje w `counters/{RRRRMMDD}` i jest inkrementowany
- * w transakcji, więc dwa równoległe zamówienia nie dostaną tego samego numeru.
- */
-export async function nextOrderNumber(date = new Date()): Promise<string> {
-  const key = `${date.getFullYear()}${String(date.getMonth() + 1).padStart(2, '0')}${String(
-    date.getDate()
-  ).padStart(2, '0')}`;
+const ORDER_NUMBER_ATTEMPTS = 10;
 
+/** Numery przydzielone w tym procesie, a jeszcze niezapisane (tryb lokalny). */
+const reservedLocally = new Set<string>();
+
+/**
+ * Zajmuje numer, jeśli jest wolny. W Firestore robi to transakcja na
+ * `orderNumbers/{numer}`: numer jest przekazywany do Przelewy24 i zapisywany
+ * dopiero po rejestracji transakcji, więc dwa równoległe zamówienia z tym
+ * samym losowym kodem musiałyby się wykluczyć już tutaj, a nie na `set()`
+ * w `saveOrder`, który nadpisałby cudze zamówienie. Dokument zamówienia
+ * sprawdzamy też osobno — stare numery (cztery cyfry) nie mają wpisu
+ * w `orderNumbers`.
+ */
+async function reserveOrderNumber(number: string): Promise<boolean> {
   if (usingFirestore()) {
     const db = getDb()!;
-    const ref = db.collection('counters').doc(key);
-    const sequence = await db.runTransaction(async (tx) => {
-      const snap = await tx.get(ref);
-      const current = snap.exists ? ((snap.data()?.value as number) ?? 0) : 0;
-      const next = current + 1;
-      tx.set(ref, { value: next }, { merge: true });
-      return next;
+    const lock = db.collection('orderNumbers').doc(number);
+    const order = db.collection('orders').doc(number);
+    return db.runTransaction(async (tx) => {
+      const [lockSnap, orderSnap] = await Promise.all([tx.get(lock), tx.get(order)]);
+      if (lockSnap.exists || orderSnap.exists) return false;
+      tx.set(lock, { reservedAt: new Date().toISOString() });
+      return true;
     });
-    return buildOrderNumber(date, sequence);
   }
 
   const db = await readLocal();
-  const next = (db.counters[key] ?? 0) + 1;
-  db.counters[key] = next;
-  await writeLocal(db);
-  return buildOrderNumber(date, next);
+  if (db.orders[number] || reservedLocally.has(number)) return false;
+  reservedLocally.add(number);
+  return true;
+}
+
+/**
+ * Nadaje numer ENV-RRRRMMDD-XXXX, gdzie XXXX to losowy kod. Kolizja w obrębie
+ * dnia jest mało prawdopodobna, ale możliwa, więc losujemy do skutku.
+ */
+export async function nextOrderNumber(date = new Date()): Promise<string> {
+  for (let attempt = 0; attempt < ORDER_NUMBER_ATTEMPTS; attempt += 1) {
+    const number = buildOrderNumber(date, generateOrderCode());
+    if (await reserveOrderNumber(number)) return number;
+  }
+  throw new Error('Nie udało się nadać unikalnego numeru zamówienia.');
 }
 
 /* ── Zamówienia ─────────────────────────────────────────────── */

@@ -4,17 +4,40 @@ import type { PaymentMethod, PaymentStatus, CartItem } from './types';
 /* ── Numer zamówienia (pkt 1.8) ─────────────────────────────── */
 
 /**
- * Generuje numer w formacie ENV-RRRRMMDD-XXXX, np. ENV-20260805-0147.
- * `sequence` to licznik zamówień z danego dnia (transakcyjny w Firestore).
+ * Alfabet losowego kodu na końcu numeru. Numer trafia na tytuł przelewu
+ * i bywa dyktowany przez telefon, więc wypadają znaki łatwe do pomylenia:
+ * 0 i O oraz 1 i I. Zostaje 32 znaki — tyle, ile mieści jeden bajt bez
+ * obciążenia rozkładu (256 / 32 bez reszty), a to daje ponad milion kodów
+ * na dzień.
  */
-export function buildOrderNumber(date: Date, sequence: number): string {
+const ORDER_CODE_ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+const ORDER_CODE_LENGTH = 4;
+
+/** Cztery losowe znaki z `ORDER_CODE_ALPHABET`, np. `GD4W`. Tylko po stronie serwera. */
+export function generateOrderCode(): string {
+  const bytes = new Uint8Array(ORDER_CODE_LENGTH);
+  globalThis.crypto.getRandomValues(bytes);
+  return Array.from(bytes, (b) => ORDER_CODE_ALPHABET[b % ORDER_CODE_ALPHABET.length]).join('');
+}
+
+/**
+ * Składa numer w formacie ENV-RRRRMMDD-XXXX, np. ENV-20261008-GD4W.
+ * `code` to losowy kod z `generateOrderCode()`; unikalność całego numeru
+ * zapewnia `nextOrderNumber()` w `store.ts`.
+ */
+export function buildOrderNumber(date: Date, code: string): string {
   const y = date.getFullYear();
   const m = String(date.getMonth() + 1).padStart(2, '0');
   const d = String(date.getDate()).padStart(2, '0');
-  return `ENV-${y}${m}${d}-${String(sequence).padStart(4, '0')}`;
+  return `ENV-${y}${m}${d}-${code}`;
 }
 
-export const ORDER_NUMBER_PATTERN = /^ENV-\d{8}-\d{4}$/;
+/**
+ * Zamówienia sprzed 8 października 2026 mają w końcówce cztery cyfry
+ * (kolejny numer z dnia, np. ENV-20260805-0147), nowe — cztery losowe znaki.
+ * Wzorzec przyjmuje oba, bo stare numery nadal są w bazie i na przelewach.
+ */
+export const ORDER_NUMBER_PATTERN = /^ENV-\d{8}-[A-Z0-9]{4}$/;
 
 export function isValidOrderNumber(value: string): boolean {
   return ORDER_NUMBER_PATTERN.test(value);

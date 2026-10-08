@@ -145,7 +145,7 @@ export interface OrderHistoryEntry {
 }
 
 export interface Order {
-  /** ENV-RRRRMMDD-XXXX (pkt 1.8) */
+  /** ENV-RRRRMMDD-XXXX, gdzie XXXX to losowy kod (pkt 1.8) */
   number: string;
   createdAt: string;
   updatedAt: string;

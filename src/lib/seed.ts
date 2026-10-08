@@ -74,7 +74,7 @@ export function seedOrders(): Order[] {
   /* 1. Bez nadruku, opłacone przez bramkę → pomija akceptację wizualizacji */
   const items1 = [makeItem(baseConfig({ format: 'DL', color: 'granatowy', quantity: 250 }))];
   const order1: Order = {
-    number: buildOrderNumber(new Date(daysAgo(9)), 12),
+    number: buildOrderNumber(new Date(daysAgo(9)), 'K7MQ'),
     createdAt: daysAgo(9),
     updatedAt: daysAgo(2),
     userId: DEMO_USER.uid,
@@ -154,7 +154,7 @@ export function seedOrders(): Order[] {
     ),
   ];
   const order2: Order = {
-    number: buildOrderNumber(new Date(daysAgo(3)), 4),
+    number: buildOrderNumber(new Date(daysAgo(3)), 'GD4W'),
     createdAt: daysAgo(3),
     updatedAt: daysAgo(1),
     userId: DEMO_USER.uid,
@@ -216,7 +216,7 @@ export function seedOrders(): Order[] {
     })),
   ];
   const order3: Order = {
-    number: buildOrderNumber(new Date(daysAgo(5)), 7),
+    number: buildOrderNumber(new Date(daysAgo(5)), 'UERB'),
     createdAt: daysAgo(5),
     updatedAt: daysAgo(1),
     userId: 'demo-firma',
@@ -280,7 +280,7 @@ export function seedOrders(): Order[] {
     ),
   ];
   const order4: Order = {
-    number: buildOrderNumber(now, 1),
+    number: buildOrderNumber(now, 'T8NC'),
     createdAt: daysAgo(0),
     updatedAt: daysAgo(0),
     userId: null,
