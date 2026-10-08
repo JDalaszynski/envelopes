@@ -102,6 +102,11 @@ const PAGES: { url: string; title: string; note: string }[] = [
     note: 'Voucher na kolację w kopercie: dyskrecja bez okienka adresowego, wybór między odcieniem Czerwonym a stonowanym Ciemnozielonym lub Czarnym, dwa szczyty sprzedażowe (Walentynki, sezon świąteczny).',
   },
   {
+    url: '/koperty-dla-salonow-fryzjerskich',
+    title: 'Koperty na bony do salonu fryzjerskiego',
+    note: 'Salony fryzjerskie i barber shopy: bon imienny z imieniem obdarowanego i numerem bonu na kopercie (lista imion musi być znana przed drukiem), wkładka — bon drukowany albo karta ID-1 (bon na całym arkuszu A4 nie mieści się w kopercie DL), dobór odcienia do logo — Biała Perłowa kontra Czarny i Butelkowa Zieleń.',
+  },
+  {
     url: '/koperty-dla-hoteli',
     title: 'Koperty firmowe dla hotelu — karty powitalne i vouchery pobytowe',
     note: 'Obiekty noclegowe: karta powitalna z nazwiskiem gościa drukowana bez adresu (lista z systemu rezerwacji), voucher pobytowy, zaproszenie na kolację sylwestrową, kolory pod pokój, salę galową i resort w naturze, kalendarz z sezonem wysokim.',

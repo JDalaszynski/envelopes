@@ -21,8 +21,13 @@ import {
 
 interface Props {
   shots: ShowcaseShot[];
-  /** Liczba kolumn na szerokim ekranie — decyduje o `sizes` */
-  columns: 3 | 4;
+  /**
+   * Liczba kolumn na szerokim ekranie — decyduje o `sizes`. `1` służy do
+   * pojedynczego kadru w wąskiej kolumnie treści (kontener ogranicza wtedy
+   * szerokość): w siatce trzykolumnowej jeden kadr dostawał trzecią część tej
+   * szerokości i wychodził miniaturą.
+   */
+  columns: 1 | 3 | 4;
   /** Pierwszy kadr sekcji widocznej w pierwszym ekranie ładuje się od razu */
   eager?: boolean;
   /**
@@ -42,7 +47,8 @@ interface Props {
  * kontener ma `max-width: 1200px` i `padding: 0 24px`, siatka `gap: 24px`,
  * a poniżej 720 px `.m-snap-sm` zamienia siatkę w karuzelę o karcie 62vw.
  */
-const SIZES: Record<3 | 4, string> = {
+const SIZES: Record<1 | 3 | 4, string> = {
+  1: '(max-width: 720px) 62vw, 320px',
   4: '(max-width: 720px) 62vw, (max-width: 900px) calc(50vw - 36px), (max-width: 1248px) calc(25vw - 30px), 270px',
   3: '(max-width: 720px) 62vw, (max-width: 900px) calc(50vw - 36px), (max-width: 1248px) calc(33.3vw - 32px), 368px',
 };

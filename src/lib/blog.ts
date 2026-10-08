@@ -2736,6 +2736,8 @@ const POSTS: BlogPost[] = [
     lead: 'Koperta ozdobna na voucher to prawie zawsze format DL. Trudniejszy jest kolor — jak dobrać odcień do branży i okazji oraz kiedy wybrać perłę lub metalik.',
     category: 'Poradniki',
     date: '2026-09-10',
+    /* Akapit o branżach opisanych osobno dostał odnośnik do poz. 50 */
+    updated: '2026-10-08',
     readingMinutes: 6,
     colorId: 'zloty',
     format: 'DL',
@@ -2778,7 +2780,7 @@ const POSTS: BlogPost[] = [
         heading: 'Jaki kolor koperty na voucher pasuje do branży',
         paragraphs: [
           'Zestawienie niżej łączy branże, które najczęściej sprzedają bony, z odcieniami, które do nich pasują. Pierwszy odcień w wierszu to kierunek najbezpieczniejszy, kolejne — warianty dla marek, które chcą się wyróżnić. Te same dopasowania pokazujemy na stronach poszczególnych kolorów.',
-          'Dwie branże opisaliśmy osobno, razem z kalendarzem sezonu i kosztem serii: salony SPA na stronie [koperty na bony podarunkowe](/koperty-dla-salonow-spa), a lokale gastronomiczne na stronie [koperty na vouchery do restauracji](/koperty-dla-restauracji).',
+          'Dwie branże opisaliśmy osobno, razem z kalendarzem sezonu i kosztem serii: salony SPA na stronie [koperty na bony podarunkowe](/koperty-dla-salonow-spa), a lokale gastronomiczne na stronie [koperty na vouchery do restauracji](/koperty-dla-restauracji). Salony fryzjerskie mają osobną stronę o bonie z imieniem obdarowanego i o doborze odcienia do logo: [koperty na bony do salonu fryzjerskiego](/koperty-dla-salonow-fryzjerskich).',
         ],
         table: {
           caption: 'Dobór koloru koperty na voucher do branży',

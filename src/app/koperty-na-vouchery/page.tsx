@@ -152,7 +152,18 @@ const INDUSTRIES: { heading: string; text: ReactNode }[] = [
   },
   {
     heading: 'Salony fryzjerskie i barber shopy',
-    text: 'Bon wręczany jest przy stanowisku, do ręki, więc adresu nie potrzebuje — wystarczy logo salonu, a jeśli bon jest imienny, także imię obdarowanego. Koperta przyjmie zarówno wydruk, jak i kartę plastikową.',
+    text: (
+      <>
+        Bon wręczany jest przy stanowisku, do ręki, więc adresu nie potrzebuje — wystarczy logo
+        salonu, a jeśli bon jest imienny, także imię obdarowanego. Koperta przyjmie zarówno wydruk,
+        jak i kartę plastikową. Bon imienny z numerem na kopercie i wybór między perłą a odcieniami
+        ciemnymi opisaliśmy na stronie{' '}
+        <Link href="/koperty-dla-salonow-fryzjerskich">
+          koperty na bony do salonu fryzjerskiego
+        </Link>
+        .
+      </>
+    ),
   },
   {
     heading: 'Restauracje fine dining, winiarnie i kawiarnie',

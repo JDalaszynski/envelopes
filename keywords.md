@@ -402,6 +402,17 @@ wprost pod cel LTV z bazy wiedzy.
 - Kalendarz publikacji zakładał wrzesień–październik pod sezon świąteczny. Strona powstała
   wcześniej **świadomie**: domena startuje od zera, a strona potrzebuje 3–6 miesięcy
   dojrzewania w indeksie — publikacja we wrześniu oznaczałaby stratę pierwszego sezonu.
+- **Wsparcie: LP branżowa `/koperty-dla-salonow-fryzjerskich` `[ISTNIEJE]`** — opublikowana
+  8 października 2026 (content-plan.md poz. 50), **właścicielka frazy `koperty na bony do
+  salonu fryzjerskiego`** oraz wariantów `koperty dla salonów fryzjerskich`, `koperty dla
+  barber shopów` i `koperta na bon do fryzjera` (żaden z nich nie miał dotąd właściciela).
+  Linkuje w górę do filara F4. Podział pracy: filar mówi, że bon wręcza się przy stanowisku
+  i adresu nie potrzebuje; LP rozstrzyga, **jak bon wygląda w rękach klienta salonu** — bon
+  imienny z numerem w trzeciej linii, wkładka (wydruk albo karta ID-1) i odcień dobrany do logo (Biała Perłowa kontra Czarny
+  i Butelkowa Zieleń). Od poz. 24 odróżnia ją tryb: strona sprzedażowa, nie poradnik wręczania.
+  Bez kalendarza sezonowego — baza wiedzy nie podaje szczytu sprzedaży tej branży. Fraza
+  `koperty na bony podarunkowe` zostaje przy `/koperty-dla-salonow-spa` i nie wchodzi do
+  nagłówków tej strony.
 
 ---
 

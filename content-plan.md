@@ -28,7 +28,7 @@ filarów, bo to on dojrzewa najdłużej.
 3–6 treści wspierających. Publikacja bez dołożenia linków zwrotnych na stronach istniejących
 jest niekompletna.
 
-**Zamknięcie pozycji:** data w `PAGE_UPDATED` (`src/app/sitemap.ts`) i — po wdrożeniu —
+**Zamknięcie pozycji:** data w `PAGE_UPDATED` (`src/lib/page-updated.ts`) i — po wdrożeniu —
 zgłoszenie adresu przez `npm run indexnow`. Dotyczy każdej nowej trasy, każdego nowego wpisu
 i każdej istotnej aktualizacji istniejącej strony. Bez tego Bing dowie się o publikacji za
 kilka tygodni, a razem z nim ChatGPT Search i Copilot (brief agenta, pkt 5.7).
@@ -297,7 +297,7 @@ i pod jakim warunkiem — w tabeli „Rezerwa warunkowa".
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 42 | Koperty na zaproszenia ślubne — poradnik doboru (wiersz i status w Fazie 4) | Supporting article | koperty na zaproszenia ślubne | RUCH | Para młoda | poz. 41 | Przeniesiona z Fazy 4 jako pierwsza w tygodniu: odblokowuje poz. 64 (LP dla wedding plannerów) i domyka klaster K9 po poz. 41, 43 i 44. Persona zawężona do pary młodej — zob. wiersz 42 w Fazie 4 | [ ] |
 | 49 | Złoty — tymczasowy brak w magazynie w treściach i w koszyku — `/koperty/zloty` oraz strony polecające ten odcień | Aktualizacja | `złote koperty dl` (bez zmiany; właściciel `/koperty/zloty`) | KONWERSJA | Każdy, kto trafia na odcień Złoty | F5 `/` | **Źródło:** zmiana z 24 września 2026 (`outOfStock: ['DL']`). **Wynik protokołu:** nowa strona zbędna, wszystko dzieje się na istniejących. **Luka:** status zna wyłącznie konfigurator (`StepColor`, `Configurator`). Strona `/koperty/zloty` nie mówi o nim nic, a `AddColorToCart` dodaje złote koperty do koszyka z pominięciem konfiguratora. Strony polecające Złoty bez statusu: `/`, `/koperty-na-pieniadze`, `/koperty-premium`, `/koperty-dla-hoteli`, `/koperty-dla-agencji-eventowych`, `/koperty-na-certyfikaty`. **Zakres:** zdanie o statusie czytane z katalogu (znika razem ze statusem), wyłączony przycisk na stronie koloru, przegląd sześciu stron polecających. Strona koloru zostaje w indeksie — fraza nie traci właściciela. Termin powrotu do magazynu od właściciela, jeśli jest znany | [ ] |
-| 50 | Koperty na bony do salonu fryzjerskiego — `/koperty-dla-salonow-fryzjerskich` | Supporting LP | koperty na bony do salonu fryzjerskiego | KONWERSJA | Salony fryzjerskie, barber shopy | F4 | **Źródło:** `knowledge-base.md` pkt 2, profil 14. **`grep`:** fraza i warianty (`koperty dla salonów fryzjerskich`, `koperty dla barber shopów`) bez właściciela; branża ma wyłącznie kartę w F4 i jest bohaterem okładki poz. 24. **Różnica intencji:** F4 mówi, że bon wręcza się przy stanowisku i adresu nie potrzebuje; LP rozstrzyga **jak ten bon wygląda w rękach klienta salonu** — bon imienny (zakres `imiona`), wkładka (wydruk albo karta ID-1) oraz perła kontra odcienie ciemne. Od poz. 24 różni ją to, że jest stroną sprzedażową, a nie poradnikiem wręczania; od poz. 19 i 22 — brak zabiegu i procedury, którą obdarowany musi zrozumieć. Kadr: `biala-perlowa-koperta-dl-nadruk-logo-salonu-fryzjerskiego` (jedyny z tej branży) | [ ] |
+| 50 | Koperty na bony do salonu fryzjerskiego — `/koperty-dla-salonow-fryzjerskich` | Supporting LP | koperty na bony do salonu fryzjerskiego | KONWERSJA | Salony fryzjerskie, barber shopy | F4 | **Wykonane 8 października 2026** (zakres wdrożenia i decyzje — w dzienniku). **Źródło:** `knowledge-base.md` pkt 2, profil 14. **`grep`:** fraza i warianty (`koperty dla salonów fryzjerskich`, `koperty dla barber shopów`) bez właściciela; branża ma wyłącznie kartę w F4 i jest bohaterem okładki poz. 24. **Różnica intencji:** F4 mówi, że bon wręcza się przy stanowisku i adresu nie potrzebuje; LP rozstrzyga **jak ten bon wygląda w rękach klienta salonu** — bon imienny (zakres `imiona`), wkładka (wydruk albo karta ID-1) oraz perła kontra odcienie ciemne. Od poz. 24 różni ją to, że jest stroną sprzedażową, a nie poradnikiem wręczania; od poz. 19 i 22 — brak zabiegu i procedury, którą obdarowany musi zrozumieć. Kadr: `biala-perlowa-koperta-dl-nadruk-logo-salonu-fryzjerskiego` (jedyny z tej branży) | [x] |
 | 51 | Koperty na karnety fitness — `/koperty-dla-klubow-fitness` | Supporting LP | koperty na karnety fitness | KONWERSJA | Kluby fitness, studia jogi i pilatesu | F4 | **Źródło:** `knowledge-base.md` pkt 2, profil 16. **`grep`:** fraza i warianty (`koperty dla klubów fitness`, `koperty na karnety`) bez właściciela; branża ma jedną kartę w F4 (karnet VIP i pakiet treningów personalnych sprzedawane w recepcji). **Różnica intencji:** F4 odpowiada „czy koperta zamieni wydruk w produkt przy ladzie"; LP — **co klub wkłada do koperty i komu ją wręcza**: karnet VIP, pakiet treningów personalnych imienny (zakres `imiona`), seria dla recepcji. Bez kalendarza sezonowego — baza wiedzy nie podaje szczytu sprzedaży tej branży. Kadr: brak aranżacyjnego, próbki katalogowe z polem nadruku | [ ] |
 
 ### Tydzień 14 (12–16 października)
@@ -412,6 +412,92 @@ nie liczą się do kadencji czterech pozycji tygodniowo i nie mają filara.
 ---
 
 ## Dziennik wdrożeń
+
+### 8 października 2026 — poz. 50: `/koperty-dla-salonow-fryzjerskich` · pierwsza LP Fazy 5
+
+**Piąta LP voucherowa pod filarem F4** — po hotelach (poz. 18), SPA (poz. 19), klinikach (poz. 22)
+i restauracjach (poz. 23). Celuje we frazę główną **`koperty na bony do salonu fryzjerskiego`**
+i warianty `koperty dla salonów fryzjerskich` oraz `koperty dla barber shopów`.
+
+**Protokół antykanibalizacyjny (pkt 8 briefu).** `grep` po frazie i wariantach w `src/`,
+`keywords.md`, `knowledge-base.md` i planie: żadnego właściciela. Branża występuje w czterech
+miejscach, żadne nie jest stroną o niej: karta „Salony fryzjerskie i barber shopy" na F4, wiersz
+„Salon fryzjerski i kosmetyczny" w tabeli doboru koloru poz. 20, karta „Salony fryzjerskie i studia
+beauty" na `/koperty/biala-perlowa` oraz okładka poz. 24 (ten sam kadr). **Różnica intencji:** F4
+mówi, że bon wręcza się przy stanowisku i adresu nie potrzebuje; strona rozstrzyga, **jak bon
+wygląda w rękach klienta salonu** — bon imienny, wkładka i odcień dobrany do logo. Od poz. 24
+różni ją tryb (strona sprzedażowa, nie poradnik wręczania), od poz. 19 i 22 — brak zabiegu
+i procedury do zrozumienia. Fraza `koperty na bony podarunkowe` zostaje przy poz. 19 i nie wchodzi
+do nagłówków.
+
+**Oś strony i decyzje przy pisaniu.**
+- **Bon imienny z ograniczeniem powiedzianym wprost:** imię musi być znane przed drukiem, bo termin
+  liczymy od akceptacji wizualizacji — koperta z imieniem nie powstaje na prośbę klienta, który
+  kupuje bon przy kasie. Takie bony salon pakuje w kopertę z samym logo. Argument za drukiem zamiast
+  pisma ręcznego jest z kodu: na perle tusz schnie wolniej, na czerni długopis nie zostawia śladu
+  (strony kolorów Biała Perłowa i Czarny). Trzecia linia nadruku mieści numer bonu albo dedykację
+  (`PERSONALIZATION_NAME_COLUMNS`).
+- **Wkładka:** tabela czterech wkładek liczona przez `fitsInFormat()` — bon drukowany, karta ID-1,
+  wizytówka i bon na całym A4 (granica formatu napisana wprost, jak w poz. 27). Pełna tabela
+  dziesięciu wkładek zostaje na F3.
+- **Kolor:** perła kontra odcienie ciemne rozstrzyga logo, nie gust — znak wielobarwny albo ciemny
+  na Białej Perłowej, znak jasny na Czarnym albo Butelkowej Zieleni. Biała Perłowa ma jedyny realny
+  kadr z branży (z podpisem „przykładowy nadruk"), ciemne to próbki katalogowe z polem nadruku.
+  Złotego strona nie poleca (`outOfStock`). Różowa z tabeli poz. 20 nie weszła — jedno zdjęcie,
+  jeden kierunek jasny.
+- **Koszt:** tabela cen jednostkowych (gładka, z logo, z logo i imieniem) z minimum i czasem
+  wysyłki; **bez macierzy nakładów** — ta należy do F4 i dublowanie jej byłoby szablonem poz. 23
+  z podmienioną branżą (doorway, pkt 4.3).
+- **Zamknięcie koperty:** jedno zdanie (przód na imię, logo na zamknięciu) i odnośnik do
+  `/koperty-z-nadrukiem#cena`; bez ceny i bez CTA z preselekcją zamknięcia, bo `ConfigureLink` nie
+  wystawia `?zamkniecie=1` (konfigurator je czyta). Poz. 54 zostaje w zakresie pięciu istniejących
+  stron.
+- **Bez własnego `FAQPage`** (jak poz. 17–26): `VOUCHER_FAQ_ITEMS` na F4 pokrywa imię obdarowanego,
+  terminy i kilka kolorów. **Bez kalendarza sezonowego** — baza wiedzy nie podaje szczytu tej
+  branży (nagłówek Fazy 5). Bez klientów, realizacji i faktury VAT (pkt 4.1, 3.2).
+
+**Metadane.** `title` 51 znaków z sufiksem. `description` **151 znaków**, forma „Państwo", fraza
+w pełnej postaci, dwa konkrety (minimum nadruku i imię obdarowanego), wezwanie w drugim zdaniu;
+`og:description` równe `description`. Liczba z `DEFAULT_PRICING.moqWithPrint` — przy zmianie
+progu zmierzyć długość ponownie (zapas do górnej granicy to 4 znaki).
+
+**CTA.** Dziewięć odnośników, wszystkie `format=DL` z kolorem i `nadruk=1`: sześć z Białą Perłową
+(hero, kadr perły, sekcja koloru, koszt, finał i `StickyCta`), jeden z Białą Perłową i
+`zakres=imiona` (sekcja bonu imiennego) oraz po jednym dla Czarnego i Butelkowej Zieleni z próbek.
+Po kliknięciu wariantu imiennego konfigurator otwiera krok nadruku z Białą Perłową
+i personalizacją, 7,56 zł/szt. — zgodnie z tabelą.
+
+**Linkowanie w obie strony.**
+- **Do LP (5 odnośników):** rejestr `INDUSTRY_PAGES` (dziesiąta pozycja sekcji „Dla kogo
+  pracujemy" na `/`, anchor równy frazie głównej), karta „Salony fryzjerskie i barber shopy" na F4
+  (karta zmieniona z tekstu na element z odnośnikiem), karta „Salony fryzjerskie i studia beauty"
+  na `/koperty/biala-perlowa`, karta „Studia tatuażu i barbershopy" na `/koperty/czarny`
+  (**decyzja do przeglądu:** karta jest wspólna dla dwóch branż, więc gdy powstanie poz. 67, trzeba
+  rozstrzygnąć, dokąd ma prowadzić) oraz akapit o branżach opisanych osobno w poz. 20 (`updated`
+  wpisu podbite).
+- **Z LP:** F4 (okruszki i sekcja kosztu), F2, F1 (`#cena`), F3, `/koperty/biala-perlowa`,
+  `/koperty/czarny`, `/koperty/ciemnozielony` i poradnik poz. 16.
+- Strona `/koperty/ciemnozielony` odnośnika nie dostała — nie ma tam karty o tej branży.
+
+**Zmiana we wspólnym komponencie.** `ShowcaseGrid` przyjmuje `columns={1}` (dotąd 3 albo 4);
+pojedynczy kadr w siatce trzykolumnowej dostawał trzecią część szerokości kontenera. **Wada
+istniejąca na ośmiu stronach** — `/koperty-dla-salonow-spa`, `-restauracji`, `-hoteli`, `-klinik`,
+`-kancelarii`, `-biur-rachunkowych`, `-nieruchomosci` i `/koperty-na-pieniadze`: kadr ma tam ok.
+91 px szerokości (zmierzone na `/koperty-dla-restauracji`). Poza zakresem tej pozycji.
+
+**Rejestry.** `PAGE_UPDATED`: nowa trasa, `/`, `/koperty-na-vouchery`, `/koperty/biala-perlowa`
+i `/koperty/czarny` na 2026-10-08. `sitemap.ts` (`page()` + `PAGE_IMAGES`: kadr perły i dwie próbki
+katalogowe), `llms.txt`, karta OG `public/images/og/koperty-dla-salonow-fryzjerskich.jpg`
+(`scripts/og-card.mjs`, bez kwot), `keywords.md` (K7). W legendzie planu poprawiona ścieżka
+`PAGE_UPDATED` — moduł mieszka w `src/lib/page-updated.ts`, nie w `sitemap.ts`.
+
+**Weryfikacja.** `npm run typecheck` i `npm run build` bez błędów, 89/89 stron, trasa statyczna.
+Ze zbudowanego HTML-u: jeden `<h1>`, pięć `<h2>`, `ItemPage` z `mainEntity` filara i
+`dateModified` 2026-10-08, `BreadcrumbList`, brak formy „Ty", wykrzykników, faktury VAT i zwrotów
+z czarnej listy, trzy zdjęcia z altem. W przeglądarce: desktop i 375 px bez przewijania
+poziomego, odnośniki zwrotne obecne w HTML-u pięciu stron, rejestr na `/` renderuje dziesięć
+pozycji, konsola bez błędów strony. **Czego nie sprawdzono:** produkcji (wdrożenia jeszcze nie
+było) i zachowania wyników wyszukiwania. **Do wykonania po wdrożeniu:** `npm run indexnow`.
 
 ### 8 października 2026 — opisy meta pięciu filarów i porządek w `keywords`
 

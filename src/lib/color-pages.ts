@@ -190,6 +190,10 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
         {
           name: 'Studia tatuażu i barbershopy',
           text: 'Vouchery na sesję i karty podarunkowe. To branża, w której czerń jest kolorem podstawowym identyfikacji, a bon w białej kopercie wygląda jak rachunek.',
+          link: {
+            href: '/koperty-dla-salonow-fryzjerskich',
+            anchor: 'Koperty na bony do salonu fryzjerskiego',
+          },
         },
         {
           name: 'Marki modowe i sklepy premium',
@@ -1844,6 +1848,10 @@ export const COLOR_PAGES: Record<string, ColorPageContent> = {
         {
           name: 'Salony fryzjerskie i studia beauty',
           text: 'Bony na zabiegi i karty lojalnościowe. Kadr wyżej pokazuje nadruk w jednym kolorze na tym papierze — miedziany znak salonu na perłowej bieli.',
+          link: {
+            href: '/koperty-dla-salonow-fryzjerskich',
+            anchor: 'Koperty na bony do salonu fryzjerskiego',
+          },
         },
         {
           name: 'Firmy detailingowe i serwisy pojazdów premium',

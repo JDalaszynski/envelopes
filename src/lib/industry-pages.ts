@@ -95,4 +95,10 @@ export const INDUSTRY_PAGES: IndustryPage[] = [
     anchor: 'koperty na vouchery do restauracji',
     text: 'Voucher na kolację, który ma wyglądać jak prezent, a nie jak rachunek, i dwa szczyty sprzedaży w roku.',
   },
+  {
+    path: '/koperty-dla-salonow-fryzjerskich',
+    branch: 'Salony fryzjerskie i barber shopy',
+    anchor: 'koperty na bony do salonu fryzjerskiego',
+    text: 'Bon z imieniem obdarowanego i numerem na kopercie, wkładka drukowana albo karta oraz wybór między perłą a odcieniami ciemnymi.',
+  },
 ];

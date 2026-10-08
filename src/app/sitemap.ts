@@ -123,6 +123,17 @@ const PAGE_IMAGES: Record<string, string[]> = {
       .filter((color) => color?.images?.DL)
       .map((color) => abs(color.images!.DL!)),
   ],
+  /* Supporting LP poz. 50 — jedyny realny kadr aranżacyjny z tej branży (Biała
+     Perłowa, znak salonu fryzjerskiego) plus dwie próbki katalogowe odcieni
+     ciemnych z zaznaczonym polem nadruku. Strona renderuje je przez
+     `EnvelopePlaceholder` z `hasPrint`, więc do sitemapy idą `printImages`. */
+  '/koperty-dla-salonow-fryzjerskich': [
+    ...shotUrls([shotByFile('biala-perlowa-koperta-dl-nadruk-logo-salonu-fryzjerskiego')]),
+    ...['czarny', 'ciemnozielony']
+      .map((id) => COLOR_MAP[id])
+      .filter((color) => color?.printImages?.DL)
+      .map((color) => abs(color.printImages!.DL!)),
+  ],
   /* Supporting LP poz. 18 — kadr personalizacji imiennej przy karcie powitalnej
      (kadru z logo hotelu w repozytorium nie ma) plus próbki katalogowe pięciu
      odcieni z trzech kierunków kolorystycznych tej strony. */
@@ -271,6 +282,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     page('/koperty-dla-salonow-spa', 'monthly', 0.8),
     /* Supporting LP pod F4 — koperty dla restauracji (content-plan.md poz. 23) */
     page('/koperty-dla-restauracji', 'monthly', 0.8),
+    /* Supporting LP pod F4 — koperty na bony do salonu fryzjerskiego (content-plan.md poz. 50) */
+    page('/koperty-dla-salonow-fryzjerskich', 'monthly', 0.8),
     /* Supporting LP pod F1 — koperty dla kancelarii (content-plan.md poz. 17) */
     page('/koperty-dla-kancelarii', 'monthly', 0.8),
     /* Supporting LP pod F4 — koperty firmowe dla hotelu (content-plan.md poz. 18) */
