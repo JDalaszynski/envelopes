@@ -4,8 +4,10 @@ Plan produkcji landing page'y i wpisów pod cele SEO/GEO. Prowadzi go agent
 `seo-geo-strategist` (`.claude/agents/seo-geo-strategist.md`) w oparciu o klastry
 z [keywords.md](keywords.md) i profil klienta z [knowledge-base.md](knowledge-base.md).
 
-**Kadencja:** ~4 pozycje tygodniowo (LP + wpisy + aktualizacje łącznie).
-**Horyzont planu:** 12 tygodni · 48 pozycji.
+**Kadencja:** ~4 pozycje tygodniowo (LP + wpisy + aktualizacje łącznie). W Fazie 5 realnie 3 —
+uzasadnienie w jej nagłówku.
+**Horyzont planu:** 20 tygodni · 70 pozycji — Fazy 0–4 (tygodnie 1–12, 48 pozycji) i Faza 5
+(tygodnie 13–20, 22 nowe pozycje; dopisana 2 października 2026, bez publikacji).
 **Punkt startowy:** domena bez historii — pierwsze pozycje w wynikach spodziewane po 3–6 miesiącach
 od publikacji. Kolejność faz jest podporządkowana temu opóźnieniu: najpierw powstaje szkielet
 filarów, bo to on dojrzewa najdłużej.
@@ -221,9 +223,9 @@ z **preselekcją koloru**.
 | # | Tytuł / URL | Format | Główna fraza | Cel | Persona / Branża | Filar | Uwagi (antykanibalizacja) | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 41 | Koperty na zaproszenia — jak dobrać kopertę DL — `/blog/koperty-na-zaproszenia-jak-dobrac-koperte-dl` | Supporting article | koperty na zaproszenia | RUCH | Eventy, ślub | F3 | **Format zmieniony z `Aktualizacja` na `Supporting article` 15 sierpnia 2026** — wpis startowy usunięty, fraza `koperty na zaproszenia` jest dziś **bez właściciela**, więc treść powstaje od zera z linkiem w górę do F3. Bez CTA zakupowego na C6/K4, konwersją jest zapis na powiadomienie. **Tabeli dopasowań nie dublować** — stoi na F3; wpis zostaje przy doborze koperty do zaproszenia. **Uwaga dopisana 15 września 2026, po publikacji poz. 25:** wpis zaczyna się od **wkładki**, nie od nadawcy — „mam zaproszenie o takim wymiarze, jakiej koperty potrzebuję". Cztery rzeczy należą już do poz. 25 i tu nie wracają: fale kampanii zapraszającej, nakład liczony listą gości, dobór odcienia do charakteru wydarzenia i tabela materiałów eventowych. Fraza `koperty na zaproszenia firmowe` ma właściciela w poz. 25 i nie wchodzi do `keywords` tego wpisu **Wykonane 24 września 2026.** Oś wpisu: **jak zaproszenie o danym wymiarze leży w kopercie DL** — wymiar graniczny 105 × 215 mm, pułapka nazwy „DL” (karta 10 × 21 cm kontra koperta), tabela siedmiu wymiarów z cenników drukarni z kolumną luzu (wypełnia kopertę / przesuwa się / nie wejdzie), karta A6, kwadrat i A5, pomiar zaproszenia z ozdobami, wymiar do zamówienia w drukarni i sposób wkładania. Zapisu na powiadomienie nadal nie ma w kodzie — właściciel zaproszenia kwadratowego dostaje formularz kontaktowy, jak w poz. 25. CTA prowadzi wyłącznie do DL. Tytuł z planu zaczynał się od „Jak dobrać” — przepisany tak, żeby otwierała go fraza główna | [x] |
-| 42 | Koperty na zaproszenia ślubne — poradnik doboru | Supporting article | koperty na zaproszenia ślubne | RUCH | Para młoda, wedding planner | poz. 41 | Inna persona i inny słownik niż poz. 41 — to jedyne, co uzasadnia osobny URL. **Uwaga przepisana 15 września 2026:** rozgraniczenie „firmowe kontra ślubne" nie przebiega już między poz. 41 a 42, bo wariant firmowy wyszedł do poz. 25. Poz. 41 jest dziś stroną **doboru koperty do wkładki**, niezależną od okazji; poz. 42 bierze wyłącznie personę ślubną (para młoda, wedding planner) i jej słownik. Zero treści B2B i zero odwołań do kampanii eventowej — te należą do poz. 25 | [ ] |
+| 42 | Koperty na zaproszenia ślubne — poradnik doboru | Supporting article | koperty na zaproszenia ślubne | RUCH | Para młoda | poz. 41 | Inna persona i inny słownik niż poz. 41 — to jedyne, co uzasadnia osobny URL. **Uwaga przepisana 15 września 2026:** rozgraniczenie „firmowe kontra ślubne" nie przebiega już między poz. 41 a 42, bo wariant firmowy wyszedł do poz. 25. Poz. 41 jest dziś stroną **doboru koperty do wkładki**, niezależną od okazji; poz. 42 bierze wyłącznie personę ślubną (para młoda, wedding planner) i jej słownik. Zero treści B2B i zero odwołań do kampanii eventowej — te należą do poz. 25. **Uwaga dopisana 2 października 2026 (Faza 5):** persona zawężona do **pary młodej**; wedding planner jako klient B2B kupujący cyklicznie przechodzi do poz. 64 (LP `/koperty-dla-wedding-plannerow`). Pozycja realizowana w tygodniu 13 — poz. 64 czeka na jej publikację | [ ] |
 | 43 | Personalizowane koperty ślubne — adresy gości — `/blog/personalizowane-koperty-slubne-adresy-gosci` | Supporting article | personalizowane koperty slubne | KONWERSJA | Para młoda, wedding planner | F2 | **Jedyna pozycja ślubna z realnym CTA** — personalizacja działa dziś na DL. **Wykonane 24 września 2026.** Oś wpisu: **korzyść z adresowania zaproszeń drukiem** — co para młoda zyskuje, gdy adresy gości są drukowane z listy, a nie wypisywane ręką (czas, jednolite pismo, jeden zapis nazwisk, korekta przed drukiem, praca zespołowa z plannerem). Tytuł z planu („— adresowanie drukiem”) powtarzał H1 filara niemal słowo w słowo, więc przepisany. Dopasowanie karty do koperty zostaje przy poz. 41, dobór koperty do zaproszenia ślubnego przy poz. 42 — fraza `koperty na zaproszenia ślubne` nie wchodzi do `keywords` ani do nagłówków | [x] |
-| 44 | Koperty na pieniądze na ślub — format i kolor | Supporting article | koperty na pieniadze na slub | RUCH | Gość weselny, detal | `/koperty-na-pieniadze` | Wąska intencja okazjonalna; poz. 39 obsługuje ogólną | [ ] |
+| 44 | Koperty na pieniądze na ślub — format i kolor — `/blog/koperty-na-pieniadze-na-slub-format-i-kolor` | Supporting article | koperty na pieniadze na slub | RUCH | Gość weselny, detal | `/koperty-na-pieniadze` | Wąska intencja okazjonalna; poz. 39 obsługuje ogólną. **Wykonane 8 października 2026** (treść gotowa 2 października, data wpisu ustawiona na dzień wdrożenia). Różnica intencji wobec poz. 39: pillar sprzedaje kopertę na prezent pieniężny na dowolną okazję, wpis odpowiada gościowi, który idzie na ślub, **jak dobrać kopertę do tej uroczystości** — kartka z życzeniami obok banknotów, odcień do zaproszenia, podpis na kopercie wrzucanej do skrzynki i koszt zamówienia z dostawą. Persona: gość z jedną kopertą; para młoda zostaje przy poz. 42 i 43. Pierwszy wpis z własnym `FAQPage` — pięć pytań, których `MONEY_FAQ_ITEMS` nie zadaje (pole `faq` w `BlogPost`). Pierwsza karta w „Poradnikach” filara K8 (siatka 3 + 2), odnośnik w karcie „Wesele” i w sekcji koloru. Formaty C6 i K4 tylko ze statusem z katalogu, bez odnośnika i przycisku | [x] |
 
 ### Tydzień 12 — procesy B2B i przegląd
 
@@ -231,7 +233,166 @@ z **preselekcją koloru**.
 | 45 | Odroczony termin płatności przy zamówieniu kopert — `/blog/odroczony-termin-platnosci-przy-zamowieniu-kopert` | Supporting article | koperty odroczony termin płatności | KONWERSJA | Instytucje, jednostki budżetowe | F1 | **Wykonane 26 września 2026.** Rozbraja barierę rozliczeniową jednostek budżetowych (odroczony termin 14 dni bez przedpłaty). Bez eksponowania faktury VAT jako zalety (standard B2B, a nie hasło reklamowe); treść o pozostałych płatnościach w pełni spójna z konfiguracją bramki i brakiem pobrania. Piąta karta w „Poradnikach” filara F1 `/koperty-z-nadrukiem` i odnośnik w sekcji rozliczenia | [x] |
 | 46 | Dlaczego koperty z nadrukiem są od 10 sztuk — `/blog/dlaczego-koperty-z-nadrukiem-od-10-sztuk` | Supporting article | koperty z nadrukiem od 10 sztuk | GEO | Małe firmy, pierwszy zakup | F1 | **Wykonane 14 września 2026, wyprzedzająco z tygodnia 12.** Odpowiedź na realną obiekcję; F1 podaje próg jako parametr (tytuł, pasek faktów, wiersz specyfikacji, pytanie w `PRINT_FAQ_ITEMS`), wpis uzasadnia go pracą przygotowawczą i podaje wyjścia dla nakładu mniejszego niż minimum. Zero kwot — koszt krótkiej serii należy do poz. 9 | [x] |
 | 47 | ~~Realizacja: 3 000 kopert DL dla kancelarii~~ | Supporting article | koperty dla kancelarii | AUTORYTET | Kancelarie | `/koperty-dla-kancelarii` | **Wstrzymane 15 sierpnia 2026 — brak realizacji do opisania.** Wpis startowy opisywał klienta, jego problem z poprzednim dostawcą i efekt wdrożenia; właściciel potwierdził, że przykład był wymyślony, więc został usunięty. Pozycja wraca do planu **dopiero wtedy, gdy powstanie realne zamówienie**, na które właściciel da zgodę i zdjęcia. Do tego czasu autorytet w klastrze kancelaryjnym buduje wyłącznie LP z poz. 17 | [—] |
-| 48 | Przegląd kwartalny: audyt kanibalizacji i aktualizacja map | Aktualizacja | — | — | — | — | Przegląd `keywords.md` i `content-plan.md`, weryfikacja pozycji, kwalifikacja treści do przepisania lub scalenia | [ ] |
+| 48 | Przegląd kwartalny: audyt kanibalizacji i aktualizacja map | Aktualizacja | — | — | — | — | Przegląd `keywords.md` i `content-plan.md`, weryfikacja pozycji, kwalifikacja treści do przepisania lub scalenia. **Przeniesiona 2 października 2026 do tygodnia 18 (Faza 5)** — po ok. trzech miesiącach danych (GA4 i Search Console zbierają od 16 sierpnia). Zakres rozszerzony o ręczny audyt cytowań w modelach (brief pkt 11) i o decyzję w sprawie pozycji ◊ z tygodnia 19 | [ ] |
+
+---
+
+## Faza 5 · Branże z backlogu, nadruk na zamknięciu i domknięcie klastrów (tydzień 13–20)
+
+**Dopisana 2 października 2026. Nic w tej fazie nie zostało opublikowane** — to wyłącznie plan.
+Kandydaci pochodzą z `knowledge-base.md` (22 profile klientów, kierunki rozwoju) i `keywords.md`
+(klastry K1–K9 i sekcja „Luki w bazie"). Każdy przeszedł protokół z pkt 8 briefu: `grep` po
+frazie głównej w `src/lib/blog.ts`, `src/app/`, `content-plan.md` i `keywords.md`, a potem
+nazwanie różnicy **intencji** wobec najbliższej istniejącej strony. Wynik jest w kolumnie
+„Uwagi" każdej pozycji. Kandydaci, którzy protokołu nie przeszli, stoją niżej z powodem.
+
+**Kadencja: 3 pozycje tygodniowo, nie 4.** Faza ma 24 pozycje w 8 tygodniach: 22 nowe
+(11 LP branżowych, 4 wpisy, 7 aktualizacji) plus poz. 42 i 48 przeniesione z Fazy 4. To wynik
+protokołu, nie niedoboru pracy: brief (pkt 8) przedkłada czystość mapy fraz nad tempo. Pozycje
+powyżej tej liczby nie miałyby nazwanej różnicy intencji, a „czwarta pozycja" z szablonu
+istniejącej strony i podmienionej okazji jest właśnie doorway page z pkt 4.3. Tygodnie 13–15
+mają po cztery pozycje, tydzień 20 jedną i bufor na wyniki poz. 48. Co mogłoby wypełnić luki
+i pod jakim warunkiem — w tabeli „Rezerwa warunkowa".
+
+**Dlaczego ta kolejność.**
+1. **Najpierw to, co dziś psuje konwersję** (poz. 49): strona `/koperty/zloty` pozwala dodać
+   do koszyka odcień z tymczasowym brakiem w magazynie.
+2. **LP voucherowe przed grudniem** (tygodnie 13–15). `keywords.md` K7 opisuje zamówienia
+   w klastrze jako sezonowe (Dzień Matki, Walentynki, Boże Narodzenie), a domena potrzebuje
+   3–6 miesięcy dojrzewania — te same przesłanki, które przesunęły poz. 19 i 23 przed poz. 17.
+   Baza wiedzy nie podaje szczytu sprzedaży dla żadnej z nowych branż osobno, więc **żadna LP
+   nie zakłada własnej sezonowości bez źródła**.
+3. **Nadruk na zamknięciu** (poz. 54, 58, 61, 62). Usługa działa od 23 września 2026, a opisują
+   ją tylko `/`, F1 i F2. Filary F3, F4, K6, K8 i wszystkie dziewięć LP branżowych jej nie znają
+   (`grep` po `zamknięci` w `src/app/*/page.tsx`; jedyne trafienie w poz. 21 to „zamknięcie
+   roku"). Cztery aktualizacje zamiast dziewiętnastu osobnych poprawek, pogrupowane
+   według czytelnika.
+4. **Przegląd poz. 48 w tygodniu 18**, po ok. trzech miesiącach danych. Pozycje ◊ z tygodnia 19
+   mają najsłabsze uzasadnienie popytu i wchodzą dopiero po nim.
+
+**Okno kalendarzowe (orientacyjne).** Tydzień 13: 5–9 października · 14: 12–16 · 15: 19–23 ·
+16: 26–30 · 17: 2–6 listopada · 18: 9–13 · 19: 16–20 · 20: 23–27.
+
+**Zasady wspólne dla każdej LP z tej fazy** (nie powtarzam ich w wierszach):
+- **Kadr.** Treść budujemy wokół zdjęcia, które istnieje (brief pkt 3.3). Gdy brakuje kadru
+  aranżacyjnego, bierzemy próbki katalogowe z polem nadruku, jak przy poz. 26. Nadruki na
+  kadrach są przykładowe (`showcase.ts`) — podpis „przykładowy nadruk", nigdy „nasza realizacja".
+- **Złoty.** Do czasu zniknięcia `outOfStock` żadna strona nie poleca Złotego jako odcienia do
+  zamówienia; status czyta się z `isColorOutOfStock()`, a zdanie o nim jest warunkowe.
+- **Formaty.** CTA prowadzi wyłącznie do DL, z preselekcją koloru i kroku nadruku. C6 i K4 tylko
+  ze statusem z katalogu, bez odnośnika i przycisku (pkt 4.2).
+- **Ton.** Pkt 10.1: parametry w tabelach, jeden na akapit w prozie, język branży zamiast
+  języka poligrafii. Bez klientów, liczby realizacji i opinii (pkt 4.1).
+- **Komplet publikacji LP** (pkt 5.2): trasa z metadanymi i JSON-LD, wpis w `INDUSTRY_PAGES`
+  (sekcja „Dla kogo pracujemy" na `/`), karta „Dla kogo" na właściwym filarze z anchorem równym
+  frazie głównej, odnośniki ze stron kolorów polecających ten odcień, wpis w `llms.txt`,
+  w `sitemap.ts` (`page()` i `PAGE_IMAGES`) i w `PAGE_UPDATED`, karta OG
+  (`scripts/og-card.mjs`), rejestr fraz w `keywords.md` i — po wdrożeniu — `npm run indexnow`.
+
+### Tydzień 13 (5–9 października)
+
+| # | Tytuł / URL | Format | Główna fraza | Cel | Persona / Branża | Filar | Uwagi (antykanibalizacja) | Status |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 42 | Koperty na zaproszenia ślubne — poradnik doboru (wiersz i status w Fazie 4) | Supporting article | koperty na zaproszenia ślubne | RUCH | Para młoda | poz. 41 | Przeniesiona z Fazy 4 jako pierwsza w tygodniu: odblokowuje poz. 64 (LP dla wedding plannerów) i domyka klaster K9 po poz. 41, 43 i 44. Persona zawężona do pary młodej — zob. wiersz 42 w Fazie 4 | [ ] |
+| 49 | Złoty — tymczasowy brak w magazynie w treściach i w koszyku — `/koperty/zloty` oraz strony polecające ten odcień | Aktualizacja | `złote koperty dl` (bez zmiany; właściciel `/koperty/zloty`) | KONWERSJA | Każdy, kto trafia na odcień Złoty | F5 `/` | **Źródło:** zmiana z 24 września 2026 (`outOfStock: ['DL']`). **Wynik protokołu:** nowa strona zbędna, wszystko dzieje się na istniejących. **Luka:** status zna wyłącznie konfigurator (`StepColor`, `Configurator`). Strona `/koperty/zloty` nie mówi o nim nic, a `AddColorToCart` dodaje złote koperty do koszyka z pominięciem konfiguratora. Strony polecające Złoty bez statusu: `/`, `/koperty-na-pieniadze`, `/koperty-premium`, `/koperty-dla-hoteli`, `/koperty-dla-agencji-eventowych`, `/koperty-na-certyfikaty`. **Zakres:** zdanie o statusie czytane z katalogu (znika razem ze statusem), wyłączony przycisk na stronie koloru, przegląd sześciu stron polecających. Strona koloru zostaje w indeksie — fraza nie traci właściciela. Termin powrotu do magazynu od właściciela, jeśli jest znany | [ ] |
+| 50 | Koperty na bony do salonu fryzjerskiego — `/koperty-dla-salonow-fryzjerskich` | Supporting LP | koperty na bony do salonu fryzjerskiego | KONWERSJA | Salony fryzjerskie, barber shopy | F4 | **Źródło:** `knowledge-base.md` pkt 2, profil 14. **`grep`:** fraza i warianty (`koperty dla salonów fryzjerskich`, `koperty dla barber shopów`) bez właściciela; branża ma wyłącznie kartę w F4 i jest bohaterem okładki poz. 24. **Różnica intencji:** F4 mówi, że bon wręcza się przy stanowisku i adresu nie potrzebuje; LP rozstrzyga **jak ten bon wygląda w rękach klienta salonu** — bon imienny (zakres `imiona`), wkładka (wydruk albo karta ID-1) oraz perła kontra odcienie ciemne. Od poz. 24 różni ją to, że jest stroną sprzedażową, a nie poradnikiem wręczania; od poz. 19 i 22 — brak zabiegu i procedury, którą obdarowany musi zrozumieć. Kadr: `biala-perlowa-koperta-dl-nadruk-logo-salonu-fryzjerskiego` (jedyny z tej branży) | [ ] |
+| 51 | Koperty na karnety fitness — `/koperty-dla-klubow-fitness` | Supporting LP | koperty na karnety fitness | KONWERSJA | Kluby fitness, studia jogi i pilatesu | F4 | **Źródło:** `knowledge-base.md` pkt 2, profil 16. **`grep`:** fraza i warianty (`koperty dla klubów fitness`, `koperty na karnety`) bez właściciela; branża ma jedną kartę w F4 (karnet VIP i pakiet treningów personalnych sprzedawane w recepcji). **Różnica intencji:** F4 odpowiada „czy koperta zamieni wydruk w produkt przy ladzie"; LP — **co klub wkłada do koperty i komu ją wręcza**: karnet VIP, pakiet treningów personalnych imienny (zakres `imiona`), seria dla recepcji. Bez kalendarza sezonowego — baza wiedzy nie podaje szczytu sprzedaży tej branży. Kadr: brak aranżacyjnego, próbki katalogowe z polem nadruku | [ ] |
+
+### Tydzień 14 (12–16 października)
+
+| # | Tytuł / URL | Format | Główna fraza | Cel | Persona / Branża | Filar | Uwagi (antykanibalizacja) | Status |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 52 | Koperty dla biur podróży — `/koperty-dla-biur-podrozy` | Supporting LP | koperty na vouchery wakacyjne | KONWERSJA | Biura podróży, agencje turystyczne | F4 | **Źródło:** `knowledge-base.md` pkt 2, profil 18. **`grep`:** `koperty na vouchery wakacyjne`, `koperty na bony lotnicze`, `koperty dla biur podróży` bez właściciela; jedyne wzmianki to karta F4 i wiersz w poz. 18, gdzie biuro podróży jest **odbiorcą** oferty hotelu, nie sprzedawcą wyjazdu. **Różnica intencji:** F4 — bon, potwierdzenie rezerwacji złożone na trzy i wizytówka doradcy w jednej kopercie; LP — **komplet dokumentów podróży**: co z niego mieści się w kopercie DL (tabela liczona przez `fitsInFormat()`) i co zostaje poza nią. Od poz. 18 różni ją rola nabywcy: tam hotel sprzedaje biuru, tu biuro wręcza klientowi. Kadr: próbki katalogowe | [ ] |
+| 53 | Koperty dla teatrów i filharmonii — `/koperty-dla-teatrow-i-filharmonii` | Supporting LP | koperty na karty podarunkowe do teatru | KONWERSJA | Teatry, filharmonie, kina studyjne | F4 | **Źródło:** `knowledge-base.md` pkt 2, profil 21. **`grep`:** fraza i `koperty dla filharmonii` bez właściciela; wzmianki: karta F4, karta „Instytucje kultury i orkiestry" na `/koperty/granatowy` oraz wiersz w poz. 45. **Różnica intencji:** poz. 45 odpowiada na pytanie **rozliczenia** instytucji publicznej, LP na pytanie **co wręcza kasa**: karta podarunkowa na spektakl (wkładka ID-1 z `STANDARD_INSERTS`), karnet abonamentowy i zaproszenie na premierę, a projekt wraca przy każdym dodruku. Płatności nie powtarza — linkuje do poz. 45. Kadr: `granatowa-koperta-dl-nadruk-logo-orkiestry` (okładka poz. 16 i 45, kadr F1) z podpisem „przykładowy nadruk" | [ ] |
+| 54 | Nadruk na zamknięciu w LP bonowych i na F4 — `/koperty-dla-salonow-spa`, `/koperty-dla-restauracji`, `/koperty-dla-klinik`, `/koperty-dla-hoteli`, `/koperty-na-vouchery` | Aktualizacja | — (frazy stron bez zmian) | KONWERSJA | Właściciele usług sprzedających bon | F4 | **Źródło:** usługa z 23 września 2026. **`grep`:** `zamknięci` — 0 trafień na wszystkich pięciu stronach; konfiguracje w ich tabelach mówią „Logo na przedniej ściance". Brak nowej strony — protokół mówi „aktualizuj". **Zakres:** jeden wariant w każdej tabeli konfiguracji (nadruk na przodzie i na zamknięciu: imię obdarowanego z przodu, logo salonu z tyłu) i odnośnik do F1 po cenę. Ceny i szczegóły usługi zostają na F1. `PAGE_UPDATED` dla pięciu tras | [ ] |
+| 55 | Akceptacja wizualizacji nadruku — co sprawdzić, zanim ją Państwo zaakceptują — `/blog/akceptacja-wizualizacji-nadruku-co-sprawdzic` | Supporting article | akceptacja wizualizacji nadruku | KONWERSJA | Office manager, asystentka, marketing | F1 | **Źródło:** `knowledge-base.md` pkt 2 („Pewność i zaufanie": największa bariera to strach, że nadruk wyjdzie źle) i pkt 3 („rozbicie bariery ryzyka"). **`grep`:** fraza bez właściciela; słowo „wizualizacj" pada w `blog.ts` w ponad 80 liniach, ale zawsze jako **warunek biegu terminu** (poz. 16, 9, 8, 7), nigdy jako temat. **Różnica intencji:** F1 podaje fakt („wizualizację dostają Państwo przed drukiem"), poz. 7 mówi, jak przygotować plik **przed** zamówieniem, poz. 16 — kiedy rusza licznik. Wpis zaczyna **po złożeniu zamówienia**: co sprawdzić na wizualizacji (treść, odcień, położenie, margines, obie strony koperty), jak zgłosić uwagi i co się dzieje po poprawce. Proces z kodu: strona akceptacji ma dwie decyzje, „Akceptuję projekt" i „Zgłoś uwagi", a poprawiona wersja wraca do ponownej akceptacji. Zero cen i MOQ; arytmetyka terminu zostaje w poz. 16 | [ ] |
+
+### Tydzień 15 (19–23 października)
+
+| # | Tytuł / URL | Format | Główna fraza | Cel | Persona / Branża | Filar | Uwagi (antykanibalizacja) | Status |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 56 | Koperty dla butików i jubilerów — `/koperty-dla-butikow-i-jubilerow` | Supporting LP | koperty dla butików | KONWERSJA | Butiki odzieżowe i jubilerskie, marki premium | F2 | **Źródło:** `knowledge-base.md` pkt 2, profil 13. **`grep`:** fraza bez właściciela; pokrycie to akapity: karta „Butiki, jubilerzy i marki premium" w F2 i F3 oraz „Marki luksusowe i salony jubilerskie" w K6. **Różnica intencji:** te karty mówią, że koperta imienna jest tu normą; LP rozstrzyga **co klient butiku dostaje do ręki przy zakupie**: list powitalny z programu lojalnościowego (lista z CRM, zakres `imiona`; higiena danych zostaje w poz. 15), podziękowanie za duży zakup, voucher. Od poz. 18 (karta powitalna hotelu — ten sam mechanizm) różni ją moment wręczenia (zakup przy ladzie, nie meldunek) i źródło listy. Jubilerzy wybierają złoto, a Złoty jest niedostępny — LP poleca Białą Perłową, Ecru i Szarobrązowy (poz. 49). Kadr: próbki katalogowe | [ ] |
+| 57 | Koperty dla fotografów — `/koperty-dla-fotografow` | Supporting LP | koperty dla fotografów | RUCH | Fotografowie, twórcy wideo | F1 | **Źródło:** `knowledge-base.md` pkt 2, profil 12. **`grep`:** fraza bez właściciela; jedyna wzmianka to karta „Fotografia rodzinna i sesje noworodkowe" na `/koperty/rozowa` („Format DL mieści odbitkę 10 × 15 cm"). **Różnica intencji:** strona koloru mówi, jaki to papier; LP rozstrzyga **co wchodzi do koperty z odbitkami**: tabela odbitek liczona przez `fitsInFormat()` (10 × 15 cm mieści się, większe popularne formaty nie), voucher na sesję, logo studia. Granica formatu napisana wprost, jak w poz. 27: odbitka większa niż wnętrze DL wymaga koperty spoza oferty. Kadr: brak, próbki katalogowe | [ ] |
+| 58 | Nadruk na zamknięciu w LP dokumentowych i zaproszeniowych — `/koperty-dla-kancelarii`, `/koperty-dla-biur-rachunkowych`, `/koperty-dla-nieruchomosci`, `/koperty-dla-agencji-eventowych`, `/koperty-na-certyfikaty` | Aktualizacja | — | KONWERSJA | Kancelarie, biura rachunkowe, nieruchomości, agencje, uczelnie | F1 | **Źródło:** ta sama luka co poz. 54. **`grep`:** żadna z pięciu stron nie opisuje usługi (trafienie w poz. 21 to „zamknięcie roku"). Najmocniejszy argument usługi — **adres odbiorcy na przodzie, logo na zamknięciu** — pasuje do korespondencji dokumentowej wprost. **Zakres:** akapit lub wiersz w tabeli konfiguracji na każdej stronie i odnośnik do F1; w poz. 25 — znak wydarzenia na zamknięciu zaproszenia. Bez cen i MOQ. `PAGE_UPDATED` dla pięciu tras | [ ] |
+| 59 | Gdzie umieścić logo na kopercie — przód czy zamknięcie — `/blog/gdzie-umiescic-logo-na-kopercie-przod-czy-zamkniecie` | Supporting article | gdzie umieścić logo na kopercie | GEO | Marketing, grafik, office manager | F1 | **Źródło:** `keywords.md` K1 (nadruk na zamknięciu) i brief pkt 3.2. **`grep`:** fraza bez właściciela. **Najwyższe ryzyko kolizji w fazie:** `keywords.md` oddaje filarowi F1 frazy `nadruk na klapce koperty`, `logo na zamknięciu koperty`, `koperty z nadrukiem na klapce`. Wpis wchodzi, bo F1 podaje **fakt** (wiersz „Miejsce nadruku", pytanie w FAQ), a nie **decyzję**: co na przodzie, co na zamknięciu, kiedy obie strony, co zasłania linia klejenia i zagięcie klapki. **Warunki:** żaden nagłówek nie zawiera trzech fraz F1, zero cen, jedna tabela „układ → komu służy". Wchodzi po poz. 54 i 58, bo opis układu ma sens dopiero wtedy, gdy strony branżowe usługę już znają | [ ] |
+
+### Tydzień 16 (26–30 października)
+
+| # | Tytuł / URL | Format | Główna fraza | Cel | Persona / Branża | Filar | Uwagi (antykanibalizacja) | Status |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 60 | Zamówienie hurtowe kopert z logo — powyżej 2 000 sztuk — `/blog/zamowienie-hurtowe-kopert-z-logo-powyzej-2000-sztuk` | Supporting article | koperty hurtowo z logo | KONWERSJA | Duże firmy, działy zakupów | F1 | **Źródło:** `keywords.md` „Luki w bazie" 2 i brief pkt 7 (formularz wyceny B2B to jedna z trzech mikrokonwersji — dziś żadna treść jej nie zasila). **`grep`:** fraza bez właściciela; próg (`BULK_QUOTE_THRESHOLD`) stoi jako zdanie przy CTA w FAQ strony głównej, w F1, F2, F4, poz. 27 i na `/kontakt#wycena`. **Różnica intencji:** poz. 9 liczy koszt zamówień poniżej progu, poz. 46 uzasadnia minimum; wpis odpowiada, **jak wygląda zamówienie powyżej progu**: stała cena bez rabatów ilościowych, co wpisać w zapytaniu o wycenę (format, odcień, nakład, plik, terminy dostaw), harmonogram dostaw. Nie obiecuje rabatów ani subskrypcji (pomysły z pkt 4.A bazy wiedzy nie są ofertą). CTA prowadzi do `/kontakt#wycena`, nie do konfiguratora | [ ] |
+| 61 | Nadruk na zamknięciu w poradnikach adresowych — poz. 8, 14 i 15 | Aktualizacja | — | KONWERSJA | Office manager, sekretariat, HR | F2 | **`grep`:** wśród wpisów usługę opisują poz. 9, 7, 40, 41 i 43; poz. 8, 14 i 15 jej nie mają. Poz. 14 (wzór adresu wysyłki firmowej) zajmuje się układem koperty, więc adres nadawcy i logo na zamknięciu są jej naturalnym rozszerzeniem. **Zakres:** akapit w poz. 14 (bez zmiany tytułu i frazy), jedno zdanie w poz. 8 (personalizacja i nadruk na zamknięciu łączą się) i w poz. 15; `updated` na każdym wpisie, `PAGE_UPDATED` dla `/blog` | [ ] |
+| 62 | Nadruk na zamknięciu w poradnikach i filarach — poz. 13, 20 i 24 oraz `/koperty-dl`, `/koperty-premium` i `/koperty-na-pieniadze` | Aktualizacja | — | KONWERSJA | Zakupowiec, właściciel salonu, detal | F3, F4, K6, K8 | **`grep`:** `zamknięci` — 0 trafień w poz. 13, 20 i 24 oraz w trzech filarach. **Zakres:** poz. 13 — pełne ścianki dają miejsce na obie strony; poz. 20 — kontrast liczy się osobno dla przodu i klapki; poz. 24 — logo na zamknięciu widać w chwili otwarcia; F3 — wiersz „Miejsce nadruku" w specyfikacji; K6 — sekcja znakowania na papierach perłowych i metalicznych; K8 — jedno zdanie w karcie „Nadruk okolicznościowy" (napis z przodu, logo z tyłu). Bez cen | [ ] |
+
+### Tydzień 17 (2–6 listopada)
+
+| # | Tytuł / URL | Format | Główna fraza | Cel | Persona / Branża | Filar | Uwagi (antykanibalizacja) | Status |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 63 | Koperty dla salonów samochodowych — `/koperty-dla-salonow-samochodowych` | Supporting LP | koperty dla salonów samochodowych | KONWERSJA | Dilerzy marek premium | F1 | **Źródło:** `knowledge-base.md` pkt 2, profil 7. **`grep`:** fraza bez właściciela; jedyne pokrycie to karta F1 „Salony samochodowe" (dokumenty pojazdu i umowy leasingowe przy odbiorze auta). **Różnica intencji:** poz. 26 rozkłada transakcję nieruchomościową na pięć etapów, samochód ma **jeden moment** — odbiór auta — i **jedną okazję zaproszeniową** (premiera modelu, profil 7). LP opisuje komplet dokumentów wręczany przy odbiorze (A4 składany na trzy, werdykt z `fitsInFormat()`), a wysyłkę zaproszeń na premierę zostawia poz. 25 i linkuje do niej. Kadr: `biala-perlowa-koperta-dl-nadruk-logo-auto-detailing` — to firma detailingowa, nie dealer, więc podpis „przykładowy nadruk z branży motoryzacyjnej" i ani słowa o dealerze | [ ] |
+| 64 | Koperty dla wedding plannerów — `/koperty-dla-wedding-plannerow` | Supporting LP | koperty dla wedding plannerów | KONWERSJA | Wedding plannerzy | F2 | **Źródło:** `knowledge-base.md` pkt 2, profil 9 („masowe zakupy"); `keywords.md` K9 (pomost K9 → K7). **`grep`:** fraza bez właściciela; planner występuje w karcie F2, w poz. 43 (zatwierdzanie listy) i występował w personie poz. 42. **Warunek:** poz. 42 opublikowana i zawężona do pary młodej (wiersz poprawiony 2 października). **Różnica intencji:** poz. 42 — jak para **dobiera** kopertę do zaproszenia, poz. 43 — co para **zyskuje** z adresów drukiem; LP — **jak planner kupuje cyklicznie**: seria na parę, lista gości przekazana przez parę, logo planera na zamknięciu, vouchery prezentowe dla par (pomost do K7). Wyłącznie DL; fraza `koperty na zaproszenia ślubne` nie wchodzi do nagłówków. Kadr: „W dniu Ślubu" z podpisem „przykładowy nadruk" — czwarte użycie jedynego ślubnego zdjęcia (K8, poz. 43, poz. 44), alternatywa: kadr „Chrzest Święty" | [ ] |
+| 65 | Koperty z nadrukiem na chrzest i komunię — podziękowania dla gości — `/blog/koperty-z-nadrukiem-na-chrzest-i-komunie` | Supporting article | koperty z nadrukiem na komunię | RUCH | Rodzice organizujący przyjęcie, detal | F1 | **Źródło:** `keywords.md` K8 (komunia i chrzciny to okazje klastra) i istniejące kadry „Chrzest Święty" oraz „Dziękujemy". **`grep`:** `koperty z nadrukiem na komunię` i `koperty na chrzest` bez właściciela; okazje stoją tylko w kartach K8 (`#okazje`) i w galerii nadruków okolicznościowych na `/`. **Różnica intencji wobec poz. 44 i K8:** tam **gość** kupuje jedną kopertę na gotówkę, tu **rodzic** zamawia **serię** z napisem okolicznościowym na podziękowania — inny kupujący, inna usługa (nadruk, nie koperta gładka), inny nakład (od minimum nadruku). To nie jest szablon poz. 44 z podmienioną okazją. Fraza główna celowo bez `koperty na komunię` — ta należy do intencji gościa i zostaje w rezerwie R1. Kadry: `blekit-lupkowy-koperta-dl-nadruk-na-chrzest` (okładka poz. 41) i `matcha-koperta-dl-nadruk-podziekowania` (okładka poz. 38). Publikacja w listopadzie, żeby wpis dojrzał przed sezonem komunijnym | [ ] |
+
+### Tydzień 18 (9–13 listopada)
+
+| # | Tytuł / URL | Format | Główna fraza | Cel | Persona / Branża | Filar | Uwagi (antykanibalizacja) | Status |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 48 | Przegląd kwartalny: audyt kanibalizacji i aktualizacja map (wiersz i status w Fazie 4) | Aktualizacja | — | — | — | — | Przeniesiony z Fazy 4. Search Console i GA4 mają wtedy ok. trzech miesięcy danych. Zakres: pozycje w `keywords.md`, które z fraz z Fazy 5 mają wyświetlenia i na jakich adresach (kanibalizacja kart „Dla kogo" z LP), indeksacja nowych LP, ręczny audyt cytowań w modelach na pytania z „Luk" (brief pkt 11), decyzja w sprawie pozycji ◊ z tygodnia 19 i rezerwy R1–R4 | [ ] |
+| 66 | Własne FAQ w poz. 38, 41 i 43 — `/blog/gramatura-papieru-na-koperty`, `/blog/koperty-na-zaproszenia-jak-dobrac-koperte-dl`, `/blog/personalizowane-koperty-slubne-adresy-gosci` | Aktualizacja | — (frazy wpisów bez zmian) | GEO | Zakupowiec, grafik, para młoda | K6, F3, F2 | **Źródło:** brief pkt 5.2 (FAQ 3–6 pytań w komplecie); trzy wpisy z 24–25 września powstały przed polem `faq` w `BlogPost` (poz. 44, 8 października). **`grep`:** żaden z nich nie ma `FAQPage`. **Warunek twardy:** pytania nie powtarzają `PREMIUM_FAQ_ITEMS`, `DL_FAQ_ITEMS`, FAQ filara F2 ani `MONEY_FAQ_ITEMS` — jedno pytanie, jeden właściciel w serwisie. **Zakres:** 3–5 pytań na wpis, tych, na które wpis już odpowiada w nagłówkach i pierwszych zdaniach sekcji; `updated` na każdym, bez zmiany tytułów | [ ] |
+
+### Tydzień 19 (16–20 listopada) — pozycje ◊ po przeglądzie poz. 48
+
+> **◊ — warunek wejścia.** Trzy pozycje mają najsłabsze uzasadnienie popytu: brak fraz w eksporcie
+> Semstorm, a jedyne pokrycie to jedna karta na filarze. Wchodzą po przeglądzie poz. 48, jeśli
+> pierwsze LP z Fazy 5 są zaindeksowane i nie kanibalizują kart „Dla kogo" na filarach. Gdy
+> przegląd wskaże problem z szablonem LP, ich miejsce zajmuje jego poprawa.
+
+| # | Tytuł / URL | Format | Główna fraza | Cel | Persona / Branża | Filar | Uwagi (antykanibalizacja) | Status |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 67 | ◊ Koperty na bony do studia tatuażu — `/koperty-dla-studiow-tatuazu` | Supporting LP | koperty na bony do studia tatuażu | KONWERSJA | Salony tatuażu i piercingu | F4 | **Źródło:** `knowledge-base.md` pkt 2, profil 19 („często szukają kolorów czarnych lub nietypowych faktur"). **`grep`:** fraza bez właściciela; pokrycie to karta F4, karta Czarnego (`/koperty/czarny`, persona poz. 29) i karta Złotego („czerń na złocie"). **Różnica intencji:** strony kolorów odpowiadają „jaki to papier", LP — **bon na sesję jako pierwszy kontakt obdarowanego ze studiem** i dobór odcienia, który zapowiada estetykę miejsca (Czarny, Czerwony, Matcha, nietypowe faktury). Jedyny kadr z tej branży jest **złoty** (`zlota-koperta-dl-nadruk-logo-studia-tatuazu`) — użyć wyłącznie ze statusem odcienia albo zastąpić kadrem czarnym (`czarna-koperta-dl-nadruk-zaproszenie`) | [ ] |
+| 68 | ◊ Koperty dla galerii sztuki i domów aukcyjnych — `/koperty-dla-galerii-sztuki` | Supporting LP | koperty dla galerii sztuki | KONWERSJA | Galerie, domy aukcyjne, muzea | F1 | **Źródło:** `knowledge-base.md` pkt 2, profil 11. **`grep`:** fraza bez właściciela; pokrycie to karta F1 „Galerie sztuki i domy aukcyjne" i wzmianka o certyfikatach autentyczności kamieni w K6. **Różnica wobec poz. 27:** tam `koperty na certyfikaty` i `koperty na dyplomy` — certyfikat **ukończenia**, tu **certyfikat autentyczności dzieła** i zaproszenie na zamknięty wernisaż lub aukcję dla wąskiej, stałej listy (imienna koperta). Fraza `koperty na certyfikaty` nie wchodzi do treści ani nagłówków. Granica formatu jak w poz. 27: sztywny dokument A4 na płasko nie mieści się w DL — napisane wprost. Kadr: próbki katalogowe | [ ] |
+| 69 | ◊ Koperty na vouchery na doświadczenia i kursy — `/koperty-na-vouchery-na-doswiadczenia` | Supporting LP | koperty na vouchery na doświadczenia | KONWERSJA | Szkoły gotowania i kursy hobbystyczne, aerokluby, pola golfowe, korty, strzelnice | F4 | **Źródło:** `knowledge-base.md` pkt 2, profile 20 i 22 — **połączone w jedną stronę**, bo obie branże sprzedają to samo: voucher na usługę, której obdarowany nie zna, kupowany jako prezent. **`grep`:** fraza bez właściciela; branża 22 ma kartę w F4 (kursy baristyczne, florystyczne, ceramiczne), branża 20 (golf, korty, aerokluby, strzelnice) **nie występuje w serwisie wcale**. **Różnica wobec F4:** karta mówi, że opakowanie ogląda ktoś inny niż uczestnik; LP — **co wkłada się do koperty z takim voucherem**: voucher i opis doświadczenia jako wkładki (wymiary z `fitsInFormat()`), seria. Gdy po poz. 48 nazwa okaże się zbyt rozproszona, rozbić na dwie strony albo oddać F4 | [ ] |
+
+### Tydzień 20 (23–27 listopada)
+
+| # | Tytuł / URL | Format | Główna fraza | Cel | Persona / Branża | Filar | Uwagi (antykanibalizacja) | Status |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 70 | Audyt linkowania po Fazie 5 — filary F1, F2, F4, K6, `/` i strony kolorów | Aktualizacja | — | AUTORYTET | — | wszystkie | Brief pkt 5.4; precedens: audyt z 14 września (`/koperty-premium`, `/koperty-na-pieniadze`). Po 11 nowych LP i 4 wpisach sprawdzić: (a) odnośniki w dół z F4 — sześć nowych LP voucherowych dochodzi do czterech istniejących; karty „Dla kogo" są odnośnikami kontekstowymi, a sekcja „Poradniki" ma zostać przy 3–6 wpisach; (b) rejestr `INDUSTRY_PAGES` na `/` rośnie z **9 do 20 pozycji** — rozstrzygnąć grupowanie tematyczne albo limit, bo dwadzieścia kart w jednej sekcji przestaje być „Dla kogo"; (c) anchor równy frazie docelowej; (d) strony kolorów linkują do LP, które rekomendują ich odcień; (e) osierocone adresy w sitemapie | [ ] |
+| — | **Bufor na wyniki poz. 48** | — | — | — | — | — | Pozycje wynikające z przeglądu (przepisania, scalenia, rezerwa R1–R4) wpisuje się dopiero po nim, z numerem od 71. Bez przeglądu nie planuję ich z góry — brak danych byłby zgadywaniem | — |
+
+### Rezerwa warunkowa (poza kadencją)
+
+Kandydaci, którzy mają nazwaną różnicę intencji, ale nie mają warunku wejścia. Wchodzą do planu
+po poz. 48, jeśli warunek jest spełniony.
+
+| # | Kandydat | Źródło | Warunek wejścia |
+| --- | --- | --- | --- |
+| R1 | Koperta na pieniądze na komunię i chrzciny — dla **gościa** | `keywords.md` K8 (okazje) | Search Console pokazuje wyświetlenia poz. 44 na frazach okazjonalnych **i** powstaje różnica wobec poz. 44 inna niż podmieniona okazja (osoba obdarowana, kolor, zwyczaj). Sezon komunijny przypada na wiosnę, więc publikacja najpóźniej w lutym 2027 |
+| R2 | `koperty na slub`, `koperty weselne` | `keywords.md` K9 | Po poz. 42; fraza ma dwie intencje (zaproszenia i prezent), więc wymaga rozstrzygnięcia na danych, do której należy |
+| R3 | `koperty do umów` | `keywords.md` „Luki" 1 | Decyzja z 15 września 2026: bez właściciela do przeglądu na danych GSC — pasuje do poz. 17 i 26 jednocześnie |
+| R4 | `koperty z nadrukiem wysyłka kurierem` | `keywords.md` „Luki" 2 | Właściciel podaje przewoźnika i realny czas transportu (blokada `transitTime` w „Zależnościach"). Bez nich treść byłaby obietnicą bez pokrycia |
+
+### Kandydaci, którzy protokołu nie przeszli
+
+| Kandydat | Źródło | Wynik protokołu | Decyzja |
+| --- | --- | --- | --- |
+| `koperty z logo`, `koperty z własnym logo`, `koperty na zamówienie z nadrukiem` | `keywords.md` K1 | Przypisane do filara F1 w tabeli K1; frazy wspierające nie dostają podstron | Odrzucone — druga strona konkurowałaby z F1 |
+| `[kolor] koperty z logo` dla 18 pozostałych odcieni | `keywords.md` K5 (wzorzec) | `czarne koperty z logo` ma właściciela (`/koperty/czarny`); wszystkie 19 stron kolorów ma galerię nadruków i CTA z krokiem nadruku | Odrzucone — druga strona na ten sam odcień |
+| `koperty na listy` | `keywords.md` K3 | Decyzja w pliku: akapit w sekcji zastosowań na `/` | Odrzucone |
+| `koperta prostokątna`, `koperty prostokątne` | `keywords.md` K4 | Decyzja w pliku: akapit i wiersz „Kształt" w F3 | Odrzucone |
+| `koperty firmowe faktura vat` | `keywords.md` „Luki" 2 | Brief pkt 3.2 i `knowledge-base.md` pkt 3: faktura VAT to standard, nie argument; odroczony termin dotyczy wyłącznie instytucji (poz. 45) | Odrzucone |
+| Pytania generatywne: ile kosztuje nadruk, jaka koperta na voucher, DL a C6, ile trwa druk, logo na zamknięciu | `keywords.md` „Luki" 3 | Mają właścicieli: poz. 9 i F1, poz. 20, `DL_FAQ_ITEMS`, poz. 16 i `PRINT_FAQ_ITEMS`, FAQ F1 | Odrzucone |
+| Profile 1, 2, 3, 5, 6, 15, 17 | `knowledge-base.md` pkt 2 | LP istnieją: poz. 17, 21, 25, 22, 19, 26, 23 | Odrzucone |
+| Profile 8 i 10: inauguracje, podziękowania dla sponsorów, firmy szkoleniowe | `knowledge-base.md` pkt 2 | Poz. 27 (`koperty na certyfikaty`), poz. 45 i karty F1 i F2 pokrywają obie persony; różnicy intencji wobec poz. 27 nie da się nazwać | Odrzucone |
+| Profil 4: sylwester i zamknięte kolacje hoteli | `knowledge-base.md` pkt 2 | Poz. 18 ma kalendarz z sylwestrem i zaproszeniem na kolację | Odrzucone |
+| Wysyłki kreatywne i pakiety VIP (profil 3) | `knowledge-base.md` pkt 2 | Baza wiedzy wspomina je jednym zdaniem; nie ma scenariusza użycia koperty, który dałoby się opisać bez zmyślania (pkt 4.1) | Odrzucone |
+| Okazje K8 jako **gość** z jedną kopertą (komunia, chrzciny, święta) | `keywords.md` K8 | Treść byłaby szablonem poz. 44 z podmienioną okazją — doorway (pkt 4.3) | Odrzucone; rodzic zamawiający serię to poz. 65, resztę zob. R1 |
+| Kalendarz sprzedaży bonów | `keywords.md` K7 | Kalendarze stoją w LP (poz. 19, 22, 23, 18), arytmetyka dat w poz. 16 | Odrzucone — trzeci kalendarz powtarzałby dwa pierwsze |
+| Perła kontra barwienie w masie | `keywords.md` K6 | Poz. 12 i 38 oraz filar K6 | Odrzucone |
+| Płatność przelewem dla firm komercyjnych | `knowledge-base.md` pkt 2 (łatwość rozliczenia) | Poz. 45 ma tabelę metod płatności dla instytucji, firm i metod niedostępnych | Odrzucone |
+| Szablony adresów w panelu, „Zamów ponownie", subskrypcja | `knowledge-base.md` pkt 4.A1–A3 | Szablonów i subskrypcji nie ma w ofercie (nie obiecujemy). „Zamów ponownie" istnieje, ale adresatem jest zalogowany klient — zasięg zerowy (brief pkt 1) | Odrzucone |
+| Papeteria, wzornik kolorów („Sample Kit") | `knowledge-base.md` pkt 4.B4–B5 | Brief pkt 4.7 i pkt 7: oferta to wyłącznie koperty, wzornika i próbek nie ma | Odrzucone |
+| Podgląd nadruku, zapis konfiguracji z linkiem | `knowledge-base.md` pkt 4.C6–C7 | Wizualizacja po zamówieniu istnieje (opisuje ją poz. 55); linku do wyceny w kodzie nie ma | Odrzucone — nie obiecujemy funkcji, której nie ma |
+| Logotypy klientów, zegar „Wysyłamy dzisiaj" | `knowledge-base.md` pkt 4.D8–D9 | Brief pkt 4.1 (poz. 28 i 47 stoją na `[—]`) i pkt 4.6: termin to 2 dni robocze, a odliczanie do godziny byłoby sztuczną pilnością | Odrzucone |
 
 ---
 
@@ -248,6 +409,157 @@ nie liczą się do kadencji czterech pozycji tygodniowo i nie mają filara.
 ---
 
 ## Dziennik wdrożeń
+
+### 8 października 2026 — poz. 44: `/blog/koperty-na-pieniadze-na-slub-format-i-kolor`
+
+**Daty.** Treść powstała 2 października 2026, wdrożenie nastąpiło 8 października. `date` wpisu,
+`updated` poz. 40 i `PAGE_UPDATED` wskazują dzień wdrożenia — to on jest datą publikacji, a okno
+`npm run indexnow` (7 dni) liczy się od `lastmod`. W treści wpisu nie zmieniło się nic poza datą.
+
+**Trzeci wpis wspierający klastra K8 i pierwszy, który obsługuje frazę ślubną z K9.** Fraza
+`koperty na pieniądze na ślub` (pomost K8 → K9) wraz z czterema wariantami dostała właściciela.
+Wpis stoi pod pillarem K8 (pole `pillar`, anchor `koperty na pieniądze`) i odpowiada gościowi
+weselnemu na pytanie „jaka koperta na pieniądze będzie odpowiednia na ślub — jaki format i jaki
+kolor".
+
+**Protokół antykanibalizacyjny.** `grep` po frazie głównej i jej wariantach w `blog.ts`,
+`src/app/`, `content-plan.md` i `keywords.md`: żadna strona jej nie obsługuje — występuje
+wyłącznie w odwołaniach do poz. 44. Najbliższy sąsiad to pillar K8, który mówi o `koperty na
+pieniądze` (opis zawiera słowa „na wesele", ale nie jest to fraza z `keywords`). **Różnica
+intencji:** pillar — „kupuję kopertę na prezent pieniężny na dowolną okazję"; wpis — „idę na ślub,
+jak dobrać kopertę do tej uroczystości". Poz. 40 sprzedaje usługę imienia, poz. 41 dobór karty do
+koperty, poz. 43 adresy zaproszeń dla pary młodej, poz. 42 zaproszenia ślubne — żadna nie mówi
+gościowi, jaką kopertę z gotówką wziąć na wesele.
+
+**Oś wpisu: dobór do wesela, nie zakup.** Siedem sekcji: czym koperta na ślub różni się od koperty
+na inną okazję (koperta często trafia do skrzynki, a para otwiera ją później — więc liczą się
+nadawca, wygląd i kartka z życzeniami) → jaki format (DL; tabela pięciu wkładek: banknot i cztery
+kartki z życzeniami, werdykty z `fitsInFormat()`) → jaki kolor (tabela ośmiu odcieni: wykończenie,
+podpis na kopercie i styl wesela, status z katalogu) → jak podpisać (kartka w środku, na kopercie
+najwyżej formuła) → ile kosztuje (tabela 1, 3 i 5 kopert z dostawą, liczona przez
+`calculatePrice`) → kiedy zamówić → lista kontrolna. Do tego pięć pytań w sekcji FAQ.
+
+**Fakty z kodu i źródeł.** Odcienie, wykończenia, ciemność papieru i status czyta się z
+`COLORS`; kolumna „Podpis na kopercie" wynika z `hasSurfaceFinish()` i `dark` — ta sama reguła co w
+poz. 40 i na `/koperty/zloty` (tusz na papierze perłowym i metalicznym łatwo się rozmazuje).
+Odcień Złoty ma dziś `outOfStock` w DL, więc stoi w tabeli ze statusem, a zdanie o braku w
+magazynie jest warunkowe (znika razem ze statusem). Zwyczaje weselne (koperty wrzucane do skrzynki,
+kartka z życzeniami w środku, spór o podpis na kopercie) sprawdzone w polskich poradnikach
+ślubnych; wpis mówi wprost, że zwyczaj nie jest jednolity, i nie podaje żadnej kwoty prezentu ani
+statystyki.
+
+**Rozgraniczenia.** Wobec pillara K8 — zero opisu okazji (komunia, chrzciny, święta, premie), zero
+tabeli „trzy warianty" i zero pytań z `MONEY_FAQ_ITEMS`; cena sztuki padła raz, jako element
+odpowiedzi o koszcie, a termin, wymiary banknotów i pozostałe odcienie odświętne zostają na
+pillarze. Wobec poz. 40 — jedno zdanie o imieniu z odesłaniem (gość z jedną kopertą jej nie
+potrzebuje). Wobec poz. 41 — dopasowanie karty do koperty w jednym zdaniu z odesłaniem; tabela
+dotyczy kartki z życzeniami, nie zaproszenia. Wobec poz. 43 — para młoda odesłana jednym zdaniem
+do wpisu o adresach. Wobec poz. 42 — **nagłówki nie zawierają frazy `koperty na zaproszenia
+ślubne`**. Wobec poz. 16 — liczba dni pada raz, arytmetyka kalendarza zostaje tam. Wobec K7 —
+bony i vouchery nie występują.
+
+**Czego wpis świadomie nie obiecuje.** Żadnej kwoty prezentu — poradniki podają skrajnie różne
+przedziały, a to nie jest pytanie o format ani kolor. Wyboru ślubnego napisu na kopercie dla
+jednego gościa: nadruk wymaga minimum, więc zdjęcie z napisem „W dniu Ślubu" jest opisane jako
+przykładowe, a gość z jedną kopertą zostaje przy gładkiej. Formatów C6 i K4 — występują tylko ze
+statusem z katalogu, a zapisu na powiadomienie o ich dostępności nadal nie ma w kodzie (jak w
+poz. 25, 41 i 43).
+
+**Konwersja.** CTA otwiera konfigurator z `format=DL` i kolorem Biała Perłowa
+(`/?format=DL&kolor=biala-perlowa#konfigurator`), tak jak pillar i zdjęcie otwierające; bez usługi,
+bo gość z jedną kopertą jej nie zamówi. Termin wysyłki stoi nad przyciskiem (warunek klastra K8),
+a sekcja kosztu mówi wprost, że przy jednej kopercie dostawa kosztuje więcej niż sama koperta —
+i podpowiada zamówienie kopert na kolejne uroczystości naraz.
+
+**Tytuł i metadane.** „Koperty na pieniądze na ślub — format i kolor": 45 znaków, 57 z sufiksem.
+`description` 141 znaków, jeden konkret (format DL) i wezwanie do sprawdzenia trzech decyzji.
+
+**Szablon wpisu.** Dotychczasowe wpisy zostawiały `FAQPage` filarom. Brief (pkt 5.2) wymaga FAQ
+w komplecie, więc `BlogPost` dostał opcjonalne pole `faq`; strona wpisu renderuje je jako sekcję
+`#pytania` (ten sam układ co na filarach), dokłada pozycję do spisu treści i węzeł `FAQPage`.
+Wpisy bez pola zachowują się jak dotąd.
+
+**Kadr i karta OG.** Okładka: `biala-perlowa-koperta-dl-nadruk-w-dniu-slubu` — jedyny ślubny kadr
+w katalogu i dokładnie ta scena, o której mówi wpis. **Powtarza okładkę poz. 43**, bo drugiego
+zdjęcia ślubnego nie ma, a żaden inny kadr nie pasuje do tematu; na stronie wpisu w „Powiązanych"
+stoi poz. 43 obok tego samego zdjęcia. Do wymiany, gdy w katalogu pojawi się nowy kadr. Karta
+`public/images/og/blog-koperty-na-pieniadze-na-slub.jpg` (1200 × 630, 64 kB, bez kwot) z dolnego
+wycinka kadru — cały napis „W dniu Ślubu" widoczny, inna kompozycja niż karta poz. 43 (klapka)
+i karta pillara K8 (środek).
+
+**Linkowanie w obie strony:**
+- **do wpisu:** `/koperty-na-pieniadze` — pierwsza karta w „Poradnikach" (siatka przechodzi na trzy
+  kolumny, układ 3 + 2, opis sekcji dopisany), odnośnik w karcie „Wesele" w `#okazje` i zdanie
+  w sekcji koloru; wpis poz. 40 — sekcja `prezenty-rodzinne` (`updated: 2026-10-08`). `/blog`
+  i `/llms.txt` — automatycznie.
+- **z wpisu:** blok „Strona oferty" (pillar K8), `/koperty-na-pieniadze`, poz. 43, poz. 41, poz. 40,
+  poz. 16, `paleta-19-kolorow-jak-wybrac-odcien` i trzy strony kolorów (`/koperty/biala-perlowa`,
+  `/koperty/ecru`, `/koperty/matcha`).
+
+**Rejestr fraz.** `keywords.md`, K8: `koperty na pieniadze na slub` przypisana poz. 44, cztery
+nowe warianty (`koperta na pieniądze na wesele`, `koperta ślubna na pieniądze`, `jaka koperta na
+pieniądze na ślub`, `kolor koperty na pieniądze na ślub`), notatka „Podział pracy z poz. 44";
+K9: dopisana notatka wdrożeniowa. Frazy `koperty na slub` i `koperty weselne` zostają bez
+właściciela (poz. 42).
+
+`PAGE_UPDATED` podbite dla `/blog` i `/koperty-na-pieniadze` (8 października 2026).
+
+Weryfikacja: `npm run typecheck` i `npm run build` bez błędów, **88/88 stron statycznie**, wpis
+prerenderowany jako SSG, obecny w `sitemap.xml` (z okładką i kartą OG, `lastmod` 2026-10-08)
+i w `/llms.txt`. Metadane ze zbudowanego HTML-u: `title` 57 znaków z sufiksem, `description` 141,
+jeden `<h1>`, siedem sekcji `<h2>` plus FAQ, trzy tabele, ok. 1 020 słów razem z FAQ; JSON-LD `Article` + `BreadcrumbList` + `WebPage`
++ `FAQPage` (5 pytań). Wszystkie odnośniki z wpisu zwracają 200. Backlinki potwierdzone w
+zbudowanym HTML-u `/koperty-na-pieniadze` (pięć kart w układzie 3 + 2, odnośnik w „Wesele"
+i w sekcji koloru), poz. 40 i `/blog`. W przeglądarce (desktop i 375 px): okładka się ładuje,
+tabele przechodzą w widok kartowy, brak przewijania poziomego, zero błędów konsoli.
+**Czego nie sprawdzono:** brzmienia wpisu w odpowiedziach modeli (audyt cytowań jest cykliczny)
+i zachowania tuszu na poszczególnych papierach — kolumna „Podpis na kopercie" opiera się na regule
+już obecnej w serwisie (poz. 40, strona Złotego), nie na teście własnym.
+**Ponowna weryfikacja 8 października 2026, przed wypchnięciem:** `npm run typecheck` i `npm run
+build` bez błędów, 88/88 stron. W zbudowanym HTML-u `Article.datePublished` i `dateModified`
+wpisu to 2026-10-08; `lastmod` 2026-10-08 mają w sitemapie wpis, poz. 40, `/blog`
+i `/koperty-na-pieniadze`.
+**Do wykonania po wdrożeniu na produkcję** (promocja deploymentu w panelu Vercela):
+`npm run indexnow` — obejmie wpis, poz. 40, `/blog` i `/koperty-na-pieniadze`.
+
+### 2 października 2026 — Faza 5 rozpisana (planowanie, bez publikacji)
+
+**Zakres.** Dopisana Faza 5 (tygodnie 13–20): 22 nowe pozycje (poz. 49–70) i dwie przeniesione
+z Fazy 4 (poz. 42 i 48). Zmieniony nagłówek planu (horyzont 20 tygodni · 70 pozycji), wiersz 42
+(persona zawężona do pary młodej, wedding planner przechodzi do poz. 64) i wiersz 48 (przegląd
+kwartalny w tygodniu 18). W tym zadaniu żaden plik poza `content-plan.md` nie został zmieniony.
+
+**Protokół.** Każdy kandydat z `knowledge-base.md` (profile 1–22 i kierunki rozwoju z pkt 4)
+i `keywords.md` (K1–K9, „Luki w bazie") przeszedł `grep` po frazie głównej i wariantach w
+`src/lib/blog.ts`, `src/app/`, `content-plan.md` i `keywords.md`, a potem nazwanie różnicy
+intencji wobec najbliższej strony. Wynik: 15 nowych adresów (11 LP branżowych i 4 wpisy), 7
+aktualizacji istniejących stron (tam, gdzie protokół mówił „aktualizuj zamiast tworzyć") i 18
+wierszy odrzuconych kandydatów z powodem (część zbiorcza). Cztery pozycje rezerwowe (R1–R4) mają
+warunek wejścia zamiast daty.
+
+**Dlaczego 3 pozycje tygodniowo, nie 4.** Po protokole zostało 24 pozycje na 8 tygodni. Czwarta
+pozycja tygodniowo oznaczałaby 8 dodatkowych stron bez nazwanej różnicy intencji — najbliższy
+przykład to wpis o komunii i chrzcinach dla **gościa**, który byłby szablonem poz. 44 z podmienioną
+okazją. Brief (pkt 8) przedkłada czystość mapy fraz nad tempo.
+
+**Znalezione przy okazji (poz. 49).** `/koperty/zloty` nie mówi nic o tymczasowym braku Złotego
+w magazynie (zmiana z 24 września 2026), a komponent `AddColorToCart` dodaje ten odcień do
+koszyka z pominięciem konfiguratora, który jako jedyny zna status. Sześć innych stron poleca
+Złoty bez statusu. Poz. 49 stoi na początku Fazy 5, bo to jedyna pozycja, która dziś psuje
+konwersję, a nie tylko pomija okazję. Poprawka kodu koszyka wykracza poza zakres planu treści
+i została zgłoszona osobno.
+
+**Usługa nadruku na zamknięciu (poz. 54, 58, 61, 62).** Opisują ją `/`, F1 i F2. Filary F3, F4,
+K6 i K8, dziewięć LP branżowych oraz poz. 8, 13, 14, 15, 20 i 24 nie wspominają o niej wcale
+(`grep` po `zamknięci`). Aktualizacje pogrupowane według czytelnika, nie według strony: bony,
+dokumenty, adresowanie, format.
+
+**Rejestr `INDUSTRY_PAGES`.** Jedenaście nowych LP podniesie sekcję „Dla kogo pracujemy" na `/`
+z 9 do 20 pozycji. Poz. 70 (tydzień 20) rozstrzyga, czy rejestr grupować tematycznie, czy
+ograniczyć. Decyzja nie jest podejmowana teraz, bo zależy od tego, które LP wejdą po poz. 48.
+
+**Czego nie sprawdzono.** Popytu na frazy branżowe — Semstorm ich nie obejmuje, a Search Console
+ma niecałe dwa miesiące danych. Dlatego trzy najsłabsze LP (poz. 67–69) mają bramkę ◊, a nie datę.
 
 ### 26 września 2026 — poz. 45: `/blog/odroczony-termin-platnosci-przy-zamowieniu-kopert`
 
@@ -3611,6 +3923,7 @@ z konfiguracją „Koperta DL Czarny z nadrukiem", 4,57 zł/szt.
 | ~~Brak analityki (GA4 / GSC)~~ | **Odblokowane 16 sierpnia 2026.** GA4 wpięte przez `NEXT_PUBLIC_GA_ID`, właściciel zweryfikowany w Search Console. Dane o zapytaniach i wejściach do konfiguratora zaczynają się zbierać | — |
 | `transitTime` w danych o dostawie | Google liczy obiecywaną datę doręczenia z `handlingTime` + `transitTime`; bez drugiego składnika adnotacja o dostawie jest niepełna. Zadeklarowanie czasu przewozu bez potwierdzenia przewoźnika byłoby obietnicą bez pokrycia | Właściciel — podanie realnego czasu przewozu kurierem |
 | Formaty C6 i K4 `disabled` | Klaster ślubny (K9) bez CTA zakupowego; poz. 27 ograniczona do A4 składanego | Właściciel — uruchomienie formatów |
+| Odcień Złoty — tymczasowy brak w magazynie (od 24 września 2026) | Status zna tylko konfigurator; `/koperty/zloty` i sześć stron polecających go nie mówią o nim nic, a `AddColorToCart` pozwala dodać ten odcień do koszyka. Dotyczy poz. 49, 56 i 67 | Właściciel — termin powrotu do magazynu; poz. 49 — treść i przycisk na stronie koloru |
 | ~~Zdjęcia produktowe to PNG po 0,5–0,75 MB~~ | **Odblokowane 15 sierpnia 2026.** `colors/`, `prints/` i `personalized/` przeszły na WebP w trzech szerokościach: **30,8 MB → 2,1 MB**. Strona główna pobiera dziś **197 kB** obrazów zamiast ~9 MB | — |
 | ~~Kadry hero w `public/images/` nadal w PNG~~ | **Odblokowane 18 sierpnia 2026.** `Hero Envelopes Robocze.png` (3,06 MB) okazał się plikiem **używanym** — jako tło hero na `/` i pięciu filarach, przez adres z `%20`. Przeszedł na WebP (`hero-tlo-2015.webp`, 127 kB); `koperta-gorna/dolna.png` i `2.png` były faktycznie nieużywane i zostały usunięte | — |
 | ~~Profile FB / Instagram / LinkedIn~~ | **Odblokowane 10 września 2026** dla LinkedIna i Instagrama — adresy ze stopki trafiły do `Organization.sameAs` przez wspólną stałą `SOCIAL_PROFILES` (`orders.ts`). Facebooka w stopce nie ma, więc nie ma go też w `sameAs` | Właściciel — adres profilu na Facebooku, jeśli powstanie |

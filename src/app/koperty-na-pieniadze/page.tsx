@@ -131,7 +131,12 @@ const OCCASIONS: { name: string; text: string }[] = [
  * (`koperty-z-imieniem-i-nazwiskiem-jak-przygotowac-liste`) — przegląd
  * zapowiedziany 14 września. Przygotowanie danych jest krokiem po decyzji,
  * o której mówi ta strona, a wpis z poz. 40 sam do tego poradnika odsyła.
- * Siatka zostaje 2 × 2. Poz. 44 (koperty na pieniądze na ślub) nadal czeka.
+ * Siatka była 2 × 2.
+ * - dobór koperty do wesela → od 8 października 2026 (poz. 44) pierwsza karta
+ *   listy: ślub jest najczęstszą okazją w tym klastrze (sekcja `#okazje`),
+ *   a wpis odpowiada gościowi na pytania, których ta strona nie zadaje —
+ *   kartka z życzeniami obok banknotów, podpis i odcień do zaproszenia.
+ *   Pięć kart układa się w siatkę 3 + 2, jak na F2.
  *
  * Świadomie **pominięte**: `jak-wreczyc-bon-podarunkowy...` i
  * `koperta-ozdobna-na-voucher...`. Oba opisują wydanie bonu przez firmę
@@ -142,7 +147,8 @@ const paletteGuide = getPost('paleta-19-kolorow-jak-wybrac-odcien');
 const moqGuide = getPost('dlaczego-koperty-z-nadrukiem-od-10-sztuk');
 const namedEnvelopeGuide = getPost('personalizowana-koperta-na-pieniadze-kiedy-warto');
 const leadTimeGuide = getPost('szybka-realizacja-kopert-terminy-i-ekspres');
-const GUIDES = [namedEnvelopeGuide, paletteGuide, moqGuide, leadTimeGuide].filter(
+const weddingGuide = getPost('koperty-na-pieniadze-na-slub-format-i-kolor');
+const GUIDES = [weddingGuide, namedEnvelopeGuide, paletteGuide, moqGuide, leadTimeGuide].filter(
   (post) => post !== undefined
 );
 
@@ -331,6 +337,15 @@ export default function MoneyEnvelopesPage() {
                 <p className="small" style={{ marginTop: 'var(--space-2)', marginBottom: 0 }}>
                   {occasion.text}
                 </p>
+                {/* Link w dół do wpisu z poz. 44 — karta o weselu jest jedyną, która
+                    ma osobny poradnik: kartka z życzeniami, podpis i odcień do
+                    zaproszenia. Pozostałe okazje zostają przy tekście strony. */}
+                {occasion.name === 'Wesele' && weddingGuide && (
+                  <p className="small muted" style={{ margin: 'var(--space-2) 0 0' }}>
+                    Jaki format i kolor wybrać na ślub, opisujemy w poradniku{' '}
+                    <Link href={`/blog/${weddingGuide.slug}`}>koperty na pieniądze na ślub</Link>.
+                  </p>
+                )}
               </div>
             ))}
           </div>
@@ -425,6 +440,17 @@ export default function MoneyEnvelopesPage() {
                   paleta 19 kolorów — jak wybrać odcień
                 </Link>
                 .
+              </>
+            )}
+            {/* Link w dół do wpisu z poz. 44. Sekcja podaje trzy odcienie
+                odświętne dla każdej okazji; dobór odcienia do wesela —
+                z podpisem i kartką z życzeniami — jest w poradniku. */}
+            {weddingGuide && (
+              <>
+                {' '}
+                Do wesela odcień dobiera się do zaproszenia, a o jego wyborze rozstrzyga też
+                sposób podpisania koperty — opisujemy to w poradniku{' '}
+                <Link href={`/blog/${weddingGuide.slug}`}>koperty na pieniądze na ślub</Link>.
               </>
             )}
           </p>
@@ -624,12 +650,15 @@ export default function MoneyEnvelopesPage() {
               <h2>Zanim zamówią Państwo kopertę na prezent pieniężny</h2>
               <p>
                 Przy jednej kopercie gładkiej wystarczy wybrać kolor. Poniższe poradniki
-                przydają się wtedy, gdy kopert jest więcej albo gdy uroczystość ma twardą datę.
+                przydają się wtedy, gdy kopertę dobiera się do wesela, gdy kopert jest więcej
+                albo gdy uroczystość ma twardą datę.
               </p>
             </div>
 
             <div
-              className={GUIDES.length > 1 ? 'grid grid-2' : undefined}
+              className={
+                GUIDES.length > 4 ? 'grid grid-3' : GUIDES.length > 1 ? 'grid grid-2' : undefined
+              }
               style={{ gap: 'var(--space-5)' }}
             >
               {GUIDES.map((post) => (

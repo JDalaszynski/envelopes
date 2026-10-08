@@ -65,8 +65,9 @@ export const PAGE_UPDATED: Record<string, string> = {
   /* Doszły wpisy o personalizowanej kopercie na pieniądze (poz. 40),
      o kopertach na zaproszenia (poz. 41) i o personalizowanych kopertach
      ślubnych (poz. 43). 25 września: wpis o gramaturze papieru na koperty
-     (poz. 38). 26 września: wpis o odroczonym terminie płatności 14 dni (poz. 45) */
-  '/blog': '2026-09-26',
+     (poz. 38). 26 września: wpis o odroczonym terminie płatności 14 dni (poz. 45).
+     8 października: wpis o kopertach na pieniądze na ślub (poz. 44) */
+  '/blog': '2026-10-08',
   /* Odnośnik do strony „O nas" w karcie danych rejestrowych */
   '/kontakt': '2026-08-17',
   /* Publikacja strony „O nas" */
@@ -141,8 +142,10 @@ export const PAGE_UPDATED: Record<string, string> = {
   /* Poz. 39 planu — pillar K8, wykonany wyprzedzająco z Fazy 4.
      14 września doszło linkowanie w dół — sekcja „Poradniki" i trzy
      odnośniki kontekstowe do treści wspierających. 24 września karta
-     personalizacji i „Poradniki" prowadzą do poz. 40 zamiast do poz. 15. */
-  '/koperty-na-pieniadze': '2026-09-24',
+     personalizacji i „Poradniki" prowadzą do poz. 40 zamiast do poz. 15.
+     8 października: poz. 44 — pierwsza karta w „Poradnikach" (siatka 3 + 2),
+     odnośnik w karcie „Wesele" i w sekcji koloru */
+  '/koperty-na-pieniadze': '2026-10-08',
   /* Poz. 18 planu — czwarta LP branżowa Fazy 2, filar F4 */
   '/koperty-dla-hoteli': '2026-09-14',
   /* Poz. 22 planu — piąta LP branżowa Fazy 2, filar F4 */

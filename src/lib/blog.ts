@@ -41,6 +41,7 @@ import type {
   PersonalizationScope,
   StandardInsert,
 } from './catalog';
+import type { FaqItem } from './faq';
 import {
   DEFAULT_PRICING,
   DELIVERY_COST,
@@ -138,6 +139,14 @@ export interface BlogPost {
    * autorytet, nigdy odwrotnie (pkt 5.4 briefu SEO).
    */
   pillar?: { href: string; anchor: string };
+  /**
+   * Własne pytania wpisu — sekcja na stronie i `FAQPage` w danych
+   * strukturalnych (pkt 5.2 i 6.5 briefu SEO). Dotychczasowe wpisy zostawiały
+   * `FAQPage` filarom, bo ich pytania filar już zadawał. Wpis, który ma własną
+   * intencję, może dołożyć pytania, których filar nie zadaje — wtedy nie
+   * powtarza żadnego z `*_FAQ_ITEMS` (jedno pytanie, jeden właściciel).
+   */
+  faq?: { heading: string; items: FaqItem[] };
 }
 
 /* ── Wartości wyliczane dla wpisu o przygotowaniu plików ───────────────── */
@@ -561,11 +570,13 @@ function slackLabel(fit: { clearanceShort: number; clearanceLong: number }): str
  * karta A6 wchodzi na granicy zapasu na szerokości, ale dla klienta
  * rozstrzyga to, że przesuwa się na długości.
  */
-function invitationVerdict(size: InvitationSize): string {
+function invitationVerdict(size: InvitationSize, wider = 'szersze'): string {
   const fit = fitsInFormat(size, DL_FORMAT);
   if (!fit.fits) {
+    /* `wider` zgadza się z rodzajem nazwy w wierszu: „zaproszenie … szersze”,
+       ale „kartka … szersza” (poz. 44). */
     return fit.clearanceShort < 0
-      ? `Nie wejdzie — jest o ${formatMm(-fit.clearanceShort)} mm szersze niż koperta`
+      ? `Nie wejdzie — jest o ${formatMm(-fit.clearanceShort)} mm ${wider} niż koperta`
       : 'Nie wejdzie — nie zostaje zapas na wsunięcie';
   }
   if (fit.clearanceLong > DL_LETTER_LONG_SLACK) return 'Wejdzie, ale przesuwa się wzdłuż koperty';
@@ -762,6 +773,124 @@ const WEIGHT_TRIAL_WITH_DELIVERY = round2(WEIGHT_TRIAL.gross + DELIVERY_COST);
 /** Formaty zapowiedziane samymi symbolami i wspólny status: „C6 i K4", „Dostępne wkrótce". */
 const UPCOMING_IDS_LABEL = UPCOMING_FORMATS.map((format) => format.id).join(' i ');
 const UPCOMING_BADGE = UPCOMING_FORMATS[0]?.badge ?? 'Dostępne wkrótce';
+
+/* ── Wartości wyliczane dla wpisu o kopertach na pieniądze na ślub (poz. 44) ─ */
+
+/**
+ * Wpis z content-plan.md poz. 44 odpowiada gościowi weselnemu na pytanie „jaka
+ * koperta na pieniądze będzie odpowiednia na ślub — format i kolor". Pillar K8
+ * sprzedaje kopertę na prezent pieniężny na dowolną okazję (cena sztuki, termin,
+ * trzy odcienie), a poz. 40 usługę imienia; ten wpis dokłada to, co wynika
+ * z samego ślubu: kartkę z życzeniami obok banknotów, odcień dobrany do
+ * zaproszenia, podpis na kopercie wrzucanej do skrzynki i koszt jednej koperty
+ * z dostawą. Żadna kwota ani werdykt dopasowania nie jest wpisana ręcznie.
+ */
+
+/** Wkładki, które gość wkłada do koperty obok gotówki — kartka z życzeniami. */
+const WEDDING_WISH_CARDS: InvitationSize[] = [
+  { label: 'Kartka z życzeniami w formacie DL', ...INVITE_DL },
+  { label: 'Kartka z życzeniami A6', width: A6_SHEET.width, height: A6_SHEET.height },
+  { label: 'Kartka kwadratowa', ...INVITE_SQUARE },
+  { label: 'Kartka z życzeniami A5', width: A4_HALF.width, height: A4_HALF.height },
+];
+
+/** Banknot leży w kopercie DL płasko, jeśli mieści się z zapasem — werdykt z geometrii. */
+const BANKNOTE_VERDICT = fitsInFormat(BANKNOTE, DL_FORMAT).fits
+  ? 'Leży płasko, bez składania'
+  : 'Nie wejdzie płasko';
+
+/** Odcień z katalogu po `id`. Rzucamy wyjątkiem, bo tabela opiera na nim cały wiersz. */
+function weddingColor(colorId: string): EnvelopeColor {
+  const color = COLOR_MAP[colorId];
+  if (!color) {
+    throw new Error(
+      `COLOR_MAP nie zawiera odcienia „${colorId}" — wpis o kopertach na pieniądze na ślub opiera na nim tabelę`
+    );
+  }
+  return color;
+}
+
+/** Wykończenie papieru słowami z katalogu — jak wiersz „Papier" na stronach kolorów. */
+function weddingFinishLabel(color: EnvelopeColor): string {
+  if (color.finish === 'perłowe') return 'Perłowe';
+  if (color.finish === 'metaliczne') return 'Metaliczne';
+  return 'Matowe, barwione w masie';
+}
+
+/**
+ * Czy da się na kopercie podpisać. Reguła ta sama co w poz. 40 („na perłowym
+ * i metalicznym tusz schnie wolniej i łatwo go rozmazać") i w karcie Złotego
+ * na `/koperty/zloty`; ciemny papier dochodzi z pola `dark` katalogu.
+ */
+function weddingSignatureLabel(color: EnvelopeColor): string {
+  if (hasSurfaceFinish(color.finish)) return 'Tusz schnie wolniej i łatwo go rozmazać';
+  if (color.dark) return 'Pismo widać tylko jasnym pisakiem';
+  return 'Pismo jest czytelne';
+}
+
+/**
+ * Osiem odcieni pod ślub — jasne i stonowane na czele, potem dwa akcenty
+ * i ciemny granat na wesele wieczorne. Dobór jest propozycją stylu, nie regułą,
+ * więc ostatnia kolumna mówi „do jakiego wesela", a nie „jaki odcień jest
+ * właściwy". Nazwy, wykończenie, podpis i status czyta się z katalogu.
+ */
+const WEDDING_COLOR_ROWS = [
+  {
+    id: 'biala-perlowa',
+    style: 'Wesele klasyczne i uroczyste, zaproszenie w bieli lub kremie',
+  },
+  { id: 'bialy', style: 'Wesele w prostej, minimalistycznej oprawie' },
+  { id: 'ecru', style: 'Wesele rustykalne albo w ciepłej palecie, zaproszenie w kremie' },
+  {
+    id: 'srebrna-perlowa',
+    style: 'Wesele wieczorne w chłodnej palecie: srebro, szarość, granat',
+  },
+  { id: 'zloty', style: 'Wesele ze złotymi dodatkami w dekoracji lub na zaproszeniu' },
+  { id: 'rozowa', style: 'Wesele w pudrowych kolorach, zaproszenie w różu' },
+  { id: 'matcha', style: 'Wesele w ogrodzie albo w zieleniach, zaproszenie z motywem roślinnym' },
+  { id: 'granatowy', style: 'Wesele wieczorne i eleganckie, zaproszenie w granacie' },
+].map((row) => ({ ...row, color: weddingColor(row.id) }));
+
+/** Trzy odcienie jasne z pierwszego akapitu o kolorze — bez tych, których chwilowo brak. */
+const WEDDING_SAFE_COLORS = ['biala-perlowa', 'ecru', 'bialy']
+  .map(weddingColor)
+  .filter((color) => !isColorOutOfStock(color.id, 'DL'));
+const WEDDING_SAFE_LABEL = alternativeLabel(WEDDING_SAFE_COLORS.map((color) => color.name));
+
+/** Odcień ze zdjęcia otwierającego wpis i z konfiguratora pod przyciskiem. */
+const WEDDING_COVER_COLOR = weddingColor('biala-perlowa');
+
+/** Zdanie o statusie z katalogu — tylko wtedy, gdy któryś odcień z tabeli go ma. */
+const WEDDING_OUT_OF_STOCK_NAMES = WEDDING_COLOR_ROWS.filter((row) =>
+  isColorOutOfStock(row.id, 'DL')
+).map((row) => row.color.name);
+const WEDDING_STOCK_NOTE =
+  WEDDING_OUT_OF_STOCK_NAMES.length > 0
+    ? `${WEDDING_OUT_OF_STOCK_NAMES.length > 1 ? 'Odcienie' : 'Odcień'} ${listLabel(WEDDING_OUT_OF_STOCK_NAMES)} ${
+        WEDDING_OUT_OF_STOCK_NAMES.length > 1 ? 'mają' : 'ma'
+      } w katalogu status „${OUT_OF_STOCK_LABEL}” i nie da się ${
+        WEDDING_OUT_OF_STOCK_NAMES.length > 1 ? 'ich' : 'go'
+      } dziś zamówić. Tabela podaje ${
+        WEDDING_OUT_OF_STOCK_NAMES.length > 1 ? 'je' : 'go'
+      } dla porównania.`
+    : '';
+
+/**
+ * Trzy typowe zamówienia gościa: jedna koperta na jedno wesele, trzy na
+ * kolejne uroczystości sezonu i pięć na sezon z zapasem. Kwoty brutto — same
+ * koperty i razem z dostawą, bo to dostawa decyduje o koszcie jednej sztuki.
+ */
+const WEDDING_MONEY_ORDERS = [1, 3, 5].map((quantity) => {
+  const plain = calculatePrice({ ...MONEY_BASE, quantity });
+  return {
+    quantity,
+    envelopes: plain.gross,
+    total: round2(plain.gross + DELIVERY_COST),
+  };
+});
+
+/** Czy dostawa przewyższa koszt jednej koperty — warunek zdania o dostawie. */
+const WEDDING_DELIVERY_DOMINATES = DELIVERY_COST > WEDDING_MONEY_ORDERS[0].envelopes;
 
 const POSTS: BlogPost[] = [
   {
@@ -2990,7 +3119,8 @@ const POSTS: BlogPost[] = [
          zostaje w tamtym wpisie;
        - wobec poz. 44 (pieniądze na ślub) i klastra K7: gość weselny
          z jedną kopertą dostaje jeden akapit bez doboru koloru, bony
-         i vouchery nie występują.
+         i vouchery nie występują. Od 8 października 2026 ten akapit
+         odsyła do wpisu poz. 44, który dobór koloru opisuje.
        `FAQPage` zostaje na filarach — wpis nie dostaje własnego. */
     slug: 'personalizowana-koperta-na-pieniadze-kiedy-warto',
     /* Tytuł z planu („…kiedy się opłaca") dawał 67 znaków z sufiksem marki;
@@ -3002,6 +3132,8 @@ const POSTS: BlogPost[] = [
     lead: `Personalizowana koperta na pieniądze opłaca się od ${DEFAULT_PRICING.moqWithPrint} kopert z różnymi imionami: premie, nagrody, prezenty rodzinne. Do jednego prezentu wystarczy gładka.`,
     category: 'Poradniki',
     date: '2026-09-24',
+    /* Odnośnik do poz. 44 w sekcji o prezentach rodzinnych */
+    updated: '2026-10-08',
     readingMinutes: 6,
     colorId: 'matcha',
     format: 'DL',
@@ -3146,7 +3278,7 @@ const POSTS: BlogPost[] = [
           'W prezentach rodzinnych personalizacja ma sens po stronie osoby, która wręcza wiele kopert naraz — nie po stronie gościa z jednym prezentem. Typowe przypadki to dziadkowie z kopertami dla wszystkich wnuków na święta albo para młoda, która po weselu rozlicza się z usługodawcami.',
           'Wiersz listy nie musi być imieniem. Para młoda może wpisać role: „Dla Zespołu”, „Dla Pani Fotograf”, „Dla Obsługi Sali”. Drukujemy dokładnie to, co stoi w wierszu, więc zapis warto przejrzeć, zanim zaakceptują Państwo wizualizację.',
           'Dedykacja zaczynająca się od „Dla” wymaga dopełniacza: „Dla Zosi”, a nie „Dla Zosia”. Samo imię i nazwisko zostaje w mianowniku. Zasady zapisu imion i nazwisk zebraliśmy w poradniku [koperty z imieniem i nazwiskiem — lista do nadruku](/blog/koperty-z-imieniem-i-nazwiskiem-jak-przygotowac-liste).',
-          'Gość weselny z jedną kopertą personalizacji nie potrzebuje. Koperta gładka w odcieniu dobranym do uroczystości wystarczy, a imiona pary młodej można dopisać odręcznie albo zostawić kopertę bez napisu.',
+          'Gość weselny z jedną kopertą personalizacji nie potrzebuje. Koperta gładka w odcieniu dobranym do uroczystości wystarczy — jak ją dobrać do wesela, opisujemy w poradniku [koperty na pieniądze na ślub](/blog/koperty-na-pieniadze-na-slub-format-i-kolor). Imiona pary młodej można dopisać odręcznie albo zostawić kopertę bez napisu.',
         ],
       },
       {
@@ -4038,6 +4170,221 @@ const POSTS: BlogPost[] = [
     cta: `Wybierz format DL i kolor kopert w konfiguratorze. Jako jednostka publiczna zaznacz w zamówieniu odroczony termin 14 dni — produkcja ruszy bez czekania na przedpłatę.`,
     ctaConfigure: { label: 'Skonfiguruj koperty dla instytucji', format: 'DL', print: true },
     pillar: { href: '/koperty-z-nadrukiem', anchor: 'koperty z nadrukiem' },
+  },
+  {
+    /* content-plan.md poz. 44 — treść wspierająca pillar K8
+       (`/koperty-na-pieniadze`), cel RUCH. Fraza główna: `koperty na pieniądze
+       na ślub` (pomost K8 → K9 z keywords.md).
+
+       Pytanie wpisu: „idę na ślub z kopertą z gotówką — jaki format i jaki
+       kolor koperty będzie odpowiedni". Persona: gość weselny z jedną kopertą,
+       nie para młoda. Intencja różni się od pillara tym, że pillar sprzedaje
+       kopertę na prezent pieniężny na dowolną okazję, a wpis pomaga dobrać ją
+       do wesela: do palety zaproszenia, do kartki z życzeniami włożonej obok
+       banknotów i do skrzynki na koperty, w której prezent czeka na parę.
+
+       Rozgraniczenia (pkt 8 briefu SEO):
+       - wobec pillara K8: zero opisu okazji (komunia, chrzciny, święta, premie),
+         zero tabeli „trzy warianty" i zero pytań z `MONEY_FAQ_ITEMS`. Cena
+         sztuki, termin i wymiary banknotów zostają na pillarze; wpis liczy
+         tylko koszt zamówienia gościa z dostawą;
+       - wobec poz. 40: personalizacja imienia to jedno zdanie z odesłaniem,
+         bo gość z jedną kopertą jej nie potrzebuje (poz. 40 zapowiadała ten
+         podział wprost w sekcji `prezenty-rodzinne`);
+       - wobec poz. 41: dopasowanie karty do koperty DL zostaje tam. Tutaj
+         tabela dotyczy kartki z życzeniami obok banknotów, w czterech
+         wymiarach, a metodę pomiaru i ozdoby zaproszenia wpis pomija;
+       - wobec poz. 43: para młoda i adresowanie zaproszeń drukiem należą do
+         poz. 43, wpis odsyła jednym zdaniem. Wobec poz. 42: nagłówki nie
+         zawierają frazy `koperty na zaproszenia ślubne`;
+       - wobec poz. 16: liczba dni pada raz, arytmetyka kalendarza zostaje tam;
+       - wobec K7: bony i vouchery nie występują.
+
+       Formaty C6 i K4 występują wyłącznie ze statusem z katalogu — bez
+       odnośnika i bez przycisku (brief pkt 4.2). Dane strukturalne: `Article`,
+       `BreadcrumbList`, `WebPage` oraz — pierwszy raz we wpisie — `FAQPage`
+       z pytaniami, których pillar nie zadaje (pole `faq`). */
+    slug: 'koperty-na-pieniadze-na-slub-format-i-kolor',
+    /* 45 znaków, 57 z sufiksem marki. Fraza główna na początku, jednostka
+       intencji („format i kolor") z planu zachowana. */
+    title: 'Koperty na pieniądze na ślub — format i kolor',
+    /* Lead zasila `description`. Jeden konkret — format DL — i wezwanie do
+       sprawdzenia trzech decyzji gościa: formatu, koloru i podpisu. */
+    lead: 'Koperta na pieniądze na ślub: DL w jasnym odcieniu mieści banknoty płasko i kartkę z życzeniami. Sprawdź, jaki format, kolor i podpis wybrać.',
+    category: 'Poradniki',
+    date: '2026-10-08',
+    readingMinutes: 7,
+    colorId: 'biala-perlowa',
+    format: 'DL',
+    /* Kadr „W dniu Ślubu" — jedyny ślubny kadr w katalogu (`showcase.ts`)
+       i dokładnie ta scena, o której mówi wpis: koperta DL na prezent
+       pieniężny na weselu. Jest też okładką poz. 43 — kadrów ślubnych nie ma
+       więcej, a żaden inny nie pasuje do tematu. Do wymiany, gdy w katalogu
+       pojawi się drugie zdjęcie. Sekcja `podpis` mówi, że napis na zdjęciu
+       jest przykładowym nadrukiem, którego gość z jedną kopertą nie zamówi
+       (nadruk wymaga minimum), więc zdjęcie nie obiecuje usługi. */
+    showcaseFile: 'biala-perlowa-koperta-dl-nadruk-w-dniu-slubu',
+    imageVariant: 'nadruk',
+    ogImageSlug: 'blog-koperty-na-pieniadze-na-slub',
+    /* Karta z wycinka z dołu kadru (`scripts/og-card.mjs`) — napis „W dniu
+       Ślubu" na perłowym papierze, inna kompozycja niż karta poz. 43 (sama
+       klapka) i karta pillara K8 (środek kadru). */
+    ogImageAlt:
+      'Koperta DL Biała Perłowa z czarnym nadrukiem „W dniu Ślubu” pismem odręcznym, leżąca na białych deskach',
+    keywords: [
+      'koperty na pieniądze na ślub',
+      'koperta na pieniądze na wesele',
+      'koperta ślubna na pieniądze',
+      'jaka koperta na pieniądze na ślub',
+      'kolor koperty na pieniądze na ślub',
+    ],
+    intro:
+      'Koperta na pieniądze na ślub to ozdobna koperta, w której gość wręcza parze młodej gotówkę, zwykle razem z kartką z życzeniami. Wystarcza koperta DL w jasnym odcieniu, dobranym do zaproszenia i stylu wesela, bez nadruku i bez okienka. Poniżej wyjaśniamy, co mieści się w kopercie obok banknotów i jaki kolor wybrać do wesela. Opisujemy też, gdzie złożyć podpis i ile wcześniej zamówić kopertę.',
+    sections: [
+      {
+        id: 'czym-sie-rozni',
+        heading: 'Czym koperta na pieniądze na ślub różni się od koperty na inną okazję',
+        paragraphs: [
+          'Koperta na ślub różni się od koperty na urodziny tym, że gość rzadko wręcza ją parze młodej do ręki. Na wielu weselach koperty trafiają do skrzynki albo na stół z prezentami, a para otwiera je później.',
+          'Z tego wynikają trzy sprawy, które rozstrzygają o wyborze. Koperta ma pasować do wesela, para ma wiedzieć, od kogo jest prezent, a w środku mieści się zwykle także kartka z życzeniami. Cenę sztuki, termin i wymiary banknotów opisujemy na stronie [koperty na pieniądze](/koperty-na-pieniadze) — są takie same przy każdym prezencie pieniężnym.',
+          'Ten poradnik jest pisany dla gościa weselnego z jedną kopertą. Para młoda, która zamawia koperty z zaproszeniami dla gości, znajdzie potrzebne informacje w poradniku [personalizowane koperty ślubne](/blog/personalizowane-koperty-slubne-adresy-gosci).',
+        ],
+      },
+      {
+        id: 'format',
+        heading: 'Jaki format koperty na pieniądze wybrać na ślub',
+        paragraphs: [
+          `Na ślub wystarcza koperta DL, czyli podłużna koperta o wymiarach ${DL_FORMAT.dimensions}. Banknoty wchodzą do niej płasko, a obok mieści się kartka z życzeniami w formacie DL albo A6.`,
+          'Większej koperty nie trzeba szukać. Kartka w formacie DL wypełnia kopertę tak jak list złożony na trzy, a mniejsza ma w niej luz i przesuwa się wzdłuż koperty. Zasady dopasowania kart do koperty DL rozpisujemy w poradniku [koperty na zaproszenia](/blog/koperty-na-zaproszenia-jak-dobrac-koperte-dl) — dotyczą także kartek z życzeniami.',
+          `Koperty ${UPCOMING_IDS_LABEL}, pod które projektuje się kartki A6 i kwadratowe, mają w katalogu status „${UPCOMING_BADGE}” i dziś nie da się ich zamówić. Do ślubu najprościej wybrać więc kartkę, która leży w kopercie DL.`,
+        ],
+        table: {
+          caption:
+            'Co mieści się w kopercie DL na ślub: banknot i kartki z życzeniami, luz liczony z wymiarów katalogowych koperty',
+          head: ['Wkładka', 'Wymiar', 'Jak leży w kopercie DL'],
+          rows: [
+            [BANKNOTE.label, insertMm(BANKNOTE), BANKNOTE_VERDICT],
+            ...WEDDING_WISH_CARDS.map((card) => [
+              card.label,
+              insertMm(card),
+              invitationVerdict(card, 'szersza'),
+            ]),
+          ],
+        },
+      },
+      {
+        id: 'kolor',
+        heading: 'Jaki kolor koperty na pieniądze wybrać na ślub',
+        paragraphs: [
+          `Na ślub najbezpieczniejszy jest odcień jasny: ${WEDDING_SAFE_LABEL}. Pasują do większości wesel i nie rywalizują z dekoracją stołu ani z zaproszeniem. Gdy zaproszenie ma wyraźną paletę, kopertę dobiera się do niej.`,
+          'Paletę wesela gość zna z zaproszenia, więc od niego warto zacząć. Koperta w odcieniu zaproszenia albo jego dodatku wygląda jak część wydarzenia, a nie przypadkowa koperta z szuflady.',
+          'Kolor decyduje też o tym, czy da się na kopercie podpisać. Na odcieniu jasnym i matowym pismo jest czytelne, na ciemnym widać je tylko jasnym pisakiem, a papier perłowy i metaliczny źle przyjmuje tusz. Tabela podaje to obok wykończenia każdego odcienia.',
+          ...(WEDDING_STOCK_NOTE ? [WEDDING_STOCK_NOTE] : []),
+          `Każdy odcień opisują osobne strony kolorów, na przykład [${WEDDING_COVER_COLOR.name}](${colorPath(WEDDING_COVER_COLOR.id)}), [Ecru](${colorPath('ecru')}) i [Matcha](${colorPath('matcha')}). Pełny podział palety i dobór odcienia do charakteru uroczystości wyjaśnia poradnik [paleta 19 kolorów — jak wybrać odcień](/blog/paleta-19-kolorow-jak-wybrac-odcien).`,
+        ],
+        table: {
+          caption: `Osiem odcieni kopert DL na ślub: wykończenie, podpis na kopercie i styl wesela`,
+          head: ['Odcień', 'Wykończenie', 'Podpis na kopercie', 'Pasuje do wesela'],
+          rows: WEDDING_COLOR_ROWS.map((row) => [
+            weightColorLabel(row.color),
+            weddingFinishLabel(row.color),
+            weddingSignatureLabel(row.color),
+            row.style,
+          ]),
+        },
+      },
+      {
+        id: 'podpis',
+        heading: 'Jak podpisać kopertę na pieniądze na ślub',
+        paragraphs: [
+          'Bezpieczniej podpisać kartkę z życzeniami w środku, a na kopercie zostawić najwyżej krótką formułę, na przykład „Dla Pary Młodej”. Zwyczaj nie jest jednolity: część poradników zaleca podpis na kopercie, część wyłącznie na kartce.',
+          'Powód jest praktyczny. Koperta trafia do skrzynki razem z wieloma innymi, a para otwiera ją później, więc podpis musi zostać z prezentem. Kartka z podpisem zostaje z nim nawet wtedy, gdy koperta zostanie wyrzucona.',
+          'Gdy chcą Państwo podpisać także kopertę, najlepszy jest odcień jasny i matowy. Pismo warto wypróbować najpierw na wewnętrznej stronie klapki.',
+          `Zdjęcie otwierające ten poradnik pokazuje kopertę DL ${WEDDING_COVER_COLOR.name} z przykładowym nadrukiem „W dniu Ślubu” pismem odręcznym. Nadruk zamawia się od ${DEFAULT_PRICING.moqWithPrint} sztuk, więc gość z jednym prezentem zostaje przy kopercie gładkiej, a własne słowa pisze na kartce. Kiedy imię na kopercie się opłaca, liczymy w poradniku [personalizowana koperta na pieniądze](/blog/personalizowana-koperta-na-pieniadze-kiedy-warto).`,
+        ],
+      },
+      {
+        id: 'koszt',
+        heading: 'Ile kosztuje koperta na pieniądze na ślub',
+        paragraphs: [
+          `Koperta gładka na ślub kosztuje ${formatPrice(WEDDING_MONEY_ORDERS[0].envelopes)} brutto za sztukę, niezależnie od odcienia, a dostawę kurierem za ${formatPrice(DELIVERY_COST)} naliczamy raz na całe zamówienie.${
+            WEDDING_DELIVERY_DOMINATES
+              ? ' Przy jednej kopercie dostawa kosztuje więc więcej niż sama koperta.'
+              : ''
+          } Tabela pokazuje trzy typowe zamówienia.`,
+          'Z tabeli wynika prosta rada: jeśli w najbliższych miesiącach czekają Państwa kolejne wesela, komunie albo chrzciny, warto zamówić koperty na wszystkie od razu. Dostawa jest wtedy jedna, a koperty czekają w domu.',
+        ],
+        table: {
+          caption:
+            'Koszt zamówienia kopert DL gładkich na ślub: same koperty i razem z dostawą kurierem, kwoty brutto',
+          head: ['Liczba kopert', 'Same koperty', 'Z dostawą kurierem'],
+          rows: WEDDING_MONEY_ORDERS.map((row) => [
+            `${row.quantity} szt.`,
+            formatPrice(row.envelopes),
+            formatPrice(row.total),
+          ]),
+        },
+      },
+      {
+        id: 'termin',
+        heading: 'Kiedy zamówić kopertę na pieniądze na ślub',
+        paragraphs: [
+          `Kopertę gładką wysyłamy w ${workingDaysLabel(DEFAULT_PRICING.leadDaysPlain)} od zaksięgowania wpłaty — nie przechodzi przez produkcję ani akceptację wizualizacji. To nie jest wysyłka tego samego dnia, a czas dostawy kurierem dochodzi osobno. Przy przelewie tradycyjnym doliczają Państwo także czas księgowania.`,
+          'Przy weselu z ustaloną datą kopertę zamawia się więc z zapasem, żeby zdążyć włożyć do niej kartkę i pieniądze. Jak policzyć datę zamówienia wstecz od dnia uroczystości, pokazujemy w poradniku [szybka realizacja kopert — terminy i ekspres](/blog/szybka-realizacja-kopert-terminy-i-ekspres).',
+        ],
+      },
+      {
+        id: 'lista-kontrolna',
+        heading: 'Zanim zamówią Państwo kopertę na pieniądze na ślub',
+        paragraphs: ['Sześć punktów do sprawdzenia przed zamówieniem koperty.'],
+        list: [
+          'Odcień pasuje do zaproszenia albo do stylu wesela i jest dostępny w katalogu',
+          'Kartka z życzeniami ma format DL albo A6 — kartka kwadratowa i A5 nie wejdą do koperty DL',
+          'Podpis stoi na kartce w środku; jeśli ma stanąć na kopercie, odcień jest jasny i matowy',
+          'Liczba kopert obejmuje kolejne uroczystości, bo dostawę naliczamy raz na zamówienie',
+          'Do dnia wesela zostało dość dni roboczych na wysyłkę i dostawę, z zapasem na włożenie kartki',
+          'Zamawiają Państwo kopertę gładką — nadruk i personalizacja wymagają minimalnego nakładu',
+        ],
+      },
+    ],
+    /* Termin nad przyciskiem — warunek klastra K8 z keywords.md: klient
+       detaliczny szuka koperty „na już", więc liczba dni stoi przed CTA. */
+    cta: `Konfigurator otworzy się z formatem DL i kolorem ${WEDDING_COVER_COLOR.name}. Kopertę gładką zamawiają Państwo od ${DEFAULT_PRICING.moqWithoutPrint} sztuki, a wysyłamy ją w ${workingDaysLabel(DEFAULT_PRICING.leadDaysPlain)} od wpłaty.`,
+    /* Preselekcja koloru zgodna z pillarem K8 i ze zdjęciem otwierającym.
+       Bez usługi: gość z jedną kopertą zostaje przy gładkiej (sekcja `podpis`). */
+    ctaConfigure: {
+      label: 'Wybierz kopertę na pieniądze na ślub',
+      format: 'DL',
+      color: WEDDING_COVER_COLOR.id,
+    },
+    pillar: { href: '/koperty-na-pieniadze', anchor: 'koperty na pieniądze' },
+    faq: {
+      heading: 'Najczęstsze pytania o koperty na pieniądze na ślub',
+      items: [
+        {
+          question: 'Czy koperta na pieniądze na ślub może być kolorowa?',
+          answer: `Tak. Na ślub nie obowiązuje jeden kolor koperty, a najbezpieczniejsze są odcienie jasne: ${WEDDING_SAFE_LABEL}. Kolorowy papier dobiera się do zaproszenia i stylu wesela. Każdy z ${COLORS.length} odcieni kosztuje tyle samo, więc wybór zależy od stylu, a przy podpisie odręcznym także od wykończenia papieru.`,
+        },
+        {
+          question: 'Czy kopertę z pieniędzmi na ślub trzeba podpisać?',
+          answer:
+            'Zwyczaj nie jest jednolity, ale bezpieczniej podpisać kartkę z życzeniami w środku. Para młoda wie wtedy, od kogo jest prezent, a podpis zostaje z prezentem nawet wtedy, gdy koperta trafi do kosza. Na kopercie wystarczy krótka formuła, na przykład „Dla Pary Młodej”.',
+        },
+        {
+          question: 'Czy w kopercie na ślub zmieści się kartka z życzeniami?',
+          answer:
+            'Tak, jeśli ma format DL albo A6. Kartka w formacie DL wypełnia kopertę, a A6 się w niej przesuwa. Kartka kwadratowa i A5 są na kopertę DL za szerokie. Banknoty leżą obok kartki płasko, bez składania.',
+        },
+        {
+          question: 'Czy można zamówić kopertę z napisem „W dniu Ślubu” dla jednego gościa?',
+          answer: `Nie, bo nadruk zamawia się od ${DEFAULT_PRICING.moqWithPrint} sztuk. Gość z jednym prezentem kupuje kopertę gładką od ${DEFAULT_PRICING.moqWithoutPrint} sztuki, a życzenia i podpis wpisuje na kartce. Nadruk okolicznościowy ma sens dopiero przy serii kopert, które wręcza się razem.`,
+        },
+        {
+          question: 'Czy koperty na ślub są dostępne w formacie C6?',
+          answer: `Dziś nie. Format C6 ma w katalogu status „${FORMAT_MAP.C6.badge}” i nie da się go zamówić. Na ślub wystarcza koperta DL, w której banknoty leżą płasko, a obok mieści się kartka z życzeniami w formacie DL albo A6.`,
+        },
+      ],
+    },
   },
 ];
 

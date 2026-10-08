@@ -9,7 +9,14 @@ import { StickyCta } from '@/components/ui/StickyCta';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { getAllPosts, getPost, getRelatedPosts } from '@/lib/blog';
 import { formatDate } from '@/lib/pricing';
-import { articleId, articleJsonLd, breadcrumbJsonLd, ogImage, webPageJsonLd } from '@/lib/seo';
+import {
+  articleId,
+  articleJsonLd,
+  breadcrumbJsonLd,
+  faqJsonLd,
+  ogImage,
+  webPageJsonLd,
+} from '@/lib/seo';
 
 /** Generowanie statyczne wszystkich wpisów (SSG) — pkt 8.3. */
 export function generateStaticParams() {
@@ -84,6 +91,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   const related = getRelatedPosts(post);
   const showToc = post.sections.length >= 3;
+  /* Pytania wpisu — opcjonalne. Wpisy bez `faq` zostawiają `FAQPage` filarowi. */
+  const faq = post.faq && post.faq.items.length > 0 ? post.faq : undefined;
 
   return (
     <>
@@ -102,6 +111,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         })}
       />
       <JsonLd data={articleJsonLd(post)} />
+      {faq && <JsonLd data={faqJsonLd(faq.items)} />}
       <JsonLd
         data={breadcrumbJsonLd([
           { name: 'Strona główna', url: '/' },
@@ -156,6 +166,11 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                     <a href={`#${section.id}`}>{section.heading}</a>
                   </li>
                 ))}
+                {faq && (
+                  <li>
+                    <a href="#pytania">{faq.heading}</a>
+                  </li>
+                )}
               </ol>
             </nav>
           )}
@@ -213,6 +228,32 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 )}
               </section>
             ))}
+
+            {/* Własne pytania wpisu (pkt 5.2 briefu SEO) — ten sam układ co
+                FAQ na filarach: jedno pytanie, jeden H3, jedna odpowiedź.
+                Treść stoi w HTML-u bez JS, a `FAQPage` wyżej jest jej lustrem. */}
+            {faq && (
+              <section id="pytania">
+                <h2>{faq.heading}</h2>
+                {faq.items.map((item) => (
+                  <details className="faq-item" key={item.question}>
+                    <summary>
+                      <h3
+                        style={{
+                          display: 'inline',
+                          margin: 0,
+                          fontSize: 17,
+                          fontFamily: 'inherit',
+                        }}
+                      >
+                        {item.question}
+                      </h3>
+                    </summary>
+                    <div className="faq-answer">{renderTextWithLinks(item.answer)}</div>
+                  </details>
+                ))}
+              </section>
+            )}
           </div>
 
           {/* Kontekstowe CTA do konfiguratora. Wpisy z polem `ctaConfigure`

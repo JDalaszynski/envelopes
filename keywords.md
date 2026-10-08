@@ -412,6 +412,11 @@ planu), po wdrożeniu K1, K2 i K7.
 24 września 2026 (poz. 40 planu), właściciel frazy `personalizowana koperta na pieniądze`. Wpis
 linkuje w górę do filara K2 (`/koperty-personalizowane`), bo sprzedaje usługę personalizacji;
 z pillarem K8 łączą go odnośniki w obie strony.
+**Wsparcie:** `/blog/koperty-na-pieniadze-na-slub-format-i-kolor` `[ISTNIEJE]` — opublikowany
+8 października 2026 (poz. 44 planu), właściciel frazy `koperty na pieniądze na ślub` i jej
+wariantów. Wpis linkuje w górę do tego filara (K8), bo dobiera kopertę gładką do wesela, nie
+sprzedaje usługi; pillar linkuje w dół z pierwszej karty „Poradników", z karty „Wesele" i z sekcji
+koloru.
 
 | Fraza | Rola | Intencja | Lejek | Wol. | P |
 | --- | --- | --- | --- | --- | --- |
@@ -420,7 +425,11 @@ z pillarem K8 łączą go odnośniki w obie strony.
 | koperta ozdobna na pieniądze | wariant szyku | TRANS | BOFU | — | P1 |
 | kolorowe koperty na pieniądze | wspierająca | TRANS | BOFU | — | P2 |
 | personalizowana koperta na pieniądze | wspierająca (upsell) → poz. 40 | TRANS | BOFU | — | P1 |
-| koperty na pieniadze na slub | pomost do K9 | TRANS | BOFU | — | P2 |
+| koperty na pieniadze na slub | pomost do K9 → poz. 44 | TRANS | BOFU | — | P2 |
+| koperta na pieniądze na wesele | wariant → poz. 44 | TRANS | BOFU | — | P2 |
+| koperta ślubna na pieniądze | wariant → poz. 44 | TRANS | BOFU | — | P2 |
+| jaka koperta na pieniądze na ślub | wariant pytający → poz. 44 | KOM | MOFU | — | P2 |
+| kolor koperty na pieniądze na ślub | wariant → poz. 44 | KOM | MOFU | — | P2 |
 
 **Notatki wdrożeniowe:** `personalizowana koperta na pieniądze` to najcenniejsza fraza klastra —
 łączy niski wolumen z usługą za +2,99 zł/szt. i podnosi wartość koszyka. Uwaga na realizm
@@ -433,6 +442,14 @@ odbicia i reklamacje.
 dla całej serii i co zrobić, gdy obdarowanych jest mniej niż minimum. Fraza
 `personalizowana koperta na pieniądze` wyszła z `keywords` pillara; pillar używa jej w treści
 jako anchoru do wpisu.
+
+**Podział pracy z poz. 44 (8 października 2026).** Pillar sprzedaje kopertę na prezent pieniężny na
+dowolną okazję (cena sztuki, termin, trzy odcienie odświętne). Wpis odpowiada gościowi weselnemu na
+pytanie, jak dobrać kopertę do **ślubu**: kartka z życzeniami obok banknotów, odcień do zaproszenia,
+podpis na kopercie wrzucanej do skrzynki i koszt zamówienia z dostawą. Pillar nie powtarza tych
+tematów, a wpis nie powtarza ceny sztuki, kolorów dla innych okazji ani pytań z `MONEY_FAQ_ITEMS`.
+Frazy `koperty na slub` i `koperty weselne` (K9) zostają bez właściciela — dotyczą też zaproszeń,
+więc należą do poz. 42.
 
 ---
 
@@ -475,6 +492,11 @@ to zapis na powiadomienie o dostępności formatów, nie wejście do konfigurato
   pytanie „co para młoda zyskuje, gdy adresy gości są drukowane, a nie wypisywane" i ma
   własną frazę długiego ogona `adresowanie zaproszeń ślubnych`. **Fraza `koperty na zaproszenia
   ślubne` nie wchodzi do jego `keywords` ani do nagłówków** — zostaje przy poz. 42.
+- Frazę `koperty na pieniadze na slub` (pomost K8 → K9) i cztery jej warianty obsługuje wpis
+  `/blog/koperty-na-pieniadze-na-slub-format-i-kolor` `[ISTNIEJE]` — opublikowany 8 października
+  2026 (poz. 44 planu), link w górę do pillara K8 (`/koperty-na-pieniadze`). Persona: gość
+  weselny z jedną kopertą, nie para młoda. Jedyny wpis z własnym `FAQPage` (pięć pytań ślubnych).
+  Fraza `koperty na zaproszenia ślubne` nie wchodzi do jego `keywords` ani do nagłówków.
 - **B2B w tym klastrze jest dostępne już dziś:** wedding plannerzy i agencje eventowe kupują
   koperty DL na vouchery prezentowe i korespondencję z parami. To pomost K9 → K7.
 - **Wariant firmowy wyszedł z K9 do K1 (15 września 2026).** Fraza `koperty na zaproszenia
