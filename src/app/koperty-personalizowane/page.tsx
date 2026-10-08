@@ -273,10 +273,16 @@ const INDUSTRIES: { heading: string; text: ReactNode }[] = [
   },
 ];
 
+/* Opis pod wynikiem wyszukiwania — pkt 5.3 briefu SEO. Obie nazwy usługi
+   z tytułu wracają w odmianie, a jedynym konkretem jest próg zamówienia:
+   kupujący z listą adresów pyta najpierw, czy jego nakład wystarczy i jak
+   przekaże dane. Cena zostaje w cenniku. Przy dzisiejszym progu 148 znaków. */
+const personalizedDescription = `Adresowanie kopert drukiem zamiast etykiet: personalizowane koperty DL z danymi każdego odbiorcy, od ${DEFAULT_PRICING.moqWithPrint} sztuk. Listę wgrają Państwo jednym arkuszem.`;
+
 export const metadata: Metadata = {
   /* Bez kwoty w tytule — decyzja właściciela z 17 sierpnia 2026. */
   title: 'Personalizowane koperty i adresowanie kopert',
-  description: `Zleć nam profesjonalne adresowanie kopert i przyspiesz wysyłkę pism. Oferujemy personalizowane koperty ułatwiające obieg dokumentów. Zobacz jak koperta z adresem buduje relacje biznesowe i zamów usługę online.`,
+  description: personalizedDescription,
   keywords: [
     'personalizowane koperty',
     'koperta personalizowana',
@@ -293,7 +299,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     title: 'Personalizowane koperty i adresowanie kopert — Envelopes',
-    description: `Zleć nam profesjonalne adresowanie kopert i przyspiesz wysyłkę pism. Oferujemy personalizowane koperty ułatwiające obieg dokumentów. Zobacz jak koperta z adresem buduje relacje biznesowe i zamów usługę online.`,
+    description: personalizedDescription,
     url: '/koperty-personalizowane',
     images: [
       ogImage(
@@ -323,7 +329,8 @@ export default function PersonalizedEnvelopesPage() {
       <JsonLd
         data={howToJsonLd({
           name: 'Jak zamówić personalizowane koperty z adresowaniem',
-          description: `Zleć nam profesjonalne adresowanie kopert i przyspiesz wysyłkę pism. Oferujemy personalizowane koperty ułatwiające obieg dokumentów. Zobacz jak koperta z adresem buduje relacje biznesowe i zamów usługę online.`,
+          description:
+            'Zamówienie personalizowanych kopert w sklepie Envelopes krok po kroku: konfiguracja, przekazanie danych odbiorców, płatność, akceptacja wizualizacji i wysyłka kurierem.',
           steps: HOW_TO_STEPS,
         })}
       />

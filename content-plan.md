@@ -6,8 +6,9 @@ z [keywords.md](keywords.md) i profil klienta z [knowledge-base.md](knowledge-ba
 
 **Kadencja:** ~4 pozycje tygodniowo (LP + wpisy + aktualizacje łącznie). W Fazie 5 realnie 3 —
 uzasadnienie w jej nagłówku.
-**Horyzont planu:** 20 tygodni · 70 pozycji — Fazy 0–4 (tygodnie 1–12, 48 pozycji) i Faza 5
-(tygodnie 13–20, 22 nowe pozycje; dopisana 2 października 2026, bez publikacji).
+**Horyzont planu:** 20 tygodni · 71 pozycji — Fazy 0–4 (tygodnie 1–12, 48 pozycji) i Faza 5
+(tygodnie 13–20, 23 nowe pozycje; dopisana 2 października 2026, bez publikacji; poz. 71 doszła
+8 października).
 **Punkt startowy:** domena bez historii — pierwsze pozycje w wynikach spodziewane po 3–6 miesiącach
 od publikacji. Kolejność faz jest podporządkowana temu opóźnieniu: najpierw powstaje szkielet
 filarów, bo to on dojrzewa najdłużej.
@@ -246,11 +247,12 @@ frazie głównej w `src/lib/blog.ts`, `src/app/`, `content-plan.md` i `keywords.
 nazwanie różnicy **intencji** wobec najbliższej istniejącej strony. Wynik jest w kolumnie
 „Uwagi" każdej pozycji. Kandydaci, którzy protokołu nie przeszli, stoją niżej z powodem.
 
-**Kadencja: 3 pozycje tygodniowo, nie 4.** Faza ma 24 pozycje w 8 tygodniach: 22 nowe
-(11 LP branżowych, 4 wpisy, 7 aktualizacji) plus poz. 42 i 48 przeniesione z Fazy 4. To wynik
+**Kadencja: 3 pozycje tygodniowo, nie 4.** Faza ma 25 pozycji w 8 tygodniach: 23 nowe
+(11 LP branżowych, 4 wpisy, 8 aktualizacji — ósma to poz. 71, dopisana 8 października) plus
+poz. 42 i 48 przeniesione z Fazy 4. To wynik
 protokołu, nie niedoboru pracy: brief (pkt 8) przedkłada czystość mapy fraz nad tempo. Pozycje
 powyżej tej liczby nie miałyby nazwanej różnicy intencji, a „czwarta pozycja" z szablonu
-istniejącej strony i podmienionej okazji jest właśnie doorway page z pkt 4.3. Tygodnie 13–15
+istniejącej strony i podmienionej okazji jest właśnie doorway page z pkt 4.3. Tygodnie 13–16
 mają po cztery pozycje, tydzień 20 jedną i bufor na wyniki poz. 48. Co mogłoby wypełnić luki
 i pod jakim warunkiem — w tabeli „Rezerwa warunkowa".
 
@@ -323,6 +325,7 @@ i pod jakim warunkiem — w tabeli „Rezerwa warunkowa".
 | 60 | Zamówienie hurtowe kopert z logo — powyżej 2 000 sztuk — `/blog/zamowienie-hurtowe-kopert-z-logo-powyzej-2000-sztuk` | Supporting article | koperty hurtowo z logo | KONWERSJA | Duże firmy, działy zakupów | F1 | **Źródło:** `keywords.md` „Luki w bazie" 2 i brief pkt 7 (formularz wyceny B2B to jedna z trzech mikrokonwersji — dziś żadna treść jej nie zasila). **`grep`:** fraza bez właściciela; próg (`BULK_QUOTE_THRESHOLD`) stoi jako zdanie przy CTA w FAQ strony głównej, w F1, F2, F4, poz. 27 i na `/kontakt#wycena`. **Różnica intencji:** poz. 9 liczy koszt zamówień poniżej progu, poz. 46 uzasadnia minimum; wpis odpowiada, **jak wygląda zamówienie powyżej progu**: stała cena bez rabatów ilościowych, co wpisać w zapytaniu o wycenę (format, odcień, nakład, plik, terminy dostaw), harmonogram dostaw. Nie obiecuje rabatów ani subskrypcji (pomysły z pkt 4.A bazy wiedzy nie są ofertą). CTA prowadzi do `/kontakt#wycena`, nie do konfiguratora | [ ] |
 | 61 | Nadruk na zamknięciu w poradnikach adresowych — poz. 8, 14 i 15 | Aktualizacja | — | KONWERSJA | Office manager, sekretariat, HR | F2 | **`grep`:** wśród wpisów usługę opisują poz. 9, 7, 40, 41 i 43; poz. 8, 14 i 15 jej nie mają. Poz. 14 (wzór adresu wysyłki firmowej) zajmuje się układem koperty, więc adres nadawcy i logo na zamknięciu są jej naturalnym rozszerzeniem. **Zakres:** akapit w poz. 14 (bez zmiany tytułu i frazy), jedno zdanie w poz. 8 (personalizacja i nadruk na zamknięciu łączą się) i w poz. 15; `updated` na każdym wpisie, `PAGE_UPDATED` dla `/blog` | [ ] |
 | 62 | Nadruk na zamknięciu w poradnikach i filarach — poz. 13, 20 i 24 oraz `/koperty-dl`, `/koperty-premium` i `/koperty-na-pieniadze` | Aktualizacja | — | KONWERSJA | Zakupowiec, właściciel salonu, detal | F3, F4, K6, K8 | **`grep`:** `zamknięci` — 0 trafień w poz. 13, 20 i 24 oraz w trzech filarach. **Zakres:** poz. 13 — pełne ścianki dają miejsce na obie strony; poz. 20 — kontrast liczy się osobno dla przodu i klapki; poz. 24 — logo na zamknięciu widać w chwili otwarcia; F3 — wiersz „Miejsce nadruku" w specyfikacji; K6 — sekcja znakowania na papierach perłowych i metalicznych; K8 — jedno zdanie w karcie „Nadruk okolicznościowy" (napis z przodu, logo z tyłu). Bez cen | [ ] |
+| 71 | Opisy meta stron kolorów i siedmiu wpisów — `/koperty/[kolor]` × 19 oraz poz. 7, 8, 9, 10, 11, 12 i 14 | Aktualizacja | — (frazy stron bez zmian) | RUCH | Każdy, kto widzi wynik wyszukiwania | F5 `/` (strony kolorów), filary wpisów | **Źródło:** commit `13212fc` z 20 sierpnia 2026 podmienił opisy na tekst w formie „Ty”, z przymiotnikami zamiast faktów i zwrotami z czarnej listy (brief pkt 10.1). Pięć filarów poprawiono 8 października 2026 (dziennik); **ta pozycja obejmuje resztę i nie była w tamtym zadaniu ruszana.** **Stan zmierzony w zbudowanym HTML-u 8 października:** 19 stron kolorów — `description` 161–187 znaków, wszystkie w formie „Ty” (pole `description` w `src/lib/color-pages.ts`); pięć wpisów z tego commita — poz. 7, 8, 9, 10 i 11, po 199–212 znaków; dwa wpisy o tym samym wzorcu — poz. 12 (161 znaków) i poz. 14 (148 znaków, długość w normie, forma nie). **Warunki (pkt 5.3 i 10.1):** 140–155 znaków liczonych w znakach, fraza główna strony w naturalnej odmianie, jeden–dwa konkrety czytane z `pricing.ts` i `catalog.ts`, forma „Państwo”, bez faktury VAT i bez czarnej listy. **Nie przywracać wersji sprzed commita** — miały po 3–4 liczby. **Uwaga do wpisów:** opis bierze się z pola `lead`, a `lead` jest też tekstem karty w „Poradnikach” na filarach i wierszem w `/llms.txt` — zmiana jest więc widoczna na stronie, nie tylko w wyniku wyszukiwania; `updated` na każdym wpisie. Na stronach kolorów `lead` jest osobnym polem i zostaje. **Bez nowych adresów i bez zmiany fraz** — protokół z pkt 8 nie ma tu czego rozstrzygać. Czwarta pozycja tygodnia 16, pierwszego z wolnym miejscem; nie zależy od żadnej innej, więc może wejść wcześniej. **Znalezione przy okazji, poza zakresem — do decyzji właściciela:** `/kontakt` (ten sam commit, 214 znaków, forma „Ty”), `/o-nas` (166 znaków, „Poznaj nasz sposób pracy”) i lead poz. 44 („Sprawdź, jaki format…”). Poza przedziałem długości, bez błędu formy: poz. 45 (179), `/koperty-na-certyfikaty` (159), `/koperty-premium` (157), `/blog` (139), `/koperty-dla-kancelarii` (137) | [ ] |
 
 ### Tydzień 17 (2–6 listopada)
 
@@ -357,7 +360,7 @@ i pod jakim warunkiem — w tabeli „Rezerwa warunkowa".
 | # | Tytuł / URL | Format | Główna fraza | Cel | Persona / Branża | Filar | Uwagi (antykanibalizacja) | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 70 | Audyt linkowania po Fazie 5 — filary F1, F2, F4, K6, `/` i strony kolorów | Aktualizacja | — | AUTORYTET | — | wszystkie | Brief pkt 5.4; precedens: audyt z 14 września (`/koperty-premium`, `/koperty-na-pieniadze`). Po 11 nowych LP i 4 wpisach sprawdzić: (a) odnośniki w dół z F4 — sześć nowych LP voucherowych dochodzi do czterech istniejących; karty „Dla kogo" są odnośnikami kontekstowymi, a sekcja „Poradniki" ma zostać przy 3–6 wpisach; (b) rejestr `INDUSTRY_PAGES` na `/` rośnie z **9 do 20 pozycji** — rozstrzygnąć grupowanie tematyczne albo limit, bo dwadzieścia kart w jednej sekcji przestaje być „Dla kogo"; (c) anchor równy frazie docelowej; (d) strony kolorów linkują do LP, które rekomendują ich odcień; (e) osierocone adresy w sitemapie | [ ] |
-| — | **Bufor na wyniki poz. 48** | — | — | — | — | — | Pozycje wynikające z przeglądu (przepisania, scalenia, rezerwa R1–R4) wpisuje się dopiero po nim, z numerem od 71. Bez przeglądu nie planuję ich z góry — brak danych byłby zgadywaniem | — |
+| — | **Bufor na wyniki poz. 48** | — | — | — | — | — | Pozycje wynikające z przeglądu (przepisania, scalenia, rezerwa R1–R4) wpisuje się dopiero po nim, z numerem od 72. Bez przeglądu nie planuję ich z góry — brak danych byłby zgadywaniem | — |
 
 ### Rezerwa warunkowa (poza kadencją)
 
@@ -409,6 +412,54 @@ nie liczą się do kadencji czterech pozycji tygodniowo i nie mają filara.
 ---
 
 ## Dziennik wdrożeń
+
+### 8 października 2026 — opisy meta pięciu filarów i porządek w `keywords`
+
+**Zakres.** `description` przepisane na `/`, `/koperty-z-nadrukiem`, `/koperty-personalizowane`,
+`/koperty-dl` i `/koperty-na-vouchery`. Dotychczasowe teksty pochodziły z commita `13212fc`
+(20 sierpnia 2026): po 206–223 znaki, forma „Ty”, „najwyższej jakości”, „idealne”, zero liczb —
+i ten sam akapit wklejony w `og:description` oraz w opis węzła `HowTo`.
+
+**Zasady (brief pkt 5.3 i 10.1).** 140–155 znaków liczonych w znakach, fraza główna w naturalnej
+odmianie, jeden–dwa konkrety czytane ze stałych (`DEFAULT_PRICING`, `calculatePrice`,
+`COLORS.length`, `FORMAT_MAP.DL`), forma „Państwo”, wezwanie w drugim zdaniu, bez faktury VAT
+i bez czarnej listy. **Wersje sprzed commita nie wróciły** — miały po 3–4 liczby i czytały się jak
+wyciąg z cennika. Konkret dobrany tak, żeby nie powtarzał tytułu.
+
+| Strona | Znaki | Konkrety w opisie | Co niesie tytuł |
+| --- | --- | --- | --- |
+| `/` | 151 | próg zamówienia, termin kopert gładkich | liczbę kolorów |
+| `/koperty-z-nadrukiem` | 145 | cena sztuki z nadrukiem | minimum zamówienia |
+| `/koperty-personalizowane` | 148 | minimum zamówienia | obie nazwy usługi |
+| `/koperty-dl` | 150 | wymiar formatu | wymiar formatu |
+| `/koperty-na-vouchery` | 152 | minimum nadruku, liczba odcieni | frazę w całości |
+
+Liczby stoją w opisach przez stałe, więc zmiana cennika albo palety przepisze je przy następnym
+wdrożeniu — długość trzeba wtedy zmierzyć ponownie (zapas do bliższej granicy przedziału to
+3–7 znaków).
+
+**`og:description` i `HowTo`.** `og:description` powtarza `description` (jedna stała na stronę).
+Opis węzła `HowTo` mówi teraz o przebiegu zamówienia — wylicza kroki z `HOW_TO_STEPS` danej
+strony, bez liczb. Na `/koperty-dl` zaznacza, że koperta gładka nie przechodzi przez akceptację
+wizualizacji. Węzeł `WebPage` bierze opis z `metadata.description`, jak dotąd.
+
+**Rejestr fraz.** `koperty bez okienka` wyszła z `keywords` strony `/koperty-dl` — właścicielem
+jest wpis z poz. 13. `koperty firmowe z nadrukiem` wyszła z `keywords` strony `/o-nas` — należy
+do filara F1. Treść obu stron bez zmian; `keywords.md` (K1, K4) zaktualizowany.
+
+**Poza zakresem, dopisane jako poz. 71 (tydzień 16):** 19 stron kolorów i siedem wpisów z tym
+samym wzorcem opisów. W wierszu 71 stoją też znaleziska z pomiaru: `/kontakt`, `/o-nas` i lead
+poz. 44 w formie „Ty” oraz pięć opisów poza przedziałem długości.
+
+`PAGE_UPDATED` podbite dla pięciu filarów (8 października 2026). `/o-nas` bez podbicia — zmiana
+dotyczy wyłącznie metatagu `keywords`.
+
+Weryfikacja: `npm run typecheck` i `npm run build` bez błędów, 88/88 stron. Pomiar ze zbudowanego
+HTML-u pięciu stron: długości jak w tabeli, `og:description` równe `description`, opis węzła
+`WebPage` równy `description`, `dateModified` 2026-10-08, brak formy „Ty”, brak zwrotów z czarnej
+listy, brak wykrzykników. **Czego nie sprawdzono:** jak Google przytnie albo przepisze opisy
+w wynikach (bywa, że podstawia własny fragment) i wpływu na CTR — Search Console ma za mało
+wyświetleń, żeby porównać okresy.
 
 ### 8 października 2026 — poz. 44: `/blog/koperty-na-pieniadze-na-slub-format-i-kolor`
 

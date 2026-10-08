@@ -199,12 +199,18 @@ const INDUSTRIES: { heading: string; text: ReactNode }[] = [
   },
 ];
 
+/* Opis pod wynikiem wyszukiwania — pkt 5.3 briefu SEO. Dwa konkrety, których
+   tytuł nie mieści: próg nadruku i liczba odcieni. Mówi językiem firmy
+   sprzedającej bon (salon, restauracja, hotel), nie językiem poligrafii.
+   Przy dzisiejszym cenniku i katalogu 152 znaki. */
+const voucherDescription = `Koperty na vouchery z logo salonu, restauracji czy hotelu drukujemy od ${DEFAULT_PRICING.moqWithPrint} sztuk. Bon w formacie DL wchodzi płasko, a kolor wybiorą Państwo z ${COLORS.length} odcieni.`;
+
 export const metadata: Metadata = {
   /* Tytuł bez liczby: „Koperty na vouchery i bony podarunkowe od 10 szt."
      ma z sufiksem marki 61 znaków, czyli o jeden za dużo. Wybraliśmy pełne
      dopasowanie frazy zamiast MOQ — liczby niesie description. */
   title: 'Koperty na vouchery i bony podarunkowe',
-  description: `Eleganckie koperty na vouchery i bony podarunkowe podniosą rangę twojego prezentu. Idealnie dopasowane koperty do voucherów robią doskonałe pierwsze wrażenie na obdarowanym. Skonfiguruj własną serię i przejdź do zamówienia.`,
+  description: voucherDescription,
   /* `koperty na bony podarunkowe` przeniesiona do `/koperty-dla-salonow-spa`
      (poz. 19 planu, keywords.md K7) — dwa adresy nie mogą celować w tę samą frazę. */
   keywords: [
@@ -217,7 +223,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     title: 'Koperty na vouchery i bony podarunkowe — Envelopes',
-    description: `Eleganckie koperty na vouchery i bony podarunkowe podniosą rangę twojego prezentu. Idealnie dopasowane koperty do voucherów robią doskonałe pierwsze wrażenie na obdarowanym. Skonfiguruj własną serię i przejdź do zamówienia.`,
+    description: voucherDescription,
     url: '/koperty-na-vouchery',
     images: [
       ogImage(
@@ -259,7 +265,8 @@ export default function VoucherEnvelopesPage() {
       <JsonLd
         data={howToJsonLd({
           name: 'Jak przygotować koperty na vouchery i bony podarunkowe',
-          description: `Eleganckie koperty na vouchery i bony podarunkowe podniosą rangę twojego prezentu. Idealnie dopasowane koperty do voucherów robią doskonałe pierwsze wrażenie na obdarowanym. Skonfiguruj własną serię i przejdź do zamówienia.`,
+          description:
+            'Przygotowanie serii kopert na vouchery i bony podarunkowe krok po kroku: ustalenie wymiaru bonu, konfiguracja kopert, akceptacja wizualizacji, wysyłka i pakowanie bonów.',
           steps: HOW_TO_STEPS,
         })}
       />

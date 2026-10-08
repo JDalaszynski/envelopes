@@ -28,8 +28,10 @@ export const PAGE_UPDATED: Record<string, string> = {
      stron branżowych pod paletą kolorów. Do tego dnia strona główna nie
      linkowała do żadnej LP branżowej. Wcześniej: odnośnik do pillara
      „koperty na pieniądze" (poz. 39) w sekcji zastosowań. 23 września:
-     nadruk na zamknięciu w sekcji usług i w kroku 1 procesu (także `HowTo`) */
-  '/': '2026-09-23',
+     nadruk na zamknięciu w sekcji usług i w kroku 1 procesu (także `HowTo`).
+     8 października: `description` i opis węzła `HowTo`
+     przepisane według pkt 5.3 briefu */
+  '/': '2026-10-08',
   /* Karta „Hotele, resorty i pensjonaty" w sekcji „Dla kogo" dostała odnośnik
      do poz. 18; czwarta karta w sekcji „Poradniki" i odnośnik pod tabelą
      specyfikacji prowadzą do poz. 46; karta „Kliniki medycyny estetycznej
@@ -38,8 +40,10 @@ export const PAGE_UPDATED: Record<string, string> = {
      i kreatywne" dostała odnośnik do poz. 25. 23 września: nadruk na
      zamknięciu — wiersz w cenniku, wiersz „Miejsce nadruku" w specyfikacji
      i pytanie w FAQ (także w `FAQPage`). 26 września: piąta karta w sekcji
-     „Poradniki” (siatka 3 + 2) oraz odnośnik w sekcji rozliczenia — poz. 45 */
-  '/koperty-z-nadrukiem': '2026-09-26',
+     „Poradniki” (siatka 3 + 2) oraz odnośnik w sekcji rozliczenia — poz. 45.
+     8 października: `description` i opis węzła `HowTo`
+     przepisane według pkt 5.3 briefu */
+  '/koperty-z-nadrukiem': '2026-10-08',
   /* Karta „Hotele, resorty i pensjonaty" w sekcji „Dla kogo" dostała odnośnik
      do poz. 18; pod cennikiem doszedł odnośnik do poz. 46 — ten sam próg
      obowiązuje przy adresowaniu; karta „Kliniki, gabinety i salony SPA" —
@@ -48,20 +52,25 @@ export const PAGE_UPDATED: Record<string, string> = {
      w cenniku i w FAQ (także `FAQPage`). 24 września: czwarta karta w sekcji
      „Poradniki" (nowy nagłówek) i odnośnik w karcie „Działy HR" — poz. 40;
      piąta karta w „Poradnikach" (siatka na trzy kolumny), zdanie w opisie
-     sekcji i odnośnik w karcie „Wedding plannerzy i pary młode" — poz. 43 */
-  '/koperty-personalizowane': '2026-09-24',
+     sekcji i odnośnik w karcie „Wedding plannerzy i pary młode" — poz. 43.
+     8 października: `description` i opis węzła `HowTo`
+     przepisane według pkt 5.3 briefu */
+  '/koperty-personalizowane': '2026-10-08',
   /* Sekcja „Poradniki" i odnośnik pod tabelą dopasowań — treść wspierająca
      z poz. 11 planu. 14 września karta „Biura rachunkowe i doradztwo
      podatkowe" w sekcji „Dla kogo" dostała odnośnik do poz. 21. 15 września
      karta „Agencje eventowe, PR i kreatywne" — odnośnik do poz. 25.
      24 września: trzecia karta w „Poradnikach" i odnośnik pod tabelą
      dopasowań — poz. 41. 25 września: odnośnik do poz. 38 w zdaniu
-     o rozkładzie gramatur */
-  '/koperty-dl': '2026-09-25',
+     o rozkładzie gramatur. 8 października: `description` i opis węzła `HowTo`
+     przepisane według pkt 5.3 briefu;
+     `koperty bez okienka` wyszła z `keywords` (właściciel: poz. 13) */
+  '/koperty-dl': '2026-10-08',
   /* Karty „Hotele, resorty i pensjonaty butikowe" oraz „Salony SPA i kliniki
      medycyny estetycznej" w sekcji „Dla kogo" dostały odnośniki do poz. 18
-     i poz. 22 */
-  '/koperty-na-vouchery': '2026-09-14',
+     i poz. 22. 8 października: `description` i opis węzła `HowTo`
+     przepisane według pkt 5.3 briefu */
+  '/koperty-na-vouchery': '2026-10-08',
   /* Doszły wpisy o personalizowanej kopercie na pieniądze (poz. 40),
      o kopertach na zaproszenia (poz. 41) i o personalizowanych kopertach
      ślubnych (poz. 43). 25 września: wpis o gramaturze papieru na koperty

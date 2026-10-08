@@ -219,6 +219,12 @@ const INDUSTRIES: { heading: string; text: ReactNode }[] = [
   },
 ];
 
+/* Opis pod wynikiem wyszukiwania — pkt 5.3 briefu SEO. Minimum zamówienia stoi
+   w tytule, więc opis niesie jeden konkret, cenę sztuki, i rozbraja obawę
+   kupującego: przed drukiem jest wizualizacja do akceptacji. Przy dzisiejszym
+   cenniku 145 znaków. */
+const printedDescription = `Koperty z nadrukiem logo firmy kosztują ${formatPrice(printed.unitTotal)} brutto za sztukę. Logo wgrają Państwo w konfiguratorze, a przed drukiem zaakceptują wizualizację.`;
+
 export const metadata: Metadata = {
   /* „brutto" schodzi z tytułu do description — razem z szablonem `| Envelopes`
      tytuł przekraczał 60 znaków. Liczba kolorów czytana z katalogu, nie
@@ -227,7 +233,7 @@ export const metadata: Metadata = {
      w pasku faktów, w tabeli cennika i w `description`; nagłówek wyniku
      wyszukiwania niesie frazę i minimum zamówienia, czyli realną przewagę. */
   title: `Koperty z nadrukiem logo firmowego od ${DEFAULT_PRICING.moqWithPrint} sztuk`,
-  description: `Profesjonalne koperty z nadrukiem ułatwią komunikację z klientem. Wyróżnij swoją markę wybierając eleganckie koperty firmowe z nadrukiem oraz koperty z logo firmy. Poznaj pełną ofertę i zleć nam realizację.`,
+  description: printedDescription,
   /* `koperty z nadrukiem cena` przeszła 17 sierpnia 2026 do wpisu
      `/blog/cena-kopert-z-nadrukiem-i-koszt-zamowienia` — jeden właściciel
      frazy na serwis. Filar zostaje przy frazie usługowej i transakcyjnej;
@@ -243,7 +249,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     title: 'Koperty z nadrukiem logo firmowego — Envelopes',
-    description: `Profesjonalne koperty z nadrukiem ułatwią komunikację z klientem. Wyróżnij swoją markę wybierając eleganckie koperty firmowe z nadrukiem oraz koperty z logo firmy. Poznaj pełną ofertę i zleć nam realizację.`,
+    description: printedDescription,
     url: '/koperty-z-nadrukiem',
     images: [
       ogImage(
@@ -293,7 +299,8 @@ export default function PrintedEnvelopesPage() {
       <JsonLd
         data={howToJsonLd({
           name: 'Jak zamówić koperty z nadrukiem logo firmowego',
-          description: `Profesjonalne koperty z nadrukiem ułatwią komunikację z klientem. Wyróżnij swoją markę wybierając eleganckie koperty firmowe z nadrukiem oraz koperty z logo firmy. Poznaj pełną ofertę i zleć nam realizację.`,
+          description:
+            'Zamówienie kopert z nadrukiem logo w sklepie Envelopes krok po kroku: konfiguracja i wgranie pliku z logo, płatność, akceptacja wizualizacji, druk i wysyłka kurierem.',
           steps: HOW_TO_STEPS,
         })}
       />

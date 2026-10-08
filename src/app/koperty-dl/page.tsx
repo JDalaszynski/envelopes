@@ -240,25 +240,34 @@ const INDUSTRIES: { heading: string; text: ReactNode }[] = [
   },
 ];
 
+/* Opis pod wynikiem wyszukiwania — pkt 5.3 briefu SEO. Strona jest
+   specyfikacyjna, więc jedynym konkretem jest wymiar z katalogu; resztę niesie
+   intencja „co się mieści” i odesłanie do tabeli dopasowań. Bez ceny, progu
+   i liczby kolorów — te należą do `/`. Przy dzisiejszym wymiarze 150 znaków. */
+const dlDescription = `Koperta DL ma wymiary ${DL.dimensions} i mieści arkusz A4 złożony na trzy. W tabeli sprawdzą Państwo, czy wejdzie do niej voucher, kartka A6 albo zdjęcie.`;
+
 export const metadata: Metadata = {
   /* Tytuł z dopiskiem „co się mieści" wychodził na 65 znaków razem z szablonem
      `| Envelopes` z layoutu — Google ucinał go w wyniku. Intencję „co się
      mieści" niesie description i pierwszy nagłówek H2. */
   title: `Koperty DL — wymiary ${DL.dimensions}`,
-  description: `Sprawdź koperty dl wymiary i dowiedz się jaka kartka do koperty dl pasuje najlepiej. Wybierz estetyczne koperty bez okienka do codziennej i biznesowej korespondencji. Zobacz dostępne warianty i złóż zamówienie.`,
+  description: dlDescription,
   keywords: [
     'koperty dl wymiary',
     'koperta dl wymiary',
     'wymiary koperty dl',
     'koperta prostokątna',
     'koperty prostokątne',
-    'koperty bez okienka',
+    /* `koperty bez okienka` wyszła 8 października 2026 z `keywords` filara —
+       właścicielem frazy jest wpis z poz. 13 planu
+       (`/blog/koperty-bez-okienka-kiedy-je-wybrac`). Filar nadal podaje sam
+       fakt: wiersz specyfikacji i akapit o braku okienka zostają bez zmian. */
   ],
   alternates: { canonical: '/koperty-dl' },
   openGraph: {
     type: 'website',
     title: `Wymiary koperty DL — ${DL.dimensions} | Envelopes`,
-    description: `Sprawdź koperty dl wymiary i dowiedz się jaka kartka do koperty dl pasuje najlepiej. Wybierz estetyczne koperty bez okienka do codziennej i biznesowej korespondencji. Zobacz dostępne warianty i złóż zamówienie.`,
+    description: dlDescription,
     url: '/koperty-dl',
     images: [
       ogImage('koperty-dl', 'Koperta DL 110 × 220 mm w kolorze Biała Perłowa z nadrukowanym adresem'),
@@ -344,7 +353,8 @@ export default function DlEnvelopesPage() {
       <JsonLd
         data={howToJsonLd({
           name: 'Jak zamówić koperty DL',
-          description: `Sprawdź koperty dl wymiary i dowiedz się jaka kartka do koperty dl pasuje najlepiej. Wybierz estetyczne koperty bez okienka do codziennej i biznesowej korespondencji. Zobacz dostępne warianty i złóż zamówienie.`,
+          description:
+            'Zamówienie kopert DL bez nadruku w sklepie Envelopes krok po kroku: wybór koloru i ilości w konfiguratorze, płatność i wysyłka kurierem — bez etapu akceptacji wizualizacji.',
           steps: HOW_TO_STEPS,
         })}
       />

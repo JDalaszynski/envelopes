@@ -105,6 +105,9 @@ wspierającą tego klastra — przekierowanie 308 stoi w `next.config.mjs`.
   nie zawierają cen. Tytuł filara brzmi dziś „Koperty z nadrukiem logo firmowego od 10 sztuk";
   kwota została w `description`, w pasku faktów i w tabeli cennika.
 - Wejście do konfiguratora z tej strony musi ustawiać krok nadruku (`step`), nie krok 1.
+- **`koperty firmowe z nadrukiem` ma jednego właściciela — filar (8 października 2026).** Fraza
+  stała też w `keywords` strony `/o-nas`; została stamtąd usunięta. Strona marki nie celuje
+  we frazy ofertowe i zostaje przy frazach brandowych.
 - **Rozgraniczenie filar ↔ poradnik plikowy** (15 sierpnia 2026). Filar odpowiada na pytanie
   **„jakie pliki przyjmujemy"** — jednym wierszem tabeli specyfikacji i jednym pytaniem
   w `PRINT_FAQ_ITEMS`. Wpis odpowiada na pytanie **„jak ten plik przygotować"**: rozdzielczość
@@ -246,7 +249,7 @@ odpowiada na nią dziś wyłącznie formatem DL.
 | kartka do koperty dl | wspierająca | INFO | TOFU | — | P1 |
 | koperta prostokątna | wspierająca | KOM | MOFU | — | P2 |
 | koperty prostokątne | wariant lm. | KOM | MOFU | — | P2 |
-| koperty bez okienka | wspierająca | KOM | MOFU | — | P1 |
+| koperty bez okienka | wspierająca `[WPIS]` → poz. 13 | KOM | MOFU | — | P1 |
 
 **Notatki wdrożeniowe:**
 - Wymiar w katalogu to **110 × 220 mm** (`src/lib/catalog.ts`). Każda treść musi używać tej
@@ -268,6 +271,9 @@ odpowiada na nią dziś wyłącznie formatem DL.
   nie dostają: to opis tego samego produktu innym słowem.
 - `koperty bez okienka` — cała oferta jest bez okienka. Filar podaje fakt (wiersz specyfikacji
   + akapit „Brak okienka na całej ofercie"), intencja decyzyjna zostaje dla poz. 13.
+  **8 października 2026:** fraza wyszła z `keywords` filara — stała tam równolegle z `keywords`
+  wpisu `/blog/koperty-bez-okienka-kiedy-je-wybrac`, czyli miała dwóch właścicieli. Zostaje
+  przy wpisie; treść filara się nie zmieniła.
 - **Rozgraniczenie z K3.** Filar nie ma nagłówka cenowego — cena 2,58 zł stoi w jednym wierszu
   tabeli specyfikacji i w `Offer`, a cennik i tabela wartości zamówienia zostają na `/`.
   Sekcja kolorów pokazuje 6 bestsellerów i odsyła do palety na `/#kolory`.

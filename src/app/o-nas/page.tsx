@@ -90,7 +90,9 @@ export const metadata: Metadata = {
     'envelopes o nas',
     'o firmie envelopes',
     'producent kopert ozdobnych',
-    'koperty firmowe z nadrukiem',
+    /* `koperty firmowe z nadrukiem` wyszła stąd 8 października 2026 — fraza
+       należy do filara F1 (`/koperty-z-nadrukiem`), a strona marki nie celuje
+       we frazy ofertowe. */
     'koperty ozdobne dla firm',
   ],
   alternates: { canonical: '/o-nas' },

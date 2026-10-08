@@ -277,6 +277,12 @@ const SHOWCASE: { colorId: string; variant: 'nadruk' | 'personalizacja'; note: s
   },
 ];
 
+/* Opis pod wynikiem wyszukiwania — pkt 5.3 briefu SEO: dwa konkrety i wezwanie,
+   forma „Państwo”. Liczbę odcieni niesie tytuł, więc opis dokłada próg zamówienia
+   i termin kopert gładkich; kwota zostaje w cenniku i w pasku faktów. Przy
+   dzisiejszym cenniku 151 znaków. */
+const homeDescription = `Koperty ozdobne DL w jednej cenie za każdy odcień, także perłowy. Zamówią je Państwo od ${DEFAULT_PRICING.moqWithoutPrint} sztuki, a koperty gładkie wysyłamy w ${DEFAULT_PRICING.leadDaysPlain} dni robocze od wpłaty.`;
+
 export const metadata: Metadata = {
   /* Szablon `%s | Envelopes` z `layout.tsx` obejmuje wyłącznie segmenty
      podrzędne — strona główna jest tym samym segmentem co layout, więc marka
@@ -284,7 +290,7 @@ export const metadata: Metadata = {
   /* Bez kwoty w tytule — decyzja właściciela z 17 sierpnia 2026: cena należy
      do cennika i paska faktów, nie do nagłówka wyniku wyszukiwania. */
   title: `Koperty ozdobne i kolorowe DL w ${COLORS.length} kolorach | Envelopes`,
-  description: `Odkryj najwyższej jakości koperty ozdobne i koperty kolorowe. Wybierz eleganckie koperty ozdobne dl idealne do profesjonalnej korespondencji i zbuduj wizerunek swojej marki. Sprawdź naszą ofertę i złóż zamówienie online.`,
+  description: homeDescription,
   keywords: [
     'koperty ozdobne',
     'koperta ozdobna',
@@ -296,7 +302,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     title: 'Koperty ozdobne DL w 19 kolorach — Envelopes',
-    description: `Odkryj najwyższej jakości koperty ozdobne i koperty kolorowe. Wybierz eleganckie koperty ozdobne dl idealne do profesjonalnej korespondencji i zbuduj wizerunek swojej marki. Sprawdź naszą ofertę i złóż zamówienie online.`,
+    description: homeDescription,
     url: '/',
     images: [
       ogImage(
@@ -333,7 +339,8 @@ export default function HomePage() {
       <JsonLd
         data={howToJsonLd({
           name: 'Jak zamówić koperty ozdobne w Envelopes',
-          description: `Odkryj najwyższej jakości koperty ozdobne i koperty kolorowe. Wybierz eleganckie koperty ozdobne dl idealne do profesjonalnej korespondencji i zbuduj wizerunek swojej marki. Sprawdź naszą ofertę i złóż zamówienie online.`,
+          description:
+            'Zamówienie kopert ozdobnych w sklepie Envelopes krok po kroku: wybór koperty w konfiguratorze, płatność, akceptacja wizualizacji przy nadruku lub personalizacji i wysyłka kurierem.',
           steps: HOW_TO_STEPS,
         })}
       />
