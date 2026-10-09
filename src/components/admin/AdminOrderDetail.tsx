@@ -128,6 +128,12 @@ export function AdminOrderDetail({ number }: { number: string }) {
         </div>
         <div className="row">
           <PaymentPill status={order.paymentStatus} />
+          <Link
+            className="btn btn-secondary btn-sm"
+            href={`/admin/generator-wizualizacji?zamowienie=${order.number}`}
+          >
+            Generuj PDF Wizualizacji
+          </Link>
         </div>
       </div>
 

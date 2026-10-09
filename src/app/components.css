@@ -3380,6 +3380,25 @@ table.data.legal-table {
   color: #fff;
 }
 
+/* Zakładki panelu. Bieżącą wyróżnia podkreślenie, nie sam kolor (pkt 4.7). */
+.admin-bar > .container {
+  flex-wrap: wrap;
+}
+
+.admin-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+}
+
+.admin-tabs a[aria-current='page'] {
+  color: #fff;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
+}
+
 /* ── Panel admina: lista zamówień ── */
 .admin-page-head {
   display: flex;
@@ -3592,6 +3611,180 @@ table.data.admin-orders .order-link:hover {
 
 @media (max-width: 560px) {
   .admin-filters-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ── Panel admina: generator wizualizacji ── */
+.viz-gen {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-5);
+  align-items: start;
+}
+
+/* Podgląd jedzie razem z formularzem; odsunięcie mija przyklejony nagłówek */
+.viz-gen-preview {
+  position: sticky;
+  top: 96px;
+}
+
+@media (max-width: 1000px) {
+  .viz-gen {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .viz-gen-preview {
+    position: static;
+  }
+}
+
+.viz-orders {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 372px;
+  overflow-y: auto;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+}
+
+.viz-order {
+  display: grid;
+  grid-template-columns: 168px minmax(0, 1fr);
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border: none;
+  border-bottom: 1px solid var(--color-line);
+  background: var(--color-surface);
+  text-align: left;
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-standard);
+}
+
+.viz-orders li:last-child .viz-order {
+  border-bottom: none;
+}
+
+.viz-order:hover {
+  background: var(--color-paper);
+}
+
+.viz-order[aria-pressed='true'] {
+  background: var(--color-seal-wash);
+  box-shadow: inset 3px 0 0 var(--color-seal);
+}
+
+/* Obrys fokusu do środka — lista przycina wszystko, co wystaje poza wiersz */
+.viz-order:focus-visible {
+  outline-offset: -2px;
+}
+
+.viz-order-number {
+  display: block;
+  font-weight: 600;
+  color: var(--color-seal);
+}
+
+.viz-order-main,
+.viz-order-sub {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.viz-order-main {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.viz-order-sub {
+  font-size: 13px;
+  color: var(--color-ink-soft);
+}
+
+.viz-selected {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-seal);
+  border-radius: var(--radius-md);
+  background: var(--color-seal-wash);
+}
+
+.viz-items {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.viz-items legend {
+  padding: 0;
+  margin-bottom: var(--space-2);
+}
+
+.viz-file {
+  display: grid;
+  grid-template-columns: 148px minmax(0, 1fr);
+  gap: var(--space-4);
+  align-items: center;
+  padding: var(--space-3);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+}
+
+.viz-file-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.viz-version .input {
+  max-width: 96px;
+}
+
+/* Proporcje arkusza A4 — podgląd ma kształt dokumentu, zanim ten powstanie */
+.viz-pdf {
+  display: block;
+  width: 100%;
+  aspect-ratio: 210 / 297;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm);
+  background: var(--color-paper);
+}
+
+.viz-pdf-empty {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: var(--space-6);
+  border-style: dashed;
+}
+
+.viz-pdf-empty ul {
+  margin: 0;
+  padding-left: var(--space-4);
+}
+
+.viz-pdf-empty li + li {
+  margin-top: var(--space-1);
+}
+
+@media (max-width: 560px) {
+  .viz-order {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-1);
+  }
+
+  .viz-file {
     grid-template-columns: minmax(0, 1fr);
   }
 }
