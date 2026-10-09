@@ -77,6 +77,10 @@ export async function registerTransaction(
     // wyłącznie [a-zA-Z0-9 ęółśążźćń ĘÓŁŚĄŻŹĆŃ . / \ : -], a pauzy nie ma
     // też w ISO-8859-2, na które bramka potrafi przepisać opis.
     description: `Zamówienie ${order.number} - Envelopes`,
+    // Bez tego pola bramka czyta opis jako ISO-8859-2, choć JSON idzie
+    // w UTF-8 — „Zamówienie" wychodziło na stronie płatności jako
+    // „ZamĂłwienie". Sam `charset=utf-8` w nagłówku tego nie zmienia.
+    encoding: 'UTF-8',
     email: order.customer.email,
     country: 'PL',
     language: 'pl',
