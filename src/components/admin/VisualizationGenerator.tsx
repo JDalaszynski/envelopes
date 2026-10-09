@@ -683,8 +683,8 @@ export function VisualizationGenerator({ initialOrder }: { initialOrder?: string
                 </li>
                 <li>lista rzeczy do sprawdzenia przed akceptacją,</li>
                 <li>
-                  przyciski „Akceptuję projekt" i „Zgłaszam uwagi", które otwierają klientowi gotową
-                  wiadomość e-mail.
+                  prośba o akceptację projektu albo opisanie zmian w odpowiedzi na wiadomość e-mail
+                  z tym plikiem.
                 </li>
               </ul>
               {order && image && items.length > 0 && (

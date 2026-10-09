@@ -489,7 +489,7 @@ function drawProduct(page: PdfPage, type: Type, card: ProductCard, y: number, he
 /* ── Karta akceptacji ───────────────────────────────────────── */
 
 const ACCEPT_PADDING = 14;
-const BUTTON_HEIGHT = 26;
+const REPLY_PADDING = 10;
 
 const CHECKLIST = [
   'pisownię nazw, numerów i\u00a0adresów',
@@ -498,15 +498,22 @@ const CHECKLIST = [
   'nakład i\u00a0parametry zamówienia',
 ];
 
-function mailto(subject: string, body: string): string {
-  // RFC 6068: znak końca linii w treści wiadomości to CRLF
-  const encoded = encodeURIComponent(body.replace(/\n/g, '\r\n'));
-  return `mailto:${CONTACT_DETAILS.ordersEmail}?subject=${encodeURIComponent(subject)}&body=${encoded}`;
-}
+/**
+ * Admin wysyła PDF e-mailem i w tej samej wiadomości prosi o akceptację,
+ * więc dokument odsyła klienta do odpowiedzi na nią — bez osobnego kanału
+ * i bez przycisków. Dosłowne „Akceptuję projekt” podpowiada odpowiedź, która
+ * zostawia w korespondencji jednoznaczny ślad.
+ */
+const REPLY = {
+  title: 'Jak odpowiedzieć',
+  body: 'Prosimy odpowiedzieć na\u00a0wiadomość e-mail, w\u00a0której przesłaliśmy ten plik\u00a0— wystarczy napisać „Akceptuję projekt” albo opisać zmiany do\u00a0wprowadzenia.',
+};
 
 interface AcceptCard {
   heading: string[];
-  hint: string[];
+  reply: string[];
+  /** Wysokość białego pola z prośbą o odpowiedź */
+  replyHeight: number;
   height: number;
 }
 
@@ -517,41 +524,31 @@ function measureAccept(type: Type): AcceptCard {
     { font: type.display, size: 13, color: INK },
     inner
   );
-  const hint = wrap(
-    `Przyciski otwierają gotową wiadomość na\u00a0adres ${CONTACT_DETAILS.ordersEmail}. Można też odpowiedzieć na\u00a0wiadomość, w\u00a0której przesłaliśmy ten plik.`,
-    { font: type.sans, size: 7.4, color: INK_SOFT },
-    inner
+  const reply = wrap(
+    REPLY.body,
+    { font: type.sans, size: 8.6, color: INK },
+    inner - REPLY_PADDING * 2
   );
+  const replyHeight = 31 + (reply.length - 1) * 12 + REPLY_PADDING;
   return {
     heading,
-    hint,
+    reply,
+    replyHeight,
     height:
       26 +
       (heading.length - 1) * 16 +
       12 +
       CHECKLIST.length * 14 +
-      8 +
-      BUTTON_HEIGHT * 2 +
-      7 +
-      14 +
-      (hint.length - 1) * 10 +
-      12,
+      10 +
+      replyHeight +
+      ACCEPT_PADDING,
   };
 }
 
-function drawAccept(
-  page: PdfPage,
-  type: Type,
-  card: AcceptCard,
-  input: VisualizationPdfInput,
-  y: number,
-  height: number
-): void {
+function drawAccept(page: PdfPage, type: Type, card: AcceptCard, y: number, height: number): void {
   const x = MARGIN + PRODUCT_WIDTH + GAP;
   const left = x + ACCEPT_PADDING;
   const inner = ACCEPT_WIDTH - ACCEPT_PADDING * 2;
-  const { number } = input.order;
-  const version = `wersja ${input.version}`;
 
   // Język `.notice-seal`: tło zaznaczenia i granatowa krawędź z lewej
   page.rect(x, y, ACCEPT_WIDTH, height, {
@@ -583,49 +580,27 @@ function drawAccept(
     page.text(entry, left + 13, baseline, { font: type.sans, size: 8.8, color: INK });
     cursor += 14;
   }
-  cursor += 8;
 
-  const buttons = [
-    {
-      label: 'Akceptuję projekt',
-      primary: true,
-      uri: mailto(
-        `Akceptacja wizualizacji — zamówienie ${number} (${version})`,
-        `Akceptuję wizualizację (${version}) do zamówienia ${number} i zatwierdzam projekt do druku.\n`
-      ),
-    },
-    {
-      label: 'Zgłaszam uwagi',
-      primary: false,
-      uri: mailto(
-        `Uwagi do wizualizacji — zamówienie ${number} (${version})`,
-        `Uwagi do wizualizacji (${version}) do zamówienia ${number}:\n\n1. `
-      ),
-    },
-  ];
-  for (const button of buttons) {
-    page.rect(
-      left,
-      cursor,
-      inner,
-      BUTTON_HEIGHT,
-      button.primary
-        ? { fill: SEAL, radius: 5 }
-        : { fill: SURFACE, stroke: LINE, lineWidth: 0.75, radius: 5 }
-    );
-    page.text(
-      button.label,
-      left + inner / 2,
-      cursor + BUTTON_HEIGHT / 2 + 3.3,
-      { font: type.sansBold, size: 9.4, color: button.primary ? SURFACE : INK },
-      'center'
-    );
-    page.link(left, cursor, inner, BUTTON_HEIGHT, button.uri, `${button.label} — wiadomość e-mail`);
-    cursor += BUTTON_HEIGHT + 7;
-  }
-
-  card.hint.forEach((line, index) =>
-    page.text(line, left, cursor + 7 + index * 10, { font: type.sans, size: 7.4, color: INK_SOFT })
+  // Pole z prośbą o odpowiedź trzyma się dołu karty — gdy karta jest wyższa
+  // niż jej treść, zapas zostaje nad polem, a nie pod nim
+  const replyTop = y + height - ACCEPT_PADDING - card.replyHeight;
+  page.rect(left, replyTop, inner, card.replyHeight, {
+    fill: SURFACE,
+    stroke: LINE,
+    lineWidth: 0.75,
+    radius: 5,
+  });
+  page.text(REPLY.title, left + REPLY_PADDING, replyTop + 17, {
+    font: type.sansBold,
+    size: 9,
+    color: INK,
+  });
+  card.reply.forEach((line, index) =>
+    page.text(line, left + REPLY_PADDING, replyTop + 31 + index * 12, {
+      font: type.sans,
+      size: 8.6,
+      color: INK,
+    })
   );
 }
 
@@ -726,7 +701,7 @@ export async function buildVisualizationPdf(
     y += imageHeight + GAP;
   } else {
     page.text(
-      'Szczegóły zamówienia i\u00a0przyciski akceptacji znajdują się na\u00a0następnej stronie.',
+      'Szczegóły zamówienia i\u00a0sposób akceptacji znajdują się na\u00a0następnej stronie.',
       MARGIN,
       y + imageHeight + 16,
       { font: type.sans, size: 8.6, color: INK_SOFT }
@@ -738,7 +713,7 @@ export async function buildVisualizationPdf(
   // produktów w razie potrzeby płyną dalej na kolejne strony
   const rowPage = page;
   const single = products.length === 1;
-  drawAccept(rowPage, type, accept, input, y, single ? rowHeight : accept.height);
+  drawAccept(rowPage, type, accept, y, single ? rowHeight : accept.height);
 
   let productY = y;
   for (const card of products) {
