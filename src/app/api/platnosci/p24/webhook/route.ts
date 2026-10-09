@@ -26,6 +26,7 @@ export async function POST(request: Request) {
 
   const order = await getOrder(notification.sessionId);
   if (!order) {
+    console.warn(`[Przelewy24] Notyfikacja dla nieznanego zamówienia ${notification.sessionId}.`);
     return NextResponse.json({ error: 'Nie znaleziono zamówienia.' }, { status: 404 });
   }
 

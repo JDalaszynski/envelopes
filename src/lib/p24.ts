@@ -148,8 +148,11 @@ export function verifyNotificationSignature(n: P24Notification): boolean {
 export async function verifyTransaction(n: P24Notification): Promise<boolean> {
   if (!isP24Configured) return true;
   try {
+    // Weryfikacja to PUT — w odróżnieniu od rejestracji. Na POST bramka
+    // odpowiada stroną HTML „Nieprawidłowe żądanie", wpłata zostaje w panelu
+    // ze statusem „Do wykorzystania" i trzeba ją księgować ręcznie.
     const res = await fetch(`${API_BASE}/transaction/verify`, {
-      method: 'POST',
+      method: 'PUT',
       headers: { authorization: authHeader(), 'content-type': 'application/json; charset=utf-8' },
       body: JSON.stringify({
         merchantId: n.merchantId,
@@ -167,9 +170,20 @@ export async function verifyTransaction(n: P24Notification): Promise<boolean> {
         }),
       }),
     });
-    const json = (await res.json()) as { data?: { status?: string } };
-    return json.data?.status === 'success';
-  } catch {
+    const raw = await res.text();
+    let json: { data?: { status?: string } } = {};
+    try {
+      json = JSON.parse(raw) as typeof json;
+    } catch {
+      /* odpowiedź nie jest JSON-em — treść trafia do logu poniżej */
+    }
+    if (json.data?.status === 'success') return true;
+    console.error(
+      `[Przelewy24] Weryfikacja ${n.sessionId} odrzucona: HTTP ${res.status}, ${raw.slice(0, 300)}`
+    );
+    return false;
+  } catch (error) {
+    console.error(`[Przelewy24] Błąd połączenia przy weryfikacji ${n.sessionId}:`, error);
     return false;
   }
 }
