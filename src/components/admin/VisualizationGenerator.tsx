@@ -8,6 +8,7 @@ import { formatBytes } from '@/components/ui/FileDropzone';
 import { useAuth } from '@/components/providers/AuthProvider';
 import { formatDate, needsProduction, plural } from '@/lib/pricing';
 import type { Order } from '@/lib/types';
+import { buildVisualizationEmail, mailtoLink } from '@/lib/visualization-email';
 import {
   VISUALIZATION_FONTS,
   buildVisualizationPdf,
@@ -152,6 +153,12 @@ export function VisualizationGenerator({ initialOrder }: { initialOrder?: string
   const [generating, setGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<GeneratedPdf | null>(null);
+
+  /** Poprawki Admina w temacie i treści — ważne tylko dla wiadomości, do której powstały */
+  const [mailDraft, setMailDraft] = useState<{ key: string; subject: string; body: string } | null>(
+    null
+  );
+  const [copied, setCopied] = useState<'to' | 'subject' | 'body' | null>(null);
 
   /** Każda zmiana danych wejściowych unieważnia wygenerowany wcześniej dokument. */
   const clearResult = useCallback(() => {
@@ -305,6 +312,37 @@ export function VisualizationGenerator({ initialOrder }: { initialOrder?: string
       setError('Nie udało się wygenerować PDF-a. Odśwież stronę i spróbuj ponownie.');
     }
     setGenerating(false);
+  }
+
+  /* Wiadomość do klienta powstaje z szablonu dla wybranego zamówienia, pozycji
+     i wersji. Zmiana któregokolwiek z nich daje nowy klucz, więc ręczne
+     poprawki do poprzedniej wiadomości nie przechodzą na następną. */
+  const mailTemplate = useMemo(
+    () => (order && items.length > 0 ? buildVisualizationEmail({ order, items, version }) : null),
+    [order, items, version]
+  );
+  const mailKey = order ? `${order.number}|${items.map((item) => item.id).join(',')}|${version}` : '';
+  const mailEdited = mailDraft?.key === mailKey;
+  const mail = mailTemplate && {
+    ...mailTemplate,
+    ...(mailEdited ? { subject: mailDraft.subject, body: mailDraft.body } : {}),
+  };
+
+  function editMail(patch: { subject?: string; body?: string }) {
+    if (!mail) return;
+    setMailDraft({ key: mailKey, subject: mail.subject, body: mail.body, ...patch });
+  }
+
+  async function copy(field: 'to' | 'subject' | 'body') {
+    if (!mail) return;
+    try {
+      await navigator.clipboard.writeText(mail[field]);
+      setCopied(field);
+      window.setTimeout(() => setCopied((current) => (current === field ? null : current)), 2000);
+    } catch {
+      // Schowek bywa zablokowany (np. strona bez fokusu) — pole da się zaznaczyć ręcznie
+      setCopied(null);
+    }
   }
 
   if (loading || !user || user.role !== 'admin') return <p className="muted">Weryfikacja dostępu…</p>;
@@ -648,6 +686,97 @@ export function VisualizationGenerator({ initialOrder }: { initialOrder?: string
                   </a>
                 </p>
               </div>
+            )}
+          </section>
+
+          {/* ── 4. Wiadomość do klienta ── */}
+          <section className="card card-lg checkout-section" aria-labelledby={`${fieldId}-mail`}>
+            <header className="checkout-section-head">
+              <span className="checkout-num" aria-hidden="true">
+                4
+              </span>
+              <div>
+                <h2 id={`${fieldId}-mail`}>Wiadomość do klienta</h2>
+                <p className="small muted" style={{ margin: 0 }}>
+                  Gotowy e-mail z prośbą o akceptację. PDF trzeba dołączyć jako załącznik.
+                </p>
+              </div>
+            </header>
+
+            {!mail ? (
+              <p className="small muted" style={{ margin: 0 }}>
+                Treść wiadomości pojawi się po wybraniu zamówienia.
+              </p>
+            ) : (
+              <>
+                <div className="field">
+                  <label htmlFor={`${fieldId}-mail-to`}>Do</label>
+                  <div className="viz-mail-row">
+                    <input id={`${fieldId}-mail-to`} className="input" value={mail.to} readOnly />
+                    <button
+                      type="button"
+                      className="btn btn-secondary"
+                      onClick={() => void copy('to')}
+                    >
+                      {copied === 'to' ? 'Skopiowano' : 'Kopiuj'}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="field">
+                  <label htmlFor={`${fieldId}-mail-subject`}>Temat</label>
+                  <div className="viz-mail-row">
+                    <input
+                      id={`${fieldId}-mail-subject`}
+                      className="input"
+                      value={mail.subject}
+                      onChange={(e) => editMail({ subject: e.target.value })}
+                    />
+                    <button
+                      type="button"
+                      className="btn btn-secondary"
+                      onClick={() => void copy('subject')}
+                    >
+                      {copied === 'subject' ? 'Skopiowano' : 'Kopiuj'}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="field">
+                  <label htmlFor={`${fieldId}-mail-body`}>Treść</label>
+                  <textarea
+                    id={`${fieldId}-mail-body`}
+                    className="textarea viz-mail-body"
+                    rows={16}
+                    value={mail.body}
+                    onChange={(e) => editMail({ body: e.target.value })}
+                  />
+                </div>
+
+                <div className="row" style={{ gap: 'var(--space-2)' }}>
+                  <button type="button" className="btn" onClick={() => void copy('body')}>
+                    {copied === 'body' ? 'Skopiowano treść' : 'Kopiuj treść'}
+                  </button>
+                  <a className="btn btn-secondary" href={mailtoLink(mail)}>
+                    Otwórz w programie pocztowym
+                  </a>
+                  {mailEdited && (
+                    <button
+                      type="button"
+                      className="btn btn-ghost"
+                      onClick={() => setMailDraft(null)}
+                    >
+                      Przywróć szablon
+                    </button>
+                  )}
+                </div>
+
+                <p className="small muted" style={{ margin: 0 }} aria-live="polite">
+                  {copied
+                    ? 'Skopiowano do schowka.'
+                    : 'Temat i treść można poprawić przed skopiowaniem. Zmiana zamówienia lub wersji wczytuje szablon od nowa.'}
+                </p>
+              </>
             )}
           </section>
         </div>

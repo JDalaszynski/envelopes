@@ -96,6 +96,7 @@ src/
     brevo.ts, p24.ts       integracje
     pdf.ts, documents.ts   generator PDF (proforma, faktura, regulamin)
     visualization-pdf.ts   PDF wizualizacji do akceptacji — zakładka „Generator Wizualizacji” w panelu Admina
+    visualization-email.ts szablon wiadomości, w której Admin wysyła ten PDF klientowi
     pdf-writer.ts,         pisarz PDF z krojami marki (public/fonts/) i przycinanie fontów;
     pdf-font.ts            dokument powstaje w przeglądarce, plik grafika nie trafia na serwer
 ```

@@ -3750,6 +3750,28 @@ table.data.admin-orders .order-link:hover {
   max-width: 96px;
 }
 
+/* Pole z przyciskiem „Kopiuj" w jednej linii */
+.viz-mail-row {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.viz-mail-row .input {
+  flex: 1;
+  min-width: 0;
+}
+
+.viz-mail-row .btn {
+  flex-shrink: 0;
+  min-width: 112px;
+}
+
+.viz-mail-body {
+  min-height: 320px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
 /* Proporcje arkusza A4 — podgląd ma kształt dokumentu, zanim ten powstanie */
 .viz-pdf {
   display: block;
