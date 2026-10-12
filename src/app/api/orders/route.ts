@@ -11,6 +11,7 @@ import {
 } from '@/lib/pricing';
 import { buildProductName } from '@/lib/product-name';
 import {
+  customerView,
   generateApprovalToken,
   isDeferredInvoice,
   isGatewayPayment,
@@ -37,7 +38,9 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: 'Wymagane logowanie.' }, { status: 401 });
     }
     const orders = await listOrders({ email });
-    return NextResponse.json({ orders: orders.filter((o) => o.number === number) });
+    return NextResponse.json({
+      orders: orders.filter((o) => o.number === number).map(customerView),
+    });
   }
 
   const isAdmin = user.role === 'admin';
@@ -56,11 +59,13 @@ export async function GET(request: Request) {
     const merged = new Map(orders.map((o) => [o.number, o]));
     byEmail.forEach((o) => merged.set(o.number, o));
     return NextResponse.json({
-      orders: [...merged.values()].sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1)),
+      orders: [...merged.values()]
+        .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1))
+        .map(customerView),
     });
   }
 
-  return NextResponse.json({ orders });
+  return NextResponse.json({ orders: isAdmin ? orders : orders.map(customerView) });
 }
 
 interface CreateOrderBody {
@@ -214,6 +219,7 @@ async function createOrder(request: Request) {
       // Brak konfiguracji bramki — potwierdzamy płatność lokalnie, żeby
       // ścieżka zakupowa pozostała przejezdna od końca do końca.
       order.paymentStatus = 'oplacone';
+      order.paidAt = now.toISOString();
       order.p24Reference = `SYMULACJA-${order.number}`;
       order.history.push({
         at: now.toISOString(),

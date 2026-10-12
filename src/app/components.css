@@ -3844,6 +3844,245 @@ table.data.admin-orders .order-link:hover {
   }
 }
 
+/* ── Panel admina: faktura zamówienia ── */
+.confirm-dialog.invoice-dialog {
+  width: min(680px, calc(100vw - 32px));
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+}
+
+.invoice-preview {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  background: var(--color-paper);
+}
+
+.invoice-preview .field-label {
+  margin: 0 0 var(--space-1);
+}
+
+.invoice-lines {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.invoice-lines th {
+  padding: var(--space-1) var(--space-2) var(--space-1) 0;
+  border-bottom: 1px solid var(--color-line);
+  color: var(--color-ink-soft);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.invoice-lines td {
+  padding: var(--space-2) var(--space-2) var(--space-2) 0;
+  border-bottom: 1px solid var(--color-line);
+  vertical-align: top;
+}
+
+.invoice-lines th:not(:first-child),
+.invoice-lines td:not(:first-child) {
+  padding-right: 0;
+  padding-left: var(--space-3);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.invoice-lines tfoot td {
+  border-bottom: none;
+  font-weight: 600;
+}
+
+.invoice-lines tfoot td:first-child {
+  text-align: left;
+}
+
+.invoice-dates {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+  align-items: start;
+}
+
+@media (max-width: 560px) {
+  .invoice-dates {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ── Panel admina: ewidencja sprzedaży ── */
+.register-toolbar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+
+.register-toolbar .field {
+  min-width: 200px;
+}
+
+.register.is-busy {
+  opacity: 0.55;
+  transition: opacity var(--duration-fast) var(--ease-standard);
+}
+
+.register-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.register-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.register-tile.is-alarm {
+  border-color: var(--color-error);
+}
+
+.register-tile.is-alarm .register-tile-value {
+  color: var(--color-error);
+}
+
+.register-tile-label {
+  color: var(--color-ink-soft);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.register-tile-value {
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.register-tile-sub {
+  color: var(--color-ink-soft);
+  font-size: 12px;
+}
+
+/* Wiersz niesie trzy dokumenty naraz, więc tabela jest gęstsza od listy
+   zamówień i przewija się w poziomie, zamiast łamać kolumny kwot. */
+table.data.register-table {
+  min-width: 1280px;
+  font-size: 13px;
+}
+
+/* Nabywca i przedmiot sprzedaży niosą najdłuższe teksty — bez minimum
+   przegrywają z kolumnami numerów i łamią się po jednym słowie. */
+table.data.register-table th.col-buyer {
+  min-width: 200px;
+}
+
+table.data.register-table th.col-items {
+  min-width: 220px;
+}
+
+table.data.register-table th,
+table.data.register-table td {
+  padding: var(--space-2) var(--space-3);
+}
+
+table.data.register-table .num {
+  text-align: right;
+  white-space: nowrap;
+}
+
+table.data.register-table .cell-sub {
+  display: block;
+  color: var(--color-ink-soft);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+/* Numery zamówień i faktur czyta się i kopiuje w całości */
+table.data.register-table a.mono-sm,
+table.data.register-table span.mono-sm:not(.register-ksef) {
+  white-space: nowrap;
+}
+
+table.data.register-table .register-line {
+  display: block;
+}
+
+table.data.register-table .register-line + .register-line {
+  margin-top: 2px;
+}
+
+table.data.register-table .register-ksef {
+  max-width: 190px;
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
+
+table.data.register-table tr.has-checks td {
+  border-bottom: none;
+}
+
+table.data.register-table tr.register-checks td {
+  padding-top: 0;
+}
+
+table.data.register-table tr.register-checks:hover {
+  background: none;
+}
+
+.register-check {
+  display: block;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.register-check-blad {
+  color: var(--color-error);
+}
+
+.register-check-uwaga {
+  color: #7a5c1e;
+}
+
+table.data.register-table tfoot td {
+  border-top: 2px solid var(--color-ink);
+  border-bottom: none;
+  font-weight: 600;
+}
+
+table.data.register-table tfoot tr + tr td {
+  border-top: 1px solid var(--color-line);
+}
+
+.register-section {
+  margin-top: var(--space-6);
+}
+
+.register-section h2 {
+  margin: 0 0 var(--space-1);
+  font-size: 20px;
+}
+
+.register-section > p {
+  margin: 0 0 var(--space-3);
+  max-width: 78ch;
+}
+
 /* ── Toast ── */
 .toast {
   position: fixed;

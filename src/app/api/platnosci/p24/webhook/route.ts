@@ -51,7 +51,20 @@ export async function POST(request: Request) {
   const now = new Date().toISOString();
   const updated = await updateOrder(order.number, {
     paymentStatus: 'oplacone',
+    paidAt: now,
     p24Reference: String(notification.orderId),
+    // Dowód zapłaty do ewidencji sprzedaży; ewidencja uzupełni go o dzień
+    // transakcji i numer paczki wypłaty, odpytując bramkę po numerze zamówienia
+    p24: {
+      orderId: notification.orderId,
+      amount: notification.amount,
+      currency: notification.currency,
+      status: 2,
+      statement: notification.statement,
+      methodId: notification.methodId,
+      source: 'webhook',
+      checkedAt: now,
+    },
     history: [
       ...order.history,
       {

@@ -6,7 +6,7 @@ import path from 'node:path';
 import { getDb, isAdminConfigured } from './firebase/admin';
 import { resolvePricing, type PricingConfig } from './pricing';
 import { buildOrderNumber, generateOrderCode } from './orders';
-import type { Order, UserProfile } from './types';
+import type { InvoiceTask, Order, UserProfile } from './types';
 import { seedOrders } from './seed';
 
 /**
@@ -230,6 +230,64 @@ export async function updateOrder(
   const updated: Order = { ...existing, ...patch, updatedAt: new Date().toISOString() };
   await saveOrder(updated);
   return updated;
+}
+
+/* ── Faktury ────────────────────────────────────────────────── */
+
+/**
+ * Blokada bez numeru zlecenia oznacza żądanie przerwane, zanim inFakt je
+ * przyjął. Po tym czasie uznajemy ją za porzuconą.
+ */
+const INVOICE_TASK_TTL_MS = 10 * 60 * 1000;
+
+export type InvoiceClaim = 'claimed' | 'has-invoice' | 'busy' | 'missing';
+
+function decideInvoiceClaim(order: Order | null): InvoiceClaim {
+  if (!order) return 'missing';
+  if (order.invoice) return 'has-invoice';
+  const task = order.invoiceTask;
+  if (task && (task.reference || Date.now() - Date.parse(task.startedAt) < INVOICE_TASK_TTL_MS)) {
+    return 'busy';
+  }
+  return 'claimed';
+}
+
+/**
+ * Zajmuje zamówienie na czas wystawiania faktury. W Firestore robi to
+ * transakcja: dwa równoległe kliknięcia „Wystaw fakturę” nie mogą oba
+ * przejść sprawdzenia „faktury jeszcze nie ma”, bo skończyłoby się to dwiema
+ * fakturami do jednej sprzedaży.
+ */
+export async function claimInvoiceTask(number: string, task: InvoiceTask): Promise<InvoiceClaim> {
+  if (usingFirestore()) {
+    const db = getDb()!;
+    const ref = db.collection('orders').doc(number);
+    return db.runTransaction(async (tx) => {
+      const snap = await tx.get(ref);
+      const claim = decideInvoiceClaim(snap.exists ? (snap.data() as Order) : null);
+      if (claim === 'claimed') {
+        tx.update(ref, { invoiceTask: task, updatedAt: new Date().toISOString() });
+      }
+      return claim;
+    });
+  }
+  const db = await readLocal();
+  const claim = decideInvoiceClaim(db.orders[number] ?? null);
+  if (claim === 'claimed') {
+    db.orders[number] = { ...db.orders[number], invoiceTask: task, updatedAt: new Date().toISOString() };
+    await writeLocal(db);
+  }
+  return claim;
+}
+
+/** Zamówienie, do którego przypisano fakturę o danym identyfikatorze inFakt. */
+export async function findOrderByInvoice(uuid: string): Promise<Order | null> {
+  if (usingFirestore()) {
+    const snap = await getDb()!.collection('orders').where('invoice.uuid', '==', uuid).limit(1).get();
+    return snap.empty ? null : (snap.docs[0].data() as Order);
+  }
+  const db = await readLocal();
+  return Object.values(db.orders).find((o) => o.invoice?.uuid === uuid) ?? null;
 }
 
 /**

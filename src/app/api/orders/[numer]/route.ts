@@ -3,6 +3,8 @@ import { NextResponse } from 'next/server';
 import { verifyRequest } from '@/lib/firebase/admin';
 import { deleteOrder, getOrder, updateOrder } from '@/lib/store';
 import { paymentConfirmedEmail, sendEmail } from '@/lib/brevo';
+import { isValidDay, warsawDay } from '@/lib/accounting';
+import { customerView } from '@/lib/orders';
 import type { Order } from '@/lib/types';
 
 export const runtime = 'nodejs';
@@ -29,11 +31,13 @@ export async function GET(
     return NextResponse.json({ error: 'Brak dostępu do tego zamówienia.' }, { status: 403 });
   }
 
-  return NextResponse.json({ order });
+  return NextResponse.json({ order: user?.role === 'admin' ? order : customerView(order) });
 }
 
 interface PatchBody {
   paymentStatus?: 'oczekuje' | 'oplacone';
+  /** Dzień wpływu na konto (RRRR-MM-DD) przy ręcznym potwierdzeniu wpłaty */
+  paidDay?: string;
   trackingNumber?: string;
   customer?: Partial<Order['customer']>;
   items?: Order['items'];
@@ -64,6 +68,13 @@ export async function PATCH(
 
   if (body.paymentStatus && body.paymentStatus !== order.paymentStatus) {
     patch.paymentStatus = body.paymentStatus;
+    /* Dzień wpływu podaje Admin, bo przelew potwierdza się nieraz dzień po
+       zaksięgowaniu, a ewidencja sprzedaży ma się zgadzać z wyciągiem.
+       Południe UTC wypada w Polsce zawsze tego samego dnia kalendarzowego. */
+    const today = warsawDay(new Date());
+    const paidDay = body.paidDay && isValidDay(body.paidDay) && body.paidDay <= today ? body.paidDay : today;
+    patch.paidAt =
+      body.paymentStatus === 'oplacone' ? (paidDay === today ? now : `${paidDay}T12:00:00.000Z`) : null;
     history.push({
       at: now,
       by: user.email ?? 'admin',
@@ -71,6 +82,9 @@ export async function PATCH(
         body.paymentStatus === 'oplacone'
           ? 'Oznaczono jako opłacone (ręczne potwierdzenie wpłaty)'
           : 'Cofnięto potwierdzenie płatności',
+      ...(body.paymentStatus === 'oplacone' && paidDay !== today
+        ? { detail: `Dzień wpływu: ${paidDay}` }
+        : {}),
     });
     if (body.paymentStatus === 'oplacone') {
       await sendEmail(paymentConfirmedEmail({ ...order, paymentStatus: 'oplacone' }));
@@ -111,6 +125,17 @@ export async function DELETE(
 
   if (!user || user.role !== 'admin') {
     return NextResponse.json({ error: 'Wymagane uprawnienia administratora.' }, { status: 403 });
+  }
+
+  // Faktura bez zamówienia zostałaby w ewidencji sprzedaży jako sprzedaż bez pokrycia
+  const order = await getOrder(numer);
+  if (order?.invoice) {
+    return NextResponse.json(
+      {
+        error: `Zamówienie ma fakturę ${order.invoice.number}. Najpierw odłącz fakturę w szczegółach zamówienia.`,
+      },
+      { status: 409 }
+    );
   }
 
   const deleted = await deleteOrder(numer);

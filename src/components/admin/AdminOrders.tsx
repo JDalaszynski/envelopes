@@ -149,7 +149,10 @@ export function AdminOrders() {
             headers: token ? { authorization: `Bearer ${token}` } : {},
           });
           // 404 = zamówienia już nie ma, czyli efekt ten sam, co po usunięciu
-          return { number, ok: res.ok || res.status === 404 };
+          if (res.ok || res.status === 404) return { number, ok: true };
+          // Serwer odmawia np. usunięcia zamówienia z fakturą i mówi dlaczego
+          const json = (await res.json().catch(() => ({}))) as { error?: string };
+          return { number, ok: false, reason: json.error };
         } catch {
           return { number, ok: false };
         }
@@ -159,6 +162,7 @@ export function AdminOrders() {
 
     const removed = results.filter((r) => r.ok).map((r) => r.number);
     const failed = results.filter((r) => !r.ok).map((r) => r.number);
+    const reasons = results.flatMap((r) => (!r.ok && 'reason' in r && r.reason ? [r.reason] : []));
 
     if (removed.length) {
       setOrders((prev) => prev.filter((order) => !removed.includes(order.number)));
@@ -168,9 +172,11 @@ export function AdminOrders() {
     if (failed.length) {
       setPendingDelete(failed);
       setDeleteError(
-        failed.length === 1
-          ? `Nie udało się usunąć zamówienia ${failed[0]}. Spróbuj ponownie.`
-          : `Nie udało się usunąć ${failed.length} zamówień. Spróbuj ponownie.`
+        reasons.length > 0
+          ? reasons.join(' ')
+          : failed.length === 1
+            ? `Nie udało się usunąć zamówienia ${failed[0]}. Spróbuj ponownie.`
+            : `Nie udało się usunąć ${failed.length} zamówień. Spróbuj ponownie.`
       );
       if (removed.length) setNote(`Usunięto: ${removed.length}.`);
       return;

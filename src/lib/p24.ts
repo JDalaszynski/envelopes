@@ -1,7 +1,8 @@
 import 'server-only';
 
 import { createHash } from 'node:crypto';
-import type { Order } from './types';
+import { warsawDay, warsawTime } from './accounting';
+import type { Order, P24Transaction } from './types';
 
 /**
  * Przelewy24 — REST API (pkt 1.5, 1.8).
@@ -185,5 +186,76 @@ export async function verifyTransaction(n: P24Notification): Promise<boolean> {
   } catch (error) {
     console.error(`[Przelewy24] Błąd połączenia przy weryfikacji ${n.sessionId}:`, error);
     return false;
+  }
+}
+
+/* ── Dane transakcji do ewidencji sprzedaży ─────────────────── */
+
+/**
+ * Bramka podaje datę jako ciąg cyfr `RRRRMMDDGGmm` w czasie polskim; na
+ * wypadek innego zapisu próbujemy też zwykłej daty.
+ */
+export function parseP24Date(raw: unknown): { day: string; time: string | null } | null {
+  if (typeof raw !== 'string' && typeof raw !== 'number') return null;
+  const value = String(raw).trim();
+  const digits = /^(\d{4})(\d{2})(\d{2})(?:(\d{2})(\d{2}))?/.exec(value);
+  if (digits && /^\d{8,14}$/.test(value)) {
+    const [, year, month, date, hour, minute] = digits;
+    return { day: `${year}-${month}-${date}`, time: hour ? `${hour}:${minute}` : null };
+  }
+  const parsed = new Date(value);
+  if (Number.isNaN(parsed.getTime())) return null;
+  return { day: warsawDay(parsed), time: warsawTime(parsed) };
+}
+
+export type P24Lookup =
+  | { found: true; transaction: P24Transaction }
+  | { found: false; reason: 'brak-konfiguracji' | 'nie-znaleziono' | 'blad' };
+
+/**
+ * Pobiera transakcję po numerze zamówienia (`sessionId`). To niezależne od
+ * notyfikacji potwierdzenie wpłaty: status, kwota, dzień zapłaty, tytuł
+ * przelewu i numer paczki wypłaty, po którym wpłatę widać na wyciągu.
+ */
+export async function fetchTransaction(sessionId: string): Promise<P24Lookup> {
+  if (!isP24Configured) return { found: false, reason: 'brak-konfiguracji' };
+  try {
+    const res = await fetch(
+      `${API_BASE}/transaction/by/sessionId/${encodeURIComponent(sessionId)}`,
+      { headers: { authorization: authHeader() }, cache: 'no-store', signal: AbortSignal.timeout(15_000) }
+    );
+    if (res.status === 404) return { found: false, reason: 'nie-znaleziono' };
+    const raw = await res.text();
+    let json: { data?: Record<string, unknown> } = {};
+    try {
+      json = JSON.parse(raw) as typeof json;
+    } catch {
+      /* odpowiedź nie jest JSON-em — treść trafia do logu poniżej */
+    }
+    const data = json.data;
+    if (!res.ok || !data || !data.orderId) {
+      console.error(`[Przelewy24] Odczyt transakcji ${sessionId}: HTTP ${res.status}, ${raw.slice(0, 300)}`);
+      return { found: false, reason: res.ok ? 'nie-znaleziono' : 'blad' };
+    }
+    const paid = parseP24Date(data.dateOfTransaction) ?? parseP24Date(data.date);
+    return {
+      found: true,
+      transaction: {
+        orderId: Number(data.orderId),
+        amount: Number(data.amount ?? 0),
+        currency: String(data.currency ?? 'PLN'),
+        status: Number(data.status ?? 0),
+        statement: data.statement ? String(data.statement) : null,
+        methodId: data.paymentMethod ? Number(data.paymentMethod) : null,
+        paidDay: paid?.day ?? null,
+        paidTime: paid?.time ?? null,
+        batchId: data.batchId ? Number(data.batchId) : null,
+        source: 'api',
+        checkedAt: new Date().toISOString(),
+      },
+    };
+  } catch (error) {
+    console.error(`[Przelewy24] Błąd połączenia przy odczycie transakcji ${sessionId}:`, error);
+    return { found: false, reason: 'blad' };
   }
 }

@@ -7,6 +7,7 @@ import { useAuth } from '@/components/providers/AuthProvider';
 
 const TABS = [
   { href: '/admin/zamowienia', label: 'Zamówienia' },
+  { href: '/admin/ewidencja-sprzedazy', label: 'Ewidencja sprzedaży' },
   { href: '/admin/generator-wizualizacji', label: 'Generator Wizualizacji' },
 ];
 

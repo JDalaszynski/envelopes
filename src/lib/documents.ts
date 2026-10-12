@@ -2,25 +2,25 @@ import 'server-only';
 
 import { buildPdf, type PdfLine } from './pdf';
 import { formatDate, formatPrice, round2 } from './pricing';
-import { BANK_TRANSFER_DETAILS, CONTACT_DETAILS, PAYMENT_METHOD_LABEL } from './orders';
+import { BANK_TRANSFER_DETAILS, CONTACT_DETAILS } from './orders';
 import type { Order } from './types';
 
-/** Faktura proforma (pkt 1.12) oraz faktura VAT do zamówienia. */
-export function buildInvoicePdf(order: Order, kind: 'proforma' | 'vat'): Buffer {
-  const title = kind === 'proforma' ? 'FAKTURA PROFORMA' : 'FAKTURA VAT';
+/**
+ * Faktura proforma (pkt 1.12) — wezwanie do zapłaty przy przelewie
+ * tradycyjnym. Fakturę VAT wystawia wyłącznie inFakt (`infakt.ts`); sklep nie
+ * składa jej sam, żeby do jednej sprzedaży nie istniały dwa dokumenty.
+ */
+export function buildProformaPdf(order: Order): Buffer {
   const buyer = order.customer.isCompany
     ? [order.customer.firma ?? '', order.customer.nip ? `NIP ${order.customer.nip}` : '']
     : [`${order.customer.imie} ${order.customer.nazwisko}`];
 
   const lines: PdfLine[] = [
     { text: 'Envelopes', size: 20, bold: true },
-    { text: `${title} do zamowienia ${order.number}`.replace('zamowienia', 'zamówienia'), size: 12, bold: true, spaceBefore: 6 },
+    { text: `FAKTURA PROFORMA do zamówienia ${order.number}`, size: 12, bold: true, spaceBefore: 6 },
     { text: `Data wystawienia: ${formatDate(order.createdAt)}`, size: 10, spaceBefore: 10 },
     {
-      text:
-        kind === 'proforma'
-          ? 'Dokument nie jest fakturą VAT i nie stanowi podstawy do odliczenia podatku.'
-          : `Metoda płatności: ${PAYMENT_METHOD_LABEL[order.paymentMethod]}`,
+      text: 'Dokument nie jest fakturą VAT i nie stanowi podstawy do odliczenia podatku.',
       size: 9,
     },
 
@@ -62,28 +62,19 @@ export function buildInvoicePdf(order: Order, kind: 'proforma' | 'vat'): Buffer 
     { text: 'RAZEM BRUTTO', size: 12, bold: true, right: formatPrice(order.totals.gross), spaceBefore: 4 }
   );
 
-  if (kind === 'proforma') {
-    lines.push(
-      { text: 'Dane do przelewu', size: 11, bold: true, spaceBefore: 20 },
-      { text: `Odbiorca: ${BANK_TRANSFER_DETAILS.odbiorca}`, size: 10 },
-      { text: `Bank: ${BANK_TRANSFER_DETAILS.bank}`, size: 10 },
-      { text: `Numer konta: ${BANK_TRANSFER_DETAILS.konto}`, size: 10 },
-      { text: `Kwota: ${formatPrice(order.totals.gross)}`, size: 10 },
-      { text: `Tytuł przelewu: ${order.number}`, size: 10, bold: true },
-      {
-        text: 'Druk rusza po zaksięgowaniu wpłaty (lub po ewentualnym zaakceptowaniu projektów przed drukiem). ',
-        size: 9,
-        spaceBefore: 10,
-      }
-    );
-  } else if (order.paymentMethod === 'faktura_odroczona' && order.paymentDueDate) {
-    lines.push({
-      text: `Termin płatności: ${formatDate(order.paymentDueDate)}`,
-      size: 11,
-      bold: true,
-      spaceBefore: 16,
-    });
-  }
+  lines.push(
+    { text: 'Dane do przelewu', size: 11, bold: true, spaceBefore: 20 },
+    { text: `Odbiorca: ${BANK_TRANSFER_DETAILS.odbiorca}`, size: 10 },
+    { text: `Bank: ${BANK_TRANSFER_DETAILS.bank}`, size: 10 },
+    { text: `Numer konta: ${BANK_TRANSFER_DETAILS.konto}`, size: 10 },
+    { text: `Kwota: ${formatPrice(order.totals.gross)}`, size: 10 },
+    { text: `Tytuł przelewu: ${order.number}`, size: 10, bold: true },
+    {
+      text: 'Druk rusza po zaksięgowaniu wpłaty (lub po ewentualnym zaakceptowaniu projektów przed drukiem). ',
+      size: 9,
+      spaceBefore: 10,
+    }
+  );
 
   lines.push({
     text: `Wartość zamówienia obliczona wg cennika obowiązującego ${formatDate(order.createdAt)}.`,

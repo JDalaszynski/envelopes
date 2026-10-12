@@ -144,6 +144,73 @@ export interface OrderHistoryEntry {
   detail?: string;
 }
 
+/* ── Księgowość: faktura z inFakt i transakcja Przelewy24 ───── */
+
+/**
+ * Faktura z inFakt przypisana do zamówienia. To migawka — źródłem prawdy
+ * pozostaje inFakt, a pola odświeżają się przy wejściu w zamówienie
+ * i przy budowaniu ewidencji sprzedaży.
+ */
+export interface OrderInvoice {
+  /** Identyfikator faktury w inFakt — po nim pobieramy PDF i status */
+  uuid: string;
+  number: string;
+  /** Daty z faktury w formacie RRRR-MM-DD */
+  invoiceDate: string;
+  saleDate: string;
+  paidDate?: string | null;
+  /** Status w inFakt: `draft`, `sent`, `printed` albo `paid` */
+  status: string;
+  /** Kwoty w złotych, tak jak `Order.totals` */
+  net: number;
+  vat: number;
+  gross: number;
+  /** Stan wysyłki do KSeF; `null`, gdy faktury tam nie wysłano */
+  ksefStatus?: string | null;
+  ksefNumber?: string | null;
+  /** `wystawiona` z panelu albo `powiazana` — istniała w inFakt wcześniej */
+  origin: 'wystawiona' | 'powiazana';
+  linkedAt: string;
+  linkedBy: string;
+  syncedAt: string;
+}
+
+/**
+ * Trwające wystawianie faktury. inFakt tworzy fakturę asynchronicznie, więc
+ * między zleceniem a numerem faktury zamówienie niesie ten wpis — to on nie
+ * pozwala wystawić drugiej faktury do tego samego zamówienia.
+ */
+export interface InvoiceTask {
+  /** Numer referencyjny zlecenia w inFakt; `null`, zanim inFakt go odda */
+  reference: string | null;
+  startedAt: string;
+  by: string;
+  /** Czy po utworzeniu faktura ma pójść do KSeF */
+  sendToKsef?: boolean;
+}
+
+/** Dane transakcji z Przelewy24 — dowód zapłaty do ewidencji sprzedaży. */
+export interface P24Transaction {
+  /** Numer transakcji w Przelewy24 */
+  orderId: number;
+  /** Kwota w groszach, tak jak podaje ją bramka */
+  amount: number;
+  currency: string;
+  /** 0 — brak wpłaty, 1 — przedpłata (niezweryfikowana), 2 — dokonana, 3 — zwrócona */
+  status: number;
+  /** Tytuł przelewu, pod którym wpłata przychodzi na wyciąg */
+  statement?: string | null;
+  methodId?: number | null;
+  /** Dzień zapłaty wg bramki, RRRR-MM-DD */
+  paidDay?: string | null;
+  paidTime?: string | null;
+  /** Numer paczki, w której bramka wypłaciła środki na konto */
+  batchId?: number | null;
+  /** `webhook` — z notyfikacji, `api` — z odpytania bramki po numerze zamówienia */
+  source: 'webhook' | 'api';
+  checkedAt: string;
+}
+
 export interface Order {
   /** ENV-RRRRMMDD-XXXX, gdzie XXXX to losowy kod (pkt 1.8) */
   number: string;
@@ -164,6 +231,16 @@ export interface Order {
   paymentStatus: PaymentStatus;
   /** Identyfikator transakcji zwrócony przez bramkę Przelewy24 */
   p24Reference?: string | null;
+  /**
+   * Chwila potwierdzenia wpłaty. Zamówienia opłacone przed wprowadzeniem
+   * ewidencji sprzedaży pola nie mają — datę bierzemy wtedy z historii zmian.
+   */
+  paidAt?: string | null;
+  /** Transakcja w Przelewy24 — wyłącznie do wglądu Admina */
+  p24?: P24Transaction | null;
+  /** Faktura wystawiona w inFakt */
+  invoice?: OrderInvoice | null;
+  invoiceTask?: InvoiceTask | null;
   paymentDueDate?: string | null;
   /** Czy zamówienie w ogóle przechodzi przez akceptację wizualizacji (pkt 1.11) */
   requiresVisualization: boolean;

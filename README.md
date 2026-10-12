@@ -37,6 +37,7 @@ Bez uzupełnionych zmiennych środowiskowych aplikacja pozostaje w pełni przeje
 | Firebase Auth | e-mail+hasło oraz Google OAuth, rola jako custom claim | sesja demonstracyjna w `localStorage`; adres zaczynający się od `admin@` dostaje rolę administratora |
 | Brevo | API `/smtp/email` i `/contacts` | pełna treść wiadomości trafia do logu serwera |
 | Przelewy24 | rejestracja transakcji + webhook | płatność bramkowa oznaczana jako opłacona lokalnie (`SYMULACJA-…`) |
+| inFakt | faktury VAT, ich PDF, wysyłka do KSeF | karta „Faktura” w zamówieniu mówi, że brakuje klucza; ewidencja sprzedaży pokazuje faktury zapisane wcześniej przy zamówieniach |
 | InPost Geowidget | mapa punktów z oficjalnego widgetu | pole na kod paczkomatu + komunikat, czego brakuje |
 
 Każda z tych usług ma **realny punkt integracji w kodzie** — fallback jest wyłącznie ścieżką awaryjną,
@@ -94,7 +95,12 @@ src/
     orders.ts              numeracja, statusy, reguła bramkująca „Do druku”
     store.ts               warstwa danych (Firestore ↔ plik lokalny)
     brevo.ts, p24.ts       integracje
-    pdf.ts, documents.ts   generator PDF (proforma, faktura, regulamin)
+    infakt.ts              klient API inFakt (faktury VAT, PDF, KSeF)
+    accounting.ts          reguły księgowe: dni w czasie polskim, pozycje i projekt faktury
+    order-invoice.ts       wystawienie, powiązanie i akcje na fakturze zamówienia
+    sales-register.ts      ewidencja sprzedaży: zamówienie + faktura + płatność, kontrole zgodności
+    sales-register-pdf.ts  PDF ewidencji (ten sam zestaw danych co podgląd)
+    pdf.ts, documents.ts   generator PDF (proforma, regulamin)
     visualization-pdf.ts   PDF wizualizacji do akceptacji — zakładka „Generator Wizualizacji” w panelu Admina
     visualization-email.ts szablon wiadomości, w której Admin wysyła ten PDF klientowi
     pdf-writer.ts,         pisarz PDF z krojami marki (public/fonts/) i przycinanie fontów;
@@ -110,7 +116,7 @@ znaki (wielkie litery i cyfry bez `0`, `O`, `1`, `I`, które łatwo pomylić na 
 w `generateOrderCode()`. Unikalność pilnuje rezerwacja w kolekcji `orderNumbers` (Firestore,
 transakcja) — przy kolizji kod jest losowany ponownie. Zamówienia sprzed 8.10.2026 mają w końcówce
 cztery cyfry (kolejny numer z dnia) i zostają bez zmian. Ten sam numer jest identyfikatorem `sessionId` w Przelewy24, tytułem przelewu, kluczem wyszukiwania
-w panelu Admina i numerem na fakturze.
+w panelu Admina i stoi w uwagach faktury wystawionej w inFakt.
 
 **Nazwa produktu** — `Koperta [Format] [Kolor] [z nadrukiem …] [z personalizacją]`, budowana
 w jednym miejscu (`buildProductName`) i używana wszędzie. Nazwa opisuje sam produkt; czas
@@ -160,6 +166,52 @@ z podpowiedzią, którego warunku brakuje.
 
 **Wizualizacja** — przygotowywana i wysyłana niezależnie od statusu płatności. Zamówienia bez nadruku
 i personalizacji pomijają ten krok całkowicie.
+
+---
+
+## Faktury (inFakt) i ewidencja sprzedaży
+
+**Konfiguracja** — jedna zmienna: `INFAKT_API_KEY` (Vercel → Settings → Environment Variables,
+środowisko Production; po dodaniu potrzebne jest nowe wdrożenie). Klucz generuje się w inFakt:
+Ustawienia → Inne opcje → API, z uprawnieniami `api:invoices:read` i `api:invoices:write`.
+Do testów bez ryzyka służy darmowe konto sandbox — wtedy dodatkowo
+`INFAKT_API_URL=https://api.sandbox-infakt.pl/api/v3`, a panel oznacza faktury jako testowe.
+
+**Wystawienie faktury** — karta „Faktura” w szczegółach zamówienia (`AdminInvoiceCard`). Przycisk
+otwiera podgląd tego, co trafi na dokument, i dopiero po potwierdzeniu zleca fakturę w inFakt.
+
+- Pozycje to pozycje zamówienia, w tej samej kolejności i pod tą samą nazwą (`buildProductName`),
+  a na końcu dostawa: „Dostawa kurierem” albo „Dostawa do Paczkomatu InPost”. Dopłata ekspresowa
+  nie ma własnej pozycji — jest w cenie sztuki, tak jak w zamówieniu.
+- Faktura jest liczona **od brutto**: suma faktury to co do grosza kwota zamówienia i transakcji
+  w Przelewy24. Netto i VAT wylicza inFakt.
+- Data wystawienia to zawsze dzień bieżący; datę sprzedaży Admin może zmienić (domyślnie dzień wpłaty).
+- Uwagi faktury niosą numer zamówienia, a przy bramce także numer transakcji Przelewy24 i dzień wpłaty.
+- Zamówienie opłacone daje fakturę ze statusem „opłacona”, nieopłacone — „wystawiona” z terminem.
+- Wysyłka do KSeF jest osobnym polem wyboru (domyślnie zaznaczonym dla nabywcy z NIP-em, gdy konto
+  inFakt ma aktywną integrację z KSeF) i następuje dopiero po sprawdzeniu, że inFakt policzył tę
+  samą kwotę brutto co zamówienie.
+- Jedno zamówienie = jedna faktura: wystawianie zakłada blokadę w transakcji Firestore, a przed
+  zleceniem sprawdza, czy w inFakt nie ma już faktury z tym numerem zamówienia w uwagach.
+
+Fakturę wystawioną w inFakt ręcznie można **powiązać** z zamówieniem po numerze. Odłączenie zdejmuje
+tylko powiązanie — w inFakt nic się nie zmienia. Sklep nie składa własnego PDF-a faktury:
+`/api/dokumenty/faktura/[numer]` podaje PDF z inFakt (Adminowi i właścicielowi zamówienia).
+
+**Ewidencja sprzedaży** — zakładka w panelu Admina (`/admin/ewidencja-sprzedazy`), podgląd i PDF
+za wybrany miesiąc. Jeden wiersz to jedna sprzedaż: zamówienie w sklepie, faktura z inFakt
+i zapłata — przy bramce z numerem transakcji, statusem i kwotą odczytanymi z Przelewy24
+(`transaction/by/sessionId`) oraz numerem paczki wypłaty.
+
+- Sprzedaż należy do miesiąca wg **daty sprzedaży z faktury**; opłacone zamówienie bez faktury stoi
+  w miesiącu wpłaty jako błąd. Dni liczone są w czasie polskim.
+- Pod wierszem stoją kontrole: brak faktury, inna kwota na fakturze albo w Przelewy24, wpłata
+  niezweryfikowana lub zwrócona, szkic, faktura nieoznaczona jako zapłacona, brak wysyłki do KSeF.
+- Osobne listy: faktury z inFakt bez zamówienia (z propozycją powiązania jednym kliknięciem),
+  faktury korygujące, zamówienia nieopłacone.
+- Budowanie ewidencji utrwala w zamówieniach odczytany stan faktur i transakcji (`invoice`, `p24`).
+
+Reguły trzyma `src/lib/sales-register.ts` (moduł czysty), dane zbiera `/api/ewidencja`.
 
 ---
 

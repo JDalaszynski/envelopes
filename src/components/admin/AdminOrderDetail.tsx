@@ -4,11 +4,13 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+import { AdminInvoiceCard } from '@/components/admin/AdminInvoiceCard';
 import { EnvelopePlaceholder } from '@/components/ui/EnvelopePlaceholder';
 import { PrintSidesDetail } from '@/components/ui/PrintSidesDetail';
 import { PaymentPill } from '@/components/ui/StatusPill';
 import { formatBytes } from '@/components/ui/FileDropzone';
 import { useAuth } from '@/components/providers/AuthProvider';
+import { formatDay, orderPaidDay, warsawDay } from '@/lib/accounting';
 import { personalizationScope } from '@/lib/catalog';
 import { PAYMENT_METHOD_LABEL, isGatewayPayment } from '@/lib/orders';
 import { formatDate, formatDateTime, formatPrice } from '@/lib/pricing';
@@ -25,6 +27,7 @@ export function AdminOrderDetail({ number }: { number: string }) {
   const [note, setNote] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [editing, setEditing] = useState(false);
+  const [paidDay, setPaidDay] = useState(() => warsawDay(new Date()));
 
   const load = useCallback(async () => {
     const token = await getToken();
@@ -153,19 +156,38 @@ export function AdminOrderDetail({ number }: { number: string }) {
                 <Row label="Termin płatności" value={formatDate(order.paymentDueDate)} />
               )}
               {order.p24Reference && <Row label="Referencja P24" value={order.p24Reference} mono />}
+              {order.paymentStatus === 'oplacone' && orderPaidDay(order) && (
+                <Row label="Dzień wpłaty" value={formatDay(orderPaidDay(order))} />
+              )}
             </dl>
 
             {order.paymentStatus === 'oczekuje' ? (
               <>
-                <button
-                  type="button"
-                  className="btn"
-                  style={{ marginTop: 'var(--space-4)' }}
-                  disabled={busy}
-                  onClick={() => void patch({ paymentStatus: 'oplacone' })}
-                >
-                  Oznacz jako opłacone
-                </button>
+                <div className="field" style={{ marginTop: 'var(--space-4)' }}>
+                  <label htmlFor="paid-day">Dzień wpływu wpłaty</label>
+                  <div className="row" style={{ flexWrap: 'nowrap', gap: 'var(--space-2)' }}>
+                    <input
+                      id="paid-day"
+                      type="date"
+                      className="input"
+                      value={paidDay}
+                      max={warsawDay(new Date())}
+                      onChange={(e) => setPaidDay(e.target.value)}
+                    />
+                    <button
+                      type="button"
+                      className="btn"
+                      style={{ flexShrink: 0 }}
+                      disabled={busy || !paidDay}
+                      onClick={() => void patch({ paymentStatus: 'oplacone', paidDay })}
+                    >
+                      Oznacz jako opłacone
+                    </button>
+                  </div>
+                  <span className="field-hint">
+                    Dzień z wyciągu — pod tą datą wpłata trafi do ewidencji sprzedaży.
+                  </span>
+                </div>
                 <p className="small muted" style={{ marginTop: 'var(--space-2)' }}>
                   {isGatewayPayment(order.paymentMethod)
                     ? 'Płatności bramkowe potwierdzają się automatycznie — ręczne oznaczenie stosujemy tylko przy problemach z notyfikacją.'
@@ -179,7 +201,7 @@ export function AdminOrderDetail({ number }: { number: string }) {
             )}
           </div>
 
-
+          <AdminInvoiceCard order={order} getToken={getToken} onOrderChange={setOrder} />
 
           {/* Przesyłka */}
           <div className="card">
@@ -397,13 +419,6 @@ export function AdminOrderDetail({ number }: { number: string }) {
               <Row label="Dostawa" value={formatPrice(order.totals.deliveryGross)} mono />
               <Row label="Razem brutto" value={formatPrice(order.totals.gross)} mono />
             </dl>
-            <a
-              className="btn btn-secondary btn-sm"
-              style={{ marginTop: 'var(--space-3)' }}
-              href={`/api/dokumenty/faktura/${order.number}`}
-            >
-              Pobierz fakturę (PDF)
-            </a>
           </div>
 
           <div className="card">

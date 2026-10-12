@@ -1,5 +1,5 @@
 import { needsProduction } from './pricing';
-import type { PaymentMethod, PaymentStatus, CartItem } from './types';
+import type { Order, PaymentMethod, PaymentStatus, CartItem } from './types';
 
 /* ── Numer zamówienia (pkt 1.8) ─────────────────────────────── */
 
@@ -98,6 +98,15 @@ export function generateApprovalToken(): string {
   return Array.from(bytes)
     .map((b) => b.toString(16).padStart(2, '0'))
     .join('');
+}
+
+/**
+ * Zamówienie w kształcie dla klienta. Dane transakcji z bramki i stan
+ * wystawiania faktury służą wyłącznie księgowości sklepu.
+ */
+export function customerView(order: Order): Order {
+  const { p24: _p24, invoiceTask: _invoiceTask, ...rest } = order;
+  return rest;
 }
 
 /* ── Dane do przelewu tradycyjnego (pkt 1.12 ścieżka B) ─────── */

@@ -10,6 +10,7 @@ import { PaymentPill } from '@/components/ui/StatusPill';
 import { useAuth } from '@/components/providers/AuthProvider';
 import { useCart } from '@/components/providers/CartProvider';
 import { personalizationScope } from '@/lib/catalog';
+import { downloadWithAuth } from '@/lib/download';
 import {
   BANK_TRANSFER_DETAILS,
   PAYMENT_METHOD_LABEL,
@@ -30,6 +31,7 @@ export function OrderDetail({ number }: { number: string }) {
   const [busy, setBusy] = useState(false);
   const [note, setNote] = useState<string | null>(null);
   const [complaint, setComplaint] = useState(false);
+  const [invoiceError, setInvoiceError] = useState<string | null>(null);
 
   const load = useCallback(async () => {
     const token = await getToken();
@@ -49,6 +51,19 @@ export function OrderDetail({ number }: { number: string }) {
     if (!loading && !user) router.push('/logowanie');
     else if (user) void load();
   }, [user, loading, router, load]);
+
+  async function downloadInvoice() {
+    if (!order) return;
+    setBusy(true);
+    setInvoiceError(null);
+    const problem = await downloadWithAuth(
+      `/api/dokumenty/faktura/${order.number}`,
+      await getToken(),
+      `faktura-${order.number}.pdf`
+    );
+    setInvoiceError(problem);
+    setBusy(false);
+  }
 
   async function respond(action: 'akceptuj' | 'uwagi') {
     if (!order) return;
@@ -201,13 +216,25 @@ export function OrderDetail({ number }: { number: string }) {
             >
               Zamów ponownie
             </button>
-            <a className="btn btn-secondary" href={`/api/dokumenty/faktura/${order.number}`}>
-              Pobierz fakturę (PDF)
-            </a>
+            {order.invoice && order.invoice.status !== 'draft' && (
+              <button
+                type="button"
+                className="btn btn-secondary"
+                disabled={busy}
+                onClick={() => void downloadInvoice()}
+              >
+                Pobierz fakturę {order.invoice.number} (PDF)
+              </button>
+            )}
             <button type="button" className="btn btn-ghost" onClick={() => setComplaint((v) => !v)}>
               Zgłoś reklamację
             </button>
           </div>
+          {invoiceError && (
+            <p className="notice notice-error" role="alert" style={{ marginTop: 'var(--space-4)' }}>
+              {invoiceError}
+            </p>
+          )}
           {complaint && (
             <p className="notice" style={{ marginTop: 'var(--space-4)' }}>
               Reklamacje przyjmujemy przez{' '}
