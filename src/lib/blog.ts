@@ -758,7 +758,11 @@ const percentMore = (grams: number, base: number) => Math.round(((grams - base) 
  */
 const OFFICE_ENVELOPE_GSM = { min: 75, max: 80 };
 
-/** Jedna koperta gładka w odcieniu z każdej gramatury, w jednym zamówieniu. */
+/**
+ * Zamówienie próbne: minimum kopert gładkich w odcieniu z każdej gramatury,
+ * w jednym koszyku. Każdy odcień to osobna pozycja z własnym minimum.
+ */
+const WEIGHT_TRIAL_QUANTITY = WEIGHT_GROUPS.length * DEFAULT_PRICING.moqWithoutPrint;
 const WEIGHT_TRIAL = calculatePrice({
   format: 'DL' as FormatId,
   color: '',
@@ -766,7 +770,7 @@ const WEIGHT_TRIAL = calculatePrice({
   printFiles: [],
   personalization: false,
   shippingSpeed: 'standard' as const,
-  quantity: WEIGHT_GROUPS.length,
+  quantity: WEIGHT_TRIAL_QUANTITY,
 });
 const WEIGHT_TRIAL_WITH_DELIVERY = round2(WEIGHT_TRIAL.gross + DELIVERY_COST);
 
@@ -876,21 +880,27 @@ const WEDDING_STOCK_NOTE =
     : '';
 
 /**
- * Trzy typowe zamówienia gościa: jedna koperta na jedno wesele, trzy na
- * kolejne uroczystości sezonu i pięć na sezon z zapasem. Kwoty brutto — same
- * koperty i razem z dostawą, bo to dostawa decyduje o koszcie jednej sztuki.
+ * Trzy typowe zamówienia gościa: minimum w jednym odcieniu oraz dwa i trzy
+ * odcienie, każdy jako osobna pozycja z własnym minimum. Do 12 października
+ * 2026 tabela liczyła 1, 3 i 5 kopert — koperta gładka nie miała wtedy progu.
+ * Kwoty brutto: same koperty i razem z dostawą.
  */
-const WEDDING_MONEY_ORDERS = [1, 3, 5].map((quantity) => {
+const WEDDING_MONEY_ORDERS = [1, 2, 3].map((shades) => {
+  const quantity = shades * DEFAULT_PRICING.moqWithoutPrint;
   const plain = calculatePrice({ ...MONEY_BASE, quantity });
   return {
+    shades,
     quantity,
     envelopes: plain.gross,
     total: round2(plain.gross + DELIVERY_COST),
   };
 });
 
-/** Czy dostawa przewyższa koszt jednej koperty — warunek zdania o dostawie. */
-const WEDDING_DELIVERY_DOMINATES = DELIVERY_COST > WEDDING_MONEY_ORDERS[0].envelopes;
+/** Cena jednej koperty gładkiej — stawka jednostkowa, niezależna od nakładu. */
+const WEDDING_UNIT_PRICE = calculatePrice({
+  ...MONEY_BASE,
+  quantity: DEFAULT_PRICING.moqWithoutPrint,
+}).unitTotal;
 
 const POSTS: BlogPost[] = [
   {
@@ -1275,7 +1285,8 @@ const POSTS: BlogPost[] = [
     /* Doszły odesłania do poradnika o terminach (poz. 16) i do poradnika
        o minimalnym nakładzie (poz. 46). 23 września: dopłata za nadruk
        na zamknięciu w pierwszej sekcji */
-    updated: '2026-09-23',
+    /* Minimum kopert gładkich: 10 sztuk zamiast 1 (12 października) */
+    updated: '2026-10-12',
     readingMinutes: 6,
     colorId: 'eko',
     format: 'DL',
@@ -1434,7 +1445,7 @@ const POSTS: BlogPost[] = [
           /* Próg pada tu jako fakt do rachunku — uzasadnienie i wyjścia dla
              mniejszego nakładu należą do poz. 46, więc wpis kosztowy do niej
              odsyła zamiast powtarzać jej treść. */
-          `Jeden próg trzeba sprawdzić przed liczeniem. Zamówienie z nadrukiem zaczyna się od ${DEFAULT_PRICING.moqWithPrint} sztuk; koperty gładkie, bez nadruku, zamawiają Państwo od ${DEFAULT_PRICING.moqWithoutPrint} sztuki. Skąd bierze się ten próg, tłumaczymy w poradniku [dlaczego koperty z nadrukiem są od ${DEFAULT_PRICING.moqWithPrint} sztuk](/blog/dlaczego-koperty-z-nadrukiem-od-10-sztuk).`,
+          `Jeden próg trzeba sprawdzić przed liczeniem. Każda pozycja zamówienia zaczyna się od ${DEFAULT_PRICING.moqWithPrint} sztuk przy nadruku i od ${DEFAULT_PRICING.moqWithoutPrint} sztuk bez nadruku. Skąd bierze się ten próg, tłumaczymy w poradniku [dlaczego koperty z nadrukiem są od ${DEFAULT_PRICING.moqWithPrint} sztuk](/blog/dlaczego-koperty-z-nadrukiem-od-10-sztuk).`,
           'Konfigurator na stronie głównej wykonuje to działanie na bieżąco. Po wpisaniu ilości i włączeniu nadruku podsumowanie pokazuje kwotę brutto, netto oraz koszt dostawy — zanim cokolwiek trafi do koszyka i zanim podadzą Państwo jakiekolwiek dane.',
         ],
       },
@@ -2941,7 +2952,8 @@ const POSTS: BlogPost[] = [
     category: 'Poradniki',
     date: '2026-09-14',
     /* Akapit o wydarzeniach kameralnych (poz. 25) i grupach szkoleniowych (poz. 27) */
-    updated: '2026-09-16',
+    /* Minimum kopert gładkich: 10 sztuk zamiast 1 (12 października) */
+    updated: '2026-10-12',
     readingMinutes: 6,
     colorId: 'biala-perlowa',
     format: 'DL',
@@ -3039,7 +3051,7 @@ const POSTS: BlogPost[] = [
         id: 'mniej-niz-minimum',
         heading: `Co zrobić, gdy potrzebują Państwo mniej niż ${DEFAULT_PRICING.moqWithPrint} kopert`,
         paragraphs: [
-          `Jeżeli koperta ma pójść do jednego odbiorcy, najprostszym rozwiązaniem jest koperta gładka. Zamawiają ją Państwo od ${DEFAULT_PRICING.moqWithoutPrint} sztuki, w tym samym papierze i kolorze co wersja z nadrukiem, a wysyłamy ją szybciej, bo nie przechodzi przez produkcję ani przez akceptację wizualizacji. Ten sam odcień wybiorą Państwo w [palecie kolorów kopert ozdobnych](/#kolory).`,
+          `Mniejszej liczby nie da się zamówić w żadnym wariancie: koperty gładkie też zamawia się od ${DEFAULT_PRICING.moqWithoutPrint} sztuk w jednym kolorze. Zostają trzy drogi. Pierwszą jest koperta gładka w tym samym papierze i kolorze co wersja z nadrukiem. Minimum jest takie samo, ale wysyłamy ją szybciej, bo nie przechodzi przez produkcję ani przez akceptację wizualizacji, a zapas bez nadruku przyda się do każdej korespondencji. Ten sam odcień wybiorą Państwo w [palecie kolorów kopert ozdobnych](/#kolory).`,
           'Drugą drogą jest zamówienie pełnej serii i zostawienie zapasu. Logo firmowe nie zmienia się co miesiąc, więc nadrukowana koperta nie traci ważności — inaczej niż nadruk z datą wydarzenia, który zestarzeje się razem z nim.',
           'Trzecia droga to połączenie potrzeb. Jeśli w tym samym miesiącu wychodzą pisma do klientów, jedno zaproszenie i komplet dokumentów, to jest to jedna seria kopert z logo, a nie trzy osobne zamówienia.',
           'Wydarzenia kameralne mieszczą się w minimum najczęściej: kolacja branżowa, śniadanie prasowe i spotkanie zarządu mają listy gości krótsze niż nakłady przyjęte w drukarniach. Jak planuje się taką wysyłkę, pokazuje strona [koperty na zaproszenia firmowe](/koperty-dla-agencji-eventowych). Podobnie edycje kursów i szkoleń liczą często kilkunastu absolwentów — zasady zamawiania krótkich partii pod poszczególne grupy zebraliśmy na stronie [koperty na certyfikaty](/koperty-na-certyfikaty).',
@@ -3049,8 +3061,8 @@ const POSTS: BlogPost[] = [
           head: ['Sytuacja', 'Rozwiązanie', 'Na co zwrócić uwagę'],
           rows: [
             [
-              'Jedna koperta do jednego odbiorcy',
-              `Koperta gładka od ${DEFAULT_PRICING.moqWithoutPrint} sztuki, dane nadawcy dopisane odręcznie`,
+              'Kilka kopert do pojedynczych odbiorców',
+              `Koperty gładkie od ${DEFAULT_PRICING.moqWithoutPrint} sztuk, dane nadawcy dopisane odręcznie; reszta zostaje jako zapas`,
               'Na kopercie nie ma wtedy logo — markę niesie zawartość',
             ],
             [
@@ -3109,7 +3121,7 @@ const POSTS: BlogPost[] = [
 
        Rozgraniczenia (pkt 8 briefu SEO):
        - wobec pillara K8 `/koperty-na-pieniadze` (poz. 39): pillar sprzedaje
-         kopertę gładką od 1 sztuki — kolory, banknoty, cenę sztuki. Wpis
+         kopertę gładką — kolory, banknoty, cenę sztuki. Wpis
          sprzedaje usługę i odpowiada na jedno pytanie: czy imię na kopercie
          ma sens. Link kontekstowy do pillara stoi w pierwszej sekcji;
        - wobec filara F2: filar rozkłada cenę personalizacji na składniki
@@ -3135,7 +3147,8 @@ const POSTS: BlogPost[] = [
     category: 'Poradniki',
     date: '2026-09-24',
     /* Odnośnik do poz. 44 w sekcji o prezentach rodzinnych */
-    updated: '2026-10-08',
+    /* Minimum kopert gładkich: 10 sztuk zamiast 1 (12 października) */
+    updated: '2026-10-12',
     readingMinutes: 6,
     colorId: 'matcha',
     format: 'DL',
@@ -3230,7 +3243,7 @@ const POSTS: BlogPost[] = [
         id: 'mniej-niz-minimum',
         heading: `Co zrobić, gdy obdarowanych jest mniej niż ${DEFAULT_PRICING.moqWithPrint}`,
         paragraphs: [
-          `Przy kilku obdarowanych najprostsza jest koperta gładka z imieniem dopisanym odręcznie. Zamawiają ją Państwo od ${DEFAULT_PRICING.moqWithoutPrint} sztuki i wysyłamy ją szybciej, bo nie przechodzi przez produkcję ani akceptację wizualizacji. Do podpisu lepiej nadają się papiery matowe: na perłowym i metalicznym tusz schnie wolniej i łatwo go rozmazać.`,
+          `Przy kilku obdarowanych najprostsza jest koperta gładka z imieniem dopisanym odręcznie. Minimum jest takie samo — ${DEFAULT_PRICING.moqWithoutPrint} sztuk w jednym kolorze — ale nie potrzeba listy imion, a koperty wysyłamy szybciej, bo nie przechodzą przez produkcję ani akceptację wizualizacji. Te, które zostaną, nie mają imienia ani daty, więc czekają na następną okazję. Do podpisu lepiej nadają się papiery matowe: na perłowym i metalicznym tusz schnie wolniej i łatwo go rozmazać.`,
           'Drugą drogą jest dopełnienie serii kopertami na kolejną okazję. Koperta z samym imieniem nie ma daty, więc ta sama osoba może dostać dwie — jedną na święta, drugą na urodziny. Na liście wystarczy wpisać to imię dwa razy, bo jeden wiersz to zawsze jedna koperta.',
           `Progu nie da się obejść dopłatą. Wynika z pracy wykonywanej przed drukiem — sprawdzenia listy i wizualizacji do akceptacji — która wygląda tak samo przy pięciu i przy pięćdziesięciu kopertach. Uzasadnienie rozpisujemy w poradniku [dlaczego koperty z nadrukiem są od ${DEFAULT_PRICING.moqWithPrint} sztuk](/blog/dlaczego-koperty-z-nadrukiem-od-10-sztuk).`,
         ],
@@ -3280,7 +3293,7 @@ const POSTS: BlogPost[] = [
           'W prezentach rodzinnych personalizacja ma sens po stronie osoby, która wręcza wiele kopert naraz — nie po stronie gościa z jednym prezentem. Typowe przypadki to dziadkowie z kopertami dla wszystkich wnuków na święta albo para młoda, która po weselu rozlicza się z usługodawcami.',
           'Wiersz listy nie musi być imieniem. Para młoda może wpisać role: „Dla Zespołu”, „Dla Pani Fotograf”, „Dla Obsługi Sali”. Drukujemy dokładnie to, co stoi w wierszu, więc zapis warto przejrzeć, zanim zaakceptują Państwo wizualizację.',
           'Dedykacja zaczynająca się od „Dla” wymaga dopełniacza: „Dla Zosi”, a nie „Dla Zosia”. Samo imię i nazwisko zostaje w mianowniku. Zasady zapisu imion i nazwisk zebraliśmy w poradniku [koperty z imieniem i nazwiskiem — lista do nadruku](/blog/koperty-z-imieniem-i-nazwiskiem-jak-przygotowac-liste).',
-          'Gość weselny z jedną kopertą personalizacji nie potrzebuje. Koperta gładka w odcieniu dobranym do uroczystości wystarczy — jak ją dobrać do wesela, opisujemy w poradniku [koperty na pieniądze na ślub](/blog/koperty-na-pieniadze-na-slub-format-i-kolor). Imiona pary młodej można dopisać odręcznie albo zostawić kopertę bez napisu.',
+          'Gość weselny personalizacji nie potrzebuje. Koperta gładka w odcieniu dobranym do uroczystości wystarczy — jak ją dobrać do wesela, opisujemy w poradniku [koperty na pieniądze na ślub](/blog/koperty-na-pieniadze-na-slub-format-i-kolor). Imiona pary młodej można dopisać odręcznie albo zostawić kopertę bez napisu.',
         ],
       },
       {
@@ -3363,6 +3376,8 @@ const POSTS: BlogPost[] = [
     lead: `Zaproszenie do ${DL_MAX_INSERT_CM} zmieści się w kopercie DL. Pokazujemy, jak leży w niej karta A6, co z kwadratem lub A5 i jaki wymiar zamówić w drukarni.`,
     category: 'Poradniki',
     date: '2026-09-24',
+    /* Minimum kopert gładkich: 10 sztuk zamiast 1 (12 października) */
+    updated: '2026-10-12',
     readingMinutes: 6,
     colorId: 'blekit-lupkowy',
     format: 'DL',
@@ -3437,7 +3452,7 @@ const POSTS: BlogPost[] = [
           'Zaproszenie mierzy się w postaci, w jakiej trafi do koperty: złożone, przewiązane, z opaską i ze wszystkimi kartami, które jadą razem z nim. O dopasowaniu decyduje najszerszy i najdłuższy punkt całego kompletu, a nie wymiar karty z zamówienia w drukarni. Przy zaokrąglonych narożnikach albo wycinanym brzegu mierzy się prostokąt, w który cały kształt się wpisuje.',
           'Ozdoby zmieniają wymiar na dwa sposoby. Kokarda zawiązana przy krawędzi i zawieszka na sznurku wystają poza obrys karty, więc to one wyznaczają szerokość. Pieczęć lakowa, zasuszony kwiat albo aplikacja pogrubiają zaproszenie w jednym punkcie — i właśnie tam klapka koperty zamyka się z największym oporem.',
           'Karta z prośbą o potwierdzenie przybycia, mapka dojazdu i program muszą zmieścić się w obrysie zaproszenia. Razem pogrubiają komplet, a sztywny karton zaproszeniowy znosi w kopercie mniej warstw niż papier biurowy. Ile ich wejdzie bez naprężenia klapki, rozpisujemy w poradniku [ile kartek mieści koperta DL](/blog/ile-kartek-miesci-koperta-dl-i-jak-je-zlozyc).',
-          `Przy zaproszeniach z ozdobami najpewniejsza jest przymiarka na gotowym egzemplarzu. Koperty gładkie zamawiają Państwo od ${DEFAULT_PRICING.moqWithoutPrint} sztuki, więc komplet da się sprawdzić w kopercie, zanim zamówią Państwo całą serię z nadrukiem.`,
+          `Przy zaproszeniach z ozdobami najpewniejsza jest przymiarka na gotowym egzemplarzu. Koperty gładkie zamawiają Państwo od ${DEFAULT_PRICING.moqWithoutPrint} sztuk, więc komplet da się sprawdzić w kopercie, zanim zamówią Państwo całą serię z nadrukiem.`,
         ],
       },
       {
@@ -3477,7 +3492,7 @@ const POSTS: BlogPost[] = [
     ],
     /* Mikroargument przy CTA (brief pkt 7): niski próg i wizualizacja przed
        drukiem. Bez ceny — ta stoi w konfiguratorze i na filarze. */
-    cta: `Koperty DL na zaproszenia: gładkie od ${DEFAULT_PRICING.moqWithoutPrint} sztuki, z nadrukiem od ${DEFAULT_PRICING.moqWithPrint} — z wizualizacją do akceptacji przed drukiem.`,
+    cta: `Koperty DL na zaproszenia: od ${DEFAULT_PRICING.moqWithoutPrint} sztuk w jednym kolorze, gładkie albo z nadrukiem — z wizualizacją do akceptacji przed drukiem.`,
     /* Sam format, bez usługi: wpis rozstrzyga dopasowanie karty, a nie to,
        co stanie na kopercie. Kolor zostaje do wyboru — dobór odcienia do
        wydarzenia należy do poz. 25. */
@@ -3528,6 +3543,8 @@ const POSTS: BlogPost[] = [
     lead: `Personalizowane koperty ślubne to adresy gości drukowane z listy na kopertach DL, bez wypisywania ręką. Pokazujemy korzyści i koszt listy, od ${DEFAULT_PRICING.moqWithPrint} sztuk.`,
     category: 'Poradniki',
     date: '2026-09-24',
+    /* Minimum kopert gładkich: 10 sztuk zamiast 1 (12 października) */
+    updated: '2026-10-12',
     readingMinutes: 7,
     colorId: 'biala-perlowa',
     format: 'DL',
@@ -3709,8 +3726,8 @@ const POSTS: BlogPost[] = [
         id: 'kiedy-koperta-gladka',
         heading: 'Kiedy wystarczy koperta gładka i podpis odręczny',
         paragraphs: [
-          `Koperta gładka z podpisem odręcznym wystarcza, gdy zaproszeń jest mniej niż minimum dla personalizacji, gdy lista dopiero się zmienia albo gdy zaproszenie ma wyglądać jak list od bliskiej osoby. Zamawiają ją Państwo od ${DEFAULT_PRICING.moqWithoutPrint} sztuki, a wysyłamy w ${workingDaysLabel(DEFAULT_PRICING.leadDaysPlain)}, bo nie przechodzi przez produkcję ani akceptację wizualizacji.`,
-          'Kopertą gładką najłatwiej też domknąć listę. Pojedynczy gość dopisany po złożeniu zamówienia nie uzasadnia osobnej serii z personalizacją, bo obowiązuje jej minimum — jego kopertę podpisują Państwo sami.',
+          `Koperta gładka z podpisem odręcznym wystarcza, gdy lista gości dopiero się zmienia albo gdy zaproszenie ma wyglądać jak list od bliskiej osoby. Zamawiają ją Państwo od ${DEFAULT_PRICING.moqWithoutPrint} sztuk w jednym kolorze, a wysyłamy w ${workingDaysLabel(DEFAULT_PRICING.leadDaysPlain)}, bo nie przechodzi przez produkcję ani akceptację wizualizacji.`,
+          'Zapasem kopert gładkich najłatwiej też domknąć listę. Gość dopisany po złożeniu zamówienia nie uzasadnia osobnej serii z personalizacją, bo obowiązuje ją minimum — jego kopertę podpisują Państwo sami. Dlatego do zamówienia z personalizacją warto od razu dodać pozycję kopert gładkich w tym samym odcieniu.',
         ],
       },
       {
@@ -3790,6 +3807,7 @@ const POSTS: BlogPost[] = [
     category: 'Poradniki',
     date: '2026-09-25',
     /* Złoty wrócił do sprzedaży — z tabel zniknął status z katalogu */
+    /* Minimum kopert gładkich: 10 sztuk zamiast 1 (12 października) */
     updated: '2026-10-12',
     readingMinutes: 6,
     colorId: 'matcha',
@@ -3953,8 +3971,8 @@ const POSTS: BlogPost[] = [
         id: 'jak-sprawdzic-gramature',
         heading: 'Jak sprawdzić gramaturę w dłoni przed zamówieniem serii',
         paragraphs: [
-          `Najpewniej przez zamówienie pojedynczych kopert gładkich: bez nadruku i personalizacji koperty zamawiają Państwo już od ${DEFAULT_PRICING.moqWithoutPrint} sztuki.`,
-          `Dostawę naliczamy raz na zamówienie, więc porównanie gramatur najtaniej wychodzi w jednym koszyku. ${WEIGHT_GROUPS.length} ${plural(WEIGHT_GROUPS.length, 'koperta', 'koperty', 'kopert')} — po jednej w odcieniu z każdej gramatury — kosztują razem ${formatPrice(WEIGHT_TRIAL_WITH_DELIVERY)} brutto z dostawą.`,
+          `Najpewniej przez zamówienie próbne kopert gładkich: bez nadruku i personalizacji zamawia się je od ${DEFAULT_PRICING.moqWithoutPrint} sztuk w jednym kolorze.`,
+          `Dostawę naliczamy raz na zamówienie, więc porównanie gramatur najtaniej wychodzi w jednym koszyku. ${WEIGHT_GROUPS.length} ${plural(WEIGHT_GROUPS.length, 'odcień', 'odcienie', 'odcieni')} po ${DEFAULT_PRICING.moqWithoutPrint} sztuk — po jednym z każdej gramatury — to ${WEIGHT_TRIAL_QUANTITY} kopert za ${formatPrice(WEIGHT_TRIAL_WITH_DELIVERY)} brutto z dostawą.`,
           'Sprawdzenie ma sens przede wszystkim wtedy, gdy seria jedzie do ważnych adresatów albo gdy o odbiorze przesyłki decyduje jej wygląd w dłoni. Przy typowej korespondencji wystarczy wybrać odcień, bo gramatura idzie razem z nim.',
         ],
       },
@@ -3967,13 +3985,13 @@ const POSTS: BlogPost[] = [
           'Odcień pasuje do identyfikacji marki i do koloru logo, bo gramatura idzie razem z nim',
           `Jeśli potrzebny jest połysk perłowy lub metaliczny, gramatura wynosi ${WEIGHT_GLOSS_LABEL}`,
           'Wkład o większej grubości został sprawdzony w poradniku o liczbie kartek w kopercie DL',
-          'Przy serii do ważnych adresatów zamówiona jest pojedyncza koperta do porównania w dłoni',
+          'Przy serii do ważnych adresatów zamówione jest najpierw minimum kopert gładkich do porównania w dłoni',
         ],
       },
     ],
     /* Mikroargument przy CTA (brief pkt 7): niski próg i wizualizacja przed
        drukiem. Bez ceny — ta stoi w tabeli i w konfiguratorze. */
-    cta: `Odcień, a razem z nim gramaturę, wybierają Państwo w konfiguratorze. Koperty gładkie zamawiają Państwo od ${DEFAULT_PRICING.moqWithoutPrint} sztuki, a przy nadruku wizualizację akceptują Państwo przed drukiem.`,
+    cta: `Odcień, a razem z nim gramaturę, wybierają Państwo w konfiguratorze. Koperty gładkie zamawiają Państwo od ${DEFAULT_PRICING.moqWithoutPrint} sztuk, a przy nadruku wizualizację akceptują Państwo przed drukiem.`,
     /* Sam format — wpis nie rozstrzyga odcienia, więc konfigurator otwiera się
        na kroku koloru bez preselekcji. */
     ctaConfigure: { label: 'Wybierz odcień koperty DL', format: 'DL' },
@@ -4008,6 +4026,8 @@ const POSTS: BlogPost[] = [
     lead: 'Instytucje publiczne i jednostki budżetowe zamawiają koperty z odroczonym terminem płatności 14 dni. Produkcja rusza bez przedpłaty, a rozliczenie następuje przelewem po dostawie.',
     category: 'Poradniki',
     date: '2026-09-26',
+    /* Minimum kopert gładkich: 10 sztuk zamiast 1 (12 października) */
+    updated: '2026-10-12',
     readingMinutes: 6,
     colorId: 'granatowy',
     format: 'DL',
@@ -4079,7 +4099,7 @@ const POSTS: BlogPost[] = [
           'Cała ścieżka zamyka się w pięciu prostych krokach:',
         ],
         list: [
-          `Wybór parametrów w konfiguratorze: format DL (110 × 220 mm), jeden z 19 kolorów papieru barwionego w masie oraz nakład — koperty gładkie zamawiają Państwo od ${DEFAULT_PRICING.moqWithoutPrint} sztuki, a z nadrukiem logo od ${DEFAULT_PRICING.moqWithPrint} sztuk`,
+          `Wybór parametrów w konfiguratorze: format DL (110 × 220 mm), jeden z 19 kolorów papieru barwionego w masie oraz nakład — każda pozycja od ${DEFAULT_PRICING.moqWithoutPrint} sztuk, gładka albo z nadrukiem logo`,
           'Wgranie pliku z herbem, godłem lub logo: konfigurator przyjmuje pliki wektorowe (PDF, AI, EPS, SVG) oraz rastrowe o wysokiej rozdzielczości',
           'Uzupełnienie danych w checkout: wpisanie oficjalnego numeru NIP jednostki oraz adresu fakturowego',
           'Wybór metody płatności: zaznaczenie opcji „Faktura z odroczonym terminem płatności (14 dni)” w sekcji płatności',
@@ -4165,7 +4185,7 @@ const POSTS: BlogPost[] = [
           'Kompletne dane do faktury: NIP jednostki nadrzędnej (Nabywca) oraz ewentualna nazwa placówki podległej (Odbiorca)',
           'Plik z herbem, godłem lub logo urzędu przygotowany w wektorach (PDF, AI, EPS, SVG) — szczegóły w poradniku jak przygotować pliki do druku na kopertach',
           'Odcień papieru DL dobrany do charakteru pisma — urzędy najczęściej wybierają Granatowy, Ciemnozielony, Szary, Ecru i Biały',
-          `Nakład zgodny z zapotrzebowaniem: od ${DEFAULT_PRICING.moqWithPrint} sztuk przy nadruku logo lub od ${DEFAULT_PRICING.moqWithoutPrint} sztuki dla kopert gładkich`,
+          `Nakład zgodny z zapotrzebowaniem: od ${DEFAULT_PRICING.moqWithoutPrint} sztuk w jednym kolorze, z nadrukiem logo albo bez`,
           'Wskazany bezpośredni adres e-mail pracownika upoważnionego do akceptacji cyfrowej wizualizacji',
           'Zaznaczona opcja „Faktura z odroczonym terminem płatności (14 dni)” w kroku wyboru płatności',
         ],
@@ -4218,6 +4238,7 @@ const POSTS: BlogPost[] = [
     category: 'Poradniki',
     date: '2026-10-08',
     /* Złoty wrócił do sprzedaży — z tabeli kolorów zniknął status z katalogu */
+    /* Minimum kopert gładkich: 10 sztuk zamiast 1 (12 października) */
     updated: '2026-10-12',
     readingMinutes: 7,
     colorId: 'biala-perlowa',
@@ -4253,7 +4274,7 @@ const POSTS: BlogPost[] = [
         paragraphs: [
           'Koperta na ślub różni się od koperty na urodziny tym, że gość rzadko wręcza ją parze młodej do ręki. Na wielu weselach koperty trafiają do skrzynki albo na stół z prezentami, a para otwiera je później.',
           'Z tego wynikają trzy sprawy, które rozstrzygają o wyborze. Koperta ma pasować do wesela, para ma wiedzieć, od kogo jest prezent, a w środku mieści się zwykle także kartka z życzeniami. Cenę sztuki, termin i wymiary banknotów opisujemy na stronie [koperty na pieniądze](/koperty-na-pieniadze) — są takie same przy każdym prezencie pieniężnym.',
-          'Ten poradnik jest pisany dla gościa weselnego z jedną kopertą. Para młoda, która zamawia koperty z zaproszeniami dla gości, znajdzie potrzebne informacje w poradniku [personalizowane koperty ślubne](/blog/personalizowane-koperty-slubne-adresy-gosci).',
+          'Ten poradnik jest pisany dla gościa weselnego, który szuka koperty na prezent pieniężny. Para młoda, która zamawia koperty z zaproszeniami dla gości, znajdzie potrzebne informacje w poradniku [personalizowane koperty ślubne](/blog/personalizowane-koperty-slubne-adresy-gosci).',
         ],
       },
       {
@@ -4306,26 +4327,22 @@ const POSTS: BlogPost[] = [
           'Bezpieczniej podpisać kartkę z życzeniami w środku, a na kopercie zostawić najwyżej krótką formułę, na przykład „Dla Pary Młodej”. Zwyczaj nie jest jednolity: część poradników zaleca podpis na kopercie, część wyłącznie na kartce.',
           'Powód jest praktyczny. Koperta trafia do skrzynki razem z wieloma innymi, a para otwiera ją później, więc podpis musi zostać z prezentem. Kartka z podpisem zostaje z nim nawet wtedy, gdy koperta zostanie wyrzucona.',
           'Gdy chcą Państwo podpisać także kopertę, najlepszy jest odcień jasny i matowy. Pismo warto wypróbować najpierw na wewnętrznej stronie klapki.',
-          `Zdjęcie otwierające ten poradnik pokazuje kopertę DL ${WEDDING_COVER_COLOR.name} z przykładowym nadrukiem „W dniu Ślubu” pismem odręcznym. Nadruk zamawia się od ${DEFAULT_PRICING.moqWithPrint} sztuk, więc gość z jednym prezentem zostaje przy kopercie gładkiej, a własne słowa pisze na kartce. Kiedy imię na kopercie się opłaca, liczymy w poradniku [personalizowana koperta na pieniądze](/blog/personalizowana-koperta-na-pieniadze-kiedy-warto).`,
+          `Zdjęcie otwierające ten poradnik pokazuje kopertę DL ${WEDDING_COVER_COLOR.name} z przykładowym nadrukiem „W dniu Ślubu” pismem odręcznym. Nadruk zamawia się od ${DEFAULT_PRICING.moqWithPrint} sztuk z tym samym napisem i dopiero po akceptacji wizualizacji, więc gość z jednym prezentem zostaje przy kopertach gładkich, a własne słowa pisze na kartce. Kiedy imię na kopercie się opłaca, liczymy w poradniku [personalizowana koperta na pieniądze](/blog/personalizowana-koperta-na-pieniadze-kiedy-warto).`,
         ],
       },
       {
         id: 'koszt',
         heading: 'Ile kosztuje koperta na pieniądze na ślub',
         paragraphs: [
-          `Koperta gładka na ślub kosztuje ${formatPrice(WEDDING_MONEY_ORDERS[0].envelopes)} brutto za sztukę, niezależnie od odcienia, a dostawę kurierem za ${formatPrice(DELIVERY_COST)} naliczamy raz na całe zamówienie.${
-            WEDDING_DELIVERY_DOMINATES
-              ? ' Przy jednej kopercie dostawa kosztuje więc więcej niż sama koperta.'
-              : ''
-          } Tabela pokazuje trzy typowe zamówienia.`,
-          'Z tabeli wynika prosta rada: jeśli w najbliższych miesiącach czekają Państwa kolejne wesela, komunie albo chrzciny, warto zamówić koperty na wszystkie od razu. Dostawa jest wtedy jedna, a koperty czekają w domu.',
+          `Koperta gładka na ślub kosztuje ${formatPrice(WEDDING_UNIT_PRICE)} brutto za sztukę, niezależnie od odcienia. Zamawia się ją od ${DEFAULT_PRICING.moqWithoutPrint} sztuk w jednym kolorze, więc najmniejsze zamówienie to ${formatPrice(WEDDING_MONEY_ORDERS[0].envelopes)} brutto, a dostawę kurierem za ${formatPrice(DELIVERY_COST)} naliczamy raz na całe zamówienie. Tabela pokazuje trzy typowe zamówienia.`,
+          `Jedno wesele nie zużyje ${DEFAULT_PRICING.moqWithoutPrint} kopert. Pozostałe przydają się na kolejne wesela, komunie i chrzciny, bo koperta gładka nie ma daty ani napisu, albo dzieli się je z rodziną, która idzie na tę samą uroczystość. Drugi odcień to osobna pozycja, również od ${DEFAULT_PRICING.moqWithoutPrint} sztuk; dostawa pozostaje jedna.`,
         ],
         table: {
           caption:
             'Koszt zamówienia kopert DL gładkich na ślub: same koperty i razem z dostawą kurierem, kwoty brutto',
           head: ['Liczba kopert', 'Same koperty', 'Z dostawą kurierem'],
           rows: WEDDING_MONEY_ORDERS.map((row) => [
-            `${row.quantity} szt.`,
+            `${row.quantity} szt. (${row.shades} ${plural(row.shades, 'odcień', 'odcienie', 'odcieni')})`,
             formatPrice(row.envelopes),
             formatPrice(row.total),
           ]),
@@ -4347,17 +4364,17 @@ const POSTS: BlogPost[] = [
           'Odcień pasuje do zaproszenia albo do stylu wesela i jest dostępny w katalogu',
           'Kartka z życzeniami ma format DL albo A6 — kartka kwadratowa i A5 nie wejdą do koperty DL',
           'Podpis stoi na kartce w środku; jeśli ma stanąć na kopercie, odcień jest jasny i matowy',
-          'Liczba kopert obejmuje kolejne uroczystości, bo dostawę naliczamy raz na zamówienie',
+          `Koperty zamawia się od ${DEFAULT_PRICING.moqWithoutPrint} sztuk w jednym kolorze — reszta zostaje na kolejne uroczystości`,
           'Do dnia wesela zostało dość dni roboczych na wysyłkę i dostawę, z zapasem na włożenie kartki',
-          'Zamawiają Państwo kopertę gładką — nadruk i personalizacja wymagają minimalnego nakładu',
+          'Zamawiają Państwo koperty gładkie — nadruk i personalizacja wydłużają realizację o akceptację wizualizacji',
         ],
       },
     ],
     /* Termin nad przyciskiem — warunek klastra K8 z keywords.md: klient
        detaliczny szuka koperty „na już", więc liczba dni stoi przed CTA. */
-    cta: `Konfigurator otworzy się z formatem DL i kolorem ${WEDDING_COVER_COLOR.name}. Kopertę gładką zamawiają Państwo od ${DEFAULT_PRICING.moqWithoutPrint} sztuki, a wysyłamy ją w ${workingDaysLabel(DEFAULT_PRICING.leadDaysPlain)} od wpłaty.`,
+    cta: `Konfigurator otworzy się z formatem DL i kolorem ${WEDDING_COVER_COLOR.name}. Koperty gładkie zamawiają Państwo od ${DEFAULT_PRICING.moqWithoutPrint} sztuk w jednym kolorze, a wysyłamy je w ${workingDaysLabel(DEFAULT_PRICING.leadDaysPlain)} od wpłaty.`,
     /* Preselekcja koloru zgodna z pillarem K8 i ze zdjęciem otwierającym.
-       Bez usługi: gość z jedną kopertą zostaje przy gładkiej (sekcja `podpis`). */
+       Bez usługi: gość weselny zostaje przy gładkiej (sekcja `podpis`). */
     ctaConfigure: {
       label: 'Wybierz kopertę na pieniądze na ślub',
       format: 'DL',
@@ -4383,7 +4400,7 @@ const POSTS: BlogPost[] = [
         },
         {
           question: 'Czy można zamówić kopertę z napisem „W dniu Ślubu” dla jednego gościa?',
-          answer: `Nie, bo nadruk zamawia się od ${DEFAULT_PRICING.moqWithPrint} sztuk. Gość z jednym prezentem kupuje kopertę gładką od ${DEFAULT_PRICING.moqWithoutPrint} sztuki, a życzenia i podpis wpisuje na kartce. Nadruk okolicznościowy ma sens dopiero przy serii kopert, które wręcza się razem.`,
+          answer: `Jednej nie. Minimalna ilość to ${DEFAULT_PRICING.moqWithPrint} sztuk przy nadruku i ${DEFAULT_PRICING.moqWithoutPrint} sztuk przy kopertach gładkich. Gość z jednym prezentem zamawia zwykle koperty gładkie: wysyłamy je w ${workingDaysLabel(DEFAULT_PRICING.leadDaysPlain)}, bez pliku i bez akceptacji wizualizacji, a życzenia i podpis wpisuje się na kartce. Nadruk okolicznościowy ma sens przy serii kopert, które wręcza się razem.`,
         },
         {
           question: 'Czy koperty na ślub są dostępne w formacie C6?',

@@ -80,7 +80,7 @@ const VOUCHER_INSERT = { width: 99, height: 210 };
 const VOUCHER_SETUPS: { label: string; note: string; config: Partial<EnvelopeConfig> }[] = [
   {
     label: 'Koperta gładka',
-    note: `Kolor marki bez druku, od ${DEFAULT_PRICING.moqWithoutPrint} sztuki`,
+    note: `Kolor marki bez druku, od ${DEFAULT_PRICING.moqWithoutPrint} sztuk`,
     config: {},
   },
   {
@@ -115,7 +115,7 @@ const HOW_TO_STEPS = [
   },
   {
     name: 'Konfiguracja kopert',
-    text: `W konfiguratorze wybierają Państwo format DL, kolor spośród ${COLORS.length} odcieni i nakład. Koperty gładkie zamawiają Państwo od ${DEFAULT_PRICING.moqWithoutPrint} sztuki, a z nadrukiem logo od ${DEFAULT_PRICING.moqWithPrint} sztuk. Cena przelicza się przy każdej zmianie.`,
+    text: `W konfiguratorze wybierają Państwo format DL, kolor spośród ${COLORS.length} odcieni i nakład. Każdy kolor zamawiają Państwo od ${DEFAULT_PRICING.moqWithoutPrint} sztuk — gładki albo z nadrukiem logo. Cena przelicza się przy każdej zmianie.`,
   },
   {
     name: 'Akceptacja wizualizacji',
@@ -339,7 +339,7 @@ export default function VoucherEnvelopesPage() {
                 },
                 {
                   title: `Od ${DEFAULT_PRICING.moqWithPrint} sztuk z logo`,
-                  note: `Koperty gładkie od ${DEFAULT_PRICING.moqWithoutPrint} sztuki — bez opakowań zbiorczych`,
+                  note: `Koperty gładkie od ${DEFAULT_PRICING.moqWithoutPrint} sztuk — bez opakowań zbiorczych`,
                 },
                 {
                   title: `${formatPrice(printed.unitTotal)} brutto/szt.`,
@@ -786,7 +786,7 @@ export default function VoucherEnvelopesPage() {
                   publicznych i urzędów i nie wstrzymuje produkcji.
                 </li>
                 <li>
-                  Koperty gładkie zamawiają Państwo od {DEFAULT_PRICING.moqWithoutPrint} sztuki,
+                  Koperty gładkie zamawiają Państwo od {DEFAULT_PRICING.moqWithoutPrint} sztuk,
                   więc zapas na sezon można uzupełniać partiami zamiast jednym dużym zakupem.
                 </li>
                 <li>

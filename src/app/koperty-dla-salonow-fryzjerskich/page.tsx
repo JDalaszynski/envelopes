@@ -259,7 +259,7 @@ export default function HairSalonEnvelopesPage() {
                 },
                 {
                   title: `Od ${DEFAULT_PRICING.moqWithPrint} sztuk z logo`,
-                  note: `Koperty gładkie od ${DEFAULT_PRICING.moqWithoutPrint} sztuki`,
+                  note: `Koperty gładkie od ${DEFAULT_PRICING.moqWithoutPrint} sztuk`,
                 },
                 {
                   title: 'Imię na kopercie, bez adresu',

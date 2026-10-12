@@ -8,7 +8,15 @@ import { EnvelopePlaceholder } from '@/components/ui/EnvelopePlaceholder';
 import { useCart, EDIT_KEY } from '@/components/providers/CartProvider';
 import { trackBeginCheckout } from '@/lib/analytics';
 import { COLOR_MAP, FORMAT_MAP, personalizationScope } from '@/lib/catalog';
-import { DEFAULT_PRICING, DELIVERY_COST, formatPrice, leadTimeDays, round2 } from '@/lib/pricing';
+import {
+  DEFAULT_PRICING,
+  DELIVERY_COST,
+  formatPrice,
+  leadTimeDays,
+  minimumQuantity,
+  needsProduction,
+  round2,
+} from '@/lib/pricing';
 import { printSides } from '@/lib/print-sides';
 import type { EnvelopeConfig, ShippingSpeed } from '@/lib/types';
 
@@ -25,6 +33,7 @@ function CartInner() {
     items,
     count,
     removeItem,
+    updateItem,
     itemsGross,
     reorder,
     ready,
@@ -90,6 +99,12 @@ function CartInner() {
   const net = round2(gross / (1 + DEFAULT_PRICING.vatRate));
   const vat = round2(gross - net);
   const leadDays = leadTimeDays({ speed: shippingSpeed, requiresProduction });
+  /* Koszyk żyje w przeglądarce dłużej niż cennik: pozycja zapisana przed
+     podniesieniem minimum albo wczytana z linku może mieć mniej sztuk, niż
+     dziś przyjmujemy. Serwer i tak ją odrzuci — tu mówimy to, zanim klient
+     wypełni formularz zamówienia. */
+  const itemMinimum = (config: EnvelopeConfig) => minimumQuantity(needsProduction(config));
+  const hasBelowMinimum = items.some((item) => item.price.quantity < itemMinimum(item.config));
 
   return (
     <>
@@ -103,6 +118,8 @@ function CartInner() {
           {items.map((item) => {
             const format = FORMAT_MAP[item.config.format];
             const color = COLOR_MAP[item.config.color];
+            const minimum = itemMinimum(item.config);
+            const belowMinimum = item.price.quantity < minimum;
             return (
               <article className="card" key={item.id}>
                 <div className="cart-item" style={{ position: 'relative' }}>
@@ -167,6 +184,26 @@ function CartInner() {
                         </li>
                       )}
                     </ul>
+
+                    {belowMinimum && (
+                      <p className="notice notice-error" role="alert">
+                        Minimalna ilość dla tej pozycji to {minimum} szt.{' '}
+                        {needsProduction(item.config) ? (
+                          /* Przy personalizacji ilość musi zgadzać się z listą
+                             danych, więc zmienia się ją w konfiguratorze. */
+                          'Prosimy zmienić ilość w konfiguracji.'
+                        ) : (
+                          <button
+                            type="button"
+                            className="btn btn-secondary btn-sm"
+                            style={{ marginLeft: 'var(--space-2)' }}
+                            onClick={() => updateItem(item.id, { ...item.config, quantity: minimum })}
+                          >
+                            Ustaw {minimum} szt.
+                          </button>
+                        )}
+                      </p>
+                    )}
 
                     <div className="row-between">
                       <div className="row">
@@ -302,13 +339,25 @@ function CartInner() {
             <span className="price">{formatPrice(gross)}</span>
           </div>
 
-          <Link
-            href="/zamowienie"
-            className="btn btn-block btn-lg"
-            onClick={() => trackBeginCheckout(items, gross)}
-          >
-            Przejdź do zamówienia
-          </Link>
+          {hasBelowMinimum ? (
+            <>
+              <button type="button" className="btn btn-block btn-lg" disabled>
+                Przejdź do zamówienia
+              </button>
+              <p className="small" style={{ marginTop: 'var(--space-3)' }} role="status">
+                Jedna z pozycji ma mniej sztuk, niż wynosi minimalna ilość. Prosimy ją poprawić
+                albo usunąć.
+              </p>
+            </>
+          ) : (
+            <Link
+              href="/zamowienie"
+              className="btn btn-block btn-lg"
+              onClick={() => trackBeginCheckout(items, gross)}
+            >
+              Przejdź do zamówienia
+            </Link>
+          )}
 
           {requiresProduction && (
             <p className="small muted" style={{ marginTop: 'var(--space-4)' }}>

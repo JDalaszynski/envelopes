@@ -97,7 +97,7 @@ const COLOR_DIRECTIONS: { heading: string; text: string; colorIds: string[] }[] 
 const CLINIC_SETUPS: { label: string; note: string; config: Partial<EnvelopeConfig> }[] = [
   {
     label: 'Koperta gładka',
-    note: `Kolor placówki bez druku, od ${DEFAULT_PRICING.moqWithoutPrint} sztuki`,
+    note: `Kolor placówki bez druku, od ${DEFAULT_PRICING.moqWithoutPrint} sztuk`,
     config: {},
   },
   {
@@ -253,7 +253,7 @@ export default function ClinicEnvelopesPage() {
                 },
                 {
                   title: `Od ${DEFAULT_PRICING.moqWithPrint} sztuk z logo`,
-                  note: `Koperty gładkie od ${DEFAULT_PRICING.moqWithoutPrint} sztuki, bez czekania na produkcję`,
+                  note: `Koperty gładkie od ${DEFAULT_PRICING.moqWithoutPrint} sztuk, bez czekania na produkcję`,
                 },
                 {
                   title: 'Cztery odcienie „czyste"',

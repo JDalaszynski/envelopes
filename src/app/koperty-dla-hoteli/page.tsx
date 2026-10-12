@@ -147,7 +147,7 @@ const COLOR_DIRECTIONS: { heading: string; text: string; colorIds: string[] }[] 
 const HOTEL_SETUPS: { label: string; note: string; config: Partial<EnvelopeConfig> }[] = [
   {
     label: 'Koperta gładka',
-    note: `Kolor obiektu bez druku, od ${DEFAULT_PRICING.moqWithoutPrint} sztuki`,
+    note: `Kolor obiektu bez druku, od ${DEFAULT_PRICING.moqWithoutPrint} sztuk`,
     config: {},
   },
   {
@@ -305,7 +305,7 @@ export default function HotelEnvelopesPage() {
                 },
                 {
                   title: `Od ${DEFAULT_PRICING.moqWithPrint} sztuk z logo`,
-                  note: `Koperty gładkie od ${DEFAULT_PRICING.moqWithoutPrint} sztuki, bez czekania na produkcję`,
+                  note: `Koperty gładkie od ${DEFAULT_PRICING.moqWithoutPrint} sztuk, bez czekania na produkcję`,
                 },
               ].map((usp) => (
                 <div className="usp" key={usp.title}>

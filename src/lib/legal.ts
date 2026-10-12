@@ -73,8 +73,17 @@ const PRINT_EXT_LABEL = PRINT_FILE_EXTENSIONS.filter((ext) => ext !== 'jpeg')
   .map((ext) => ext.toUpperCase())
   .join(', ');
 
-/** Data ostatniej aktualizacji — wspólna dla wszystkich trzech dokumentów. */
+/** Data ostatniej aktualizacji polityki prywatności i polityki cookies. */
 const UPDATED = '2026-08-11';
+
+/**
+ * Data ostatniej aktualizacji regulaminu. Osobna od `UPDATED`, bo §5 podaje
+ * minimalne ilości wprost z `DEFAULT_PRICING` — zmiana `moqWithPrint` albo
+ * `moqWithoutPrint` jest zmianą treści regulaminu (inaczej niż zmiana ceny,
+ * którą §1 wyłącza) i wymaga podbicia tej daty. 12 października 2026:
+ * minimum dla kopert gładkich 1 → 10 sztuk.
+ */
+const TERMS_UPDATED = '2026-10-12';
 
 /* ── Regulamin ──────────────────────────────────────────────── */
 
@@ -82,7 +91,7 @@ export const TERMS: LegalDocument = {
   title: 'Regulamin sklepu Envelopes',
   description:
     'Regulamin sklepu envelopes.pl: zawieranie umów, ceny i płatności, akceptacja wizualizacji, terminy realizacji, dostawa, odstąpienie od umowy i reklamacje.',
-  updated: UPDATED,
+  updated: TERMS_UPDATED,
   intro:
     'Regulamin określa zasady sprzedaży kopert ozdobnych — gładkich oraz z nadrukiem i personalizacją — prowadzonej za pośrednictwem sklepu internetowego envelopes.pl, a także zasady korzystania z konta klienta i pozostałych usług świadczonych drogą elektroniczną.',
   sections: [
@@ -239,7 +248,7 @@ export const TERMS: LegalDocument = {
           text: 'Minimalna ilość Zamówienia (MOQ) wynosi:',
           points: [
             `${DEFAULT_PRICING.moqWithPrint} sztuk dla Produktów z Nadrukiem lub Personalizacją,`,
-            `${DEFAULT_PRICING.moqWithoutPrint} sztuka dla kopert gładkich.`,
+            `${DEFAULT_PRICING.moqWithoutPrint} sztuk dla kopert gładkich.`,
           ],
         },
         {
@@ -648,7 +657,7 @@ export const TERMS: LegalDocument = {
           text: 'Żadne postanowienie Regulaminu nie ogranicza uprawnień Konsumenta ani PNPK wynikających z bezwzględnie obowiązujących przepisów prawa. W razie sprzeczności pierwszeństwo mają przepisy prawa.',
         },
         {
-          text: `Regulamin obowiązuje od dnia ${UPDATED.split('-').reverse().join('.')}.`,
+          text: `Regulamin obowiązuje od dnia ${TERMS_UPDATED.split('-').reverse().join('.')}.`,
         },
       ],
     },

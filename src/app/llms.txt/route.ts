@@ -143,8 +143,8 @@ const PAGES: { url: string; title: string; note: string }[] = [
   },
   {
     url: '/koperty-na-pieniadze',
-    title: 'Koperty na pieniądze — ozdobne, od 1 sztuki',
-    note: 'Prezent pieniężny na wesele, komunię, chrzciny lub jako nagrodę: MOQ 1 sztuka bez nadruku, banknot wchodzi płasko, termin realizacji 2 dni robocze (nie tego samego dnia).',
+    title: `Koperty na pieniądze — ozdobne, w ${COLORS.length} kolorach`,
+    note: `Prezent pieniężny na wesele, komunię, chrzciny lub jako nagrodę: minimalna ilość ${DEFAULT_PRICING.moqWithoutPrint} sztuk bez nadruku, banknot wchodzi płasko, termin realizacji ${DEFAULT_PRICING.leadDaysPlain} dni robocze (nie tego samego dnia).`,
   },
   {
     url: '/kontakt',
@@ -194,8 +194,9 @@ Kontakt: ${CONTACT_DETAILS.email}, tel. ${CONTACT_DETAILS.phone} (${CONTACT_DETA
 
 ## Minimalna ilość zamówienia
 
-- Koperty gładkie, bez nadruku i bez personalizacji: od ${DEFAULT_PRICING.moqWithoutPrint} sztuki.
+- Koperty gładkie, bez nadruku i bez personalizacji: od ${DEFAULT_PRICING.moqWithoutPrint} sztuk.
 - Koperty z nadrukiem (na przodzie lub na zamknięciu) albo z personalizacją: od ${DEFAULT_PRICING.moqWithPrint} sztuk.
+- Minimalna ilość dotyczy pozycji zamówienia, czyli jednego koloru w jednej konfiguracji. Pojedynczych kopert sklep nie sprzedaje.
 - Powyżej ${BULK_QUOTE_THRESHOLD.toLocaleString('pl-PL')} sztuk warunki ustalane są indywidualnie przez formularz wyceny.
 
 ## Terminy realizacji (dni robocze)

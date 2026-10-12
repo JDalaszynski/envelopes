@@ -254,7 +254,7 @@ export default function AccountingEnvelopesPage() {
                 },
                 {
                   title: `Od ${DEFAULT_PRICING.moqWithPrint} sztuk z logo`,
-                  note: `Koperty gładkie od ${DEFAULT_PRICING.moqWithoutPrint} sztuki, bez czekania na produkcję`,
+                  note: `Koperty gładkie od ${DEFAULT_PRICING.moqWithoutPrint} sztuk, bez czekania na produkcję`,
                 },
                 {
                   title: 'Biały albo Ecru',

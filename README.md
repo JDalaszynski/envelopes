@@ -185,7 +185,7 @@ Kartę OG dla nowej strony generuje `scripts/og-card.mjs` — odtwarza układ ro
 wyróżniających. Bez kwot: obraz bywa buforowany przez komunikatory miesiącami.
 
 ```bash
-node scripts/og-card.mjs --photo public/images/zastosowania/<kadr>-1024.webp --eyebrow "Kolor czarny" --title "Czarne koperty DL" --line1 "Papier barwiony w masie · 115 g/m²" --line2 "Nadruk logo jasnym kolorem, od 1 sztuki" --out public/images/og/koperty-czarne.jpg
+node scripts/og-card.mjs --photo public/images/zastosowania/<kadr>-1024.webp --eyebrow "Kolor czarny" --title "Czarne koperty DL" --line1 "Papier barwiony w masie · 115 g/m²" --line2 "Nadruk logo jasnym kolorem, od 10 sztuk" --out public/images/og/koperty-czarne.jpg
 ```
 
 ### Feed produktowy (Google Merchant Center)
@@ -195,11 +195,11 @@ i `catalog.ts`, budowany z tego samego bloku danych strukturalnych, który opisu
 na `/koperty-dl`. Cena w feedzie nie może więc rozjechać się z ceną na stronie docelowej —
 a to najczęstsza przyczyna odrzucenia oferty i, przy powtórzeniach, zawieszenia konta.
 
-**Zawiera jedną pozycję: kopertę DL gładką** (`ENV-DL`, 2,58 zł brutto/szt.). To jedyna
-konfiguracja, którą kupujący może zamówić od 1 sztuki, więc cena jednostkowa jest ceną realnie
-dostępną. Koperty z nadrukiem i z personalizacją mają minimum 10 sztuk — wchodzą dopiero jako
-pozycja wyceniona za komplet (`unit_pricing_measure`), razem ze stronami kolorów, które dadzą
-im własne adresy docelowe.
+**Zawiera koperty DL gładkie** (grupa `ENV-DL`, 2,58 zł brutto/szt.). Od 12 października 2026
+także koperty gładkie mają minimum 10 sztuk, a feed nadal podaje cenę sztuki — zgodną ze stroną
+koloru, ale nie z wytyczną Merchant Center o cenie najmniejszej kupowalnej ilości. Przejście na
+cenę kompletu (`unit_pricing_measure`) jest opisane w nagłówku `src/app/feed.xml/route.ts` jako
+sprawa do rozstrzygnięcia. Koperty z nadrukiem i z personalizacją do feedu nie wchodzą.
 
 W Merchant Center dodaje się to jako **zaplanowane pobieranie** z adresu
 `https://envelopes.pl/feed.xml` (dzienne). Ustawienia po stronie konta, których feed nie niesie:

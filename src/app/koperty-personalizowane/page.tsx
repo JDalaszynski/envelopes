@@ -869,7 +869,7 @@ export default function PersonalizedEnvelopesPage() {
                   <th scope="row">Minimalna ilość</th>
                   <td>
                     {DEFAULT_PRICING.moqWithPrint} sztuk z personalizacją,{' '}
-                    {DEFAULT_PRICING.moqWithoutPrint} sztuka bez personalizacji
+                    {DEFAULT_PRICING.moqWithoutPrint} sztuk bez personalizacji
                   </td>
                 </tr>
                 <tr>

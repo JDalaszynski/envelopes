@@ -623,7 +623,7 @@ export default function PrintedEnvelopesPage() {
                   <th scope="row">Minimalna ilość</th>
                   <td>
                     {DEFAULT_PRICING.moqWithPrint} sztuk z nadrukiem,{' '}
-                    {DEFAULT_PRICING.moqWithoutPrint} sztuka bez nadruku
+                    {DEFAULT_PRICING.moqWithoutPrint} sztuk bez nadruku
                   </td>
                 </tr>
                 <tr>

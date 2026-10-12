@@ -38,8 +38,9 @@ export function AddColorToCart({
   const { addItem, ready } = useCart();
   const minimum = DEFAULT_PRICING.moqWithoutPrint;
   /* Domyślna ilość: nakład, przy którym zamówienie ma sens transportowy.
-     Minimum wynosi 1 sztukę i pole można na nie zejść — to podpowiedź,
-     nie próg. */
+     Pole można zejść do minimum — to podpowiedź, nie próg. Wartość wpisana
+     poniżej minimum wraca do niego po opuszczeniu pola, żeby liczba w polu
+     nie różniła się od tej, którą policzyliśmy i dodamy do koszyka. */
   const [quantity, setQuantity] = useState(50);
   const [added, setAdded] = useState(0);
 
@@ -80,6 +81,7 @@ export function AddColorToCart({
             onChange={(event) =>
               setQuantity(Math.max(0, Number.parseInt(event.target.value, 10) || 0))
             }
+            onBlur={() => setQuantity(config.quantity)}
           />
           <button
             type="button"
@@ -120,7 +122,7 @@ export function AddColorToCart({
           </>
         ) : (
           <span className="muted">
-            Koperty gładkie zamawiają Państwo od {minimum} sztuki.
+            Koperty gładkie zamawiają Państwo od {minimum} sztuk.
           </span>
         )}
       </p>

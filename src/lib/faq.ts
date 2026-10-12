@@ -55,8 +55,8 @@ export const FAQ_ITEMS: FaqItem[] = [
     answer: `Koperta ozdobna DL ${FORMAT_MAP.DL.dimensions} kosztuje ${formatPrice(PLAIN_DL)} brutto (${formatPrice(net(PLAIN_DL))} netto) za sztukę. Cena jest identyczna we wszystkich ${COLORS.length} kolorach — za wykończenie perłowe, metaliczne i papier eko nie ma dopłaty. Rabatów ilościowych nie stosujemy, więc cena jednostkowa przy 10 i przy 1 000 sztuk jest taka sama.`,
   },
   {
-    question: 'Czy mogę zamówić tylko 1 kopertę?',
-    answer: `Tak. Koperty gładkie, bez nadruku i personalizacji, zamawiają Państwo już od ${DEFAULT_PRICING.moqWithoutPrint} sztuki. Minimalna ilość ${DEFAULT_PRICING.moqWithPrint} sztuk obowiązuje wyłącznie wtedy, gdy zamówienie obejmuje nadruk logo lub personalizację.`,
+    question: 'Od ilu sztuk można zamówić koperty?',
+    answer: `Od ${DEFAULT_PRICING.moqWithoutPrint} sztuk w jednym kolorze. Tyle wynosi minimalna ilość dla kopert gładkich, bez nadruku i personalizacji; przy nadruku logo lub personalizacji jest to ${DEFAULT_PRICING.moqWithPrint} sztuk. Pojedynczych kopert nie sprzedajemy, a każdy kolor jest osobną pozycją zamówienia.`,
   },
   {
     question: 'Jakie formaty kopert są dostępne w Envelopes?',
@@ -145,7 +145,7 @@ export const PRINT_FAQ_ITEMS: FaqItem[] = [
   },
   {
     question: 'Ile kopert z nadrukiem trzeba zamówić minimalnie?',
-    answer: `Minimalna ilość przy nadruku to ${DEFAULT_PRICING.moqWithPrint} sztuk. Próg wynika z kosztu przygotowania druku, który jest taki sam dla 5 i dla 500 kopert. Koperty gładkie, bez nadruku, zamawiają Państwo już od ${DEFAULT_PRICING.moqWithoutPrint} sztuki.`,
+    answer: `Minimalna ilość przy nadruku to ${DEFAULT_PRICING.moqWithPrint} sztuk. Próg wynika z kosztu przygotowania druku, który jest taki sam dla 5 i dla 500 kopert. Koperty gładkie, bez nadruku, zamawiają Państwo od ${DEFAULT_PRICING.moqWithoutPrint} sztuk.`,
   },
   {
     question: 'Ile trwa druk kopert z logo?',
@@ -281,7 +281,7 @@ export const PERSONALIZATION_FAQ_ITEMS: FaqItem[] = [
   },
   {
     question: 'Ile kopert z personalizacją trzeba zamówić minimalnie?',
-    answer: `Minimalna ilość przy personalizacji to ${DEFAULT_PRICING.moqWithPrint} sztuk — tyle samo, co przy nadruku logo. Próg wynika z kosztu przygotowania produkcji, który jest taki sam dla 5 i dla 500 kopert. Koperty gładkie, bez nadruku i bez adresowania, zamawiają Państwo już od ${DEFAULT_PRICING.moqWithoutPrint} sztuki.`,
+    answer: `Minimalna ilość przy personalizacji to ${DEFAULT_PRICING.moqWithPrint} sztuk — tyle samo, co przy nadruku logo. Próg wynika z kosztu przygotowania produkcji, który jest taki sam dla 5 i dla 500 kopert. Koperty gładkie, bez nadruku i bez adresowania, zamawiają Państwo od ${DEFAULT_PRICING.moqWithoutPrint} sztuk.`,
   },
   {
     question: 'W jaki sposób przekazać listę adresów do zadrukowania?',
@@ -350,7 +350,7 @@ export const VOUCHER_FAQ_ITEMS: FaqItem[] = [
   },
   {
     question: 'Czy koperta na voucher musi mieć nadruk logo?',
-    answer: `Nie musi — sama koperta w kolorze marki robi już większość roboty, a gładkie zamawiają Państwo od ${DEFAULT_PRICING.moqWithoutPrint} sztuki i bez czekania na produkcję. Nadruk dokłada jedno: nazwa salonu jest widoczna, zanim koperta zostanie otwarta, i zostaje w domu obdarowanego razem z bonem. Przy bonach kupowanych na prezent to często jedyny ślad marki, który tam dociera.`,
+    answer: `Nie musi — sama koperta w kolorze marki robi już większość roboty, a gładkie zamawiają Państwo od ${DEFAULT_PRICING.moqWithoutPrint} sztuk i bez czekania na produkcję. Nadruk dokłada jedno: nazwa salonu jest widoczna, zanim koperta zostanie otwarta, i zostaje w domu obdarowanego razem z bonem. Przy bonach kupowanych na prezent to często jedyny ślad marki, który tam dociera.`,
   },
   {
     question: 'Czy na kopercie z bonem można nadrukować imię obdarowanego?',
@@ -363,7 +363,7 @@ export const VOUCHER_FAQ_ITEMS: FaqItem[] = [
   },
   {
     question: 'Czy koperty na vouchery można zamówić w kilku kolorach naraz?',
-    answer: `Tak. Każdy kolor konfigurują Państwo osobno i dodają do koszyka jako oddzielną pozycję — jedno zamówienie może obejmować dowolnie wiele kolorów. Minimalna ilość ${DEFAULT_PRICING.moqWithPrint} sztuk dotyczy pojedynczej pozycji z nadrukiem, więc trzy kolory z logo to minimum ${3 * DEFAULT_PRICING.moqWithPrint} kopert. Dostawę ${formatPrice(DELIVERY_COST)} brutto naliczamy raz na całe zamówienie, niezależnie od liczby pozycji.`,
+    answer: `Tak. Każdy kolor konfigurują Państwo osobno i dodają do koszyka jako oddzielną pozycję — jedno zamówienie może obejmować dowolnie wiele kolorów. Minimalna ilość ${DEFAULT_PRICING.moqWithPrint} sztuk dotyczy każdej pozycji z osobna, więc trzy kolory z logo to minimum ${3 * DEFAULT_PRICING.moqWithPrint} kopert. Dostawę ${formatPrice(DELIVERY_COST)} brutto naliczamy raz na całe zamówienie, niezależnie od liczby pozycji.`,
   },
 ];
 
@@ -395,7 +395,7 @@ export const PREMIUM_FAQ_ITEMS: FaqItem[] = [
   },
   {
     question: 'Od ilu sztuk można zamówić koperty premium z własnym nadrukiem logo?',
-    answer: `Koperty premium z nadrukiem logo realizujemy już od ${DEFAULT_PRICING.moqWithPrint} sztuk. Przygotowujemy bezpłatną cyfrową wizualizację na wybranym papierze, a produkcję uruchamiamy dopiero po Państwa akceptacji. Koperty gładkie, bez nadruku, dostępne są już od ${DEFAULT_PRICING.moqWithoutPrint} sztuki.`,
+    answer: `Koperty premium z nadrukiem logo realizujemy już od ${DEFAULT_PRICING.moqWithPrint} sztuk. Przygotowujemy bezpłatną cyfrową wizualizację na wybranym papierze, a produkcję uruchamiamy dopiero po Państwa akceptacji. Koperty gładkie, bez nadruku, dostępne są już od ${DEFAULT_PRICING.moqWithoutPrint} sztuk.`,
   },
   {
     question: 'Jakie kolory nadruku stosuje się na ciemnych i metalicznych kopertach premium?',
@@ -413,8 +413,10 @@ export const PREMIUM_FAQ_ITEMS: FaqItem[] = [
 const MONEY_MAX_INSERT = maxInsertSize(FORMAT_MAP.DL);
 
 /**
- * Pytania klienta detalicznego kupującego 1–5 sztuk na prezent — klaster K8
- * (keywords.md). Zakres rozdzielony od sąsiadów:
+ * Pytania klienta detalicznego kupującego koperty na prezent — klaster K8
+ * (keywords.md). Od 12 października 2026 minimum dla koperty gładkiej to
+ * `moqWithoutPrint` sztuk, więc pytanie o jedną kopertę ma odpowiedź „nie".
+ * Zakres rozdzielony od sąsiadów:
  * - `DL_FAQ_ITEMS` (F3) ma już pytanie „Czy w kopercie DL zmieści się
  *   banknot?" z wymiarami trzech nominałów — tu **nie powtarzamy** tego
  *   pytania, tylko pytanie o dwa banknoty naraz, którego F3 nie ma.
@@ -429,7 +431,7 @@ const MONEY_MAX_INSERT = maxInsertSize(FORMAT_MAP.DL);
 export const MONEY_FAQ_ITEMS: FaqItem[] = [
   {
     question: 'Czy mogę zamówić tylko jedną kopertę na pieniądze?',
-    answer: `Tak. Koperta gładka, bez nadruku i personalizacji, kosztuje ${formatPrice(PLAIN_DL)} brutto i zamawia się ją od ${DEFAULT_PRICING.moqWithoutPrint} sztuki — nie trzeba kupować całej serii, żeby przygotować prezent na jedną uroczystość.`,
+    answer: `Nie. Koperty gładkie, bez nadruku i personalizacji, zamawia się od ${DEFAULT_PRICING.moqWithoutPrint} sztuk w jednym kolorze. Jedna kosztuje ${formatPrice(PLAIN_DL)} brutto, więc najmniejsze zamówienie to ${formatPrice(round2(PLAIN_DL * DEFAULT_PRICING.moqWithoutPrint))} brutto bez dostawy. Koperty, które zostaną, przydają się na kolejne uroczystości: gładka nie ma daty ani napisu, więc pasuje do każdej okazji.`,
   },
   {
     question: 'Ile trwa realizacja koperty na pieniądze?',
@@ -437,11 +439,11 @@ export const MONEY_FAQ_ITEMS: FaqItem[] = [
   },
   {
     question: 'Czy koperta na pieniądze musi mieć nadruk okolicznościowy?',
-    answer: `Nie. Koperta gładka w wybranym kolorze wystarczy — to najszybsza i najtańsza opcja, dostępna od ${DEFAULT_PRICING.moqWithoutPrint} sztuki. Nadruk okolicznościowy (np. „Wszystkiego najlepszego" albo „W dniu Ślubu") to opcja dodatkowa, dostępna od ${DEFAULT_PRICING.moqWithPrint} sztuk, bo tyle wynosi minimalny nakład przy każdym nadruku w naszej produkcji.`,
+    answer: `Nie. Koperta gładka w wybranym kolorze wystarczy — to najszybsza i najtańsza opcja, dostępna od ${DEFAULT_PRICING.moqWithoutPrint} sztuk. Nadruk okolicznościowy (np. „Wszystkiego najlepszego" albo „W dniu Ślubu") to opcja dodatkowa, dostępna od ${DEFAULT_PRICING.moqWithPrint} sztuk, bo tyle wynosi minimalny nakład przy każdym nadruku w naszej produkcji.`,
   },
   {
     question: 'Czy da się dodać imię obdarowanego na kopercie z pieniędzmi?',
-    answer: `Tak, usługą personalizacji — drukujemy wtedy inne imię lub dedykację na każdej kopercie z serii, od ${DEFAULT_PRICING.moqWithPrint} sztuk. Przy jednorazowym prezencie dla jednej osoby minimalny nakład bywa niewspółmierny do potrzeby — w takiej sytuacji szybciej wychodzi kupić kopertę gładką i podpisać ją odręcznie. Personalizacja sprawdza się przy większej liczbie obdarowanych naraz: nagrodach firmowych, kopertach dla wielu gości weselnych albo całej rodziny na święta.`,
+    answer: `Tak, usługą personalizacji — drukujemy wtedy inne imię lub dedykację na każdej kopercie z serii, od ${DEFAULT_PRICING.moqWithPrint} sztuk. Przy prezencie dla jednej osoby prościej wychodzi koperta gładka podpisana odręcznie: nie wymaga listy imion ani akceptacji wizualizacji i wysyłamy ją w ${DEFAULT_PRICING.leadDaysPlain} dni robocze. Personalizacja sprawdza się przy większej liczbie obdarowanych naraz: nagrodach firmowych, kopertach dla wielu gości weselnych albo całej rodziny na święta.`,
   },
   {
     question: 'Czy w jednej kopercie zmieszczą się dwa banknoty?',

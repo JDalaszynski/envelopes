@@ -148,7 +148,7 @@ const UPCOMING_LABEL = UPCOMING_FORMATS.map((f) => `${f.id} ${f.dimensions}`).jo
 const HOW_TO_STEPS = [
   {
     name: 'Wybór koperty DL w konfiguratorze',
-    text: `Wybierają Państwo format DL ${DL.dimensions}, jeden z ${COLORS.length} kolorów i ilość od ${DEFAULT_PRICING.moqWithoutPrint} sztuki. Koperta DL kosztuje ${formatPrice(plain.unitTotal)} brutto za sztukę w każdym kolorze, a cena przelicza się przy każdej zmianie ilości.`,
+    text: `Wybierają Państwo format DL ${DL.dimensions}, jeden z ${COLORS.length} kolorów i ilość od ${DEFAULT_PRICING.moqWithoutPrint} sztuk. Koperta DL kosztuje ${formatPrice(plain.unitTotal)} brutto za sztukę w każdym kolorze, a cena przelicza się przy każdej zmianie ilości.`,
   },
   {
     name: 'Płatność',
@@ -396,7 +396,7 @@ export default function DlEnvelopesPage() {
               </Link>
             </div>
             <p className="small muted" style={{ marginTop: 'var(--space-3)' }}>
-              Koperty gładkie zamawiają Państwo od {DEFAULT_PRICING.moqWithoutPrint} sztuki, bez
+              Koperty gładkie zamawiają Państwo od {DEFAULT_PRICING.moqWithoutPrint} sztuk, bez
               opakowań zbiorczych. Do każdego zamówienia wystawiamy fakturę VAT, a instytucjom
               publicznym i urzędom — z odroczonym terminem płatności 14 dni.
             </p>
@@ -416,7 +416,7 @@ export default function DlEnvelopesPage() {
                   note: `A4 złożone na trzy, voucher ${A4_IN_THREE.width} × ${A4_IN_THREE.height} mm, banknot płasko`,
                 },
                 {
-                  title: `Od ${DEFAULT_PRICING.moqWithoutPrint} sztuki`,
+                  title: `Od ${DEFAULT_PRICING.moqWithoutPrint} sztuk`,
                   note: `${formatPrice(plain.unitTotal)} brutto za sztukę w każdym z ${COLORS.length} kolorów`,
                 },
                 {
@@ -513,7 +513,7 @@ export default function DlEnvelopesPage() {
                 <tr>
                   <th scope="row">Minimalna ilość</th>
                   <td>
-                    {DEFAULT_PRICING.moqWithoutPrint} sztuka bez nadruku,{' '}
+                    {DEFAULT_PRICING.moqWithoutPrint} sztuk bez nadruku,{' '}
                     {DEFAULT_PRICING.moqWithPrint} sztuk z nadrukiem lub personalizacją
                   </td>
                 </tr>
@@ -642,7 +642,7 @@ export default function DlEnvelopesPage() {
             </ConfigureLink>
             <span className="small muted">
               Koperty gładkie wysyłamy w {DEFAULT_PRICING.leadDaysPlain} dni robocze, od{' '}
-              {DEFAULT_PRICING.moqWithoutPrint} sztuki.
+              {DEFAULT_PRICING.moqWithoutPrint} sztuk.
             </span>
           </div>
         </div>
@@ -1067,7 +1067,7 @@ export default function DlEnvelopesPage() {
               <p>
                 Konfigurator otworzy się z formatem DL. Wybór koloru zajmuje minutę, a cenę widzą
                 Państwo od razu — {formatPrice(plain.unitTotal)} brutto za sztukę, od{' '}
-                {DEFAULT_PRICING.moqWithoutPrint} sztuki, z wysyłką w{' '}
+                {DEFAULT_PRICING.moqWithoutPrint} sztuk, z wysyłką w{' '}
                 {DEFAULT_PRICING.leadDaysPlain} dni robocze.
               </p>
             </div>

@@ -214,9 +214,20 @@ export function Configurator() {
       return { ref: colorRef, message: 'Prosimy podać liczbę kopert.' };
     }
     if (config.quantity < minimum) {
+      if (!needsProduction(config)) {
+        return {
+          ref: colorRef,
+          message: `Minimalna ilość to ${minimum} szt. Prosimy zwiększyć ilość.`,
+        };
+      }
+      /* Wyłączenie usług pomaga tylko wtedy, gdy koperta gładka ma niższy
+         próg — przy równych progach ta rada prowadziłaby donikąd. */
+      const plainHelps = config.quantity >= minimumQuantity(false);
       return {
         ref: printRef,
-        message: `Minimalna ilość dla koperty z nadrukiem lub personalizacją to ${minimum} szt. Prosimy zwiększyć ilość albo wyłączyć te opcje.`,
+        message: `Minimalna ilość dla koperty z nadrukiem lub personalizacją to ${minimum} szt. Prosimy zwiększyć ilość${
+          plainHelps ? ' albo wyłączyć te opcje' : ''
+        }.`,
       };
     }
     if (config.print && config.printFiles.filter((f) => f.status === 'przeslano').length === 0) {

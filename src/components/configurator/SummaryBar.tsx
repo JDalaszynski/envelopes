@@ -130,7 +130,7 @@ export function SummaryBar({
               className="qty-block-input"
               type="number"
               inputMode="numeric"
-              min={1}
+              min={minimumQuantity}
               value={price.quantity}
               onChange={(e) =>
                 onQuantityChange(Math.max(0, Number.parseInt(e.target.value, 10) || 0))

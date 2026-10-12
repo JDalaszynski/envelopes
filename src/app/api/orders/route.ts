@@ -2,7 +2,13 @@ import { NextResponse } from 'next/server';
 
 import { verifyRequest } from '@/lib/firebase/admin';
 import { getPricing, listOrders, nextOrderNumber, saveOrder } from '@/lib/store';
-import { calculatePrice, estimatedDeliveryDate, needsProduction, round2 } from '@/lib/pricing';
+import {
+  calculatePrice,
+  estimatedDeliveryDate,
+  minimumQuantity,
+  needsProduction,
+  round2,
+} from '@/lib/pricing';
 import { buildProductName } from '@/lib/product-name';
 import {
   generateApprovalToken,
@@ -127,17 +133,22 @@ async function createOrder(request: Request) {
     };
   });
 
-  /* Próg obejmuje każdą pozycję, która idzie do produkcji — także samą
-     personalizację i sam nadruk na zamknięciu. Wcześniej sprawdzaliśmy tylko
-     nadruk z przodu, więc ominięcie konfiguratora pozwalało zamówić
-     pojedynczą kopertę z adresem. */
+  /* Próg obejmuje każdą pozycję: idącą do produkcji (także samą
+     personalizację i sam nadruk na zamknięciu) oraz gładką. Wcześniej
+     sprawdzaliśmy tylko nadruk z przodu, więc ominięcie konfiguratora
+     pozwalało zamówić pojedynczą kopertę z adresem; koperta gładka nie miała
+     progu do 12 października 2026. Koszyk zapisany przed tą datą może nieść
+     pozycję poniżej minimum — `CartView` zatrzymuje ją wcześniej, a tu stoi
+     ostatnia zapora. */
   const minimumViolation = items.find(
-    (item) => needsProduction(item.config) && item.price.quantity < pricing.moqWithPrint
+    (item) => item.price.quantity < minimumQuantity(needsProduction(item.config), pricing)
   );
   if (minimumViolation) {
     return NextResponse.json(
       {
-        error: `Minimalna ilość dla koperty z nadrukiem lub personalizacją to ${pricing.moqWithPrint} szt.`,
+        error: needsProduction(minimumViolation.config)
+          ? `Minimalna ilość dla koperty z nadrukiem lub personalizacją to ${pricing.moqWithPrint} szt.`
+          : `Minimalna ilość dla koperty bez nadruku to ${pricing.moqWithoutPrint} szt.`,
       },
       { status: 400 }
     );

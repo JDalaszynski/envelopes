@@ -19,7 +19,7 @@
  *     --eyebrow "Kolor czarny" \
  *     --title "Czarne koperty DL" \
  *     --line1 "Papier barwiony w masie · 115 g/m²" \
- *     --line2 "Nadruk logo jasnym kolorem, od 1 sztuki" \
+ *     --line2 "Nadruk logo jasnym kolorem, od 10 sztuk" \
  *     --out public/images/og/koperty-czarne.jpg
  */
 

@@ -98,7 +98,7 @@ przelewów. **Nie wpisuj tych danych ręcznie w treściach — zawsze odwołuj s
   dane, a marka jest widoczna przy otwieraniu. Nazwa produktu: sam przód zostaje „z nadrukiem",
   zamknięcie dopisujemy („z nadrukiem na zamknięciu", „z nadrukiem na przodzie i zamknięciu").
   Link z preselekcją: `?zamkniecie=1` (obok `?nadruk=1`).
-- **MOQ:** 1 szt. dla kopert gładkich, 10 szt. przy nadruku lub personalizacji. **(UWAGA: Wydruk z własnym logo już od 10 szt. to gigantyczna przewaga konkurencyjna na rynku poligraficznym! Drukarnie startują zazwyczaj od 100-500 szt. Zawsze podkreślaj to w treściach jako kluczową korzyść dla małych firm i organizatorów eventów: "Koperty z własnym nadrukiem już od 10 sztuk").**
+- **MOQ:** 10 szt. dla kopert gładkich (od 12 października 2026; wcześniej 1 szt. — nie pisz już „od 1 sztuki” ani o kupowaniu pojedynczej koperty), 10 szt. przy nadruku lub personalizacji. Minimum dotyczy pozycji, czyli jednego koloru. **(UWAGA: Wydruk z własnym logo już od 10 szt. to gigantyczna przewaga konkurencyjna na rynku poligraficznym! Drukarnie startują zazwyczaj od 100-500 szt. Zawsze podkreślaj to w treściach jako kluczową korzyść dla małych firm i organizatorów eventów: "Koperty z własnym nadrukiem już od 10 sztuk").**
 - **Terminy:** gładkie 2 dni robocze; z nadrukiem 5 dni (standard) lub 2 dni (ekspres).
 - **Dostawa:** 19,99 zł, kurier. **Faktura z odroczonym terminem 14 dni wyłącznie dla instytucji
   publicznych i urzędów** — decyzja właściciela z 14 sierpnia 2026. Pozostali klienci, także firmy
@@ -637,7 +637,7 @@ i wymiar wracały w akapitach, które nie były o cenie, gramaturze ani wymiarze
 | „Certyfikat A4 złożony na trzy mieści się w kopercie DL. Przy nadruku logo obowiązuje minimum 10 sztuk, więc pojedyncza grupa szkoleniowa to już zamówienie realizowalne." | „Certyfikat A4 złożony na trzy mieści się w kopercie DL. Jedna edycja kursu albo pojedyncza grupa szkoleniowa to już wystarczający nakład." |
 | „Do wysyłek, które mają zostać zapamiętane, wybierane są odcienie nietypowe: Matcha 120 g/m², Błękit Łupkowy 120 g/m² i Złoty w wykończeniu metalicznym. Wszystkie kosztują tyle samo, co koperta biała." | „Kiedy przesyłka ma zostać zapamiętana, wybierane są odcienie, których nie widuje się codziennie na biurku: Matcha, Błękit Łupkowy albo Złoty z metalicznym połyskiem." |
 | „Nadruk kosztuje 1,99 zł brutto za sztukę niezależnie od koloru koperty — druk na czarnej kopercie kosztuje tyle samo, co na białej." (jako wstęp do sekcji o **kolorach**) | „Odcień papieru nie wpływa na koszt nadruku. Wybór koloru jest więc pytaniem o to, jak logo ma wyglądać, a nie ile ma kosztować." |
-| „Koperta ozdobna DL 110 × 220 mm kosztuje 2,58 zł brutto za sztukę w 19 kolorach, zamawiają ją Państwo od 1 sztuki, a wysyłamy w 3 dni robocze." (lead strony **o wymiarach**) | „Koperta DL ma wymiary 110 × 220 mm — format podłużny, zaprojektowany pod arkusz A4 złożony na trzy. Poniżej rozpisujemy, co się w niej mieści, a co wymaga innego formatu." |
+| „Koperta ozdobna DL 110 × 220 mm kosztuje 2,58 zł brutto za sztukę w 19 kolorach, zamawiają ją Państwo od 10 sztuk, a wysyłamy w 3 dni robocze." (lead strony **o wymiarach**) | „Koperta DL ma wymiary 110 × 220 mm — format podłużny, zaprojektowany pod arkusz A4 złożony na trzy. Poniżej rozpisujemy, co się w niej mieści, a co wymaga innego formatu." |
 
 ### Test przed oddaniem tekstu
 

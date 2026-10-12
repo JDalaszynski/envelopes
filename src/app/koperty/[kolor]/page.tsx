@@ -251,7 +251,7 @@ export default async function ColorPage({ params }: { params: Promise<{ kolor: s
                     ]
                   : []),
                 {
-                  title: `Od ${DEFAULT_PRICING.moqWithoutPrint} sztuki`,
+                  title: `Od ${DEFAULT_PRICING.moqWithoutPrint} sztuk`,
                   note: `${formatPrice(plain.unitTotal)} brutto za sztukę — tyle samo co każdy z ${COLORS.length} odcieni`,
                 },
                 {
@@ -341,7 +341,7 @@ export default async function ColorPage({ params }: { params: Promise<{ kolor: s
               <tr>
                 <th scope="row">Minimalna ilość</th>
                 <td>
-                  {DEFAULT_PRICING.moqWithoutPrint} sztuka bez nadruku,{' '}
+                  {DEFAULT_PRICING.moqWithoutPrint} sztuk bez nadruku,{' '}
                   {DEFAULT_PRICING.moqWithPrint} sztuk z nadrukiem lub personalizacją
                 </td>
               </tr>

@@ -81,7 +81,7 @@ Każdy wpis w pliku `socials/pinterest-piny.txt` musi zawierać 4 elementy ści�
   2. **Lista korzyści (Bullet points z frazami kluczowymi)**:
      - Format (np. DL 110 × 220 mm — idealny na voucher, zaproszenie, bon podarunkowy),
      - Jakość papieru (np. papier barwiony w masie, gramatura 120–140 g/m²),
-     - Usługa (nadruk logo już od 1 sztuki, brak okienka, personalizacja),
+     - Usługa (nadruk logo już od 10 sztuk, brak okienka, personalizacja),
      - Proces (konfigurator online, szybka dostawa).
   3. **Wyraźne Call to Action**: Bezpośrednie wezwanie do akcji z powtórzeniem frazy kluczowej, np. *„👉 Kliknij pin, przejdź do konfiguratora i zamów koperty ozdobne z logo na envelopes.pl!”*.
   4. **Tagi (Hashtags)**: Zestaw 10–14 branżowych tagów opartych na słowach kluczowych.

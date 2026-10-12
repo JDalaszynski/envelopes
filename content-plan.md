@@ -416,6 +416,57 @@ nie liczą się do kadencji czterech pozycji tygodniowo i nie mają filara.
 
 ## Dziennik wdrożeń
 
+### 12 października 2026 — minimum kopert gładkich: 10 sztuk zamiast 1
+
+**Decyzja właściciela.** `DEFAULT_PRICING.moqWithoutPrint` wzrosło z 1 do 10. Oba progi są dziś
+równe: 10 sztuk na pozycję (jeden kolor w jednej konfiguracji), gładką albo z nadrukiem lub
+personalizacją. Pojedynczych kopert sklep nie sprzedaje.
+
+**Kod.** Serwer (`api/orders`) odrzuca pozycję gładką poniżej minimum — wcześniej sprawdzał tylko
+pozycje idące do produkcji. Konfigurator ma osobny komunikat dla koperty gładkiej, a przy
+nadruku nie radzi już „wyłączyć te opcje", gdy to nic nie daje. Koszyk zapisany wcześniej
+z mniejszą ilością pokazuje przy pozycji komunikat z przyciskiem „Ustaw 10 szt." i nie
+przepuszcza do zamówienia. Przycisk na stronach kolorów (`AddColorToCart`) wyrównuje wpisaną
+ilość do minimum po opuszczeniu pola.
+
+**Regulamin.** §5 podaje minimum wprost z cennika, więc zmienił treść: „10 sztuk dla kopert
+gładkich". Regulamin dostał własną datę (`TERMS_UPDATED`, 12 października 2026); polityka
+prywatności i cookies zostają przy 11 sierpnia. **Po stronie właściciela:** §18 przewiduje
+powiadomienie posiadaczy kont e-mailem o zmianie regulaminu z 14-dniowym wyprzedzeniem — zmiana
+weszła w życie z dniem wdrożenia, bez tego okresu.
+
+**Treści — co przestało być prawdą i jak to rozstrzygnięto.**
+- **„Od 1 sztuki" w 47 miejscach** czytanych ze stałej (paski faktów, tabele specyfikacji,
+  FAQ, `llms.txt`, opisy meta) — odmiana poprawiona na „od 10 sztuk"; liczba schodzi z cennika.
+- **Poz. 39 `/koperty-na-pieniadze`** — strona stała na argumencie „jedna sztuka na jedną
+  uroczystość". Tytuł: „Koperty na pieniądze — ozdobne, w 19 kolorach" (było: „…od 1 sztuki").
+  Lead, pasek faktów i karta „Dlaczego" mówią o jednym zamówieniu na kilka uroczystości.
+  `MONEY_FAQ_ITEMS`: pytanie „Czy mogę zamówić tylko jedną kopertę na pieniądze?" zostaje,
+  odpowiedź brzmi „Nie" i podaje koszt najmniejszego zamówienia.
+- **Poz. 44** (ślub) — tabela kosztu liczyła 1, 3 i 5 kopert; liczy minimum w jednym, dwóch
+  i trzech odcieniach. Persona zostaje (gość weselny), znika „z jedną kopertą".
+- **Poz. 46** (próg 10 sztuk) — rada „potrzebujesz mniej: weź gładką od 1 sztuki" już nie
+  działa. Sekcja mówi wprost, że mniejszej liczby nie da się zamówić w żadnym wariancie,
+  i zostawia trzy drogi: gładkie z zapasem, pełna seria z logo, połączenie potrzeb.
+- **Poz. 9, 38, 40, 41, 43, 45** — zdania kierujące małe zamówienia do koperty gładkiej
+  przepisane tak, żeby nie sugerowały niższego progu (szczegóły w `blog.ts`, pole `updated`).
+- **`FAQ_ITEMS` na `/`** — pytanie „Czy mogę zamówić tylko 1 kopertę?" zastąpione pytaniem
+  „Od ilu sztuk można zamówić koperty?".
+
+**Karty OG.** Sześć obrazów miało „od 1 sztuki" wpisane w grafikę: `home`, `koperty-dl`,
+`koperty-na-pieniadze`, `koperty-czarne`, `koperty-szare`, `koperty-taupe`. Cztery wygenerowane
+ponownie `scripts/og-card.mjs`; `home` i `koperty-dl` (robione ręcznie) mają podmienione dwie
+linijki parametrów. Komunikatory mogą jeszcze przez jakiś czas pokazywać starą wersję z bufora.
+
+**Źródła faktów.** `knowledge-base.md` (pkt o MOQ), `keywords.md` (K8), definicja agenta,
+`README.md` i szkice postów w `socials/` (18 linijek z „od 1 sztuki") — poprawione.
+
+**Daty.** `PAGE_UPDATED` → 12 października dla `/`, sześciu filarów, 19 stron kolorów i ośmiu LP
+branżowych podających minimum; `updated` w ośmiu wpisach.
+
+**Otwarte — feed produktowy.** `/feed.xml` podaje cenę sztuki, a najmniejszy zakup to dziś
+10 sztuk. Zob. wiersz w „Zależności i blokady".
+
 ### 12 października 2026 — Złoty wraca do sprzedaży w DL
 
 **Decyzja właściciela.** Z odcienia `zloty` w `COLORS` zniknęło `outOfStock: ['DL']`, wpisane
@@ -4084,6 +4135,7 @@ z konfiguracją „Koperta DL Czarny z nadrukiem", 4,57 zł/szt.
 | ~~Brak analityki (GA4 / GSC)~~ | **Odblokowane 16 sierpnia 2026.** GA4 wpięte przez `NEXT_PUBLIC_GA_ID`, właściciel zweryfikowany w Search Console. Dane o zapytaniach i wejściach do konfiguratora zaczynają się zbierać | — |
 | `transitTime` w danych o dostawie | Google liczy obiecywaną datę doręczenia z `handlingTime` + `transitTime`; bez drugiego składnika adnotacja o dostawie jest niepełna. Zadeklarowanie czasu przewozu bez potwierdzenia przewoźnika byłoby obietnicą bez pokrycia | Właściciel — podanie realnego czasu przewozu kurierem |
 | Formaty C6 i K4 `disabled` | Klaster ślubny (K9) bez CTA zakupowego; poz. 27 ograniczona do A4 składanego | Właściciel — uruchomienie formatów |
+| Feed produktowy podaje cenę sztuki przy minimum 10 sztuk (od 12 października 2026) | Do tej daty koperta gładka była jedyną konfiguracją kupowalną od 1 sztuki i dlatego jedyną w feedzie. Dziś `g:price` (2,58 zł) zgadza się ze stroną koloru i z `Offer`, ale wytyczne Merchant Center oczekują ceny najmniejszej kupowalnej ilości. Przejście na cenę kompletu (`unit_pricing_measure`, `Offer` z `referenceQuantity`, kwota kompletu widoczna na stronie koloru) trzeba zrobić w trzech miejscach naraz | Właściciel — czy feed jest podłączony w Merchant Center i czy oferty mają zostać; potem zmiana w `feed.xml/route.ts` i `seo.ts` |
 | ~~Odcień Złoty — tymczasowy brak w magazynie (od 24 września 2026)~~ | **Odblokowane 12 października 2026.** Złoty wrócił do sprzedaży w DL — `outOfStock` zdjęty z katalogu, kafelek w kroku 2 konfiguratora znów da się wybrać. Poz. 49 anulowana; poz. 56 i 67 mogą polecać Złoty bez zastrzeżeń | — |
 | ~~Zdjęcia produktowe to PNG po 0,5–0,75 MB~~ | **Odblokowane 15 sierpnia 2026.** `colors/`, `prints/` i `personalized/` przeszły na WebP w trzech szerokościach: **30,8 MB → 2,1 MB**. Strona główna pobiera dziś **197 kB** obrazów zamiast ~9 MB | — |
 | ~~Kadry hero w `public/images/` nadal w PNG~~ | **Odblokowane 18 sierpnia 2026.** `Hero Envelopes Robocze.png` (3,06 MB) okazał się plikiem **używanym** — jako tło hero na `/` i pięciu filarach, przez adres z `%20`. Przeszedł na WebP (`hero-tlo-2015.webp`, 127 kB); `koperta-gorna/dolna.png` i `2.png` były faktycznie nieużywane i zostały usunięte | — |

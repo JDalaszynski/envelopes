@@ -206,8 +206,8 @@ export default function KopertyPremiumPage() {
               </a>
             </div>
             <p className="small muted" style={{ marginTop: 'var(--space-3)' }}>
-              Koperty gładkie od {DEFAULT_PRICING.moqWithoutPrint} sztuki · Z logo od{' '}
-              {DEFAULT_PRICING.moqWithPrint} sztuk · Cyfrowa wizualizacja grafika do akceptacji
+              Od {DEFAULT_PRICING.moqWithoutPrint} sztuk w jednym kolorze, gładkie albo z logo ·
+              Cyfrowa wizualizacja grafika do akceptacji
             </p>
           </div>
         </div>
@@ -622,7 +622,7 @@ export default function KopertyPremiumPage() {
               <p className="small" style={{ marginTop: 'var(--space-2)', marginBottom: 0 }}>
                 Podziękowania dla gości, zaproszenia podłużne oraz eleganckie wręczanie upominków
                 finansowych bez konieczności składania banknotów. Ofertę kopert pod prezent
-                pieniężny, dostępną już od 1 sztuki, opisaliśmy na stronie{' '}
+                pieniężny opisaliśmy na stronie{' '}
                 <Link href="/koperty-na-pieniadze">koperty na pieniądze</Link>.
               </p>
             </div>

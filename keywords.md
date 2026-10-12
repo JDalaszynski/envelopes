@@ -420,8 +420,10 @@ wprost pod cel LTV z bazy wiedzy.
 
 Klaster o wysokim wolumenie, ale **mieszanej wartości**: dominuje w nim klient detaliczny
 (wesele, komunia, chrzciny) kupujący 1–5 sztuk, podczas gdy model biznesowy jest B2B.
-Wartość realna: MOQ 1 szt. dla kopert gładkich pozwala go obsłużyć bez wyjątków w procesie,
-a ruch buduje autorytet tematyczny domeny.
+Wartość realna: ruch buduje autorytet tematyczny domeny. **Od 12 października 2026 koperty
+gładkie mają MOQ 10 szt.** (wcześniej 1 szt.), więc klient detaliczny kupuje komplet w jednym
+kolorze na kilka okazji — treści klastra nie obiecują pojedynczej koperty, a frazy typu
+„koperta na pieniądze 1 sztuka" nie mają pokrycia w ofercie.
 
 **URL docelowy:** `/koperty-na-pieniadze` `[ISTNIEJE]` — opublikowany 7 września 2026 (poz. 39
 planu), po wdrożeniu K1, K2 i K7.
@@ -454,7 +456,7 @@ oczekiwań: klient detaliczny szuka koperty „na już", a realizacja z personal
 roboczych (2 dni ekspres). Termin musi być podany wprost nad CTA, inaczej klaster wygeneruje
 odbicia i reklamacje.
 
-**Podział pracy z poz. 40 (24 września 2026).** Pillar sprzedaje kopertę gładką od 1 sztuki
+**Podział pracy z poz. 40 (24 września 2026).** Pillar sprzedaje kopertę gładką (od 12 października 2026 od 10 sztuk)
 (kolory, banknoty, cena sztuki), wpis — usługę: kiedy imię na kopercie się opłaca, ile kosztuje
 dla całej serii i co zrobić, gdy obdarowanych jest mniej niż minimum. Fraza
 `personalizowana koperta na pieniądze` wyszła z `keywords` pillara; pillar używa jej w treści

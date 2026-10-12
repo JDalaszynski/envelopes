@@ -30,6 +30,15 @@ import { plainShotsForColor, showcaseSrc } from '@/lib/showcase';
  * obejmują kilka konfiguracji naraz, więc nie mają jednej ceny ani jednego
  * symbolu.
  *
+ * **Do rozstrzygnięcia (12 października 2026).** Tego dnia minimum kopert
+ * gładkich wzrosło z 1 do `moqWithoutPrint` sztuk, więc ten sam zarzut
+ * dotyczy dziś każdej pozycji feedu: `g:price` jest ceną sztuki, a najmniejszy
+ * zakup to komplet. Cena w feedzie nadal zgadza się z ceną na stronie koloru
+ * i z `Offer` (który niesie `eligibleQuantity.minValue`), ale wytyczne
+ * Merchant Center oczekują ceny najmniejszej kupowalnej ilości. Przejście na
+ * cenę kompletu z `unit_pricing_measure` wymaga zmiany feedu, `Offer`
+ * i kwoty widocznej na stronie koloru naraz — nie robimy tego połowicznie.
+ *
  * **Dlaczego trasa, a nie plik wgrywany ręcznie.** Wszystkie liczby pochodzą
  * z `pricing.ts` i `catalog.ts`, czyli z tego samego źródła co konfigurator,
  * cennik na stronie i `Offer` w danych strukturalnych. Plik wgrany raz
@@ -132,9 +141,9 @@ function feedItems(): string[] {
      * „kopertę" albo „kolor" wprost, łamie się na połowie palety —
      * dwukropek czyta się jako etykieta pola i jest poprawny dla wszystkich.
      *
-     * Liczba pojedyncza jest tu istotna: sprzedajemy od 1 sztuki i cena
-     * dotyczy sztuki. Tytuł w liczbie mnogiej przy kwocie 2,58 zł czytałby
-     * się jak cena opakowania.
+     * Liczba pojedyncza jest tu istotna: cena dotyczy sztuki. Tytuł
+     * w liczbie mnogiej przy kwocie 2,58 zł czytałby się jak cena opakowania.
+     * (Minimum zakupu to dziś `moqWithoutPrint` sztuk — patrz nagłówek pliku.)
      */
     const title = `Koperta ozdobna ${FORMAT} ${SPEC.dimensions}, kolor: ${color.name}${
       weight ? `, ${weight}` : ''

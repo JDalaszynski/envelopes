@@ -61,7 +61,7 @@ const VOUCHER_INSERT = { width: 99, height: 210 };
 const RESTAURANT_SETUPS: { label: string; note: string; config: Partial<EnvelopeConfig> }[] = [
   {
     label: 'Koperta gładka',
-    note: `Kolor lokalu bez druku, od ${DEFAULT_PRICING.moqWithoutPrint} sztuki`,
+    note: `Kolor lokalu bez druku, od ${DEFAULT_PRICING.moqWithoutPrint} sztuk`,
     config: {},
   },
   {
@@ -202,7 +202,7 @@ export default function RestaurantEnvelopesPage() {
                 },
                 {
                   title: `Od ${DEFAULT_PRICING.moqWithPrint} sztuk z logo`,
-                  note: `Koperty gładkie od ${DEFAULT_PRICING.moqWithoutPrint} sztuki, bez czekania na produkcję`,
+                  note: `Koperty gładkie od ${DEFAULT_PRICING.moqWithoutPrint} sztuk, bez czekania na produkcję`,
                 },
                 {
                   title: 'Czerwony lub odcień stonowany',

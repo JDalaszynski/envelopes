@@ -9,7 +9,7 @@ import { StickyCta } from '@/components/ui/StickyCta';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { getPost } from '@/lib/blog';
 import { colorPagePath, hasColorPage } from '@/lib/color-pages';
-import { COLOR_MAP, FORMAT_MAP, maxInsertSize } from '@/lib/catalog';
+import { COLORS, COLOR_MAP, FORMAT_MAP, maxInsertSize } from '@/lib/catalog';
 import { MONEY_FAQ_ITEMS } from '@/lib/faq';
 import { DEFAULT_PRICING, DELIVERY_COST, calculatePrice, formatPrice } from '@/lib/pricing';
 import {
@@ -33,9 +33,11 @@ import type { EnvelopeConfig } from '@/lib/types';
  * wdrożenie K1, K2, K7 — jest spełniony: wszystkie trzy filary istnieją.
  *
  * **Jedyny pillar z dominującym klientem detalicznym.** W przeciwieństwie do
- * pozostałych filarów, klient kupuje 1–5 sztuk (wesele, komunia, chrzciny),
- * nie serię pod jedno zamówienie firmowe. Stąd MOQ 1 sztuka jest głównym
- * argumentem strony, a nie szczegółem w tabeli.
+ * pozostałych filarów, klient kupuje koperty pod uroczystości rodzinne
+ * (wesele, komunia, chrzciny), nie serię pod jedno zamówienie firmowe. Do
+ * 12 października 2026 głównym argumentem strony było MOQ 1 sztuka; od tego
+ * dnia koperta gładka ma minimum `moqWithoutPrint` sztuk, więc strona mówi
+ * o komplecie na kilka okazji i nigdzie nie obiecuje pojedynczej koperty.
  *
  * **Termin realizacji podany nad CTA — decyzja z content-plan.md, nie
  * stylistyczna.** Klient detaliczny szuka koperty „na już". Koperta gładka
@@ -119,8 +121,8 @@ const OCCASIONS: { name: string; text: string }[] = [
  * pytania zadawane **na tej stronie**, choć w górę linkują do innych filarów
  * (ten sam wzorzec co `filesPost` na F4):
  * - dobór odcienia → sekcja koloru pokazuje 3 z 19 odcieni,
- * - próg 10 sztuk → najostrzejsze tarcie tej strony: filar sprzedaje kopertę
- *   od 1 sztuki, a obie usługi dodatkowe zaczynają się od 10 (pytanie stoi już
+ * - próg 10 sztuk → najostrzejsze tarcie tej strony: klient detaliczny
+ *   potrzebuje jednej lub kilku kopert, a minimum wynosi 10 (pytanie stoi już
  *   w `MONEY_FAQ_ITEMS`, ale odpowiedź „bo tyle wynosi minimalny nakład" nie
  *   tłumaczy, skąd ten nakład się bierze),
  * - imię na kopercie → karta personalizacji; od 24 września 2026 prowadzi do
@@ -152,8 +154,8 @@ const GUIDES = [weddingGuide, namedEnvelopeGuide, paletteGuide, moqGuide, leadTi
   (post) => post !== undefined
 );
 
-const moneyTitle = 'Koperty na pieniądze — ozdobne, od 1 sztuki';
-const moneyDescription = `Ozdobna koperta na pieniądze na wesele, komunię lub chrzciny — banknot wchodzi płasko, od 1 sztuki za ${formatPrice(plain.unitTotal)} brutto. Wysyłka w ${DEFAULT_PRICING.leadDaysPlain} dni robocze.`;
+const moneyTitle = `Koperty na pieniądze — ozdobne, w ${COLORS.length} kolorach`;
+const moneyDescription = `Ozdobna koperta na pieniądze na wesele, komunię lub chrzciny — banknot wchodzi płasko. Od ${DEFAULT_PRICING.moqWithoutPrint} sztuk, ${formatPrice(plain.unitTotal)} brutto za sztukę. Wysyłka w ${DEFAULT_PRICING.leadDaysPlain} dni robocze.`;
 
 export const metadata: Metadata = {
   title: moneyTitle,
@@ -171,7 +173,7 @@ export const metadata: Metadata = {
   alternates: { canonical: '/koperty-na-pieniadze' },
   openGraph: {
     type: 'website',
-    title: 'Koperty na pieniądze — ozdobne, od 1 sztuki — Envelopes',
+    title: `${moneyTitle} — Envelopes`,
     description: moneyDescription,
     url: '/koperty-na-pieniadze',
     images: [
@@ -206,7 +208,7 @@ export default function MoneyEnvelopesPage() {
         ])}
       />
 
-      {/* ── Hero — blok odpowiedzi GEO, MOQ 1 i termin realizacji nad CTA ── */}
+      {/* ── Hero — blok odpowiedzi GEO, minimum i termin realizacji nad CTA ── */}
       <section className="hero hero-with-bg">
         <div className="hero-main-content">
           <ParallaxBackground imageUrl="/images/hero-tlo-2015.webp" />
@@ -225,8 +227,8 @@ export default function MoneyEnvelopesPage() {
             <p className="hero-lead">
               Ozdobna koperta DL {DL.dimensions} na gotówkę wręczaną w prezencie — na wesele,
               komunię, chrzciny albo jako nagrodę. Banknot wchodzi płasko, bez składania. Koperta
-              gładka kosztuje {formatPrice(plain.unitTotal)} brutto i kupują ją Państwo już od{' '}
-              {DEFAULT_PRICING.moqWithoutPrint} sztuki — bez minimalnego nakładu na serię.{' '}
+              gładka kosztuje {formatPrice(plain.unitTotal)} brutto za sztukę, a zamawia się ją od{' '}
+              {DEFAULT_PRICING.moqWithoutPrint} sztuk w jednym kolorze.{' '}
               <strong>
                 Wysyłamy ją w {DEFAULT_PRICING.leadDaysPlain} dni robocze — to najszybsza opcja
                 w naszej ofercie, ale nie jest to wysyłka tego samego dnia.
@@ -253,8 +255,8 @@ export default function MoneyEnvelopesPage() {
             <div className="usp-bar" style={{ flexWrap: 'wrap' }}>
               {[
                 {
-                  title: `Od ${DEFAULT_PRICING.moqWithoutPrint} sztuki`,
-                  note: 'Bez minimalnego nakładu na serię — jedna koperta na jedną uroczystość',
+                  title: `Od ${DEFAULT_PRICING.moqWithoutPrint} sztuk`,
+                  note: 'W jednym kolorze — zapas na kolejne uroczystości w roku',
                 },
                 {
                   title: `${formatPrice(plain.unitTotal)} brutto/szt.`,
@@ -307,11 +309,11 @@ export default function MoneyEnvelopesPage() {
               </p>
             </div>
             <div className="card">
-              <h3 style={{ fontSize: 19 }}>Jedna sztuka, bez czekania na serię</h3>
+              <h3 style={{ fontSize: 19 }}>Jedno zamówienie na kilka uroczystości</h3>
               <p className="small" style={{ marginTop: 'var(--space-2)', marginBottom: 0 }}>
-                Pozostałe produkty w naszej ofercie mają sens dopiero od kilku lub kilkunastu
-                sztuk. Koperta na pieniądze kupują Państwo pojedynczo, dokładnie pod jedną
-                uroczystość.
+                Koperty gładkie zamawia się od {DEFAULT_PRICING.moqWithoutPrint} sztuk w jednym
+                kolorze. Koperta bez nadruku nie ma daty ani napisu, więc to samo zamówienie
+                obsługuje wesela, komunie i urodziny przez cały rok.
               </p>
             </div>
           </div>
@@ -488,8 +490,8 @@ export default function MoneyEnvelopesPage() {
                 Pełną specyfikację i proces akceptacji opisaliśmy na stronie{' '}
                 <Link href="/koperty-z-nadrukiem">koperty z nadrukiem</Link>.
               </p>
-              {/* Link w dół do najostrzejszego tarcia tej strony: filar sprzedaje
-                  kopertę od 1 sztuki, a obie usługi dodatkowe zaczynają się od 10.
+              {/* Link w dół do najostrzejszego tarcia tej strony: klient detaliczny
+                  potrzebuje kilku kopert, a minimum wynosi 10.
                   `MONEY_FAQ_ITEMS` stwierdza próg, wpis tłumaczy, skąd się bierze. */}
               {moqGuide && (
                 <p className="small muted" style={{ marginBottom: 0 }}>
@@ -558,7 +560,7 @@ export default function MoneyEnvelopesPage() {
                 <tr>
                   <td>Koperta gładka</td>
                   <td className="mono-sm">{formatPrice(plain.unitTotal)}</td>
-                  <td>{DEFAULT_PRICING.moqWithoutPrint} sztuka</td>
+                  <td>{DEFAULT_PRICING.moqWithoutPrint} sztuk</td>
                   <td>{DEFAULT_PRICING.leadDaysPlain} dni robocze</td>
                 </tr>
                 <tr>
@@ -689,7 +691,7 @@ export default function MoneyEnvelopesPage() {
               <p>
                 Konfigurator otworzy się z formatem DL i kolorem Biała Perłowa —{' '}
                 {formatPrice(plain.unitTotal)} brutto za sztukę, od {DEFAULT_PRICING.moqWithoutPrint}{' '}
-                sztuki, z wysyłką w {DEFAULT_PRICING.leadDaysPlain} dni robocze.
+                sztuk, z wysyłką w {DEFAULT_PRICING.leadDaysPlain} dni robocze.
               </p>
             </div>
             <ConfigureLink format="DL" color="biala-perlowa" className="btn btn-lg">

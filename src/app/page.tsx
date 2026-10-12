@@ -132,7 +132,7 @@ const UPCOMING_LABEL_SHORT = UPCOMING_FORMATS.map((f) => f.id).join(' i ');
 const HOW_TO_STEPS = [
   {
     name: 'Wybór koperty w konfiguratorze',
-    text: `Wybierają Państwo kolor i ilość, a jeśli koperta ma nieść logo albo dane odbiorcy — także nadruk (na przodzie, na zamknięciu albo na obu stronach) lub personalizację. Przy nadruku i personalizacji zamówienie zaczyna się od ${DEFAULT_PRICING.moqWithPrint} sztuk. Cena przelicza się przy każdej zmianie, więc nic nie wyjaśnia się dopiero w koszyku.`,
+    text: `Wybierają Państwo kolor i ilość, a jeśli koperta ma nieść logo albo dane odbiorcy — także nadruk (na przodzie, na zamknięciu albo na obu stronach) lub personalizację. Każdy kolor zamawia się od ${DEFAULT_PRICING.moqWithoutPrint} sztuk, także przy nadruku i personalizacji. Cena przelicza się przy każdej zmianie, więc nic nie wyjaśnia się dopiero w koszyku.`,
   },
   {
     name: 'Płatność',
@@ -281,7 +281,7 @@ const SHOWCASE: { colorId: string; variant: 'nadruk' | 'personalizacja'; note: s
    forma „Państwo”. Liczbę odcieni niesie tytuł, więc opis dokłada próg zamówienia
    i termin kopert gładkich; kwota zostaje w cenniku i w pasku faktów. Przy
    dzisiejszym cenniku 151 znaków. */
-const homeDescription = `Koperty ozdobne DL w jednej cenie za każdy odcień, także perłowy. Zamówią je Państwo od ${DEFAULT_PRICING.moqWithoutPrint} sztuki, a koperty gładkie wysyłamy w ${DEFAULT_PRICING.leadDaysPlain} dni robocze od wpłaty.`;
+const homeDescription = `Koperty ozdobne DL w jednej cenie za każdy odcień, także perłowy. Zamówią je Państwo od ${DEFAULT_PRICING.moqWithoutPrint} sztuk, a koperty gładkie wysyłamy w ${DEFAULT_PRICING.leadDaysPlain} dni robocze od wpłaty.`;
 
 export const metadata: Metadata = {
   /* Szablon `%s | Envelopes` z `layout.tsx` obejmuje wyłącznie segmenty
@@ -406,8 +406,8 @@ export default function HomePage() {
               },
               {
                 icon: 'ilosc.svg',
-                title: `Zamawiaj od ${DEFAULT_PRICING.moqWithoutPrint} sztuki`,
-                note: `Koperty z nadrukiem od 10 sztuk. Zamów tyle, ile faktycznie zużyjesz`,
+                title: `Zamawiaj od ${DEFAULT_PRICING.moqWithoutPrint} sztuk`,
+                note: `Gładkie i z nadrukiem — to samo minimum. Powyżej niego dowolna liczba sztuk`,
               },
               {
                 icon: 'wysylka.svg',
@@ -1012,7 +1012,7 @@ export default function HomePage() {
                 opisaliśmy na stronie <Link href="/koperty-na-vouchery">koperty na vouchery</Link>.
                 Ofertę dla korespondencji zarządczej i marek luksusowych przedstawia strona{' '}
                 <Link href="/koperty-premium">koperty premium</Link>. Prezent pieniężny na wesele,
-                komunię czy chrzciny — bez minimalnego nakładu na serię — opisuje strona{' '}
+                komunię czy chrzciny opisuje strona{' '}
                 <Link href="/koperty-na-pieniadze">koperty na pieniądze</Link>.
               </p>
             </div>
@@ -1112,7 +1112,8 @@ export default function HomePage() {
               </div>
 
               <p>
-                Zamawiać można bez opakowań zbiorczych i bez progów ilościowych. Kliknięcie w kolor
+                Każdy kolor zamawia się od {DEFAULT_PRICING.moqWithoutPrint} sztuk, bez opakowań
+                zbiorczych — powyżej minimum liczba kopert jest dowolna. Kliknięcie w kolor
                 otwiera konfigurator z zaznaczonym odcieniem — a odcienie z własną kartą prowadzą
                 na stronę, która opisuje ich papier i zastosowania.
               </p>

@@ -20,7 +20,7 @@ Sklep charakteryzuje się precyzyjną, zwartą i wysoce przewidywalną ofertą. 
     *   Personalizacja/adresowanie (+2,99 zł/szt.)
 *   **Zasady minimalnego zamówienia (MOQ):**
     *   Od 10 sztuk dla kopert z nadrukiem/personalizacją (optymalizacja kosztów przygotowania).
-    *   Od 1 sztuki dla kopert gładkich.
+    *   Od 10 sztuk dla kopert gładkich — od 12 października 2026 (wcześniej od 1 sztuki). Minimum dotyczy pozycji zamówienia, czyli jednego koloru; pojedynczych kopert sklep nie sprzedaje.
 *   **Czas:** Zamówienia gładkich kopert wysyłane są w **2 dni robocze**. Przy nadruku standardowa wysyłka to 5 dni roboczych, z możliwością ekspresu (2 dni) za dopłatą +1,50 zł/szt. Koszt dostawy to stałe 19,99 zł.
 
 ---

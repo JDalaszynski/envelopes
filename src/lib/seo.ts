@@ -812,7 +812,7 @@ export function voucherEnvelopeProductJsonLd() {
     '@type': 'Product',
     '@id': `${url}#product`,
     name: 'Koperty DL na vouchery i bony podarunkowe',
-    description: `Koperty ozdobne DL ${FORMAT_MAP.DL.dimensions} do pakowania bonów podarunkowych i voucherów na usługi. Voucher drukowany na jednej trzeciej arkusza A4, czyli 99 × 210 mm, wchodzi płasko, bez zaginania. Dostępne w ${COLORS.length} kolorach, opcjonalnie z nadrukiem logo firmy i z imieniem obdarowanego. Minimalna ilość ${DEFAULT_PRICING.moqWithPrint} sztuk przy nadruku, ${DEFAULT_PRICING.moqWithoutPrint} sztuka bez nadruku.`,
+    description: `Koperty ozdobne DL ${FORMAT_MAP.DL.dimensions} do pakowania bonów podarunkowych i voucherów na usługi. Voucher drukowany na jednej trzeciej arkusza A4, czyli 99 × 210 mm, wchodzi płasko, bez zaginania. Dostępne w ${COLORS.length} kolorach, opcjonalnie z nadrukiem logo firmy i z imieniem obdarowanego. Minimalna ilość ${DEFAULT_PRICING.moqWithPrint} sztuk przy nadruku, ${DEFAULT_PRICING.moqWithoutPrint} sztuk bez nadruku.`,
     brand: brandRef,
     category: 'Koperty na vouchery i bony podarunkowe',
     material: 'Papier ozdobny 115–140 g/m²',
@@ -916,8 +916,8 @@ export function premiumEnvelopeProductJsonLd() {
  * Product + AggregateOffer dla „Koperty na pieniądze" (/koperty-na-pieniadze) — klaster K8.
  *
  * Jedyny pillar w serwisie z dominującym klientem detalicznym (wesele, komunia,
- * chrzciny) kupującym 1–5 sztuk — stąd `eligibleQuantity.minValue` bierze
- * `moqWithoutPrint`, nie `moqWithPrint` jak na pozostałych pillarach. Widełki
+ * chrzciny), który kupuje kopertę gładką — stąd `eligibleQuantity.minValue`
+ * bierze `moqWithoutPrint`, nie `moqWithPrint` jak na pozostałych pillarach. Widełki
  * obejmują kopertę gładką, z nadrukiem okolicznościowym i z personalizacją.
  *
  * **Bez `hasMerchantReturnPolicy`** — z tego samego powodu co na F4 i na `/`:
@@ -944,7 +944,7 @@ export function moneyEnvelopeProductJsonLd() {
     '@type': 'Product',
     '@id': `${url}#product`,
     name: 'Koperty DL na pieniądze',
-    description: `Ozdobna koperta DL ${FORMAT_MAP.DL.dimensions} na pieniądze wręczane w prezencie — na wesele, komunię, chrzciny lub jako nagrodę. Banknot mieści się płasko, bez składania. Dostępna w ${COLORS.length} kolorach od ${DEFAULT_PRICING.moqWithoutPrint} sztuki, opcjonalnie z nadrukiem okolicznościowym lub personalizacją imienia obdarowanego.`,
+    description: `Ozdobna koperta DL ${FORMAT_MAP.DL.dimensions} na pieniądze wręczane w prezencie — na wesele, komunię, chrzciny lub jako nagrodę. Banknot mieści się płasko, bez składania. Dostępna w ${COLORS.length} kolorach od ${DEFAULT_PRICING.moqWithoutPrint} sztuk, opcjonalnie z nadrukiem okolicznościowym lub personalizacją imienia obdarowanego.`,
     brand: brandRef,
     category: 'Koperty na pieniądze',
     material: 'Papier ozdobny 115–140 g/m²',

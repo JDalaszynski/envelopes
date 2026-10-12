@@ -67,7 +67,7 @@ const VOUCHER_INSERT = { width: 99, height: 210 };
 const SPA_SETUPS: { label: string; note: string; config: Partial<EnvelopeConfig> }[] = [
   {
     label: 'Koperta gładka',
-    note: `Kolor salonu bez druku, od ${DEFAULT_PRICING.moqWithoutPrint} sztuki`,
+    note: `Kolor salonu bez druku, od ${DEFAULT_PRICING.moqWithoutPrint} sztuk`,
     config: {},
   },
   {
@@ -214,7 +214,7 @@ export default function SpaEnvelopesPage() {
                 },
                 {
                   title: `Od ${DEFAULT_PRICING.moqWithPrint} sztuk z logo`,
-                  note: `Koperty gładkie od ${DEFAULT_PRICING.moqWithoutPrint} sztuki, bez czekania na produkcję`,
+                  note: `Koperty gładkie od ${DEFAULT_PRICING.moqWithoutPrint} sztuk, bez czekania na produkcję`,
                 },
                 {
                   title: 'Taupe 140 g/m² lub jasne odcienie',

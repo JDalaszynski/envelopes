@@ -50,7 +50,7 @@ export const DEFAULT_PRICING: PricingConfig = {
   delivery: { kurier: 19.99, paczkomat: 19.99 },
   vatRate: 0.23,
   moqWithPrint: 10,
-  moqWithoutPrint: 1,
+  moqWithoutPrint: 10,
   leadDaysStandard: 5,
   leadDaysExpress: 2,
   leadDaysPlain: 2,
