@@ -3789,6 +3789,8 @@ const POSTS: BlogPost[] = [
     lead: `Koperty ozdobne DL mają gramatury ${WEIGHT_NUMBERS_LABEL} g/m². Pokazujemy, który odcień ma którą, ile więcej papieru to daje i co gramatura zmienia.`,
     category: 'Poradniki',
     date: '2026-09-25',
+    /* Złoty wrócił do sprzedaży — z tabel zniknął status z katalogu */
+    updated: '2026-10-12',
     readingMinutes: 6,
     colorId: 'matcha',
     format: 'DL',
@@ -4215,6 +4217,8 @@ const POSTS: BlogPost[] = [
     lead: 'Koperta na pieniądze na ślub: DL w jasnym odcieniu mieści banknoty płasko i kartkę z życzeniami. Sprawdź, jaki format, kolor i podpis wybrać.',
     category: 'Poradniki',
     date: '2026-10-08',
+    /* Złoty wrócił do sprzedaży — z tabeli kolorów zniknął status z katalogu */
+    updated: '2026-10-12',
     readingMinutes: 7,
     colorId: 'biala-perlowa',
     format: 'DL',

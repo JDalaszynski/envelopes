@@ -56,7 +56,8 @@ import type { EnvelopeConfig } from '@/lib/types';
  * fryzjerskiego`) — stoi tam, gdzie mowa o perle, z podpisem „przykładowy
  * nadruk". Kierunek ciemny pokazują kadry katalogowe z polem nadruku, bo
  * zdjęcia aranżacyjnego z logo barber shopu w repozytorium nie ma. Złotego
- * strona nie poleca (`outOfStock` w katalogu).
+ * strona nie poleca: w dniu publikacji miał w katalogu `outOfStock`
+ * (wrócił do sprzedaży 12 października 2026).
  *
  * Kolory, ceny, minima i terminy pochodzą z `catalog.ts` i `pricing.ts`.
  */

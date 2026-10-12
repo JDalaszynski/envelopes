@@ -258,7 +258,8 @@ i pod jakim warunkiem — w tabeli „Rezerwa warunkowa".
 
 **Dlaczego ta kolejność.**
 1. **Najpierw to, co dziś psuje konwersję** (poz. 49): strona `/koperty/zloty` pozwala dodać
-   do koszyka odcień z tymczasowym brakiem w magazynie.
+   do koszyka odcień z tymczasowym brakiem w magazynie. **Nieaktualne od 12 października
+   2026** — Złoty wrócił do sprzedaży, poz. 49 anulowana.
 2. **LP voucherowe przed grudniem** (tygodnie 13–15). `keywords.md` K7 opisuje zamówienia
    w klastrze jako sezonowe (Dzień Matki, Walentynki, Boże Narodzenie), a domena potrzebuje
    3–6 miesięcy dojrzewania — te same przesłanki, które przesunęły poz. 19 i 23 przed poz. 17.
@@ -279,8 +280,10 @@ i pod jakim warunkiem — w tabeli „Rezerwa warunkowa".
 - **Kadr.** Treść budujemy wokół zdjęcia, które istnieje (brief pkt 3.3). Gdy brakuje kadru
   aranżacyjnego, bierzemy próbki katalogowe z polem nadruku, jak przy poz. 26. Nadruki na
   kadrach są przykładowe (`showcase.ts`) — podpis „przykładowy nadruk", nigdy „nasza realizacja".
-- **Złoty.** Do czasu zniknięcia `outOfStock` żadna strona nie poleca Złotego jako odcienia do
-  zamówienia; status czyta się z `isColorOutOfStock()`, a zdanie o nim jest warunkowe.
+- **Złoty.** Od 12 października 2026 znów w sprzedaży w DL (`outOfStock` zdjęty) — strony mogą
+  go polecać jak każdy inny odcień. Zasada zostaje dla odcienia, który kiedykolwiek dostanie
+  `outOfStock`: żadna strona nie poleca go do zamówienia, status czyta się z
+  `isColorOutOfStock()`, a zdanie o nim jest warunkowe.
 - **Formaty.** CTA prowadzi wyłącznie do DL, z preselekcją koloru i kroku nadruku. C6 i K4 tylko
   ze statusem z katalogu, bez odnośnika i przycisku (pkt 4.2).
 - **Ton.** Pkt 10.1: parametry w tabelach, jeden na akapit w prozie, język branży zamiast
@@ -296,7 +299,7 @@ i pod jakim warunkiem — w tabeli „Rezerwa warunkowa".
 | # | Tytuł / URL | Format | Główna fraza | Cel | Persona / Branża | Filar | Uwagi (antykanibalizacja) | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 42 | Koperty na zaproszenia ślubne — poradnik doboru (wiersz i status w Fazie 4) | Supporting article | koperty na zaproszenia ślubne | RUCH | Para młoda | poz. 41 | Przeniesiona z Fazy 4 jako pierwsza w tygodniu: odblokowuje poz. 64 (LP dla wedding plannerów) i domyka klaster K9 po poz. 41, 43 i 44. Persona zawężona do pary młodej — zob. wiersz 42 w Fazie 4 | [ ] |
-| 49 | Złoty — tymczasowy brak w magazynie w treściach i w koszyku — `/koperty/zloty` oraz strony polecające ten odcień | Aktualizacja | `złote koperty dl` (bez zmiany; właściciel `/koperty/zloty`) | KONWERSJA | Każdy, kto trafia na odcień Złoty | F5 `/` | **Źródło:** zmiana z 24 września 2026 (`outOfStock: ['DL']`). **Wynik protokołu:** nowa strona zbędna, wszystko dzieje się na istniejących. **Luka:** status zna wyłącznie konfigurator (`StepColor`, `Configurator`). Strona `/koperty/zloty` nie mówi o nim nic, a `AddColorToCart` dodaje złote koperty do koszyka z pominięciem konfiguratora. Strony polecające Złoty bez statusu: `/`, `/koperty-na-pieniadze`, `/koperty-premium`, `/koperty-dla-hoteli`, `/koperty-dla-agencji-eventowych`, `/koperty-na-certyfikaty`. **Zakres:** zdanie o statusie czytane z katalogu (znika razem ze statusem), wyłączony przycisk na stronie koloru, przegląd sześciu stron polecających. Strona koloru zostaje w indeksie — fraza nie traci właściciela. Termin powrotu do magazynu od właściciela, jeśli jest znany | [ ] |
+| 49 | ~~Złoty — tymczasowy brak w magazynie w treściach i w koszyku — `/koperty/zloty` oraz strony polecające ten odcień~~ | Aktualizacja | `złote koperty dl` (bez zmiany; właściciel `/koperty/zloty`) | KONWERSJA | Każdy, kto trafia na odcień Złoty | F5 `/` | **Anulowane 12 października 2026** — Złoty wrócił do sprzedaży w DL (`outOfStock` zdjęty z katalogu), więc nie ma statusu do opisania ani przycisku do wyłączenia. Zapis pierwotny: **Źródło:** zmiana z 24 września 2026 (`outOfStock: ['DL']`). **Wynik protokołu:** nowa strona zbędna, wszystko dzieje się na istniejących. **Luka:** status zna wyłącznie konfigurator (`StepColor`, `Configurator`). Strona `/koperty/zloty` nie mówi o nim nic, a `AddColorToCart` dodaje złote koperty do koszyka z pominięciem konfiguratora. Strony polecające Złoty bez statusu: `/`, `/koperty-na-pieniadze`, `/koperty-premium`, `/koperty-dla-hoteli`, `/koperty-dla-agencji-eventowych`, `/koperty-na-certyfikaty`. **Zakres:** zdanie o statusie czytane z katalogu (znika razem ze statusem), wyłączony przycisk na stronie koloru, przegląd sześciu stron polecających. Strona koloru zostaje w indeksie — fraza nie traci właściciela. Termin powrotu do magazynu od właściciela, jeśli jest znany | [x] |
 | 50 | Koperty na bony do salonu fryzjerskiego — `/koperty-dla-salonow-fryzjerskich` | Supporting LP | koperty na bony do salonu fryzjerskiego | KONWERSJA | Salony fryzjerskie, barber shopy | F4 | **Wykonane 8 października 2026** (zakres wdrożenia i decyzje — w dzienniku). **Źródło:** `knowledge-base.md` pkt 2, profil 14. **`grep`:** fraza i warianty (`koperty dla salonów fryzjerskich`, `koperty dla barber shopów`) bez właściciela; branża ma wyłącznie kartę w F4 i jest bohaterem okładki poz. 24. **Różnica intencji:** F4 mówi, że bon wręcza się przy stanowisku i adresu nie potrzebuje; LP rozstrzyga **jak ten bon wygląda w rękach klienta salonu** — bon imienny (zakres `imiona`), wkładka (wydruk albo karta ID-1) oraz perła kontra odcienie ciemne. Od poz. 24 różni ją to, że jest stroną sprzedażową, a nie poradnikiem wręczania; od poz. 19 i 22 — brak zabiegu i procedury, którą obdarowany musi zrozumieć. Kadr: `biala-perlowa-koperta-dl-nadruk-logo-salonu-fryzjerskiego` (jedyny z tej branży) | [x] |
 | 51 | Koperty na karnety fitness — `/koperty-dla-klubow-fitness` | Supporting LP | koperty na karnety fitness | KONWERSJA | Kluby fitness, studia jogi i pilatesu | F4 | **Źródło:** `knowledge-base.md` pkt 2, profil 16. **`grep`:** fraza i warianty (`koperty dla klubów fitness`, `koperty na karnety`) bez właściciela; branża ma jedną kartę w F4 (karnet VIP i pakiet treningów personalnych sprzedawane w recepcji). **Różnica intencji:** F4 odpowiada „czy koperta zamieni wydruk w produkt przy ladzie"; LP — **co klub wkłada do koperty i komu ją wręcza**: karnet VIP, pakiet treningów personalnych imienny (zakres `imiona`), seria dla recepcji. Bez kalendarza sezonowego — baza wiedzy nie podaje szczytu sprzedaży tej branży. Kadr: brak aranżacyjnego, próbki katalogowe z polem nadruku | [ ] |
 
@@ -412,6 +415,27 @@ nie liczą się do kadencji czterech pozycji tygodniowo i nie mają filara.
 ---
 
 ## Dziennik wdrożeń
+
+### 12 października 2026 — Złoty wraca do sprzedaży w DL
+
+**Decyzja właściciela.** Z odcienia `zloty` w `COLORS` zniknęło `outOfStock: ['DL']`, wpisane
+24 września 2026. Sam mechanizm (`outOfStock`, `isColorOutOfStock()`, `OUT_OF_STOCK_LABEL`,
+style `.swatch:disabled` i `.swatch-stock`) zostaje w kodzie na następny brak w magazynie.
+
+**Co się zmieniło na stronie — wszystko wynika z katalogu:**
+- **Konfigurator, krok 2:** kafelek Złotego jest aktywny, bez wygaszenia i bez plakietki
+  „Tymczasowy brak w magazynie". Preselekcja `?kolor=zloty` (przycisk na `/koperty/zloty`
+  i odnośniki ze stron polecających) znów zaznacza kolor, a pozycja ze Złotym wczytana z koszyka
+  do edycji przechodzi dalej.
+- **Poz. 38** `/blog/gramatura-papieru-na-koperty`: z obu tabel zniknął dopisek statusu przy
+  Złotym i zdanie „Przy odcieniu, którego chwilowo nie ma w magazynie…". `updated` → 12 października.
+- **Poz. 44** `/blog/koperty-na-pieniadze-na-slub-format-i-kolor`: z tabeli kolorów zniknął status
+  przy Złotym i zdanie o tym, że nie da się go zamówić. `updated` → 12 października.
+
+**Bez zmiany:** `/koperty/zloty` i sześć stron polecających Złoty nigdy nie opisywały braku
+(poz. 49 nie została wykonana), więc ich treść i daty w `PAGE_UPDATED` zostają. Poz. 49
+anulowana, blokada w „Zależności i blokady" zamknięta. Poz. 50 nadal nie poleca Złotego — to
+decyzja o kierunkach kolorystycznych tej LP, do przeglądu przy najbliższej aktualizacji.
 
 ### 8 października 2026 — poz. 50: `/koperty-dla-salonow-fryzjerskich` · pierwsza LP Fazy 5
 
@@ -4060,7 +4084,7 @@ z konfiguracją „Koperta DL Czarny z nadrukiem", 4,57 zł/szt.
 | ~~Brak analityki (GA4 / GSC)~~ | **Odblokowane 16 sierpnia 2026.** GA4 wpięte przez `NEXT_PUBLIC_GA_ID`, właściciel zweryfikowany w Search Console. Dane o zapytaniach i wejściach do konfiguratora zaczynają się zbierać | — |
 | `transitTime` w danych o dostawie | Google liczy obiecywaną datę doręczenia z `handlingTime` + `transitTime`; bez drugiego składnika adnotacja o dostawie jest niepełna. Zadeklarowanie czasu przewozu bez potwierdzenia przewoźnika byłoby obietnicą bez pokrycia | Właściciel — podanie realnego czasu przewozu kurierem |
 | Formaty C6 i K4 `disabled` | Klaster ślubny (K9) bez CTA zakupowego; poz. 27 ograniczona do A4 składanego | Właściciel — uruchomienie formatów |
-| Odcień Złoty — tymczasowy brak w magazynie (od 24 września 2026) | Status zna tylko konfigurator; `/koperty/zloty` i sześć stron polecających go nie mówią o nim nic, a `AddColorToCart` pozwala dodać ten odcień do koszyka. Dotyczy poz. 49, 56 i 67 | Właściciel — termin powrotu do magazynu; poz. 49 — treść i przycisk na stronie koloru |
+| ~~Odcień Złoty — tymczasowy brak w magazynie (od 24 września 2026)~~ | **Odblokowane 12 października 2026.** Złoty wrócił do sprzedaży w DL — `outOfStock` zdjęty z katalogu, kafelek w kroku 2 konfiguratora znów da się wybrać. Poz. 49 anulowana; poz. 56 i 67 mogą polecać Złoty bez zastrzeżeń | — |
 | ~~Zdjęcia produktowe to PNG po 0,5–0,75 MB~~ | **Odblokowane 15 sierpnia 2026.** `colors/`, `prints/` i `personalized/` przeszły na WebP w trzech szerokościach: **30,8 MB → 2,1 MB**. Strona główna pobiera dziś **197 kB** obrazów zamiast ~9 MB | — |
 | ~~Kadry hero w `public/images/` nadal w PNG~~ | **Odblokowane 18 sierpnia 2026.** `Hero Envelopes Robocze.png` (3,06 MB) okazał się plikiem **używanym** — jako tło hero na `/` i pięciu filarach, przez adres z `%20`. Przeszedł na WebP (`hero-tlo-2015.webp`, 127 kB); `koperta-gorna/dolna.png` i `2.png` były faktycznie nieużywane i zostały usunięte | — |
 | ~~Profile FB / Instagram / LinkedIn~~ | **Odblokowane 10 września 2026** dla LinkedIna i Instagrama — adresy ze stopki trafiły do `Organization.sameAs` przez wspólną stałą `SOCIAL_PROFILES` (`orders.ts`). Facebooka w stopce nie ma, więc nie ma go też w `sameAs` | Właściciel — adres profilu na Facebooku, jeśli powstanie |

@@ -118,7 +118,7 @@ export function Configurator() {
       const format =
         detail.format && !FORMAT_MAP[detail.format]?.disabled ? detail.format : undefined;
       /* Odcienia bez stanu magazynowego nie zaznaczamy — wejście ze strony
-         złotego koloru kończy się w kroku 2, gdzie widać plakietkę braku. */
+         takiego koloru kończy się w kroku 2, gdzie widać plakietkę braku. */
       const color =
         detail.color &&
         COLOR_MAP[detail.color] &&
