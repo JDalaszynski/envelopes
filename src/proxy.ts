@@ -38,8 +38,6 @@ const ALLOWED_API_WRITES = [
   /^\/api\/orders\/[^/]+(?:\/(?:faktura|wizualizacja))?\/?$/,
 ];
 
-/* Dane kontaktowe wpisane na sztywno — proxy nie powinno zależeć od modułów
-   aplikacji (dokumentacja Next), a `@/lib/orders` pociąga za sobą cennik. */
 const MAINTENANCE_PAGE = `<!doctype html>
 <html lang="pl">
 <head>
@@ -78,23 +76,14 @@ const MAINTENANCE_PAGE = `<!doctype html>
     margin: 0 0 16px;
     font: 600 28px/1.25 Georgia, 'Times New Roman', serif;
   }
-  p { margin: 0 0 12px; color: #575e6e; }
-  a { color: #2a4e7e; }
-  .contact {
-    margin-top: 24px;
-    padding-top: 16px;
-    border-top: 1px solid #dcd8cc;
-    font-size: 15px;
-  }
+  p { margin: 0; color: #575e6e; }
 </style>
 </head>
 <body>
 <main>
   <p class="brand">Envelopes</p>
-  <h1>Strona jest chwilowo niedostępna</h1>
-  <p>Trwają prace konserwatorskie. Sklep wróci do działania wkrótce — przepraszamy za utrudnienia.</p>
-  <p class="contact">W pilnych sprawach napisz na <a href="mailto:kontakt@envelopes.pl">kontakt@envelopes.pl</a>
-  lub zadzwoń: <a href="tel:+48695527166">+48 695 527 166</a> (pon.–pt. 8:00–16:00).</p>
+  <h1>Strona jest niedostępna</h1>
+  <p>Trwają prace konserwatorskie</p>
 </main>
 </body>
 </html>`;
